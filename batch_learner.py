@@ -52,8 +52,8 @@ def batch_generate_save_dictionary(*new_filenames, **parameters):
     """
         @brief  Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL. Results will be saved in each file
 
-        @param  new_filenames     name of the file to read.
-        @param  parameters     name of the file to read.
+        @param  new_filenames     name of the files to read.
+        @param  parameters        name of the file to read.
     """
     
     # simple. iterates over each call to generate and save results in given HDF5 file.
@@ -68,7 +68,7 @@ def generate_save_dictionary(new_filename, **parameters):
         @brief  Uses generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
 
         @param  new_filename     name of the file to read.
-        @param  parameters     name of the file to read.
+        @param  parameters       name of the file to read.
     """
 
     # no need unless loading data. thus, won't be loaded if only using numpy arrays with generate_dictionary.
@@ -145,7 +145,7 @@ def main(*argv):
     import argparse
 
     # creates command line parser
-    parser = argparse.ArgumentParser(description = "Parses input from the comman line for a batch job.")
+    parser = argparse.ArgumentParser(description = "Parses input from the command line for a batch job.")
 
     # Takes a config file and then a series of one or more HDF5 files.
     parser.add_argument("config_filename", metavar="CONFIG_FILE", type = str, help = "JSON file that provides configuration options for how to use dictionary learning on the input files.")
