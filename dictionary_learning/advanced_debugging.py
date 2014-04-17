@@ -61,7 +61,6 @@ def log_call(logger, print_args = False):
             # Log that we have entered the callable in question.
             logger.debug("Entering callable: \"" + callable.__name__ + "\".")
             
-            
             # Output arguments and keyword arguments if acceptable. Note that this allows keyword arguments to be turned on or off at runtime.
             #
             # Note: We have used log_call_callable_wrapped.print_args. However, we cannot define this until after as wrapping will lose this variable.
@@ -77,6 +76,9 @@ def log_call(logger, print_args = False):
             
             # Return the result even None.
             return(result)
+        
+        # Store the underlying callable. Automatic in Python 3.
+        log_call_callable_wrapped.__wrapped__ = callable
         
         # Copy over the define value of print_args for later use.
         # Must be defined afterwards as functools.wraps will not copy it over to the wrapped instance.
