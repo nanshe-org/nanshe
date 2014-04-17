@@ -107,7 +107,8 @@ class TimeNavigator(object):
 
             Note:
                 Todo
-                Extract constants as parameters of constructor. Also, determine out a way to make all position relative to some bounding box for all of TimeNavigator as opposed to the fig.
+                Extract constants as parameters of constructor.
+                Also, determine out a way to make all position relative to some bounding box for all of TimeNavigator as opposed to the fig.
         """
 
         self.min_time = min_time
@@ -203,7 +204,8 @@ class TimeNavigator(object):
     @advanced_debugging.log_call(logger, print_args = True)
     def normalize_val(self, val):
         """
-            Takes the time value and normalizes it to fit within the range. Then makes sure it is a discrete number of steps from the min_time.
+            Takes the time value and normalizes it to fit within the range.
+            Then, makes sure it is a discrete number of steps from the min_time.
 
             Args:
                 val     float position from the slider bar to correct
