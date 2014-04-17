@@ -83,7 +83,8 @@ def generate_save_dictionary(new_filename, **parameters):
     import h5py
     
     # Need in order to read h5py path. Otherwise unneeded.
-    import lazyflow.utility.pathHelpers as pathHelpers
+    #import lazyflow.utility.pathHelpers as pathHelpers # Use this when merged into the ilastik framework.
+    import pathHelpers
     
     # Inspect path name to get where the file is an its internal path
     new_filename_details = pathHelpers.PathComponents(new_filename)
@@ -145,7 +146,7 @@ def generate_dictionary(new_data, **parameters):
         Generates a dictionary using the data and parameters given for trainDL.
         
         Args:
-            new_data(numpy.ndarray):      name of the file to read.
+            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
             parameters(dict):             passed directly to spams.trainDL.
         
         Note:
@@ -161,11 +162,13 @@ def generate_dictionary(new_data, **parameters):
     import spams
 
     # Maybe should copy data so as not to change the original.
-    # new_data_processed = new_data[:]
+    # new_data_processed = new_data.copy()
     new_data_processed = new_data
 
     # Reshape data into a matrix (each image is now a column vector)
-    new_data_processed = numpy.asmatrix(numpy.reshape(new_data_processed, [new_data_processed.shape[0], -1])).transpose()
+    new_data_processed = numpy.reshape(new_data_processed, [new_data_processed.shape[0], -1])
+    new_data_processed = numpy.asmatrix(new_data_processed)
+    new_data_processed = new_data_processed.transpose()
 
     # Remove the mean of each row vector
     new_data_processed -= new_data_processed.mean(axis = 0)
@@ -174,13 +177,9 @@ def generate_dictionary(new_data, **parameters):
     # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.
     L_2_norm = numpy.array([numpy.linalg.norm(new_data_processed[:, _i]) for _i in xrange(new_data_processed.shape[1])])
     
-    # Now that we have the norm we need to brodcast it in the right way. Fortunately, we can skip this here.
-    #L_2_norm = np.tile(L_2_norm, (new_data_processed.shape[0],1))
-    
     # This should automatically broadcast the norm to the right dimensions.
     new_data_processed /= L_2_norm
-    #new_data_processed /= numpy.tile(numpy.linalg.norm(new_data_processed, axis = 0).reshape((1, -1)), (new_data_processed.shape[0], 1))
-
+    
     # Spams requires all matrices to be fortran.
     new_data_processed = numpy.asfortranarray(new_data_processed)
     
