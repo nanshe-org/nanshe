@@ -85,17 +85,64 @@ own disgression. Further, we don&#8217;t want to break their existing code.</td>
 <dl class="function">
 <dt id="dictionary_learning.advanced_iterators.index_generator">
 <tt class="descclassname">dictionary_learning.advanced_iterators.</tt><tt class="descname">index_generator</tt><big>(</big><em>*sizes</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/advanced_iterators.html#index_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.advanced_iterators.index_generator" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Takes an argument list of sizes and iterates through them from 0 up to (but including) each size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>chain_gen</strong> &#8211;
+a generator over every possible coordinated</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">generator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="dictionary_learning.advanced_iterators.list_indices_to_index_array">
 <tt class="descclassname">dictionary_learning.advanced_iterators.</tt><tt class="descname">list_indices_to_index_array</tt><big>(</big><em>list_indices</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/advanced_iterators.html#list_indices_to_index_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.advanced_iterators.list_indices_to_index_array" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Converts a list of tuple indices to numpy index array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list_indices</strong> (<em>list</em>) &#8211; a list of indices corresponding to some array object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>chain_gen</strong> &#8211;
+a tuple containing a numpy array in for each index</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="dictionary_learning.advanced_iterators.list_indices_to_numpy_bool_array">
 <tt class="descclassname">dictionary_learning.advanced_iterators.</tt><tt class="descname">list_indices_to_numpy_bool_array</tt><big>(</big><em>list_indices</em>, <em>shape</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/advanced_iterators.html#list_indices_to_numpy_bool_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.advanced_iterators.list_indices_to_numpy_bool_array" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.
+All indices in list_indices are set to True in the numpy.ndarray. The rest are False by default.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>list_indices</strong> (<em>list</em>) &#8211; a list of indices corresponding to some numpy.ndarray object</li>
+<li><strong>shape</strong> (<em>tuple</em>) &#8211; a tuple used to set the shape of the numpy.ndarray to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> &#8211;
+a numpy.ndarray with dtype bool (True for indices in list_indices and False otherwise).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <div class="section" id="module-dictionary_learning.batch_learner">
@@ -103,7 +150,8 @@ own disgression. Further, we don&#8217;t want to break their existing code.</td>
 <dl class="function">
 <dt id="dictionary_learning.batch_learner.batch_generate_save_dictionary">
 <tt class="descclassname">dictionary_learning.batch_learner.</tt><tt class="descname">batch_generate_save_dictionary</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/batch_learner.html#batch_generate_save_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.batch_learner.batch_generate_save_dictionary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL. Results will be saved in each file.</p>
+<dd><p>Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL.
+Results will be saved in each file.</p>
 </dd></dl>
 
 <dl class="function">
@@ -247,7 +295,8 @@ whether to output arguments and keyword arguments passed to the function.</td>
 <dl class="method">
 <dt id="dictionary_learning.neuron_viewer.TimeNavigator.normalize_val">
 <tt class="descname">normalize_val</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/neuron_viewer.html#TimeNavigator.normalize_val"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.neuron_viewer.TimeNavigator.normalize_val" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes the time value and normalizes it to fit within the range. Then makes sure it is a discrete number of steps from the min_time.</p>
+<dd><p>Takes the time value and normalizes it to fit within the range.
+Then, makes sure it is a discrete number of steps from the min_time.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -291,125 +340,8 @@ whether to output arguments and keyword arguments passed to the function.</td>
 </dd></dl>
 
 </div>
-<div class="section" id="module-dictionary_learning.random_dictionary_learning_data">
-<span id="dictionary-learning-random-dictionary-learning-data-module"></span><h2>dictionary_learning.random_dictionary_learning_data module<a class="headerlink" href="#module-dictionary_learning.random_dictionary_learning_data" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator">
-<em class="property">class </em><tt class="descclassname">dictionary_learning.random_dictionary_learning_data.</tt><tt class="descname">DictionaryLearningRandomDataGenerator</tt><big>(</big><em>frame_shape</em>, <em>num_objects</em>, <em>num_groups</em>, <em>num_frames</em>, <em>mean_group_size</em>, <em>object_spread</em>, <em>object_max_intensity</em>, <em>object_min_intensity</em>, <em>background_noise_intensity</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#DictionaryLearningRandomDataGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>A Random Generator that build pseudo-data similar in nature to that which the ADINA algorithm is run.</p>
-<dl class="method">
-<dt id="dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__">
-<tt class="descname">__call__</tt><big>(</big><em>num_runs=1</em>, <em>seed=None</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#DictionaryLearningRandomDataGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructs a series of pseudo-videos.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>num_runs</strong> (<em>int</em>) &#8211; number of pseudo-videos to generate</li>
-<li><strong>seed</strong> (<em>int</em>) &#8211; uses the seed for numpy.random.seed if provided.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> &#8211;
-a list of DictionaryLearningRandomDataSample instances with relevant data from generation included.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataSample">
-<em class="property">class </em><tt class="descclassname">dictionary_learning.random_dictionary_learning_data.</tt><tt class="descname">DictionaryLearningRandomDataSample</tt><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#DictionaryLearningRandomDataSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataSample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Essentially a struct with its values set at runtime by DictionaryLearningRandomDataGenerator calls.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="dictionary_learning.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator">
-<em class="property">class </em><tt class="descclassname">dictionary_learning.random_dictionary_learning_data.</tt><tt class="descname">MappingDiscreteGeometricDistributionGenerator</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#MappingDiscreteGeometricDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>A random generator of groups. Each group has a size that is geometrically distributed.
-However, the individuals chosen for the group are all equally likely.</p>
-<dl class="method">
-<dt id="dictionary_learning.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__">
-<tt class="descname">__call__</tt><big>(</big><em>p</em>, <em>size=1</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#MappingDiscreteGeometricDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a number of groups equal to size with each group size being distributed geometrically by p.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> &#8211;
-a list of groups of arguments drawn (None if no arguments)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="dictionary_learning.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator">
-<em class="property">class </em><tt class="descclassname">dictionary_learning.random_dictionary_learning_data.</tt><tt class="descname">MappingDiscreteUniformDistributionGenerator</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#MappingDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Given a bunch of arguments. This will create a random element generator that returns one or many</p>
-<dl class="method">
-<dt id="dictionary_learning.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__">
-<tt class="descname">__call__</tt><big>(</big><em>size=1</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#MappingDiscreteUniformDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws a certain number of elements with equal likelihood and returns them in a list.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of elements to draw (one if unspecified).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> &#8211;
-a list of arguments drawn (None if no arguments)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="dictionary_learning.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator">
-<em class="property">class </em><tt class="descclassname">dictionary_learning.random_dictionary_learning_data.</tt><tt class="descname">NumpyRandomArrayDiscreteUniformDistributionGenerator</tt><big>(</big><em>shape</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#NumpyRandomArrayDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Creates a random numpy array (with type bool) generator that will set
-a certain number of random positions in the array to True (like Bernoulli random distribution)</p>
-<dl class="method">
-<dt id="dictionary_learning.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__">
-<tt class="descname">__call__</tt><big>(</big><em>size=1</em><big>)</big><a class="reference internal" href="_modules/dictionary_learning/random_dictionary_learning_data.html#NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dictionary_learning.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a numpy array.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of Trues to have in the numpy array.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> &#8211;
-a boolean numpy array with a fixed number of randomly placed Trues</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="dictionary-learning-random-dictionary-learning-data-module">
+<h2>dictionary_learning.random_dictionary_learning_data module<a class="headerlink" href="#dictionary-learning-random-dictionary-learning-data-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-dictionary_learning">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dictionary_learning" title="Permalink to this headline">¶</a></h2>
@@ -430,7 +362,7 @@ a boolean numpy array with a fixed number of randomly placed Trues</td>
 <li><a class="reference internal" href="#module-dictionary_learning.advanced_iterators">dictionary_learning.advanced_iterators module</a></li>
 <li><a class="reference internal" href="#module-dictionary_learning.batch_learner">dictionary_learning.batch_learner module</a></li>
 <li><a class="reference internal" href="#module-dictionary_learning.neuron_viewer">dictionary_learning.neuron_viewer module</a></li>
-<li><a class="reference internal" href="#module-dictionary_learning.random_dictionary_learning_data">dictionary_learning.random_dictionary_learning_data module</a></li>
+<li><a class="reference internal" href="#dictionary-learning-random-dictionary-learning-data-module">dictionary_learning.random_dictionary_learning_data module</a></li>
 <li><a class="reference internal" href="#module-dictionary_learning">Module contents</a></li>
 </ul>
 </li>

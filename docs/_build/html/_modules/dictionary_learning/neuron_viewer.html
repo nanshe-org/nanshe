@@ -156,7 +156,8 @@
 
 <span class="sd">            Note:</span>
 <span class="sd">                Todo</span>
-<span class="sd">                Extract constants as parameters of constructor. Also, determine out a way to make all position relative to some bounding box for all of TimeNavigator as opposed to the fig.</span>
+<span class="sd">                Extract constants as parameters of constructor.</span>
+<span class="sd">                Also, determine out a way to make all position relative to some bounding box for all of TimeNavigator as opposed to the fig.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">=</span> <span class="n">min_time</span>
@@ -252,7 +253,8 @@
     <span class="nd">@advanced_debugging.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">print_args</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="TimeNavigator.normalize_val"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.neuron_viewer.TimeNavigator.normalize_val">[docs]</a>    <span class="k">def</span> <span class="nf">normalize_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Takes the time value and normalizes it to fit within the range. Then makes sure it is a discrete number of steps from the min_time.</span>
+<span class="sd">            Takes the time value and normalizes it to fit within the range.</span>
+<span class="sd">            Then, makes sure it is a discrete number of steps from the min_time.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                val     float position from the slider bar to correct</span>
