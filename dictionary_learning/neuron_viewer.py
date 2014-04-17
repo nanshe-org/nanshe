@@ -70,7 +70,7 @@ class NeuronViewer(matplotlib.figure.Figure):
         
         self.neuron_images = new_neuron_images
         
-        if (new_neuron_images.ndim == 3):
+        if (self.neuron_images.ndim == 3):
             self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = mpl.cm.RdBu, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
         else:
             self.image_view = self.viewer.imshow(self.neuron_images, cmap = mpl.cm.RdBu, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
@@ -78,7 +78,7 @@ class NeuronViewer(matplotlib.figure.Figure):
 
         self.colorbar(self.image_view, ax = self.viewer)
         
-        if (new_neuron_images.ndim == 3):
+        if (self.neuron_images.ndim == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
 
             self.time_nav_cid = self.time_nav.on_time_update(self.time_update)
@@ -88,7 +88,7 @@ class NeuronViewer(matplotlib.figure.Figure):
         """
             Method to be called by the TimeNavigator when the time changes. Updates image displayed.
         """
-        if (new_neuron_images.ndim == 3):
+        if (self.neuron_images.ndim == 3):
             self.image_view.set_array(self.neuron_images[self.time_nav.stime.val])
             self.canvas.draw_idle()
 
