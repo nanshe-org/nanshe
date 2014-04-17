@@ -12,8 +12,10 @@ def index_generator(*sizes):
             chain_gen(generator):   a generator over every possible coordinated
     """
     
+    # Creates a list of xrange generator objects over each respective dimension of sizes
     gens = [xrange(_) for _ in sizes]
     
+    # Combines the generators to a single generator of indicies that go throughout sizes
     chain_gen = itertools.product(*gens)
     
     return(chain_gen)
@@ -30,6 +32,8 @@ def list_indices_to_index_array(list_indices):
             chain_gen(tuple):       a tuple containing a numpy array in for each index
     """
     
+    # Combines the indices so that one dimension is represented by each list.
+    # Then converts this to a tuple numpy.ndarrays.
     return(tuple(numpy.array(zip(*list_indices))))
 
 
@@ -46,8 +50,10 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
             result(numpy.ndarray):   a numpy.ndarray with dtype bool (True for indices in list_indices and False otherwise).
     """
     
+    # Constructs the numpy.ndarray with False everywhere
     result = numpy.zeros(shape, dtype = bool)
     
+    # Sets the given indices to True
     result[list_indices_to_index_array(list_indices)] = True
     
     return(result)

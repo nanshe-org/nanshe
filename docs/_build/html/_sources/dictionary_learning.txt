@@ -36,14 +36,6 @@ dictionary_learning.neuron_viewer module
     :undoc-members:
     :show-inheritance:
 
-dictionary_learning.random_dictionary_learning_data module
-----------------------------------------------------------
-
-.. automodule:: dictionary_learning.random_dictionary_learning_data
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

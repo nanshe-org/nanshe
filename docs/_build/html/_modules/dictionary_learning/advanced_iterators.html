@@ -61,8 +61,10 @@
 <span class="sd">            chain_gen(generator):   a generator over every possible coordinated</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="c"># Creates a list of xrange generator objects over each respective dimension of sizes</span>
     <span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="nb">xrange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">]</span>
     
+    <span class="c"># Combines the generators to a single generator of indicies that go throughout sizes</span>
     <span class="n">chain_gen</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">gens</span><span class="p">)</span>
     
     <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span>
@@ -79,6 +81,8 @@
 <span class="sd">            chain_gen(tuple):       a tuple containing a numpy array in for each index</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="c"># Combines the indices so that one dimension is represented by each list.</span>
+    <span class="c"># Then converts this to a tuple numpy.ndarrays.</span>
     <span class="k">return</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">list_indices</span><span class="p">))))</span>
 
 </div>
@@ -95,8 +99,10 @@
 <span class="sd">            result(numpy.ndarray):   a numpy.ndarray with dtype bool (True for indices in list_indices and False otherwise).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="c"># Constructs the numpy.ndarray with False everywhere</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">)</span>
     
+    <span class="c"># Sets the given indices to True</span>
     <span class="n">result</span><span class="p">[</span><span class="n">list_indices_to_index_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
     
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
