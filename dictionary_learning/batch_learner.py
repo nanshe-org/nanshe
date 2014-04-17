@@ -55,7 +55,8 @@ def read_parameters(config_filename):
 @advanced_debugging.log_call(logger, print_args = True)
 def batch_generate_save_dictionary(*new_filenames, **parameters):
     """
-        Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL. Results will be saved in each file.
+        Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL.
+        Results will be saved in each file.
         
         Args:
             new_filenames     names of the files to read.
@@ -155,34 +156,36 @@ def generate_dictionary(new_data, **parameters):
             dict: the dictionary found.
     """
     
-    # it takes a loooong time to load spams. so, we shouldn't do this until we are sure that we are ready to generate the dictionary (i.e. the user supplied a bad config file, /images does not exist, etc.). note it caches the import so subsequent calls should not make it any slower.
+    # it takes a loooong time to load spams. so, we shouldn't do this until we are sure that we are ready to generate the dictionary
+    # (i.e. the user supplied a bad config file, /images does not exist, etc.). note it caches the import so subsequent calls should not make it any slower.
     import spams
 
-    # maybe should copy data so as not to change the original
+    # Maybe should copy data so as not to change the original.
     # new_data_processed = new_data[:]
     new_data_processed = new_data
 
-    # reshape data into a matrix (each image is now a column vector)
+    # Reshape data into a matrix (each image is now a column vector)
     new_data_processed = numpy.asmatrix(numpy.reshape(new_data_processed, [new_data_processed.shape[0], -1])).transpose()
 
-    # remove the mean of each row vector
+    # Remove the mean of each row vector
     new_data_processed -= new_data_processed.mean(axis = 0)
 
-    # renormalize each row vector using L_2
+    # Renormalize each row vector using L_2
     # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.
     L_2_norm = numpy.array([numpy.linalg.norm(new_data_processed[:, _i]) for _i in xrange(new_data_processed.shape[1])])
     
     # Now that we have the norm we need to brodcast it in the right way. Fortunately, we can skip this here.
     #L_2_norm = np.tile(L_2_norm, (new_data_processed.shape[0],1))
     
-    # This should automatically broadcast the norm to the right dimensions
+    # This should automatically broadcast the norm to the right dimensions.
     new_data_processed /= L_2_norm
     #new_data_processed /= numpy.tile(numpy.linalg.norm(new_data_processed, axis = 0).reshape((1, -1)), (new_data_processed.shape[0], 1))
 
-    # spams requires all matrices to be fortran
+    # Spams requires all matrices to be fortran.
     new_data_processed = numpy.asfortranarray(new_data_processed)
     
-    # simply trains the dictionary (does not return sparse code, need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
+    # Simply trains the dictionary. Does not return sparse code.
+    # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
     new_dictionary = spams.trainDL(new_data_processed, **parameters)
 
     # fix dictionary so that the first index will be the particular image and the rest will be the shape of an image (same as input shape)
@@ -217,7 +220,9 @@ def main(*argv):
     # Results of parsing arguments (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
 
-    # Go ahead and stuff in parameters with the other parsed_args (a little risky if parsed_args may later contain a parameters variable due to changing the main file or argparse changing behavior; however, this keeps all arguments in the same place.)
+    # Go ahead and stuff in parameters with the other parsed_args
+    # A little risky if parsed_args may later contain a parameters variable due to changing the main file
+    # or argparse changing behavior; however, this keeps all arguments in the same place.
     parsed_args.parameters = read_parameters(parsed_args.config_filename)
 
     # Runs the dictionary learning algorithm on each file with the given parameters and saves the results in the given files.
