@@ -94,11 +94,11 @@ def generate_save_dictionary(new_filename, **parameters):
     with h5py.File(new_filename_details.externalPath, "a") as new_file:
         # Must contain the internal path in question
         if new_filename_details.internalPath not in new_file:
-            raise IOError("The given data file \"" + new_filename + "\" does not contain \"" + new_filename_details.internalPath + "\".")
+            raise Exception("The given data file \"" + new_filename + "\" does not contain \"" + new_filename_details.internalPath + "\".")
         
         # Must be a path to a h5py.Dataset not a h5py.Group (would be nice to relax this constraint)
         elif not isinstance(new_file[new_filename_details.internalPath], h5py.Dataset):
-            raise IOError("The given data file \"" + new_filename + "\" does not not contain a dataset for \"" + new_filename_details.internalPath + "\".")
+            raise Exception("The given data file \"" + new_filename + "\" does not not contain a dataset for \"" + new_filename_details.internalPath + "\".")
         
         # Where to read data files from
         input_directory = new_filename_details.internalDirectory.rstrip("/")
