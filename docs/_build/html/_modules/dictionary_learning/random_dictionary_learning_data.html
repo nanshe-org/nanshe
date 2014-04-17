@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dictionary_learning.random_dictionary_learning_data &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="..  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">..  documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for dictionary_learning.random_dictionary_learning_data</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">scipy.ndimage</span>
+
+<span class="kn">import</span> <span class="nn">advanced_debugging</span>
+<span class="kn">import</span> <span class="nn">advanced_iterators</span>
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">advanced_debugging</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+
+
+
+
+<div class="viewcode-block" id="MappingDiscreteUniformDistributionGenerator"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator">[docs]</a><span class="k">class</span> <span class="nc">MappingDiscreteUniformDistributionGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a bunch of arguments. This will create a random element generator that returns one or many</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Builds a random element generator</span>
+<span class="sd">        </span>
+<span class="sd">            Args:</span>
+<span class="sd">                *args:  Anything that needs to be drawn from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+    
+<div class="viewcode-block" id="MappingDiscreteUniformDistributionGenerator.__call__"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Draws a certain number of elements with equal likelihood and returns them in a list.</span>
+<span class="sd">        </span>
+<span class="sd">            Args:</span>
+<span class="sd">                size(int):  Number of elements to draw (one if unspecified).</span>
+<span class="sd">            </span>
+<span class="sd">            Returns:</span>
+<span class="sd">                results(list):   a list of arguments drawn (None if no arguments)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">),</span> <span class="n">size</span><span class="p">)</span>
+            
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">_</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span>
+        
+        <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="NumpyRandomArrayDiscreteUniformDistributionGenerator"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator">[docs]</a><span class="k">class</span> <span class="nc">NumpyRandomArrayDiscreteUniformDistributionGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a random numpy array (with type bool) generator that will set</span>
+<span class="sd">        a certain number of random positions in the array to True (like Bernoulli random distribution)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Creates a random numpy array generator that returns arrays of a certain shape.</span>
+<span class="sd">            </span>
+<span class="sd">            Args:</span>
+<span class="sd">                shape(tuple):   A tuple permissible for setting the size of a numpy array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+    
+<div class="viewcode-block" id="NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generates a numpy array.</span>
+<span class="sd">            </span>
+<span class="sd">            Args:</span>
+<span class="sd">                size(int):             Number of Trues to have in the numpy array.</span>
+<span class="sd">            </span>
+<span class="sd">            Returns:</span>
+<span class="sd">                results(numpy.ndarray):   a boolean numpy array with a fixed number of randomly placed Trues</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># A completely empty numpy array</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">)</span>
+        
+        <span class="c"># Gets a set of random indices that need to be non-zero</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">each_dim</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="k">for</span> <span class="n">each_dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
+        
+        <span class="c"># Makes them non-zero</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>        
+        
+        <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="MappingDiscreteGeometricDistributionGenerator"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator">[docs]</a><span class="k">class</span> <span class="nc">MappingDiscreteGeometricDistributionGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A random generator of groups. Each group has a size that is geometrically distributed.</span>
+<span class="sd">        However, the individuals chosen for the group are all equally likely.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Sets the arguments for use to compose the groups.</span>
+<span class="sd">            </span>
+<span class="sd">            Args:</span>
+<span class="sd">                *args:  Any variety of useful items for drawing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+    
+<div class="viewcode-block" id="MappingDiscreteGeometricDistributionGenerator.__call__"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generates a number of groups equal to size with each group size being distributed geometrically by p.</span>
+<span class="sd">            </span>
+<span class="sd">            Args:</span>
+<span class="sd">                p       the probability of success for a geometric distribution (starts with 1 so has mean 1/p).</span>
+<span class="sd">                size    the number of groups to make</span>
+<span class="sd">            </span>
+<span class="sd">            Returns:</span>
+<span class="sd">                results(list):   a list of groups of arguments drawn (None if no arguments)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># Get a uniform distribution over the elements to fill each group.</span>
+        <span class="n">uni_gen</span> <span class="o">=</span> <span class="n">MappingDiscreteUniformDistributionGenerator</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>        
+        
+        <span class="c"># Draw the sizes for each group</span>
+        <span class="n">group_sizes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">geometric</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        
+        <span class="c"># Using the sizes draw element to fill groups up to the right size</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">uni_gen</span><span class="p">(</span><span class="n">group_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span>
+        
+        <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+
+
+
+</div></div>
+<div class="viewcode-block" id="DictionaryLearningRandomDataSample"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataSample">[docs]</a><span class="k">class</span> <span class="nc">DictionaryLearningRandomDataSample</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Essentially a struct with its values set at runtime by DictionaryLearningRandomDataGenerator calls.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+</div>
+<div class="viewcode-block" id="DictionaryLearningRandomDataGenerator"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator">[docs]</a><span class="k">class</span> <span class="nc">DictionaryLearningRandomDataGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A Random Generator that build pseudo-data similar in nature to that which the ADINA algorithm is run.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shape</span><span class="p">,</span> <span class="n">num_objects</span><span class="p">,</span> <span class="n">num_groups</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">mean_group_size</span><span class="p">,</span> <span class="n">object_spread</span><span class="p">,</span> <span class="n">object_max_intensity</span><span class="p">,</span> <span class="n">object_min_intensity</span><span class="p">,</span> <span class="n">background_noise_intensity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Builds a DictionaryLearningRandomDataGenerator for draws.</span>
+<span class="sd">            </span>
+<span class="sd">            Args:</span>
+<span class="sd">                frame_shape(tuple)                  a tuple of ints for constructing a numpy array</span>
+<span class="sd">                num_objects(int)                    the number of objects that can possible be active (i.e. neurons present whether active or not)</span>
+<span class="sd">                num_groups(int)                     number of groups of objects that will be active (i.e. number of groups of neurons seen to be active)</span>
+<span class="sd">                num_frames(int)                     number of frames for any group to be active in the pseudo-video</span>
+<span class="sd">                mean_group_size(float)              average group size (average for a geometric distribution)</span>
+<span class="sd">                object_spread(float)                how big an object is on average</span>
+<span class="sd">                object_max_intensity(float)         the highest intensity possible</span>
+<span class="sd">                object_min_intensity(float)         the lowest intensity possible</span>
+<span class="sd">                background_noise_intensity(float)   how much noise there is in the background.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_shape</span> <span class="o">=</span> <span class="n">frame_shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_objects</span> <span class="o">=</span> <span class="n">num_objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_groups</span> <span class="o">=</span> <span class="n">num_groups</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span> <span class="o">=</span> <span class="n">num_frames</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_group_size</span> <span class="o">=</span> <span class="n">mean_group_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_spread</span> <span class="o">=</span> <span class="n">object_spread</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_max_intensity</span> <span class="o">=</span> <span class="n">object_max_intensity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_min_intensity</span> <span class="o">=</span> <span class="n">object_min_intensity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_noise_intensity</span> <span class="o">=</span> <span class="n">background_noise_intensity</span>
+        
+    
+<div class="viewcode-block" id="DictionaryLearningRandomDataGenerator.__call__"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_runs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Constructs a series of pseudo-videos.</span>
+<span class="sd">            </span>
+<span class="sd">            Args:</span>
+<span class="sd">                num_runs(int):  number of pseudo-videos to generate</span>
+<span class="sd">                seed(int):      uses the seed for numpy.random.seed if provided.</span>
+<span class="sd">            </span>
+<span class="sd">            Returns:</span>
+<span class="sd">                results(list):           a list of DictionaryLearningRandomDataSample instances with relevant data from generation included.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># Use the seed provided.</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        
+        <span class="c"># A list of DictionaryLearningRandomDataSample instances</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_runs</span><span class="p">):</span>
+            <span class="c"># Where the result will be stored</span>
+            <span class="n">each_result</span> <span class="o">=</span> <span class="n">DictionaryLearningRandomDataSample</span><span class="p">()</span>
+            
+            <span class="c"># Generates a numpy array that has a shape of self.frame_shape with a fixed number of randomly selected (equally likely) non-zero entries that number self.num_object</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">NumpyRandomArrayDiscreteUniformDistributionGenerator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_shape</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_objects</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+            
+            <span class="c"># Creates a point generator that selects from the non-zero points generated for activation to create groups</span>
+            <span class="n">point_groups_gen</span> <span class="o">=</span> <span class="n">MappingDiscreteGeometricDistributionGenerator</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">each_result</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">nonzero</span><span class="p">())</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+            
+            <span class="c"># Using a mean group size and the number of groups creates point groups (these should in someway relate to the basis images)</span>
+            <span class="n">point_groups</span> <span class="o">=</span> <span class="n">point_groups_gen</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_group_size</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_groups</span><span class="p">)</span>
+            
+            <span class="c"># Will store the essential frames that indicate which points will be active in each frame</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">centroid_activation_frames</span> <span class="o">=</span> <span class="p">[]</span>        
+            <span class="k">for</span> <span class="n">each_point_group</span> <span class="ow">in</span> <span class="n">point_groups</span><span class="p">:</span>
+                <span class="c"># Get an index array</span>
+                <span class="n">each_point_group_index_array</span> <span class="o">=</span> <span class="n">advanced_iterators</span><span class="o">.</span><span class="n">list_indices_to_index_array</span><span class="p">(</span><span class="n">each_point_group</span><span class="p">)</span>
+                
+                <span class="n">each_centroid_activation_frame</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_shape</span><span class="p">)</span>            
+                
+                <span class="c"># Set each of the points picked for activation to a uniformly random value</span>
+                <span class="n">each_centroid_activation_frame</span><span class="p">[</span><span class="n">each_point_group_index_array</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object_max_intensity</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_min_intensity</span><span class="p">)</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">each_point_group</span><span class="p">)))</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_min_intensity</span>
+                
+                <span class="c"># add to the stack of centroid activations</span>
+                <span class="n">each_result</span><span class="o">.</span><span class="n">centroid_activation_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_centroid_activation_frame</span><span class="p">)</span>
+            
+            <span class="c"># convert to numpy array</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">centroid_activation_frames</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">each_result</span><span class="o">.</span><span class="n">centroid_activation_frames</span><span class="p">)</span>
+    
+            <span class="c"># Holds the frames without noise</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">noiseless_frames</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="c"># Takes each centroid activation frame and creates objects that dim over time</span>
+            <span class="k">for</span> <span class="n">each_centroid_activation_frame</span> <span class="ow">in</span> <span class="n">each_result</span><span class="o">.</span><span class="n">centroid_activation_frames</span><span class="p">:</span>
+                <span class="c"># Determines how much to spread each active point (self.object_spread is like the average spread)</span>
+                <span class="n">sigma</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_spread</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">each_frame_num</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">):</span>
+                    <span class="c"># Determines a linear rescaling of each image (where they slowly become dimmer)</span>
+                    <span class="n">rescale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span> <span class="o">-</span> <span class="n">each_frame_num</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">)</span>
+                    <span class="c"># Convolves each frame to generate a frame with objects (uses the same spread for each simply dims over time)</span>
+                    <span class="n">each_matrix_convolved</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">rescale</span> <span class="o">*</span> <span class="n">each_centroid_activation_frame</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+                    <span class="c"># Adds to the stack of frames</span>
+                    <span class="n">each_result</span><span class="o">.</span><span class="n">noiseless_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_matrix_convolved</span><span class="p">)</span>
+            
+            <span class="c"># Converts the form of the noiseless frames</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">noiseless_frames</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">each_result</span><span class="o">.</span><span class="n">noiseless_frames</span><span class="p">)</span>
+            
+            <span class="c"># Creates frames that contain some background noise from a normal distribution</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">frames</span> <span class="o">=</span> <span class="n">each_result</span><span class="o">.</span><span class="n">noiseless_frames</span><span class="p">[:]</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">frames</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_noise_intensity</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">each_result</span><span class="o">.</span><span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            
+            <span class="c"># Append to our list of results</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_result</span><span class="p">)</span>
+            
+        
+        <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        
+        
+        
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">..  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

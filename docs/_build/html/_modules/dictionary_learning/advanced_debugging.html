@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dictionary_learning.advanced_debugging &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="..  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">..  documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for dictionary_learning.advanced_debugging</h1><div class="highlight"><pre>
+<span class="c"># To change this license header, choose License Headers in Project Properties.</span>
+<span class="c"># To change this template file, choose Tools | Templates</span>
+<span class="c"># and open the template in the editor.</span>
+
+
+<span class="n">__author__</span><span class="o">=</span><span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span><span class="s">&quot;$Apr 14, 2014 5:42:07 PM$&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+
+<span class="c"># Nothing fancy. Just the basic logging unless otherwise specified, in which case this does nothing.</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="log_call"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.advanced_debugging.log_call">[docs]</a><span class="k">def</span> <span class="nf">log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">print_args</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a given logger and uses it to log entering and leaving the decorated callable.</span>
+<span class="sd">        </span>
+<span class="sd">        Intended to be used as a decorator that takes a few arguments.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            logger      (Logger):    Used for logging entry, exit and possibly arguments.</span>
+<span class="sd">        </span>
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            print_args  (bool):      Whether to output the arguments and keyword arguments passed to the function.</span>
+<span class="sd">                                     This should not automatically be true as some arguments may not be printable or</span>
+<span class="sd">                                     may be expensive to print. Thus, it should be up to the developer to use their</span>
+<span class="sd">                                     own disgression. Further, we don&#39;t want to break their existing code.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            log_call_decorator (for wrapping)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">log_call_decorator</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The actual decorator, which is what is returned to decorate the callable in question.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                callable:    Anything that can be called function, method, functor, lambda, etc.</span>
+<span class="sd">        </span>
+<span class="sd">            Returns:</span>
+<span class="sd">		log_call_callable_wrapped, which is wrapped around the function in question.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="nd">@functools.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">log_call_callable_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                This is what will replace the orignal callable. It will behave the same except it will now log its</span>
+<span class="sd">                entrance and exit. If set, it will log its parameters too.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    callable:    Anything that can be called function, method, functor, lambda, etc.</span>
+
+<span class="sd">                Returns:</span>
+<span class="sd">                    log_call_callable_wrapped, which is wrapped around the function in question.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            
+            <span class="c"># Log that we have entered the callable in question.</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Entering callable: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">callable</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+            
+            
+            <span class="c"># Output arguments and keyword arguments if acceptable. Note that this allows keyword arguments to be turned on or off at runtime.</span>
+            <span class="c">#</span>
+            <span class="c"># Note: We have used log_call_callable_wrapped.print_args. However, we cannot define this until after as wrapping will lose this variable.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">log_call_callable_wrapped</span><span class="o">.</span><span class="n">print_args</span><span class="p">):</span>
+               <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Called with the arguments: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> and with the keyword arguments: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+            
+            <span class="c"># We don&#39;t return immediately. Why? We want to know if this succeeded or failed.</span>
+            <span class="c"># So, we want the log message below to print after the function runs.</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">callable</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            
+            <span class="c"># Log that we have exited the callable in question.</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Exiting &quot;</span> <span class="o">+</span> <span class="nb">callable</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span><span class="p">)</span>
+            
+            <span class="c"># Return the result even None.</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        
+        <span class="c"># Copy over the define value of print_args for later use.</span>
+        <span class="c"># Must be defined afterwards as functools.wraps will not copy it over to the wrapped instance.</span>
+        <span class="n">log_call_callable_wrapped</span><span class="o">.</span><span class="n">print_args</span> <span class="o">=</span> <span class="n">print_args</span>
+        
+        <span class="c"># The callable wrapped.</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">log_call_callable_wrapped</span><span class="p">)</span>
+    
+    <span class="c"># The arguments passed to the decorator for easy access.</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">log_call_decorator</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">..  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

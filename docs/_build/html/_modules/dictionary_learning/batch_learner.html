@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dictionary_learning.batch_learner &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="..  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">..  documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for dictionary_learning.batch_learner</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+
+<span class="n">__author__</span><span class="o">=</span><span class="s">&quot;John Kirkham&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span><span class="s">&quot;$Apr 9, 2014 4:00:40 PM$&quot;</span>
+
+
+<span class="c"># on my system need macports at present</span>
+<span class="c">###########!/opt/local/bin/python</span>
+
+
+<span class="c"># Generally useful and fast to import so done immediately.</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="kn">import</span> <span class="nn">advanced_debugging</span>
+
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">advanced_debugging</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+
+<span class="nd">@advanced_debugging.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">print_args</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.batch_learner.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the contents of a json config file and returns the parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            config_filename:     name of the file to read.</span>
+<span class="sd">        </span>
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            print_args (bool):   whether to output arguments and keyword arguments passed to the function.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: parameters read from the file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    
+    <span class="c"># only relevant if reading parameter file.</span>
+    <span class="kn">import</span> <span class="nn">json</span>
+
+    <span class="c"># gets parameters out of the file and dumps them in the dictionary. just that simple.</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Opened configure file named </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">config_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        
+        <span class="c"># will just give a dictionary. just that simple</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Loaded parameters from file, which are </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+</div>
+<span class="nd">@advanced_debugging.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">print_args</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<div class="viewcode-block" id="batch_generate_save_dictionary"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.batch_learner.batch_generate_save_dictionary">[docs]</a><span class="k">def</span> <span class="nf">batch_generate_save_dictionary</span><span class="p">(</span><span class="o">*</span><span class="n">new_filenames</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL. Results will be saved in each file.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_filenames     names of the files to read.</span>
+<span class="sd">            parameters        passed directly to generate_save_dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># simple. iterates over each call to generate and save results in given HDF5 file.</span>
+    <span class="k">for</span> <span class="n">each_new_filename</span> <span class="ow">in</span> <span class="n">new_filenames</span><span class="p">:</span>
+        <span class="c"># runs each one and saves results in each file</span>
+        <span class="n">generate_save_dictionary</span><span class="p">(</span><span class="n">each_new_filename</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+
+</div>
+<span class="nd">@advanced_debugging.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">print_args</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<div class="viewcode-block" id="generate_save_dictionary"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.batch_learner.generate_save_dictionary">[docs]</a><span class="k">def</span> <span class="nf">generate_save_dictionary</span><span class="p">(</span><span class="n">new_filename</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Uses generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_filenames     name of the internal file to read (should be a Dataset)</span>
+<span class="sd">            parameters        passed directly to generate_dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># No need unless loading data. thus, won&#39;t be loaded if only using numpy arrays with generate_dictionary.</span>
+    <span class="kn">import</span> <span class="nn">h5py</span>
+    
+    <span class="c"># Need in order to read h5py path. Otherwise unneeded.</span>
+    <span class="kn">import</span> <span class="nn">lazyflow.utility.pathHelpers</span> <span class="kn">as</span> <span class="nn">pathHelpers</span>
+    
+    <span class="c"># Inspect path name to get where the file is an its internal path</span>
+    <span class="n">new_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">new_filename</span><span class="p">)</span>
+    
+    <span class="c"># The name of the data without the its path</span>
+    <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalDatasetName</span> <span class="o">=</span> <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalDatasetName</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">new_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_file</span><span class="p">:</span>
+        <span class="c"># Must contain the internal path in question</span>
+        <span class="k">if</span> <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalPath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_file</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;The given data file </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">new_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> does not contain </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalPath</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        
+        <span class="c"># Must be a path to a h5py.Dataset not a h5py.Group (would be nice to relax this constraint)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_file</span><span class="p">[</span><span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalPath</span><span class="p">],</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;The given data file </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">new_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> does not not contain a dataset for </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalPath</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        
+        <span class="c"># Where to read data files from</span>
+        <span class="n">input_directory</span> <span class="o">=</span> <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalDirectory</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+        
+        <span class="c"># Where the results will be saved to</span>
+        <span class="n">output_directory</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">input_directory</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+            <span class="c"># if we are at the root</span>
+            <span class="n">output_directory</span> <span class="o">=</span> <span class="s">&quot;/ADINA_results&quot;</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalDatasetName</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># otherwise (not at that the root)</span>
+            <span class="n">output_directory</span> <span class="o">=</span> <span class="n">input_directory</span> <span class="o">+</span> <span class="s">&quot;_ADINA_results&quot;</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalDatasetName</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+        
+        <span class="c"># If the group does not exist, make it.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">output_directory</span> <span class="ow">in</span> <span class="n">new_file</span><span class="p">:</span>
+            <span class="n">new_file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">output_directory</span><span class="p">)</span>
+        
+        <span class="c"># Create a hardlink (does not copy) the original data</span>
+        <span class="n">new_file</span><span class="p">[</span><span class="n">output_directory</span><span class="p">][</span><span class="s">&quot;original_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_file</span><span class="p">[</span><span class="n">new_filename_details</span><span class="o">.</span><span class="n">internalDatasetName</span><span class="p">]</span>
+        
+        <span class="c"># Copy out images for manipulation in memory</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">new_file</span><span class="p">[</span><span class="n">output_directory</span><span class="p">][</span><span class="s">&quot;original_data&quot;</span><span class="p">][:]</span>
+        
+        <span class="c"># generates dictionary and stores results</span>
+        <span class="n">new_file</span><span class="p">[</span><span class="n">output_directory</span><span class="p">][</span><span class="s">&quot;dictionary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">generate_dictionary</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="c"># stores all parameters used to generate the dictionary in results</span>
+        <span class="k">for</span> <span class="n">parameter_key</span><span class="p">,</span> <span class="n">parameter_value</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">new_file</span><span class="p">[</span><span class="n">output_directory</span><span class="p">][</span><span class="s">&quot;dictionary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">parameter_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameter_value</span>
+
+</div>
+<span class="nd">@advanced_debugging.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">print_args</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<div class="viewcode-block" id="generate_dictionary"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.batch_learner.generate_dictionary">[docs]</a><span class="k">def</span> <span class="nf">generate_dictionary</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a dictionary using the data and parameters given for trainDL.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_data(numpy.ndarray):      name of the file to read.</span>
+<span class="sd">            parameters(dict):           passed directly to spams.trainDL.</span>
+<span class="sd">        </span>
+<span class="sd">        Note:</span>
+<span class="sd">            Todo</span>
+<span class="sd">            Look into move data normalization into separate method (have method chosen by config file).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: the dictionary found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># it takes a loooong time to load spams. so, we shouldn&#39;t do this until we are sure that we are ready to generate the dictionary (i.e. the user supplied a bad config file, /images does not exist, etc.). note it caches the import so subsequent calls should not make it any slower.</span>
+    <span class="kn">import</span> <span class="nn">spams</span>
+
+    <span class="c"># maybe should copy data so as not to change the original</span>
+    <span class="c"># new_data_processed = new_data[:]</span>
+    <span class="n">new_data_processed</span> <span class="o">=</span> <span class="n">new_data</span>
+
+    <span class="c"># reshape data into a matrix (each image is now a column vector)</span>
+    <span class="n">new_data_processed</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">new_data_processed</span><span class="p">,</span> <span class="p">[</span><span class="n">new_data_processed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+    <span class="c"># remove the mean of each row vector</span>
+    <span class="n">new_data_processed</span> <span class="o">-=</span> <span class="n">new_data_processed</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># renormalize each row vector using L_2</span>
+    <span class="c"># Unfortunately our version of numpy&#39;s function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.</span>
+    <span class="n">L_2_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">new_data_processed</span><span class="p">[:,</span> <span class="n">_i</span><span class="p">])</span> <span class="k">for</span> <span class="n">_i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">new_data_processed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+    
+    <span class="c"># Now that we have the norm we need to brodcast it in the right way. Fortunately, we can skip this here.</span>
+    <span class="c">#L_2_norm = np.tile(L_2_norm, (new_data_processed.shape[0],1))</span>
+    
+    <span class="c"># This should automatically broadcast the norm to the right dimensions</span>
+    <span class="n">new_data_processed</span> <span class="o">/=</span> <span class="n">L_2_norm</span>
+    <span class="c">#new_data_processed /= numpy.tile(numpy.linalg.norm(new_data_processed, axis = 0).reshape((1, -1)), (new_data_processed.shape[0], 1))</span>
+
+    <span class="c"># spams requires all matrices to be fortran</span>
+    <span class="n">new_data_processed</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="n">new_data_processed</span><span class="p">)</span>
+    
+    <span class="c"># simply trains the dictionary (does not return sparse code, need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))</span>
+    <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">new_data_processed</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+
+    <span class="c"># fix dictionary so that the first index will be the particular image and the rest will be the shape of an image (same as input shape)</span>
+    <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">new_dictionary</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;K&quot;</span><span class="p">],)</span> <span class="o">+</span> <span class="n">new_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])[:]</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">)</span>
+
+</div>
+<span class="nd">@advanced_debugging.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">print_args</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../dictionary_learning.html#dictionary_learning.batch_learner.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            argv(list):     arguments (includes command line call).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int:    exit code (0 if success)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># only necessary if running main (normally if calling command line). no point in importing otherwise.</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+
+    <span class="c"># creates command line parser</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Parses input from the command line for a batch job.&quot;</span><span class="p">)</span>
+
+    <span class="c"># Takes a config file and then a series of one or more HDF5 files.</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config_filename&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span> <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;JSON file that provides configuration options for how to use dictionary learning on the input files.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;input_files&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;HDF5 file(s) to process (a single dataset or video will be expected in /images (time must be the first dimension) the results will be placed in /results (will overwrite old data) of the respective file with attribute tags related to the parameters used).&quot;</span><span class="p">)</span>
+
+    <span class="c"># Results of parsing arguments (ignore the first one as it is the command line call).</span>
+    <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="c"># Go ahead and stuff in parameters with the other parsed_args (a little risky if parsed_args may later contain a parameters variable due to changing the main file or argparse changing behavior; however, this keeps all arguments in the same place.)</span>
+    <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">read_parameters</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">)</span>
+
+    <span class="c"># Runs the dictionary learning algorithm on each file with the given parameters and saves the results in the given files.</span>
+    <span class="n">batch_generate_save_dictionary</span><span class="p">(</span><span class="o">*</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">,</span> <span class="o">**</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c"># only necessary if running main (normally if calling command line). no point in importing otherwise.</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    
+    <span class="c"># call main if the script is loaded from command line. otherwise, user can import package without main being called.</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">..  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
