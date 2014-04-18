@@ -157,8 +157,9 @@ def generate_dictionary(new_data, **parameters):
             dict: the dictionary found.
     """
     
-    # it takes a loooong time to load spams. so, we shouldn't do this until we are sure that we are ready to generate the dictionary
-    # (i.e. the user supplied a bad config file, /images does not exist, etc.). note it caches the import so subsequent calls should not make it any slower.
+    # It takes a loooong time to load spams. so, we shouldn't do this until we are sure that we are ready to generate the dictionary
+    # (i.e. the user supplied a bad config file, /images does not exist, etc.).
+    # Note it caches the import so subsequent calls should not make it any slower.
     import spams
 
     # Maybe should copy data so as not to change the original.
@@ -187,7 +188,8 @@ def generate_dictionary(new_data, **parameters):
     # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
     new_dictionary = spams.trainDL(new_data_processed, **parameters)
 
-    # fix dictionary so that the first index will be the particular image and the rest will be the shape of an image (same as input shape)
+    # Fix dictionary so that the first index will be the particular image.
+    # The rest will be the shape of an image (same as input shape).
     new_dictionary = new_dictionary.transpose()
     new_dictionary = numpy.asarray(new_dictionary).reshape((parameters["K"],) + new_data.shape[1:])[:]
 
@@ -206,10 +208,10 @@ def main(*argv):
             int:            exit code (0 if success)
     """
     
-    # only necessary if running main (normally if calling command line). no point in importing otherwise.
+    # Only necessary if running main (normally if calling command line). No point in importing otherwise.
     import argparse
 
-    # creates command line parser
+    # Creates command line parser
     parser = argparse.ArgumentParser(description = "Parses input from the command line for a batch job.")
 
     # Takes a config file and then a series of one or more HDF5 files.
