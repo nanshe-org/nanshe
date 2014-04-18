@@ -2,9 +2,13 @@
 
 REM Command file for Sphinx documentation
 
+if "%SPHINXAPIDOC%" == "" (
+	set SPHINXAPIDOC=sphinx-apidoc
+)
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
+
 set BUILDDIR=_build
 set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% .
 set I18NSPHINXOPTS=%SPHINXOPTS% .
@@ -47,6 +51,19 @@ if "%1" == "clean" (
 )
 
 
+%SPHINXAPIDOC% 2> nul
+if errorlevel 9009 (
+	echo.
+	echo.The 'sphinx-apidoc' command was not found. Make sure you have Sphinx
+	echo.installed, then set the SPHINXAPIDOC environment variable to point
+	echo.to the full path of the 'sphinx-apidoc' executable. Alternatively you
+	echo.may add the Sphinx directory to PATH.
+	echo.
+	echo.If you don't have Sphinx installed, grab it from
+	echo.http://sphinx-doc.org/
+	exit /b 1
+)
+
 %SPHINXBUILD% 2> nul
 if errorlevel 9009 (
 	echo.
@@ -59,6 +76,15 @@ if errorlevel 9009 (
 	echo.http://sphinx-doc.org/
 	exit /b 1
 )
+
+if "%1" == "rst" (
+        %SPHINXAPIDOC% -f -o . ..
+	if errorlevel 1 exit /b 1
+	echo.
+	echo.Build finished. The RST pages are in in the current directory.
+	goto end
+)
+
 
 if "%1" == "html" (
 	%SPHINXBUILD% -b html %ALLSPHINXOPTS% %BUILDDIR%/html
