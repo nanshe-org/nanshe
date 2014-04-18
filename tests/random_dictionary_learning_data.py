@@ -137,7 +137,11 @@ class DictionaryLearningRandomDataSample(object):
     """
         Essentially a struct with its values set at runtime by DictionaryLearningRandomDataGenerator calls.
     """
-    pass
+    def __init__(self):
+        self.points = None
+        self.centroid_activation_frames = None
+        self.noiseless_frames = None
+        self.frames = None
 
 
 class DictionaryLearningRandomDataGenerator(object):
