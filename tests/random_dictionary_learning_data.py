@@ -203,7 +203,7 @@ class DictionaryLearningRandomDataGenerator(object):
             # Where the result will be stored
             each_result = DictionaryLearningRandomDataSample()
             
-            # Generates a numpy array that has a shape of self.frame_shape with a fixed number of randomly selected (equally likely) non-zero entries that number self.num_object
+            # Generates a numpy array that has a shape of self.frame_shape with a fixed number of randomly selected (equally likely) non-zero entries
             each_result.points = NumpyRandomArrayDiscreteUniformDistributionGenerator(self.frame_shape)(self.num_objects).astype(float)
             
             # Creates a point generator that selects from the non-zero points generated for activation to create groups
