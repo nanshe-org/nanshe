@@ -179,7 +179,8 @@ class DictionaryLearningRandomDataGenerator(object):
         self.object_min_intensity = object_min_intensity
         self.background_noise_intensity = background_noise_intensity
         
-    
+        self.object_intensity_range = self.object_max_intensity - self.object_min_intensity
+        
     def __call__(self, num_runs = 1, seed = None):
         """
             Constructs a series of pseudo-videos.
@@ -206,7 +207,11 @@ class DictionaryLearningRandomDataGenerator(object):
             each_result.points = NumpyRandomArrayDiscreteUniformDistributionGenerator(self.frame_shape)(self.num_objects).astype(float)
             
             # Creates a point generator that selects from the non-zero points generated for activation to create groups
-            point_groups_gen = MappingDiscreteGeometricDistributionGenerator(*(numpy.array(each_result.points.nonzero()).T.tolist()))
+            selected_points = each_result.points.nonzero()  # as an index array (tuple of 1D numpy.ndarrays)
+            selected_points = numpy.array(selected_points)  # convert to a single numpy.ndarrays
+            selected_points = selected_points.T             # simpler, lightweight way of doing zip(*selected_points)
+            selected_points = selected_points.tolist()
+            point_groups_gen = MappingDiscreteGeometricDistributionGenerator(*selected_points)
             
             # Using a mean group size and the number of groups creates point groups (these should in someway relate to the basis images)
             point_groups = point_groups_gen(1.0 / float(self.mean_group_size), self.num_groups)
@@ -217,10 +222,20 @@ class DictionaryLearningRandomDataGenerator(object):
                 # Get an index array
                 each_point_group_index_array = advanced_iterators.list_indices_to_index_array(each_point_group)
                 
-                each_centroid_activation_frame = numpy.zeros(self.frame_shape)            
+                # Create an empty activation frame
+                each_centroid_activation_frame = numpy.zeros(self.frame_shape)
                 
-                # Set each of the points picked for activation to a uniformly random value
-                each_centroid_activation_frame[each_point_group_index_array] = (self.object_max_intensity - self.object_min_intensity) * numpy.random.random((len(each_point_group))) + self.object_min_intensity
+                # Set the active points to be randomly distributed
+                each_centroid_activation_frame_points_shape = each_centroid_activation_frame[each_point_group_index_array].shape
+                
+                # Set the active points to be randomly distributed
+                each_centroid_activation_frame[each_point_group_index_array] = numpy.random.random(each_centroid_activation_frame_points_shape)
+                
+                # Rescale the active points
+                each_centroid_activation_frame[each_point_group_index_array] *= self.object_intensity_range
+                
+                # Translate the active points
+                each_centroid_activation_frame[each_point_group_index_array] += self.object_min_intensity
                 
                 # add to the stack of centroid activations
                 each_result.centroid_activation_frames.append(each_centroid_activation_frame)
