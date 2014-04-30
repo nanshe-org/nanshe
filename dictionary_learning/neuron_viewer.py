@@ -58,7 +58,7 @@ class NeuronViewer(matplotlib.figure.Figure):
         #self.set_images(kwargs["neuron_images"])
 
     @advanced_debugging.log_call(logger)
-    def set_images(self, new_neuron_images):
+    def set_images(self, new_neuron_images, cmap = mpl.cm.RdBu):
         """
             Sets the images to be viewed.
             
@@ -66,17 +66,18 @@ class NeuronViewer(matplotlib.figure.Figure):
                 new_neuron_images(numpy.ndarray):     array of images (first index is which image)
         """
         if (new_neuron_images.ndim > 3):
-            raise ValueError("Dimensions cannot be greater than 3. Was provided new_neuron_images with \"" + new_neuron_images.ndim + "\" dimensions.")
+            raise ValueError("Dimensions cannot be greater than 3. Was provided new_neuron_images with \"" + str(new_neuron_images.ndim) + "\" dimensions.")
         
         self.neuron_images = new_neuron_images
+        self.cmap = cmap
         
         if (self.neuron_images.ndim == 3):
-            self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = mpl.cm.RdBu, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
         else:
-            self.image_view = self.viewer.imshow(self.neuron_images, cmap = mpl.cm.RdBu, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             
 
-        self.colorbar(self.image_view, ax = self.viewer)
+        self.image_view_colorbar = self.colorbar(self.image_view, ax = self.viewer)
         
         if (self.neuron_images.ndim == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
@@ -91,7 +92,7 @@ class NeuronViewer(matplotlib.figure.Figure):
         if (self.neuron_images.ndim == 3):
             self.image_view.set_array(self.neuron_images[self.time_nav.stime.val])
             self.canvas.draw_idle()
-
+    
 
 
 
