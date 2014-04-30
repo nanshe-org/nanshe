@@ -4,10 +4,6 @@ __author__="John Kirkham"
 __date__ ="$Apr 9, 2014 4:00:40 PM$"
 
 
-# on my system need macports at present
-###########!/opt/local/bin/python
-
-
 # Generally useful and fast to import so done immediately.
 import numpy
 
