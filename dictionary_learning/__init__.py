@@ -5,10 +5,11 @@
 __author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ ="$Apr 14, 2014 8:37:08 PM$"
 
-__all__ = ["advanced_debugging", "batch_learner", "neuron_viewer", "read_config"]
+__all__ = ["advanced_debugging", "batch_learner", "simple_image_processing", "neuron_viewer", "read_config"]
 
 import advanced_debugging
 import batch_learner
+import simple_image_processing
 import neuron_viewer
 import read_config
 
