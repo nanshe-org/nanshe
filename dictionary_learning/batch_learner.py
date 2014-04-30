@@ -10,43 +10,14 @@ import numpy
 # Need in order to have logging information no matter what.
 import advanced_debugging
 
+# For IO. Right now, just includes read_parameters for reading a config.json file.
+import read_config
 
 
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
 
 
-
-@advanced_debugging.log_call(logger, print_args = True)
-def read_parameters(config_filename):
-    """
-        Reads the contents of a json config file and returns the parameters.
-        
-        Args:
-            config_filename:     name of the file to read.
-        
-        Keyword Args:
-            print_args (bool):   whether to output arguments and keyword arguments passed to the function.
-        
-        Returns:
-            dict: parameters read from the file.
-    """
-    
-    
-    # only relevant if reading parameter file.
-    import json
-
-    # gets parameters out of the file and dumps them in the dictionary. just that simple.
-    parameters = {}
-    with open(config_filename, 'r') as fp:
-        logger.debug("Opened configure file named \"" + config_filename + "\".")
-        
-        # will just give a dictionary. just that simple
-        parameters = json.load(fp)
-        
-        logger.debug("Loaded parameters from file, which are \"" + str(parameters) + "\".")
-
-    return(parameters)
 
 @advanced_debugging.log_call(logger, print_args = True)
 def batch_generate_save_dictionary(*new_filenames, **parameters):
@@ -318,7 +289,7 @@ def main(*argv):
     # Go ahead and stuff in parameters with the other parsed_args
     # A little risky if parsed_args may later contain a parameters variable due to changing the main file
     # or argparse changing behavior; however, this keeps all arguments in the same place.
-    parsed_args.parameters = read_parameters(parsed_args.config_filename)
+    parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
 
     # Runs the dictionary learning algorithm on each file with the given parameters and saves the results in the given files.
     batch_generate_save_dictionary(*parsed_args.input_files, **parsed_args.parameters)
