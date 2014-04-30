@@ -140,6 +140,107 @@ def generate_save_dictionary(new_filename, **parameters):
             new_file[output_directory]["dictionary"].attrs[parameter_key] = parameter_value
 
 
+@advanced_debugging.log_call(logger)
+def zeroed_mean_images(new_numpy_array):
+    """
+        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
+        
+        Args:
+            new_numpy_array(numpy.ndarray):     array images with time as the first index
+        
+        Returns:
+            result(numpy.ndarray):              The same array with each images mean removed. Where means[i] = mean(new_numpy_array[i])
+        
+        
+        Examples:
+            >>> import numpy; zeroed_mean_images(numpy.array([[0,0],[0,0]]))
+            array([[ 0.,  0.],
+                   [ 0.,  0.]])
+                   
+            >>> import numpy; zeroed_mean_images(numpy.array([[6,0],[0,0]]))
+            array([[ 3., -3.],
+                   [ 0.,  0.]])
+                   
+            >>> import numpy; zeroed_mean_images(numpy.array([[0,0],[0,4]]))
+            array([[ 0.,  0.],
+                   [-2.,  2.]])
+                   
+            >>> import numpy; zeroed_mean_images(numpy.array([[6,0],[0,4]]))
+            array([[ 3., -3.],
+                   [-2.,  2.]])
+                   
+            >>> import numpy; zeroed_mean_images(numpy.array([[1,2],[3,4]]))
+            array([[-0.5,  0.5],
+                   [-0.5,  0.5]])
+                   
+            >>> import numpy; zeroed_mean_images(numpy.array([[1,2],[3,4]]))
+            array([[-0.5,  0.5],
+                   [-0.5,  0.5]])
+    """
+    
+    # start with means having the same contents as the given images
+    means = new_numpy_array
+    
+    # take the mean while we haven't gotten one mean for each image.
+    while means.ndim > 1:
+        means = means.mean(axis = 1)
+    
+    # reshape means until it has the right number of dimensions to broadcast.
+    while means.ndim < new_numpy_array.ndim:
+        means = means.reshape(means.shape + (1,))
+    
+    # broadcast and subtract the means so that the mean of all values in result[i] is zero
+    result = new_numpy_array - means
+    
+    return(result)
+
+
+@advanced_debugging.log_call(logger)
+def renormalized_images(new_numpy_array, ord = 2):
+    """
+        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
+        
+        Args:
+            new_numpy_array(numpy.ndarray):     array images with time as the first index
+        
+        Returns:
+            result(numpy.ndarray):              The same array with each images mean removed. Where means[i] = mean(new_numpy_array[i])
+        
+        
+        Examples:
+            >>> import numpy; renormalized_images(numpy.array([[0,1],[1,0]]))
+            array([[0, 1],
+                   [1, 0]])
+                   
+            >>> import numpy; renormalized_images(numpy.array([[0.,2.],[1.,0.]]))
+            array([[ 0.,  1.],
+                   [ 1.,  0.]])
+                   
+            >>> import numpy; renormalized_images(numpy.array([[2.,2.],[1.,0.]]))
+            array([[ 0.70710678,  0.70710678],
+                   [ 1.        ,  0.        ]])
+                   
+            >>> import numpy; renormalized_images(numpy.array([[1.,2.],[3.,4.]]))
+            array([[ 0.4472136 ,  0.89442719],
+                   [ 0.6       ,  0.8       ]])
+                   
+            >>> import numpy; renormalized_images(numpy.array([[1.,2.],[3.,4.]]), ord = 1)
+            array([[ 0.33333333,  0.66666667],
+                   [ 0.42857143,  0.57142857]])
+    """
+    
+    # must copy as we will change contents
+    result = new_numpy_array.copy()
+    
+    # take each image at each time turn the image into a vector and find the norm.
+    # divide each image by this norm. (required for spams.trainDL)
+    for i in xrange(result.shape[0]):
+        result[i] /= numpy.linalg.norm(result[i].ravel(), ord = ord)
+    
+    return(result)
+
+
+
 @advanced_debugging.log_call(logger, print_args = True)
 def generate_dictionary(new_data, **parameters):
     """
@@ -165,22 +266,19 @@ def generate_dictionary(new_data, **parameters):
     # Maybe should copy data so as not to change the original.
     # new_data_processed = new_data.copy()
     new_data_processed = new_data
+    
+    # Remove the mean of each row vector
+    new_data_processed = zeroed_mean_images(new_data_processed)
+
+    # Renormalize each row vector using L_2
+    # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.
+    new_data_processed = renormalized_images(new_data_processed, ord = 2)
 
     # Reshape data into a matrix (each image is now a column vector)
     new_data_processed = numpy.reshape(new_data_processed, [new_data_processed.shape[0], -1])
     new_data_processed = numpy.asmatrix(new_data_processed)
     new_data_processed = new_data_processed.transpose()
 
-    # Remove the mean of each row vector
-    new_data_processed -= new_data_processed.mean(axis = 0)
-
-    # Renormalize each row vector using L_2
-    # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.
-    L_2_norm = numpy.array([numpy.linalg.norm(new_data_processed[:, _i]) for _i in xrange(new_data_processed.shape[1])])
-    
-    # This should automatically broadcast the norm to the right dimensions.
-    new_data_processed /= L_2_norm
-    
     # Spams requires all matrices to be fortran.
     new_data_processed = numpy.asfortranarray(new_data_processed)
     
