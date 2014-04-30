@@ -11,7 +11,7 @@ import numpy
 import advanced_debugging
 
 # Short function to process image data.
-import simple_image_processing
+import advanced_image_processing
 
 # For IO. Right now, just includes read_parameters for reading a config.json file.
 import read_config
@@ -42,14 +42,14 @@ def batch_generate_save_dictionary(*new_filenames, **parameters):
 @advanced_debugging.log_call(logger, print_args = True)
 def generate_save_dictionary(new_filename, **parameters):
     """
-        Uses generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
+        Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
         
         Args:
             new_filenames     name of the internal file to read (should be a Dataset)
-            parameters        passed directly to generate_dictionary.
+            parameters        passed directly to advanced_image_processing.generate_dictionary.
     """
     
-    # No need unless loading data. thus, won't be loaded if only using numpy arrays with generate_dictionary.
+    # No need unless loading data. thus, won't be loaded if only using numpy arrays with advanced_image_processing.generate_dictionary.
     import h5py
     
     # Need in order to read h5py path. Otherwise unneeded.
@@ -103,64 +103,11 @@ def generate_save_dictionary(new_filename, **parameters):
         new_data = new_file[output_directory]["original_data"][:]
         
         # generates dictionary and stores results
-        new_file[output_directory]["dictionary"] = generate_dictionary(new_data, **parameters)
+        new_file[output_directory]["dictionary"] = advanced_image_processing.generate_dictionary(new_data, **parameters)
 
         # stores all parameters used to generate the dictionary in results
         for parameter_key, parameter_value in parameters.items():
             new_file[output_directory]["dictionary"].attrs[parameter_key] = parameter_value
-
-
-@advanced_debugging.log_call(logger, print_args = True)
-def generate_dictionary(new_data, **parameters):
-    """
-        Generates a dictionary using the data and parameters given for trainDL.
-        
-        Args:
-            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
-            parameters(dict):             passed directly to spams.trainDL.
-        
-        Note:
-            Todo
-            Look into move data normalization into separate method (have method chosen by config file).
-        
-        Returns:
-            dict: the dictionary found.
-    """
-    
-    # It takes a loooong time to load spams. so, we shouldn't do this until we are sure that we are ready to generate the dictionary
-    # (i.e. the user supplied a bad config file, /images does not exist, etc.).
-    # Note it caches the import so subsequent calls should not make it any slower.
-    import spams
-
-    # Maybe should copy data so as not to change the original.
-    # new_data_processed = new_data.copy()
-    new_data_processed = new_data
-    
-    # Remove the mean of each row vector
-    new_data_processed = simple_image_processing.zeroed_mean_images(new_data_processed)
-
-    # Renormalize each row vector using L_2
-    # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.
-    new_data_processed = simple_image_processing.renormalized_images(new_data_processed, ord = 2)
-
-    # Reshape data into a matrix (each image is now a column vector)
-    new_data_processed = numpy.reshape(new_data_processed, [new_data_processed.shape[0], -1])
-    new_data_processed = numpy.asmatrix(new_data_processed)
-    new_data_processed = new_data_processed.transpose()
-
-    # Spams requires all matrices to be fortran.
-    new_data_processed = numpy.asfortranarray(new_data_processed)
-    
-    # Simply trains the dictionary. Does not return sparse code.
-    # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
-    new_dictionary = spams.trainDL(new_data_processed, **parameters)
-
-    # Fix dictionary so that the first index will be the particular image.
-    # The rest will be the shape of an image (same as input shape).
-    new_dictionary = new_dictionary.transpose()
-    new_dictionary = numpy.asarray(new_dictionary).reshape((parameters["K"],) + new_data.shape[1:])[:]
-
-    return(new_dictionary)
 
 
 @advanced_debugging.log_call(logger, print_args = True)
