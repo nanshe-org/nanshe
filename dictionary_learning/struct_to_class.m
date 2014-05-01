@@ -1,7 +1,6 @@
 function [ new_class_inst ] = struct_to_class ( new_struct_inst )
 %struct_to_class  Takes a struct with a classname property and converts it
 % back to a class of the named type.
-% Has some issues on import of arrays. Need to revisit.
     
     % If nothing else, we return the same thing we started with.
     new_class_inst = new_struct_inst;
