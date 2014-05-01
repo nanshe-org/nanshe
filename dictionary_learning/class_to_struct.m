@@ -25,7 +25,7 @@ function [ new_struct_inst ] = class_to_struct ( new_class_inst )
             % want to.
             old_classname = class(new_struct_inst);
             new_struct_inst = struct(new_struct_inst);
-            new_struct_inst.('classname') = old_classname;
+            new_struct_inst.classname = old_classname;
         end
         
         % Take all fields and apply class_to_struct on them recursively.
