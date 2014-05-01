@@ -22,7 +22,7 @@ function [ new_struct_inst ] = class_to_struct ( new_class_inst )
     elseif isobject(new_struct_inst) | isstruct(new_struct_inst)
         if isobject(new_struct_inst)
             % We save the classname for later so we can read it back if we
-            % want to.
+            % want to. Otherwise, the class instance will now be a struct.
             old_classname = class(new_struct_inst);
             new_struct_inst = struct(new_struct_inst);
             new_struct_inst.classname = old_classname;
