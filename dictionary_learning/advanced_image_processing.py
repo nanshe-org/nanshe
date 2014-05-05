@@ -16,6 +16,12 @@ import advanced_debugging
 # Short function to process image data.
 import simple_image_processing
 
+# To remove noise from the basis images
+import denoising
+
+# Wavelet transformation operations
+import wavelet_transform
+
 
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
@@ -70,5 +76,11 @@ def generate_dictionary(new_data, **parameters):
     # The rest will be the shape of an image (same as input shape).
     new_dictionary = new_dictionary.transpose()
     new_dictionary = numpy.asarray(new_dictionary).reshape((parameters["K"],) + new_data.shape[1:])[:]
+    
+    # Removes noise from the dictionary
+    denoising.remove_noise(new_dictionary, in_place = True)
+    
+    # Dictionary with wavelet transform applied
+    new_wavelet_dictionary = wavelet_transform.wavelet_transform(new_dictionary)
 
     return(new_dictionary)
