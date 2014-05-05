@@ -80,7 +80,7 @@ def generate_dictionary(new_data, **parameters):
     # Removes noise from the dictionary
     denoising.remove_noise(new_dictionary, in_place = True)
     
-    # Dictionary with wavelet transform applied
-    new_wavelet_dictionary = wavelet_transform.wavelet_transform(new_dictionary)
+    # Dictionary with wavelet transform applied or inbetween results
+    new_wavelet_dictionary, new_wavelet_dictionary_intermediates = wavelet_transform.wavelet_transform(new_dictionary)
 
     return(new_dictionary)
