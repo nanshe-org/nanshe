@@ -58,13 +58,12 @@ def estimate_noise(input_array, significance_threshhold = 3.0):
     return(noise)
 
 
-def significant_mask(input_array, significance_threshhold = 3.0, noise_threshhold = 6.0):
+def significant_mask(input_array, noise_threshhold = 6.0, noise_estimate = None):
     """
         Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.
         
         Args:
             input_array(numpy.ndarray):          the array, which needs noise removed.
-            significance_threshhold(float):      the number of standard deviations (of the whole array), below which must be noise.
             noise_threshhold(float):             the estimated noise times this value determines the max value to consider as noise (to zero).
             in_place(bool):                      whether to modify input_array directly or to return a copy instead.
         
@@ -74,20 +73,20 @@ def significant_mask(input_array, significance_threshhold = 3.0, noise_threshhol
         
         Examples:
             
-            >>> significant_mask(numpy.eye(2), significance_threshhold = 3.0, noise_threshhold = 6.0)
+            >>> significant_mask(numpy.eye(2), noise_threshhold = 6.0, noise_estimate = 0.5)
             array([[False, False],
                    [False, False]], dtype=bool)
             
-            >>> significant_mask(numpy.eye(2), significance_threshhold = 3.0, noise_threshhold = 1.0)
+            >>> significant_mask(numpy.eye(2), noise_threshhold = 1.0, noise_estimate = 0.5)
             array([[ True,  True],
                    [ True,  True]], dtype=bool)
                    
-            >>> significant_mask(numpy.eye(3), significance_threshhold = 3.0, noise_threshhold = 2.0)
+            >>> significant_mask(numpy.eye(3), noise_threshhold = 2.0, noise_estimate = 0.47140452079103173)
             array([[False, False, False],
                    [False, False, False],
                    [False, False, False]], dtype=bool)
             
-            >>> significant_mask(numpy.eye(3), significance_threshhold = 3.0, noise_threshhold = 1.0)
+            >>> significant_mask(numpy.eye(3), noise_threshhold = 1.0, noise_estimate = 0.47140452079103173)
             array([[ True, False, False],
                    [False,  True, False],
                    [False, False,  True]], dtype=bool)
@@ -95,16 +94,17 @@ def significant_mask(input_array, significance_threshhold = 3.0, noise_threshhol
     
     mean = input_array.mean()
     
-    # Those cells have noise. Estimate the standard deviation on them. That will be our noise unit size.
-    noise = estimate_noise(input_array, significance_threshhold)
+    # Estimate noise with the default estimate_noise function if a value is not provided.
+    if noise_estimate is None:
+        noise_estimate = estimate_noise(input_array)
     
     # Get all the noisy points in a mask and toss them.
-    significant_mask = numpy.abs(input_array - mean) >= noise_threshhold * noise
+    significant_mask = numpy.abs(input_array - mean) >= noise_threshhold * noise_estimate
     
     return(significant_mask)
 
 
-def noise_mask(input_array, significance_threshhold = 3.0, noise_threshhold = 6.0):
+def noise_mask(input_array, noise_threshhold = 6.0, noise_estimate = None):
     """
         Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.
         
@@ -118,75 +118,29 @@ def noise_mask(input_array, significance_threshhold = 3.0, noise_threshhold = 6.
         
         
         Examples:
-            >>> noise_mask(numpy.eye(2), significance_threshhold = 3.0, noise_threshhold = 6.0)
+            >>> noise_mask(numpy.eye(2), noise_threshhold = 6.0, noise_estimate = 0.5)
             array([[ True,  True],
                    [ True,  True]], dtype=bool)
             
-            >>> noise_mask(numpy.eye(2), significance_threshhold = 3.0, noise_threshhold = 1.0)
+            >>> noise_mask(numpy.eye(2), noise_threshhold = 1.0, noise_estimate = 0.5)
             array([[False, False],
                    [False, False]], dtype=bool)
                    
-            >>> noise_mask(numpy.eye(3), significance_threshhold = 3.0, noise_threshhold = 2.0)
+            >>> noise_mask(numpy.eye(3), noise_threshhold = 2.0, noise_estimate = 0.47140452079103173)
             array([[ True,  True,  True],
                    [ True,  True,  True],
                    [ True,  True,  True]], dtype=bool)
             
-            >>> noise_mask(numpy.eye(3), significance_threshhold = 3.0, noise_threshhold = 1.0)
+            >>> noise_mask(numpy.eye(3), noise_threshhold = 1.0, noise_estimate = 0.47140452079103173)
             array([[False,  True,  True],
                    [ True, False,  True],
                    [ True,  True, False]], dtype=bool)
     """
     
     # Get all the significant points in a mask.
-    noisy_mask = significant_mask(input_array, significance_threshhold = significance_threshhold, noise_threshhold = noise_threshhold)
+    noisy_mask = significant_mask(input_array, noise_threshhold = noise_threshhold, noise_estimate = noise_estimate)
     
     # Invert the maske
     numpy.logical_not(noisy_mask, noisy_mask)
     
     return(noisy_mask)
-
-
-def remove_noise(input_array, significance_threshhold = 3.0, noise_threshhold = 6.0, output_array = None):
-    """
-        Using estimate_noise, removes noise from the given array.
-        
-        Args:
-            input_array(numpy.ndarray):          the array, which needs noise removed.
-            significance_threshhold(float):      the number of standard deviations (of the whole array), below which must be noise.
-            noise_threshhold(float):             the estimated noise times this value determines the max value to consider as noise (to zero).
-            output_array(bool):                      whether to modify input_array directly or to return a copy instead.
-        
-        Returns:
-            result(numpy.ndarray): a numpy array with noise zeroed.
-        
-        
-        Examples:
-            >>> remove_noise(numpy.eye(2), significance_threshhold = 3.0, noise_threshhold = 6.0)
-            array([[ 0.,  0.],
-                   [ 0.,  0.]])
-            
-            >>> remove_noise(numpy.random.random((2,2)), significance_threshhold = 3.0, noise_threshhold = 6.0)
-            array([[ 0.,  0.],
-                   [ 0.,  0.]])
-            
-            >>> a = numpy.random.random((2,2)); numpy.all(a != remove_noise(a, significance_threshhold = 3.0, noise_threshhold = 6.0))
-            True
-            
-            >>> a = numpy.random.random((2,2)); numpy.all(a == remove_noise(a, significance_threshhold = 3.0, noise_threshhold = 6.0, output_array = a))
-            True
-    """
-    
-    # Get all the noisy points in a mask.
-    sig_mask = significant_mask(input_array, significance_threshhold = significance_threshhold, noise_threshhold = noise_threshhold)
-    
-    if output_array is None:
-        # No storage specified. So, use a zeroed array of the same shape and type as the input_array.
-        output_array = numpy.zeros(input_array.shape).astype(input_array.dtype.type)
-    else:
-        # Storage 
-        noisy_mask = numpy.logical_not(sig_mask)
-        output_array[noisy_mask] = 0
-    
-    output_array[sig_mask] = input_array[sig_mask]
-    
-    return(output_array)
