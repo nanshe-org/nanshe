@@ -135,23 +135,35 @@ def region_properties(new_label_image, *args, **kwargs):
     # This gives a list of dictionaries. However, this is not very usable. So, we will convert this to a structured NumPy array.
     new_label_image_props = skimage.measure.regionprops(new_label_image, *args, **kwargs)
     
+    for each_new_label_image_prop in new_label_image_props:
+        for each_key in [ "BoundingBox", "Centroid", "HuMoments", "WeightedCentroid", "WeightedHuMoments" ]:
+            if each_key in each_new_label_image_prop:
+                each_new_label_image_prop[each_key] = numpy.array(each_new_label_image_prop[each_key])
+    
     # Holds the values from props.
     new_label_image_props_values = []
     
     # Holds the types from props.
-    new_label_image_props_dtype = {}
+    new_label_image_props_dtype = []
     
     if new_label_image_props:
         # Get types for all properties as a dictionary
-        new_label_image_props_dtype = dict([(_k, numpy.dtype(type(_v)))  for _k, _v in new_label_image_props[0].items()])
+        for each_name, each_sample_value in new_label_image_props[0].items():
+            each_type = type(each_sample_value)
+            
+            if each_type is numpy.ndarray:
+                new_label_image_props_dtype.append( (each_name, each_sample_value.dtype, each_sample_value.shape) )
+            else:
+                new_label_image_props_dtype.append( (each_name, each_type) )
 
         # Store the values to place in NumPy structured array in order.
         new_label_image_props_values = []
         for j in xrange(len(new_label_image_props)):
             # Add all values in order of keys from the dictionary.
             new_label_image_props_values.append([])
-            for k in new_label_image_props_dtype.keys():
-                new_label_image_props_values[j].append(new_label_image_props[j][k])
+            for each_new_label_image_props_dtype in new_label_image_props_dtype:
+                each_dtype_key = each_new_label_image_props_dtype[0]
+                new_label_image_props_values[j].append(new_label_image_props[j][each_dtype_key])
 
             # NumPy will expect a tuple for each set of values.
             new_label_image_props_values[j] = tuple(new_label_image_props_values[j])
@@ -163,16 +175,7 @@ def region_properties(new_label_image, *args, **kwargs):
         new_label_image_props_dtype = dict([(_k, numpy.object)  for _k in kwargs["properties"]])
     
     # Replace the properties with the structured array.
-    new_label_image_props = numpy.array(new_label_image_props_values, dtype = new_label_image_props_dtype.items())
-    
-    # For each array-like object, we convert them to NumPy arrays to make them easier to manage.
-    #make_numpy_object_array = numpy.vectorize(numpy.array, otypes = [ numpy.dtype(numpy.object) ])
-    
-    for each_key in [ "BoundingBox", "Centroid", "HuMoments", "WeightedCentroid", "WeightedHuMoments" ]:
-        new_label_image_props[each_key] = list(numpy.array(new_label_image_props[each_key].tolist()))
-        
-        #if each_key in kwargs["properties"]:
-        #    new_label_image_props[each_key] = make_numpy_object_array(local_maxima_labeled_props[each_key])
+    new_label_image_props = numpy.array(new_label_image_props_values, dtype = new_label_image_props_dtype)
     
     return(new_label_image_props)
 
