@@ -315,10 +315,11 @@ def wavelet_denoising(new_image, **parameters):
     # Replace the old structured array with the enlarged version.
     local_maxima_labeled_props = new_local_maxima_labeled_props
     
+    # More convenient as NumPy array
+    make_numpy_object_array = np.vectorize(numpy.array, otypes=[numpy.dtype(numpy.object)])
+    local_maxima_labeled_props["Centroid"] = make_numpy_object_array(local_maxima_labeled_props["Centroid"])
+    
     for i in xrange(len(local_maxima_labeled_props)):
-        # More convenient as NumPy array
-        local_maxima_labeled_props[i]["Centroid"] = numpy.array(local_maxima_labeled_props[i]["Centroid"])
-        
         # Get integers close to local max
         local_maxima_labeled_props[i]["IntCentroid"] = local_maxima_labeled_props[i]["Centroid"].round().astype(int)
         
