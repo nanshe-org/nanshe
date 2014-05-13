@@ -274,15 +274,18 @@ def wavelet_denoising(new_image, **parameters):
     local_maxima_mask = skimage.morphology.is_local_maximum(new_wavelet_image_denoised, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised > 0).astype(int))
     #local_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
 
-    # Count local maxima. Not necessary as we only need a mask as to where they are.
+    # Group local maxima. Also, we don't care about differentiating them. If they are part of one
     local_maxima_labeled = label(local_maxima_mask)[0]
+    local_maxima_labeled_binary = (local_maxima_labeled > 0).astype(int)
 
     # Extract the centroids.
-    local_maxima_labeled_props = region_properties(local_maxima_labeled, properties = ["Centroid"])
+    local_maxima_labeled_props = region_properties(local_maxima_labeled_binary, properties = ["Centroid"])
     
     # These should not be used agan. So, we drop them.
     # This way, if they are used, we get an error.
     del local_maxima_mask
+    del local_maxima_labeled
+    del local_maxima_labeled_binary
 
     # Stores the number of times a particular label appears.
     local_maxima_labeled_count = numpy.zeros( (len(local_maxima_labeled_props),), dtype = [("Label", int), ("Count", int)] )
