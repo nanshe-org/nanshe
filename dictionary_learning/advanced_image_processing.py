@@ -324,7 +324,6 @@ def wavelet_denoising(new_image, **parameters):
         
         # Store an index array for easy indexing of the point in question
         local_maxima_labeled_props[i]["IntCentroidIndexArray"] = tuple( local_maxima_labeled_props[i]["IntCentroid"].T )
-        #local_maxima_labeled_props[i]["IntCentroidIndexArray"] = tuple( [ numpy.array([_]) for _ in local_maxima_labeled_props[i]["IntCentroid"] ] )
         
         # Stores the value from wavelet denoising at the centroid for easy retrieval
         local_maxima_labeled_props[i]["IntCentroidWaveletValue"] = new_wavelet_image_denoised[ local_maxima_labeled_props[i]["IntCentroidIndexArray"] ]
