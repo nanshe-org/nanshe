@@ -310,8 +310,7 @@ def wavelet_denoising(new_image, **parameters):
     for each_name in local_maxima_labeled_props.dtype.names:
         local_maxima_labeled_props_dtype.append( (each_name, local_maxima_labeled_props[each_name].dtype) )
     
-    local_maxima_labeled_props_dtype.append( ("IntCentroid", numpy.dtype(numpy.object)) )
-    local_maxima_labeled_props_dtype.append( ("IntCentroidIndexArray", numpy.dtype(numpy.object)) )
+    local_maxima_labeled_props_dtype.append( ("IntCentroid", local_maxima_labeled_props["Centroid"].dtype, local_maxima_labeled_props["Centroid"].shape[1:]) )
     local_maxima_labeled_props_dtype.append( ("IntCentroidWaveletValue", new_wavelet_image_denoised.dtype) )
     
     local_maxima_labeled_props_dtype = numpy.dtype(local_maxima_labeled_props_dtype)
@@ -327,25 +326,21 @@ def wavelet_denoising(new_image, **parameters):
     local_maxima_labeled_props = new_local_maxima_labeled_props
     
     
-    for i in xrange(len(local_maxima_labeled_props)):
-        # Get integers close to local max
-        local_maxima_labeled_props[i]["IntCentroid"] = local_maxima_labeled_props[i]["Centroid"].round().astype(int)
-        
-        # Store an index array for easy indexing of the point in question
-        local_maxima_labeled_props[i]["IntCentroidIndexArray"] = tuple( local_maxima_labeled_props[i]["IntCentroid"].T )
-        
-        # Stores the value from wavelet denoising at the centroid for easy retrieval
-        local_maxima_labeled_props[i]["IntCentroidWaveletValue"] = new_wavelet_image_denoised[ local_maxima_labeled_props[i]["IntCentroidIndexArray"] ]
-        
-        # Overwrite the label parameter as it holds no information as it is always 1, Now, is the label from wavelet mask label image.
-        local_maxima_labeled_props[i]["Label"] = new_wavelet_mask_labeled[ local_maxima_labeled_props[i]["IntCentroidIndexArray"] ]
-        
-        if (local_maxima_labeled_props[i]["Label"] == 0):
-            # There shouldn't be any maximums in the background. This should never happen.
-            logger.debug("Maximum found where Label is 0.")
-        
-        # Increase the count of the matching label
-        local_maxima_labeled_count["Count"] += (local_maxima_labeled_count["Label"] == local_maxima_labeled_props[i]["Label"])
+    # Get integers close to local max
+    local_maxima_labeled_props["IntCentroid"] = local_maxima_labeled_props["Centroid"].round().astype(int)
+    
+    # Stores the value from wavelet denoising at the centroid for easy retrieval
+    local_maxima_labeled_props["IntCentroidWaveletValue"] = new_wavelet_image_denoised[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
+    
+    # Overwrite the label parameter as it holds no information as it is always 1, Now, is the label from wavelet mask label image.
+    local_maxima_labeled_props["Label"] = new_wavelet_mask_labeled[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
+    
+    if (numpy.any(local_maxima_labeled_props["Label"] == 0)):
+        # There shouldn't be any maximums in the background. This should never happen.
+        logger.debug("Maximum found where Label is 0.")
+    
+    # Increase the count of the matching label
+    local_maxima_labeled_count["Count"] += (local_maxima_labeled_count["Label"].reshape(-1,1) == local_maxima_labeled_props["Label"].reshape(1,-1)).sum(axis=1)
     
     
     if numpy.any(local_maxima_labeled_count["Count"] == 0):
