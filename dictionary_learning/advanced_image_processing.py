@@ -166,11 +166,13 @@ def region_properties(new_label_image, *args, **kwargs):
     new_label_image_props = numpy.array(new_label_image_props_values, dtype = new_label_image_props_dtype.items())
     
     # For each array-like object, we convert them to NumPy arrays to make them easier to manage.
-    make_numpy_object_array = numpy.vectorize(numpy.array, otypes = [ numpy.dtype(numpy.object) ])
+    #make_numpy_object_array = numpy.vectorize(numpy.array, otypes = [ numpy.dtype(numpy.object) ])
     
     for each_key in [ "BoundingBox", "Centroid", "HuMoments", "WeightedCentroid", "WeightedHuMoments" ]:
-        if each_key in kwargs["properties"]:
-            local_maxima_labeled_props[each_key] = make_numpy_object_array(local_maxima_labeled_props[each_key])
+        new_label_image_props[each_key] = list(numpy.array(new_label_image_props[each_key].tolist()))
+        
+        #if each_key in kwargs["properties"]:
+        #    new_label_image_props[each_key] = make_numpy_object_array(local_maxima_labeled_props[each_key])
     
     return(new_label_image_props)
 
