@@ -431,7 +431,8 @@ def wavelet_denoising(new_image, **parameters):
         #new_wavelet_image_denoised_opened_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised_opened, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised_opened > 0).astype(int), indices = False)
         
         # We could look for seeds using local minima. However, we already know what these should be as these are the centroids we have found.
-        
+        new_wavelet_image_denoised_opened_maxima = numpy.zeros(new_wavelet_image_denoised.shape, dtype = bool)
+        new_wavelet_image_denoised_opened_maxima[ tuple(local_maxima_labeled_props["IntCentroid"].T) ] = True
         
         # Segment with watershed on minimum image
         # Use seeds from centroids of local minima
