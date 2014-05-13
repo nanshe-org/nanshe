@@ -376,7 +376,6 @@ def wavelet_denoising(new_image, **parameters):
         low_intensities__local_maxima_labels__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
     
     
-    local_maxima_mask[tuple(local_maxima_labeled_props["IntCentroidWaveletValue"].T)]
     # Take a subset of the label props and reduce the count
     local_maxima_labeled_props = local_maxima_labeled_props[ ~low_intensities__local_maxima_labels__to_remove ].copy()
     local_maxima_labeled_count["Count"] -= low_intensities__local_maxima_labels__to_remove
