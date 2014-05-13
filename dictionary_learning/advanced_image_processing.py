@@ -328,8 +328,7 @@ def wavelet_denoising(new_image, **parameters):
         # Stores the value from wavelet denoising at the centroid for easy retrieval
         local_maxima_labeled_props[i]["IntCentroidWaveletValue"] = new_wavelet_image_denoised[ local_maxima_labeled_props[i]["IntCentroidIndexArray"] ]
         
-        # Overwrite the label parameter as it holds no information as is, always 1, Now, is the label from wavelet mask label image (No longer true.)
-        ######### TODO: Revisit where this information should be stored if at all due to the fact that Label now has meaning.
+        # Overwrite the label parameter as it holds no information as is, always 1, Now, is the label from wavelet mask label image.
         local_maxima_labeled_props[i]["Label"] = new_wavelet_mask_labeled[ local_maxima_labeled_props[i]["IntCentroidIndexArray"] ]
         
         if (local_maxima_labeled_props[i]["Label"] == 0):
