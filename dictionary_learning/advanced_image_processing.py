@@ -316,7 +316,7 @@ def wavelet_denoising(new_image, **parameters):
         local_maxima_labeled_props[i]["Centroid"] = numpy.array(local_maxima_labeled_props[i]["Centroid"])
         
         # Get integers close to local max
-        local_maxima_labeled_props[i]["IntCentroid"] = local_maxima_labeled_props[i]["Centroid"].copy().round().astype(int)
+        local_maxima_labeled_props[i]["IntCentroid"] = local_maxima_labeled_props[i]["Centroid"].round().astype(int)
         
         # Store an index array for easy indexing of the point in question
         local_maxima_labeled_props[i]["IntCentroidIndexArray"] = tuple( local_maxima_labeled_props[i]["IntCentroid"].T )
