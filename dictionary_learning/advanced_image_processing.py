@@ -165,6 +165,12 @@ def region_properties(new_label_image, *args, **kwargs):
     # Replace the properties with the structured array.
     new_label_image_props = numpy.array(new_label_image_props_values, dtype = new_label_image_props_dtype.items())
     
+    # For each array-like object, we convert them to NumPy arrays to make them easier to manage.
+    make_numpy_object_array = numpy.vectorize(numpy.array, otypes = [ numpy.dtype(numpy.object) ])
+    
+    for each_key in [ "BoundingBox", "Centroid", "HuMoments", "WeightedCentroid", "WeightedHuMoments" ]:
+        if each_key in kwargs["properties"]:
+            local_maxima_labeled_props[each_key] = make_numpy_object_array(local_maxima_labeled_props[each_key])
     
     return(new_label_image_props)
 
@@ -315,9 +321,6 @@ def wavelet_denoising(new_image, **parameters):
     # Replace the old structured array with the enlarged version.
     local_maxima_labeled_props = new_local_maxima_labeled_props
     
-    # More convenient as NumPy array
-    make_numpy_object_array = np.vectorize(numpy.array, otypes=[numpy.dtype(numpy.object)])
-    local_maxima_labeled_props["Centroid"] = make_numpy_object_array(local_maxima_labeled_props["Centroid"])
     
     for i in xrange(len(local_maxima_labeled_props)):
         # Get integers close to local max
