@@ -215,7 +215,7 @@ def wavelet_denoising(new_image, **parameters):
     new_wavelet_image_denoised *= new_wavelet_image_mask
     
     # For holding the label image
-    new_wavelet_image_denoised_labeled = skimage.morphology.label(new_wavelet_image_denoised)[0]
+    new_wavelet_image_denoised_labeled = scipy.ndimage.label(new_wavelet_image_denoised)[0]
     
     # For holding the label image properties
     new_wavelet_image_denoised_labeled_props = []
@@ -275,7 +275,7 @@ def wavelet_denoising(new_image, **parameters):
         new_wavelet_image_denoised[current_label_mask] = new_wavelet_image_denoised_replacement[current_label_mask]
     
     
-    new_wavelet_mask_labeled = skimage.morphology.label(new_wavelet_image_mask)[0]
+    new_wavelet_mask_labeled = scipy.ndimage.label(new_wavelet_image_mask)[0]
     
     
     
@@ -437,14 +437,16 @@ def wavelet_denoising(new_image, **parameters):
         # Segment with watershed on minimum image
         # Use seeds from centroids of local minima
         # Also, include mask
-        new_wavelet_image_denoised_opened_segmentation = skimage.morphology.watershed(-new_wavelet_image_denoised_opened, new_wavelet_image_denoised_opened_maxima)
+        new_wavelet_image_denoised_opened_segmentation = skimage.morphology.watershed(-new_wavelet_image_denoised_opened, new_wavelet_image_denoised_opened_maxima, mask = (new_wavelet_image_denoised_opened > 0))
         
         # Get the regions created in segmentation
         new_wavelet_image_denoised_opened_segmentation_regions = numpy.unique(new_wavelet_image_denoised_opened_segmentation)
         
-        # Drop the first two as 0's are the region edges and 1's are the background.
-        new_wavelet_image_denoised_opened_segmentation[new_wavelet_image_denoised_opened_segmentation == 1] = 0
-        new_wavelet_image_denoised_opened_segmentation_regions = new_wavelet_image_denoised_opened_segmentation_regions[2:]
+        ## Drop the first two as 0's are the region edges and 1's are the background.
+        #new_wavelet_image_denoised_opened_segmentation[new_wavelet_image_denoised_opened_segmentation == 1] = 0
+        #new_wavelet_image_denoised_opened_segmentation_regions = new_wavelet_image_denoised_opened_segmentation_regions[2:]
+        
+        
         
     else:
         #################### Some other kind of segmentation??? Talked to Ferran and he said don't worry about implementing this for now. Does not seem to give noticeably better results.
