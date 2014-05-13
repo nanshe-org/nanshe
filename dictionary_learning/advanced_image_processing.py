@@ -198,6 +198,9 @@ def wavelet_denoising(new_image, **parameters):
     """
     ######## TODO: Break up into several simpler functions with unit/doctests.
     
+    neurons = None
+    new_wavelet_image_denoised_opened_segmentation = None
+    
     # Contains a bool array with significant values True and noise False.
     new_image_noise_estimate = denoising.estimate_noise(new_image, significance_threshhold = parameters["significance_threshhold"])
     
@@ -220,28 +223,22 @@ def wavelet_denoising(new_image, **parameters):
     # For holding the label image properties
     new_wavelet_image_denoised_labeled_props = []
     
-    # Get the types for the label image properties structured array
-    new_wavelet_image_denoised_labeled_props_dtypes = []
-    for each_key in parameters["regionprops"].keys():
-        each_type = numpy.dtype(parameters["regionprops"][each_key]["max"])
-        new_wavelet_image_denoised_labeled_props_dtypes.append( (each_key, each_type) )
-    
     # For holding the label image properties
-    new_wavelet_image_denoised_labeled_props = region_properties(new_wavelet_image_denoised_labeled , properties = parameters["regionprops"].keys())
+    new_wavelet_image_denoised_labeled_props = region_properties(new_wavelet_image_denoised_labeled , properties = parameters["accepted_region_shape_constraints"].keys())
     
     
     
     not_within_bound = numpy.zeros(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
     
     # Go through each property and make sure they are within the bounds
-    for each_prop in parameters["regionprops"]:
+    for each_prop in parameters["accepted_region_shape_constraints"]:
         # Get lower and upper bounds for the current property
-        lower_bound = parameters["regionprops"][each_prop]["min"]
-        upper_bound = parameters["regionprops"][each_prop]["max"]
+        lower_bound = parameters["accepted_region_shape_constraints"][each_prop]["min"]
+        upper_bound = parameters["accepted_region_shape_constraints"][each_prop]["max"]
 
         # Determine whether lower or upper bound is satisfied
-        is_lower_bounded = lower_bound < new_wavelet_image_denoised_labeled_props[each_prop]
-        is_upper_bounded = new_wavelet_image_denoised_labeled_props[each_prop] < upper_bound
+        is_lower_bounded = lower_bound <= new_wavelet_image_denoised_labeled_props[each_prop]
+        is_upper_bounded = new_wavelet_image_denoised_labeled_props[each_prop] <= upper_bound
 
         # See whether both or neither bound is satisified.
         is_within_bound = is_lower_bounded & is_upper_bounded
@@ -430,7 +427,7 @@ def wavelet_denoising(new_image, **parameters):
         #new_wavelet_image_denoised_opened_maxima = skimage.morphology.is_local_maximum(new_wavelet_image_denoised_opened, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised_opened > 0).astype(int))
         #new_wavelet_image_denoised_opened_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised_opened, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised_opened > 0).astype(int), indices = False)
         
-        # We could look for seeds using local minima. However, we already know what these should be as these are the centroids we have found.
+        # We could look for seeds using local maxima. However, we already know what these should be as these are the centroids we have found.
         new_wavelet_image_denoised_opened_maxima = numpy.zeros(new_wavelet_image_denoised.shape, dtype = bool)
         new_wavelet_image_denoised_opened_maxima[ tuple(local_maxima_labeled_props["IntCentroid"].T) ] = True
         
@@ -439,17 +436,130 @@ def wavelet_denoising(new_image, **parameters):
         # Also, include mask
         new_wavelet_image_denoised_opened_segmentation = skimage.morphology.watershed(-new_wavelet_image_denoised_opened, new_wavelet_image_denoised_opened_maxima, mask = (new_wavelet_image_denoised_opened > 0))
         
-        # Get the regions created in segmentation
-        new_wavelet_image_denoised_opened_segmentation_regions = numpy.unique(new_wavelet_image_denoised_opened_segmentation)
+        # Get the regions created in segmentation (drop zero as it is the background)
+        new_wavelet_image_denoised_opened_segmentation_regions = numpy.unique(new_wavelet_image_denoised_opened_segmentation)[1:]
         
         ## Drop the first two as 0's are the region edges and 1's are the background.
         #new_wavelet_image_denoised_opened_segmentation[new_wavelet_image_denoised_opened_segmentation == 1] = 0
         #new_wavelet_image_denoised_opened_segmentation_regions = new_wavelet_image_denoised_opened_segmentation_regions[2:]
         
+        # Find properties of all regions (except the background)
+        new_wavelet_image_denoised_opened_segmentation_regions_props = region_properties(new_wavelet_image_denoised_opened_segmentation_regions, properties = ["Centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
         
+        # Check to see if there are any doubled labels
+        new_wavelet_image_denoised_opened_segmentation_regions_props_labels_broadcast = new_wavelet_image_denoised_opened_segmentation_regions_props["Label"]
+        new_wavelet_image_denoised_opened_segmentation_regions_props_labels_broadcast = new_wavelet_image_denoised_opened_segmentation_regions_props_labels_broadcast.reshape( new_wavelet_image_denoised_opened_segmentation_regions_props_labels_broadcast.shape + (1,) )
+        new_wavelet_image_denoised_opened_segmentation_regions_broadcast = new_wavelet_image_denoised_opened_segmentation_regions
+        new_wavelet_image_denoised_opened_segmentation_regions_broadcast = new_wavelet_image_denoised_opened_segmentation_regions_broadcast.reshape( (1,) + new_wavelet_image_denoised_opened_segmentation_regions_broadcast.shape )
         
+        new_wavelet_image_denoised_opened_segmentation_regions_props_labels_match = (new_wavelet_image_denoised_opened_segmentation_regions_props_labels_broadcast == new_wavelet_image_denoised_opened_segmentation_regions_broadcast)
+        
+        if (new_wavelet_image_denoised_opened_segmentation_regions_props_labels_match.ndim != 2):
+            raise Error("There is no reason this should happen. Someone changed something they shouldn't have. The dimensions of this match should be 2 exactly.")
+        
+        if (new_wavelet_image_denoised_opened_segmentation_regions_props_labels_match.shape[0] < new_wavelet_image_denoised_opened_segmentation_regions_props_labels_match.shape[1]):
+            raise Error("There is no reason this should happen. There are less labeled regions then there are unique labels.")
+        elif (new_wavelet_image_denoised_opened_segmentation_regions_props_labels_match.shape[0] > new_wavelet_image_denoised_opened_segmentation_regions_props_labels_match.shape[1]):
+            # So, we have some labels represented more than once. We will simply eliminate these.
+            # Find all labels that repeat
+            new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates_mask = (new_wavelet_image_denoised_opened_segmentation_regions_props_labels_match.sum(axis = 0) > 1)
+            new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates = numpy.unique(new_wavelet_image_denoised_opened_segmentation_regions_props["Label"][new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates_mask])
+
+            # Determine a mask that represents all labels to be set to zero in the watershed (new_wavelet_image_denoised_opened_segmentation_regions_props_labels_non_duplicates_watershed_mask)
+            new_wavelet_image_denoised_opened_segmentation_broadcast = new_wavelet_image_denoised_opened_segmentation_broadcast.reshape( (1,)*new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates.ndim + new_wavelet_image_denoised_opened_segmentation.shape )
+
+            new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates_broadcast = new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates_broadcast.reshape( new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates_broadcast.shape + (1,)*new_wavelet_image_denoised_opened_segmentation.ndim  )
+
+            # The first index now corresponds to the same index used to denote each duplicate. The rest for the image.
+            new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_all_masks = (new_wavelet_image_denoised_opened_segmentation_broadcast == new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates_broadcast)
+
+            # If any of the masks contain a point to remove then it should be included for removal. Only points in none of the stacks should not.
+            new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_mask = np.any(new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_all_masks, axis = 0)
+
+            # Zero the labels that need to be removed.
+            new_wavelet_image_denoised_opened_segmentation[new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_mask] = 0
+
+            # Toss the region props that we don't want.
+            new_wavelet_image_denoised_opened_segmentation_regions_props = new_wavelet_image_denoised_opened_segmentation_regions_props[~new_wavelet_image_denoised_opened_segmentation_regions_props_labels_duplicates_mask]
+
+            # As we have removed all repeat labels. We can simply use them for our regions. (However, this parameter is not used any more. So, we may toss this.
+            #new_wavelet_image_denoised_opened_segmentation_regions = new_wavelet_image_denoised_opened_segmentation_regions_props["Label"].copy()
+
+        # Just go ahead and toss the regions. The same information already exists through new_wavelet_image_denoised_opened_segmentation_regions_props["Label"].
+        del new_wavelet_image_denoised_opened_segmentation_regions
+
+
+        not_within_bound = numpy.zeros(new_wavelet_image_denoised_opened_segmentation_regions_props.shape, dtype = bool)
+
+        # Go through each property and make sure they are within the bounds
+        for each_prop in parameters["accepted_neuron_shape_constraints"]:
+            # Get lower and upper bounds for the current property
+            lower_bound = parameters["accepted_neuron_shape_constraints"][each_prop]["min"]
+            upper_bound = parameters["accepted_neuron_shape_constraints"][each_prop]["max"]
+
+            # Determine whether lower or upper bound is satisfied
+            is_lower_bounded = lower_bound <= new_wavelet_image_denoised_opened_segmentation_regions_props[each_prop]
+            is_upper_bounded = new_wavelet_image_denoised_opened_segmentation_regions_props[each_prop] <= upper_bound
+
+            # See whether both or neither bound is satisified.
+            is_within_bound = is_lower_bounded & is_upper_bounded
+            is_not_within_bound = ~is_within_bound
+
+            # Collect the unbounded ones
+            not_within_bound |= is_not_within_bound
+
+        # Get labels outside of bounds
+        new_wavelet_image_denoised_opened_segmentation_regions_props_unbounded_labels = new_wavelet_image_denoised_opened_segmentation_regions_props["Label"][not_within_bound]
+
+        # Get a mask of the locations in the watershed where these must be zeroed
+        new_wavelet_image_denoised_opened_segmentation_broadcast = new_wavelet_image_denoised_opened_segmentation.reshape((1,)*new_wavelet_image_denoised_opened_segmentation_regions_props_unbounded_labels.ndim + new_wavelet_image_denoised_opened_segmentation.shape)
+        new_wavelet_image_denoised_opened_segmentation_regions_props_unbounded_labels_broadcast = new_wavelet_image_denoised_opened_segmentation_regions_props_unbounded_labels.reshape(new_wavelet_image_denoised_opened_segmentation_regions_props_unbounded_labels.shape + (1,)*new_wavelet_image_denoised_opened_segmentation.ndim)
+
+        new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_all_masks = (new_wavelet_image_denoised_opened_segmentation_broadcast == new_wavelet_image_denoised_opened_segmentation_regions_props_unbounded_labels_broadcast)
+
+        new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_mask = np.any(new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_all_masks, axis = 0)
+
+        # Zero them
+        new_wavelet_image_denoised_opened_segmentation[new_wavelet_image_denoised_opened_segmentation_regions_labels_duplicates_watershed_mask] = 0
+
+        # Remove the corresponding properties.
+        new_wavelet_image_denoised_opened_segmentation_regions_props = new_wavelet_image_denoised_opened_segmentation_regions_props[~not_within_bound]
+
+        # Creates a NumPy structure array to store 
+        neurons = numpy.array(new_wavelet_image_denoised_opened_segmentation.shape, dtype = [("mask", bool, new_wavelet_image_denoised_opened_segmentation.shape),
+                                                                                             ("image", new_wavelet_image_denoised_opened_segmentation.dtype, new_wavelet_image_denoised_opened_segmentation.shape),
+                                                                                             ("image_original", new_wavelet_image_denoised_opened_segmentation.dtype, new_wavelet_image_denoised_opened_segmentation.shape),
+                                                                                             ("area", float),
+                                                                                             ("max_F", float),
+                                                                                             ("gaussian_mean", float),
+                                                                                             ("gaussian_var", float),
+                                                                                             ("centroid", new_wavelet_image_denoised_opened_segmentation_regions_props["Centroid"][0].dtype, new_wavelet_image_denoised_opened_segmentation_regions_props["Centroid"][0].shape),])
+
+        # Get masks for all cells
+        new_wavelet_image_denoised_opened_segmentation_broadcast = new_wavelet_image_denoised_opened_segmentation.reshape((1,)*new_wavelet_image_denoised_opened_segmentation_regions_props["Label"].ndim + new_wavelet_image_denoised_opened_segmentation.shape)
+        new_wavelet_image_denoised_opened_segmentation_regions_props_labels_broadcast = new_wavelet_image_denoised_opened_segmentation_regions_props["Label"].reshape(new_wavelet_image_denoised_opened_segmentation_regions_props["Label"].shape + (1,)*new_wavelet_image_denoised_opened_segmentation.ndim)
+
+        new_wavelet_image_denoised_opened_segmentation_regions_props_labels_all_masks = (new_wavelet_image_denoised_opened_segmentation_broadcast == new_wavelet_image_denoised_opened_segmentation_regions_props_labels_broadcast)
+
+        neurons["mask"] = new_wavelet_image_denoised_opened_segmentation_regions_props_labels_all_masks
+
+        # TODO: Is this what Ferran wants?????
+        neurons["image"] = new_wavelet_image_denoised * neurons["mask"]
+
+        neurons["image_original"] = new_label_image * neurons["mask"]
+
+        neurons["area"] = new_wavelet_image_denoised_opened_segmentation_regions_props["Area"]
+
+        neurons["max_F"] = (neurons["image_original"] * neurons["mask"]).max()
+
+        neurons["gaussian_mean"] = numpy.array(neurons["mask"].nonzero()).mean(axis = 1)
+
+        neurons["gaussian_var"] = numpy.array(neurons["mask"].nonzero()).var(axis = 1)
+
+        neurons["centroid"] = new_wavelet_image_denoised_opened_segmentation_regions_props["Centroid"]
     else:
         #################### Some other kind of segmentation??? Talked to Ferran and he said don't worry about implementing this for now. Does not seem to give noticeably better results.
         raise Exception("No other form of segmentation is implemented.")
     
-    return()
+    
+    return((neurons, new_wavelet_image_denoised_opened_segmentation))
