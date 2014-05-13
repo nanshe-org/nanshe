@@ -274,8 +274,9 @@ def wavelet_denoising(new_image, **parameters):
     local_maxima_mask = skimage.morphology.is_local_maximum(new_wavelet_image_denoised, footprint = numpy.ones((3,) * new_wavelet_image_denoised.ndim), labels = (new_wavelet_image_denoised > 0).astype(int))
     #local_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = numpy.ones((3,) * new_wavelet_image_denoised.ndim), labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
 
-    # Group local maxima. Also, we don't care about differentiating them. If they are part of one
-    local_maxima_labeled = label(local_maxima_mask)[0]
+    # Group local maxima. Also, we don't care about differentiating them. If there are several local maxima touching, we only want one.
+    # Note, if they are touching, they must be on a plateau (i.e. all have the same value).
+    local_maxima_labeled = label(local_maxima_mask.astype(int))[0]
     local_maxima_labeled_binary = (local_maxima_labeled > 0).astype(int)
 
     # Extract the centroids.
