@@ -183,7 +183,7 @@ def region_properties(new_label_image, *args, **kwargs):
 @advanced_debugging.log_call(logger, print_args = True)
 def wavelet_denoising(new_image, **parameters):
     """
-        Preforms wavelet denoising on the given dictionary.
+        Performs wavelet denoising on the given dictionary.
         
         Args:
             new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
@@ -417,9 +417,9 @@ def wavelet_denoising(new_image, **parameters):
     if parameters["use_watershed"]:
         ################ TODO: Revisit to make sure all of Ferran's algorithm is implemented and this is working properly.
         
-        # Preform the watershed segmentation.
+        # Perform the watershed segmentation.
         
-        # First preform disc opening on the image.
+        # First perform disc opening on the image.
         new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised, radius = 1)
         
         # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
@@ -563,3 +563,42 @@ def wavelet_denoising(new_image, **parameters):
     
     
     return((neurons, new_wavelet_image_denoised_opened_segmentation))
+
+
+@advanced_debugging.log_call(logger, print_args = True)
+def generate_neurons(new_data, **parameters):
+    """
+        Generates the neuron representations for the given data set.
+        
+        Args:
+            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
+            parameters(dict):             passed directly to spams.trainDL.
+        
+        Note:
+            Todo
+            Look into move data normalization into separate method (have method chosen by config file).
+        
+        Returns:
+            dict: the dictionary found.
+    """
+    
+    # Creates the dictionary
+    new_dictionary = generate_dictionary(new_data, parameters["generate_dictionary"])
+    
+    
+    new_neurons = []
+    new_segmentations = []
+    for each_new_dictionary_image in new_dictionary:
+        each_new_neuron, each_new_segmentation = wavelet_denoising(each_new_dictionary_image)
+        
+        new_neurons.append(each_new_neuron)
+        new_segmentations.append(each_new_segmentation)
+    
+    
+    new_neurons_shape = []
+    new_neurons_dtype = []
+    for each_name in new_neurons[0].dtype.names:
+        
+        new_neurons_dtype.append( (each_name, new_neurons[0][each_name][0].dtype, new_neurons[0][each_name][0].shape) )
+    
+    return()
