@@ -126,13 +126,13 @@ def xrange_with_skip(start, stop = None, step = None, to_skip = None):
         These values to be skipped should be specified using some iterable.
         
         Args:
-            start(int):         start for xrange or if stop is not specified this will be stop.
-            stop(int):          stop for xrange.
-            stop(int):          step for xrange.
-            to_skip(iter):      some form of iterable or list of elements to skip (can be a single value as well).
+            start(int):            start for xrange or if stop is not specified this will be stop.
+            stop(int):             stop for xrange.
+            stop(int):             step for xrange.
+            to_skip(iter):         some form of iterable or list of elements to skip (can be a single value as well).
         
         Returns:
-            result(generator):  an xrange-like generator that skips some values.
+            (generator object):    an xrange-like generator that skips some values.
         
         Examples:
             >>> xrange_with_skip(10) #doctest: +ELLIPSIS
