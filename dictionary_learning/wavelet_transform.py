@@ -13,7 +13,7 @@ import scipy.misc
 import vigra
 
 
-def bin_coeffs(n):
+def binomial_coefficients(n):
     """
         Generates a row in Pascal's triangle (binomial coefficients).
         
@@ -25,21 +25,24 @@ def bin_coeffs(n):
         
         
         Examples:
-            >>> bin_coeffs(0)
+            >>> binomial_coefficients(0)
             array([1])
                    
-            >>> bin_coeffs(1)
+            >>> binomial_coefficients(1)
             array([1, 1])
                    
-            >>> bin_coeffs(2)
+            >>> binomial_coefficients(2)
             array([1, 2, 1])
                    
-            >>> bin_coeffs(4)
+            >>> binomial_coefficients(4)
             array([1, 4, 6, 4, 1])
                    
-            >>> bin_coeffs(4.0)
+            >>> binomial_coefficients(4.0)
             array([1, 4, 6, 4, 1])
     """
+    
+    # Must be integer
+    n = int(n)
     
     # Below 0 is irrelevant. 
     if n < 0:
@@ -58,7 +61,7 @@ def bin_coeffs(n):
     return(cs)
 
 
-def h(i, n = 4):
+def binomial_1D_array_kernel(i, n = 4):
     """
         Generates a 1D numpy array used to make the kernel for the wavelet transform.
         
@@ -71,32 +74,32 @@ def h(i, n = 4):
         
         
         Examples:
-            >>> h(0)
+            >>> binomial_1D_array_kernel(0)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
             
-            >>> h(0, 4)
+            >>> binomial_1D_array_kernel(0, 4)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
             
-            >>> h(1, 4)
+            >>> binomial_1D_array_kernel(1, 4)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
             
-            >>> h(2, 4)
+            >>> binomial_1D_array_kernel(2, 4)
             array([ 0.0625,  0.    ,  0.25  ,  0.    ,  0.375 ,  0.    ,  0.25  ,
                     0.    ,  0.0625])
             
-            >>> h(3, 4)
+            >>> binomial_1D_array_kernel(3, 4)
             array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,
                     0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,
                     0.    ,  0.    ,  0.0625])
             
-            >>> h(4, 4)
+            >>> binomial_1D_array_kernel(4, 4)
             array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.    ,  0.    ,  0.0625])
             
-            >>> h(2, 1)
+            >>> binomial_1D_array_kernel(2, 1)
             array([ 0.5,  0. ,  0.5])
     """
     
@@ -109,7 +112,7 @@ def h(i, n = 4):
         n = 0
     
     # Get the binomial coefficients.
-    cs = list(bin_coeffs(n))
+    cs = list(binomial_coefficients(n))
     
     # Get the right number of zeros to fill in
     zs = list(numpy.zeros(2**(i-1) - 1).astype(int))
@@ -134,9 +137,9 @@ def h(i, n = 4):
     return(r)
 
 
-def vigra_kernel_h(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
+def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
     """
-        Generates a vigra.filters.Kernel1D using h(i).
+        Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).
         
         Args:
             i(int):                                                 which scaling to use.
@@ -148,12 +151,12 @@ def vigra_kernel_h(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMod
         
         
         Examples:
-            >>> vigra_kernel_h(1) # doctest: +ELLIPSIS
+            >>> binomial_1D_vigra_kernel(1) # doctest: +ELLIPSIS
             <vigra.filters.Kernel1D object at 0x...>
     """
     
     # Generate the vector for the kernel
-    h_kern = h(i, n)
+    h_kern = binomial_1D_array_kernel(i, n)
     
     # Determine the kernel center
     h_kern_half_width = (h_kern.size - 1) / 2
@@ -216,7 +219,7 @@ def wavelet_transform(im0, scale = 5):
     imCur = im0.copy()
     for i in xrange(1, scale.max() + 1): # Ferran does not do the 5th yet, but we will
         
-        h_ker = vigra_kernel_h(i)
+        h_ker = binomial_1D_vigra_kernel(i)
         
         for d in xrange(len(scale)):
             if i <= scale[d]:
