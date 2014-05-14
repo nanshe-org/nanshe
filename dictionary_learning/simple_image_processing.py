@@ -19,7 +19,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 @advanced_debugging.log_call(logger)
-def renormalized_images(input_array, ord = 2, output_array = None):
+def zeroed_mean_images(input_array, ord = 2, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
         
@@ -56,15 +56,16 @@ def renormalized_images(input_array, ord = 2, output_array = None):
             array([[-0.5,  0.5],
                    [-0.5,  0.5]])
                    
-            >>> a = numpy.array([[1.,2.],[3.,4.]]); a != zeroed_mean_images(a)
+            >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a != zeroed_mean_images(a))
             True
                    
-            >>> a = numpy.array([[1.,2.],[3.,4.]]); a == zeroed_mean_images(a, output_array = a)
+            >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == zeroed_mean_images(a, output_array = a))
             True
     """
     
     if output_array is None:
-        output_array = input_array.copy()
+        output_array = numpy.zeros(input_array.shape, dtype=float)
+        
     
     # start with means having the same contents as the given images
     means = input_array
@@ -74,11 +75,11 @@ def renormalized_images(input_array, ord = 2, output_array = None):
         means = means.mean(axis = 1)
     
     # reshape means until it has the right number of dimensions to broadcast.
-    while means.ndim < new_numpy_array.ndim:
+    while means.ndim < input_array.ndim:
         means = means.reshape(means.shape + (1,))
     
     # broadcast and subtract the means so that the mean of all values in result[i] is zero
-    output_array = input_array - means
+    output_array[:] = input_array - means
     
     return(output_array)
 
@@ -98,8 +99,8 @@ def renormalized_images(input_array, ord = 2, output_array = None):
         
         Examples:
             >>> renormalized_images(numpy.array([[0,1],[1,0]]))
-            array([[0, 1],
-                   [1, 0]])
+            array([[ 0.,  1.],
+                   [ 1.,  0.]])
                    
             >>> renormalized_images(numpy.array([[0.,2.],[1.,0.]]))
             array([[ 0.,  1.],
@@ -125,7 +126,7 @@ def renormalized_images(input_array, ord = 2, output_array = None):
     """
     
     if output_array is None:
-        output_array = input_array.copy()
+        output_array = input_array.copy().astype(float)
     
     # take each image at each time turn the image into a vector and find the norm.
     # divide each image by this norm. (required for spams.trainDL)
