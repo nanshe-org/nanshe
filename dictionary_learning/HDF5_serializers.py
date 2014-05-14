@@ -7,6 +7,7 @@ __date__ ="$May 14, 2014 10:19:59 PM$"
 
 
 import numpy
+import h5py
 
 
 def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = False):
