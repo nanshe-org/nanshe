@@ -118,3 +118,81 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
         result[index_array] = True
     
     return(result)
+
+
+def xrange_with_skip(start, stop = None, step = None, to_skip = None):
+    """
+        Behaves as xrange does except allows for skipping arbitrary values as well.
+        These values to be skipped should be specified using some iterable.
+        
+        Args:
+            start(int):         start for xrange or if stop is not specified this will be stop.
+            stop(int):          stop for xrange.
+            stop(int):          step for xrange.
+            to_skip(iter):      some form of iterable or list of elements to skip (can be a single value as well).
+        
+        Returns:
+            result(generator):  an xrange-like generator that skips some values.
+        
+        Examples:
+            >>> xrange_with_skip(10) #doctest: +ELLIPSIS
+            <generator object xrange_with_skip at 0x...>
+            
+            >>> list(xrange_with_skip(10))
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            
+            >>> list(xrange_with_skip(0, 10))
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            
+            >>> list(xrange_with_skip(1, 10))
+            [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            
+            >>> list(xrange_with_skip(0, 10, 2))
+            [0, 2, 4, 6, 8]
+            
+            >>> list(xrange_with_skip(1, 10, 2))
+            [1, 3, 5, 7, 9]
+            
+            >>> list(xrange_with_skip(10, to_skip = 2))
+            [0, 1, 3, 4, 5, 6, 7, 8, 9]
+            
+            >>> list(xrange_with_skip(10, to_skip = [2, 7]))
+            [0, 1, 3, 4, 5, 6, 8, 9]
+            
+            >>> list(xrange_with_skip(10, to_skip = [0]))
+            [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            
+            >>> list(xrange_with_skip(1, 10, to_skip = [0]))
+            [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            
+            >>> list(xrange_with_skip(10, to_skip = [9]))
+            [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            
+    """
+    
+    
+    full = None
+    
+    if (stop is None):
+        full = iter(xrange(start))
+    elif (step is None):
+        full = iter(xrange(start, stop))
+    else:
+        full = iter(xrange(start, stop, step))
+    
+    if to_skip is None:
+        to_skip = iter([])
+    else:
+        try:
+            to_skip = iter(sorted(set(to_skip)))
+        except TypeError:
+            to_skip = iter([to_skip])
+    
+    
+    next_to_skip = next(to_skip, None)
+    
+    for each in full:
+        if each != next_to_skip:
+            yield(each)
+        else:
+            next_to_skip = next(to_skip, None)
