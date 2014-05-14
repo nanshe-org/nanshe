@@ -8,6 +8,8 @@ __date__ ="$May 1, 2014 2:24:55 PM$"
 
 
 import numpy
+import scipy
+import scipy.misc
 import vigra
 
 
@@ -23,19 +25,19 @@ def bin_coeffs(n):
         
         
         Examples:
-            >>> import numpy; bin_coeffs(0)
+            >>> bin_coeffs(0)
             array([1])
                    
-            >>> import numpy; bin_coeffs(1)
+            >>> bin_coeffs(1)
             array([1, 1])
                    
-            >>> import numpy; bin_coeffs(2)
+            >>> bin_coeffs(2)
             array([1, 2, 1])
                    
-            >>> import numpy; bin_coeffs(4)
+            >>> bin_coeffs(4)
             array([1, 4, 6, 4, 1])
                    
-            >>> import numpy; bin_coeffs(4.0)
+            >>> bin_coeffs(4.0)
             array([1, 4, 6, 4, 1])
     """
     
@@ -49,7 +51,7 @@ def bin_coeffs(n):
     ks = numpy.arange(n + 1).astype(int)
     
     # Get all the coefficents in order
-    cs = sp.misc.comb(ns, ks)
+    cs = scipy.misc.comb(ns, ks)
     cs = numpy.around(cs)
     cs = cs.astype(int)
     
@@ -69,33 +71,32 @@ def h(i, n = 4):
         
         
         Examples:
-            >>> import numpy; h(0)
+            >>> h(0)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
             
-            >>> import numpy; h(0, 4)
+            >>> h(0, 4)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
             
-            >>> import numpy; h(1, 4)
+            >>> h(1, 4)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
             
-            >>> import numpy; h(2, 4)
+            >>> h(2, 4)
             array([ 0.0625,  0.    ,  0.25  ,  0.    ,  0.375 ,  0.    ,  0.25  ,
                     0.    ,  0.0625])
             
-            >>> import numpy; h(3, 4)
+            >>> h(3, 4)
             array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,
                     0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,
                     0.    ,  0.    ,  0.0625])
-                    0.    ,  0.0625])
             
-            >>> import numpy; h(4, 4)
+            >>> h(4, 4)
             array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.    ,  0.    ,  0.0625])
             
-            >>> import numpy; h(2, 1)
+            >>> h(2, 1)
             array([ 0.5,  0. ,  0.5])
     """
     
@@ -147,8 +148,8 @@ def vigra_kernel_h(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMod
         
         
         Examples:
-            >>> import numpy; import vigra; vigra_kernel_h(1) #doctest: +ELLIPSIS
-            <vigra.filters.Kernel1D at 0x...>
+            >>> vigra_kernel_h(1) # doctest: +ELLIPSIS
+            <vigra.filters.Kernel1D object at 0x...>
     """
     
     # Generate the vector for the kernel
@@ -169,7 +170,7 @@ def vigra_kernel_h(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMod
 
 def wavelet_transform(im0, scale = 5):
     """
-        Preforms integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
+        performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
         
         Args:
             i(int):                                                 which scaling to use.
@@ -181,14 +182,13 @@ def wavelet_transform(im0, scale = 5):
         
         
         Examples:
-            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32), 1)
+            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32), 1) # doctest: +NORMALIZE_WHITESPACE
             (array([[[ 0.59375, -0.375  , -0.34375],
-                    [-0.375  ,  0.625  , -0.375  ],
-                    [-0.34375, -0.375  ,  0.59375]]]),
-             array([[[ 1.     ,  0.     ,  0.     ],
+                     [-0.375  ,  0.625  , -0.375  ],
+                     [-0.34375, -0.375  ,  0.59375]]]),
+             array([[[ 1.    ,  0.     ,  0.     ],
                     [ 0.     ,  1.     ,  0.     ],
                     [ 0.     ,  0.     ,  1.     ]],
-
                    [[ 0.40625,  0.375  ,  0.34375],
                     [ 0.375  ,  0.375  ,  0.375  ],
                     [ 0.34375,  0.375  ,  0.40625]]]))
