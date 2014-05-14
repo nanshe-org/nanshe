@@ -100,7 +100,7 @@ def generate_save_dictionary(new_filename, **parameters):
         new_file[output_directory]["original_data"] = new_file[new_filename_details.internalPath]
         
         # Copy out images for manipulation in memory
-        new_data = new_file[output_directory]["original_data"][:]
+        new_data = new_file[output_directory]["original_data"].copy()
         
         # generates dictionary and stores results
         new_file[output_directory]["dictionary"] = advanced_image_processing.generate_dictionary(new_data, **parameters)
