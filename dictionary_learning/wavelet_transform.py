@@ -197,6 +197,8 @@ def wavelet_transform(im0, scale = 5):
                     [ 0.34375,  0.375  ,  0.40625]]]))
     """
     
+    im0 = im0.astype(numpy.float32)
+    
     # Make sure that we have scale as a list.
     # If it is not a list, then make a singleton list.
     try:
