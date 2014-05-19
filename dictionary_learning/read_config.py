@@ -33,6 +33,10 @@ def read_parameters(config_filename):
     
     # only relevant if reading parameter file.
     import json
+    
+    def ascii_encode_dict(data):
+        ascii_encode = lambda x: x.encode('ascii')
+        return dict((ascii_encode(key), value) for key, value in data.items())
 
     # gets parameters out of the file and dumps them in the dictionary. just that simple.
     parameters = {}
@@ -40,7 +44,7 @@ def read_parameters(config_filename):
         logger.debug("Opened configure file named \"" + config_filename + "\".")
         
         # will just give a dictionary. just that simple
-        parameters = json.load(fp)
+        parameters = json.load(fp, object_hook = ascii_encode_dict)
         
         logger.debug("Loaded parameters from file, which are \"" + str(parameters) + "\".")
 
