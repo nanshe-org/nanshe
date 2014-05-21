@@ -424,7 +424,7 @@ def wavelet_denoising(new_image, **parameters):
         # Extract the centroids.
         local_maxima_labeled_props = region_properties(local_maxima_labeled, properties = ["Centroid"])
         
-        # TODO: This cannot be right. Talk to Ferran about > 0 at line 41 in wavelet_denoising.
+        # TODO: This cannot be right. Talk to Ferran about > 0 at line 41 in wavelet_denoising. Checked with Ferran and he said that it should use separate labels.
         #local_maxima_labeled_binary = (local_maxima_labeled > 0).astype(int)
         #local_maxima_labeled_props = region_properties(local_maxima_labeled_binary, properties = ["Centroid"])
         
@@ -601,6 +601,9 @@ def wavelet_denoising(new_image, **parameters):
             ## Drop the first two as 0's are the region edges and 1's are the background.
             #new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation == 1] = 0
             #new_wavelet_image_denoised_segmentation_regions = new_wavelet_image_denoised_segmentation_regions[2:]
+
+            
+            print(len(new_wavelet_image_denoised_segmentation_regions))
 
             # Find properties of all regions (except the background)
             #print(repr(new_wavelet_image_denoised_segmentation_regions))
@@ -819,7 +822,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
             dict: the dictionary found.
     """
     
-    # TODO: CHeck to make sure both aren't 
+    # TODO: Check to make sure both aren't 
     if not new_neuron_set_1:
         new_neuron_set = new_neuron_set_2.copy()
     elif not new_neuron_set_2:
