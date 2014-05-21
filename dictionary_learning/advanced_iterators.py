@@ -1,6 +1,8 @@
 import itertools
 import numpy
 
+
+
 def index_generator(*sizes):
     """
         Takes an argument list of sizes and iterates through them from 0 up to (but including) each size.
@@ -196,3 +198,47 @@ def xrange_with_skip(start, stop = None, step = None, to_skip = None):
             yield(each)
         else:
             next_to_skip = next(to_skip, None)
+
+
+def cumulative_generator(new_op, new_iter):
+    """
+        Takes each value from new_iter and applies new_op to it with the result
+        of previous values.
+        
+        For instance cumulative_generator(op.mul, xrange(1,5)) will return all
+        factorials up to and including the factorial of 4 (24).
+        
+        Args:
+            new_op(callabel):      something that can be called on two values and return a result with a type that is a permissible argument.
+            new_iter(iter):        an iterator or something that can be turned into an iterator.
+        
+        Returns:
+            (generator object):    an iterator over the intermediate results.
+        
+        Examples:
+            >>> cumulative_generator(op.add, 10) #doctest: +ELLIPSIS
+            <generator object cumulative_generator at 0x...>
+            
+            >>> list(cumulative_generator(op.add, xrange(1,5)))
+            [1, 3, 6, 10]
+
+            >>> list(cumulative_generator(op.add, xrange(5)))
+            [0, 1, 3, 6, 10]
+
+            >>> list(cumulative_generator(op.mul, xrange(5)))
+            [0, 0, 0, 0, 0]
+
+            >>> list(cumulative_generator(op.mul, xrange(1,5)))
+            [1, 2, 6, 24]
+        
+    """
+    
+    new_iter = iter(new_iter)
+    
+    cur = next(new_iter)
+    yield(cur)
+    
+    for each in new_iter:
+        cur = new_op(cur, each)
+        yield(cur)
+        
