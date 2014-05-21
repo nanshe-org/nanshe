@@ -205,10 +205,10 @@ def wavelet_transform(im0, scale = 5):
         scale = numpy.array(list(scale))
         
         if scale.ndim > 1:
-            raise Error("Scale should only have 1 dimension. Instead, got scale.ndim = \"" + str(scale.ndim) + "\".")
+            raise Exception("Scale should only have 1 dimension. Instead, got scale.ndim = \"" + str(scale.ndim) + "\".")
         
         if scale.shape[0] != im0.ndim:
-            raise Error("Scale should have a value of each dimension of im0. Instead, got scale.shape[0] = \"" + str(scale.shape[0]) + "\" and im0.ndim = \"" + str(im0.ndim) + "\".")
+            raise Exception("Scale should have a value of each dimension of im0. Instead, got scale.shape[0] = \"" + str(scale.shape[0]) + "\" and im0.ndim = \"" + str(im0.ndim) + "\".")
     
     except TypeError:
         scale = numpy.repeat([scale], im0.ndim)
