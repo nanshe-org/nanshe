@@ -2,5 +2,5 @@
 *.pyc
 .DS_Store
 docs/_build
-nbproject/private
 nbproject/
+nbproject/private
