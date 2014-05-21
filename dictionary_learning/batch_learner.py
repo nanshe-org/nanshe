@@ -16,6 +16,8 @@ import advanced_image_processing
 # For IO. Right now, just includes read_parameters for reading a config.json file.
 import read_config
 
+import HDF5_serializers
+
 
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
@@ -92,22 +94,18 @@ def generate_save_dictionary(new_filename, **parameters):
         if "original_data" in new_file[output_directory]:
             del new_file[output_directory]["original_data"]
         
-        # Remove a the old dictionary data if it already exists
-        if "dictionary" in new_file[output_directory]:
-            del new_file[output_directory]["dictionary"]
-        
         # Create a hardlink (does not copy) the original data
         new_file[output_directory]["original_data"] = new_file[new_filename_details.internalPath]
         
         # Copy out images for manipulation in memory
-        new_data = new_file[output_directory]["original_data"].copy()
+        new_data = new_file[output_directory]["original_data"][:]
         
         # generates dictionary and stores results
-        new_file[output_directory]["dictionary"] = advanced_image_processing.generate_dictionary(new_data, **parameters)
-
+        HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", advanced_image_processing.generate_neurons(new_data, **parameters), True)
+        
         # stores all parameters used to generate the dictionary in results
         for parameter_key, parameter_value in parameters.items():
-            new_file[output_directory]["dictionary"].attrs[parameter_key] = parameter_value
+            new_file[output_directory]["neurons"].attrs[parameter_key] = parameter_value
 
 
 @advanced_debugging.log_call(logger, print_args = True)
