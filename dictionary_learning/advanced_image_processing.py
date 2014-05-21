@@ -424,10 +424,6 @@ def wavelet_denoising(new_image, **parameters):
         # Extract the centroids.
         local_maxima_labeled_props = region_properties(local_maxima_labeled, properties = ["Centroid"])
         
-        # TODO: This cannot be right. Talk to Ferran about > 0 at line 41 in wavelet_denoising. Checked with Ferran and he said that it should use separate labels.
-        #local_maxima_labeled_binary = (local_maxima_labeled > 0).astype(int)
-        #local_maxima_labeled_props = region_properties(local_maxima_labeled_binary, properties = ["Centroid"])
-        
         logger.debug("Extracted properties from the local maxima.")
         
         # This should not be used again so we drop it.
