@@ -300,7 +300,7 @@ def wavelet_denoising(new_image, **parameters):
                                          ("area", float),
                                          ("max_F", float),
                                          ("gaussian_mean", float),
-                                         ("gaussian_var", float),
+                                         ("gaussian_cov", float),
                                          ("centroid", new_image.dtype, new_image.ndim)])
     
     new_wavelet_image_denoised_segmentation = None
@@ -726,8 +726,8 @@ def wavelet_denoising(new_image, **parameters):
                                                                                                    #("segmentation", new_wavelet_image_denoised_segmentation.dtype, new_wavelet_image_denoised_segmentation.shape),
                                                                                                    ("area", float),
                                                                                                    ("max_F", float),
-                                                                                                   ("gaussian_mean", float),
-                                                                                                   ("gaussian_var", float),
+                                                                                                   ("gaussian_mean", float, (new_wavelet_image_denoised_segmentation.ndim,)),
+                                                                                                   ("gaussian_cov", float, (new_wavelet_image_denoised_segmentation.ndim, new_wavelet_image_denoised_segmentation.ndim,)),
                                                                                                    ("centroid", new_wavelet_image_denoised_segmentation_props["Centroid"][0].dtype, new_wavelet_image_denoised_segmentation_props["Centroid"][0].shape),])
                 
                 print("neurons = ")
@@ -745,16 +745,17 @@ def wavelet_denoising(new_image, **parameters):
 
                 neurons["image"] = new_wavelet_image_denoised * neurons["mask"]
 
-                neurons["image_original"] = new_label_image * neurons["mask"]
+                neurons["image_original"] = new_image * neurons["mask"]
 
                 neurons["area"] = new_wavelet_image_denoised_segmentation_props["Area"]
 
                 neurons["max_F"] = (neurons["image_original"] * neurons["mask"]).max()
-
-                neurons["gaussian_mean"] = numpy.array(neurons["mask"].nonzero()).mean(axis = 1)
-
-                # TODO: Covariance matrix
-                neurons["gaussian_var"] = numpy.array(neurons["mask"].nonzero()).var(axis = 1)
+                
+                for i in xrange(len(neurons)):
+                    neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
+                    
+                    neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
+                    neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
                 neurons["centroid"] = new_wavelet_image_denoised_segmentation_props["Centroid"]
 
@@ -802,7 +803,7 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
                                                                                             ("area", float),
                                                                                             ("max_F", float),
                                                                                             ("gaussian_mean", float),
-                                                                                            ("gaussian_var", float),
+                                                                                            ("gaussian_cov", float),
                                                                                             ("centroid", new_wavelet_image_denoised_opened_segmentation_regions_props["Centroid"][0].dtype, new_wavelet_image_denoised_opened_segmentation_regions_props["Centroid"][0].shape),])
 
     new_neuron["mask"] = mean_neuron_mask
@@ -815,10 +816,10 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
 
     new_neuron["max_F"] = new_neuron["image"].max()
 
-    new_neuron["gaussian_mean"] = numpy.array(new_neuron["mask"].nonzero()).mean(axis = 1)
+    new_neuron_mask_points = numpy.array(new_neuron["mask"][i].nonzero())
 
-    # TODO: Covariance matrix
-    new_neuron["gaussian_var"] = numpy.array(new_neuron["mask"].nonzero()).var(axis = 1)
+    new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis = 1)
+    new_neuron["gaussian_cov"] = numpy.cov(new_neuron_mask_points)
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
     
