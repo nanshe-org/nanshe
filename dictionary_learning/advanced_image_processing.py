@@ -406,7 +406,8 @@ def wavelet_denoising(new_image, **parameters):
 
         # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
         # but it requires skimage 0.8.0 minimum.
-        local_maxima_mask = skimage.morphology.is_local_maximum(new_wavelet_image_denoised, footprint = numpy.ones((3,) * new_wavelet_image_denoised.ndim), labels = (new_wavelet_image_denoised > 0).astype(int))
+        local_maxima_neighborhood = numpy.ones((2 * parameters["local_max_neighborhood_size"] + 1,) * new_wavelet_image_denoised.ndim)
+        local_maxima_mask = skimage.morphology.is_local_maximum(new_wavelet_image_denoised, footprint = local_maxima_neighborhood, labels = (new_wavelet_image_denoised > 0).astype(int))
         #local_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = numpy.ones((3,) * new_wavelet_image_denoised.ndim), labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
 
         logger.debug("Found the local maxima.")
