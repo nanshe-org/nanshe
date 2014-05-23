@@ -49,7 +49,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 @advanced_debugging.log_call(logger)
-def preprocess_data(new_data, **parameters):
+def normalize_data(new_data, **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
         
@@ -1206,7 +1206,7 @@ def generate_neurons(new_images, **parameters):
             dict: the dictionary found.
     """
     
-    new_preprocessed_images = preprocess_data(new_images, **parameters["preprocess_data"])
+    new_preprocessed_images = normalize_data(new_images, **parameters["normalize_data"])
     
     new_dictionary = generate_dictionary(new_preprocessed_images, **parameters["generate_dictionary"])
     
