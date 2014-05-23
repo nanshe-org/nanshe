@@ -12,6 +12,15 @@ import operator
 
 
 
+# Need in order to have logging information no matter what.
+import advanced_debugging
+
+
+# Get the logger
+logger = advanced_debugging.logging.getLogger(__name__)
+
+
+@advanced_debugging.log_call(logger)
 def add_singleton_axis_pos(new_array, new_pos = 0):
     """
         Adds a singleton axis to the given position.
@@ -57,6 +66,7 @@ def add_singleton_axis_pos(new_array, new_pos = 0):
 
 
 
+@advanced_debugging.log_call(logger)
 def add_singleton_axis_beginning(new_array):
     """
         Adds a singleton axis to the beginning of the array.
@@ -81,6 +91,7 @@ def add_singleton_axis_beginning(new_array):
 
 
 
+@advanced_debugging.log_call(logger)
 def add_singleton_axis_end(new_array):
     """
         Adds a singleton axis to the end of the array.
@@ -105,6 +116,7 @@ def add_singleton_axis_end(new_array):
 
 
 
+@advanced_debugging.log_call(logger)
 def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
     """
         Behaves like NumPy tile except that it always returns a view and not a copy.
@@ -302,6 +314,7 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
 
 
 
+@advanced_debugging.log_call(logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
@@ -394,6 +407,7 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
     return( new_op(new_array_1_tiled, new_array_2_tiled) )
 
 
+@advanced_debugging.log_call(logger)
 def all_permutations_equal(new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
