@@ -13,6 +13,15 @@ import scipy.misc
 import vigra
 
 
+# Need in order to have logging information no matter what.
+import advanced_debugging
+
+
+# Get the logger
+logger = advanced_debugging.logging.getLogger(__name__)
+
+
+@advanced_debugging.log_call(logger)
 def binomial_coefficients(n):
     """
         Generates a row in Pascal's triangle (binomial coefficients).
@@ -61,6 +70,7 @@ def binomial_coefficients(n):
     return(cs)
 
 
+@advanced_debugging.log_call(logger)
 def binomial_1D_array_kernel(i, n = 4):
     """
         Generates a 1D numpy array used to make the kernel for the wavelet transform.
@@ -137,6 +147,7 @@ def binomial_1D_array_kernel(i, n = 4):
     return(r)
 
 
+@advanced_debugging.log_call(logger)
 def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
     """
         Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).
@@ -171,6 +182,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
     return(k)
 
 
+@advanced_debugging.log_call(logger)
 def wavelet_transform(im0, scale = 5):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
