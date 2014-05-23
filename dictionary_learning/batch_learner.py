@@ -24,7 +24,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def batch_generate_save_dictionary(*new_filenames, **parameters):
     """
         Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL.
@@ -41,7 +41,7 @@ def batch_generate_save_dictionary(*new_filenames, **parameters):
         generate_save_dictionary(each_new_filename, **parameters)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def generate_save_dictionary(new_filename, **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
@@ -100,15 +100,14 @@ def generate_save_dictionary(new_filename, **parameters):
         # Copy out images for manipulation in memory
         new_data = new_file[output_directory]["original_data"][:]
         
-        # generates dictionary and stores results
-        HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", advanced_image_processing.generate_neurons(new_data, **parameters), True)
-        
+        # generates the neuron set
+        # stores the result
         # stores all parameters used to generate the dictionary in results
-        for parameter_key, parameter_value in parameters.items():
-            new_file[output_directory]["neurons"].attrs[parameter_key] = parameter_value
+        new_neurons = advanced_image_processing.generate_neurons(new_data, **parameters)
+        HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def main(*argv):
     """
         Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.
