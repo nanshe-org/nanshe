@@ -48,7 +48,7 @@ import wavelet_transform
 logger = advanced_debugging.logging.getLogger(__name__)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def preprocess_data(new_data, **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
@@ -80,7 +80,7 @@ def preprocess_data(new_data, **parameters):
     return(new_data_processed)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def generate_dictionary(new_data, **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
@@ -114,6 +114,8 @@ def generate_dictionary(new_data, **parameters):
     # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
     new_dictionary = spams.trainDL(new_data_processed, **parameters["spams_trainDL"])
 
+    #new_dictionary = numpy.random.random((parameters["spams_trainDL"]["K"],) + new_data.shape[1:])
+
     # Fix dictionary so that the first index will be the particular image.
     # The rest will be the shape of an image (same as input shape).
     new_dictionary = new_dictionary.transpose()
@@ -123,7 +125,7 @@ def generate_dictionary(new_data, **parameters):
     return(new_dictionary)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def region_properties(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label .
@@ -203,8 +205,8 @@ def region_properties(new_label_image, *args, **kwargs):
                 if each_key in new_label_image_props[i]:
                     new_label_image_props[i][each_key] = numpy.array(new_label_image_props[i][each_key])
         
-        print(repr(new_label_image_props))
-        print("")
+        #print(repr(new_label_image_props))
+        #print("")
         
         # Holds the values from props.
         new_label_image_props_values = []
@@ -263,13 +265,13 @@ def region_properties(new_label_image, *args, **kwargs):
                 new_label_image_props_dtype.append( (each_key, numpy.dtype(numpy.object)) )
     
 
-    print("")
+    #print("")
     
-    print(repr(new_label_image_props_values))
-    print("")
-    print(repr(new_label_image_props_dtype))
+    #print(repr(new_label_image_props_values))
+    #print("")
+    #print(repr(new_label_image_props_dtype))
     
-    print("")
+    #print("")
     
     new_label_image_props_dtype = numpy.dtype(new_label_image_props_dtype)
 
@@ -278,8 +280,35 @@ def region_properties(new_label_image, *args, **kwargs):
     
     return(new_label_image_props)
 
+@advanced_debugging.log_call(logger)
+def get_neuron_dtype(new_image):
+    neurons_dtype = [("mask", bool, new_image.shape),
+                    #("image", new_image.dtype, new_image.shape),
+                    ("image_original", new_image.dtype, new_image.shape),
+                    #("segmentation", new_wavelet_image_denoised.dtype, new_wavelet_image_denoised.shape),
+                    ("area", float),
+                    ("max_F", float),
+                    ("gaussian_mean", float, (new_image.ndim,)),
+                    ("gaussian_cov", float, (new_image.ndim, new_image.ndim,)),
+                    ("centroid", new_image.dtype, (new_image.ndim,))]
+    
+    return(neurons_dtype)
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
+def get_empty_neuron(new_image):
+    neurons_dtype = get_neuron_dtype(new_image)
+    neurons = numpy.zeros((0,), dtype = neurons_dtype)
+    
+    return(neurons)
+
+@advanced_debugging.log_call(logger)
+def get_one_neuron(new_image):
+    neurons_dtype = get_neuron_dtype(new_image)
+    neurons = numpy.zeros((1,), dtype = neurons_dtype)
+    
+    return(neurons)
+
+@advanced_debugging.log_call(logger)
 def wavelet_denoising(new_image, **parameters):
     """
         Performs wavelet denoising on the given dictionary.
@@ -293,15 +322,7 @@ def wavelet_denoising(new_image, **parameters):
     """
     ######## TODO: Break up into several simpler functions with unit/doctests. Debug further to find memory leak?
     
-    neurons = numpy.zeros((0,), dtype = [("mask", bool, new_image.shape),
-                                         ("image", new_image.dtype, new_image.shape),
-                                         ("image_original", new_image.dtype, new_image.shape),
-                                         #("segmentation", new_wavelet_image_denoised.dtype, new_wavelet_image_denoised.shape),
-                                         ("area", float),
-                                         ("max_F", float),
-                                         ("gaussian_mean", float),
-                                         ("gaussian_cov", float),
-                                         ("centroid", new_image.dtype, new_image.ndim)])
+    neurons = get_empty_neuron(new_image)
     
     new_wavelet_image_denoised_segmentation = None
     
@@ -600,30 +621,30 @@ def wavelet_denoising(new_image, **parameters):
             #new_wavelet_image_denoised_segmentation_regions = new_wavelet_image_denoised_segmentation_regions[2:]
 
             
-            print(len(new_wavelet_image_denoised_segmentation_regions))
+            #print(len(new_wavelet_image_denoised_segmentation_regions))
 
             # Find properties of all regions (except the background)
-            #print(repr(new_wavelet_image_denoised_segmentation_regions))
-            #print(repr(new_wavelet_image_denoised_segmentation_regions.shape))
-            #print(repr(new_wavelet_image_denoised_segmentation_regions.dtype))
+            ##print(repr(new_wavelet_image_denoised_segmentation_regions))
+            ##print(repr(new_wavelet_image_denoised_segmentation_regions.shape))
+            ##print(repr(new_wavelet_image_denoised_segmentation_regions.dtype))
             new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["Centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
-            print("new_wavelet_image_denoised_segmentation_props = ")
-            print(repr(new_wavelet_image_denoised_segmentation_props))
+            #print("new_wavelet_image_denoised_segmentation_props = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_props))
             
-            print("new_wavelet_image_denoised_segmentation_regions = ")
-            print(repr(new_wavelet_image_denoised_segmentation_regions))
+            #print("new_wavelet_image_denoised_segmentation_regions = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_regions))
             
             # Check to see if there are any doubled labels
-            print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = ")
-            print(repr(new_wavelet_image_denoised_segmentation_props["Label"]))
+            #print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_props["Label"]))
             
-            print("new_wavelet_image_denoised_segmentation_regions = ")
-            print(repr(new_wavelet_image_denoised_segmentation_regions))
+            #print("new_wavelet_image_denoised_segmentation_regions = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_regions))
             
             new_wavelet_image_denoised_segmentation_props_labels_match = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props["Label"], new_wavelet_image_denoised_segmentation_regions)
             
-            print("new_wavelet_image_denoised_segmentation_props_labels_match = ")
-            print(repr(new_wavelet_image_denoised_segmentation_props_labels_match))
+            #print("new_wavelet_image_denoised_segmentation_props_labels_match = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_props_labels_match))
 
             if (new_wavelet_image_denoised_segmentation_props_labels_match.ndim != 2):
                 raise Exception("There is no reason this should happen. Someone changed something they shouldn't have. The dimensions of this match should be 2 exactly.")
@@ -664,8 +685,8 @@ def wavelet_denoising(new_image, **parameters):
             # Just go ahead and toss the regions. The same information already exists through new_wavelet_image_denoised_segmentation_props["Label"].
             del new_wavelet_image_denoised_segmentation_regions
 
-            print("new_wavelet_image_denoised_segmentation_props = ")
-            print(repr(new_wavelet_image_denoised_segmentation_props))
+            #print("new_wavelet_image_denoised_segmentation_props = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_props))
 
             not_within_bound = numpy.zeros(new_wavelet_image_denoised_segmentation_props.shape, dtype = bool)
 
@@ -687,8 +708,8 @@ def wavelet_denoising(new_image, **parameters):
                 # Collect the unbounded ones
                 not_within_bound |= is_not_within_bound
 
-            print("not_within_bound = ")
-            print(repr(not_within_bound))
+            #print("not_within_bound = ")
+            #print(repr(not_within_bound))
 
             # Get labels outside of bounds
             new_wavelet_image_denoised_segmentation_props_unbounded_labels = new_wavelet_image_denoised_segmentation_props["Label"][not_within_bound]
@@ -702,8 +723,8 @@ def wavelet_denoising(new_image, **parameters):
             
             new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = numpy.any(new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks, axis = 0)
 
-            print("new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = ")
-            print(repr(new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask))
+            #print("new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask))
 
             # Zero them
             new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask] = 0
@@ -711,30 +732,31 @@ def wavelet_denoising(new_image, **parameters):
             # Remove the corresponding properties.
             new_wavelet_image_denoised_segmentation_props = new_wavelet_image_denoised_segmentation_props[~not_within_bound]
             
-            print("new_wavelet_image_denoised_segmentation_props = ")
-            print(repr(new_wavelet_image_denoised_segmentation_props))
+            #print("new_wavelet_image_denoised_segmentation_props = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_props))
             
-            print("new_wavelet_image_denoised_segmentation_props.size = ")
-            print(repr(new_wavelet_image_denoised_segmentation_props.size))
+            #print("new_wavelet_image_denoised_segmentation_props.size = ")
+            #print(repr(new_wavelet_image_denoised_segmentation_props.size))
+            
+            #print("len(new_wavelet_image_denoised_segmentation_props) = ")
+            #print(repr(len(new_wavelet_image_denoised_segmentation_props)))
             
             
             if new_wavelet_image_denoised_segmentation_props.size:
-                # Creates a NumPy structure array to store 
-                neurons = numpy.zeros(len(new_wavelet_image_denoised_segmentation_props), dtype = [("mask", bool, new_wavelet_image_denoised_segmentation.shape),
-                                                                                                   ("image", new_wavelet_image_denoised_segmentation.dtype, new_wavelet_image_denoised_segmentation.shape),
-                                                                                                   ("image_original", new_wavelet_image_denoised_segmentation.dtype, new_wavelet_image_denoised_segmentation.shape),
-                                                                                                   #("segmentation", new_wavelet_image_denoised_segmentation.dtype, new_wavelet_image_denoised_segmentation.shape),
-                                                                                                   ("area", float),
-                                                                                                   ("max_F", float),
-                                                                                                   ("gaussian_mean", float, (new_wavelet_image_denoised_segmentation.ndim,)),
-                                                                                                   ("gaussian_cov", float, (new_wavelet_image_denoised_segmentation.ndim, new_wavelet_image_denoised_segmentation.ndim,)),
-                                                                                                   ("centroid", new_wavelet_image_denoised_segmentation_props["Centroid"][0].dtype, new_wavelet_image_denoised_segmentation_props["Centroid"][0].shape),])
+                # Creates a NumPy structure array to store
+                neurons = numpy.zeros(len(new_wavelet_image_denoised_segmentation_props), dtype = neurons.dtype)
                 
-                print("neurons = ")
-                print(repr(neurons))
+                #print("len(neurons) = ")
+                #print(repr(len(neurons)))
+                
+                #print("neurons = ")
+                #print(repr(neurons))
                 
                 # Get masks for all cells
                 new_wavelet_image_denoised_segmentation_props_labels_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props["Label"], new_wavelet_image_denoised_segmentation)
+                
+                #print("new_wavelet_image_denoised_segmentation_props_labels_all_masks = ")
+                #print(repr(new_wavelet_image_denoised_segmentation_props_labels_all_masks))
                 
                 #new_wavelet_image_denoised_segmentation_broadcast = new_wavelet_image_denoised_segmentation.reshape((1,)*new_wavelet_image_denoised_segmentation_props["Label"].ndim + new_wavelet_image_denoised_segmentation.shape)
                 #new_wavelet_image_denoised_segmentation_props_labels_broadcast = new_wavelet_image_denoised_segmentation_props["Label"].reshape(new_wavelet_image_denoised_segmentation_props["Label"].shape + (1,)*new_wavelet_image_denoised_segmentation.ndim)
@@ -742,24 +764,60 @@ def wavelet_denoising(new_image, **parameters):
                 #new_wavelet_image_denoised_segmentation_props_labels_all_masks = (new_wavelet_image_denoised_segmentation_broadcast == new_wavelet_image_denoised_segmentation_props_labels_broadcast)
 
                 neurons["mask"] = new_wavelet_image_denoised_segmentation_props_labels_all_masks
+                
+                
+                #print("neurons[\"mask\"] = ")
+                #print(repr(neurons["mask"]))
 
-                neurons["image"] = new_wavelet_image_denoised * neurons["mask"]
+                #neurons["image"] = new_wavelet_image_denoised * neurons["mask"]
+                
+                ##print("neurons[\"image\"] = ")
+                ##print(repr(neurons["image"]))
 
                 neurons["image_original"] = new_image * neurons["mask"]
+                
+                #print("neurons[\"image_original\"] = ")
+                #print(repr(neurons["image_original"]))
 
                 neurons["area"] = new_wavelet_image_denoised_segmentation_props["Area"]
-
-                neurons["max_F"] = (neurons["image_original"] * neurons["mask"]).max()
+                
+                neurons["max_F"] = neurons["image_original"].reshape( (neurons["image_original"].shape[0], -1) ).max(axis = 1)
+                
+                #print("neurons[\"max_F\"] = ")
+                #print(repr(neurons["max_F"]))
+                
+                #print("neurons[\"area\"] = ")
+                #print(repr(neurons["area"]))
                 
                 for i in xrange(len(neurons)):
                     neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
                     
                     neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
                     neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
-
+                
+                #print("neurons[\"gaussian_mean\"] = ")
+                #print(repr(neurons["gaussian_mean"]))
+                
+                #print("neurons[\"gaussian_cov\"] = ")
+                #print(repr(neurons["gaussian_cov"]))
+                
                 neurons["centroid"] = new_wavelet_image_denoised_segmentation_props["Centroid"]
+                
+                #print("neurons[\"centroid\"] = ")
+                #print(repr(neurons["centroid"]))
 
                 #neurons["segmentation"] = new_wavelet_image_denoised_segmentation
+                
+                #print("len(neurons) = ")
+                #print(repr(len(neurons)))
+                #
+                #for each_name in neurons.dtype.names:
+                #    print("neurons[" + each_name + "][0] = ")
+                #    print(repr(neurons[each_name][0]))
+                #
+                #wait = raw_input("PRESS ENTER TO CONTINUE...")
+                
+                logger.debug("Extracted neuron(s). Found " + str(len(neurons)) + " neuron(s).")
         else:
             #################### Some other kind of segmentation??? Talked to Ferran and he said don't worry about implementing this for now. Does not seem to give noticeably better results.
             raise Exception("No other form of segmentation is implemented.")
@@ -769,11 +827,11 @@ def wavelet_denoising(new_image, **parameters):
     
     
     
-    print("Done with making neurons.")
+    #print("Done with making neurons.")
     return(neurons)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def fuse_neurons(neuron_1, neuron_2, **parameters):
     """
         Merges the two neurons into one (treats the first with preference).
@@ -791,32 +849,29 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
             dict: the dictionary found.
     """
     
+    assert(neuron_1.dtype == neuron_2.dtype)
+    
     mean_neuron = numpy.array([neuron_1["image_original"], neuron_2["image_original"]]).mean(axis = 0)
     mean_neuron_mask = mean_neuron > (parameters["fraction_mean_neuron_max_threshold"] * mean_neuron.max())
     
-    # Gaussing mixture model ??? Skipped this.
     
-    # Creates a NumPy structure array to store 
-    new_neuron = numpy.array(new_wavelet_image_denoised_opened_segmentation.shape, dtype = [("mask", bool, new_wavelet_image_denoised_opened_segmentation.shape),
-                                                                                            ("image", new_wavelet_image_denoised_opened_segmentation.dtype, new_wavelet_image_denoised_opened_segmentation.shape),
-                                                                                            ("image_original", new_wavelet_image_denoised_opened_segmentation.dtype, new_wavelet_image_denoised_opened_segmentation.shape),
-                                                                                            ("area", float),
-                                                                                            ("max_F", float),
-                                                                                            ("gaussian_mean", float),
-                                                                                            ("gaussian_cov", float),
-                                                                                            ("centroid", new_wavelet_image_denoised_opened_segmentation_regions_props["Centroid"][0].dtype, new_wavelet_image_denoised_opened_segmentation_regions_props["Centroid"][0].shape),])
+    # Gaussian mixture model ??? Skipped this.
+    
+    # Creates a NumPy structure array to store
+    new_neuron = numpy.zeros(neuron_1.shape, dtype = neuron_1.dtype)
 
     new_neuron["mask"] = mean_neuron_mask
 
-    new_neuron["image"] = mean_neuron * new_neuron["mask"]
+    #new_neuron["image"] = mean_neuron * new_neuron["mask"]
 
+    ##### TODO: Revisit whether this correct per Ferran's code.
     new_neuron["image_original"] = neuron_1["image_original"]
 
-    new_neuron["area"] = (neuron_1 > 0).sum()
+    new_neuron["area"] = (new_neuron["mask"] > 0).sum()
 
     new_neuron["max_F"] = new_neuron["image"].max()
 
-    new_neuron_mask_points = numpy.array(new_neuron["mask"][i].nonzero())
+    new_neuron_mask_points = numpy.array(new_neuron["mask"].nonzero())
 
     new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis = 1)
     new_neuron["gaussian_cov"] = numpy.cov(new_neuron_mask_points)
@@ -826,7 +881,7 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
     return(new_neuron)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
     """
         Merges the two sets of neurons into one (treats the first with preference).
@@ -844,18 +899,38 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
             dict: the dictionary found.
     """
     
-    # TODO: Check to make sure both aren't 
-    if not new_neuron_set_1:
-        new_neuron_set = new_neuron_set_2.copy()
-    elif not new_neuron_set_2:
+    assert(new_neuron_set_1.dtype == new_neuron_set_2.dtype)
+    
+    #print(repr(new_neuron_set_1))
+    #print(repr(new_neuron_set_2))
+    
+    #print(len(new_neuron_set_1))
+    #print(len(new_neuron_set_2))
+    
+    #try:
+    #    print(new_neuron_set_1.dtype)
+    #    
+    #    for each_name in new_neuron_set_1.dtype.names:
+    #        print("new_neuron_set_1[" + each_name + "]")
+    #        print(repr(new_neuron_set_1[each_name]))
+    #except AttributeError:
+    #    print(type(new_neuron_set_1))
+    #
+    #try:
+    #    print(new_neuron_set_2.dtype)
+    #    
+    #    for each_name in new_neuron_set_2.dtype.names:
+    #        print("new_neuron_set_2[" + each_name + "]")
+    #        print(repr(new_neuron_set_2[each_name]))
+    #except AttributeError:
+    #    print(type(new_neuron_set_2))
+    
+    # TODO: Reverse if statement so it is not nots
+    if len(new_neuron_set_1) and len(new_neuron_set_2):
         new_neuron_set = new_neuron_set_1.copy()
-    elif (not new_neuron_set_1) and (not new_neuron_set_2):
-        new_neuron_set = []
-    else:
-        new_neuron_set = list(new_neuron_set_1.copy())
 
-        new_neuron_set_1_flattened = new_neuron_set_1["image_original"].reshape(new_neuron_set_1["mask"].shape[0], -1)
-        new_neuron_set_2_flattened = new_neuron_set_2["image_original"].reshape(new_neuron_set_2["mask"].shape[0], -1)
+        new_neuron_set_1_flattened = new_neuron_set_1["image_original"].reshape(new_neuron_set_1["image_original"].shape[0], -1)
+        new_neuron_set_2_flattened = new_neuron_set_2["image_original"].reshape(new_neuron_set_2["image_original"].shape[0], -1)
 
         new_neuron_set_1_flattened_mask = new_neuron_set_1["mask"].reshape(new_neuron_set_1["mask"].shape[0], -1)
         new_neuron_set_2_flattened_mask = new_neuron_set_2["mask"].reshape(new_neuron_set_2["mask"].shape[0], -1)
@@ -865,20 +940,37 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
                                                                 new_neuron_set_2_flattened,
                                                                 "cosine")
 
-        # Measure the normalized Hamming distance between the two (need 1 minus to calculate
-        new_neuron_set_masks_overlayed = 1- scipy.spatial.distance.cdist(new_neuron_set_1_flattened_mask,
-                                                                      new_neuron_set_2_flattened_mask,
-                                                                      "hamming")
+        # Measure the normalized Hamming distance (0, the same; 1, exact opposites) between the two
+        # Need 1 minus to calculate the number of similarities.
+        new_neuron_set_masks_overlayed = 1 - scipy.spatial.distance.cdist(new_neuron_set_1_flattened_mask,
+                                                                          new_neuron_set_2_flattened_mask,
+                                                                          "hamming")
 
         # Rescale the normalized Hamming distance to a non-normalized Hamming distance.
-        # TODO: Is this actually necessary? Ask Ferran.
         new_neuron_set_masks_overlayed *= (new_neuron_set_1_flattened.shape[1])
 
         # Find the number of true values in each mask for each neuron
         # TODO: Just use area.
-        new_neuron_set_1_masks_count = numpy.apply_over_axes(numpy.sum, new_neuron_set_1, numpy.array(list(xrange(1, new_neuron_set_1.ndim))))
-        new_neuron_set_2_masks_count = numpy.apply_over_axes(numpy.sum, new_neuron_set_2, numpy.array(list(xrange(1, new_neuron_set_2.ndim))))
+        new_neuron_set_1_masks_count = new_neuron_set_1["area"]
+        new_neuron_set_2_masks_count = new_neuron_set_2["area"]
 
+        import sys
+        sys.stderr.flush()
+        sys.stdout.flush()
+        
+        #print("nsoafj;sldfjlasdjflasd")
+        #
+        #print("new_neuron_set_masks_overlayed = ")
+        #print(repr(new_neuron_set_masks_overlayed))
+        #
+        #print("new_neuron_set_1_masks_count = ")
+        #print(repr(new_neuron_set_1_masks_count))
+        #
+        #print("new_neuron_set_2_masks_count = ")
+        #print(repr(new_neuron_set_2_masks_count))
+        #
+        #print("nsoafj;sldfjlasdjflasd")
+        
         # Normalizes each set of masks by the count
         new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count
         new_neuron_set_masks_overlayed_2 = new_neuron_set_masks_overlayed / new_neuron_set_2_masks_count
@@ -888,14 +980,14 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_masks_overlayed_1_optimal = new_neuron_set_masks_overlayed_1.argmax(axis = 0)
         new_neuron_set_masks_overlayed_2_optimal = new_neuron_set_masks_overlayed_2.argmax(axis = 0)
 
-        for j in xrange(len(new_neuron_set_2.shape[0])):
+        for j in xrange(new_neuron_set_2.shape[0]):
             new_neuron_set_angle_i = new_neuron_set_angle_optimal[j]
-            new_neuron_set_masks_overlayed_1_i = new_neuron_set_masks_overlayed_1[j]
-            new_neuron_set_masks_overlayed_2_i = new_neuron_set_masks_overlayed_2[j]
+            new_neuron_set_masks_overlayed_1_i = new_neuron_set_masks_overlayed_1_optimal[j]
+            new_neuron_set_masks_overlayed_2_i = new_neuron_set_masks_overlayed_2_optimal[j]
 
             new_neuron_set_angle_max = new_neuron_set_angle[ new_neuron_set_angle_i, j ]
-            new_neuron_set_masks_overlayed_1_max = new_neuron_set_masks_overlayed_1_max[ new_neuron_set_masks_overlayed_1_i, j ]
-            new_neuron_set_masks_overlayed_2_max = new_neuron_set_masks_overlayed_2_max[ new_neuron_set_masks_overlayed_2_i, j ]
+            new_neuron_set_masks_overlayed_1_max = new_neuron_set_masks_overlayed_1[ new_neuron_set_masks_overlayed_1_i, j ]
+            new_neuron_set_masks_overlayed_2_max = new_neuron_set_masks_overlayed_2[ new_neuron_set_masks_overlayed_2_i, j ]
 
             if new_neuron_set_angle_max > parameters["alignment_min_threshold"]:
                 new_neuron_set[new_neuron_set_angle_i] = fuse_neurons(new_neuron_set_1[new_neuron_set_angle_i], new_neuron_set_2[j], **parameters["fuse_neurons"])
@@ -905,16 +997,23 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
                 elif new_neuron_set_masks_overlayed_1_max > parameters["overlap_min_threshold"]:
                     new_neuron_set[new_neuron_set_masks_overlayed_1_i] = fuse_neurons(new_neuron_set_1[new_neuron_set_masks_overlayed_1_i], new_neuron_set_2[j], **parameters["fuse_neurons"])
                 else:
-                    #new_neuron_set = numpy.concatenate([new_neuron_set, new_neuron_set_2[j]])
-                    new_neuron_set.append(new_neuron_set_2[j].copy())
+                    numpy.append(new_neuron_set, new_neuron_set_2[j].copy())
 
-
-        new_neuron_set = numpy.concatenate(new_neuron_set)
+        print("new_neuron_set = ")
+        print(repr(new_neuron_set))
+        
+        
+    elif not len(new_neuron_set_1):
+        new_neuron_set = new_neuron_set_2
+    #elif not len(new_neuron_set_2):
+    #    new_neuron_set = new_neuron_set_1
+    else:
+        new_neuron_set = new_neuron_set_1
     
     return(new_neuron_set)
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def generate_neurons(new_images, **parameters):
     """
         Generates the neurons.
@@ -934,16 +1033,15 @@ def generate_neurons(new_images, **parameters):
     
     new_preprocessed_images = preprocess_data(new_images, **parameters["preprocess_data"])
     
-    # Creates the dictionary
     new_dictionary = generate_dictionary(new_preprocessed_images, **parameters["generate_dictionary"])
     
-    # Get all neurons for all images 
-    new_neurons_set = []
+    # Get all neurons for all images
+    new_neurons_set = get_empty_neuron(new_images[0])
     for each_new_dictionary_image in new_dictionary:
         each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, **parameters["wavelet_denoising"])
         
             
-        print("Finished a set of neurons.")
+        #print("Finished a set of neurons.")
         
         new_neurons_set = merge_neuron_sets(new_neurons_set, each_new_neuron_set, **parameters["merge_neuron_sets"])
     
