@@ -72,7 +72,7 @@ def log_call(logger, print_args = False):
             result = callable(*args, **kwargs)
             
             # Log that we have exited the callable in question.
-            logger.debug("Exiting " + callable.__name__ + ".")
+            logger.debug("Exiting \"" + callable.__name__ + "\".")
             
             # Return the result even None.
             return(result)
