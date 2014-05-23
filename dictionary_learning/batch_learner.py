@@ -105,6 +105,7 @@ def generate_save_dictionary(new_filename, **parameters):
         # stores all parameters used to generate the dictionary in results
         new_neurons = advanced_image_processing.generate_neurons(new_data, **parameters)
         HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
+        new_file[output_directory].attrs["parameters"] = repr(parameters)
 
 
 @advanced_debugging.log_call(logger)
