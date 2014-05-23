@@ -80,23 +80,178 @@ def preprocess_data(new_data, **parameters):
     return(new_data_processed)
 
 
-def run_multithreaded_spams_trainDL(output_array, *args, **kwargs):
-    result = numpy.frombuffer(output_array.get_obj(), dtype = float)
+@advanced_debugging.log_call(logger)
+def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
+    """
+        Designed to run spams.trainDL in a seperate process.
+        
+        It is necessary to run SPAMS in a separate process as segmentation faults
+        have been discovered in later parts of the Python code dependent on whether
+        SPAMS has run or not. It is suspected that spams may interfere with the 
+        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
+        so that it doesn't damage what happens in this one.
+        
+        This particular version uses a multiprocessing.Queue to return the resulting dictionary.
+        
+        
+        Args:
+            out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.
+            *args(list):                            a list of position arguments to pass to spams.trainDL.
+            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
+        
+        Note:
+            Todo
+            Look into having the raw data for input for spams.trainDL copied in.
+    """
     
-    result[:] = spams.trainDL(new_data_processed, **parameters["spams_trainDL"])
+    # It is not needed outside of calling spams.trainDL.
+    # Also, it takes a long time to load this module.
+    import spams
+    
+    result = spams.trainDL(*args, **kwargs)
+    out_queue.put(result)
     
 
-def call_multithreaded_spams_trainDL(output_array_size, *args, **kwargs):
-    import multiprocessing
-    import ctypes
+@advanced_debugging.log_call(logger)
+def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
+    """
+        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
+        
+        It is necessary to run SPAMS in a separate process as segmentation faults
+        have been discovered in later parts of the Python code dependent on whether
+        SPAMS has run or not. It is suspected that spams may interfere with the 
+        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
+        so that it doesn't damage what happens in this one.
+        
+        This particular version uses a multiprocessing.Queue to return the resulting dictionary.
+        
+        
+        Args:
+            *args(list):                            a list of position arguments to pass to spams.trainDL.
+            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
+        
+        Note:
+            Todo
+            Look into having the raw data for input for spams.trainDL copied in.
+        
+        Returns:
+            result(numpy.matrix): the dictionary found
+    """
     
+    # Only necessary for dealing with SPAMS
+    import multiprocessing
+    
+    out_queue = multiprocessing.Queue()
+    
+    p = multiprocessing.Process(target = run_multiprocessing_queue_spams_trainDL, args = (out_queue,) + args, kwargs = kwargs)
+    p.start()
+    result = out_queue.get()
+    p.join()
+    
+    return(result)
+
+
+@advanced_debugging.log_call(logger)
+def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
+    """
+        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
+        
+        It is necessary to run SPAMS in a separate process as segmentation faults
+        have been discovered in later parts of the Python code dependent on whether
+        SPAMS has run or not. It is suspected that spams may interfere with the 
+        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
+        so that it doesn't damage what happens in this one.
+        
+        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.
+        
+        
+        Args:
+            *args(list):                            a list of position arguments to pass to spams.trainDL.
+            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
+        
+        Note:
+            This is somewhat faster than using multiprocessing.Queue.
+            
+            Todo
+            Need to deal with return_model case.
+            Look into having the raw data for input for spams.trainDL copied in.
+    """
+    
+    # Just to make sure this exists in the new process. Shouldn't be necessary.
+    import numpy
+    # Just to make sure this exists in the new process. Shouldn't be necessary.
+    # Also, it is not needed outside of calling this function.
+    import spams
+    
+    # Create a numpy.ndarray that uses the shared buffer.
+    result = numpy.frombuffer(output_array.get_obj(), dtype = float).reshape((-1, kwargs["K"]))
+    result = numpy.asmatrix(result)
+    
+    result[:] = spams.trainDL(*args, **kwargs)
+    
+
+@advanced_debugging.log_call(logger)
+def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
+    """
+        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
+        
+        It is necessary to run SPAMS in a separate process as segmentation faults
+        have been discovered in later parts of the Python code dependent on whether
+        SPAMS has run or not. It is suspected that spams may interfere with the 
+        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
+        so that it doesn't damage what happens in this one.
+        
+        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.
+        
+        
+        Args:
+            X(numpy.matrix)                         a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).
+            *args(list):                            a list of position arguments to pass to spams.trainDL.
+            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
+        
+        Note:
+            This is somewhat faster than using multiprocessing.Queue.
+            
+            Todo
+            Need to deal with return_model case.
+            Look into having the raw data for input for spams.trainDL copied in.
+    """
+    
+    # Only necessary for dealing with SPAMS
+    import multiprocessing
+    # Only necessary for dealing with multiprocessing.Array for SPAMS
+    import ctypes
+    # Just to make sure this exists in the new process. Shouldn't be necessary.
+    import numpy
+    
+    output_array_size = X.shape[0] * kwargs["K"]
     output_array = multiprocessing.Array(ctypes.c_double, output_array_size)
     
-    p = multiprocessing.Process(target = run_multithreaded_spams_trainDL, args = (output_array,) + args, kwargs = kwargs)
+    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (output_array, X,) + args, kwargs = kwargs)
     p.start()
     p.join()
     
-    result = numpy.frombuffer(output_array.get_obj(), dtype = float)
+    result = numpy.frombuffer(output_array.get_obj(), dtype = float).reshape((-1, kwargs["K"]))
+    result = result.copy()
+    
+    return(result)
+
+
+@advanced_debugging.log_call(logger)
+def call_spams_trainDL(*args, **kwargs):
+    """
+        Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.
+        Designed to be like the multiprocessing calls.
+        
+        Args:
+            *args(list):                            a list of position arguments to pass to spams.trainDL.
+            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
+        
+        Note:
+            For legacy.
+    """
+    
+    result = spams.trainDL(*args, **kwargs)
     result = result.copy()
     
     return(result)
@@ -134,15 +289,12 @@ def generate_dictionary(new_data, **parameters):
     
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
-    #new_dictionary = spams.trainDL(new_data_processed, **parameters["spams_trainDL"])
-    output_array_size = new_data_processed.shape[0] * parameters["spams_trainDL"]["K"]
-    new_dictionary = call_multithreaded_spams_trainDL(output_array_size, new_data_processed, parameters["spams_trainDL"])
+    new_dictionary = call_multiprocessing_array_spams_trainDL(new_data_processed, **parameters["spams_trainDL"])
 
     # Fix dictionary so that the first index will be the particular image.
     # The rest will be the shape of an image (same as input shape).
     new_dictionary = new_dictionary.transpose()
     new_dictionary = numpy.asarray(new_dictionary).reshape((parameters["spams_trainDL"]["K"],) + new_data.shape[1:])
-    new_dictionary = new_dictionary.copy()
     
     return(new_dictionary)
 
@@ -947,6 +1099,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
     #except AttributeError:
     #    print(type(new_neuron_set_2))
     
+    
     # TODO: Reverse if statement so it is not nots
     if len(new_neuron_set_1) and len(new_neuron_set_2):
         new_neuron_set = new_neuron_set_1.copy()
@@ -1021,8 +1174,8 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
                 else:
                     numpy.append(new_neuron_set, new_neuron_set_2[j].copy())
 
-        print("new_neuron_set = ")
-        print(repr(new_neuron_set))
+        #print("new_neuron_set = ")
+        #print(repr(new_neuron_set))
         
         
     elif not len(new_neuron_set_1):
