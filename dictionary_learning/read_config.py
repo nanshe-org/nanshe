@@ -15,7 +15,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 
-@advanced_debugging.log_call(logger, print_args = True)
+@advanced_debugging.log_call(logger)
 def read_parameters(config_filename):
     """
         Reads the contents of a json config file and returns the parameters.
@@ -34,6 +34,7 @@ def read_parameters(config_filename):
     # only relevant if reading parameter file.
     import json
     
+    @advanced_debugging.log_call(logger)
     def ascii_encode_dict(data):
         ascii_encode = lambda x: x.encode('ascii')
         return dict((ascii_encode(key), value) for key, value in data.items())
