@@ -2,7 +2,16 @@ import itertools
 import numpy
 
 
+# Need in order to have logging information no matter what.
+import advanced_debugging
 
+
+# Get the logger
+logger = advanced_debugging.logging.getLogger(__name__)
+
+
+
+@advanced_debugging.log_call(logger)
 def index_generator(*sizes):
     """
         Takes an argument list of sizes and iterates through them from 0 up to (but including) each size.
@@ -46,6 +55,7 @@ def index_generator(*sizes):
     return(chain_gen)
 
 
+@advanced_debugging.log_call(logger)
 def list_indices_to_index_array(list_indices):
     """
         Converts a list of tuple indices to numpy index array.
@@ -72,6 +82,7 @@ def list_indices_to_index_array(list_indices):
     return(tuple(numpy.array(zip(*list_indices))))
 
 
+@advanced_debugging.log_call(logger)
 def list_indices_to_numpy_bool_array(list_indices, shape):
     """
         Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.
@@ -122,6 +133,7 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
     return(result)
 
 
+@advanced_debugging.log_call(logger)
 def xrange_with_skip(start, stop = None, step = None, to_skip = None):
     """
         Behaves as xrange does except allows for skipping arbitrary values as well.
@@ -200,6 +212,7 @@ def xrange_with_skip(start, stop = None, step = None, to_skip = None):
             next_to_skip = next(to_skip, None)
 
 
+@advanced_debugging.log_call(logger)
 def cumulative_generator(new_op, new_iter):
     """
         Takes each value from new_iter and applies new_op to it with the result
