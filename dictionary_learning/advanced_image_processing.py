@@ -80,6 +80,28 @@ def preprocess_data(new_data, **parameters):
     return(new_data_processed)
 
 
+def run_multithreaded_spams_trainDL(output_array, *args, **kwargs):
+    result = numpy.frombuffer(output_array.get_obj(), dtype = float)
+    
+    result[:] = spams.trainDL(new_data_processed, **parameters["spams_trainDL"])
+    
+
+def call_multithreaded_spams_trainDL(output_array_size, *args, **kwargs):
+    import multiprocessing
+    import ctypes
+    
+    output_array = multiprocessing.Array(ctypes.c_double, output_array_size)
+    
+    p = multiprocessing.Process(target = run_multithreaded_spams_trainDL, args = (output_array,) + args, kwargs = kwargs)
+    p.start()
+    p.join()
+    
+    result = numpy.frombuffer(output_array.get_obj(), dtype = float)
+    result = result.copy()
+    
+    return(result)
+    
+
 @advanced_debugging.log_call(logger)
 def generate_dictionary(new_data, **parameters):
     """
@@ -112,9 +134,9 @@ def generate_dictionary(new_data, **parameters):
     
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
-    new_dictionary = spams.trainDL(new_data_processed, **parameters["spams_trainDL"])
-
-    #new_dictionary = numpy.random.random((parameters["spams_trainDL"]["K"],) + new_data.shape[1:])
+    #new_dictionary = spams.trainDL(new_data_processed, **parameters["spams_trainDL"])
+    output_array_size = new_data_processed.shape[0] * parameters["spams_trainDL"]["K"]
+    new_dictionary = call_multithreaded_spams_trainDL(output_array_size, new_data_processed, parameters["spams_trainDL"])
 
     # Fix dictionary so that the first index will be the particular image.
     # The rest will be the shape of an image (same as input shape).
