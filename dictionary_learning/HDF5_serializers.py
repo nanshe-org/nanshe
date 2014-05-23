@@ -10,6 +10,15 @@ import numpy
 import h5py
 
 
+# Need in order to have logging information no matter what.
+import advanced_debugging
+
+
+# Get the logger
+logger = advanced_debugging.logging.getLogger(__name__)
+
+
+@advanced_debugging.log_call(logger)
 def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
@@ -38,6 +47,8 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
     
     dataset = None
     
+    #print(repr(data.dtype))
+    
     try:
         dataset = fid.create_dataset(internalPath, data.shape, data.dtype)
     except RuntimeError:
@@ -53,7 +64,7 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
         fid.close()
     
 
-
+@advanced_debugging.log_call(logger)
 def read_numpy_structured_array_from_HDF5(fid, internalPath):
     """
         Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.
@@ -99,7 +110,7 @@ def read_numpy_structured_array_from_HDF5(fid, internalPath):
 
 
 
-
+#@advanced_debugging.log_call(logger)
 #def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = False):
 #    """
 #        Serializes a NumPy structure array to an HDF5 file by creating a group that contains
@@ -150,6 +161,7 @@ def read_numpy_structured_array_from_HDF5(fid, internalPath):
 #    
 #
 #
+#@advanced_debugging.log_call(logger)
 #def read_numpy_structured_array_from_HDF5(fid, internalPath, use_attrs = True, ndim_global = 1):
 #    """
 #        Serializes a NumPy structure array from an HDF5 file by reading a group that contains
@@ -234,7 +246,6 @@ def read_numpy_structured_array_from_HDF5(fid, internalPath):
 #        data = numpy.zeros(data_shape, dtype = data_dtype)
 #        
 #        for each_name in fid[internalPath].keys():
-#            print 
 #            data[each_name] = fid[internalPath][each_name]
 #    
 #    if close_fid:
