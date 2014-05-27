@@ -1350,8 +1350,8 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_2_masks_count = new_neuron_set_2["area"]
         
         # Expand the counts to the size new_neuron_set_masks_overlayed. This solves any broadcasting bug.
-        new_neuron_set_1_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_1_masks_count, new_neuron_set_masks_overlayed.shape[1:])
-        new_neuron_set_2_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_2_masks_count, new_neuron_set_masks_overlayed.shape[1:])
+        new_neuron_set_1_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_1_masks_count, reps_after = (new_neuron_set_masks_overlayed.shape[1],))
+        new_neuron_set_2_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_2_masks_count, reps_before = (new_neuron_set_masks_overlayed.shape[0],))
         
         # Normalizes each set of masks by the count
         new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count_expanded
