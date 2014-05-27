@@ -327,12 +327,15 @@ def region_properties(new_label_image, *args, **kwargs):
                   dtype=[('Area', '<f8'), ('Centroid', '<f8', (2,)), ('Label', '<i8')])
     """
     
+    logger.debug(repr(numpy.unique(new_label_image)))
+    
     fixed_shape_array_values = [ "BoundingBox", "CentralMoments", "Centroid", "HuMoments", "Moments", "NormalizedMoments", "WeightedCentralMoments", "WeightedCentroid", "WeightedHuMoments", "WeightedMoments", "WeightedNormalizedMoments" ]
     all_array_values = [ "BoundingBox", "CentralMoments", "Centroid", "ConvexImage", "Coordinates", "FilledImage", "HuMoments", "Image", "Moments", "NormalizedMoments", "WeightedCentralMoments", "WeightedCentroid", "WeightedHuMoments", "WeightedMoments", "WeightedNormalizedMoments" ]
     
     new_label_image_props = None
-    new_label_image_props_values = None
-    new_label_image_props_dtype = None
+    new_label_image_props_with_arrays = None
+    new_label_image_props_with_arrays_values = None
+    new_label_image_props_with_arrays_dtype = None
     
     properties = None
     if (len(args)) and (args[0]):
@@ -374,23 +377,29 @@ def region_properties(new_label_image, *args, **kwargs):
         # This gives a list of dictionaries. However, this is not very usable. So, we will convert this to a structured NumPy array.
         new_label_image_props = skimage.measure.regionprops(new_label_image, properties, *args, **kwargs)
         
+        new_label_image_props_with_arrays = []
         for i in xrange(len(new_label_image_props)):
-            for each_key in all_array_values:
+            new_label_image_props_with_arrays.append({})
+            
+            for each_key in properties:
+                print each_key
                 if each_key in new_label_image_props[i]:
-                    new_label_image_props[i][each_key] = numpy.array(new_label_image_props[i][each_key])
+                    new_label_image_props_with_arrays[i][each_key] = numpy.array(new_label_image_props[i][each_key])
+                else:
+                    new_label_image_props_with_arrays[i][each_key] = new_label_image_props[i][each_key]
         
-        #print(repr(new_label_image_props))
+        #print(repr(new_label_image_props_with_arrays))
         #print("")
         
         # Holds the values from props.
-        new_label_image_props_values = []
+        new_label_image_props_with_arrays_values = []
 
         # Holds the types from props.
-        new_label_image_props_dtype = []
+        new_label_image_props_with_arrays_dtype = []
 
-        if len(new_label_image_props):
+        if len(new_label_image_props_with_arrays):
             # Get types for all properties as a dictionary
-            for each_name, each_sample_value in new_label_image_props[0].items():
+            for each_name, each_sample_value in new_label_image_props_with_arrays[0].items():
                 each_type = type(each_sample_value)
                 each_shape = tuple()
                 
@@ -400,59 +409,59 @@ def region_properties(new_label_image, *args, **kwargs):
                 else:
                     each_type = numpy.dtype(each_type)
                     
-                new_label_image_props_dtype.append( (each_name, each_type, each_shape) )
+                new_label_image_props_with_arrays_dtype.append( (each_name, each_type, each_shape) )
 
             # Store the values to place in NumPy structured array in order.
-            new_label_image_props_values = []
-            for j in xrange(len(new_label_image_props)):
+            new_label_image_props_with_arrays_values = []
+            for j in xrange(len(new_label_image_props_with_arrays)):
                 # Add all values in order of keys from the dictionary.
-                new_label_image_props_values.append([])
-                for each_new_label_image_props_dtype in new_label_image_props_dtype:
+                new_label_image_props_with_arrays_values.append([])
+                for each_new_label_image_props_with_arrays_dtype in new_label_image_props_with_arrays_dtype:
                     
-                    each_name, each_type, each_shape = each_new_label_image_props_dtype
+                    each_name, each_type, each_shape = each_new_label_image_props_with_arrays_dtype
                     
                     if each_shape:
-                        new_label_image_props_values[j].append(new_label_image_props[j][each_name].tolist())
+                        new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name].tolist())
                     else:
-                        new_label_image_props_values[j].append(new_label_image_props[j][each_name])
+                        new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name])
                     
-#                    if len(each_new_label_image_props_dtype) == 2:
-#                        each_name, each_type = each_new_label_image_props_dtype
+#                    if len(each_new_label_image_props_with_arrays_dtype) == 2:
+#                        each_name, each_type = each_new_label_image_props_with_arrays_dtype
 #                        
-#                        new_label_image_props_values[j].append(new_label_image_props[j][each_name])
-#                    elif len(each_new_label_image_props_dtype) == 3:
-#                        each_name, each_type, each_shape = each_new_label_image_props_dtype
+#                        new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name])
+#                    elif len(each_new_label_image_props_with_arrays_dtype) == 3:
+#                        each_name, each_type, each_shape = each_new_label_image_props_with_arrays_dtype
 #                        
-#                        new_label_image_props_values[j].append(new_label_image_props[j][each_name].tolist())
+#                        new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name].tolist())
 #                    else:
 #                        raise Exception("Not possible for dtype to be a length other than 2 or 3 elements.")
 
                 # NumPy will expect a tuple for each set of values.
-                new_label_image_props_values[j] = tuple(new_label_image_props_values[j])
+                new_label_image_props_with_arrays_values[j] = tuple(new_label_image_props_with_arrays_values[j])
 
-    if (not new_label_image.size) or (not len(new_label_image_props)):
-        new_label_image_props_dtype = []
+    if (not new_label_image.size) or (not len(new_label_image_props_with_arrays)):
+        new_label_image_props_with_arrays_dtype = []
         for each_key in properties:
             if each_key in [ "BoundingBox", "Centroid", "HuMoments", "WeightedCentroid", "WeightedHuMoments" ]:
-                new_label_image_props_dtype.append( (each_key, numpy.dtype(numpy.object), new_label_image.ndim) )
+                new_label_image_props_with_arrays_dtype.append( (each_key, numpy.dtype(numpy.object), new_label_image.ndim) )
             else:
-                new_label_image_props_dtype.append( (each_key, numpy.dtype(numpy.object)) )
+                new_label_image_props_with_arrays_dtype.append( (each_key, numpy.dtype(numpy.object)) )
     
 
     #print("")
     
-    #print(repr(new_label_image_props_values))
+    #print(repr(new_label_image_props_with_arrays_values))
     #print("")
-    #print(repr(new_label_image_props_dtype))
+    #print(repr(new_label_image_props_with_arrays_dtype))
     
     #print("")
     
-    new_label_image_props_dtype = numpy.dtype(new_label_image_props_dtype)
+    new_label_image_props_with_arrays_dtype = numpy.dtype(new_label_image_props_with_arrays_dtype)
 
     # Replace the properties with the structured array.
-    new_label_image_props = numpy.array(new_label_image_props_values, dtype = new_label_image_props_dtype)
+    new_label_image_props_with_arrays = numpy.array(new_label_image_props_with_arrays_values, dtype = new_label_image_props_with_arrays_dtype)
     
-    return(new_label_image_props)
+    return(new_label_image_props_with_arrays)
 
 @advanced_debugging.log_call(logger)
 def get_neuron_dtype(new_image):
@@ -634,7 +643,7 @@ def wavelet_denoising(new_image, **parameters):
 
         # Stores the number of times a particular label appears.
         local_maxima_labeled_count = numpy.zeros( (len(local_maxima_labeled_props),), dtype = [("Label", int), ("Count", int)] )
-        local_maxima_labeled_count["Label"] = numpy.arange(1,len(local_maxima_labeled_count)+1)
+        local_maxima_labeled_count["Label"] = numpy.arange(1, len(local_maxima_labeled_count)+1)
 
         # We want to have a few more type present in our NumPy structured array. To do this, we collect the existing types into
         # a list and then add our new types onto the end. Finally, we make the new structured array type from the list we have.
@@ -676,15 +685,16 @@ def wavelet_denoising(new_image, **parameters):
 
         # Increase the count of the matching label
         local_maxima_labeled_count["Count"] += (local_maxima_labeled_count["Label"].reshape(-1,1) == local_maxima_labeled_props["Label"].reshape(1,-1)).sum(axis=1)
-
+        
+        logger.debug("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
+        logger.debug("local_maxima_labeled_count = " + repr(local_maxima_labeled_count))
 
         if numpy.any(local_maxima_labeled_count["Count"] == 0):
             # All labels should have a local maximum. If they don't, this could be a problem.
 
             failed_labels_list = local_maxima_labeled_count["Label"][local_maxima_labeled_count["Count"] == 0].tolist()
             failed_labels_list = [str(_) for _ in failed_labels_list]
-            failed_label_str = ", ".join(failed_labels_list)
-            failed_label_msg = "Label(s) not found in local maxima. For labels = [ " + failed_label_str + " ]."
+            failed_label_msg = "Label(s) not found in local maxima. For labels = " + repr(failed_labels_list) + "."
 
             logger.warning(failed_label_msg)
         
@@ -815,6 +825,8 @@ def wavelet_denoising(new_image, **parameters):
             #print("new_wavelet_image_denoised_segmentation_regions = ")
             #print(repr(new_wavelet_image_denoised_segmentation_regions))
             
+            ## TODO: Replace with numpy.bincount.
+            
             new_wavelet_image_denoised_segmentation_props_labels_match = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props["Label"], new_wavelet_image_denoised_segmentation_regions)
             
             #print("new_wavelet_image_denoised_segmentation_props_labels_match = ")
@@ -844,17 +856,9 @@ def wavelet_denoising(new_image, **parameters):
                 # Toss the region props that we don't want.
                 new_wavelet_image_denoised_segmentation_props = new_wavelet_image_denoised_segmentation_props[~new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask]
                 
-                ## Get the old labels and their renumbering
-                #old_labels = new_wavelet_image_denoised_segmentation_props["Label"]
-                #new_labels = numpy.arange(1, len(old_labels) + 1)
-                #
-                ## Get masks for each old label.
-                #new_wavelet_image_denoised_segmentation_label_masks = advanced_numpy.all_permutations_equal(old_labels, new_wavelet_image_denoised_segmentation)
-                #new_labels_tiled_view = advanced_numpy.expand_view(new_labels, new_wavelet_image_denoised_segmentation.shape)
-                #
-                ## Replace the segmentation numbering and the label numbering in properties
-                #new_wavelet_image_denoised_segmentation = (new_wavelet_image_denoised_segmentation_label_masks * new_labels_tiled_view).sum(axis = 0)
-                #new_wavelet_image_denoised_segmentation_props["Label"] = new_labels
+                # Renumber all labels sequentially.
+                new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
+                new_wavelet_image_denoised_segmentation_props["Label"] = reverse_label_mapping[ new_wavelet_image_denoised_segmentation_props["Label"] ]
 
             # Just go ahead and toss the regions. The same information already exists through new_wavelet_image_denoised_segmentation_props["Label"].
             del new_wavelet_image_denoised_segmentation_regions
@@ -1102,6 +1106,8 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
     
     # TODO: Reverse if statement so it is not nots
     if len(new_neuron_set_1) and len(new_neuron_set_2):
+        logger.debug("Have 2 sets of neurons to merge.")
+        
         new_neuron_set = new_neuron_set_1.copy()
 
         new_neuron_set_1_flattened = new_neuron_set_1["image_original"].reshape(new_neuron_set_1["image_original"].shape[0], -1)
@@ -1116,45 +1122,31 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
                                                                 "cosine")
 
         # Measure the normalized Hamming distance (0, the same; 1, exact opposites) between the two
-        # Need 1 minus to calculate the number of similarities.
+        # Need 1 minus to calculate the number of similarities. Now, (1, the same; 0, exact opposites)
         new_neuron_set_masks_overlayed = 1 - scipy.spatial.distance.cdist(new_neuron_set_1_flattened_mask,
                                                                           new_neuron_set_2_flattened_mask,
                                                                           "hamming")
 
-        # Rescale the normalized Hamming distance to a non-normalized Hamming distance.
+        # Rescale the normalized Hamming distance to a non-normalized Hamming distance (i.e. the Hamming distance).
         new_neuron_set_masks_overlayed *= (new_neuron_set_1_flattened.shape[1])
 
         # Find the number of true values in each mask for each neuron
         # TODO: Just use area.
         new_neuron_set_1_masks_count = new_neuron_set_1["area"]
         new_neuron_set_2_masks_count = new_neuron_set_2["area"]
-
-        import sys
-        sys.stderr.flush()
-        sys.stdout.flush()
-        
-        #print("nsoafj;sldfjlasdjflasd")
-        #
-        #print("new_neuron_set_masks_overlayed = ")
-        #print(repr(new_neuron_set_masks_overlayed))
-        #
-        #print("new_neuron_set_1_masks_count = ")
-        #print(repr(new_neuron_set_1_masks_count))
-        #
-        #print("new_neuron_set_2_masks_count = ")
-        #print(repr(new_neuron_set_2_masks_count))
-        #
-        #print("nsoafj;sldfjlasdjflasd")
         
         # Normalizes each set of masks by the count
         new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count
         new_neuron_set_masks_overlayed_2 = new_neuron_set_masks_overlayed / new_neuron_set_2_masks_count
 
-
+        # Now that the three measures for the correlation method have been found, we want to know,
+        # which are the best correlated neurons between the two sets using these measures.
+        # This done to find the neuron in new_neuron_set_1 that best matches each neuron in new_neuron_set_2.
         new_neuron_set_angle_optimal = new_neuron_set_angle.argmax(axis = 0)
         new_neuron_set_masks_overlayed_1_optimal = new_neuron_set_masks_overlayed_1.argmax(axis = 0)
         new_neuron_set_masks_overlayed_2_optimal = new_neuron_set_masks_overlayed_2.argmax(axis = 0)
 
+        # Fuse or add each neuron from new_neuron_set_2 to the new_neuron_set composed of new_neuron_set_1
         for j in xrange(new_neuron_set_2.shape[0]):
             new_neuron_set_angle_i = new_neuron_set_angle_optimal[j]
             new_neuron_set_masks_overlayed_1_i = new_neuron_set_masks_overlayed_1_optimal[j]
@@ -1177,12 +1169,14 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         #print("new_neuron_set = ")
         #print(repr(new_neuron_set))
         
-        
     elif not len(new_neuron_set_1):
+        logger.debug("Have 1 sets of neurons to merge. Only the first set has neurons.")
         new_neuron_set = new_neuron_set_2
-    #elif not len(new_neuron_set_2):
-    #    new_neuron_set = new_neuron_set_1
+    elif not len(new_neuron_set_2):
+        logger.debug("Have 1 sets of neurons to merge. Only the second set has neurons.")
+        new_neuron_set = new_neuron_set_1
     else:
+        logger.debug("Have 0 sets of neurons to merge.")
         new_neuron_set = new_neuron_set_1
     
     return(new_neuron_set)
@@ -1212,13 +1206,14 @@ def generate_neurons(new_images, **parameters):
     
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])
-    for each_new_dictionary_image in new_dictionary:
+    for i, each_new_dictionary_image in enumerate(new_dictionary):
         each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, **parameters["wavelet_denoising"])
         
-            
-        #print("Finished a set of neurons.")
+        logger.debug("Denoised a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
         
         new_neurons_set = merge_neuron_sets(new_neurons_set, each_new_neuron_set, **parameters["merge_neuron_sets"])
+        
+        logger.debug("Merged a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
     
     
     return(new_neurons_set)
