@@ -21,6 +21,7 @@ import skimage
 import skimage.measure
 import skimage.feature
 import skimage.morphology
+import skimage.segmentation
 
 # To allow for more advanced iteration pattersn
 import itertools
@@ -327,6 +328,7 @@ def region_properties(new_label_image, *args, **kwargs):
                   dtype=[('Area', '<f8'), ('Centroid', '<f8', (2,)), ('Label', '<i8')])
     """
     
+    logger.debug(repr(new_label_image))
     logger.debug(repr(numpy.unique(new_label_image)))
     
     fixed_shape_array_values = [ "BoundingBox", "CentralMoments", "Centroid", "HuMoments", "Moments", "NormalizedMoments", "WeightedCentralMoments", "WeightedCentroid", "WeightedHuMoments", "WeightedMoments", "WeightedNormalizedMoments" ]
@@ -537,10 +539,12 @@ def wavelet_denoising(new_image, **parameters):
         
         # For holding the label image
         new_wavelet_image_denoised_labeled = scipy.ndimage.label(new_wavelet_image_denoised)[0]
+        # Renumber all labels sequentially
+        new_wavelet_image_denoised_labeled = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_labeled)[0]
 
         logger.debug("Found the label image.")
         logger.debug("Determining the properties of the label image...")
-
+        
         # For holding the label image properties
         new_wavelet_image_denoised_labeled_props = region_properties(new_wavelet_image_denoised_labeled, properties = parameters["accepted_region_shape_constraints"].keys())
         
@@ -603,6 +607,8 @@ def wavelet_denoising(new_image, **parameters):
         logger.debug("Finding new label image...")
 
         new_wavelet_mask_labeled = scipy.ndimage.label(new_wavelet_image_mask)[0]
+        # Renumber all labels sequentially
+        new_wavelet_mask_labeled = skimage.segmentation.relabel_sequential(new_wavelet_mask_labeled)[0]
         
         logger.debug("Found new label image.")
         
@@ -620,6 +626,9 @@ def wavelet_denoising(new_image, **parameters):
         # Group local maxima. Also, we don't care about differentiating them. If there are several local maxima touching, we only want one.
         # Note, if they are touching, they must be on a plateau (i.e. all have the same value).
         local_maxima_labeled = scipy.ndimage.label(local_maxima_mask.astype(int))[0]
+        # Renumber all labels sequentially
+        local_maxima_labeled = skimage.segmentation.relabel_sequential(local_maxima_labeled)[0]
+        
         
         logger.debug("Labeled the local maxima.")
         
@@ -794,7 +803,9 @@ def wavelet_denoising(new_image, **parameters):
             # Use seeds from centroids of local minima
             # Also, include mask
             new_wavelet_image_denoised_segmentation = skimage.morphology.watershed(-new_wavelet_image_denoised, new_wavelet_image_denoised_maxima, mask = (new_wavelet_image_denoised > 0))
-
+            # Renumber all labels sequentially
+            new_wavelet_image_denoised_segmentation = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)[0]
+            
             # Get the regions created in segmentation (drop zero as it is the background)
             new_wavelet_image_denoised_segmentation_regions = numpy.unique(new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation != 0])
 
