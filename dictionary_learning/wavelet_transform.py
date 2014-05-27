@@ -183,21 +183,23 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 
 
 @advanced_debugging.log_call(logger)
-def wavelet_transform(im0, scale = 5):
+def wavelet_transform(im0, scale = 5, include_intermediates = False):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
         
         Args:
-            i(int):                                                 which scaling to use.
-            n(int):                                                 which row of Pascal's triangle to return.
-            border_treatment(vigra.filters.BorderTreatmentMode):    determines how to deal with the borders.
+            im0(numpy.ndarray):                                         the original image.
+            scale(int):                                                 the scale of wavelet transform to apply.
+            include_intermediates                                       whether to return intermediates or not (default False)
         
         Returns:
             k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
         
         
         Examples:
-            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32), 1) # doctest: +NORMALIZE_WHITESPACE
+            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32),
+            ...     scale = 1,
+            ...     include_intermediates = True) # doctest: +NORMALIZE_WHITESPACE
             (array([[[ 0.59375, -0.375  , -0.34375],
                      [-0.375  ,  0.625  , -0.375  ],
                      [-0.34375, -0.375  ,  0.59375]]]),
@@ -243,4 +245,7 @@ def wavelet_transform(im0, scale = 5):
         imOut[i] = imCur
         imPrev = imCur
     
-    return((W, imOut))
+    if include_intermediates:
+        return((W, imOut))
+    else:
+        return(W)
