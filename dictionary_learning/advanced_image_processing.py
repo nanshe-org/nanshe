@@ -1213,6 +1213,9 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
             dict: the dictionary found.
     """
     
+    print neuron_1.shape
+    print neuron_2.shape
+    assert(neuron_1.shape == neuron_2.shape == tuple())
     assert(neuron_1.dtype == neuron_2.dtype)
     
     mean_neuron = numpy.array([neuron_1["image_original"], neuron_2["image_original"]]).mean(axis = 0)
@@ -1244,15 +1247,24 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
 
     new_neuron["max_F"] = new_neuron["image"].max()
 
-    for i in xrange(len(new_neuron)):
-        new_neuron_mask_points = numpy.array(new_neuron["mask"][i].nonzero())
+    new_neuron_mask_points = numpy.array(new_neuron["mask"].nonzero())
         
-        print("new_neuron_mask_points = " + repr(new_neuron_mask_points))
+    print("new_neuron_mask_points = " + repr(new_neuron_mask_points))
 
-        print("new_neuron_mask_points.mean(axis = 1) = " + repr(new_neuron_mask_points.mean(axis = 1)))
-        
-        new_neuron["gaussian_mean"][i] = new_neuron_mask_points.mean(axis = 1)
-        new_neuron["gaussian_cov"][i] = numpy.cov(new_neuron_mask_points)
+    print("new_neuron_mask_points.mean(axis = 1) = " + repr(new_neuron_mask_points.mean(axis = 1)))
+
+    new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis = 1)
+    new_neuron["gaussian_cov"] = numpy.cov(new_neuron_mask_points)
+    
+    #    for i in xrange(len(new_neuron)):
+    #        new_neuron_mask_points = numpy.array(new_neuron["mask"][i].nonzero())
+    #        
+    #        print("new_neuron_mask_points = " + repr(new_neuron_mask_points))
+    #
+    #        print("new_neuron_mask_points.mean(axis = 1) = " + repr(new_neuron_mask_points.mean(axis = 1)))
+    #        
+    #        new_neuron["gaussian_mean"][i] = new_neuron_mask_points.mean(axis = 1)
+    #        new_neuron["gaussian_cov"][i] = numpy.cov(new_neuron_mask_points)
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
     
@@ -1315,7 +1327,10 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
 
         new_neuron_set_1_flattened_mask = new_neuron_set_1["mask"].reshape(new_neuron_set_1["mask"].shape[0], -1)
         new_neuron_set_2_flattened_mask = new_neuron_set_2["mask"].reshape(new_neuron_set_2["mask"].shape[0], -1)
-
+        
+        print("new_neuron_set_1_flattened.nonzero() = " + repr(new_neuron_set_1_flattened.nonzero()))
+        print("new_neuron_set_2_flattened.nonzero() = " + repr(new_neuron_set_2_flattened.nonzero()))
+        
         # Measure the dot product between any two neurons (i.e. related to the angle of separation)
         new_neuron_set_angle = 1 - scipy.spatial.distance.cdist(new_neuron_set_1_flattened,
                                                                 new_neuron_set_2_flattened,
@@ -1328,18 +1343,24 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
                                                                           "hamming")
 
         # Rescale the normalized Hamming distance to a non-normalized Hamming distance (i.e. the Hamming distance).
-        new_neuron_set_masks_overlayed *= (new_neuron_set_1_flattened.shape[1])
+        new_neuron_set_masks_overlayed *= (new_neuron_set_1_flattened_mask.shape[1])
 
         # Find the number of true values in each mask for each neuron
         new_neuron_set_1_masks_count = new_neuron_set_1["area"]
         new_neuron_set_2_masks_count = new_neuron_set_2["area"]
         
-        new_neuron_set_1_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_1_masks_count, new_neuron_set_masks_overlayed.shape)
-        new_neuron_set_2_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_2_masks_count, new_neuron_set_masks_overlayed.shape)
+        # Expand the counts to the size new_neuron_set_masks_overlayed. This solves any broadcasting bug.
+        new_neuron_set_1_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_1_masks_count, new_neuron_set_masks_overlayed.shape[1:])
+        new_neuron_set_2_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_2_masks_count, new_neuron_set_masks_overlayed.shape[1:])
         
         # Normalizes each set of masks by the count
         new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count_expanded
         new_neuron_set_masks_overlayed_2 = new_neuron_set_masks_overlayed / new_neuron_set_2_masks_count_expanded
+
+        print("new_neuron_set_angle = " + repr(new_neuron_set_angle))
+        print("new_neuron_set_masks_overlayed = " + repr(new_neuron_set_masks_overlayed))
+        print("new_neuron_set_masks_overlayed_1 = " + repr(new_neuron_set_masks_overlayed_1))
+        print("new_neuron_set_masks_overlayed_2 = " + repr(new_neuron_set_masks_overlayed_2))
 
         # Now that the three measures for the correlation method have been found, we want to know,
         # which are the best correlated neurons between the two sets using these measures.
@@ -1358,6 +1379,10 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
             new_neuron_set_masks_overlayed_1_i = new_neuron_set_masks_overlayed_1_optimal[j]
             new_neuron_set_masks_overlayed_2_i = new_neuron_set_masks_overlayed_2_optimal[j]
 
+            print("new_neuron_set_angle_i = " + repr(new_neuron_set_angle_i))
+            print("new_neuron_set_masks_overlayed_1_i = " + repr(new_neuron_set_masks_overlayed_1_i))
+            print("new_neuron_set_masks_overlayed_2_i = " + repr(new_neuron_set_masks_overlayed_2_i))
+            
             new_neuron_set_angle_max = new_neuron_set_angle[ new_neuron_set_angle_i, j ]
             new_neuron_set_masks_overlayed_1_max = new_neuron_set_masks_overlayed_1[ new_neuron_set_masks_overlayed_1_i, j ]
             new_neuron_set_masks_overlayed_2_max = new_neuron_set_masks_overlayed_2[ new_neuron_set_masks_overlayed_2_i, j ]
