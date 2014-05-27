@@ -711,95 +711,102 @@ def wavelet_denoising(new_image, **parameters):
         
         logger.debug("Found new label image.")
         
-        logger.debug("Finding the local maxima...")
-
-        # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
-        # but it requires skimage 0.8.0 minimum.
-        local_maxima_neighborhood = numpy.ones((2 * parameters["local_max_neighborhood_size"] + 1,) * new_wavelet_image_denoised.ndim)
-        local_maxima_mask = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = local_maxima_neighborhood, labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
-
-        logger.debug("Found the local maxima.")
-        
-        logger.debug("Labeling the local maxima...")
-
-        # Group local maxima. Also, we don't care about differentiating them. If there are several local maxima touching, we only want one.
-        # Note, if they are touching, they must be on a plateau (i.e. all have the same value).
-        local_maxima_labeled = scipy.ndimage.label(local_maxima_mask.astype(int))[0]
-        # Renumber all labels sequentially
-        print(repr(numpy.unique(local_maxima_labeled)))
-        local_maxima_labeled = skimage.segmentation.relabel_sequential(local_maxima_labeled)[0].copy()
-        print(repr(numpy.unique(local_maxima_labeled)))
-        
-        
-        logger.debug("Labeled the local maxima.")
-        
-        logger.debug("Extracting properties from the local maxima.")
-
-        # Extract the centroids.
-        
-        print("local_maxima_labeled = " + repr(local_maxima_labeled))
-        
-        local_maxima_labeled_props = region_properties(local_maxima_labeled, properties = ["Centroid"])
-        
-        print("local_maxima_labeled = " + repr(local_maxima_labeled))
-        print("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
-        
-        logger.debug("Extracted properties from the local maxima.")
-        
-        # This should not be used again so we drop it.
-        #del local_maxima_labeled_binary
-
-        # These should not be used agan. So, we drop them.
-        # This way, if they are used, we get an error.
-        del local_maxima_mask
-        del local_maxima_labeled
-        
-        logger.debug("Refinining properties for local maxima...")
-
+        # Store the properties of those maxima
+        local_maxima_labeled_props = local_maxima_properties(new_wavelet_image_denoised, **parameters["local_maxima_properties"])
         # Stores the number of times a particular label appears.
         local_maxima_labeled_count = numpy.zeros( (len(local_maxima_labeled_props),), dtype = [("Label", int), ("Count", int)] )
         local_maxima_labeled_count["Label"] = numpy.arange(1, len(local_maxima_labeled_count)+1)
+        
+        #        logger.debug("Finding the local maxima...")
+        #
+        #        # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
+        #        # but it requires skimage 0.8.0 minimum.
+        #        local_maxima_neighborhood = numpy.ones((2 * parameters["local_max_neighborhood_size"] + 1,) * new_wavelet_image_denoised.ndim)
+        #        local_maxima_mask = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = local_maxima_neighborhood, labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
+        #
+        #        logger.debug("Found the local maxima.")
+        #        
+        #        logger.debug("Labeling the local maxima...")
+        #
+        #        # Group local maxima. Also, we don't care about differentiating them. If there are several local maxima touching, we only want one.
+        #        # Note, if they are touching, they must be on a plateau (i.e. all have the same value).
+        #        local_maxima_labeled = scipy.ndimage.label(local_maxima_mask.astype(int))[0]
+        #        # Renumber all labels sequentially
+        #        print(repr(numpy.unique(local_maxima_labeled)))
+        #        local_maxima_labeled = skimage.segmentation.relabel_sequential(local_maxima_labeled)[0].copy()
+        #        print(repr(numpy.unique(local_maxima_labeled)))
+        #        
+        #        
+        #        logger.debug("Labeled the local maxima.")
+        #        
+        #        logger.debug("Extracting properties from the local maxima.")
+        #
+        #        # Extract the centroids.
+        #        
+        #        print("local_maxima_labeled = " + repr(local_maxima_labeled))
+        #        
+        #        local_maxima_labeled_props = region_properties(local_maxima_labeled, properties = ["Centroid"])
+        #        
+        #        print("local_maxima_labeled = " + repr(local_maxima_labeled))
+        #        print("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
+        #        
+        #        logger.debug("Extracted properties from the local maxima.")
+        #        
+        #        # This should not be used again so we drop it.
+        #        #del local_maxima_labeled_binary
+        #
+        #        # These should not be used agan. So, we drop them.
+        #        # This way, if they are used, we get an error.
+        #        del local_maxima_mask
+        #        del local_maxima_labeled
+        #        
+        #        logger.debug("Refinining properties for local maxima...")
+        #
+        #        # Stores the number of times a particular label appears.
+        #        local_maxima_labeled_count = numpy.zeros( (len(local_maxima_labeled_props),), dtype = [("Label", int), ("Count", int)] )
+        #        local_maxima_labeled_count["Label"] = numpy.arange(1, len(local_maxima_labeled_count)+1)
+        #
+        #        # We want to have a few more type present in our NumPy structured array. To do this, we collect the existing types into
+        #        # a list and then add our new types onto the end. Finally, we make the new structured array type from the list we have.
+        #        local_maxima_labeled_props_dtype = []
+        #
+        #        for each_name in local_maxima_labeled_props.dtype.names:
+        #            local_maxima_labeled_props_dtype.append( (each_name, local_maxima_labeled_props[each_name].dtype, local_maxima_labeled_props[each_name].shape[1:]) )
+        #
+        #        local_maxima_labeled_props_dtype.append( ("IntCentroid", int, local_maxima_labeled_props["Centroid"].shape[1:]) )
+        #        local_maxima_labeled_props_dtype.append( ("IntCentroidWaveletValue", new_wavelet_image_denoised.dtype) )
+        #
+        #        local_maxima_labeled_props_dtype = numpy.dtype(local_maxima_labeled_props_dtype)
+        #
+        #        # Makes a new properties array that contains enough entries to hold the old one and has all the types we desire.
+        #        new_local_maxima_labeled_props = numpy.zeros(local_maxima_labeled_props.shape, dtype = local_maxima_labeled_props_dtype)
+        #
+        #        # Copy over the old values.
+        #        for each_name in local_maxima_labeled_props.dtype.names:
+        #            new_local_maxima_labeled_props[each_name] = local_maxima_labeled_props[each_name].copy()
+        #
+        #        # Replace the old structured array with the enlarged version.
+        #        local_maxima_labeled_props = new_local_maxima_labeled_props
+        #
+        #
+        #        # Get integers close to local max
+        #        local_maxima_labeled_props["IntCentroid"] = local_maxima_labeled_props["Centroid"].round().astype(int)
+        #
+        #        # Stores the value from wavelet denoising at the centroid for easy retrieval
+        #        if local_maxima_labeled_props["IntCentroidWaveletValue"].size:
+        #            local_maxima_labeled_props["IntCentroidWaveletValue"] = new_wavelet_image_denoised[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
 
-        # We want to have a few more type present in our NumPy structured array. To do this, we collect the existing types into
-        # a list and then add our new types onto the end. Finally, we make the new structured array type from the list we have.
-        local_maxima_labeled_props_dtype = []
-
-        for each_name in local_maxima_labeled_props.dtype.names:
-            local_maxima_labeled_props_dtype.append( (each_name, local_maxima_labeled_props[each_name].dtype, local_maxima_labeled_props[each_name].shape[1:]) )
-
-        local_maxima_labeled_props_dtype.append( ("IntCentroid", int, local_maxima_labeled_props["Centroid"].shape[1:]) )
-        local_maxima_labeled_props_dtype.append( ("IntCentroidWaveletValue", new_wavelet_image_denoised.dtype) )
-
-        local_maxima_labeled_props_dtype = numpy.dtype(local_maxima_labeled_props_dtype)
-
-        # Makes a new properties array that contains enough entries to hold the old one and has all the types we desire.
-        new_local_maxima_labeled_props = numpy.zeros(local_maxima_labeled_props.shape, dtype = local_maxima_labeled_props_dtype)
-
-        # Copy over the old values.
-        for each_name in local_maxima_labeled_props.dtype.names:
-            new_local_maxima_labeled_props[each_name] = local_maxima_labeled_props[each_name].copy()
-
-        # Replace the old structured array with the enlarged version.
-        local_maxima_labeled_props = new_local_maxima_labeled_props
-
-
-        # Get integers close to local max
-        local_maxima_labeled_props["IntCentroid"] = local_maxima_labeled_props["Centroid"].round().astype(int)
-
-        # Stores the value from wavelet denoising at the centroid for easy retrieval
-        if local_maxima_labeled_props["IntCentroidWaveletValue"].size:
-            local_maxima_labeled_props["IntCentroidWaveletValue"] = new_wavelet_image_denoised[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
-
-        # Overwrite the label parameter as it holds no information as it is always 1, Now, is the label from wavelet mask label image.
+        # Overwrite the label parameter as it holds no information. Now, is the label from wavelet mask label image.
         if local_maxima_labeled_props["Label"].size:
             local_maxima_labeled_props["Label"] = new_wavelet_mask_labeled[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
 
         if (numpy.any(local_maxima_labeled_props["Label"] == 0)):
             # There shouldn't be any maximums in the background. This should never happen.
-            logger.debug("Maximum found where Label is 0.")
+            logger.warning("Maximum found where Label is 0.")
 
         # Increase the count of the matching label
-        local_maxima_labeled_count["Count"] += (local_maxima_labeled_count["Label"].reshape(-1,1) == local_maxima_labeled_props["Label"].reshape(1,-1)).sum(axis=1)
+        #local_maxima_labeled_count["Count"] += (local_maxima_labeled_count["Label"].reshape(-1,1) == local_maxima_labeled_props["Label"].reshape(1,-1)).sum(axis=1)
+        local_maxima_labeled_count["Count"] += numpy.bincount(local_maxima_labeled_count["Label"])[1:]
         
         logger.debug("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
         logger.debug("local_maxima_labeled_count = " + repr(local_maxima_labeled_count))
