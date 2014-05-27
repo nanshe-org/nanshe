@@ -20,6 +20,50 @@ import advanced_debugging
 logger = advanced_debugging.logging.getLogger(__name__)
 
 
+def renumber_label_image(new_array):
+    """
+        Takes a label image with non-consecutive numbering and renumbers it to be consecutive.
+        
+        Args:
+            new_array(numpy.ndarray):            the label image.
+            
+        Returns:
+            (numpy.ndarray):                     the relabeled label image
+        
+        Examples:
+            >>> renumber_label_image(np.array([1, 2, 3]))
+            array([1, 2, 3])
+            
+            >>> renumber_label_image(np.array([1, 2, 4]))
+            array([1, 2, 3])
+            
+            >>> renumber_label_image(np.array([0, 1, 2, 3]))
+            array([0, 1, 2, 3])
+            
+            >>> renumber_label_image(np.array([0, 1, 2, 4]))
+            array([0, 1, 2, 3])
+    """
+    
+    # Get the set of old labels excluding background
+    old_labels = numpy.unique(new_array)
+    old_labels = old_labels[old_labels != 0]
+    
+    # Get the set of new labels in order
+    new_labels = numpy.arange(1, len(old_labels) + 1)
+
+    # Get masks for each old label
+    new_array_label_masks = all_permutations_equal(old_labels, new_array)
+    
+    # Create tiled where each label is expanded to the size of the new_array
+    new_labels_tiled_view = expand_view(new_labels, new_array.shape)
+    
+    # Take every mask and make sure it has the appropriate sequential label
+    # Then combine each of these parts of the label image together into a new sequential label image
+    new_array_relabeled = (new_array_label_masks * new_labels_tiled_view).sum(axis = 0)
+    
+    return(new_array_relabeled)
+
+
 @advanced_debugging.log_call(logger)
 def add_singleton_axis_pos(new_array, new_pos = 0):
     """
