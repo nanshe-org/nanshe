@@ -611,7 +611,7 @@ def wavelet_denoising(new_image, **parameters):
         # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
         # but it requires skimage 0.8.0 minimum.
         local_maxima_neighborhood = numpy.ones((2 * parameters["local_max_neighborhood_size"] + 1,) * new_wavelet_image_denoised.ndim)
-        local_maxima_mask = skimage.morphology.is_local_maximum(new_wavelet_image_denoised, footprint = local_maxima_neighborhood, labels = (new_wavelet_image_denoised > 0).astype(int))
+        local_maxima_mask = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = local_maxima_neighborhood, labels = (new_wavelet_image_denoised > 0).astype(int))
         #local_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = numpy.ones((3,) * new_wavelet_image_denoised.ndim), labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
 
         logger.debug("Found the local maxima.")
@@ -781,9 +781,6 @@ def wavelet_denoising(new_image, **parameters):
             # First perform disc opening on the image. (Actually, we don't do this.)
             #new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised.astype(numpy.float32), radius = 1)
 
-            # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
-            # but it requires skimage 0.8.0 minimum.
-            #new_wavelet_image_denoised_maxima = skimage.morphology.is_local_maximum(new_wavelet_image_denoised, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised > 0).astype(int))
             #new_wavelet_image_denoised_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
 
             # We could look for seeds using local maxima. However, we already know what these should be as these are the centroids we have found.
