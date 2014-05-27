@@ -385,7 +385,7 @@ def region_properties(new_label_image, *args, **kwargs):
             
             for each_key in properties:
                 print each_key
-                if each_key in new_label_image_props[i]:
+                if each_key in all_array_values:
                     new_label_image_props_with_arrays[i][each_key] = numpy.array(new_label_image_props[i][each_key])
                 else:
                     new_label_image_props_with_arrays[i][each_key] = new_label_image_props[i][each_key]
@@ -401,7 +401,8 @@ def region_properties(new_label_image, *args, **kwargs):
 
         if len(new_label_image_props_with_arrays):
             # Get types for all properties as a dictionary
-            for each_name, each_sample_value in new_label_image_props_with_arrays[0].items():
+            for each_name in properties:
+                each_sample_value = new_label_image_props_with_arrays[0][each_name]
                 each_type = type(each_sample_value)
                 each_shape = tuple()
                 
@@ -836,38 +837,84 @@ def wavelet_denoising(new_image, **parameters):
             
             ## TODO: Replace with numpy.bincount.
             
-            new_wavelet_image_denoised_segmentation_props_labels_match = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props["Label"], new_wavelet_image_denoised_segmentation_regions)
+            new_wavelet_image_denoised_segmentation_props_labels_count = numpy.bincount(new_wavelet_image_denoised_segmentation_props["Label"])
+            new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask = (new_wavelet_image_denoised_segmentation_props_labels_count > 1)
+            new_wavelet_image_denoised_segmentation_props_labels_duplicates = numpy.unique(new_wavelet_image_denoised_segmentation_props["Label"][new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask])
             
-            #print("new_wavelet_image_denoised_segmentation_props_labels_match = ")
-            #print(repr(new_wavelet_image_denoised_segmentation_props_labels_match))
+            # Determine a mask that represents all labels to be set to zero in the watershed (new_wavelet_image_denoised_segmentation_props_labels_non_duplicates_watershed_mask)
+            # The first index now corresponds to the same index used to denote each duplicate. The rest for the image.
+            new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_labels_duplicates, new_wavelet_image_denoised_segmentation)
 
-            if (new_wavelet_image_denoised_segmentation_props_labels_match.ndim != 2):
-                raise Exception("There is no reason this should happen. Someone changed something they shouldn't have. The dimensions of this match should be 2 exactly.")
+            # If any of the masks contain a point to remove then it should be included for removal. Only points in none of the stacks should not.
+            new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks.any(axis = 0)
 
-            if (new_wavelet_image_denoised_segmentation_props_labels_match.shape[0] < new_wavelet_image_denoised_segmentation_props_labels_match.shape[1]):
-                raise Exception("There is no reason this should happen. There are less labeled regions than there are unique labels?!")
-            elif (new_wavelet_image_denoised_segmentation_props_labels_match.shape[0] > new_wavelet_image_denoised_segmentation_props_labels_match.shape[1]):
-                # So, we have some labels represented more than once. We will simply eliminate these.
-                # Find all labels that repeat
-                new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask = (new_wavelet_image_denoised_segmentation_props_labels_match.sum(axis = 0) > 1)
-                new_wavelet_image_denoised_segmentation_props_labels_duplicates = numpy.unique(new_wavelet_image_denoised_segmentation_props["Label"][new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask])
+            # Zero the labels that need to be removed.
+            new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask] = 0
 
-                # Determine a mask that represents all labels to be set to zero in the watershed (new_wavelet_image_denoised_segmentation_props_labels_non_duplicates_watershed_mask)
-                # The first index now corresponds to the same index used to denote each duplicate. The rest for the image.
-                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_labels_duplicates, new_wavelet_image_denoised_segmentation)
-                
-                # If any of the masks contain a point to remove then it should be included for removal. Only points in none of the stacks should not.
-                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks.any(axis = 0)
+            # Toss the region props that we don't want.
+            new_wavelet_image_denoised_segmentation_props = new_wavelet_image_denoised_segmentation_props[~new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask]
 
-                # Zero the labels that need to be removed.
-                new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask] = 0
-
-                # Toss the region props that we don't want.
-                new_wavelet_image_denoised_segmentation_props = new_wavelet_image_denoised_segmentation_props[~new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask]
-                
-                # Renumber all labels sequentially.
-                new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
-                new_wavelet_image_denoised_segmentation_props["Label"] = reverse_label_mapping[ new_wavelet_image_denoised_segmentation_props["Label"] ]
+            # Renumber all labels sequentially.
+            new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
+            new_wavelet_image_denoised_segmentation_props["Label"] = reverse_label_mapping[ new_wavelet_image_denoised_segmentation_props["Label"] ]
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+#            new_wavelet_image_denoised_segmentation_props_labels_match = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props["Label"], new_wavelet_image_denoised_segmentation_regions)
+#            
+#            #print("new_wavelet_image_denoised_segmentation_props_labels_match = ")
+#            #print(repr(new_wavelet_image_denoised_segmentation_props_labels_match))
+#
+#            if (new_wavelet_image_denoised_segmentation_props_labels_match.ndim != 2):
+#                raise Exception("There is no reason this should happen. Someone changed something they shouldn't have. The dimensions of this match should be 2 exactly.")
+#
+#            if (new_wavelet_image_denoised_segmentation_props_labels_match.shape[0] < new_wavelet_image_denoised_segmentation_props_labels_match.shape[1]):
+#                raise Exception("There is no reason this should happen. There are less labeled regions than there are unique labels?!")
+#            elif (new_wavelet_image_denoised_segmentation_props_labels_match.shape[0] > new_wavelet_image_denoised_segmentation_props_labels_match.shape[1]):
+#                # So, we have some labels represented more than once. We will simply eliminate these.
+#                # Find all labels that repeat
+#                new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask = (new_wavelet_image_denoised_segmentation_props_labels_match.sum(axis = 0) > 1)
+#                new_wavelet_image_denoised_segmentation_props_labels_duplicates = numpy.unique(new_wavelet_image_denoised_segmentation_props["Label"][new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask])
+#
+#                # Determine a mask that represents all labels to be set to zero in the watershed (new_wavelet_image_denoised_segmentation_props_labels_non_duplicates_watershed_mask)
+#                # The first index now corresponds to the same index used to denote each duplicate. The rest for the image.
+#                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_labels_duplicates, new_wavelet_image_denoised_segmentation)
+#                
+#                # If any of the masks contain a point to remove then it should be included for removal. Only points in none of the stacks should not.
+#                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks.any(axis = 0)
+#
+#                # Zero the labels that need to be removed.
+#                new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask] = 0
+#
+#                # Toss the region props that we don't want.
+#                new_wavelet_image_denoised_segmentation_props = new_wavelet_image_denoised_segmentation_props[~new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask]
+#                
+#                # Renumber all labels sequentially.
+#                new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
+#                new_wavelet_image_denoised_segmentation_props["Label"] = reverse_label_mapping[ new_wavelet_image_denoised_segmentation_props["Label"] ]
 
             # Just go ahead and toss the regions. The same information already exists through new_wavelet_image_denoised_segmentation_props["Label"].
             del new_wavelet_image_denoised_segmentation_regions
