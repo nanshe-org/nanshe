@@ -1321,9 +1321,12 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_1_masks_count = new_neuron_set_1["area"]
         new_neuron_set_2_masks_count = new_neuron_set_2["area"]
         
+        new_neuron_set_1_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_1_masks_count, new_neuron_set_masks_overlayed.shape)
+        new_neuron_set_2_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_2_masks_count, new_neuron_set_masks_overlayed.shape)
+        
         # Normalizes each set of masks by the count
-        new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count
-        new_neuron_set_masks_overlayed_2 = new_neuron_set_masks_overlayed / new_neuron_set_2_masks_count
+        new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count_expanded
+        new_neuron_set_masks_overlayed_2 = new_neuron_set_masks_overlayed / new_neuron_set_2_masks_count_expanded
 
         # Now that the three measures for the correlation method have been found, we want to know,
         # which are the best correlated neurons between the two sets using these measures.
