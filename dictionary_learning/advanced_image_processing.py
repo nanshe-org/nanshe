@@ -1331,7 +1331,6 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_masks_overlayed *= (new_neuron_set_1_flattened.shape[1])
 
         # Find the number of true values in each mask for each neuron
-        # TODO: Just use area.
         new_neuron_set_1_masks_count = new_neuron_set_1["area"]
         new_neuron_set_2_masks_count = new_neuron_set_2["area"]
         
@@ -1349,6 +1348,10 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_masks_overlayed_1_optimal = new_neuron_set_masks_overlayed_1.argmax(axis = 0)
         new_neuron_set_masks_overlayed_2_optimal = new_neuron_set_masks_overlayed_2.argmax(axis = 0)
 
+        print("new_neuron_set_angle_optimal = " + repr(new_neuron_set_angle_optimal))
+        print("new_neuron_set_masks_overlayed_1_optimal = " + repr(new_neuron_set_masks_overlayed_1_optimal))
+        print("new_neuron_set_masks_overlayed_2_optimal = " + repr(new_neuron_set_masks_overlayed_2_optimal))
+
         # Fuse or add each neuron from new_neuron_set_2 to the new_neuron_set composed of new_neuron_set_1
         for j in xrange(new_neuron_set_2.shape[0]):
             new_neuron_set_angle_i = new_neuron_set_angle_optimal[j]
@@ -1358,7 +1361,9 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
             new_neuron_set_angle_max = new_neuron_set_angle[ new_neuron_set_angle_i, j ]
             new_neuron_set_masks_overlayed_1_max = new_neuron_set_masks_overlayed_1[ new_neuron_set_masks_overlayed_1_i, j ]
             new_neuron_set_masks_overlayed_2_max = new_neuron_set_masks_overlayed_2[ new_neuron_set_masks_overlayed_2_i, j ]
-
+            
+            print(repr(new_neuron_set_masks_overlayed_2_max))
+            
             if new_neuron_set_angle_max > parameters["alignment_min_threshold"]:
                 new_neuron_set[new_neuron_set_angle_i] = fuse_neurons(new_neuron_set_1[new_neuron_set_angle_i], new_neuron_set_2[j], **parameters["fuse_neurons"])
             else:
