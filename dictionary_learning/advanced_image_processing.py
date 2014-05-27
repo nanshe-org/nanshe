@@ -1218,6 +1218,15 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
     mean_neuron = numpy.array([neuron_1["image_original"], neuron_2["image_original"]]).mean(axis = 0)
     mean_neuron_mask = mean_neuron > (parameters["fraction_mean_neuron_max_threshold"] * mean_neuron.max())
     
+    print("neuron_1[\"image_original\"].shape = " + repr(neuron_1["image_original"].shape))
+    
+    print("mean_neuron = " + repr(mean_neuron))
+    
+    print("mean_neuron.shape = " + repr(mean_neuron.shape))
+    
+    print("mean_neuron_mask = " + repr(mean_neuron_mask))
+    
+    print("mean_neuron_mask.shape = " + repr(mean_neuron_mask.shape))
     
     # Gaussian mixture model ??? Skipped this.
     
@@ -1235,10 +1244,15 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
 
     new_neuron["max_F"] = new_neuron["image"].max()
 
-    new_neuron_mask_points = numpy.array(new_neuron["mask"].nonzero())
+    for i in xrange(len(new_neuron)):
+        new_neuron_mask_points = numpy.array(new_neuron["mask"][i].nonzero())
+        
+        print("new_neuron_mask_points = " + repr(new_neuron_mask_points))
 
-    new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis = 1)
-    new_neuron["gaussian_cov"] = numpy.cov(new_neuron_mask_points)
+        print("new_neuron_mask_points.mean(axis = 1) = " + repr(new_neuron_mask_points.mean(axis = 1)))
+        
+        new_neuron["gaussian_mean"][i] = new_neuron_mask_points.mean(axis = 1)
+        new_neuron["gaussian_cov"][i] = numpy.cov(new_neuron_mask_points)
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
     
