@@ -614,6 +614,23 @@ class LabelImageCentroidProps(object):
         return(new_centroid_label_image)
     
     @advanced_debugging.log_call(logger)
+    def get_active_label_image(self):
+        # Returns a label image containing the labels, which still have centroids.
+        
+        # Mask over self.count of labels that still have centroid(s)
+        active_label_count_mask = self.count["Count"] > 0
+        # Labels that still have centroid(s)
+        active_labels = self.count["Label"][active_label_count_mask]
+        # Mask for each label as to whether it appears in the self.label_image
+        every_active_label_mask = advanced_numpy.all_permutations_equal(active_labels, self.label_image)
+        # Mask for self.label_image that matches any relevant label.
+        active_label_mask = every_active_label_mask.any(axis = 0)
+        # The label image of relevant labels
+        new_active_label_image = active_label_mask * self.label_image
+        
+        return(new_active_label_image)
+    
+    @advanced_debugging.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
         # Get the labels to remove
         remove_labels = self.props["Label"][remove_prop_indices_mask]
