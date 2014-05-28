@@ -42,7 +42,7 @@ def batch_generate_save_dictionary(*new_filenames, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def generate_save_dictionary(new_filename, **parameters):
+def generate_save_dictionary(new_filename, debug = False, **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
         
@@ -103,8 +103,20 @@ def generate_save_dictionary(new_filename, **parameters):
         # generates the neuron set
         # stores the result
         # stores all parameters used to generate the dictionary in results
-        new_neurons = advanced_image_processing.generate_neurons(new_data, **parameters)
-        HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
+        #new_neurons = advanced_image_processing.generate_neurons(new_data, **parameters)
+        if debug:
+            new_dictionary, new_neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2 = advanced_image_processing.generate_neurons(new_data, debug = debug, **parameters["generate_neurons"])
+            
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "dictionary", new_dictionary, True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_label_image_0", centroid_label_image_0, True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_label_image_1", centroid_label_image_1, True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_label_image_2", centroid_label_image_2, True)
+        else:
+            new_neurons = advanced_image_processing.generate_neurons(new_data, debug = debug, **parameters["generate_neurons"])
+            
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
+        
         new_file[output_directory].attrs["parameters"] = repr(parameters)
 
 

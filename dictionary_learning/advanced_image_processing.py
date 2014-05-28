@@ -697,7 +697,7 @@ def remove_too_close_local_maxima(local_maxima, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def wavelet_denoising(new_image, **parameters):
+def wavelet_denoising(new_image, debug = False, **parameters):
     """
         Performs wavelet denoising on the given dictionary.
         
@@ -712,9 +712,10 @@ def wavelet_denoising(new_image, **parameters):
     
     neurons = get_empty_neuron(new_image)
     
-    centroid_label_image_0 = numpy.zeros(new_image.shape, dtype = int)
-    centroid_label_image_1 = numpy.zeros(new_image.shape, dtype = int)
-    centroid_label_image_2 = numpy.zeros(new_image.shape, dtype = int)
+    if debug:
+        centroid_label_image_0 = numpy.zeros(new_image.shape, dtype = int)
+        centroid_label_image_1 = numpy.zeros(new_image.shape, dtype = int)
+        centroid_label_image_2 = numpy.zeros(new_image.shape, dtype = int)
     
     new_wavelet_image_denoised_segmentation = None
     
@@ -1063,7 +1064,10 @@ def wavelet_denoising(new_image, **parameters):
     
     
     #print("Done with making neurons.")
-    return((neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2,))
+    if debug:
+        return((neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2,))
+    else:
+        return(neurons)
 
 
 @advanced_debugging.log_call(logger)
@@ -1287,7 +1291,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def generate_neurons(new_images, **parameters):
+def generate_neurons(new_images, debug = False, **parameters):
     """
         Generates the neurons.
         
@@ -1308,15 +1312,18 @@ def generate_neurons(new_images, **parameters):
     
     new_dictionary = generate_dictionary(new_preprocessed_images, **parameters["generate_dictionary"])
     
-    centroid_label_image_0 = numpy.zeros(new_dictionary.shape, dtype = int)
-    centroid_label_image_1 = numpy.zeros(new_dictionary.shape, dtype = int)
-    centroid_label_image_2 = numpy.zeros(new_dictionary.shape, dtype = int)
+    if debug:
+        centroid_label_image_0 = numpy.zeros(new_dictionary.shape, dtype = int)
+        centroid_label_image_1 = numpy.zeros(new_dictionary.shape, dtype = int)
+        centroid_label_image_2 = numpy.zeros(new_dictionary.shape, dtype = int)
     
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])
     for i, each_new_dictionary_image in enumerate(new_dictionary):
-        (each_new_neuron_set, centroid_label_image_0[i][:], centroid_label_image_1[i][:], centroid_label_image_2[i][:],) = wavelet_denoising(each_new_dictionary_image, **parameters["wavelet_denoising"])
-        #each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, **parameters["wavelet_denoising"])
+        if debug:
+            (each_new_neuron_set, centroid_label_image_0[i][:], centroid_label_image_1[i][:], centroid_label_image_2[i][:],) = wavelet_denoising(each_new_dictionary_image, debug = debug, **parameters["wavelet_denoising"])
+        else:
+            each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, debug = debug, **parameters["wavelet_denoising"])
         
         logger.debug("Denoised a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
         
@@ -1324,6 +1331,7 @@ def generate_neurons(new_images, **parameters):
         
         logger.debug("Merged a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
     
-    
-    #return(new_neurons_set)
-    return((new_dictionary, new_neurons_set, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2))
+    if debug:
+        return((new_dictionary, new_neurons_set, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2))
+    else:
+        return(new_neurons_set)
