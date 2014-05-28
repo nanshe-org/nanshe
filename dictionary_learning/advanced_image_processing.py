@@ -765,6 +765,32 @@ def remove_low_intensity_local_maxima(local_maxima, **parameters):
     
     return(local_maxima)
 
+
+def remove_too_close_local_maxima(local_maxima, **parameters):
+    # Deleting close local maxima below 16 pixels
+    too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+
+    # Find the distance between every centroid (efficiently)
+    local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
+    local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima.props["Centroid"], metric = "euclidean")
+
+    too_close_local_maxima_labels_mask = local_maxima_centroid_distance < parameters["min_centroid_distance"]
+    too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
+
+    for each_too_close_local_maxima_pairs in too_close_local_maxima_pairs:
+        first_props_index, second_props_index = each_too_close_local_maxima_pairs
+
+        if (local_maxima.props["Label"][first_props_index] == local_maxima.props["Label"][second_props_index]):
+            if local_maxima.props["IntCentroidWaveletValue"][first_props_index] < local_maxima.props["IntCentroidWaveletValue"][second_props_index]:
+                too_close__local_maxima_label_mask__to_remove[first_props_index] = True
+            else:
+                too_close__local_maxima_label_mask__to_remove[second_props_index] = True
+
+    local_maxima.remove_prop_mask(too_close__local_maxima_label_mask__to_remove)
+    
+    return(local_maxima)
+
+
 @advanced_debugging.log_call(logger)
 def wavelet_denoising(new_image, **parameters):
     """
@@ -1043,31 +1069,31 @@ def wavelet_denoising(new_image, **parameters):
         
         #logger.debug("Removing local maxima that are too close...")
         
-        print("parameters[\"remove_low_intensity_local_maxima\"] = " + repr(parameters["remove_low_intensity_local_maxima"]))
         local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
 
-        # Deleting close local maxima below 16 pixels
-        too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+        ## Deleting close local maxima below 16 pixels
+        #too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+        #
+        ## Find the distance between every centroid (efficiently)
+        #local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
+        #local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima.props["Centroid"], metric = "euclidean")
+        #
+        #too_close_local_maxima_labels_mask = local_maxima_centroid_distance < parameters["min_centroid_distance"]
+        #too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
+        #
+        #for each_too_close_local_maxima_pairs in too_close_local_maxima_pairs:
+        #    first_props_index, second_props_index = each_too_close_local_maxima_pairs
+        #    
+        #    if (local_maxima.props["Label"][first_props_index] == local_maxima.props["Label"][second_props_index]):
+        #        if local_maxima.props["IntCentroidWaveletValue"][first_props_index] < local_maxima.props["IntCentroidWaveletValue"][second_props_index]:
+        #            too_close__local_maxima_label_mask__to_remove[first_props_index] = True
+        #        else:
+        #            too_close__local_maxima_label_mask__to_remove[second_props_index] = True
+        #
+        #
+        #local_maxima.remove_prop_mask(too_close__local_maxima_label_mask__to_remove)
         
-        # Find the distance between every centroid (efficiently)
-        local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
-        local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima.props["Centroid"], metric = "euclidean")
-        
-        too_close_local_maxima_labels_mask = local_maxima_centroid_distance < parameters["min_centroid_distance"]
-        too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
-        
-        for each_too_close_local_maxima_pairs in too_close_local_maxima_pairs:
-            first_props_index, second_props_index = each_too_close_local_maxima_pairs
-            
-            if (local_maxima.props["Label"][first_props_index] == local_maxima.props["Label"][second_props_index]):
-                if local_maxima.props["IntCentroidWaveletValue"][first_props_index] < local_maxima.props["IntCentroidWaveletValue"][second_props_index]:
-                    too_close__local_maxima_label_mask__to_remove[first_props_index] = True
-                else:
-                    too_close__local_maxima_label_mask__to_remove[second_props_index] = True
-        
-        
-        local_maxima.remove_prop_mask(too_close__local_maxima_label_mask__to_remove)
-        
+        local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
         
         ## Get the labels to remove
         #too_close__local_maxima_labels__to_remove = local_maxima_labeled_props["Label"][too_close__local_maxima_label_mask__to_remove]
