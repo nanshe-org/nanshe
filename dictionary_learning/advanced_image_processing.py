@@ -26,6 +26,9 @@ import skimage.segmentation
 # To allow for more advanced iteration pattersn
 import itertools
 
+# Allows for deep and shallow copies.
+import copy
+
 # Need for opening
 import vigra
 import vigra.filters
@@ -663,9 +666,11 @@ def remove_low_intensity_local_maxima(local_maxima, **parameters):
         # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
         low_intensities__local_maxima_label_mask__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
 
-    local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
+    new_local_maxima = copy.deepcopy(local_maxima)
+
+    new_local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
     
-    return(local_maxima)
+    return(new_local_maxima)
 
 
 def remove_too_close_local_maxima(local_maxima, **parameters):
@@ -688,9 +693,11 @@ def remove_too_close_local_maxima(local_maxima, **parameters):
             else:
                 too_close__local_maxima_label_mask__to_remove[second_props_index] = True
 
-    local_maxima.remove_prop_mask(too_close__local_maxima_label_mask__to_remove)
+    new_local_maxima = copy.deepcopy(local_maxima)
+
+    new_local_maxima.remove_prop_mask(too_close__local_maxima_label_mask__to_remove)
     
-    return(local_maxima)
+    return(new_local_maxima)
 
 
 @advanced_debugging.log_call(logger)
