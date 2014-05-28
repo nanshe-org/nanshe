@@ -572,7 +572,7 @@ class LabelImageCentroidProps(object):
         
         # Overwrite the label parameter as it holds no information. Now, is the label from wavelet mask label image.
         if self.props["Label"].size:
-            self.props["Label"] = new_label_image[ tuple(self.props["IntCentroid"].T) ]
+            self.props["Label"] = new_label_image[ self.get_centroid_index_array() ]
 
         if (numpy.any(self.props["Label"] == 0)):
             # There shouldn't be any maximums in the background. This should never happen.
@@ -600,6 +600,20 @@ class LabelImageCentroidProps(object):
         logger.debug("Refinined properties for local maxima.")
     
     @advanced_debugging.log_call(logger)
+    def get_centroid_index_array(self):
+        return(tuple(self.props["IntCentroid"].T))
+    
+    @advanced_debugging.log_call(logger)
+    def get_centroid_label_image(self):
+        # Returns a label image containing each centroid and its labels.
+        new_centroid_label_image = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
+        
+        # Set the given centroids to be the same as their labels
+        new_centroid_label_image[self.get_centroid_index_array()] = self.props["Label"]
+        
+        return(new_centroid_label_image)
+    
+    @advanced_debugging.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
         # Get the labels to remove
         remove_labels = self.props["Label"][remove_prop_indices_mask]
@@ -623,6 +637,7 @@ class LabelImageCentroidProps(object):
         self.remove_prop_mask(remove_prop_indices_mask)
 
 
+@advanced_debugging.log_call(logger)
 def remove_low_intensity_local_maxima(local_maxima, **parameters):
     # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
     low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
@@ -653,6 +668,7 @@ def remove_low_intensity_local_maxima(local_maxima, **parameters):
     return(new_local_maxima)
 
 
+@advanced_debugging.log_call(logger)
 def remove_too_close_local_maxima(local_maxima, **parameters):
     # Deleting close local maxima below 16 pixels
     too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
@@ -695,6 +711,10 @@ def wavelet_denoising(new_image, **parameters):
     ######## TODO: Break up into several simpler functions with unit/doctests. Debug further to find memory leak?
     
     neurons = get_empty_neuron(new_image)
+    
+    centroid_label_image_0 = numpy.zeros(new_image.shape, dtype = int)
+    centroid_label_image_1 = numpy.zeros(new_image.shape, dtype = int)
+    centroid_label_image_2 = numpy.zeros(new_image.shape, dtype = int)
     
     new_wavelet_image_denoised_segmentation = None
     
@@ -803,9 +823,15 @@ def wavelet_denoising(new_image, **parameters):
         
         local_maxima = LabelImageCentroidProps(new_wavelet_image_denoised, new_wavelet_mask_labeled, **parameters["LabelImageCentroidProps"])
         
+        centroid_label_image_0 = local_maxima.get_centroid_label_image()
+        
         local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
+        
+        centroid_label_image_1 = local_maxima.get_centroid_label_image()
 
         local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
+        
+        centroid_label_image_2 = local_maxima.get_centroid_label_image()
         
         logger.debug("Removed local maxima that are too close.")
         
@@ -867,6 +893,9 @@ def wavelet_denoising(new_image, **parameters):
                 # Renumber all labels sequentially.
                 new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
 
+                # Find properties of all regions (except the background)
+                new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["Centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
+                
                 print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = " + repr(new_wavelet_image_denoised_segmentation_props["Label"]))
                 print("reverse_label_mapping = " + repr(reverse_label_mapping))
 
@@ -1033,7 +1062,7 @@ def wavelet_denoising(new_image, **parameters):
     
     
     #print("Done with making neurons.")
-    return(neurons)
+    return((neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2,))
 
 
 @advanced_debugging.log_call(logger)
@@ -1278,10 +1307,15 @@ def generate_neurons(new_images, **parameters):
     
     new_dictionary = generate_dictionary(new_preprocessed_images, **parameters["generate_dictionary"])
     
+    centroid_label_image_0 = numpy.zeros(new_dictionary.shape, dtype = int)
+    centroid_label_image_1 = numpy.zeros(new_dictionary.shape, dtype = int)
+    centroid_label_image_2 = numpy.zeros(new_dictionary.shape, dtype = int)
+    
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])
     for i, each_new_dictionary_image in enumerate(new_dictionary):
-        each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, **parameters["wavelet_denoising"])
+        (each_new_neuron_set, centroid_label_image_0[i][:], centroid_label_image_1[i][:], centroid_label_image_2[i][:],) = wavelet_denoising(each_new_dictionary_image, **parameters["wavelet_denoising"])
+        #each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, **parameters["wavelet_denoising"])
         
         logger.debug("Denoised a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
         
@@ -1290,4 +1324,5 @@ def generate_neurons(new_images, **parameters):
         logger.debug("Merged a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
     
     
-    return((new_dictionary, new_neurons_set))
+    #return(new_neurons_set)
+    return((new_dictionary, new_neurons_set, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2))
