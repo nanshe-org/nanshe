@@ -594,7 +594,7 @@ def get_one_neuron(new_image):
 
 class LabelImageCentroidProps(object):
     @advanced_debugging.log_call(logger)
-    def __init__(self, new_local_maxima_mask, new_label_image, **parameters):
+    def __init__(self, new_intensity_image, new_label_image, **parameters):
         self.props = []
         self.count = []
     
@@ -604,8 +604,8 @@ class LabelImageCentroidProps(object):
 
         # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
         # but it requires skimage 0.8.0 minimum.
-        local_maxima_neighborhood = numpy.ones((2 * parameters["local_max_neighborhood_size"] + 1,) * new_local_maxima_mask.ndim)
-        local_maxima_mask = skimage.feature.peak_local_max(new_local_maxima_mask, footprint = local_maxima_neighborhood, labels = (new_local_maxima_mask > 0).astype(int), indices = False)
+        local_maxima_neighborhood = numpy.ones((2 * parameters["local_max_neighborhood_size"] + 1,) * new_intensity_image.ndim)
+        local_maxima_mask = skimage.feature.peak_local_max(new_intensity_image, footprint = local_maxima_neighborhood, labels = (new_intensity_image > 0).astype(int), indices = False)
 
         logger.debug("Found the local maxima.")
 
@@ -645,9 +645,9 @@ class LabelImageCentroidProps(object):
         #    local_maxima_labeled_props_dtype.append( (each_name, self.props[each_name].dtype, self.props[each_name].shape[1:]) )
 
         local_maxima_labeled_props_dtype.append( ("Label", int) )
-        local_maxima_labeled_props_dtype.append( ("Centroid", float, new_local_maxima_mask.ndim) )
-        local_maxima_labeled_props_dtype.append( ("IntCentroid", int, new_local_maxima_mask.ndim) )
-        local_maxima_labeled_props_dtype.append( ("IntCentroidWaveletValue", new_local_maxima_mask.dtype) )
+        local_maxima_labeled_props_dtype.append( ("Centroid", float, new_intensity_image.ndim) )
+        local_maxima_labeled_props_dtype.append( ("IntCentroid", int, new_intensity_image.ndim) )
+        local_maxima_labeled_props_dtype.append( ("IntCentroidWaveletValue", new_intensity_image.dtype) )
 
         local_maxima_labeled_props_dtype = numpy.dtype(local_maxima_labeled_props_dtype)
 
@@ -856,6 +856,8 @@ def wavelet_denoising(new_image, **parameters):
         new_wavelet_mask_labeled = skimage.segmentation.relabel_sequential(new_wavelet_mask_labeled)[0]
         
         logger.debug("Found new label image.")
+        
+        LabelImageCentroidProps()
         
         # Store the properties of those maxima
         local_maxima_labeled_props = local_maxima_properties(new_wavelet_image_denoised, **parameters["local_maxima_properties"])
