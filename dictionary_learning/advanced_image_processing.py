@@ -849,6 +849,7 @@ def wavelet_denoising(new_image, **parameters):
         
         # Set all of these regions without maxima to the background
         new_wavelet_image_mask[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
+        new_wavelet_mask_labeled[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
         new_wavelet_image_denoised[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
         
         logger.debug("Removed regions without local maxima.")
