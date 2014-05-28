@@ -254,4 +254,10 @@ def cumulative_generator(new_op, new_iter):
     for each in new_iter:
         cur = new_op(cur, each)
         yield(cur)
-        
+
+
+def reverse_each_element(new_iter):
+    new_iter = iter(new_iter)
+    
+    for each in new_iter:
+        yield( type(each)(reversed(each)) )
