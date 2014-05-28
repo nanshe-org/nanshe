@@ -105,13 +105,16 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
         # stores all parameters used to generate the dictionary in results
         #new_neurons = advanced_image_processing.generate_neurons(new_data, **parameters)
         if debug:
-            new_dictionary, new_neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2 = advanced_image_processing.generate_neurons(new_data, debug = debug, **parameters["generate_neurons"])
+            new_dictionary, new_neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2, centroid_active_label_image_0, centroid_active_label_image_1, centroid_active_label_image_2 = advanced_image_processing.generate_neurons(new_data, debug = debug, **parameters["generate_neurons"])
             
             HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "dictionary", new_dictionary, True)
             HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
             HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_label_image_0", centroid_label_image_0, True)
             HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_label_image_1", centroid_label_image_1, True)
             HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_label_image_2", centroid_label_image_2, True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_active_label_image_0", centroid_active_label_image_0, True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_active_label_image_1", centroid_active_label_image_1, True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "centroid_active_label_image_2", centroid_active_label_image_2, True)
         else:
             new_neurons = advanced_image_processing.generate_neurons(new_data, debug = debug, **parameters["generate_neurons"])
             

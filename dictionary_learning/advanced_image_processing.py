@@ -733,6 +733,10 @@ def wavelet_denoising(new_image, debug = False, **parameters):
         centroid_label_image_0 = numpy.zeros(new_image.shape, dtype = int)
         centroid_label_image_1 = numpy.zeros(new_image.shape, dtype = int)
         centroid_label_image_2 = numpy.zeros(new_image.shape, dtype = int)
+        
+        centroid_active_label_image_0 = numpy.zeros(new_image.shape, dtype = int)
+        centroid_active_label_image_1 = numpy.zeros(new_image.shape, dtype = int)
+        centroid_active_label_image_2 = numpy.zeros(new_image.shape, dtype = int)
     
     new_wavelet_image_denoised_segmentation = None
     
@@ -842,14 +846,17 @@ def wavelet_denoising(new_image, debug = False, **parameters):
         local_maxima = LabelImageCentroidProps(new_wavelet_image_denoised, new_wavelet_mask_labeled, **parameters["LabelImageCentroidProps"])
         
         centroid_label_image_0 = local_maxima.get_centroid_label_image()
+        centroid_active_label_image_0 = local_maxima.get_active_label_image()
         
         local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
         
         centroid_label_image_1 = local_maxima.get_centroid_label_image()
+        centroid_active_label_image_1 = local_maxima.get_active_label_image()
 
         local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
         
         centroid_label_image_2 = local_maxima.get_centroid_label_image()
+        centroid_active_label_image_2 = local_maxima.get_active_label_image()
         
         logger.debug("Removed local maxima that are too close.")
         
@@ -1082,7 +1089,7 @@ def wavelet_denoising(new_image, debug = False, **parameters):
     
     #print("Done with making neurons.")
     if debug:
-        return((neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2,))
+        return((neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2, centroid_active_label_image_0, centroid_active_label_image_1, centroid_active_label_image_2,))
     else:
         return(neurons)
 
@@ -1329,16 +1336,21 @@ def generate_neurons(new_images, debug = False, **parameters):
     
     new_dictionary = generate_dictionary(new_preprocessed_images, **parameters["generate_dictionary"])
     
+    
     if debug:
         centroid_label_image_0 = numpy.zeros(new_dictionary.shape, dtype = int)
         centroid_label_image_1 = numpy.zeros(new_dictionary.shape, dtype = int)
         centroid_label_image_2 = numpy.zeros(new_dictionary.shape, dtype = int)
+        
+        centroid_active_label_image_0 = numpy.zeros(new_dictionary.shape, dtype = int)
+        centroid_active_label_image_1 = numpy.zeros(new_dictionary.shape, dtype = int)
+        centroid_active_label_image_2 = numpy.zeros(new_dictionary.shape, dtype = int)
     
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])
     for i, each_new_dictionary_image in enumerate(new_dictionary):
         if debug:
-            (each_new_neuron_set, centroid_label_image_0[i][:], centroid_label_image_1[i][:], centroid_label_image_2[i][:],) = wavelet_denoising(each_new_dictionary_image, debug = debug, **parameters["wavelet_denoising"])
+            (each_new_neuron_set, centroid_label_image_0[i][:], centroid_label_image_1[i][:], centroid_label_image_2[i][:], centroid_active_label_image_0[i][:], centroid_active_label_image_1[i][:], centroid_active_label_image_2[i][:],) = wavelet_denoising(each_new_dictionary_image, debug = debug, **parameters["wavelet_denoising"])
         else:
             each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, debug = debug, **parameters["wavelet_denoising"])
         
@@ -1349,6 +1361,6 @@ def generate_neurons(new_images, debug = False, **parameters):
         logger.debug("Merged a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
     
     if debug:
-        return((new_dictionary, new_neurons_set, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2))
+        return((new_dictionary, new_neurons_set, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2, centroid_active_label_image_0, centroid_active_label_image_1, centroid_active_label_image_2))
     else:
         return(new_neurons_set)
