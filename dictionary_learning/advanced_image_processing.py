@@ -713,9 +713,6 @@ def wavelet_denoising(new_image, **parameters):
         
         # Store the properties of those maxima
         local_maxima_labeled_props = local_maxima_properties(new_wavelet_image_denoised, **parameters["local_maxima_properties"])
-        # Stores the number of times a particular label appears.
-        local_maxima_labeled_count = numpy.zeros( (len(local_maxima_labeled_props),), dtype = [("Label", int), ("Count", int)] )
-        local_maxima_labeled_count["Label"] = numpy.arange(1, len(local_maxima_labeled_count)+1)
         
         #        logger.debug("Finding the local maxima...")
         #
@@ -803,10 +800,16 @@ def wavelet_denoising(new_image, **parameters):
         if (numpy.any(local_maxima_labeled_props["Label"] == 0)):
             # There shouldn't be any maximums in the background. This should never happen.
             logger.warning("Maximum found where Label is 0.")
-
-        # Increase the count of the matching label
-        #local_maxima_labeled_count["Count"] += (local_maxima_labeled_count["Label"].reshape(-1,1) == local_maxima_labeled_props["Label"].reshape(1,-1)).sum(axis=1)
-        local_maxima_labeled_count["Count"] += numpy.bincount(local_maxima_labeled_count["Label"])[1:]
+        
+        # Get the labels being used
+        local_maxima_labels = numpy.unique(local_maxima_labeled_props["Label"])
+        
+        # Stores the number of times a particular label appears.
+        local_maxima_labeled_count = numpy.zeros( (len(local_maxima_labels),), dtype = [("Label", int), ("Count", int)] )
+        # Get the unique labels used
+        local_maxima_labeled_count["Label"] = local_maxima_labels
+        # Get the count of those labels
+        local_maxima_labeled_count["Count"] = numpy.bincount(local_maxima_labeled_props["Label"])[1:]
         
         logger.debug("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
         logger.debug("local_maxima_labeled_count = " + repr(local_maxima_labeled_count))
