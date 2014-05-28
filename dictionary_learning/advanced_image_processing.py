@@ -801,15 +801,13 @@ def wavelet_denoising(new_image, **parameters):
             # There shouldn't be any maximums in the background. This should never happen.
             logger.warning("Maximum found where Label is 0.")
         
-        # Get the labels being used
-        local_maxima_labels = numpy.unique(local_maxima_labeled_props["Label"])
+        # Stores the number of times a particular label maxima appears.
+        local_maxima_labeled_count = numpy.zeros( (new_wavelet_mask_labeled.max(),), dtype = [("Label", int), ("Count", int)] )
+        # Get all the labels used in the label image
+        local_maxima_labeled_count["Label"] = numpy.arange(1, new_wavelet_mask_labeled.max() + 1)
+        # Get the count of those labels (excluding zero as it is background)
+        local_maxima_labeled_count["Count"] = numpy.bincount(local_maxima_labeled_props["Label"], minlength = len(local_maxima_labeled_count) + 1)[1:]
         
-        # Stores the number of times a particular label appears.
-        local_maxima_labeled_count = numpy.zeros( (len(local_maxima_labels),), dtype = [("Label", int), ("Count", int)] )
-        # Get the unique labels used
-        local_maxima_labeled_count["Label"] = local_maxima_labels
-        # Get the count of those labels
-        local_maxima_labeled_count["Count"] = numpy.bincount(local_maxima_labeled_props["Label"])[1:]
         
         logger.debug("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
         logger.debug("local_maxima_labeled_count = " + repr(local_maxima_labeled_count))
@@ -828,7 +826,7 @@ def wavelet_denoising(new_image, **parameters):
         logger.debug("Removing local maxima that have too low of an intensity...")
         
         # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
-        low_intensities__local_maxima_labels__to_remove = numpy.zeros(local_maxima_labeled_props.shape, dtype = bool)
+        low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima_labeled_props.shape, dtype = bool)
         for i in xrange(len(local_maxima_labeled_props)):
             # Get the region with the label matching the maximum
             each_region_image_wavelet_mask = (new_wavelet_mask_labeled == local_maxima_labeled_props["Label"][i])
@@ -847,19 +845,28 @@ def wavelet_denoising(new_image, **parameters):
             each_region_image_wavelet_ratio_pixels = each_region_image_wavelet_num_pixels_below_max / each_region_image_wavelet_num_pixels
 
             # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
-            low_intensities__local_maxima_labels__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
+            low_intensities__local_maxima_label_mask__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
 
 
-        # Take a subset of the label props and reduce the count
-        local_maxima_labeled_props = local_maxima_labeled_props[ ~low_intensities__local_maxima_labels__to_remove ].copy()
-        local_maxima_labeled_count["Count"] -= low_intensities__local_maxima_labels__to_remove
+        # Get the labels to remove
+        low_intensities__local_maxima_labels__to_remove = local_maxima_labeled_props["Label"][low_intensities__local_maxima_label_mask__to_remove]
+        # Get how many of each label to remove
+        low_intensities__local_maxima_label_count__to_remove = numpy.bincount(low_intensities__local_maxima_labels__to_remove, minlength = len(local_maxima_labeled_count) + 1)[1:]
+        
+        print("low_intensities__local_maxima_labels__to_remove = " + repr(low_intensities__local_maxima_labels__to_remove))
+        print("low_intensities__local_maxima_label_count__to_remove = " + repr(low_intensities__local_maxima_label_count__to_remove))
+        
+        # Take a subset of the label props that does not include the removal mask
+        local_maxima_labeled_props = local_maxima_labeled_props[ ~low_intensities__local_maxima_label_mask__to_remove ].copy()
+        # Reduce the count by the number of each label
+        local_maxima_labeled_count["Count"] -= low_intensities__local_maxima_label_count__to_remove
 
         logger.debug("Removed local maxima that have too low of an intensity.")
         
         logger.debug("Removing local maxima that are too close...")
 
         # Deleting close local maxima below 16 pixels
-        too_close__local_maxima_labels__to_remove = numpy.zeros(local_maxima_labeled_props.shape, dtype = bool)
+        too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima_labeled_props.shape, dtype = bool)
 
         # Find the distance between every centroid (efficiently)
         local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima_labeled_props)), 2)))
@@ -873,13 +880,18 @@ def wavelet_denoising(new_image, **parameters):
             
             if (local_maxima_labeled_props["Label"][first_props_index] == local_maxima_labeled_props["Label"][second_props_index]):
                 if local_maxima_labeled_props["IntCentroidWaveletValue"][first_props_index] < local_maxima_labeled_props["IntCentroidWaveletValue"][second_props_index]:
-                    too_close__local_maxima_labels__to_remove[first_props_index] = True
+                    too_close__local_maxima_label_mask__to_remove[first_props_index] = True
                 else:
-                    too_close__local_maxima_labels__to_remove[second_props_index] = True
-
-        # Take a subset of the label props and reduce the count
-        local_maxima_labeled_props = local_maxima_labeled_props[ ~too_close__local_maxima_labels__to_remove ].copy()
-        local_maxima_labeled_count["Count"] -= too_close__local_maxima_labels__to_remove
+                    too_close__local_maxima_label_mask__to_remove[second_props_index] = True
+        
+        # Get the labels to remove
+        too_close__local_maxima_labels__to_remove = local_maxima_labeled_props["Label"][too_close__local_maxima_label_mask__to_remove]
+        # Get how many of each label to remove
+        too_close__local_maxima_label_count__to_remove = numpy.bincount(too_close__local_maxima_labels__to_remove, minlength = len(local_maxima_labeled_count) + 1)[1:]
+        # Take a subset of the label props that does not include the removal mask
+        local_maxima_labeled_props = local_maxima_labeled_props[ ~too_close__local_maxima_label_mask__to_remove ].copy()
+        # Reduce the count by the number of each label
+        local_maxima_labeled_count["Count"] -= too_close__local_maxima_label_count__to_remove
         
         logger.debug("Removed local maxima that are too close.")
         
@@ -888,9 +900,9 @@ def wavelet_denoising(new_image, **parameters):
         # Deleting regions without local maxima
         # As we have been decreasing the count by removing maxima, it is possible that some regions should no longer exist as they have no maxima.
         # Find all these labels that no longer have maxima and create a mask that includes them.
-        no_maxima__local_maxima_labels__to_remove = (local_maxima_labeled_count["Count"] == 0)
-        no_maxima__local_maxima_labels__to_remove_labels = local_maxima_labeled_props["Label"][no_maxima__local_maxima_labels__to_remove]
-        no_maxima__local_maxima_labels__to_remove_labels_mask = numpy.in1d(new_wavelet_mask_labeled, no_maxima__local_maxima_labels__to_remove_labels).reshape(new_wavelet_mask_labeled.shape)
+        no_maxima__local_maxima_label_count_mask__to_remove = (local_maxima_labeled_count["Count"] == 0)
+        no_maxima__local_maxima_labels__to_remove = local_maxima_labeled_count["Label"][no_maxima__local_maxima_label_count_mask__to_remove]
+        no_maxima__local_maxima_labels__to_remove_labels_mask = numpy.in1d(new_wavelet_mask_labeled, no_maxima__local_maxima_labels__to_remove).reshape(new_wavelet_mask_labeled.shape)
         
         # Set all of these regions without maxima to the background
         new_wavelet_image_mask[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
