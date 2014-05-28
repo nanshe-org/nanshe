@@ -685,7 +685,7 @@ class LabelImageCentroidProps(object):
         
         # Overwrite the label parameter as it holds no information. Now, is the label from wavelet mask label image.
         if self.props["Label"].size:
-            self.props["Label"] = new_wavelet_mask_labeled[ tuple(self.props["IntCentroid"].T) ]
+            self.props["Label"] = new_label_image[ tuple(self.props["IntCentroid"].T) ]
 
         if (numpy.any(self.props["Label"] == 0)):
             # There shouldn't be any maximums in the background. This should never happen.
@@ -696,7 +696,7 @@ class LabelImageCentroidProps(object):
         # Get all the labels used in the label image
         self.count["Label"] = numpy.arange(1, new_label_image.max() + 1)
         # Get the count of those labels (excluding zero as it is background)
-        self.count["Count"] = numpy.bincount(self.props["Label"], minlength = len(local_maxima_labeled_count) + 1)[1:]
+        self.count["Count"] = numpy.bincount(self.props["Label"], minlength = len(self.count) + 1)[1:]
         
         logger.debug("self.props = " + repr(self.props))
         logger.debug("self.count = " + repr(self.count))
@@ -715,7 +715,7 @@ class LabelImageCentroidProps(object):
     @advanced_debugging.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
         # Get the labels to remove
-        remove_labels = local_maxima_labeled_props["Label"][remove_prop_indices_mask]
+        remove_labels = self.props["Label"][remove_prop_indices_mask]
         # Get how many of each label to remove
         label_count_to_remove = numpy.bincount(remove_labels, minlength = len(self.count) + 1)[1:]
         
@@ -857,11 +857,11 @@ def wavelet_denoising(new_image, **parameters):
         
         logger.debug("Found new label image.")
         
-        LabelImageCentroidProps()
+        local_maxima = LabelImageCentroidProps(new_wavelet_image_denoised, new_wavelet_mask_labeled, **parameters["local_maxima_properties"])
         
         # Store the properties of those maxima
-        local_maxima_labeled_props = local_maxima_properties(new_wavelet_image_denoised, **parameters["local_maxima_properties"])
-        
+        #local_maxima_labeled_props = local_maxima_properties(new_wavelet_image_denoised, **parameters["local_maxima_properties"])
+        #
         #        logger.debug("Finding the local maxima...")
         #
         #        # Would be good to use peak_local_max as it has more features and is_local_maximum is removed in later versions,
@@ -940,51 +940,51 @@ def wavelet_denoising(new_image, **parameters):
         #        # Stores the value from wavelet denoising at the centroid for easy retrieval
         #        if local_maxima_labeled_props["IntCentroidWaveletValue"].size:
         #            local_maxima_labeled_props["IntCentroidWaveletValue"] = new_wavelet_image_denoised[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
-
+        #
         # Overwrite the label parameter as it holds no information. Now, is the label from wavelet mask label image.
-        if local_maxima_labeled_props["Label"].size:
-            local_maxima_labeled_props["Label"] = new_wavelet_mask_labeled[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
-
-        if (numpy.any(local_maxima_labeled_props["Label"] == 0)):
-            # There shouldn't be any maximums in the background. This should never happen.
-            logger.warning("Maximum found where Label is 0.")
-        
-        # Stores the number of times a particular label maxima appears.
-        local_maxima_labeled_count = numpy.zeros( (new_wavelet_mask_labeled.max(),), dtype = [("Label", int), ("Count", int)] )
-        # Get all the labels used in the label image
-        local_maxima_labeled_count["Label"] = numpy.arange(1, new_wavelet_mask_labeled.max() + 1)
-        # Get the count of those labels (excluding zero as it is background)
-        local_maxima_labeled_count["Count"] = numpy.bincount(local_maxima_labeled_props["Label"], minlength = len(local_maxima_labeled_count) + 1)[1:]
-        
-        
-        logger.debug("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
-        logger.debug("local_maxima_labeled_count = " + repr(local_maxima_labeled_count))
-
-        if numpy.any(local_maxima_labeled_count["Count"] == 0):
-            # All labels should have a local maximum. If they don't, this could be a problem.
-
-            failed_labels_list = local_maxima_labeled_count["Label"][local_maxima_labeled_count["Count"] == 0].tolist()
-            failed_labels_list = [str(_) for _ in failed_labels_list]
-            failed_label_msg = "Label(s) not found in local maxima. For labels = " + repr(failed_labels_list) + "."
-
-            logger.warning(failed_label_msg)
-        
-        logger.debug("Refinined properties for local maxima.")
+        #if local_maxima_labeled_props["Label"].size:
+        #    local_maxima_labeled_props["Label"] = new_wavelet_mask_labeled[ tuple(local_maxima_labeled_props["IntCentroid"].T) ]
+        #
+        #if (numpy.any(local_maxima_labeled_props["Label"] == 0)):
+        #    # There shouldn't be any maximums in the background. This should never happen.
+        #    logger.warning("Maximum found where Label is 0.")
+        #
+        ## Stores the number of times a particular label maxima appears.
+        #local_maxima_labeled_count = numpy.zeros( (new_wavelet_mask_labeled.max(),), dtype = [("Label", int), ("Count", int)] )
+        ## Get all the labels used in the label image
+        #local_maxima_labeled_count["Label"] = numpy.arange(1, new_wavelet_mask_labeled.max() + 1)
+        ## Get the count of those labels (excluding zero as it is background)
+        #local_maxima_labeled_count["Count"] = numpy.bincount(local_maxima_labeled_props["Label"], minlength = len(local_maxima_labeled_count) + 1)[1:]
+        #
+        #logger.debug("local_maxima_labeled_props = " + repr(local_maxima_labeled_props))
+        #logger.debug("local_maxima_labeled_count = " + repr(local_maxima_labeled_count))
+        #
+        #if numpy.any(local_maxima_labeled_count["Count"] == 0):
+        #    # All labels should have a local maximum. If they don't, this could be a problem.
+        #
+        #    failed_labels_list = local_maxima_labeled_count["Label"][local_maxima_labeled_count["Count"] == 0].tolist()
+        #    failed_labels_list = [str(_) for _ in failed_labels_list]
+        #    failed_label_msg = "Label(s) not found in local maxima. For labels = " + repr(failed_labels_list) + "."
+        #
+        #    logger.warning(failed_label_msg)
+        #
+        #logger.debug("Refinined properties for local maxima.")
+        #
         
         logger.debug("Removing local maxima that have too low of an intensity...")
         
         # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
-        low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima_labeled_props.shape, dtype = bool)
-        for i in xrange(len(local_maxima_labeled_props)):
+        low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+        for i in xrange(len(local_maxima.props)):
             # Get the region with the label matching the maximum
-            each_region_image_wavelet_mask = (new_wavelet_mask_labeled == local_maxima_labeled_props["Label"][i])
+            each_region_image_wavelet_mask = (new_wavelet_mask_labeled == local_maxima.props["Label"][i])
             each_region_image_wavelet = new_wavelet_image_denoised[each_region_image_wavelet_mask]
 
             # Get the number of pixels in that region
             each_region_image_wavelet_num_pixels = float(each_region_image_wavelet.size)
 
             # Get the value of the max for that region
-            each_region_image_wavelet_centroid_value = local_maxima_labeled_props["IntCentroidWaveletValue"][i]
+            each_region_image_wavelet_centroid_value = local_maxima.props["IntCentroidWaveletValue"][i]
 
             # Get a mask of the pixels below that max for that region
             each_region_image_wavelet_num_pixels_below_max = float((each_region_image_wavelet < each_region_image_wavelet_centroid_value).sum())
@@ -995,30 +995,31 @@ def wavelet_denoising(new_image, **parameters):
             # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
             low_intensities__local_maxima_label_mask__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
 
-
         # Get the labels to remove
-        low_intensities__local_maxima_labels__to_remove = local_maxima_labeled_props["Label"][low_intensities__local_maxima_label_mask__to_remove]
+        low_intensities__local_maxima_labels__to_remove = local_maxima.props["Label"][low_intensities__local_maxima_label_mask__to_remove]
         # Get how many of each label to remove
-        low_intensities__local_maxima_label_count__to_remove = numpy.bincount(low_intensities__local_maxima_labels__to_remove, minlength = len(local_maxima_labeled_count) + 1)[1:]
+        low_intensities__local_maxima_label_count__to_remove = numpy.bincount(low_intensities__local_maxima_labels__to_remove, minlength = len(local_maxima.count) + 1)[1:]
         
         print("low_intensities__local_maxima_labels__to_remove = " + repr(low_intensities__local_maxima_labels__to_remove))
         print("low_intensities__local_maxima_label_count__to_remove = " + repr(low_intensities__local_maxima_label_count__to_remove))
         
-        # Take a subset of the label props that does not include the removal mask
-        local_maxima_labeled_props = local_maxima_labeled_props[ ~low_intensities__local_maxima_label_mask__to_remove ].copy()
-        # Reduce the count by the number of each label
-        local_maxima_labeled_count["Count"] -= low_intensities__local_maxima_label_count__to_remove
+        local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
+        
+        ## Take a subset of the label props that does not include the removal mask
+        #local_maxima_labeled_props = local_maxima_labeled_props[ ~low_intensities__local_maxima_label_mask__to_remove ].copy()
+        ## Reduce the count by the number of each label
+        #local_maxima_labeled_count["Count"] -= low_intensities__local_maxima_label_count__to_remove
 
         logger.debug("Removed local maxima that have too low of an intensity.")
         
         logger.debug("Removing local maxima that are too close...")
 
         # Deleting close local maxima below 16 pixels
-        too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima_labeled_props.shape, dtype = bool)
+        too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
 
         # Find the distance between every centroid (efficiently)
-        local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima_labeled_props)), 2)))
-        local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima_labeled_props["Centroid"], metric = "euclidean")
+        local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
+        local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima.props["Centroid"], metric = "euclidean")
 
         too_close_local_maxima_labels_mask = local_maxima_centroid_distance < parameters["min_centroid_distance"]
         too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
@@ -1026,20 +1027,23 @@ def wavelet_denoising(new_image, **parameters):
         for each_too_close_local_maxima_pairs in too_close_local_maxima_pairs:
             first_props_index, second_props_index = each_too_close_local_maxima_pairs
             
-            if (local_maxima_labeled_props["Label"][first_props_index] == local_maxima_labeled_props["Label"][second_props_index]):
-                if local_maxima_labeled_props["IntCentroidWaveletValue"][first_props_index] < local_maxima_labeled_props["IntCentroidWaveletValue"][second_props_index]:
+            if (local_maxima.props["Label"][first_props_index] == local_maxima.props["Label"][second_props_index]):
+                if local_maxima.props["IntCentroidWaveletValue"][first_props_index] < local_maxima.props["IntCentroidWaveletValue"][second_props_index]:
                     too_close__local_maxima_label_mask__to_remove[first_props_index] = True
                 else:
                     too_close__local_maxima_label_mask__to_remove[second_props_index] = True
         
-        # Get the labels to remove
-        too_close__local_maxima_labels__to_remove = local_maxima_labeled_props["Label"][too_close__local_maxima_label_mask__to_remove]
-        # Get how many of each label to remove
-        too_close__local_maxima_label_count__to_remove = numpy.bincount(too_close__local_maxima_labels__to_remove, minlength = len(local_maxima_labeled_count) + 1)[1:]
-        # Take a subset of the label props that does not include the removal mask
-        local_maxima_labeled_props = local_maxima_labeled_props[ ~too_close__local_maxima_label_mask__to_remove ].copy()
+        
+        local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
+        
+        ## Get the labels to remove
+        #too_close__local_maxima_labels__to_remove = local_maxima_labeled_props["Label"][too_close__local_maxima_label_mask__to_remove]
+        ## Get how many of each label to remove
+        #too_close__local_maxima_label_count__to_remove = numpy.bincount(too_close__local_maxima_labels__to_remove, minlength = len(local_maxima_labeled_count) + 1)[1:]
+        ## Take a subset of the label props that does not include the removal mask
+        #local_maxima_labeled_props = local_maxima_labeled_props[ ~too_close__local_maxima_label_mask__to_remove ].copy()
         # Reduce the count by the number of each label
-        local_maxima_labeled_count["Count"] -= too_close__local_maxima_label_count__to_remove
+        #local_maxima_labeled_count["Count"] -= too_close__local_maxima_label_count__to_remove
         
         logger.debug("Removed local maxima that are too close.")
         
@@ -1048,9 +1052,12 @@ def wavelet_denoising(new_image, **parameters):
         # Deleting regions without local maxima
         # As we have been decreasing the count by removing maxima, it is possible that some regions should no longer exist as they have no maxima.
         # Find all these labels that no longer have maxima and create a mask that includes them.
-        no_maxima__local_maxima_label_count_mask__to_remove = (local_maxima_labeled_count["Count"] == 0)
-        no_maxima__local_maxima_labels__to_remove = local_maxima_labeled_count["Label"][no_maxima__local_maxima_label_count_mask__to_remove]
+        no_maxima__local_maxima_label_count_mask__to_remove = (local_maxima.count["Count"] == 0)
+        no_maxima__local_maxima_labels__to_remove = local_maxima.count["Label"][no_maxima__local_maxima_label_count_mask__to_remove]
         no_maxima__local_maxima_labels__to_remove_labels_mask = numpy.in1d(new_wavelet_mask_labeled, no_maxima__local_maxima_labels__to_remove).reshape(new_wavelet_mask_labeled.shape)
+        #no_maxima__local_maxima_label_count_mask__to_remove = (local_maxima_labeled_count["Count"] == 0)
+        #no_maxima__local_maxima_labels__to_remove = local_maxima_labeled_count["Label"][no_maxima__local_maxima_label_count_mask__to_remove]
+        #no_maxima__local_maxima_labels__to_remove_labels_mask = numpy.in1d(new_wavelet_mask_labeled, no_maxima__local_maxima_labels__to_remove).reshape(new_wavelet_mask_labeled.shape)
         
         # Set all of these regions without maxima to the background
         new_wavelet_image_mask[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
@@ -1058,11 +1065,11 @@ def wavelet_denoising(new_image, **parameters):
         
         logger.debug("Removed regions without local maxima.")
 
-        if local_maxima_labeled_props.size:
+        if local_maxima.props.size:
             if parameters["use_watershed"]:
                 ################ TODO: Revisit to make sure all of Ferran's algorithm is implemented and this is working properly.
 
-                print("local_maxima_labeled_props = " +repr(local_maxima_labeled_props))
+                print("local_maxima.props = " + repr(local_maxima.props))
 
                 # Perform the watershed segmentation.
 
@@ -1074,8 +1081,8 @@ def wavelet_denoising(new_image, **parameters):
                 # We could look for seeds using local maxima. However, we already know what these should be as these are the centroids we have found.
                 new_wavelet_image_denoised_maxima = numpy.zeros(new_wavelet_image_denoised.shape, dtype = int)
 
-                if local_maxima_labeled_props["IntCentroid"].any():
-                    new_wavelet_image_denoised_maxima[ tuple(local_maxima_labeled_props["IntCentroid"].T) ] = local_maxima_labeled_props["Label"].T
+                if local_maxima.props["IntCentroid"].any():
+                    new_wavelet_image_denoised_maxima[ tuple(local_maxima.props["IntCentroid"].T) ] = local_maxima.props["Label"].T
 
                 print("new_wavelet_image_denoised_maxima = " + repr(new_wavelet_image_denoised_maxima))
 
