@@ -871,36 +871,11 @@ def wavelet_denoising(new_image, **parameters):
                 # Get the regions created in segmentation (drop zero as it is the background)
                 new_wavelet_image_denoised_segmentation_regions = numpy.unique(new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation != 0])
 
-                ## Drop the first two as 0's are the region edges and 1's are the background.
+                ## Drop the first two as 0's are the region edges and 1's are the background. Not necessary in our code as seeds for the watershed are set.
                 #new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation == 1] = 0
                 #new_wavelet_image_denoised_segmentation_regions = new_wavelet_image_denoised_segmentation_regions[2:]
-
-
-                #print(len(new_wavelet_image_denoised_segmentation_regions))
-
-                # Find properties of all regions (except the background)
-                ##print(repr(new_wavelet_image_denoised_segmentation_regions))
-                ##print(repr(new_wavelet_image_denoised_segmentation_regions.shape))
-                ##print(repr(new_wavelet_image_denoised_segmentation_regions.dtype))
-                new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["Centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
-                print("new_wavelet_image_denoised_segmentation_props = " + repr(new_wavelet_image_denoised_segmentation_props))
-
-                #print("new_wavelet_image_denoised_segmentation_props = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_props))
-
-                #print("new_wavelet_image_denoised_segmentation_regions = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_regions))
-
-                # Check to see if there are any doubled labels
-                #print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_props["Label"]))
-
-                #print("new_wavelet_image_denoised_segmentation_regions = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_regions))
-
+                
                 ## TODO: Replace with numpy.bincount.
-
-
 
                 # Renumber all labels sequentially.
                 new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
@@ -997,9 +972,6 @@ def wavelet_denoising(new_image, **parameters):
                 # Just go ahead and toss the regions. The same information already exists through new_wavelet_image_denoised_segmentation_props["Label"].
                 del new_wavelet_image_denoised_segmentation_regions
 
-                #print("new_wavelet_image_denoised_segmentation_props = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_props))
-
                 not_within_bound = numpy.zeros(new_wavelet_image_denoised_segmentation_props.shape, dtype = bool)
 
 
@@ -1020,23 +992,13 @@ def wavelet_denoising(new_image, **parameters):
                     # Collect the unbounded ones
                     not_within_bound |= is_not_within_bound
 
-                #print("not_within_bound = ")
-                #print(repr(not_within_bound))
-
                 # Get labels outside of bounds
                 new_wavelet_image_denoised_segmentation_props_unbounded_labels = new_wavelet_image_denoised_segmentation_props["Label"][not_within_bound]
 
                 # Get a mask of the locations in the watershed where these must be zeroed
-                #new_wavelet_image_denoised_segmentation_broadcast = new_wavelet_image_denoised_segmentation.reshape((1,)*new_wavelet_image_denoised_segmentation_props_unbounded_labels.ndim + new_wavelet_image_denoised_segmentation.shape)
-                #new_wavelet_image_denoised_segmentation_props_unbounded_labels_broadcast = new_wavelet_image_denoised_segmentation_props_unbounded_labels.reshape(new_wavelet_image_denoised_segmentation_props_unbounded_labels.shape + (1,)*new_wavelet_image_denoised_segmentation.ndim)
-
-                #new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = (new_wavelet_image_denoised_segmentation_broadcast == new_wavelet_image_denoised_segmentation_props_unbounded_labels_broadcast)
                 new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_unbounded_labels, new_wavelet_image_denoised_segmentation)
 
                 new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = numpy.any(new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks, axis = 0)
-
-                #print("new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask))
 
                 # Zero them
                 new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask] = 0
@@ -1044,62 +1006,20 @@ def wavelet_denoising(new_image, **parameters):
                 # Remove the corresponding properties.
                 new_wavelet_image_denoised_segmentation_props = new_wavelet_image_denoised_segmentation_props[~not_within_bound]
 
-                #print("new_wavelet_image_denoised_segmentation_props = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_props))
-
-                #print("new_wavelet_image_denoised_segmentation_props.size = ")
-                #print(repr(new_wavelet_image_denoised_segmentation_props.size))
-
-                #print("len(new_wavelet_image_denoised_segmentation_props) = ")
-                #print(repr(len(new_wavelet_image_denoised_segmentation_props)))
-
-
                 if new_wavelet_image_denoised_segmentation_props.size:
                     # Creates a NumPy structure array to store
                     neurons = numpy.zeros(len(new_wavelet_image_denoised_segmentation_props), dtype = neurons.dtype)
 
-                    #print("len(neurons) = ")
-                    #print(repr(len(neurons)))
-
-                    #print("neurons = ")
-                    #print(repr(neurons))
-
                     # Get masks for all cells
-                    new_wavelet_image_denoised_segmentation_props_labels_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props["Label"], new_wavelet_image_denoised_segmentation)
-
-                    #print("new_wavelet_image_denoised_segmentation_props_labels_all_masks = ")
-                    #print(repr(new_wavelet_image_denoised_segmentation_props_labels_all_masks))
-
-                    #new_wavelet_image_denoised_segmentation_broadcast = new_wavelet_image_denoised_segmentation.reshape((1,)*new_wavelet_image_denoised_segmentation_props["Label"].ndim + new_wavelet_image_denoised_segmentation.shape)
-                    #new_wavelet_image_denoised_segmentation_props_labels_broadcast = new_wavelet_image_denoised_segmentation_props["Label"].reshape(new_wavelet_image_denoised_segmentation_props["Label"].shape + (1,)*new_wavelet_image_denoised_segmentation.ndim)
-
-                    #new_wavelet_image_denoised_segmentation_props_labels_all_masks = (new_wavelet_image_denoised_segmentation_broadcast == new_wavelet_image_denoised_segmentation_props_labels_broadcast)
-
-                    neurons["mask"] = new_wavelet_image_denoised_segmentation_props_labels_all_masks
-
-
-                    #print("neurons[\"mask\"] = ")
-                    #print(repr(neurons["mask"]))
+                    neurons["mask"] = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props["Label"], new_wavelet_image_denoised_segmentation)
 
                     #neurons["image"] = new_wavelet_image_denoised * neurons["mask"]
 
-                    ##print("neurons[\"image\"] = ")
-                    ##print(repr(neurons["image"]))
-
                     neurons["image_original"] = new_image * neurons["mask"]
-
-                    #print("neurons[\"image_original\"] = ")
-                    #print(repr(neurons["image_original"]))
 
                     neurons["area"] = new_wavelet_image_denoised_segmentation_props["Area"]
 
                     neurons["max_F"] = neurons["image_original"].reshape( (neurons["image_original"].shape[0], -1) ).max(axis = 1)
-
-                    #print("neurons[\"max_F\"] = ")
-                    #print(repr(neurons["max_F"]))
-
-                    #print("neurons[\"area\"] = ")
-                    #print(repr(neurons["area"]))
 
                     for i in xrange(len(neurons)):
                         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
@@ -1107,29 +1027,14 @@ def wavelet_denoising(new_image, **parameters):
                         neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
                         neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
-                    #print("neurons[\"gaussian_mean\"] = ")
-                    #print(repr(neurons["gaussian_mean"]))
-
-                    #print("neurons[\"gaussian_cov\"] = ")
-                    #print(repr(neurons["gaussian_cov"]))
-
                     neurons["centroid"] = new_wavelet_image_denoised_segmentation_props["Centroid"]
-
-                    #print("neurons[\"centroid\"] = ")
-                    #print(repr(neurons["centroid"]))
-
-                    #neurons["segmentation"] = new_wavelet_image_denoised_segmentation
-
-                    #print("len(neurons) = ")
-                    #print(repr(len(neurons)))
-                    #
-                    #for each_name in neurons.dtype.names:
-                    #    print("neurons[" + each_name + "][0] = ")
-                    #    print(repr(neurons[each_name][0]))
-                    #
-                    #wait = raw_input("PRESS ENTER TO CONTINUE...")
-
-                    logger.debug("Extracted neuron(s). Found " + str(len(neurons)) + " neuron(s).")
+                    
+                    if len(neurons) > 1:
+                        logger.debug("Extracted neurons. Found " + str(len(neurons)) + " neurons.")
+                    else:
+                        logger.debug("Extracted a neuron. Found " + str(len(neurons)) + " neuron.")
+                    
+                    logger.debug("neurons = " + repr(neurons) + "")
             else:
                 #################### Some other kind of segmentation??? Talked to Ferran and he said don't worry about implementing this for now. Does not seem to give noticeably better results.
                 raise Exception("No other form of segmentation is implemented.")
