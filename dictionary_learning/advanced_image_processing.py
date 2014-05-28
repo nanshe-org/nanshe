@@ -429,17 +429,6 @@ def region_properties(new_label_image, *args, **kwargs):
                         new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name].tolist())
                     else:
                         new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name])
-                    
-#                    if len(each_new_label_image_props_with_arrays_dtype) == 2:
-#                        each_name, each_type = each_new_label_image_props_with_arrays_dtype
-#                        
-#                        new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name])
-#                    elif len(each_new_label_image_props_with_arrays_dtype) == 3:
-#                        each_name, each_type, each_shape = each_new_label_image_props_with_arrays_dtype
-#                        
-#                        new_label_image_props_with_arrays_values[j].append(new_label_image_props_with_arrays[j][each_name].tolist())
-#                    else:
-#                        raise Exception("Not possible for dtype to be a length other than 2 or 3 elements.")
 
                 # NumPy will expect a tuple for each set of values.
                 new_label_image_props_with_arrays_values[j] = tuple(new_label_image_props_with_arrays_values[j])
@@ -451,15 +440,6 @@ def region_properties(new_label_image, *args, **kwargs):
                 new_label_image_props_with_arrays_dtype.append( (each_key, numpy.dtype(numpy.object), new_label_image.ndim) )
             else:
                 new_label_image_props_with_arrays_dtype.append( (each_key, numpy.dtype(numpy.object)) )
-    
-
-    #print("")
-    
-    #print(repr(new_label_image_props_with_arrays_values))
-    #print("")
-    #print(repr(new_label_image_props_with_arrays_dtype))
-    
-    #print("")
     
     new_label_image_props_with_arrays_dtype = numpy.dtype(new_label_image_props_with_arrays_dtype)
 
