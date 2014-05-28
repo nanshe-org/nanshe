@@ -593,6 +593,7 @@ def get_one_neuron(new_image):
     return(neurons)
 
 class LabelImageCentroidProps(object):
+    @advanced_debugging.log_call(logger)
     def __init__(self, new_local_maxima_mask, new_label_image, **parameters):
         self.props = []
         self.count = []
@@ -711,6 +712,7 @@ class LabelImageCentroidProps(object):
         
         logger.debug("Refinined properties for local maxima.")
     
+    @advanced_debugging.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
         # Get the labels to remove
         remove_labels = local_maxima_labeled_props["Label"][remove_prop_indices_mask]
@@ -725,6 +727,7 @@ class LabelImageCentroidProps(object):
         # Reduce the count by the number of each label
         self.count["Count"] -= label_count_to_remove
     
+    @advanced_debugging.log_call(logger)
     def remove_prop_indices(self, *i):
         # A mask of the indices to remove
         remove_prop_indices_mask = numpy.zeros( (len(self.props),), dtype = bool )
