@@ -519,10 +519,12 @@ def local_maxima_properties(new_wavelet_image_denoised, **parameters):
     # a list and then add our new types onto the end. Finally, we make the new structured array type from the list we have.
     local_maxima_labeled_props_dtype = []
 
-    for each_name in local_maxima_labeled_props.dtype.names:
-        local_maxima_labeled_props_dtype.append( (each_name, local_maxima_labeled_props[each_name].dtype, local_maxima_labeled_props[each_name].shape[1:]) )
+    #for each_name in local_maxima_labeled_props.dtype.names:
+    #    local_maxima_labeled_props_dtype.append( (each_name, local_maxima_labeled_props[each_name].dtype, local_maxima_labeled_props[each_name].shape[1:]) )
 
-    local_maxima_labeled_props_dtype.append( ("IntCentroid", int, local_maxima_labeled_props["Centroid"].shape[1:]) )
+    local_maxima_labeled_props_dtype.append( ("Label", int) )
+    local_maxima_labeled_props_dtype.append( ("Centroid", float, new_wavelet_image_denoised.ndim) )
+    local_maxima_labeled_props_dtype.append( ("IntCentroid", int, new_wavelet_image_denoised.ndim) )
     local_maxima_labeled_props_dtype.append( ("IntCentroidWaveletValue", new_wavelet_image_denoised.dtype) )
 
     local_maxima_labeled_props_dtype = numpy.dtype(local_maxima_labeled_props_dtype)
