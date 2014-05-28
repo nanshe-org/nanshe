@@ -595,8 +595,10 @@ def get_one_neuron(new_image):
 class LabelImageCentroidProps(object):
     @advanced_debugging.log_call(logger)
     def __init__(self, new_intensity_image, new_label_image, **parameters):
-        self.props = []
-        self.count = []
+        self.intensity_image = new_intensity_image
+        self.label_image = new_label_image
+        self.props = None
+        self.count = None
     
         logger.debug("Found new label image.")
 
@@ -736,6 +738,33 @@ class LabelImageCentroidProps(object):
         self.remove_prop_mask(remove_prop_indices_mask)
 
 
+def remove_low_intensity_local_maxima(local_maxima, **parameters):
+    # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
+    low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+    for i in xrange(len(local_maxima.props)):
+        # Get the region with the label matching the maximum
+        each_region_image_wavelet_mask = (local_maxima.label_image == local_maxima.props["Label"][i])
+        each_region_image_wavelet = local_maxima.intensity_image[each_region_image_wavelet_mask]
+
+        # Get the number of pixels in that region
+        each_region_image_wavelet_num_pixels = float(each_region_image_wavelet.size)
+
+        # Get the value of the max for that region
+        each_region_image_wavelet_centroid_value = local_maxima.props["IntCentroidWaveletValue"][i]
+
+        # Get a mask of the pixels below that max for that region
+        each_region_image_wavelet_num_pixels_below_max = float((each_region_image_wavelet < each_region_image_wavelet_centroid_value).sum())
+
+        # Get a ratio of the number of pixels below that max for that region
+        each_region_image_wavelet_ratio_pixels = each_region_image_wavelet_num_pixels_below_max / each_region_image_wavelet_num_pixels
+
+        # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
+        low_intensities__local_maxima_label_mask__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
+
+    local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
+    
+    return(local_maxima)
+
 @advanced_debugging.log_call(logger)
 def wavelet_denoising(new_image, **parameters):
     """
@@ -857,7 +886,7 @@ def wavelet_denoising(new_image, **parameters):
         
         logger.debug("Found new label image.")
         
-        local_maxima = LabelImageCentroidProps(new_wavelet_image_denoised, new_wavelet_mask_labeled, **parameters["local_maxima_properties"])
+        local_maxima = LabelImageCentroidProps(new_wavelet_image_denoised, new_wavelet_mask_labeled, **parameters["LabelImageCentroidProps"])
         
         # Store the properties of those maxima
         #local_maxima_labeled_props = local_maxima_properties(new_wavelet_image_denoised, **parameters["local_maxima_properties"])
@@ -971,59 +1000,62 @@ def wavelet_denoising(new_image, **parameters):
         #logger.debug("Refinined properties for local maxima.")
         #
         
-        logger.debug("Removing local maxima that have too low of an intensity...")
+        #logger.debug("Removing local maxima that have too low of an intensity...")
         
-        # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
-        low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
-        for i in xrange(len(local_maxima.props)):
-            # Get the region with the label matching the maximum
-            each_region_image_wavelet_mask = (new_wavelet_mask_labeled == local_maxima.props["Label"][i])
-            each_region_image_wavelet = new_wavelet_image_denoised[each_region_image_wavelet_mask]
-
-            # Get the number of pixels in that region
-            each_region_image_wavelet_num_pixels = float(each_region_image_wavelet.size)
-
-            # Get the value of the max for that region
-            each_region_image_wavelet_centroid_value = local_maxima.props["IntCentroidWaveletValue"][i]
-
-            # Get a mask of the pixels below that max for that region
-            each_region_image_wavelet_num_pixels_below_max = float((each_region_image_wavelet < each_region_image_wavelet_centroid_value).sum())
-
-            # Get a ratio of the number of pixels below that max for that region
-            each_region_image_wavelet_ratio_pixels = each_region_image_wavelet_num_pixels_below_max / each_region_image_wavelet_num_pixels
-
-            # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
-            low_intensities__local_maxima_label_mask__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
+        ## Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
+        #low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+        #for i in xrange(len(local_maxima.props)):
+        #    # Get the region with the label matching the maximum
+        #    each_region_image_wavelet_mask = (new_wavelet_mask_labeled == local_maxima.props["Label"][i])
+        #    each_region_image_wavelet = new_wavelet_image_denoised[each_region_image_wavelet_mask]
+        #
+        #    # Get the number of pixels in that region
+        #    each_region_image_wavelet_num_pixels = float(each_region_image_wavelet.size)
+        #
+        #    # Get the value of the max for that region
+        #    each_region_image_wavelet_centroid_value = local_maxima.props["IntCentroidWaveletValue"][i]
+        #
+        #    # Get a mask of the pixels below that max for that region
+        #    each_region_image_wavelet_num_pixels_below_max = float((each_region_image_wavelet < each_region_image_wavelet_centroid_value).sum())
+        #
+        #    # Get a ratio of the number of pixels below that max for that region
+        #    each_region_image_wavelet_ratio_pixels = each_region_image_wavelet_num_pixels_below_max / each_region_image_wavelet_num_pixels
+        #
+        #    # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
+        #    low_intensities__local_maxima_label_mask__to_remove[i] = (each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
 
         # Get the labels to remove
-        low_intensities__local_maxima_labels__to_remove = local_maxima.props["Label"][low_intensities__local_maxima_label_mask__to_remove]
+        #low_intensities__local_maxima_labels__to_remove = local_maxima.props["Label"][low_intensities__local_maxima_label_mask__to_remove]
         # Get how many of each label to remove
-        low_intensities__local_maxima_label_count__to_remove = numpy.bincount(low_intensities__local_maxima_labels__to_remove, minlength = len(local_maxima.count) + 1)[1:]
+        #low_intensities__local_maxima_label_count__to_remove = numpy.bincount(low_intensities__local_maxima_labels__to_remove, minlength = len(local_maxima.count) + 1)[1:]
         
-        print("low_intensities__local_maxima_labels__to_remove = " + repr(low_intensities__local_maxima_labels__to_remove))
-        print("low_intensities__local_maxima_label_count__to_remove = " + repr(low_intensities__local_maxima_label_count__to_remove))
+        #print("low_intensities__local_maxima_labels__to_remove = " + repr(low_intensities__local_maxima_labels__to_remove))
+        #print("low_intensities__local_maxima_label_count__to_remove = " + repr(low_intensities__local_maxima_label_count__to_remove))
         
-        local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
+        #local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
         
         ## Take a subset of the label props that does not include the removal mask
         #local_maxima_labeled_props = local_maxima_labeled_props[ ~low_intensities__local_maxima_label_mask__to_remove ].copy()
         ## Reduce the count by the number of each label
         #local_maxima_labeled_count["Count"] -= low_intensities__local_maxima_label_count__to_remove
 
-        logger.debug("Removed local maxima that have too low of an intensity.")
+        #logger.debug("Removed local maxima that have too low of an intensity.")
         
-        logger.debug("Removing local maxima that are too close...")
+        #logger.debug("Removing local maxima that are too close...")
+        
+        print("parameters[\"remove_low_intensity_local_maxima\"] = " + repr(parameters["remove_low_intensity_local_maxima"]))
+        local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
 
         # Deleting close local maxima below 16 pixels
         too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
-
+        
         # Find the distance between every centroid (efficiently)
         local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
         local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima.props["Centroid"], metric = "euclidean")
-
+        
         too_close_local_maxima_labels_mask = local_maxima_centroid_distance < parameters["min_centroid_distance"]
         too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
-
+        
         for each_too_close_local_maxima_pairs in too_close_local_maxima_pairs:
             first_props_index, second_props_index = each_too_close_local_maxima_pairs
             
@@ -1034,7 +1066,8 @@ def wavelet_denoising(new_image, **parameters):
                     too_close__local_maxima_label_mask__to_remove[second_props_index] = True
         
         
-        local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
+        local_maxima.remove_prop_mask(too_close__local_maxima_label_mask__to_remove)
+        
         
         ## Get the labels to remove
         #too_close__local_maxima_labels__to_remove = local_maxima_labeled_props["Label"][too_close__local_maxima_label_mask__to_remove]
