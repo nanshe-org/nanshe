@@ -483,8 +483,6 @@ class LabelImageCentroidProps(object):
         logger.debug("Finding new label image...")
 
         self.label_image = scipy.ndimage.label(self.image_mask)[0]
-        # Renumber all labels sequentially
-        #new_wavelet_mask_labeled = skimage.segmentation.relabel_sequential(new_wavelet_mask_labeled)[0]
     
         logger.debug("Found new label image.")
 
@@ -508,7 +506,7 @@ class LabelImageCentroidProps(object):
 
         logger.debug("Labeled the local maxima.")
 
-        logger.debug("Extracting properties from the local maxima.")
+        logger.debug("Extracting properties from the local maxima...")
 
         # Extract the centroids.
         self.props = region_properties(local_maxima_labeled, properties = ["Centroid"])
@@ -519,20 +517,20 @@ class LabelImageCentroidProps(object):
 
         # We want to have a few more type present in our NumPy structured array. To do this, we collect the existing types into
         # a list and then add our new types onto the end. Finally, we make the new structured array type from the list we have.
-        local_maxima_labeled_props_dtype = []
+        props_dtype = []
 
         #for each_name in self.props.dtype.names:
-        #    local_maxima_labeled_props_dtype.append( (each_name, self.props[each_name].dtype, self.props[each_name].shape[1:]) )
+        #    props_dtype.append( (each_name, self.props[each_name].dtype, self.props[each_name].shape[1:]) )
 
-        local_maxima_labeled_props_dtype.append( ("Label", int) )
-        local_maxima_labeled_props_dtype.append( ("Centroid", float, new_intensity_image.ndim) )
-        local_maxima_labeled_props_dtype.append( ("IntCentroid", int, new_intensity_image.ndim) )
-        local_maxima_labeled_props_dtype.append( ("IntCentroidWaveletValue", new_intensity_image.dtype) )
+        props_dtype.append( ("Label", int) )
+        props_dtype.append( ("Centroid", float, new_intensity_image.ndim) )
+        props_dtype.append( ("IntCentroid", int, new_intensity_image.ndim) )
+        props_dtype.append( ("IntCentroidWaveletValue", new_intensity_image.dtype) )
 
-        local_maxima_labeled_props_dtype = numpy.dtype(local_maxima_labeled_props_dtype)
+        props_dtype = numpy.dtype(props_dtype)
 
         # Makes a new properties array that contains enough entries to hold the old one and has all the types we desire.
-        new_local_maxima_labeled_props = numpy.zeros(self.props.shape, dtype = local_maxima_labeled_props_dtype)
+        new_local_maxima_labeled_props = numpy.zeros(self.props.shape, dtype = props_dtype)
 
         # Copy over the old values.
         for each_name in self.props.dtype.names:
