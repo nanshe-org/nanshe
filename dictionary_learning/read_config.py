@@ -23,9 +23,6 @@ def read_parameters(config_filename):
         Args:
             config_filename:     name of the file to read.
         
-        Keyword Args:
-            print_args (bool):   whether to output arguments and keyword arguments passed to the function.
-        
         Returns:
             dict: parameters read from the file.
     """
