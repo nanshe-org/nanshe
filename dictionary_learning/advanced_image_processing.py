@@ -893,11 +893,8 @@ def wavelet_denoising(new_image, debug = False, **parameters):
                 #new_wavelet_image_denoised_maxima = skimage.feature.peak_local_max(new_wavelet_image_denoised, footprint = numpy.ones((3, 3)), labels = (new_wavelet_image_denoised > 0).astype(int), indices = False)
 
                 # We could look for seeds using local maxima. However, we already know what these should be as these are the centroids we have found.
-                new_wavelet_image_denoised_maxima = numpy.zeros(new_wavelet_image_denoised.shape, dtype = int)
-
-                if local_maxima.props["IntCentroid"].any():
-                    new_wavelet_image_denoised_maxima[ tuple(local_maxima.props["IntCentroid"].T) ] = local_maxima.props["Label"].T
-
+                new_wavelet_image_denoised_maxima = local_maxima.get_centroid_label_image()
+                
                 print("new_wavelet_image_denoised_maxima = " + repr(new_wavelet_image_denoised_maxima))
 
                 # Segment with watershed on minimum image
@@ -919,7 +916,7 @@ def wavelet_denoising(new_image, debug = False, **parameters):
                 # Renumber all labels sequentially.
                 new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
 
-                # Find properties of all regions (except the background)
+                # Find properties of all regions
                 new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["Centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
                 
                 print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = " + repr(new_wavelet_image_denoised_segmentation_props["Label"]))
