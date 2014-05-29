@@ -331,9 +331,6 @@ def region_properties(new_label_image, *args, **kwargs):
                   dtype=[('Area', '<f8'), ('Centroid', '<f8', (2,)), ('Label', '<i8')])
     """
     
-    logger.debug(repr(new_label_image))
-    logger.debug(repr(numpy.unique(new_label_image)))
-    
     fixed_shape_array_values = [ "BoundingBox", "CentralMoments", "Centroid", "HuMoments", "Moments", "NormalizedMoments", "WeightedCentralMoments", "WeightedCentroid", "WeightedHuMoments", "WeightedMoments", "WeightedNormalizedMoments" ]
     all_array_values = [ "BoundingBox", "CentralMoments", "Centroid", "ConvexImage", "Coordinates", "FilledImage", "HuMoments", "Image", "Moments", "NormalizedMoments", "WeightedCentralMoments", "WeightedCentroid", "WeightedHuMoments", "WeightedMoments", "WeightedNormalizedMoments" ]
     
@@ -479,11 +476,18 @@ def get_one_neuron(new_image):
 
 class LabelImageCentroidProps(object):
     @advanced_debugging.log_call(logger)
-    def __init__(self, new_intensity_image, new_label_image, **parameters):
+    def __init__(self, new_intensity_image, new_image_mask, **parameters):
         self.intensity_image = new_intensity_image
-        self.label_image = new_label_image
+        self.image_mask = new_image_mask
+        self.label_image = None
         self.props = None
         self.count = None
+        
+        logger.debug("Finding new label image...")
+
+        self.label_image = scipy.ndimage.label(self.image_mask)[0]
+        # Renumber all labels sequentially
+        #new_wavelet_mask_labeled = skimage.segmentation.relabel_sequential(new_wavelet_mask_labeled)[0]
     
         logger.debug("Found new label image.")
 
@@ -502,9 +506,9 @@ class LabelImageCentroidProps(object):
         # Note, if they are touching, they must be on a plateau (i.e. all have the same value).
         local_maxima_labeled = scipy.ndimage.label(local_maxima_mask.astype(int))[0]
         # Renumber all labels sequentially
-        print(repr(numpy.unique(local_maxima_labeled)))
+        #print(repr(numpy.unique(local_maxima_labeled)))
         local_maxima_labeled = skimage.segmentation.relabel_sequential(local_maxima_labeled)[0].copy()
-        print(repr(numpy.unique(local_maxima_labeled)))
+        #print(repr(numpy.unique(local_maxima_labeled)))
 
 
         logger.debug("Labeled the local maxima.")
@@ -513,12 +517,12 @@ class LabelImageCentroidProps(object):
 
         # Extract the centroids.
 
-        print("local_maxima_labeled = " + repr(local_maxima_labeled))
+        #print("local_maxima_labeled = " + repr(local_maxima_labeled))
 
         self.props = region_properties(local_maxima_labeled, properties = ["Centroid"])
 
-        print("local_maxima_labeled = " + repr(local_maxima_labeled))
-        print("self.props = " + repr(self.props))
+        #print("local_maxima_labeled = " + repr(local_maxima_labeled))
+        #print("self.props = " + repr(self.props))
 
         logger.debug("Extracted properties from the local maxima.")
 
@@ -554,39 +558,26 @@ class LabelImageCentroidProps(object):
 
         # Stores the value from wavelet denoising at the centroid for easy retrieval
         if self.props["IntCentroidWaveletValue"].size:
-            self.props["IntCentroidWaveletValue"] = new_label_image[ tuple(self.props["IntCentroid"].T) ]
+            self.props["IntCentroidWaveletValue"] = self.intensity_image[ tuple(self.props["IntCentroid"].T) ]
 
-        # Overwrite the label parameter as it holds no information as it is always 1, Now, is the label from wavelet mask label image.
-        #if self.props["Label"].size:
-        #    self.props["Label"] = new_wavelet_mask_labeled[ tuple(self.props["IntCentroid"].T) ]
-
-        if (numpy.any(self.props["Label"] == 0)):
-            # There shouldn't be any maximums in the background. This should never happen.
-            logger.warning("Maximum found where Label is 0.")
-
-        logger.debug("self.props = " + repr(self.props))
-
-        logger.debug("Refinined properties for local maxima.")
-
-        print(self.props)
+        #print(self.props)
         
         # Overwrite the label parameter as it holds no information. Now, is the label from wavelet mask label image.
         if self.props["Label"].size:
-            self.props["Label"] = new_label_image[ self.get_centroid_index_array() ]
+            self.props["Label"] = self.label_image[ self.get_centroid_index_array() ]
 
         if (numpy.any(self.props["Label"] == 0)):
             # There shouldn't be any maximums in the background. This should never happen.
             logger.warning("Maximum found where Label is 0.")
+            # Remove the 0 labels
+            self.props = self.props[self.props["Label"] == 0]
         
         # Stores the number of times a particular label maxima appears.
-        self.count = numpy.zeros( (new_label_image.max(),), dtype = [("Label", int), ("Count", int)] )
+        self.count = numpy.zeros( (self.label_image.max(),), dtype = [("Label", int), ("Count", int)] )
         # Get all the labels used in the label image
-        self.count["Label"] = numpy.arange(1, new_label_image.max() + 1)
+        self.count["Label"] = numpy.arange(1, self.label_image.max() + 1)
         # Get the count of those labels (excluding zero as it is background)
         self.count["Count"] = numpy.bincount(self.props["Label"], minlength = len(self.count) + 1)[1:]
-        
-        logger.debug("self.props = " + repr(self.props))
-        logger.debug("self.count = " + repr(self.count))
 
         if numpy.any(self.count["Count"] == 0):
             # All labels should have a local maximum. If they don't, this could be a problem.
@@ -596,12 +587,17 @@ class LabelImageCentroidProps(object):
             failed_label_msg = "Label(s) not found in local maxima. For labels = " + repr(failed_labels_list) + "."
 
             logger.warning(failed_label_msg)
+            
+            # Renumber labels. This way there are no labels without local maxima.
+            self.renumber_labels()
         
         logger.debug("Refinined properties for local maxima.")
+    
     
     @advanced_debugging.log_call(logger)
     def get_centroid_index_array(self):
         return(tuple(self.props["IntCentroid"].T))
+    
     
     @advanced_debugging.log_call(logger)
     def get_centroid_mask(self):
@@ -613,6 +609,7 @@ class LabelImageCentroidProps(object):
         
         return(new_centroid_mask)
     
+    
     @advanced_debugging.log_call(logger)
     def get_centroid_label_image(self):
         # Returns a label image containing each centroid and its labels.
@@ -623,27 +620,6 @@ class LabelImageCentroidProps(object):
         
         return(new_centroid_label_image)
     
-    @advanced_debugging.log_call(logger)
-    def get_active_label_image(self):
-        # Returns a label image containing the labels, which still have centroids.
-        
-        # Mask over self.count of labels that still have centroid(s)
-        active_label_count_mask = self.count["Count"] > 0
-        # Labels that still have centroid(s)
-        active_labels = self.count["Label"][active_label_count_mask]
-        # Mask for each label as to whether it appears in the self.label_image
-        #every_active_label_mask = advanced_numpy.all_permutations_equal(active_labels, self.label_image)
-        # Mask for self.label_image that matches any relevant label.
-        #active_label_mask = every_active_label_mask.any(axis = 0)
-        active_label_mask = advanced_numpy.contains(self.label_image, active_labels)
-        # The label image of relevant labels
-        #new_active_label_image = active_label_mask * self.label_image
-        
-        
-        new_active_label_image = skimage.morphology.watershed(active_label_mask.astype(int), self.get_centroid_label_image(), mask = active_label_mask)
-                
-        
-        return(new_active_label_image)
     
     @advanced_debugging.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
@@ -652,23 +628,72 @@ class LabelImageCentroidProps(object):
         # Get how many of each label to remove
         label_count_to_remove = numpy.bincount(remove_labels, minlength = len(self.count) + 1)[1:]
         
-        print("remove_labels = " + repr(remove_labels))
-        print("label_count_to_remove = " + repr(label_count_to_remove))
+        #print("remove_labels = " + repr(remove_labels))
+        #print("label_count_to_remove = " + repr(label_count_to_remove))
         
         # Take a subset of the label props that does not include the removal mask
+        # (copying may not be necessary as the mask may be as effective)
         self.props = self.props[ ~remove_prop_indices_mask ].copy()
         # Reduce the count by the number of each label
         self.count["Count"] -= label_count_to_remove
+        
+        # Mask over label_count_to_remove to find labels that had centroids removed
+        centroids_removed_label_count_mask = (label_count_to_remove > 0)
+        # Mask over self.count to find labels that do not have centroid(s)
+        inactive_label_count_mask = (self.count["Count"] == 0)
+        # Combine the two masks to find the labels that have just had all centroids removed
+        newly_inactive_labels_count_mask = (centroids_removed_label_count_mask & inactive_label_count_mask)
+        
+        # Are there labels that do not exist now? If so, we will dump them.
+        if newly_inactive_labels_count_mask.any():
+            # Find the labels to remove from the label image and mask and remove them
+            labels_to_remove = self.count["Label"][newly_inactive_labels_count_mask]
+            labels_to_remove_mask = advanced_numpy.contains(self.label_image, labels_to_remove)
+            self.label_image[labels_to_remove_mask] = 0
+            self.image_mask[labels_to_remove_mask] = 0
+
+            # Renumber all labels sequentially starting with the label image
+            self.renumber_labels()
+        
     
     @advanced_debugging.log_call(logger)
     def remove_prop_indices(self, *i):
         # A mask of the indices to remove
         remove_prop_indices_mask = numpy.zeros( (len(self.props),), dtype = bool )
-        remove_prop_indices_mask[numpy.array(i)] = True
+        remove_prop_indices_mask[ numpy.array(i) ] = True
         
         self.remove_prop_mask(remove_prop_indices_mask)
 
+    def renumber_labels(self):
+        # Renumber all labels sequentially starting with the label image
+        self.label_image[:], forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(self.label_image)
+        #new_label_image, forward_label_mapping, reverse_label_mapping = advanced_numpy.renumber_label_image(self.label_image)
+        
+        # Remove zero from the mappings as it is background and remains the same
+        forward_label_mapping = forward_label_mapping[forward_label_mapping != 0]
+        reverse_label_mapping = reverse_label_mapping[reverse_label_mapping != 0]
 
+        # Find which of the old labels appear in self.props["Label"] (skip 0)
+        props_reverse_mapped = advanced_numpy.all_permutations_equal(reverse_label_mapping, self.props["Label"])
+        # Get the new labels by noting they must range from 0 to the length of reverse_label_mapping.
+        # Skip zero as it is not necessary to check for it.
+        new_labels = numpy.arange(1, len(reverse_label_mapping) + 1)
+        # Expand new_labels into a view of the same size as props_reverse_mapped
+        new_labels_expanded = advanced_numpy.expand_view(new_labels, reps_after = self.props["Label"].shape)
+        # Replace the labels with the matches and combine them
+        self.props["Label"] = (props_reverse_mapped * new_labels_expanded).sum(axis = 0)
+
+        # Get a mask over the labels to find what is contained
+        new_count_mask = advanced_numpy.contains(self.count["Label"], reverse_label_mapping)
+        # Move the values of the count into the proper lower labels and zero everything else
+        self.count["Count"][:len(reverse_label_mapping)] = self.count["Count"][new_count_mask]
+        self.count["Count"][len(reverse_label_mapping):] = 0
+
+        # (copying may not be necessary as the slice may be as effective)
+        self.count = self.count[:len(reverse_label_mapping)].copy()
+        
+        pass
+    
 @advanced_debugging.log_call(logger)
 def remove_low_intensity_local_maxima(local_maxima, **parameters):
     # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
@@ -839,8 +864,7 @@ def wavelet_denoising(new_image, debug = False, **parameters):
             replacement_mask = current_label_mask & lower_wavelet_mask
 
             # Zero everything that is not in the replacement region and then use the lower transformed wavelet.
-            new_wavelet_image_denoised_replacement = new_wavelet_transformed_image[-2].copy()
-            new_wavelet_image_denoised_replacement *= replacement_mask
+            new_wavelet_image_denoised_replacement = new_wavelet_transformed_image[-2] * replacement_mask
 
             # Overwrite the area in our old labeled mask to match this lower wavelet transform
             new_wavelet_image_mask[current_label_mask] = lower_wavelet_mask[current_label_mask]
@@ -850,47 +874,52 @@ def wavelet_denoising(new_image, debug = False, **parameters):
         
         logger.debug("Reduced wavelet transform on regions outside of constraints...")
         
-        logger.debug("Finding new label image...")
-
-        new_wavelet_mask_labeled = scipy.ndimage.label(new_wavelet_image_mask)[0]
-        # Renumber all labels sequentially
-        new_wavelet_mask_labeled = skimage.segmentation.relabel_sequential(new_wavelet_mask_labeled)[0]
         
-        logger.debug("Found new label image.")
         
-        local_maxima = LabelImageCentroidProps(new_wavelet_image_denoised, new_wavelet_mask_labeled, **parameters["LabelImageCentroidProps"])
+        local_maxima = LabelImageCentroidProps(new_wavelet_image_denoised, new_wavelet_image_denoised > 0, **parameters["LabelImageCentroidProps"])
         
         centroid_label_image_0 = local_maxima.get_centroid_label_image()
-        centroid_active_label_image_0 = local_maxima.get_active_label_image()
+        centroid_active_label_image_0 = local_maxima.label_image.copy()
         
         local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
         
         centroid_label_image_1 = local_maxima.get_centroid_label_image()
-        centroid_active_label_image_1 = local_maxima.get_active_label_image()
+        centroid_active_label_image_1 = local_maxima.label_image.copy()
 
         local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
         
         centroid_label_image_2 = local_maxima.get_centroid_label_image()
-        centroid_active_label_image_2 = local_maxima.get_active_label_image()
+        centroid_active_label_image_2 = local_maxima.label_image.copy()
         
         logger.debug("Removed local maxima that are too close.")
         
         logger.debug("Removing regions without local maxima...")
 
+        # No longer necessary as new_wavelet_mask_labeled is not used further and this can always be gotten by calling local_maxima.get_active_label_image
         # Deleting regions without local maxima
         # As we have been decreasing the count by removing maxima, it is possible that some regions should no longer exist as they have no maxima.
         # Find all these labels that no longer have maxima and create a mask that includes them.
-        no_maxima__local_maxima_label_count_mask__to_remove = (local_maxima.count["Count"] == 0)
-        no_maxima__local_maxima_labels__to_remove = local_maxima.count["Label"][no_maxima__local_maxima_label_count_mask__to_remove]
-        no_maxima__local_maxima_labels__to_remove_labels_mask = numpy.in1d(new_wavelet_mask_labeled, no_maxima__local_maxima_labels__to_remove).reshape(new_wavelet_mask_labeled.shape)
+        #no_maxima__local_maxima_label_count_mask__to_remove = (local_maxima.count["Count"] == 0)
+        #no_maxima__local_maxima_labels__to_remove = local_maxima.count["Label"][no_maxima__local_maxima_label_count_mask__to_remove]
+        #no_maxima__local_maxima_labels__to_remove_labels_mask = numpy.in1d(new_wavelet_mask_labeled, no_maxima__local_maxima_labels__to_remove).reshape(new_wavelet_mask_labeled.shape)
         #no_maxima__local_maxima_label_count_mask__to_remove = (local_maxima_labeled_count["Count"] == 0)
         #no_maxima__local_maxima_labels__to_remove = local_maxima_labeled_count["Label"][no_maxima__local_maxima_label_count_mask__to_remove]
         #no_maxima__local_maxima_labels__to_remove_labels_mask = numpy.in1d(new_wavelet_mask_labeled, no_maxima__local_maxima_labels__to_remove).reshape(new_wavelet_mask_labeled.shape)
         
         # Set all of these regions without maxima to the background
-        new_wavelet_image_mask[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
-        new_wavelet_mask_labeled[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
-        new_wavelet_image_denoised[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
+        #new_wavelet_image_mask[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
+        #new_wavelet_mask_labeled[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
+        #new_wavelet_image_denoised[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
+        
+        # Set all of these regions without maxima to the background
+        #old_wavelet_image_mask = new_wavelet_image_mask
+        
+        #new_wavelet_mask_labeled = local_maxima.label_image
+        #new_wavelet_image_mask = (new_wavelet_mask_labeled > 0)
+        
+        #no_maxima__local_maxima_labels__to_remove_labels_mask = (old_wavelet_image_mask != new_wavelet_image_mask)
+        #new_wavelet_image_denoised[no_maxima__local_maxima_labels__to_remove_labels_mask] = 0
+        
         
         logger.debug("Removed regions without local maxima.")
 
@@ -898,7 +927,7 @@ def wavelet_denoising(new_image, debug = False, **parameters):
             if parameters["use_watershed"]:
                 ################ TODO: Revisit to make sure all of Ferran's algorithm is implemented and this is working properly.
 
-                print("local_maxima.props = " + repr(local_maxima.props))
+                #print("local_maxima.props = " + repr(local_maxima.props))
 
                 # Perform the watershed segmentation.
 
@@ -910,7 +939,7 @@ def wavelet_denoising(new_image, debug = False, **parameters):
                 # We could look for seeds using local maxima. However, we already know what these should be as these are the centroids we have found.
                 new_wavelet_image_denoised_maxima = local_maxima.get_centroid_label_image()
                 
-                print("new_wavelet_image_denoised_maxima = " + repr(new_wavelet_image_denoised_maxima))
+                #print("new_wavelet_image_denoised_maxima = " + repr(new_wavelet_image_denoised_maxima))
 
                 # Segment with watershed on minimum image
                 # Use seeds from centroids of local minima
@@ -934,16 +963,16 @@ def wavelet_denoising(new_image, debug = False, **parameters):
                 # Find properties of all regions
                 new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["Centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
                 
-                print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = " + repr(new_wavelet_image_denoised_segmentation_props["Label"]))
-                print("reverse_label_mapping = " + repr(reverse_label_mapping))
+                #print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = " + repr(new_wavelet_image_denoised_segmentation_props["Label"]))
+                #print("reverse_label_mapping = " + repr(reverse_label_mapping))
 
                 new_wavelet_image_denoised_segmentation_props["Label"] = reverse_label_mapping[ new_wavelet_image_denoised_segmentation_props["Label"] ]
 
 
                 new_wavelet_image_denoised_segmentation_props_labels_count = numpy.bincount(new_wavelet_image_denoised_segmentation_props["Label"])[1:]
 
-                print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = " + repr(new_wavelet_image_denoised_segmentation_props["Label"]))
-                print("new_wavelet_image_denoised_segmentation_props_labels_count = " + repr(new_wavelet_image_denoised_segmentation_props_labels_count))
+                #print("new_wavelet_image_denoised_segmentation_props[\"Label\"] = " + repr(new_wavelet_image_denoised_segmentation_props["Label"]))
+                #print("new_wavelet_image_denoised_segmentation_props_labels_count = " + repr(new_wavelet_image_denoised_segmentation_props_labels_count))
 
                 new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask = (new_wavelet_image_denoised_segmentation_props_labels_count > 1)
                 new_wavelet_image_denoised_segmentation_props_labels_duplicates = numpy.unique(new_wavelet_image_denoised_segmentation_props["Label"][new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask])
@@ -1087,8 +1116,6 @@ def wavelet_denoising(new_image, debug = False, **parameters):
                         logger.debug("Extracted neurons. Found " + str(len(neurons)) + " neurons.")
                     else:
                         logger.debug("Extracted a neuron. Found " + str(len(neurons)) + " neuron.")
-                    
-                    logger.debug("neurons = " + repr(neurons) + "")
             else:
                 #################### Some other kind of segmentation??? Talked to Ferran and he said don't worry about implementing this for now. Does not seem to give noticeably better results.
                 raise Exception("No other form of segmentation is implemented.")
@@ -1098,8 +1125,7 @@ def wavelet_denoising(new_image, debug = False, **parameters):
         logger.debug("Frame is only noise.")
     
     
-    
-    #print("Done with making neurons.")
+    logger.debug("Finished making neurons for the current frame.")
     if debug:
         return((neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2, centroid_active_label_image_0, centroid_active_label_image_1, centroid_active_label_image_2,))
     else:
@@ -1124,23 +1150,23 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
             dict: the dictionary found.
     """
     
-    print neuron_1.shape
-    print neuron_2.shape
+    #print neuron_1.shape
+    #print neuron_2.shape
     assert(neuron_1.shape == neuron_2.shape == tuple())
     assert(neuron_1.dtype == neuron_2.dtype)
     
     mean_neuron = numpy.array([neuron_1["image_original"], neuron_2["image_original"]]).mean(axis = 0)
     mean_neuron_mask = mean_neuron > (parameters["fraction_mean_neuron_max_threshold"] * mean_neuron.max())
     
-    print("neuron_1[\"image_original\"].shape = " + repr(neuron_1["image_original"].shape))
+    #print("neuron_1[\"image_original\"].shape = " + repr(neuron_1["image_original"].shape))
     
-    print("mean_neuron = " + repr(mean_neuron))
+    #print("mean_neuron = " + repr(mean_neuron))
     
-    print("mean_neuron.shape = " + repr(mean_neuron.shape))
+    #print("mean_neuron.shape = " + repr(mean_neuron.shape))
     
-    print("mean_neuron_mask = " + repr(mean_neuron_mask))
+    #print("mean_neuron_mask = " + repr(mean_neuron_mask))
     
-    print("mean_neuron_mask.shape = " + repr(mean_neuron_mask.shape))
+    #print("mean_neuron_mask.shape = " + repr(mean_neuron_mask.shape))
     
     # Gaussian mixture model ??? Skipped this.
     
@@ -1160,9 +1186,9 @@ def fuse_neurons(neuron_1, neuron_2, **parameters):
 
     new_neuron_mask_points = numpy.array(new_neuron["mask"].nonzero())
         
-    print("new_neuron_mask_points = " + repr(new_neuron_mask_points))
+    #print("new_neuron_mask_points = " + repr(new_neuron_mask_points))
 
-    print("new_neuron_mask_points.mean(axis = 1) = " + repr(new_neuron_mask_points.mean(axis = 1)))
+    #print("new_neuron_mask_points.mean(axis = 1) = " + repr(new_neuron_mask_points.mean(axis = 1)))
 
     new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis = 1)
     new_neuron["gaussian_cov"] = numpy.cov(new_neuron_mask_points)
@@ -1239,8 +1265,8 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_1_flattened_mask = new_neuron_set_1["mask"].reshape(new_neuron_set_1["mask"].shape[0], -1)
         new_neuron_set_2_flattened_mask = new_neuron_set_2["mask"].reshape(new_neuron_set_2["mask"].shape[0], -1)
         
-        print("new_neuron_set_1_flattened.nonzero() = " + repr(new_neuron_set_1_flattened.nonzero()))
-        print("new_neuron_set_2_flattened.nonzero() = " + repr(new_neuron_set_2_flattened.nonzero()))
+        #print("new_neuron_set_1_flattened.nonzero() = " + repr(new_neuron_set_1_flattened.nonzero()))
+        #print("new_neuron_set_2_flattened.nonzero() = " + repr(new_neuron_set_2_flattened.nonzero()))
         
         # Measure the dot product between any two neurons (i.e. related to the angle of separation)
         new_neuron_set_angle = 1 - scipy.spatial.distance.cdist(new_neuron_set_1_flattened,
@@ -1268,10 +1294,10 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count_expanded
         new_neuron_set_masks_overlayed_2 = new_neuron_set_masks_overlayed / new_neuron_set_2_masks_count_expanded
 
-        print("new_neuron_set_angle = " + repr(new_neuron_set_angle))
-        print("new_neuron_set_masks_overlayed = " + repr(new_neuron_set_masks_overlayed))
-        print("new_neuron_set_masks_overlayed_1 = " + repr(new_neuron_set_masks_overlayed_1))
-        print("new_neuron_set_masks_overlayed_2 = " + repr(new_neuron_set_masks_overlayed_2))
+        #print("new_neuron_set_angle = " + repr(new_neuron_set_angle))
+        #print("new_neuron_set_masks_overlayed = " + repr(new_neuron_set_masks_overlayed))
+        #print("new_neuron_set_masks_overlayed_1 = " + repr(new_neuron_set_masks_overlayed_1))
+        #print("new_neuron_set_masks_overlayed_2 = " + repr(new_neuron_set_masks_overlayed_2))
 
         # Now that the three measures for the correlation method have been found, we want to know,
         # which are the best correlated neurons between the two sets using these measures.
@@ -1280,9 +1306,9 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
         new_neuron_set_masks_overlayed_1_optimal = new_neuron_set_masks_overlayed_1.argmax(axis = 0)
         new_neuron_set_masks_overlayed_2_optimal = new_neuron_set_masks_overlayed_2.argmax(axis = 0)
 
-        print("new_neuron_set_angle_optimal = " + repr(new_neuron_set_angle_optimal))
-        print("new_neuron_set_masks_overlayed_1_optimal = " + repr(new_neuron_set_masks_overlayed_1_optimal))
-        print("new_neuron_set_masks_overlayed_2_optimal = " + repr(new_neuron_set_masks_overlayed_2_optimal))
+        #print("new_neuron_set_angle_optimal = " + repr(new_neuron_set_angle_optimal))
+        #print("new_neuron_set_masks_overlayed_1_optimal = " + repr(new_neuron_set_masks_overlayed_1_optimal))
+        #print("new_neuron_set_masks_overlayed_2_optimal = " + repr(new_neuron_set_masks_overlayed_2_optimal))
 
         # Fuse or add each neuron from new_neuron_set_2 to the new_neuron_set composed of new_neuron_set_1
         for j in xrange(new_neuron_set_2.shape[0]):
@@ -1290,15 +1316,15 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
             new_neuron_set_masks_overlayed_1_i = new_neuron_set_masks_overlayed_1_optimal[j]
             new_neuron_set_masks_overlayed_2_i = new_neuron_set_masks_overlayed_2_optimal[j]
 
-            print("new_neuron_set_angle_i = " + repr(new_neuron_set_angle_i))
-            print("new_neuron_set_masks_overlayed_1_i = " + repr(new_neuron_set_masks_overlayed_1_i))
-            print("new_neuron_set_masks_overlayed_2_i = " + repr(new_neuron_set_masks_overlayed_2_i))
+            #print("new_neuron_set_angle_i = " + repr(new_neuron_set_angle_i))
+            #print("new_neuron_set_masks_overlayed_1_i = " + repr(new_neuron_set_masks_overlayed_1_i))
+            #print("new_neuron_set_masks_overlayed_2_i = " + repr(new_neuron_set_masks_overlayed_2_i))
             
             new_neuron_set_angle_max = new_neuron_set_angle[ new_neuron_set_angle_i, j ]
             new_neuron_set_masks_overlayed_1_max = new_neuron_set_masks_overlayed_1[ new_neuron_set_masks_overlayed_1_i, j ]
             new_neuron_set_masks_overlayed_2_max = new_neuron_set_masks_overlayed_2[ new_neuron_set_masks_overlayed_2_i, j ]
             
-            print(repr(new_neuron_set_masks_overlayed_2_max))
+            #print(repr(new_neuron_set_masks_overlayed_2_max))
             
             if new_neuron_set_angle_max > parameters["alignment_min_threshold"]:
                 new_neuron_set[new_neuron_set_angle_i] = fuse_neurons(new_neuron_set_1[new_neuron_set_angle_i], new_neuron_set_2[j], **parameters["fuse_neurons"])
