@@ -637,17 +637,13 @@ class LabelImageCentroidProps(object):
         # Reduce the count by the number of each label
         self.count["Count"] -= label_count_to_remove
         
-        # Mask over label_count_to_remove to find labels that had centroids removed
-        centroids_removed_label_count_mask = (label_count_to_remove > 0)
         # Mask over self.count to find labels that do not have centroid(s)
         inactive_label_count_mask = (self.count["Count"] == 0)
-        # Combine the two masks to find the labels that have just had all centroids removed
-        newly_inactive_labels_count_mask = (centroids_removed_label_count_mask & inactive_label_count_mask)
         
         # Are there labels that do not exist now? If so, we will dump them.
-        if newly_inactive_labels_count_mask.any():
+        if inactive_label_count_mask.any():
             # Find the labels to remove from the label image and mask and remove them
-            labels_to_remove = self.count["Label"][newly_inactive_labels_count_mask]
+            labels_to_remove = self.count["Label"][inactive_label_count_mask]
             labels_to_remove_mask = advanced_numpy.contains(self.label_image, labels_to_remove)
             self.label_image[labels_to_remove_mask] = 0
             self.image_mask[labels_to_remove_mask] = 0
