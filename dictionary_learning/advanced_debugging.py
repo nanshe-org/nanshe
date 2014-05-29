@@ -80,7 +80,7 @@ def log_call(logger, print_args = False):
         # Store the underlying callable. Automatic in Python 3.
         log_call_callable_wrapped.__wrapped__ = callable
         
-        # Copy over the define value of print_args for later use.
+        # Copy over the value of print_args for later use.
         # Must be defined afterwards as functools.wraps will not copy it over to the wrapped instance.
         log_call_callable_wrapped.print_args = print_args
         
