@@ -1238,10 +1238,10 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, **parameters):
                     numpy.append(new_neuron_set, new_neuron_set_2[j].copy())
         
     elif not len(new_neuron_set_1):
-        logger.debug("Have 1 sets of neurons to merge. Only the first set has neurons.")
+        logger.debug("Have 1 set of neurons to merge. Only the first set has neurons.")
         new_neuron_set = new_neuron_set_2
     elif not len(new_neuron_set_2):
-        logger.debug("Have 1 sets of neurons to merge. Only the second set has neurons.")
+        logger.debug("Have 1 set of neurons to merge. Only the second set has neurons.")
         new_neuron_set = new_neuron_set_1
     else:
         logger.debug("Have 0 sets of neurons to merge.")
