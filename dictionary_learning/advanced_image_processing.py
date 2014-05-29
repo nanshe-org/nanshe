@@ -604,6 +604,16 @@ class LabelImageCentroidProps(object):
         return(tuple(self.props["IntCentroid"].T))
     
     @advanced_debugging.log_call(logger)
+    def get_centroid_mask(self):
+        # Returns a label image containing each centroid and its labels.
+        new_centroid_mask = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
+        
+        # Set the given centroids to be the same as their labels
+        new_centroid_mask[self.get_centroid_index_array()] = True
+        
+        return(new_centroid_mask)
+    
+    @advanced_debugging.log_call(logger)
     def get_centroid_label_image(self):
         # Returns a label image containing each centroid and its labels.
         new_centroid_label_image = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
@@ -622,11 +632,16 @@ class LabelImageCentroidProps(object):
         # Labels that still have centroid(s)
         active_labels = self.count["Label"][active_label_count_mask]
         # Mask for each label as to whether it appears in the self.label_image
-        every_active_label_mask = advanced_numpy.all_permutations_equal(active_labels, self.label_image)
+        #every_active_label_mask = advanced_numpy.all_permutations_equal(active_labels, self.label_image)
         # Mask for self.label_image that matches any relevant label.
-        active_label_mask = every_active_label_mask.any(axis = 0)
+        #active_label_mask = every_active_label_mask.any(axis = 0)
+        active_label_mask = advanced_numpy.contains(self.label_image, active_labels)
         # The label image of relevant labels
-        new_active_label_image = active_label_mask * self.label_image
+        #new_active_label_image = active_label_mask * self.label_image
+        
+        
+        new_active_label_image = skimage.morphology.watershed(active_label_mask.astype(int), self.get_centroid_label_image(), mask = active_label_mask)
+                
         
         return(new_active_label_image)
     
@@ -935,11 +950,11 @@ def wavelet_denoising(new_image, debug = False, **parameters):
 
                 # Determine a mask that represents all labels to be set to zero in the watershed (new_wavelet_image_denoised_segmentation_props_labels_non_duplicates_watershed_mask)
                 # The first index now corresponds to the same index used to denote each duplicate. The rest for the image.
-                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_labels_duplicates, new_wavelet_image_denoised_segmentation)
-
+                #new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_labels_duplicates, new_wavelet_image_denoised_segmentation)
                 # If any of the masks contain a point to remove then it should be included for removal. Only points in none of the stacks should not.
-                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks.any(axis = 0)
-
+                #new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks.any(axis = 0)
+                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = advanced_numpy.contains(new_wavelet_image_denoised_segmentation, new_wavelet_image_denoised_segmentation_props_labels_duplicates)
+                
                 # Zero the labels that need to be removed.
                 new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask] = 0
 
@@ -1035,10 +1050,10 @@ def wavelet_denoising(new_image, debug = False, **parameters):
                 new_wavelet_image_denoised_segmentation_props_unbounded_labels = new_wavelet_image_denoised_segmentation_props["Label"][not_within_bound]
 
                 # Get a mask of the locations in the watershed where these must be zeroed
-                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_unbounded_labels, new_wavelet_image_denoised_segmentation)
-
-                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = numpy.any(new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks, axis = 0)
-
+                #new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks = advanced_numpy.all_permutations_equal(new_wavelet_image_denoised_segmentation_props_unbounded_labels, new_wavelet_image_denoised_segmentation)
+                #new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = numpy.any(new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_all_masks, axis = 0)
+                new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask = advanced_numpy.contains(new_wavelet_image_denoised_segmentation, new_wavelet_image_denoised_segmentation_props_unbounded_labels)
+                
                 # Zero them
                 new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation_regions_labels_duplicates_watershed_mask] = 0
 
