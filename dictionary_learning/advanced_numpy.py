@@ -20,6 +20,7 @@ import advanced_debugging
 logger = advanced_debugging.logging.getLogger(__name__)
 
 
+@advanced_debugging.log_call(logger)
 def renumber_label_image(new_array):
     """
         Takes a label image with non-consecutive numbering and renumbers it to be consecutive.
@@ -31,16 +32,16 @@ def renumber_label_image(new_array):
             (numpy.ndarray):                     the relabeled label image
         
         Examples:
-            >>> renumber_label_image(np.array([1, 2, 3]))
+            >>> renumber_label_image(numpy.array([1, 2, 3]))
             array([1, 2, 3])
             
-            >>> renumber_label_image(np.array([1, 2, 4]))
+            >>> renumber_label_image(numpy.array([1, 2, 4]))
             array([1, 2, 3])
             
-            >>> renumber_label_image(np.array([0, 1, 2, 3]))
+            >>> renumber_label_image(numpy.array([0, 1, 2, 3]))
             array([0, 1, 2, 3])
             
-            >>> renumber_label_image(np.array([0, 1, 2, 4]))
+            >>> renumber_label_image(numpy.array([0, 1, 2, 4]))
             array([0, 1, 2, 3])
     """
     
@@ -159,6 +160,52 @@ def add_singleton_axis_end(new_array):
     return( add_singleton_axis_pos(new_array, new_pos = new_array.ndim) )
 
 
+@advanced_debugging.log_call(logger)
+def contains(new_array, to_contain):
+    """
+        Gets a mask array that is true every time something from to_contain appears in new_array.
+        
+        Args:
+            new_array(numpy.ndarray):            array to check for matches.
+            to_contain(array_like):              desired matches to find.
+        
+        Returns:
+            (numpy.ndarray):                     a mask for new_array that selects values from to_contain.
+        
+        Examples:
+            >>> contains(numpy.zeros((2,2)), 0)
+            array([[ True,  True],
+                   [ True,  True]], dtype=bool)
+                    
+            >>> contains(numpy.zeros((2,2)), 1)
+            array([[False, False],
+                   [False, False]], dtype=bool)
+                    
+            >>> contains(numpy.zeros((2,2)), [1])
+            array([[False, False],
+                   [False, False]], dtype=bool)
+                    
+            >>> contains(numpy.zeros((2,2)), numpy.array([1]))
+            array([[False, False],
+                   [False, False]], dtype=bool)
+                    
+            >>> contains(numpy.arange(4).reshape((2,2)), numpy.array([0]))
+            array([[ True, False],
+                   [False, False]], dtype=bool)
+                    
+            >>> contains(numpy.arange(4).reshape((2,2)), numpy.array([1]))
+            array([[False,  True],
+                   [False, False]], dtype=bool)
+                    
+            >>> contains(numpy.arange(4).reshape((2,2)), numpy.array([2]))
+            array([[False, False],
+                   [ True, False]], dtype=bool)
+                    
+            >>> contains(numpy.arange(4).reshape((2,2)), numpy.array([3]))
+            array([[False, False],
+                   [False,  True]], dtype=bool)
+    """
+    return(numpy.in1d(new_array, to_contain).reshape(new_array.shape))
 
 @advanced_debugging.log_call(logger)
 def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
