@@ -45,12 +45,18 @@ def renumber_label_image(new_array):
             array([0, 1, 2, 3])
     """
     
+    # Get the set of reverse label mapping
+    reverse_label_mapping = numpy.unique(numpy.array([0] + numpy.unique(new_array).tolist() ))
+    
     # Get the set of old labels excluding background
-    old_labels = numpy.unique(new_array)
-    old_labels = old_labels[old_labels != 0]
+    old_labels = reverse_label_mapping[reverse_label_mapping != 0]
     
     # Get the set of new labels in order
     new_labels = numpy.arange(1, len(old_labels) + 1)
+    
+    # Get the forward label mapping
+    forward_label_mapping = numpy.zeros((reverse_label_mapping.max() + 1,), dtype = new_array.dtype)
+    forward_label_mapping[old_labels] = new_labels
 
     # Get masks for each old label
     new_array_label_masks = all_permutations_equal(old_labels, new_array)
@@ -62,7 +68,7 @@ def renumber_label_image(new_array):
     # Then combine each of these parts of the label image together into a new sequential label image
     new_array_relabeled = (new_array_label_masks * new_labels_tiled_view).sum(axis = 0)
     
-    return(new_array_relabeled)
+    return((new_array_relabeled, forward_label_mapping, reverse_label_mapping))
 
 
 @advanced_debugging.log_call(logger)
