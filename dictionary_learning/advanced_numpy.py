@@ -665,6 +665,6 @@ def numpy_array_dtype_list(new_array):
     """
     
     try:
-        return(list(numpy_array_dtype_generator(new_array)))
-    except NotNumPyStructuredArray:
+        return(list(numpy_structured_array_dtype_generator(new_array)))
+    except NotNumPyStructuredArrayType:
         return(new_array.dtype.type)
