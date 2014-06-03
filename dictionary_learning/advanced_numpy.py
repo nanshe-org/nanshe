@@ -612,3 +612,59 @@ def all_permutations_equal(new_array_1, new_array_2):
     return( all_permutations_operation(operator.eq, new_array_1, new_array_2) )
 
 
+class NotNumPyStructuredArrayType(Exception):
+    """
+        Designed for being thrown if a NumPy Structured Array is recieved.
+    """
+    pass
+
+
+def numpy_structured_array_dtype_generator(new_array):
+    """
+        Takes a NumPy structured array and returns a generator that goes over
+        each name in the structured array and yields the name, type, and shape
+        (for the given name).
+        
+        Args:
+            new_array(numpy.ndarray):       the array to get the info dtype from.
+        
+        Raises:
+            (NotNumPyStructuredArrayType):  if it is a normal NumPy array.
+        
+        Returns:
+            (iterator):                     An iterator yielding tuples.
+    """
+    
+    # Test to see if this is a NumPy Structured Array
+    if new_array.dtype.names:
+        # Go through each name
+        for each_name in new_array.dtype.names:
+            # Get the type (want the actual type, not a str or dtype object)
+            each_dtype = new_array[each_name].dtype.type
+            # Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)
+            each_shape = new_array.dtype[each_name].shape
+            
+            yield( (each_name, each_dtype, each_shape) )
+    else:
+        raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
+
+
+def numpy_array_dtype_list(new_array):
+    """
+        Takes any NumPy array and returns either a list for a NumPy structured array
+        via numpy_structured_array_dtype_generator or if it is a normal NumPy array
+        it returns the type used.
+        
+        Args:
+            new_array(numpy.ndarray):       the array to get the dtype info from.
+        
+        Returns:
+            (list or type):                 something that can be given to numpy.dtype
+                                            to obtain the new_array.dtype, but is more
+                                            malleable than a numpy.dtype. 
+    """
+    
+    try:
+        return(list(numpy_array_dtype_generator(new_array)))
+    except NotNumPyStructuredArray:
+        return(new_array.dtype.type)
