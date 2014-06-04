@@ -142,8 +142,6 @@ def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, over
                     
             new_array_debug_logger.fid = new_array_debug_logger.fid[group_name]
         
-        print("new_array_debug_logger.fid = " + repr(new_array_debug_logger.fid))
-        
         return(new_array_debug_logger)
     else:
         return(array_debug_logger)
