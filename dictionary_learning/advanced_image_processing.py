@@ -1192,7 +1192,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         array_debug_logger("new_neuron_set_2_flattened_mask", new_neuron_set_2_flattened_mask)
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        advanced_numpy.normalized_dot_product(new_neuron_set_1_flattened, new_neuron_set_2_flattened)
+        advanced_numpy.dot_product_L2_normalized(new_neuron_set_1_flattened, new_neuron_set_2_flattened)
 
         array_debug_logger("new_neuron_set_angle", new_neuron_set_angle)
 

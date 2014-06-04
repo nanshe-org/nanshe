@@ -713,7 +713,7 @@ def dot_product(new_vector_set_1, new_vector_set_2):
     return(vector_pairs_dot_product)
 
 
-def normalized_dot_product(new_vector_set_1, new_vector_set_2):
+def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each set and divides them by the L_2 norm of the two.
         
@@ -725,25 +725,25 @@ def normalized_dot_product(new_vector_set_1, new_vector_set_2):
             (numpy.ndarray):                      an array with the distances between each pair of vectors from the first and second set.
         
         Examples:
-            >>> (normalized_dot_product(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
+            >>> (dot_product_L2_normalized(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
             True
             
-            >>> (normalized_dot_product(numpy.eye(10), numpy.eye(10)) == numpy.eye(10)).all()
+            >>> (dot_product_L2_normalized(numpy.eye(10), numpy.eye(10)) == numpy.eye(10)).all()
             True
             
-            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]))
+            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]))
             array([[ 1.]])
             
-            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]))
+            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]))
             array([[ 0.]])
             
-            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]))
+            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]))
             array([[-1.]])
             
-            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]))
+            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]))
             array([[ 0.]])
             
-            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
+            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
             array([[ 0.70710678]])
     """
     
