@@ -24,28 +24,30 @@ logger = advanced_debugging.logging.getLogger(__name__)
 def renumber_label_image(new_array):
     """
         Takes a label image with non-consecutive numbering and renumbers it to be consecutive.
+        Returns the relabeled image, a mapping from the old labels (by index) to the new ones,
+        and a mapping from the new labels back to the old labels.
         
         Args:
-            new_array(numpy.ndarray):            the label image.
+            new_array(numpy.ndarray):                               the label image.
             
         Returns:
-            (numpy.ndarray):                     the relabeled label image
+            (numpy.ndarray, numpy.ndarray, numpy.ndarray):          the relabeled label image, the forward label mapping, and the reverse label mapping
         
         Examples:
             >>> renumber_label_image(numpy.array([1, 2, 3]))
-            array([1, 2, 3])
+            (array([1, 2, 3]), array([0, 1, 2, 3]), array([0, 1, 2, 3]))
             
             >>> renumber_label_image(numpy.array([1, 2, 4]))
-            array([1, 2, 3])
+            (array([1, 2, 3]), array([0, 1, 2, 0, 3]), array([0, 1, 2, 4]))
             
             >>> renumber_label_image(numpy.array([0, 1, 2, 3]))
-            array([0, 1, 2, 3])
+            (array([0, 1, 2, 3]), array([0, 1, 2, 3]), array([0, 1, 2, 3]))
             
             >>> renumber_label_image(numpy.array([0, 1, 2, 4]))
-            array([0, 1, 2, 3])
+            (array([0, 1, 2, 3]), array([0, 1, 2, 0, 3]), array([0, 1, 2, 4]))
     """
     
-    # Get the set of reverse label mapping
+    # Get the set of reverse label mapping (ensure the background is always included)
     reverse_label_mapping = numpy.unique(numpy.array([0] + numpy.unique(new_array).tolist() ))
     
     # Get the set of old labels excluding background
@@ -54,7 +56,7 @@ def renumber_label_image(new_array):
     # Get the set of new labels in order
     new_labels = numpy.arange(1, len(old_labels) + 1)
     
-    # Get the forward label mapping
+    # Get the forward label mapping (ensure the background is included)
     forward_label_mapping = numpy.zeros((reverse_label_mapping.max() + 1,), dtype = new_array.dtype)
     forward_label_mapping[old_labels] = new_labels
 
