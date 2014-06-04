@@ -8,9 +8,10 @@ __date__ ="$May 20, 2014 9:46:45 AM$"
 
 
 import numpy
+import scipy
 import operator
 
-
+import scipy.spatial
 
 # Need in order to have logging information no matter what.
 import advanced_debugging
@@ -670,3 +671,45 @@ def numpy_array_dtype_list(new_array):
         return(list(numpy_structured_array_dtype_generator(new_array)))
     except NotNumPyStructuredArrayType:
         return(new_array.dtype.type)
+
+
+def normalized_dot_product(new_vector_set_1, new_vector_set_2):
+    """
+        Determines the dot product between the two vectors divided by the norm between the two.
+        
+        Args:
+            new_vector_set_1(numpy.ndarray):      first set of vectors.
+            new_vector_set_2(numpy.ndarray):      second set of vectors.
+        
+        Returns:
+            (numpy.ndarray):                      an array with the distances between each pair of vectors from the first and second set.
+        
+        Examples:
+            >>> (normalized_dot_product(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
+            True
+            
+            >>> (normalized_dot_product(numpy.eye(10), numpy.eye(10)) == numpy.eye(10)).all()
+            True
+            
+            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]))
+            array([[ 1.]])
+            
+            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]))
+            array([[ 0.]])
+            
+            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]))
+            array([[-1.]])
+            
+            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]))
+            array([[ 0.]])
+            
+            >>> normalized_dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
+            array([[ 0.70710678]])
+    """
+    
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_cosine_angle = 1 - scipy.spatial.distance.cdist(new_vector_set_1,
+                                                                 new_vector_set_2,
+                                                                 "cosine")
+    
+    return(vector_pairs_cosine_angle)
