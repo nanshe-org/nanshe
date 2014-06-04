@@ -715,7 +715,7 @@ def dot_product(new_vector_set_1, new_vector_set_2):
 
 def normalized_dot_product(new_vector_set_1, new_vector_set_2):
     """
-        Determines the dot product between the two pairs of vectors from each set and divides them by the norm of the two.
+        Determines the dot product between the two pairs of vectors from each set and divides them by the L_2 norm of the two.
         
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
