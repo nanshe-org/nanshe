@@ -257,6 +257,29 @@ def cumulative_generator(new_op, new_iter):
 
 
 def reverse_each_element(new_iter):
+    """
+        Takes each element yielded by new_iter and reverses it using reversed.
+        
+        Args:
+            new_iter(iter):        an iterator or something that can be turned into an iterator.
+        
+        Returns:
+            (generator object):    an iterator over the reversed elements.
+        
+        Examples:
+            >>> reverse_each_element(zip(xrange(5, 11), xrange(5))) #doctest: +ELLIPSIS
+            <generator object reverse_each_element at 0x...>
+            
+            >>> list(reverse_each_element(zip(xrange(5, 11), xrange(5))))
+            [(0, 5), (1, 6), (2, 7), (3, 8), (4, 9)]
+            
+            >>> list(reverse_each_element(iter([[5]])))
+            [[5]]
+            
+            >>> list(reverse_each_element(iter([[5,2,3], [1, 7, 9]])))
+            [[3, 2, 5], [9, 7, 1]]
+    """
+    
     new_iter = iter(new_iter)
     
     for each in new_iter:
