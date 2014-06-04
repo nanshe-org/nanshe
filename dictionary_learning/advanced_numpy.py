@@ -713,6 +713,62 @@ def dot_product(new_vector_set_1, new_vector_set_2):
     return(vector_pairs_dot_product)
 
 
+def norm(new_vector_set, ord = 2):
+    """
+        Determines the norm of a vector or a set of vectors.
+        
+        Args:
+            new_vector_set(numpy.ndarray):        either a single vector or a set of vectors (matrix).
+            ord(optional):                        basically the same arguments as numpy.linalg.norm (though some are redundant here).
+        
+        Returns:
+            (numpy.ndarray):                      an array with .
+        
+        Examples:
+            >>> norm(numpy.array([ 1,  0]), 2).ndim
+            0
+            
+            >>> norm(numpy.array([[ 1,  0]]), 2).ndim
+            1
+            
+            >>> norm(numpy.array([ 1,  0]), 2)
+            array(1.0)
+            
+            >>> norm(numpy.array([ 1,  0]), 1)
+            array(1.0)
+            
+            >>> norm(numpy.array([[ 1,  0]]), 2)
+            array([ 1.])
+            
+            >>> norm(numpy.array([[ 1,  1]]), 1)
+            array([ 2.])
+            
+            >>> norm(numpy.array([[ 1,  1]]), 2)
+            array([ 1.41421356])
+            
+            >>> norm(numpy.array([[ 1,  1,  1], [ 1,  0,  1]]), 1)
+            array([ 3.,  2.])
+            
+            >>> norm(numpy.array([[ 1,  1,  1], [ 1,  0,  1]]), 2)
+            array([ 1.73205081,  1.41421356])
+    """
+    
+    new_vector_set = new_vector_set.astype(float)
+    
+    # Wrap the order parameter so as to avoid passing through numpy.apply_along_axis
+    # and risk having it break. Also, makes sure the same function can be used in the
+    # two cases.
+    def wrapped_norm(new_vector):
+        return(numpy.linalg.norm(new_vector, ord = ord))
+    
+    # Return a scalar NumPy array in the case of a single vector
+    # Always return type float as the result.
+    if new_vector_set.ndim == 1:
+        return(numpy.array(wrapped_norm(new_vector_set)).astype(float))
+    else:
+        return(numpy.apply_along_axis(wrapped_norm, 1, new_vector_set).astype(float))
+
+            
 def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each set and divides them by the L_2 norm of the two.
