@@ -284,3 +284,35 @@ def reverse_each_element(new_iter):
     
     for each in new_iter:
         yield( type(each)(reversed(each)) )
+
+
+def filled_stringify_enumerate(new_list):
+    """
+        Takes each element yielded by new_iter and reverses it using reversed.
+        
+        Args:
+            new_list(list):        an iterator or something that can be turned into an iterator.
+        
+        Returns:
+            (generator object):    an iterator over the reversed elements.
+        
+        Examples:
+            >>> filled_stringify_enumerate([5, 7]) #doctest: +ELLIPSIS
+            <generator object filled_stringify_enumerate at 0x...>
+            
+            >>> list(filled_stringify_enumerate([]))
+            []
+            
+            >>> list(filled_stringify_enumerate([5]))
+            [(0, '0', 5)]
+            
+            >>> list(filled_stringify_enumerate([5, 7]))
+            [(0, '0', 5), (1, '1', 7)]
+    """
+    
+    
+    if len(new_list):
+        digits = int(numpy.floor(numpy.log10(len(new_list))))
+
+    for i, each in enumerate(new_list):
+        yield( (i, str(i).zfill(digits), each) )
