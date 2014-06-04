@@ -229,19 +229,19 @@ def cumulative_generator(new_op, new_iter):
             (generator object):    an iterator over the intermediate results.
         
         Examples:
-            >>> cumulative_generator(op.add, 10) #doctest: +ELLIPSIS
+            >>> import operator; cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS
             <generator object cumulative_generator at 0x...>
             
-            >>> list(cumulative_generator(op.add, xrange(1,5)))
+            >>> import operator; list(cumulative_generator(operator.add, xrange(1,5)))
             [1, 3, 6, 10]
 
-            >>> list(cumulative_generator(op.add, xrange(5)))
+            >>> import operator; list(cumulative_generator(operator.add, xrange(5)))
             [0, 1, 3, 6, 10]
 
-            >>> list(cumulative_generator(op.mul, xrange(5)))
+            >>> import operator; list(cumulative_generator(operator.mul, xrange(5)))
             [0, 0, 0, 0, 0]
 
-            >>> list(cumulative_generator(op.mul, xrange(1,5)))
+            >>> import operator; list(cumulative_generator(operator.mul, xrange(1,5)))
             [1, 2, 6, 24]
         
     """
