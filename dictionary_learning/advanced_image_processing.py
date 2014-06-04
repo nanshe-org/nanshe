@@ -1160,10 +1160,6 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
             neuron_2(numpy.ndarray):      second neuron (one to merge in).
             parameters(dict):             dictionary of parameters
         
-        Note:
-            Todo
-            Look into move data normalization into separate method (have method chosen by config file).
-        
         Returns:
             dict: the dictionary found.
     """
@@ -1195,16 +1191,13 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         array_debug_logger("new_neuron_set_1_flattened_mask", new_neuron_set_1_flattened_mask)
         array_debug_logger("new_neuron_set_2_flattened_mask", new_neuron_set_2_flattened_mask)
 
-        # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = 1 - scipy.spatial.distance.cdist(new_neuron_set_1_flattened,
-                                                                new_neuron_set_2_flattened,
-                                                                "cosine")
+        # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
+        advanced_numpy.normalized_dot_product(new_neuron_set_1_flattened, new_neuron_set_2_flattened)
 
         array_debug_logger("new_neuron_set_angle", new_neuron_set_angle)
 
-        # Measure the normalized Hamming distance (0, the same; 1, exact opposites) between the two
-        # Need 1 minus to calculate the number of similarities. Now, (1, the same; 0, exact opposites)
-        new_neuron_set_masks_overlayed = numpy.dot(new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask.T)
+        # Measure the distance between the two masks.
+        new_neuron_set_masks_overlayed = advanced_numpy.dot_product(new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask)
 
         array_debug_logger("new_neuron_set_masks_overlayed", new_neuron_set_masks_overlayed)
 
