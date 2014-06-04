@@ -7,24 +7,28 @@ __date__ ="$Jun 4, 2014 11:10:55 AM$"
 
 
 
-import logging
 import copy
+
+import HDF5_serializers
+
+# Need in order to have logging information no matter what.
+import advanced_debugging
 
 
 # Get the logger
-logger = logging.getLogger(__name__)
+logger = advanced_debugging.logging.getLogger(__name__)
 
 
 class EmptyArrayDebugLogger(object):
-    @log_call(logger)
+    @advanced_debugging.log_call(logger)
     def __init__(self):
         pass
     
-    @log_call(logger)
+    @advanced_debugging.log_call(logger)
     def debug(self):
         return(False)
     
-    @log_call(logger)
+    @advanced_debugging.log_call(logger)
     def __call__(self, array_name, array_value):
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
         if array_value.size:
@@ -34,19 +38,16 @@ class EmptyArrayDebugLogger(object):
 
 
 class HDF5ArrayDebugLogger(object):
-    @log_call(logger)
+    @advanced_debugging.log_call(logger)
     def __init__(self, fid):
         self.fid = fid
     
-    @log_call(logger)
+    @advanced_debugging.log_call(logger)
     def debug(self):
         return(True)
     
-    @log_call(logger)
+    @advanced_debugging.log_call(logger)
     def __call__(self, array_name, array_value):
-        # Must be a local import. Otherwise log_call will be undefined in HDF5_serializers.
-        import HDF5_serializers
-        
         # Attempt to create a dataset in self.fid named array_name with array_value and do not overwrite.
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
         if array_value.size:
@@ -55,7 +56,7 @@ class HDF5ArrayDebugLogger(object):
             raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
 
 
-@log_call(logger)
+@advanced_debugging.log_call(logger)
 def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, overwrite_group = True):
     """
         Generates a function used for writing arrays (structured or otherwise)
@@ -98,7 +99,7 @@ def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, ov
         return(EmptyArrayDebugLogger())
 
 
-@log_call(logger)
+@advanced_debugging.log_call(logger)
 def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, overwrite_group = True):
     """
         Generates a function used for writing arrays (structured or otherwise)
