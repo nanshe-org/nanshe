@@ -373,7 +373,10 @@ def region_properties(new_label_image, *args, **kwargs):
                       "MinorAxisLength",
                       "HuMoments"]
     
-    properties = ["Label"] + properties
+    # Remove duplicates and make sure Label is at the front.
+    properties = set(properties)
+    properties.discard("Label")
+    properties = ["Label"] + sorted(properties)
     
     if new_label_image.size:
         # This gives a list of dictionaries. However, this is not very usable. So, we will convert this to a structured NumPy array.
