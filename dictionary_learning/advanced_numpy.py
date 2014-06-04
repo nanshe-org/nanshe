@@ -673,6 +673,46 @@ def numpy_array_dtype_list(new_array):
         return(new_array.dtype.type)
 
 
+def dot_product(new_vector_set_1, new_vector_set_2):
+    """
+        Determines the dot product between the two pairs of vectors from each set.
+        
+        Args:
+            new_vector_set_1(numpy.ndarray):      first set of vectors.
+            new_vector_set_2(numpy.ndarray):      second set of vectors.
+        
+        Returns:
+            (numpy.ndarray):                      an array with the distances between each pair of vectors from the first and second set.
+        
+        Examples:
+            >>> (dot_product(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
+            True
+            
+            >>> (dot_product(numpy.eye(10), numpy.eye(10)) == numpy.eye(10)).all()
+            True
+            
+            >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]))
+            array([[1]])
+            
+            >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]))
+            array([[0]])
+            
+            >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]))
+            array([[-1]])
+            
+            >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]))
+            array([[0]])
+            
+            >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
+            array([[1]])
+    """
+    
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(new_vector_set_1, new_vector_set_2.T)
+    
+    return(vector_pairs_dot_product)
+
+
 def normalized_dot_product(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each set and divides them by the norm of the two.
