@@ -769,7 +769,7 @@ def norm(new_vector_set, ord = 2):
         return(numpy.apply_along_axis(wrapped_norm, 1, new_vector_set).astype(float))
 
 
-def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord):
+def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple with the dot product divided by one norm or the other.
         
@@ -821,7 +821,7 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord):
     return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
 
 
-def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord):
+def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and divides them by the norm of the two.
         
