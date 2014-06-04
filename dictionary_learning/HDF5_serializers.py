@@ -47,8 +47,6 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
     
     dataset = None
     
-    #print(repr(data.dtype))
-    
     try:
         dataset = fid.create_dataset(internalPath, data.shape, data.dtype)
     except RuntimeError:
