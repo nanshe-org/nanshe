@@ -768,6 +768,59 @@ def norm(new_vector_set, ord = 2):
     else:
         return(numpy.apply_along_axis(wrapped_norm, 1, new_vector_set).astype(float))
 
+
+def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord):
+    """
+        Determines the dot product between the two pairs of vectors from each set and creates a tuple with the dot product divided by one norm or the other.
+        
+        Args:
+            new_vector_set_1(numpy.ndarray):      first set of vectors.
+            new_vector_set_2(numpy.ndarray):      second set of vectors.
+            ord(optional):                        basically the same arguments as numpy.linalg.norm (though some are redundant here).
+        
+        Returns:
+            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors from the first and second set.
+        
+        Examples:
+            >>> (dot_product_partially_normalized(numpy.eye(2), numpy.eye(2), 2) == numpy.eye(2)).all()
+            True
+            
+            >>> (dot_product_partially_normalized(numpy.eye(10), numpy.eye(10), 2) == numpy.eye(10)).all()
+            True
+            
+            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]), 2)
+            (array([[ 1.]]), array([[ 1.]]))
+            
+            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]), 2)
+            (array([[ 0.]]), array([[ 0.]]))
+            
+            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]), 2)
+            (array([[-1.]]), array([[-1.]]))
+            
+            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]), 2)
+            (array([[ 0.]]), array([[ 0.]]))
+            
+            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 2)
+            (array([[ 1.]]), array([[ 0.70710678]]))
+            
+            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 1)
+            (array([[ 1.]]), array([[ 0.5]]))
+    """
+    
+    # Gets all of the norms
+    new_vector_set_1_norms = norm(new_vector_set_1.astype(float), ord)
+    new_vector_set_2_norms = norm(new_vector_set_2.astype(float), ord)
+    
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(new_vector_set_1, new_vector_set_2.T)
+    
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / new_vector_set_1_norms
+    vector_pairs_dot_product_2_normalized = vector_pairs_dot_product / new_vector_set_2_norms
+    
+    return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
+
+
 def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord):
     """
         Determines the dot product between the two pairs of vectors from each set and divides them by the norm of the two.
