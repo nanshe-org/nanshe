@@ -751,6 +751,9 @@ def norm(new_vector_set, ord = 2):
             
             >>> norm(numpy.array([[ 1,  1,  1], [ 1,  0,  1]]), 2)
             array([ 1.73205081,  1.41421356])
+            
+            >>> norm(numpy.array([ 0,  1,  2]))
+            array(2.23606797749979)
     """
     
     new_vector_set = new_vector_set.astype(float)
@@ -782,10 +785,10 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
             (numpy.ndarray):                      an array with the normalized distances between each pair of vectors from the first and second set.
         
         Examples:
-            >>> (dot_product_partially_normalized(numpy.eye(2), numpy.eye(2), 2) == numpy.eye(2)).all()
+            >>> (numpy.array(dot_product_partially_normalized(numpy.eye(2), numpy.eye(2), 2)) == numpy.array((numpy.eye(2), numpy.eye(2),))).all()
             True
             
-            >>> (dot_product_partially_normalized(numpy.eye(10), numpy.eye(10), 2) == numpy.eye(10)).all()
+            >>> (numpy.array(dot_product_partially_normalized(numpy.eye(10), numpy.eye(10), 2)) == numpy.array((numpy.eye(10), numpy.eye(10),))).all()
             True
             
             >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]), 2)
@@ -805,18 +808,28 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
             
             >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 1)
             (array([[ 1.]]), array([[ 0.5]]))
+            
+            >>> dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE
+            (array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],
+                   [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),
+             array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],
+                   [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
     """
     
     # Gets all of the norms
     new_vector_set_1_norms = norm(new_vector_set_1.astype(float), ord)
     new_vector_set_2_norms = norm(new_vector_set_2.astype(float), ord)
     
+    # Expand the norms to have a shape equivalent to vector_pairs_dot_product
+    new_vector_set_1_norms_expanded = expand_view(new_vector_set_1_norms, reps_after = new_vector_set_2.shape[0])
+    new_vector_set_2_norms_expanded = expand_view(new_vector_set_2_norms, reps_before = new_vector_set_1.shape[0])
+    
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(new_vector_set_1, new_vector_set_2.T)
     
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-    vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / new_vector_set_1_norms
-    vector_pairs_dot_product_2_normalized = vector_pairs_dot_product / new_vector_set_2_norms
+    vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / new_vector_set_1_norms_expanded
+    vector_pairs_dot_product_2_normalized = vector_pairs_dot_product / new_vector_set_2_norms_expanded
     
     return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
 
@@ -857,6 +870,10 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
             
             >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 1)
             array([[ 0.5]])
+            
+            >>> dot_product_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )
+            array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
+                   [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
     
     # Gets all of the norms
@@ -907,6 +924,10 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
             
             >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
             array([[ 0.70710678]])
+            
+            >>> dot_product_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)) )
+            array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
+                   [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
     
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
