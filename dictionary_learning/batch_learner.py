@@ -10,6 +10,8 @@ import numpy
 # Need in order to have logging information no matter what.
 import advanced_debugging
 
+import HDF5_logger
+
 # Short function to process image data.
 import advanced_image_processing
 
@@ -86,13 +88,12 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
             # otherwise (not at that the root)
             output_directory = input_directory + "_ADINA_results" + "/" + new_filename_details.internalDatasetName.rstrip("/")
         
-        # If the group does not exist, make it.
-        if not output_directory in new_file:
-            new_file.create_group(output_directory)
+        # Delete the old output directory if it exists.
+        if output_directory in new_file:
+            del new_file[output_directory]
         
-        # Remove a link to the original data if it already exists
-        if "original_data" in new_file[output_directory]:
-            del new_file[output_directory]["original_data"]
+        # Create a new output directory.
+        new_file.create_group(output_directory)
         
         # Create a hardlink (does not copy) the original data
         new_file[output_directory]["original_data"] = new_file[new_filename_details.internalPath]
@@ -100,37 +101,21 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
         # Copy out images for manipulation in memory
         new_data = new_file[output_directory]["original_data"][:]
         
-        # generates the neuron set
-        # stores the result
-        # stores all parameters used to generate the dictionary in results
-        #new_neurons = advanced_image_processing.generate_neurons(new_data, **parameters)
+        # Get a debug logger for the HDF5 file (if needed)
+        array_debug_logger = HDF5_logger.generate_HDF5_array_debug_logger(new_file[output_directory], debug = debug)
         
-        if debug:
-            new_dictionary, new_neurons, centroid_label_image_0, centroid_label_image_1, centroid_label_image_2, centroid_active_label_image_0, centroid_active_label_image_1, centroid_active_label_image_2 = advanced_image_processing.generate_neurons(new_data, debug = debug, **parameters["generate_neurons"])
-            
+        # Generate the new neurons
+        new_neurons = advanced_image_processing.generate_neurons(new_data, array_debug_logger = array_debug_logger, **parameters)
+        
+        # Save them
+        if new_neurons.size:
             HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
-            
-            if "debug" in new_file[output_directory]:
-                del new_file[output_directory]["debug"]
-            
-            new_file.create_group(output_directory + "/" + "debug")
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory]["debug"], "dictionary", new_dictionary, True)
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory]["debug"], "centroid_label_image_0", centroid_label_image_0, True)
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory]["debug"], "centroid_label_image_1", centroid_label_image_1, True)
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory]["debug"], "centroid_label_image_2", centroid_label_image_2, True)
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory]["debug"], "centroid_active_label_image_0", centroid_active_label_image_0, True)
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory]["debug"], "centroid_active_label_image_1", centroid_active_label_image_1, True)
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory]["debug"], "centroid_active_label_image_2", centroid_active_label_image_2, True)
         else:
-            if "debug" in new_file[output_directory]:
-                del new_file[output_directory]["debug"]
-            
-            new_neurons = advanced_image_processing.generate_neurons(new_data, debug = debug, **parameters["generate_neurons"])
-            
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
+            logger.warning("No neurons were found in the data.")
         
+        # Write the configuration parameters in the attributes as a string.
         new_file[output_directory].attrs["parameters"] = repr(parameters)
-
+        
 
 @advanced_debugging.log_call(logger)
 def main(*argv):
