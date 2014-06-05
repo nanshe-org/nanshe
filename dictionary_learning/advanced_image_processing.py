@@ -1192,33 +1192,13 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         array_debug_logger("new_neuron_set_2_flattened_mask", new_neuron_set_2_flattened_mask)
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        advanced_numpy.dot_product_L2_normalized(new_neuron_set_1_flattened, new_neuron_set_2_flattened)
+        new_neuron_set_angle = advanced_numpy.dot_product_L2_normalized(new_neuron_set_1_flattened, new_neuron_set_2_flattened)
 
         array_debug_logger("new_neuron_set_angle", new_neuron_set_angle)
-
-        # Measure the distance between the two masks.
-        new_neuron_set_masks_overlayed = advanced_numpy.dot_product(new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask)
-
-        array_debug_logger("new_neuron_set_masks_overlayed", new_neuron_set_masks_overlayed)
-
-        # Find the number of true values in each mask for each neuron
-        new_neuron_set_1_masks_count = new_neuron_set_1["area"]
-        new_neuron_set_2_masks_count = new_neuron_set_2["area"]
-
-        array_debug_logger("new_neuron_set_1_masks_count", new_neuron_set_1_masks_count)
-        array_debug_logger("new_neuron_set_2_masks_count", new_neuron_set_2_masks_count)
-
-        # Expand the counts to the size new_neuron_set_masks_overlayed. This solves any broadcasting bug.
-        new_neuron_set_1_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_1_masks_count, reps_after = (new_neuron_set_masks_overlayed.shape[1],))
-        new_neuron_set_2_masks_count_expanded = advanced_numpy.expand_view(new_neuron_set_2_masks_count, reps_before = (new_neuron_set_masks_overlayed.shape[0],))
-
-        array_debug_logger("new_neuron_set_1_masks_count_expanded", new_neuron_set_1_masks_count_expanded)
-        array_debug_logger("new_neuron_set_2_masks_count_expanded", new_neuron_set_2_masks_count_expanded)
-
-        # Normalizes each set of masks by the count
-        new_neuron_set_masks_overlayed_1 = new_neuron_set_masks_overlayed / new_neuron_set_1_masks_count_expanded
-        new_neuron_set_masks_overlayed_2 = new_neuron_set_masks_overlayed / new_neuron_set_2_masks_count_expanded
-
+        
+        # Measure the distance between the two masks (note distance relative to the total mask content of each mask individually)
+        new_neuron_set_masks_overlayed_1, new_neuron_set_masks_overlayed_2 = advanced_numpy.dot_product_partially_normalized(new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask, ord = 1)
+        
         array_debug_logger("new_neuron_set_masks_overlayed_1", new_neuron_set_masks_overlayed_1)
         array_debug_logger("new_neuron_set_masks_overlayed_2", new_neuron_set_masks_overlayed_2)
 
