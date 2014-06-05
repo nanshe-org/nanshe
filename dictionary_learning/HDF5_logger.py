@@ -9,6 +9,8 @@ __date__ ="$Jun 4, 2014 11:10:55 AM$"
 
 import copy
 
+import h5py
+
 import HDF5_serializers
 
 # Need in order to have logging information no matter what.
@@ -57,7 +59,7 @@ class HDF5ArrayDebugLogger(object):
 
 
 @advanced_debugging.log_call(logger)
-def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, overwrite_group = True):
+def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, overwrite_group = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to an HDF5 file.
@@ -75,6 +77,9 @@ def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, ov
         Returns:
             A function, which will take a given array name and value and write them out.
     """
+    
+    if type(fid) is str:
+        fid = h5py.File(fid, "a")
     
     if (debug):
         fid_debug = fid
@@ -100,7 +105,7 @@ def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, ov
 
 
 @advanced_debugging.log_call(logger)
-def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, overwrite_group = True):
+def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, overwrite_group = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to an HDF5 file.

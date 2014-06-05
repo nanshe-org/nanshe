@@ -102,7 +102,7 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
         new_data = new_file[output_directory]["original_data"][:]
         
         # Get a debug logger for the HDF5 file (if needed)
-        array_debug_logger = HDF5_logger.generate_HDF5_array_debug_logger(new_file[output_directory], debug = debug)
+        array_debug_logger = HDF5_logger.generate_HDF5_array_debug_logger(new_file[output_directory], debug = debug, overwrite_group = True)
         
         # Generate the new neurons
         new_neurons = advanced_image_processing.generate_neurons(new_data, array_debug_logger = array_debug_logger, **parameters)
