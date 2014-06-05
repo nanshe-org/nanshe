@@ -1284,13 +1284,17 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         
         if new_neuron_set_all_optimal_i.size:
             array_debug_logger("new_neuron_set_all_optimal_i_4", new_neuron_set_all_optimal_i)
-
+        
         # Fuse all the neurons that can be from new_neuron_set_2 to the new_neuron_set (composed of new_neuron_set_1)
         for i, j in itertools.izip(new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse):
             new_neuron_set[i] = fuse_neurons(new_neuron_set_1[i], new_neuron_set_2[j], array_debug_logger, **parameters["fuse_neurons"])
-
+        
+        logger.debug("Fused \"" + repr(len(new_neuron_set_all_j_fuse)) + "\" neurons to the existing set.")
+        
         # Tack on the ones that must be appended
         new_neuron_set = numpy.hstack([new_neuron_set, new_neuron_set_2[new_neuron_set_all_j_append]])
+        
+        logger.debug("Added \"" + repr(len(new_neuron_set_all_j_append)) + "\" new neurons to the existing set.")
         
     elif not len(new_neuron_set_1):
         logger.debug("Have 1 set of neurons to merge. Only the first set has neurons.")
@@ -1331,10 +1335,12 @@ def generate_neurons(new_images, array_debug_logger, **parameters):
     new_dictionary = generate_dictionary(new_preprocessed_images, **parameters["generate_dictionary"])
     
     array_debug_logger("dictionary", new_dictionary)
-    
+
     def array_debug_logger_enumerator(new_list):
+        neuron_sets_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger("neuron_sets", array_debug_logger)
+        
         for i, i_str, each in advanced_iterators.filled_stringify_enumerate(new_list): 
-            yield( (i, each, HDF5_logger.create_subgroup_HDF5_array_debug_logger(i_str, array_debug_logger)) )
+            yield( (i, each, HDF5_logger.create_subgroup_HDF5_array_debug_logger(i_str, neuron_sets_array_debug_logger)) )
     
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])
