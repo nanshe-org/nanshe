@@ -2,8 +2,8 @@ import numpy
 import scipy
 import scipy.ndimage
 
-import advanced_debugging
-import advanced_iterators
+from dictionary_learning import advanced_debugging
+from dictionary_learning import advanced_iterators
 
 
 # Get the logger
@@ -262,7 +262,7 @@ class DictionaryLearningRandomDataGenerator(object):
             each_result.noiseless_frames = numpy.array(each_result.noiseless_frames)
             
             # Creates frames that contain some background noise from a normal distribution
-            each_result.frames = each_result.noiseless_frames[:]
+            each_result.frames = each_result.noiseless_frames.copy()
             each_result.frames += numpy.random.normal(scale = self.background_noise_intensity, size = each_result.frames.shape)
             
             # Append to our list of results
