@@ -62,7 +62,7 @@ class HDF5ArrayDebugLogger(object):
 def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, overwrite_group = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
-        to an HDF5 file.
+        to a group in an HDF5 file.
         
         Args:
             fid:                The HDF5 file group to place the debug contents into.
@@ -108,7 +108,7 @@ def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, ov
 def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, overwrite_group = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
-        to an HDF5 file.
+        to a group within the current group in an HDF5 file.
         
         Args:
             fid:                The HDF5 file group to place the debug contents into.
