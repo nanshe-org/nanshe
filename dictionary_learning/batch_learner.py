@@ -74,6 +74,10 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
     if ( (new_filename_ext == "tif") or (new_filename_ext == "tiff") ):
         # TIFF file. Convert to HDF5
         new_hdf5_filename = new_filename_details.externalDirectory + os.path.sep + new_filename_details.filenameBase + os.path.extsep + "h5"
+        internal_path = "images"
+        new_hdf5_filepath = new_hdf5_filename + "/" + internal_path
+        
+        logger.info("Got a TIFF file as input. Will copy over to an HDF5 file, which will be named \"" + new_hdf5_filepath + "\".")
         
         with h5py.File(new_hdf5_filename, "a") as new_hdf5_file:
             data = None
@@ -93,48 +97,45 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
                 data = vigra.taggedView(numpy.array(data), 'xyc')
                 data = data.withAxes('c', 'x', 'y')[0]
                 data = data.view(numpy.ndarray)
-
-            internal_path = "images"
+            
             if internal_path in new_hdf5_file:
                 del new_hdf5_file[internal_path]
             
             new_hdf5_file[internal_path] = data
-        
-            new_hdf5_filename = new_hdf5_filename + "/" + internal_path
     elif ( (new_filename_ext == "h5") or (new_filename_ext == "hdf5") or (new_filename_ext == "he5") ):
         # HDF5 file. Nothing to do here.
-        new_hdf5_filename = new_filename
+        new_hdf5_filepath = new_filename
     else:
         raise Exception("File with filename: \"" + new_filename + "\""  + " provided with an unknown file extension: \"" + new_filename_ext + "\". Support for ")
     
     
     # Inspect path name to get where the file is and its internal path
-    new_hdf5_filename_details = pathHelpers.PathComponents(new_hdf5_filename)
+    new_hdf5_filepath_details = pathHelpers.PathComponents(new_hdf5_filepath)
     
     # The name of the data without the its path
-    new_hdf5_filename_details.internalDatasetName = new_hdf5_filename_details.internalDatasetName.strip("/")
+    new_hdf5_filepath_details.internalDatasetName = new_hdf5_filepath_details.internalDatasetName.strip("/")
     
-    with h5py.File(new_hdf5_filename_details.externalPath, "a") as new_file:
+    with h5py.File(new_hdf5_filepath_details.externalPath, "a") as new_file:
         # Must contain the internal path in question
-        if new_hdf5_filename_details.internalPath not in new_file:
-            raise Exception("The given data file \"" + new_filename + "\" does not contain \"" + new_hdf5_filename_details.internalPath + "\".")
+        if new_hdf5_filepath_details.internalPath not in new_file:
+            raise Exception("The given data file \"" + new_filename + "\" does not contain \"" + new_hdf5_filepath_details.internalPath + "\".")
         
         # Must be a path to a h5py.Dataset not a h5py.Group (would be nice to relax this constraint)
-        elif not isinstance(new_file[new_hdf5_filename_details.internalPath], h5py.Dataset):
-            raise Exception("The given data file \"" + new_filename + "\" does not not contain a dataset for \"" + new_hdf5_filename_details.internalPath + "\".")
+        elif not isinstance(new_file[new_hdf5_filepath_details.internalPath], h5py.Dataset):
+            raise Exception("The given data file \"" + new_filename + "\" does not not contain a dataset for \"" + new_hdf5_filepath_details.internalPath + "\".")
         
         # Where to read data files from
-        input_directory = new_hdf5_filename_details.internalDirectory.rstrip("/")
+        input_directory = new_hdf5_filepath_details.internalDirectory.rstrip("/")
         
         # Where the results will be saved to
         output_directory = ""
         
         if input_directory == "":
             # if we are at the root
-            output_directory = "/ADINA_results" + "/" + new_hdf5_filename_details.internalDatasetName.rstrip("/")
+            output_directory = "/ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip("/")
         else:
             # otherwise (not at that the root)
-            output_directory = input_directory + "_ADINA_results" + "/" + new_hdf5_filename_details.internalDatasetName.rstrip("/")
+            output_directory = input_directory + "_ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip("/")
         
         # Delete the old output directory if it exists.
         if output_directory in new_file:
@@ -144,7 +145,7 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
         new_file.create_group(output_directory)
         
         # Create a hardlink (does not copy) the original data
-        new_file[output_directory]["original_data"] = new_file[new_hdf5_filename_details.internalPath]
+        new_file[output_directory]["original_data"] = new_file[new_hdf5_filepath_details.internalPath]
         
         # Copy out images for manipulation in memory
         new_data = new_file[output_directory]["original_data"][:]
