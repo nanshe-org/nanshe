@@ -4,6 +4,8 @@ __author__="John Kirkham"
 __date__ ="$Apr 9, 2014 4:00:40 PM$"
 
 
+import os
+
 # Generally useful and fast to import so done immediately.
 import numpy
 
@@ -19,6 +21,9 @@ import advanced_image_processing
 import read_config
 
 import HDF5_serializers
+
+import vigra
+import vigra.impex
 
 
 # Get the logger
@@ -60,33 +65,76 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
     #import lazyflow.utility.pathHelpers as pathHelpers # Use this when merged into the ilastik framework.
     import pathHelpers
     
-    # Inspect path name to get where the file is an its internal path
+    
     new_filename_details = pathHelpers.PathComponents(new_filename)
     
-    # The name of the data without the its path
-    new_filename_details.internalDatasetName = new_filename_details.internalDatasetName.strip("/")
+    new_filename_ext = new_filename_details.extension
+    new_filename_ext = new_filename_ext.lower()
+    new_filename_ext = new_filename_ext.replace(os.path.extsep, "", 1)
+    if ( (new_filename_ext == "tif") or (new_filename_ext == "tiff") ):
+        # TIFF file. Convert to HDF5
+        new_hdf5_filename = new_filename_details.externalDirectory + os.path.sep + new_filename_details.filenameBase + os.path.extsep + "h5"
+        
+        with h5py.File(new_hdf5_filename, "a") as new_hdf5_file:
+            data = None
+            if vigra.impex.numberImages(new_filename_details.externalPath) > 1:
+                # Our algorithm expect double precision
+                data = vigra.impex.readVolume(new_filename_details.externalPath, dtype = "DOUBLE")
+                data = data.view(numpy.ndarray)
+                # TODO: Very hacky. Need to fix. Should also move this to another function.
+                # Simon's data has channel and then time. One channel is garbage. So, we dump it.
+                # Besides this algorithm does not know what to do with another channel.
+                data = data.reshape( data.shape[0:2] + (data.shape[2]/2, 2,) )
+                data = vigra.taggedView(data, 'xytc')
+                data = data.withAxes('c', 't', 'x', 'y')[0]
+                data = data.view(numpy.ndarray)
+            else:
+                data = vigra.impex.readImage(new_filename_details.externalPath, dtype = "DOUBLE")
+                data = vigra.taggedView(numpy.array(data), 'xyc')
+                data = data.withAxes('c', 'x', 'y')[0]
+                data = data.view(numpy.ndarray)
+
+            internal_path = "images"
+            if internal_path in new_hdf5_file:
+                del new_hdf5_file[internal_path]
+            
+            new_hdf5_file[internal_path] = data
+        
+            new_hdf5_filename = new_hdf5_filename + "/" + internal_path
+    elif ( (new_filename_ext == "h5") or (new_filename_ext == "hdf5") or (new_filename_ext == "he5") ):
+        # HDF5 file. Nothing to do here.
+        new_hdf5_filename = new_filename
+    else:
+        raise Exception("File with filename: \"" + new_filename + "\""  + " provided with an unknown file extension: \"" + new_filename_ext + "\". Support for ")
     
-    with h5py.File(new_filename_details.externalPath, "a") as new_file:
+    
+    # Inspect path name to get where the file is and its internal path
+    new_hdf5_filename_details = pathHelpers.PathComponents(new_hdf5_filename)
+    
+    # The name of the data without the its path
+    new_hdf5_filename_details.internalDatasetName = new_hdf5_filename_details.internalDatasetName.strip("/")
+    
+    with h5py.File(new_hdf5_filename_details.externalPath, "a") as new_file:
         # Must contain the internal path in question
-        if new_filename_details.internalPath not in new_file:
-            raise Exception("The given data file \"" + new_filename + "\" does not contain \"" + new_filename_details.internalPath + "\".")
+        if new_hdf5_filename_details.internalPath not in new_file:
+            raise Exception("The given data file \"" + new_filename + "\" does not contain \"" + new_hdf5_filename_details.internalPath + "\".")
         
         # Must be a path to a h5py.Dataset not a h5py.Group (would be nice to relax this constraint)
-        elif not isinstance(new_file[new_filename_details.internalPath], h5py.Dataset):
-            raise Exception("The given data file \"" + new_filename + "\" does not not contain a dataset for \"" + new_filename_details.internalPath + "\".")
+        elif not isinstance(new_file[new_hdf5_filename_details.internalPath], h5py.Dataset):
+            raise Exception("The given data file \"" + new_filename + "\" does not not contain a dataset for \"" + new_hdf5_filename_details.internalPath + "\".")
         
         # Where to read data files from
-        input_directory = new_filename_details.internalDirectory.rstrip("/")
+        input_directory = new_hdf5_filename_details.internalDirectory.rstrip("/")
         
         # Where the results will be saved to
         output_directory = ""
         
         if input_directory == "":
             # if we are at the root
-            output_directory = "/ADINA_results" + "/" + new_filename_details.internalDatasetName.rstrip("/")
+            output_directory = "/ADINA_results" + "/" + new_hdf5_filename_details.internalDatasetName.rstrip("/")
         else:
             # otherwise (not at that the root)
-            output_directory = input_directory + "_ADINA_results" + "/" + new_filename_details.internalDatasetName.rstrip("/")
+            output_directory = input_directory + "_ADINA_results" + "/" + new_hdf5_filename_details.internalDatasetName.rstrip("/")
         
         # Delete the old output directory if it exists.
         if output_directory in new_file:
@@ -96,7 +144,7 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
         new_file.create_group(output_directory)
         
         # Create a hardlink (does not copy) the original data
-        new_file[output_directory]["original_data"] = new_file[new_filename_details.internalPath]
+        new_file[output_directory]["original_data"] = new_file[new_hdf5_filename_details.internalPath]
         
         # Copy out images for manipulation in memory
         new_data = new_file[output_directory]["original_data"][:]
