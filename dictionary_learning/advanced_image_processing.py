@@ -1427,12 +1427,12 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         
         logger.debug("Added \"" + repr(len(new_neuron_set_all_j_append)) + "\" new neurons to the existing set.")
         
-    elif not len(new_neuron_set_1):
+    elif len(new_neuron_set_1):
         logger.debug("Have 1 set of neurons to merge. Only the first set has neurons.")
-        new_neuron_set = new_neuron_set_2
-    elif not len(new_neuron_set_2):
-        logger.debug("Have 1 set of neurons to merge. Only the second set has neurons.")
         new_neuron_set = new_neuron_set_1
+    elif len(new_neuron_set_2):
+        logger.debug("Have 1 set of neurons to merge. Only the second set has neurons.")
+        new_neuron_set = new_neuron_set_2
     else:
         logger.debug("Have 0 sets of neurons to merge.")
         new_neuron_set = new_neuron_set_1
