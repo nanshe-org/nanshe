@@ -2,8 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-__author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Apr 3, 2014 8:20:39PM$"
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
+__date__ = "$Apr 3, 2014 8:20:39PM$"
 
 
 # Need in order to have logging information no matter what.
@@ -13,15 +13,10 @@ import advanced_debugging
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
 
-
 import matplotlib as mpl
 import matplotlib.figure
 
-
 from matplotlib.widgets import Slider, Button
-
-
-
 
 
 class NeuronViewer(matplotlib.figure.Figure):
@@ -30,7 +25,7 @@ class NeuronViewer(matplotlib.figure.Figure):
 
         Wraps a Matplotlib figure instance.
     """
-    
+
     @advanced_debugging.log_call(logger)
     def __init__(self, *args, **kwargs):
         """
@@ -48,13 +43,13 @@ class NeuronViewer(matplotlib.figure.Figure):
                 Todo
                 Extract constants as parameters of constructor.
         """
-        
+
         super(NeuronViewer, self).__init__(*args, **kwargs)
-        #super(NeuronViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
-        
-        self.subplots_adjust(left=0.25, bottom=0.25)
+        # super(NeuronViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
+
+        self.subplots_adjust(left = 0.25, bottom = 0.25)
         self.viewer = self.add_axes([0.25, 0.25, 0.7, 0.7])
-        
+
         #self.set_images(kwargs["neuron_images"])
 
     @advanced_debugging.log_call(logger)
@@ -66,27 +61,29 @@ class NeuronViewer(matplotlib.figure.Figure):
                 new_neuron_images(numpy.ndarray):     array of images (first index is which image)
         """
         if (new_neuron_images.ndim > 3):
-            raise ValueError("Dimensions cannot be greater than 3. Was provided new_neuron_images with \"" + str(new_neuron_images.ndim) + "\" dimensions.")
-        
+            raise ValueError("Dimensions cannot be greater than 3. Was provided new_neuron_images with \"" + str(
+                new_neuron_images.ndim) + "\" dimensions.")
+
         self.neuron_images = new_neuron_images
         self.cmap = cmap
-        
+
         viewer_show_method = None
         if use_matshow:
             viewer_show_method = self.viewer.matshow
         else:
             viewer_show_method = self.viewer.imshow
-        
+
         if (self.neuron_images.ndim == 3):
-            #self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            # self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            self.image_view = viewer_show_method(self.neuron_images[0], cmap = self.cmap,
+                                                 vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
         else:
-            #self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            
+            # self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            self.image_view = viewer_show_method(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(),
+                                                 vmax = self.neuron_images.max())
 
         self.image_view_colorbar = self.colorbar(self.image_view, ax = self.viewer)
-        
+
         if (self.neuron_images.ndim == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
 
@@ -100,14 +97,12 @@ class NeuronViewer(matplotlib.figure.Figure):
         if (self.neuron_images.ndim == 3):
             self.image_view.set_array(self.neuron_images[self.time_nav.stime.val])
             self.canvas.draw_idle()
-    
-
 
 
 class TimeNavigator(object):
-    
     @advanced_debugging.log_call(logger)
-    def __init__(self, fig, max_time, min_time = 0, time_step = 1, axcolor = 'lightgoldenrodyellow', hovercolor = '0.975'):
+    def __init__(self, fig, max_time, min_time = 0, time_step = 1, axcolor = 'lightgoldenrodyellow',
+                 hovercolor = '0.975'):
         """
             Initializes a TimeNavigator using the given figure and a fixed number of steps.
 
@@ -166,13 +161,13 @@ class TimeNavigator(object):
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
-        
+
         logger.debug("Value of slider before setting to the beginning is \"" + str(self.stime.val) + "\".")
-        
+
         self.time_update(self.min_time)
-        
+
         logger.debug("Value of slider after setting to the beginning is \"" + str(self.stime.val) + "\".")
-        assert(self.min_time == self.stime.val)
+        assert (self.min_time == self.stime.val)
 
     @advanced_debugging.log_call(logger)
     def prev_time(self, event):
@@ -182,13 +177,13 @@ class TimeNavigator(object):
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
-        
+
         logger.debug("Value of slider before going to the previous time is \"" + str(self.stime.val) + "\".")
-        
+
         self.time_update(self.stime.val - self.time_step)
-        
+
         logger.debug("Value of slider after going to the previous time is \"" + str(self.stime.val) + "\".")
-    
+
     @advanced_debugging.log_call(logger)
     def next_time(self, event):
         """
@@ -197,11 +192,11 @@ class TimeNavigator(object):
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
-        
+
         logger.debug("Value of slider before going to the next time is \"" + str(self.stime.val) + "\".")
-        
+
         self.time_update(self.stime.val + self.time_step)
-        
+
         logger.debug("Value of slider after going to the next time is \"" + str(self.stime.val) + "\".")
 
     @advanced_debugging.log_call(logger)
@@ -212,10 +207,10 @@ class TimeNavigator(object):
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
-        
+
         self.time_update(self.max_time)
-        
-        assert(self.max_time == self.stime.val)
+
+        assert (self.max_time == self.stime.val)
 
     @advanced_debugging.log_call(logger)
     def normalize_val(self, val):
@@ -235,7 +230,7 @@ class TimeNavigator(object):
         elif val > self.max_time:
             return(self.max_time)
         else:
-            return(int(round((val - self.min_time)/self.time_step)))
+            return(int(round((val - self.min_time) / self.time_step)))
 
     @advanced_debugging.log_call(logger)
     def time_update(self, val):
@@ -253,9 +248,9 @@ class TimeNavigator(object):
 
             for each_cid, each_callback in self.callbacks.items():
                 logger.debug("Before calling the caller id for time_update with value \"" + str(each_cid) + "\".")
-                
+
                 each_callback()
-                
+
                 logger.debug("After calling the caller id for time_update with value \"" + str(each_cid) + "\".")
 
             return
@@ -268,13 +263,12 @@ class TimeNavigator(object):
             Args:
                 cid     ID of callback to pull
         """
-        
-        
+
         logger.debug("Before disconnecting the caller id for time_update with value \"" + str(cid) + "\".")
         logger.debug("Contents of the callback dictionary before disconnecting \"" + str(self.callbacks) + "\".")
-        
+
         del self.callbacks[cid]
-        
+
         logger.debug("After disconnecting the caller id for time_update with value \"" + str(cid) + "\".")
         logger.debug("Contents of the callback dictionary after disconnecting\"" + str(self.callbacks) + "\".")
 
@@ -289,16 +283,16 @@ class TimeNavigator(object):
             Returns:
 		int:    a callback ID or cid to allow pulling the callback when no longer necessary.
         """
-        
+
         logger.debug("Before connecting the caller id for time_update with value \"" + str(self.next_cid) + "\".")
         logger.debug("Contents of the callback dictionary before connecting \"" + str(self.callbacks) + "\".")
-        
+
         cid = self.next_cid
         self.next_cid += 1
 
         self.callbacks[cid] = func
-        
+
         logger.debug("After connecting the caller id for time_update with value \"" + str(cid) + "\".")
         logger.debug("Contents of the callback dictionary after connecting \"" + str(self.callbacks) + "\".")
-        
+
         return(cid)

@@ -2,10 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-__author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Jun 4, 2014 11:10:55 AM$"
-
-
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
+__date__ = "$Jun 4, 2014 11:10:55 AM$"
 
 import copy
 
@@ -25,11 +23,11 @@ class EmptyArrayDebugLogger(object):
     @advanced_debugging.log_call(logger)
     def __init__(self):
         pass
-    
+
     @advanced_debugging.log_call(logger)
     def debug(self):
         return(False)
-    
+
     @advanced_debugging.log_call(logger)
     def __call__(self, array_name, array_value):
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
@@ -43,11 +41,11 @@ class HDF5ArrayDebugLogger(object):
     @advanced_debugging.log_call(logger)
     def __init__(self, fid):
         self.fid = fid
-    
+
     @advanced_debugging.log_call(logger)
     def debug(self):
         return(True)
-    
+
     @advanced_debugging.log_call(logger)
     def __call__(self, array_name, array_value):
         # Attempt to create a dataset in self.fid named array_name with array_value and do not overwrite.
@@ -77,13 +75,13 @@ def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, ov
         Returns:
             A function, which will take a given array name and value and write them out.
     """
-    
+
     if type(fid) is str:
         fid = h5py.File(fid, "a")
-    
+
     if (debug):
         fid_debug = fid
-        
+
         # Check to if the output must go somewhere special.
         if group_name:
             # If so, check to see if it exists.
@@ -96,9 +94,9 @@ def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, ov
             else:
                 # Create it if it doesn't, exist.
                 fid.create_group(group_name)
-            
+
             fid_debug = fid[group_name]
-        
+
         return(HDF5ArrayDebugLogger(fid_debug))
     else:
         return(EmptyArrayDebugLogger())
@@ -123,15 +121,15 @@ def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, over
         Returns:
             A function, which will take a given array name and value and write them out the new directory location.
     """
-    
+
     # Must be a local import. Otherwise log_call will be undefined in HDF5_serializers.
     import HDF5_serializers
-    
+
     if array_debug_logger.debug():
         import types
-        
+
         new_array_debug_logger = copy.copy(array_debug_logger)
-        
+
         # Check to if the output must go somewhere special.
         if group_name:
             # If so, check to see if it exists.
@@ -139,14 +137,14 @@ def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, over
                 # If it does and we want to overwrite it, do so.
                 if overwrite_group:
                     del new_array_debug_logger.fid[group_name]
-            
+
                     new_array_debug_logger.fid.create_group(group_name)
             else:
                 # Create it if it doesn't, exist.
                 new_array_debug_logger.fid.create_group(group_name)
-                    
+
             new_array_debug_logger.fid = new_array_debug_logger.fid[group_name]
-        
+
         return(new_array_debug_logger)
     else:
         return(array_debug_logger)

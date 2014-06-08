@@ -2,9 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-__author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$May 1, 2014 2:23:45PM$"
-
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
+__date__ = "$May 1, 2014 2:23:45PM$"
 
 import numpy
 
@@ -53,16 +52,16 @@ def estimate_noise(input_array, significance_threshhold = 3.0):
             >>> import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshhold = 3))/1000
             0.288
     """
-    
+
     mean = input_array.mean()
     stddev = input_array.std()
-    
+
     # Find cells that are inside an acceptable range (3 std devs from the mean by default)
     insignificant_mask = numpy.abs(input_array - mean) < significance_threshhold * stddev
-    
+
     # Those cells have noise. Estimate the standard deviation on them. That will be our noise unit size.
     noise = input_array[insignificant_mask].std()
-    
+
     return(noise)
 
 
@@ -100,16 +99,16 @@ def significant_mask(input_array, noise_threshhold = 6.0, noise_estimate = None)
                    [False,  True, False],
                    [False, False,  True]], dtype=bool)
     """
-    
+
     mean = input_array.mean()
-    
+
     # Estimate noise with the default estimate_noise function if a value is not provided.
     if noise_estimate is None:
         noise_estimate = estimate_noise(input_array)
-    
+
     # Get all the noisy points in a mask and toss them.
     significant_mask = numpy.abs(input_array - mean) >= noise_threshhold * noise_estimate
-    
+
     return(significant_mask)
 
 
@@ -146,11 +145,11 @@ def noise_mask(input_array, noise_threshhold = 6.0, noise_estimate = None):
                    [ True, False,  True],
                    [ True,  True, False]], dtype=bool)
     """
-    
+
     # Get all the significant points in a mask.
     noisy_mask = significant_mask(input_array, noise_threshhold = noise_threshhold, noise_estimate = noise_estimate)
-    
+
     # Invert the maske
     numpy.logical_not(noisy_mask, noisy_mask)
-    
+
     return(noisy_mask)

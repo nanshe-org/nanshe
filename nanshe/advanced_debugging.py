@@ -3,16 +3,15 @@
 # and open the template in the editor.
 
 
-__author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Apr 14, 2014 5:42:07PM$"
-
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
+__date__ = "$Apr 14, 2014 5:42:07PM$"
 
 import logging
 import functools
 
 
 # Nothing fancy. Just the basic logging unless otherwise specified, in which case this does nothing.
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level = logging.DEBUG)
 
 
 def log_call(logger, print_args = False):
@@ -33,7 +32,7 @@ def log_call(logger, print_args = False):
         Returns:
             log_call_decorator (for wrapping)
     """
-    
+
     def log_call_decorator(callable):
         """
             The actual decorator, which is what is returned to decorate the callable in question.
@@ -44,7 +43,7 @@ def log_call(logger, print_args = False):
             Returns:
 		log_call_callable_wrapped, which is wrapped around the function in question.
         """
-        
+
         @functools.wraps(callable)
         def log_call_callable_wrapped(*args, **kwargs):
             """
@@ -57,35 +56,37 @@ def log_call(logger, print_args = False):
                 Returns:
                     log_call_callable_wrapped, which is wrapped around the function in question.
             """
-            
+
             # Log that we have entered the callable in question.
             logger.debug("Entering callable: \"" + callable.__name__ + "\".")
-            
+
             # Output arguments and keyword arguments if acceptable. Note that this allows keyword arguments to be turned on or off at runtime.
             #
             # Note: We have used log_call_callable_wrapped.print_args. However, we cannot define this until after as wrapping will lose this variable.
             if (log_call_callable_wrapped.print_args):
-               logger.debug("Called with the arguments: \"" + str(args) + "\" and with the keyword arguments: \"" + str(kwargs) + "\".")
-            
+                logger.debug(
+                    "Called with the arguments: \"" + str(args) + "\" and with the keyword arguments: \"" + str(
+                        kwargs) + "\".")
+
             # We don't return immediately. Why? We want to know if this succeeded or failed.
             # So, we want the log message below to print after the function runs.
             result = callable(*args, **kwargs)
-            
+
             # Log that we have exited the callable in question.
             logger.debug("Exiting \"" + callable.__name__ + "\".")
-            
+
             # Return the result even None.
             return(result)
-        
+
         # Store the underlying callable. Automatic in Python 3.
         log_call_callable_wrapped.__wrapped__ = callable
-        
+
         # Copy over the value of print_args for later use.
         # Must be defined afterwards as functools.wraps will not copy it over to the wrapped instance.
         log_call_callable_wrapped.print_args = print_args
-        
+
         # The callable wrapped.
         return(log_call_callable_wrapped)
-    
+
     # The arguments passed to the decorator for easy access.
     return(log_call_decorator)

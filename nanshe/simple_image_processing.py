@@ -2,8 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-__author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Apr 30, 2014 5:14:50PM$"
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
+__date__ = "$Apr 30, 2014 5:14:50PM$"
 
 
 
@@ -62,25 +62,25 @@ def zeroed_mean_images(input_array, ord = 2, output_array = None):
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == zeroed_mean_images(a, output_array = a))
             True
     """
-    
+
     if output_array is None:
-        output_array = numpy.zeros(input_array.shape, dtype=float)
-        
-    
+        output_array = numpy.zeros(input_array.shape, dtype = float)
+
+
     # start with means having the same contents as the given images
     means = input_array
-    
+
     # take the mean while we haven't gotten one mean for each image.
     while means.ndim > 1:
         means = means.mean(axis = 1)
-    
+
     # reshape means until it has the right number of dimensions to broadcast.
     while means.ndim < input_array.ndim:
         means = means.reshape(means.shape + (1,))
-    
+
     # broadcast and subtract the means so that the mean of all values in result[i] is zero
     output_array[:] = input_array - means
-    
+
     return(output_array)
 
 
@@ -124,14 +124,14 @@ def renormalized_images(input_array, ord = 2, output_array = None):
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == renormalized_images(a, output_array = a))
             True
     """
-    
+
     if output_array is None:
         output_array = input_array.copy().astype(float)
-    
+
     # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.
     # take each image at each time turn the image into a vector and find the norm.
     # divide each image by this norm. (required for spams.trainDL)
     for i in xrange(output_array.shape[0]):
         output_array[i] /= numpy.linalg.norm(output_array[i].ravel(), ord = ord)
-    
+
     return(output_array)

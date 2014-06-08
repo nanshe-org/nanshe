@@ -10,7 +10,6 @@ import advanced_debugging
 logger = advanced_debugging.logging.getLogger(__name__)
 
 
-
 @advanced_debugging.log_call(logger)
 def index_generator(*sizes):
     """
@@ -45,13 +44,13 @@ def index_generator(*sizes):
             >>> list(index_generator(3, 2))
             [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]
     """
-    
+
     # Creates a list of xrange generator objects over each respective dimension of sizes
     gens = [xrange(_) for _ in sizes]
-    
+
     # Combines the generators to a single generator of indicies that go throughout sizes
     chain_gen = itertools.product(*gens)
-    
+
     return(chain_gen)
 
 
@@ -76,7 +75,7 @@ def list_indices_to_index_array(list_indices):
             >>> list_indices_to_index_array([(1, 2), (5, 7), (33, 2)])
             (array([ 1,  5, 33]), array([2, 7, 2]))
     """
-    
+
     # Combines the indices so that one dimension is represented by each list.
     # Then converts this to a tuple numpy.ndarrays.
     return(tuple(numpy.array(zip(*list_indices))))
@@ -117,19 +116,19 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
                    [False, False, False,  True]], dtype=bool)
             
     """
-    
+
     # Constructs the numpy.ndarray with False everywhere
     result = numpy.zeros(shape, dtype = bool)
-    
+
     # Gets the index array
     # Done first to make sure that if list_indices is this [], or this (), or this [()]
     # will be converted to this ().
     index_array = list_indices_to_index_array(list_indices)
-    
+
     # Sets the given indices to True
     if index_array != ():
         result[index_array] = True
-    
+
     return(result)
 
 
@@ -183,17 +182,16 @@ def xrange_with_skip(start, stop = None, step = None, to_skip = None):
             [0, 1, 2, 3, 4, 5, 6, 7, 8]
             
     """
-    
-    
+
     full = None
-    
+
     if (stop is None):
         full = iter(xrange(start))
     elif (step is None):
         full = iter(xrange(start, stop))
     else:
         full = iter(xrange(start, stop, step))
-    
+
     if to_skip is None:
         to_skip = iter([])
     else:
@@ -201,13 +199,12 @@ def xrange_with_skip(start, stop = None, step = None, to_skip = None):
             to_skip = iter(sorted(set(to_skip)))
         except TypeError:
             to_skip = iter([to_skip])
-    
-    
+
     next_to_skip = next(to_skip, None)
-    
+
     for each in full:
         if each != next_to_skip:
-            yield(each)
+            yield (each)
         else:
             next_to_skip = next(to_skip, None)
 
@@ -245,15 +242,15 @@ def cumulative_generator(new_op, new_iter):
             [1, 2, 6, 24]
         
     """
-    
+
     new_iter = iter(new_iter)
-    
+
     cur = next(new_iter)
-    yield(cur)
-    
+    yield (cur)
+
     for each in new_iter:
         cur = new_op(cur, each)
-        yield(cur)
+        yield (cur)
 
 
 def reverse_each_element(new_iter):
@@ -279,11 +276,11 @@ def reverse_each_element(new_iter):
             >>> list(reverse_each_element(iter([[5,2,3], [1, 7, 9]])))
             [[3, 2, 5], [9, 7, 1]]
     """
-    
+
     new_iter = iter(new_iter)
-    
+
     for each in new_iter:
-        yield( type(each)(reversed(each)) )
+        yield ( type(each)(reversed(each)) )
 
 
 def filled_stringify_enumerate(new_list):
@@ -309,10 +306,9 @@ def filled_stringify_enumerate(new_list):
             >>> list(filled_stringify_enumerate([5, 7]))
             [(0, '0', 5), (1, '1', 7)]
     """
-    
-    
+
     if len(new_list):
         digits = int(numpy.floor(numpy.log10(len(new_list))))
 
     for i, each in enumerate(new_list):
-        yield( (i, str(i).zfill(digits), each) )
+        yield ( (i, str(i).zfill(digits), each) )

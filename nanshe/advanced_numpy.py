@@ -2,10 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-__author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$May 20, 2014 9:46:45 AM$"
-
-
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
+__date__ = "$May 20, 2014 9:46:45 AM$"
 
 import numpy
 import scipy
@@ -47,30 +45,30 @@ def renumber_label_image(new_array):
             >>> renumber_label_image(numpy.array([0, 1, 2, 4]))
             (array([0, 1, 2, 3]), array([0, 1, 2, 0, 3]), array([0, 1, 2, 4]))
     """
-    
+
     # Get the set of reverse label mapping (ensure the background is always included)
-    reverse_label_mapping = numpy.unique(numpy.array([0] + numpy.unique(new_array).tolist() ))
-    
+    reverse_label_mapping = numpy.unique(numpy.array([0] + numpy.unique(new_array).tolist()))
+
     # Get the set of old labels excluding background
     old_labels = reverse_label_mapping[reverse_label_mapping != 0]
-    
+
     # Get the set of new labels in order
     new_labels = numpy.arange(1, len(old_labels) + 1)
-    
+
     # Get the forward label mapping (ensure the background is included)
     forward_label_mapping = numpy.zeros((reverse_label_mapping.max() + 1,), dtype = new_array.dtype)
     forward_label_mapping[old_labels] = new_labels
 
     # Get masks for each old label
     new_array_label_masks = all_permutations_equal(old_labels, new_array)
-    
+
     # Create tiled where each label is expanded to the size of the new_array
     new_labels_tiled_view = expand_view(new_labels, new_array.shape)
-    
+
     # Take every mask and make sure it has the appropriate sequential label
     # Then combine each of these parts of the label image together into a new sequential label image
     new_array_relabeled = (new_array_label_masks * new_labels_tiled_view).sum(axis = 0)
-    
+
     return((new_array_relabeled, forward_label_mapping, reverse_label_mapping))
 
 
@@ -111,13 +109,12 @@ def add_singleton_axis_pos(new_array, new_pos = 0):
             (2, 3, 4, 1)
             
     """
-    
+
     new_pos %= (new_array.ndim + 1)
     if new_pos < 0:
         new_pos += new_array.ndim + 1
-        
-    return( numpy.rollaxis(new_array[None], 0, new_pos + 1) )
 
+    return( numpy.rollaxis(new_array[None], 0, new_pos + 1) )
 
 
 @advanced_debugging.log_call(logger)
@@ -139,10 +136,9 @@ def add_singleton_axis_beginning(new_array):
             (1, 3, 3)
             
     """
-    
-    #return( new_array[None] )
-    return( add_singleton_axis_pos(new_array, new_pos = 0) )
 
+    # return( new_array[None] )
+    return( add_singleton_axis_pos(new_array, new_pos = 0) )
 
 
 @advanced_debugging.log_call(logger)
@@ -164,8 +160,8 @@ def add_singleton_axis_end(new_array):
             (3, 3, 1)
             
     """
-    
-    #return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )
+
+    # return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )
     return( add_singleton_axis_pos(new_array, new_pos = new_array.ndim) )
 
 
@@ -215,6 +211,7 @@ def contains(new_array, to_contain):
                    [False,  True]], dtype=bool)
     """
     return(numpy.in1d(new_array, to_contain).reshape(new_array.shape))
+
 
 @advanced_debugging.log_call(logger)
 def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
@@ -399,19 +396,18 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
                      [3, 4, 5]]]])
             
     """
-    
-    
+
     if type(reps_after) is not tuple:
         reps_after = (reps_after,)
-        
+
     if type(reps_before) is not tuple:
         reps_before = (reps_before,)
-        
+
     if (not reps_after) and (not reps_before):
         raise Exception("expand_view() requires reps_after or reps_before to specified.")
-    
-    return( numpy.lib.stride_tricks.as_strided(new_array, reps_before + new_array.shape + reps_after, len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)) )
 
+    return(numpy.lib.stride_tricks.as_strided(new_array, reps_before + new_array.shape + reps_after,
+                                               len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)) )
 
 
 @advanced_debugging.log_call(logger)
@@ -500,10 +496,10 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
                      [ 0., -1.]]]])
             
     """
-    
+
     new_array_1_tiled = expand_view(new_array_1, reps_after = new_array_2.shape)
     new_array_2_tiled = expand_view(new_array_2, reps_before = new_array_1.shape)
-    
+
     return( new_op(new_array_1_tiled, new_array_2_tiled) )
 
 
@@ -611,7 +607,7 @@ def all_permutations_equal(new_array_1, new_array_2):
                      [False, False]]]], dtype=bool)
             
     """
-    
+
     return( all_permutations_operation(operator.eq, new_array_1, new_array_2) )
 
 
@@ -637,7 +633,7 @@ def numpy_structured_array_dtype_generator(new_array):
         Returns:
             (iterator):                     An iterator yielding tuples.
     """
-    
+
     # Test to see if this is a NumPy Structured Array
     if new_array.dtype.names:
         # Go through each name
@@ -646,8 +642,8 @@ def numpy_structured_array_dtype_generator(new_array):
             each_dtype = new_array[each_name].dtype.type
             # Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)
             each_shape = new_array.dtype[each_name].shape
-            
-            yield( (each_name, each_dtype, each_shape) )
+
+            yield ( (each_name, each_dtype, each_shape) )
     else:
         raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
 
@@ -666,7 +662,7 @@ def numpy_array_dtype_list(new_array):
                                             to obtain the new_array.dtype, but is more
                                             malleable than a numpy.dtype. 
     """
-    
+
     try:
         return(list(numpy_structured_array_dtype_generator(new_array)))
     except NotNumPyStructuredArrayType:
@@ -706,10 +702,10 @@ def dot_product(new_vector_set_1, new_vector_set_2):
             >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
             array([[1]])
     """
-    
+
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(new_vector_set_1, new_vector_set_2.T)
-    
+
     return(vector_pairs_dot_product)
 
 
@@ -755,15 +751,15 @@ def norm(new_vector_set, ord = 2):
             >>> norm(numpy.array([ 0,  1,  2]))
             array(2.23606797749979)
     """
-    
+
     new_vector_set = new_vector_set.astype(float)
-    
+
     # Wrap the order parameter so as to avoid passing through numpy.apply_along_axis
     # and risk having it break. Also, makes sure the same function can be used in the
     # two cases.
     def wrapped_norm(new_vector):
         return(numpy.linalg.norm(new_vector, ord = ord))
-    
+
     # Return a scalar NumPy array in the case of a single vector
     # Always return type float as the result.
     if new_vector_set.ndim == 1:
@@ -815,22 +811,22 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
              array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],
                    [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
     """
-    
+
     # Gets all of the norms
     new_vector_set_1_norms = norm(new_vector_set_1.astype(float), ord)
     new_vector_set_2_norms = norm(new_vector_set_2.astype(float), ord)
-    
+
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
     new_vector_set_1_norms_expanded = expand_view(new_vector_set_1_norms, reps_after = new_vector_set_2.shape[0])
     new_vector_set_2_norms_expanded = expand_view(new_vector_set_2_norms, reps_before = new_vector_set_1.shape[0])
-    
+
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(new_vector_set_1, new_vector_set_2.T)
-    
+
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / new_vector_set_1_norms_expanded
     vector_pairs_dot_product_2_normalized = vector_pairs_dot_product / new_vector_set_2_norms_expanded
-    
+
     return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
 
 
@@ -875,20 +871,20 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
             array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
-    
+
     # Gets all of the norms
     new_vector_set_1_norms = norm(new_vector_set_1.astype(float), ord)
     new_vector_set_2_norms = norm(new_vector_set_2.astype(float), ord)
-    
+
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(operator.mul, new_vector_set_1_norms, new_vector_set_2_norms)
-    
+
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(new_vector_set_1, new_vector_set_2.T)
-    
+
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product_normalized = vector_pairs_dot_product / norm_products
-    
+
     return(vector_pairs_dot_product_normalized)
 
 
@@ -929,10 +925,10 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
             array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
-    
+
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_cosine_angle = 1 - scipy.spatial.distance.cdist(new_vector_set_1,
                                                                  new_vector_set_2,
                                                                  "cosine")
-    
+
     return(vector_pairs_cosine_angle)
