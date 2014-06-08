@@ -1,6 +1,10 @@
 *~
 *.pyc
 .DS_Store
+.idea
+.project
+.pydevproject
+.ipynb_checkpoints
 docs/_build
 nbproject/
 nbproject/private
