@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 4
 
-   dictionary_learning
+   nanshe
 
 
 Indices and tables
