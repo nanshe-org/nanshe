@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __author__="John Kirkham"
-__date__ ="$Apr 9, 2014 4:00:40 PM$"
+__date__ ="$Apr 9, 2014 4:00:40PM$"
 
 
 import os
@@ -25,7 +25,6 @@ import HDF5_serializers
 import vigra
 import vigra.impex
 
-
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
 
@@ -41,7 +40,7 @@ def batch_generate_save_dictionary(*new_filenames, **parameters):
             new_filenames     names of the files to read.
             parameters        passed directly to generate_save_dictionary.
     """
-    
+
     # simple. iterates over each call to generate and save results in given HDF5 file.
     for each_new_filename in new_filenames:
         # runs each one and saves results in each file

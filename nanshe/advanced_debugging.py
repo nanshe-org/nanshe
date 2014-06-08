@@ -4,7 +4,7 @@
 
 
 __author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Apr 14, 2014 5:42:07 PM$"
+__date__ ="$Apr 14, 2014 5:42:07PM$"
 
 
 import logging

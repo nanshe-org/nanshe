@@ -3,7 +3,7 @@
 # and open the template in the editor.
 
 __author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Apr 3, 2014 8:20:39 PM$"
+__date__ ="$Apr 3, 2014 8:20:39PM$"
 
 
 # Need in order to have logging information no matter what.

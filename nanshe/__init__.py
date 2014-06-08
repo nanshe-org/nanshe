@@ -3,7 +3,7 @@
 # and open the template in the editor.
 
 __author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Apr 14, 2014 8:37:08 PM$"
+__date__ ="$Apr 14, 2014 8:37:08PM$"
 
 __all__ = ["..", "HDF5_logger", "advanced_debugging", "advanced_numpy", "denoising", "read_config", "HDF5_serializers", "advanced_image_processing", "batch_learner", "neuron_viewer", "simple_image_processing", "__init__", "advanced_iterators", "batch_learner_debug", "pathHelpers"]
 

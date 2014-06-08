@@ -3,7 +3,7 @@
 # and open the template in the editor.
 
 __author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$May 1, 2014 2:23:45 PM$"
+__date__ ="$May 1, 2014 2:23:45PM$"
 
 
 import numpy

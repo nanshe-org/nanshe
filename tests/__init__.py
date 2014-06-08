@@ -3,7 +3,7 @@
 # and open the template in the editor.
 
 __author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ ="$Jun 6, 2014 4:21:22 PM$"
+__date__ ="$Jun 6, 2014 4:21:22PM$"
 
 __all__ = ["..", "random_dictionary_learning_data"]
 
