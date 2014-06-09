@@ -1370,24 +1370,24 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         array_debug_logger("new_neuron_set_angle", new_neuron_set_angle)
 
         # Measure the distance between the two masks (note distance relative to the total mask content of each mask individually)
-        new_neuron_set_masks_overlayed_1, new_neuron_set_masks_overlayed_2 = advanced_numpy.dot_product_partially_normalized(
+        new_neuron_set_masks_overlaid_1, new_neuron_set_masks_overlaid_2 = advanced_numpy.dot_product_partially_normalized(
             new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask, ord = 1)
 
-        array_debug_logger("new_neuron_set_masks_overlayed_1", new_neuron_set_masks_overlayed_1)
-        array_debug_logger("new_neuron_set_masks_overlayed_2", new_neuron_set_masks_overlayed_2)
+        array_debug_logger("new_neuron_set_masks_overlaid_1", new_neuron_set_masks_overlaid_1)
+        array_debug_logger("new_neuron_set_masks_overlaid_2", new_neuron_set_masks_overlaid_2)
 
         # Now that the three measures for the correlation method have been found, we want to know,
         # which are the best correlated neurons between the two sets using these measures.
         # This done to find the neuron in new_neuron_set_1 that best matches each neuron in new_neuron_set_2.
         new_neuron_set_angle_all_optimal_i = new_neuron_set_angle.argmax(axis = 0)
-        new_neuron_set_masks_overlayed_1_all_optimal_i = new_neuron_set_masks_overlayed_1.argmax(axis = 0)
-        new_neuron_set_masks_overlayed_2_all_optimal_i = new_neuron_set_masks_overlayed_2.argmax(axis = 0)
+        new_neuron_set_masks_overlaid_1_all_optimal_i = new_neuron_set_masks_overlaid_1.argmax(axis = 0)
+        new_neuron_set_masks_overlaid_2_all_optimal_i = new_neuron_set_masks_overlaid_2.argmax(axis = 0)
 
         array_debug_logger("new_neuron_set_angle_all_optimal_i", new_neuron_set_angle_all_optimal_i)
-        array_debug_logger("new_neuron_set_masks_overlayed_1_all_optimal_i",
-                           new_neuron_set_masks_overlayed_1_all_optimal_i)
-        array_debug_logger("new_neuron_set_masks_overlayed_2_all_optimal_i",
-                           new_neuron_set_masks_overlayed_2_all_optimal_i)
+        array_debug_logger("new_neuron_set_masks_overlaid_1_all_optimal_i",
+                           new_neuron_set_masks_overlaid_1_all_optimal_i)
+        array_debug_logger("new_neuron_set_masks_overlaid_2_all_optimal_i",
+                           new_neuron_set_masks_overlaid_2_all_optimal_i)
 
         # Get all the j indices
         new_neuron_set_all_j = numpy.arange(len(new_neuron_set_2))
@@ -1396,14 +1396,14 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
 
         # Get the maximum corresponding to the best matched paris from before
         new_neuron_set_angle_maxes = new_neuron_set_angle[(new_neuron_set_angle_all_optimal_i, new_neuron_set_all_j,)]
-        new_neuron_set_masks_overlayed_1_maxes = new_neuron_set_masks_overlayed_1[
-            (new_neuron_set_masks_overlayed_1_all_optimal_i, new_neuron_set_all_j,)]
-        new_neuron_set_masks_overlayed_2_maxes = new_neuron_set_masks_overlayed_2[
-            (new_neuron_set_masks_overlayed_2_all_optimal_i, new_neuron_set_all_j,)]
+        new_neuron_set_masks_overlaid_1_maxes = new_neuron_set_masks_overlaid_1[
+            (new_neuron_set_masks_overlaid_1_all_optimal_i, new_neuron_set_all_j,)]
+        new_neuron_set_masks_overlaid_2_maxes = new_neuron_set_masks_overlaid_2[
+            (new_neuron_set_masks_overlaid_2_all_optimal_i, new_neuron_set_all_j,)]
 
         array_debug_logger("new_neuron_set_angle_maxes", new_neuron_set_angle_maxes)
-        array_debug_logger("new_neuron_set_masks_overlayed_1_maxes", new_neuron_set_masks_overlayed_1_maxes)
-        array_debug_logger("new_neuron_set_masks_overlayed_2_maxes", new_neuron_set_masks_overlayed_2_maxes)
+        array_debug_logger("new_neuron_set_masks_overlaid_1_maxes", new_neuron_set_masks_overlaid_1_maxes)
+        array_debug_logger("new_neuron_set_masks_overlaid_2_maxes", new_neuron_set_masks_overlaid_2_maxes)
 
         # Store a list of the optimal neurons in the existing set to fuse with (by default set all values to -1)
         new_neuron_set_all_optimal_i = numpy.zeros((len(new_neuron_set_2),), dtype = int)
@@ -1413,29 +1413,29 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
 
         # Create the masks to use for getting the proper indices
         new_neuron_set_angle_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
-        new_neuron_set_masks_overlayed_1_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
-        new_neuron_set_masks_overlayed_2_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
+        new_neuron_set_masks_overlaid_1_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
+        new_neuron_set_masks_overlaid_2_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
 
         array_debug_logger("new_neuron_set_angle_maxes_significant_0", new_neuron_set_angle_maxes_significant)
-        array_debug_logger("new_neuron_set_masks_overlayed_1_maxes_significant_0",
-                           new_neuron_set_masks_overlayed_1_maxes_significant)
-        array_debug_logger("new_neuron_set_masks_overlayed_2_maxes_significant_0",
-                           new_neuron_set_masks_overlayed_2_maxes_significant)
+        array_debug_logger("new_neuron_set_masks_overlaid_1_maxes_significant_0",
+                           new_neuron_set_masks_overlaid_1_maxes_significant)
+        array_debug_logger("new_neuron_set_masks_overlaid_2_maxes_significant_0",
+                           new_neuron_set_masks_overlaid_2_maxes_significant)
 
         # Get masks that indicate which measurements have the best matching neuron
         new_neuron_set_angle_maxes_significant[
             new_neuron_set_angle_maxes > parameters["alignment_min_threshold"]] = True
-        new_neuron_set_masks_overlayed_1_maxes_significant[~new_neuron_set_angle_maxes_significant & (
-            new_neuron_set_masks_overlayed_2_maxes > parameters["overlap_min_threshold"])] = True
-        new_neuron_set_masks_overlayed_2_maxes_significant[
-            ~new_neuron_set_angle_maxes_significant & ~new_neuron_set_masks_overlayed_1_maxes_significant & (
-                new_neuron_set_masks_overlayed_1_maxes > parameters["overlap_min_threshold"])] = True
+        new_neuron_set_masks_overlaid_1_maxes_significant[~new_neuron_set_angle_maxes_significant & (
+            new_neuron_set_masks_overlaid_2_maxes > parameters["overlap_min_threshold"])] = True
+        new_neuron_set_masks_overlaid_2_maxes_significant[
+            ~new_neuron_set_angle_maxes_significant & ~new_neuron_set_masks_overlaid_1_maxes_significant & (
+                new_neuron_set_masks_overlaid_1_maxes > parameters["overlap_min_threshold"])] = True
 
         array_debug_logger("new_neuron_set_angle_maxes_significant_1", new_neuron_set_angle_maxes_significant)
-        array_debug_logger("new_neuron_set_masks_overlayed_1_maxes_significant_1",
-                           new_neuron_set_masks_overlayed_1_maxes_significant)
-        array_debug_logger("new_neuron_set_masks_overlayed_2_maxes_significant_1",
-                           new_neuron_set_masks_overlayed_2_maxes_significant)
+        array_debug_logger("new_neuron_set_masks_overlaid_1_maxes_significant_1",
+                           new_neuron_set_masks_overlaid_1_maxes_significant)
+        array_debug_logger("new_neuron_set_masks_overlaid_2_maxes_significant_1",
+                           new_neuron_set_masks_overlaid_2_maxes_significant)
 
         # Using the masks construct the best match neuron index for each case
         # After doing these three, new_neuron_set_all_optimal_i will contain either
@@ -1445,13 +1445,13 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
 
         array_debug_logger("new_neuron_set_all_optimal_i_1", new_neuron_set_all_optimal_i)
 
-        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlayed_1_maxes_significant] = \
-            new_neuron_set_masks_overlayed_1_all_optimal_i[new_neuron_set_masks_overlayed_1_maxes_significant]
+        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant] = \
+            new_neuron_set_masks_overlaid_1_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant]
 
         array_debug_logger("new_neuron_set_all_optimal_i_2", new_neuron_set_all_optimal_i)
 
-        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlayed_2_maxes_significant] = \
-            new_neuron_set_masks_overlayed_2_all_optimal_i[new_neuron_set_masks_overlayed_2_maxes_significant]
+        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlaid_2_maxes_significant] = \
+            new_neuron_set_masks_overlaid_2_all_optimal_i[new_neuron_set_masks_overlaid_2_maxes_significant]
 
         array_debug_logger("new_neuron_set_all_optimal_i_3", new_neuron_set_all_optimal_i)
 
