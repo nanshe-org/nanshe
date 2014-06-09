@@ -23,9 +23,6 @@ import skimage.feature
 import skimage.morphology
 import skimage.segmentation
 
-import h5py
-import HDF5_serializers
-
 import advanced_iterators
 
 # To allow for more advanced iteration patterns
