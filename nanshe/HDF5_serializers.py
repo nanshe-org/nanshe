@@ -21,7 +21,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
-        Also, will handle normal NumPy arrays as well.
+        Also, will handle normal NumPy arrays and scalars, as well.
         
         Note:
             HDF5 does not support generic Python objects. So, serialization of objects to something
@@ -43,18 +43,14 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
         fid = h5py.File(fid, "a")
         close_fid = True
 
-    dataset = None
-
     try:
-        dataset = fid.create_dataset(internalPath, data.shape, data.dtype)
+        fid.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
     except RuntimeError:
         if overwrite:
             del fid[internalPath]
-            dataset = fid.create_dataset(internalPath, data.shape, data.dtype)
+            fid.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
         else:
             raise
-
-    dataset[:] = data
 
     if close_fid:
         fid.close()
@@ -64,7 +60,7 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
 def read_numpy_structured_array_from_HDF5(fid, internalPath):
     """
         Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.
-        Also, it will handle normal NumPy arrays as well.
+        Also, it will handle normal NumPy arrays and scalars, as well.
         
         Note:
             HDF5 does not support generic Python objects. So, serialization of objects to something
@@ -87,7 +83,7 @@ def read_numpy_structured_array_from_HDF5(fid, internalPath):
         fid = h5py.File(fid, "r")
         close_fid = True
 
-    data = fid[internalPath][:]
+    data = fid[internalPath].value
 
     if close_fid:
         fid.close()
