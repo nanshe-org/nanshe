@@ -52,6 +52,7 @@ class HDF5ArrayDebugLogger(object):
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
         if array_value.size:
             HDF5_serializers.write_numpy_structured_array_to_HDF5(self.fid, array_name, array_value, overwrite = False)
+            self.fid.file.flush()
         else:
             raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
 
@@ -97,6 +98,8 @@ def generate_HDF5_array_debug_logger(fid, group_name = "debug", debug = True, ov
 
             fid_debug = fid[group_name]
 
+        fid.file.flush()
+
         return(HDF5ArrayDebugLogger(fid_debug))
     else:
         return(EmptyArrayDebugLogger())
@@ -139,9 +142,13 @@ def create_subgroup_HDF5_array_debug_logger(group_name, array_debug_logger, over
                     del new_array_debug_logger.fid[group_name]
 
                     new_array_debug_logger.fid.create_group(group_name)
+
+                    new_array_debug_logger.fid.file.flush()
             else:
                 # Create it if it doesn't, exist.
                 new_array_debug_logger.fid.create_group(group_name)
+
+                new_array_debug_logger.fid.file.flush()
 
             new_array_debug_logger.fid = new_array_debug_logger.fid[group_name]
 
