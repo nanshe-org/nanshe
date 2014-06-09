@@ -1086,6 +1086,7 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
 
         extended_region_props_0_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger(
             "extended_region_props_0", array_debug_logger)
+
         local_maxima = ExtendedRegionProps(new_wavelet_image_denoised, new_wavelet_image_denoised_label_image,
                                            array_debug_logger = extended_region_props_0_array_debug_logger)
 
@@ -1125,8 +1126,7 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
                 # Also, include mask
                 new_wavelet_image_denoised_segmentation = skimage.morphology.watershed(local_maxima.intensity_image,
                                                                                        new_wavelet_image_denoised_maxima,
-                                                                                       mask = (
-                                                                                           local_maxima.intensity_image > 0))
+                                                                                       mask = (local_maxima.intensity_image > 0))
 
                 array_debug_logger("watershed_segmentation", new_wavelet_image_denoised_segmentation)
 
@@ -1135,8 +1135,7 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
                 watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
                                                              new_wavelet_image_denoised_segmentation,
                                                              array_debug_logger = extended_region_props_1_array_debug_logger,
-                                                             properties = ["centroid"] + parameters[
-                                                                 "accepted_neuron_shape_constraints"].keys())
+                                                             properties = ["centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
 
                 array_debug_logger("watershed_local_maxima_label_image_0", watershed_local_maxima.label_image)
 
@@ -1247,7 +1246,7 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
                     else:
                         logger.debug("Extracted a neuron. Found " + str(len(neurons)) + " neuron.")
 
-                    array_debug_logger("neurons", neurons)
+                    array_debug_logger("new_neuron_set", neurons)
             else:
                 # ################### Some other kind of segmentation??? Talked to Ferran and he said don't worry about implementing this for now. Does not seem to give noticeably better results.
                 raise Exception("No other form of segmentation is implemented.")
@@ -1277,6 +1276,9 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger, **parameters):
         Returns:
             dict: the dictionary found.
     """
+
+    array_debug_logger("neuron_1", neuron_1)
+    array_debug_logger("neuron_2", neuron_2)
 
     assert (neuron_1.shape == neuron_2.shape == tuple())
     assert (neuron_1.dtype == neuron_2.dtype)
@@ -1312,6 +1314,8 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger, **parameters):
     #        new_neuron["gaussian_cov"][i] = numpy.cov(new_neuron_mask_points)
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
+
+    array_debug_logger("new_neuron", new_neuron)
 
     return(new_neuron)
 
@@ -1472,8 +1476,12 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the new_neuron_set (composed of new_neuron_set_1)
         for i, j in itertools.izip(new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse):
-            new_neuron_set[i] = fuse_neurons(new_neuron_set_1[i], new_neuron_set_2[j], array_debug_logger,
-                                             **parameters["fuse_neurons"])
+            new_fusing_neurons_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger("__".join(["fusing_neurons",
+                                                                                                                   "new_neuron_set_1_" + str(i),
+                                                                                                                   "new_neuron_set_2_" + str(j)]),
+                                                                                                        array_debug_logger)
+
+            new_neuron_set[i] = fuse_neurons(new_neuron_set_1[i], new_neuron_set_2[j], new_fusing_neurons_array_debug_logger, **parameters["fuse_neurons"])
 
         logger.debug("Fused \"" + repr(len(new_neuron_set_all_j_fuse)) + "\" neurons to the existing set.")
 
@@ -1493,7 +1501,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         new_neuron_set = new_neuron_set_1
 
     if new_neuron_set.size:
-        array_debug_logger("new_neuron_set", new_neuron_set)
+        array_debug_logger("new_merged_neurons_set", new_neuron_set)
 
     return(new_neuron_set)
 
@@ -1531,8 +1539,7 @@ def generate_neurons(new_images, array_debug_logger, **parameters):
                                                                                              array_debug_logger)
 
         for i, i_str, each in advanced_iterators.filled_stringify_enumerate(new_list):
-            yield (
-                (i, each, HDF5_logger.create_subgroup_HDF5_array_debug_logger(i_str, neuron_sets_array_debug_logger)) )
+            yield ( (i, each, HDF5_logger.create_subgroup_HDF5_array_debug_logger(i_str, neuron_sets_array_debug_logger)) )
 
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])
