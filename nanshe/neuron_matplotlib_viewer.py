@@ -19,7 +19,7 @@ import matplotlib.figure
 from matplotlib.widgets import Slider, Button
 
 
-class NeuronViewer(matplotlib.figure.Figure):
+class NeuronMatplotlibViewer(matplotlib.figure.Figure):
     """
         Provides a way to interact with numpy arrays pulled from neuron images.
 
@@ -29,7 +29,7 @@ class NeuronViewer(matplotlib.figure.Figure):
     @advanced_debugging.log_call(logger)
     def __init__(self, *args, **kwargs):
         """
-            Initializes a NeuronViewer using the given figure to clone and image stack to view.
+            Initializes a NeuronMatplotlibViewer using the given figure to clone and image stack to view.
 
             After cloning, self will be the same as fig. Additional features will be attached to self.
 
@@ -44,8 +44,8 @@ class NeuronViewer(matplotlib.figure.Figure):
                 Extract constants as parameters of constructor.
         """
 
-        super(NeuronViewer, self).__init__(*args, **kwargs)
-        # super(NeuronViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
+        super(NeuronMatplotlibViewer, self).__init__(*args, **kwargs)
+        # super(NeuronMatplotlibViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
 
         self.subplots_adjust(left = 0.25, bottom = 0.25)
         self.viewer = self.add_axes([0.25, 0.25, 0.7, 0.7])
