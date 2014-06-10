@@ -1,5 +1,6 @@
 import itertools
 import numpy
+import math
 
 
 # Need in order to have logging information no matter what.
@@ -390,3 +391,76 @@ def reformat_slice(a_slice, a_length = None):
     new_slice = slice(new_slice_start, new_slice_stop, new_slice_step)
 
     return(new_slice)
+
+
+class UnknownSliceLengthException(Exception):
+    """
+        Raised if a slice does not have a known length.
+    """
+
+    pass
+
+
+def len_slice(a_slice, a_length = None):
+    """
+        Determines how many elements a slice will contain.
+
+        Raises:
+            UnknownSliceLengthException: Will raise an exception if a_slice.stop and a_length is None.
+
+        Args:
+            a_slice(slice):        a slice to reformat.
+            a_length(int):         a length to fill for stopping if not provided.
+
+        Returns:
+            (slice):               a new slice with as many values filled in as possible.
+
+        Examples:
+            >>> len_slice(slice(None)) #doctest: +ELLIPSIS +IGNORE_EXCEPTION_DETAIL
+            Traceback (most recent call last):
+            UnknownSliceLengthException: ...
+
+            >>> len_slice(slice(None), 10)
+            10
+
+            >>> len_slice(slice(None), 10) == len(range(10)[:])
+            True
+
+            >>> len_slice(slice(2, None), 10)
+            8
+
+            >>> len_slice(slice(2, None), 10) == len(range(10)[2:])
+            True
+
+            >>> len_slice(slice(2, None, None), 10)
+            8
+
+            >>> len_slice(slice(2, None, None), 10) == len(range(10)[2:])
+            True
+
+            >>> len_slice(slice(2, 6))
+            4
+
+            >>> len_slice(slice(2, 6), 1000)
+            4
+
+            >>> len_slice(slice(2, 6), 10) == len(range(10)[2:6])
+            True
+
+            >>> len_slice(slice(2, 6, 3))
+            2
+
+            >>> len_slice(slice(2, 6, 3), 10) == len(range(10)[2:6:3])
+            True
+    """
+
+    new_slice = reformat_slice(a_slice, a_length)
+
+    if new_slice.stop is None:
+        raise UnknownSliceLengthException("Cannot determine slice length without a defined end point. The reformatted slice was " + repr(new_slice) + ".")
+
+    new_slice_diff = new_slice.stop - new_slice.start
+
+    new_slice_size = int(math.ceil(float(new_slice_diff) / new_slice.step))
+
+    return(new_slice_size)
