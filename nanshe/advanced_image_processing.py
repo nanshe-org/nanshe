@@ -292,7 +292,7 @@ def generate_dictionary(new_data, **parameters):
     new_data_processed = new_data
 
     # Reshape data into a matrix (each image is now a column vector)
-    new_data_processed = numpy.reshape(new_data_processed, [new_data_processed.shape[0], -1])
+    new_data_processed = numpy.reshape(new_data_processed, (new_data_processed.shape[0], -1))
     new_data_processed = numpy.asmatrix(new_data_processed)
     new_data_processed = new_data_processed.transpose()
 
@@ -634,6 +634,7 @@ def generate_local_maxima_scikit_image(new_intensity_image, neighborhood_size = 
         
         Args:
             new_intensity_image(numpy.ndarray):     The image to find local maxima for.
+            neighborhood_size(int):                 Size of the neighborhood to check for a local maxima.
         
         Returns:
             numpy.ndarray:  A mask of the local maxima.
@@ -1437,18 +1438,15 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
         # Using the masks construct the best match neuron index for each case
         # After doing these three, new_neuron_set_all_optimal_i will contain either
         # the index of the neuron to fuse with in new_neuron_set for each 
-        new_neuron_set_all_optimal_i[new_neuron_set_angle_maxes_significant] = new_neuron_set_angle_all_optimal_i[
-            new_neuron_set_angle_maxes_significant]
+        new_neuron_set_all_optimal_i[new_neuron_set_angle_maxes_significant] = new_neuron_set_angle_all_optimal_i[new_neuron_set_angle_maxes_significant]
 
         array_debug_logger("new_neuron_set_all_optimal_i_1", new_neuron_set_all_optimal_i)
 
-        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant] = \
-            new_neuron_set_masks_overlaid_1_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant]
+        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant] = new_neuron_set_masks_overlaid_1_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant]
 
         array_debug_logger("new_neuron_set_all_optimal_i_2", new_neuron_set_all_optimal_i)
 
-        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlaid_2_maxes_significant] = \
-            new_neuron_set_masks_overlaid_2_all_optimal_i[new_neuron_set_masks_overlaid_2_maxes_significant]
+        new_neuron_set_all_optimal_i[new_neuron_set_masks_overlaid_2_maxes_significant] = new_neuron_set_masks_overlaid_2_all_optimal_i[new_neuron_set_masks_overlaid_2_maxes_significant]
 
         array_debug_logger("new_neuron_set_all_optimal_i_3", new_neuron_set_all_optimal_i)
 
