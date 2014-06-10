@@ -312,3 +312,81 @@ def filled_stringify_enumerate(new_list):
 
     for i, each in enumerate(new_list):
         yield ( (i, str(i).zfill(digits), each) )
+
+
+def reformat_slice(a_slice, a_length = None):
+    """
+        Takes a slice and reformats it to fill in as many undefined values as possible.
+
+        Args:
+            a_slice(slice):        a slice to reformat.
+            a_length(int):         a length to fill for stopping if not provided.
+
+        Returns:
+            (slice):               a new slice with as many values filled in as possible.
+
+        Examples:
+            >>> reformat_slice(slice(None))
+            slice(0, None, 1)
+
+            >>> reformat_slice(slice(None), 10)
+            slice(0, 10, 1)
+
+            >>> reformat_slice(slice(2, None))
+            slice(2, None, 1)
+
+            >>> reformat_slice(slice(2, None), 10)
+            slice(2, 10, 1)
+
+            >>> reformat_slice(slice(2, None, None))
+            slice(2, None, 1)
+
+            >>> reformat_slice(slice(2, None, None), 10)
+            slice(2, 10, 1)
+
+            >>> range(10)[reformat_slice(slice(None))] == range(10)[:]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, None))] == range(10)[2:]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, 6))] == range(10)[2:6]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, 6, 3))] == range(10)[2:6:3]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, None, 3))] == range(10)[2::3]
+            True
+
+            >>> range(10)[reformat_slice(slice(None), 10)] == range(10)[:]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, None), 10)] == range(10)[2:]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, 6), 10)] == range(10)[2:6]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, 6, 3), 10)] == range(10)[2:6:3]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, None, 3), 10)] == range(10)[2::3]
+            True
+    """
+
+    new_slice_stop = a_slice.stop
+    if new_slice_stop is None:
+        new_slice_stop = a_length
+
+    new_slice_start = a_slice.start
+    if new_slice_start is None:
+        new_slice_start = 0
+
+    new_slice_step = a_slice.step
+    if new_slice_step is None:
+        new_slice_step = 1
+
+    new_slice = slice(new_slice_start, new_slice_stop, new_slice_step)
+
+    return(new_slice)
