@@ -73,15 +73,93 @@ def renumber_label_image(new_array):
 
 
 @advanced_debugging.log_call(logger)
-def add_singleton_axis_pos(new_array, new_pos = 0):
+def index_axis_at_pos(new_array, axis, pos):
+    """
+        Indexes an arbitrary axis to the given position, which may be an index, a slice, or any other NumPy allowed
+        indexing type. This will return a view.
+
+        Args:
+            new_array(numpy.ndarray):            array to add the singleton axis to.
+            axis(int):                           position for the axis to be in the final array.
+            pos(int or slice):                   how to index at the given axis.
+
+        Returns:
+            (numpy.ndarray):                     a numpy array view of the original array.
+
+        Examples:
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 0, 0).shape
+            (2, 3, 4)
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 1, 0).shape
+            (1, 3, 4)
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 2, 0).shape
+            (1, 2, 4)
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 3, 0).shape
+            (1, 2, 3)
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, 3, 0) == a[:,:,:,0]).all()
+            True
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, -1, 0) == a[:,:,:,0]).all()
+            True
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, -1, 2) == a[:,:,:,2]).all()
+            True
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, 1, 1) == a[:,1,:,:]).all()
+            True
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, 2, slice(None,None,2)) == a[:,:,::2,:]).all()
+            True
+
+            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 2, 2)[0, 1, 3] = 19; a[0, 1, 2, 3] == 19
+            True
+
+    """
+
+    import advanced_iterators
+
+    # Rescale axis inside the bounds
+    axis %= (new_array.ndim)
+    if axis < 0:
+        axis += new_array.ndim
+
+
+    # Ordering of the axes to generate
+    axis_new_ordering = []
+    # Place the chosen axis first (as all axes are positive semi-definite) and then 0 (if it is different from our axis)
+    axis_new_ordering += sorted(set([axis, 0]), reverse = True)
+    # Skip generating 0 or the chosen axis, but generate all others in normal order
+    axis_new_ordering += list(advanced_iterators.xrange_with_skip(new_array.ndim, to_skip = [0, axis]))
+
+    # Swaps the first with the desired axis (returns a view)
+    new_array_swapped = new_array.transpose(axis_new_ordering)
+    # Index to pos at the given axis
+    new_subarray = new_array_swapped[pos]
+
+    # Check to see if the chosen axis still exists (if pos were a slice)
+    if new_subarray.ndim == new_array.ndim:
+        # If so, generate the old ordering.
+        axis_old_ordering = range(1, axis + 1) + [0] + range(axis + 1, new_array.ndim)
+        # Transpose our selction to that ordering.
+        new_subarray = new_subarray.transpose(axis_old_ordering)
+
+
+    return( new_subarray )
+
+
+@advanced_debugging.log_call(logger)
+def add_singleton_axis_pos(new_array, new_axis = 0):
     """
         Adds a singleton axis to the given position.
-        Allows negative values for new_pos.
-        Also, automatically bounds new_pos in an acceptable regime if it is not already.
+        Allows negative values for new_axis.
+        Also, automatically bounds new_axis in an acceptable regime if it is not already.
         
         Args:
             new_array(numpy.ndarray):            array to add the singleton axis to.
-            new_pos(int):                        position for the axis to be in the final array (defaults to zero ).
+            new_axis(int):                       position for the axis to be in the final array (defaults to zero ).
         
         Returns:
             (numpy.ndarray):                     a numpy array with the singleton axis added.
@@ -93,28 +171,28 @@ def add_singleton_axis_pos(new_array, new_pos = 0):
             >>> add_singleton_axis_pos(numpy.ones((2,3,4)), 0).shape
             (1, 2, 3, 4)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_pos = 0).shape
+            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 0).shape
             (1, 2, 3, 4)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_pos = 1).shape
+            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 1).shape
             (2, 1, 3, 4)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_pos = 2).shape
+            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 2).shape
             (2, 3, 1, 4)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_pos = 3).shape
+            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 3).shape
             (2, 3, 4, 1)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_pos = -1).shape
+            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = -1).shape
             (2, 3, 4, 1)
             
     """
 
-    new_pos %= (new_array.ndim + 1)
-    if new_pos < 0:
-        new_pos += new_array.ndim + 1
+    new_axis %= (new_array.ndim + 1)
+    if new_axis < 0:
+        new_axis += new_array.ndim + 1
 
-    return( numpy.rollaxis(new_array[None], 0, new_pos + 1) )
+    return( numpy.rollaxis(new_array[None], 0, new_axis + 1) )
 
 
 @advanced_debugging.log_call(logger)
@@ -138,7 +216,7 @@ def add_singleton_axis_beginning(new_array):
     """
 
     # return( new_array[None] )
-    return( add_singleton_axis_pos(new_array, new_pos = 0) )
+    return( add_singleton_axis_pos(new_array, new_axis = 0) )
 
 
 @advanced_debugging.log_call(logger)
@@ -162,7 +240,7 @@ def add_singleton_axis_end(new_array):
     """
 
     # return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )
-    return( add_singleton_axis_pos(new_array, new_pos = new_array.ndim) )
+    return( add_singleton_axis_pos(new_array, new_axis = new_array.ndim) )
 
 
 @advanced_debugging.log_call(logger)
