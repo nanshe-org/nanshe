@@ -999,7 +999,7 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
             >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
             array([[ 0.70710678]])
             
-            >>> dot_product_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)) )
+            >>> dot_product_L2_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)) )
             array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
