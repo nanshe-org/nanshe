@@ -56,9 +56,8 @@ import HDF5_logger
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
 
-
 @advanced_debugging.log_call(logger)
-def normalize_data(new_data, **parameters):
+def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
         
@@ -93,7 +92,7 @@ def normalize_data(new_data, **parameters):
 @advanced_debugging.log_call(logger)
 def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
     """
-        Designed to run spams.trainDL in a seperate process.
+        Designed to run spams.trainDL in a separate process.
         
         It is necessary to run SPAMS in a separate process as segmentation faults
         have been discovered in later parts of the Python code dependent on whether
@@ -270,7 +269,7 @@ def call_spams_trainDL(*args, **kwargs):
 
 
 @advanced_debugging.log_call(logger)
-def generate_dictionary(new_data, **parameters):
+def generate_dictionary(new_data, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
         
@@ -581,7 +580,7 @@ def region_properties(new_label_image, *args, **kwargs):
 def get_neuron_dtype(new_image):
     neurons_dtype = [("mask", bool, new_image.shape),
                      # ("image", new_image.dtype, new_image.shape),
-                     ("image_original", new_image.dtype, new_image.shape),
+                     ("image", new_image.dtype, new_image.shape),
                      # ("segmentation", new_wavelet_image_denoised.dtype, new_wavelet_image_denoised.shape),
                      ("area", float),
                      ("max_F", float),
@@ -735,7 +734,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
 
 class ExtendedRegionProps(object):
     @advanced_debugging.log_call(logger)
-    def __init__(self, new_intensity_image, new_label_image, array_debug_logger, properties = ["centroid"]):
+    def __init__(self, new_intensity_image, new_label_image, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), properties = ["centroid"]):
         self.intensity_image = new_intensity_image
         self.label_image = new_label_image
         self.image_mask = (self.label_image > 0)
@@ -968,7 +967,7 @@ def remove_too_close_local_maxima(local_maxima, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def wavelet_denoising(new_image, array_debug_logger, **parameters):
+def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
     """
         Performs wavelet denoising on the given dictionary.
         
@@ -1137,10 +1136,14 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
 
                 array_debug_logger("watershed_local_maxima_label_image_0", watershed_local_maxima.label_image)
 
-                if watershed_local_maxima.props.size:
-                    array_debug_logger("watershed_local_maxima_props_0", watershed_local_maxima.props)
-                if watershed_local_maxima.count.size:
-                    array_debug_logger("watershed_local_maxima_count_0", watershed_local_maxima.count)
+
+                array_debug_logger("watershed_local_maxima_props_0", watershed_local_maxima.props)
+                array_debug_logger("watershed_local_maxima_count_0", watershed_local_maxima.count)
+
+                # if watershed_local_maxima.props.size:
+                #     array_debug_logger("watershed_local_maxima_props_0", watershed_local_maxima.props)
+                # if watershed_local_maxima.count.size:
+                #     array_debug_logger("watershed_local_maxima_count_0", watershed_local_maxima.count)
 
 
                 # Renumber all labels sequentially
@@ -1196,7 +1199,7 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
                     is_lower_bounded = lower_bound <= watershed_local_maxima.props[each_prop]
                     is_upper_bounded = watershed_local_maxima.props[each_prop] <= upper_bound
 
-                    # See whether both or neither bound is satisified.
+                    # See whether both or neither bound is satisfied.
                     is_within_bound = is_lower_bounded & is_upper_bounded
                     is_not_within_bound = ~is_within_bound
 
@@ -1224,11 +1227,11 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
 
                     #neurons["image"] = new_wavelet_image_denoised * neurons["mask"]
 
-                    neurons["image_original"] = new_image * neurons["mask"]
+                    neurons["image"] = new_image * neurons["mask"]
 
                     neurons["area"] = watershed_local_maxima.props["area"]
 
-                    neurons["max_F"] = neurons["image_original"].reshape((neurons["image_original"].shape[0], -1)).max(
+                    neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(
                         axis = 1)
 
                     for i in xrange(len(neurons)):
@@ -1258,7 +1261,7 @@ def wavelet_denoising(new_image, array_debug_logger, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def fuse_neurons(neuron_1, neuron_2, array_debug_logger, **parameters):
+def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
     """
         Merges the two neurons into one (treats the first with preference).
         
@@ -1281,7 +1284,7 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger, **parameters):
     assert (neuron_1.shape == neuron_2.shape == tuple())
     assert (neuron_1.dtype == neuron_2.dtype)
 
-    mean_neuron = numpy.array([neuron_1["image_original"], neuron_2["image_original"]]).mean(axis = 0)
+    mean_neuron = numpy.array([neuron_1["image"], neuron_2["image"]]).mean(axis = 0)
     mean_neuron_mask = mean_neuron > (parameters["fraction_mean_neuron_max_threshold"] * mean_neuron.max())
 
     # Gaussian mixture model ??? Skipped this.
@@ -1291,10 +1294,7 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger, **parameters):
 
     new_neuron["mask"] = mean_neuron_mask
 
-    # new_neuron["image"] = mean_neuron * new_neuron["mask"]
-
-    # #### TODO: Revisit whether this correct per Ferran's code.
-    new_neuron["image_original"] = neuron_1["image_original"]
+    new_neuron["image"] = mean_neuron * new_neuron["mask"]
 
     new_neuron["area"] = (new_neuron["mask"] > 0).sum()
 
@@ -1319,7 +1319,7 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **parameters):
+def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
     """
         Merges the two sets of neurons into one (treats the first with preference).
         
@@ -1347,10 +1347,10 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
 
         new_neuron_set = new_neuron_set_1.copy()
 
-        new_neuron_set_1_flattened = new_neuron_set_1["image_original"].reshape(
-            new_neuron_set_1["image_original"].shape[0], -1)
-        new_neuron_set_2_flattened = new_neuron_set_2["image_original"].reshape(
-            new_neuron_set_2["image_original"].shape[0], -1)
+        new_neuron_set_1_flattened = new_neuron_set_1["image"].reshape(
+            new_neuron_set_1["image"].shape[0], -1)
+        new_neuron_set_2_flattened = new_neuron_set_2["image"].reshape(
+            new_neuron_set_2["image"].shape[0], -1)
 
         array_debug_logger("new_neuron_set_1_flattened", new_neuron_set_1_flattened)
         array_debug_logger("new_neuron_set_2_flattened", new_neuron_set_2_flattened)
@@ -1502,7 +1502,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger, **
 
 
 @advanced_debugging.log_call(logger)
-def generate_neurons(new_images, array_debug_logger, **parameters):
+def generate_neurons(new_images, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
     """
         Generates the neurons.
         
@@ -1521,11 +1521,11 @@ def generate_neurons(new_images, array_debug_logger, **parameters):
 
     array_debug_logger("new_images", new_images)
 
-    new_preprocessed_images = normalize_data(new_images, **parameters["normalize_data"])
+    new_preprocessed_images = normalize_data(new_images, array_debug_logger = array_debug_logger, **parameters["normalize_data"])
 
     array_debug_logger("new_preprocessed_images", new_preprocessed_images)
 
-    new_dictionary = generate_dictionary(new_preprocessed_images, **parameters["generate_dictionary"])
+    new_dictionary = generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
 
     array_debug_logger("dictionary", new_dictionary)
 
@@ -1544,7 +1544,7 @@ def generate_neurons(new_images, array_debug_logger, **parameters):
 
         logger.debug("Denoised a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
 
-        new_neurons_set = merge_neuron_sets(new_neurons_set, each_new_neuron_set, each_array_debug_logger,
+        new_neurons_set = merge_neuron_sets(new_neurons_set, each_new_neuron_set, array_debug_logger = each_array_debug_logger,
                                             **parameters["merge_neuron_sets"])
 
         logger.debug("Merged a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
