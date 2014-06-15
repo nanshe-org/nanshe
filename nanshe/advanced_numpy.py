@@ -17,6 +17,7 @@ import advanced_debugging
 
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
+logger.setLevel(advanced_debugging.logging.WARN)
 
 
 @advanced_debugging.log_call(logger)
@@ -696,6 +697,7 @@ class NotNumPyStructuredArrayType(Exception):
     pass
 
 
+@advanced_debugging.log_call(logger)
 def numpy_structured_array_dtype_generator(new_array):
     """
         Takes a NumPy structured array and returns a generator that goes over
@@ -726,6 +728,7 @@ def numpy_structured_array_dtype_generator(new_array):
         raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
 
 
+@advanced_debugging.log_call(logger)
 def numpy_array_dtype_list(new_array):
     """
         Takes any NumPy array and returns either a list for a NumPy structured array
@@ -747,6 +750,7 @@ def numpy_array_dtype_list(new_array):
         return(new_array.dtype.type)
 
 
+@advanced_debugging.log_call(logger)
 def dot_product(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each set.
@@ -779,6 +783,9 @@ def dot_product(new_vector_set_1, new_vector_set_2):
             
             >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
             array([[ 1.]])
+
+            >>> dot_product(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]))
+            array([[ 1.]])
     """
 
     new_vector_set_1_float = new_vector_set_1.astype(float)
@@ -790,6 +797,7 @@ def dot_product(new_vector_set_1, new_vector_set_2):
     return(vector_pairs_dot_product)
 
 
+@advanced_debugging.log_call(logger)
 def norm(new_vector_set, ord = 2):
     """
         Determines the norm of a vector or a set of vectors.
@@ -822,6 +830,18 @@ def norm(new_vector_set, ord = 2):
             
             >>> norm(numpy.array([[ 1,  1]]), 2)
             array([ 1.41421356])
+
+            >>> norm(numpy.array([[ True,  False]]), 1)
+            array([ 1.])
+
+            >>> norm(numpy.array([[ True,  False]]), 2)
+            array([ 1.])
+
+            >>> norm(numpy.array([[ True,  True]]), 1)
+            array([ 2.])
+
+            >>> norm(numpy.array([[ True,  True]]), 2)
+            array([ 1.41421356])
             
             >>> norm(numpy.array([[ 1,  1,  1], [ 1,  0,  1]]), 1)
             array([ 3.,  2.])
@@ -853,6 +873,7 @@ def norm(new_vector_set, ord = 2):
     return(result)
 
 
+@advanced_debugging.log_call(logger)
 def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple with the dot product divided by one norm or the other.
@@ -889,6 +910,12 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
             
             >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 1)
             (array([[ 1.]]), array([[ 0.5]]))
+
+            >>> dot_product_partially_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 2)
+            (array([[ 1.]]), array([[ 0.70710678]]))
+
+            >>> dot_product_partially_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 1)
+            (array([[ 1.]]), array([[ 0.5]]))
             
             >>> dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE
             (array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],
@@ -918,6 +945,7 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
     return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
 
 
+@advanced_debugging.log_call(logger)
 def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and divides them by the norm of the two.
@@ -954,8 +982,14 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
             
             >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 1)
             array([[ 0.5]])
+
+            >>> dot_product_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 2)
+            array([[ 0.70710678]])
+
+            >>> dot_product_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 1)
+            array([[ 0.5]])
             
-            >>> dot_product_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )
+            >>> dot_product_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2)
             array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
@@ -964,8 +998,14 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     new_vector_set_2_float = new_vector_set_2.astype(float)
 
     # Gets all of the norms
-    new_vector_set_1_norms = norm(new_vector_set_1_float, ord)
-    new_vector_set_2_norms = norm(new_vector_set_2_float, ord)
+    new_vector_set_1_norms = norm(new_vector_set_1_float, ord = ord)
+    new_vector_set_2_norms = norm(new_vector_set_2_float, ord = ord)
+
+    if not new_vector_set_1_norms.shape:
+        new_vector_set_1_norms = numpy.array([new_vector_set_1_norms])
+
+    if not new_vector_set_2_norms.shape:
+        new_vector_set_2_norms = numpy.array([new_vector_set_2_norms])
 
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(operator.mul, new_vector_set_1_norms, new_vector_set_2_norms)
@@ -979,6 +1019,7 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     return(vector_pairs_dot_product_normalized)
 
 
+@advanced_debugging.log_call(logger)
 def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each set and divides them by the L_2 norm of the two.
@@ -1010,6 +1051,9 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
             array([[ 0.]])
             
             >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
+            array([[ 0.70710678]])
+
+            >>> dot_product_L2_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]))
             array([[ 0.70710678]])
             
             >>> dot_product_L2_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)) )
