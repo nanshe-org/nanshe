@@ -994,16 +994,25 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
     new_wavelet_transformed_image = numpy.zeros((parameters["scale"],) + new_image.shape)
     new_wavelet_transformed_image[:] = wavelet_transform.wavelet_transform(new_image, scale = parameters["scale"])
 
+    for i in xrange(len(new_wavelet_transformed_image)):
+        array_debug_logger("new_wavelet_transformed_image_" + repr(i), new_wavelet_transformed_image[i])
+
     # Contains a bool array with significant values True and noise False for all wavelet transforms.
     new_wavelet_transformed_image_significant_mask = denoising.significant_mask(new_wavelet_transformed_image,
                                                                                 noise_estimate = new_image_noise_estimate,
                                                                                 noise_threshhold = parameters[
                                                                                     "noise_threshhold"])
+
+    for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
+        array_debug_logger("new_wavelet_transformed_image_significant_mask_" + repr(i), new_wavelet_transformed_image_significant_mask[i])
+
     new_wavelet_image_mask = new_wavelet_transformed_image_significant_mask[-1].copy()
 
     # Creates a new dictionary without the noise
     new_wavelet_image_denoised = new_wavelet_transformed_image[-1].copy()
     new_wavelet_image_denoised *= new_wavelet_image_mask
+
+    array_debug_logger("new_wavelet_image_denoised_0", new_wavelet_image_denoised)
 
     logger.debug("Noise removed.")
 
