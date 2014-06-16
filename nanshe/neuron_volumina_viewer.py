@@ -311,16 +311,39 @@ class HDF5Viewer(Viewer):
         layer.zeroIsTransparent = True
         return layer
 
-    def addColorTableHDF5Layer(self, a, name=None, colortable=None, direct=False, clickFunctor=None):
+    def addColorTableHDF5Source(self, source, shape, name=None, colortable=None, direct=False, clickFunctor=None):
+        self.dataShape = shape
+
         if colortable is None:
             colortable = self._randomColors()
-        source,self.dataShape = createHDF5DataSource(a,True)
+
+        layer = None
         if clickFunctor is None:
             layer = ColortableLayer(source, colortable, direct=direct)
         else:
             layer = ClickableColortableLayer(self.editor, clickFunctor, source, colortable, direct=direct)
         if name:
             layer.name = name
+
+        layer.numberOfChannels = self.dataShape[-1]
+        self.layerstack.append(layer)
+        return layer
+
+    def addColorTableHDF5Layer(self, a, name=None, colortable=None, direct=False, clickFunctor=None):
+        source, self.dataShape = createHDF5DataSource(a,True)
+
+        if colortable is None:
+            colortable = self._randomColors()
+
+        layer = None
+        if clickFunctor is None:
+            layer = ColortableLayer(source, colortable, direct=direct)
+        else:
+            layer = ClickableColortableLayer(self.editor, clickFunctor, source, colortable, direct=direct)
+        if name:
+            layer.name = name
+
+        layer.numberOfChannels = self.dataShape[-1]
         self.layerstack.append(layer)
         return layer
 
@@ -573,7 +596,14 @@ if __name__ == "__main__":
 
             group_data[each_dataset_name] = HDF5DataFusedSource(-1, *group_data[each_dataset_name])
 
-            each_layer = viewer.addGrayscaleHDF5Source(group_data[each_dataset_name], group_data[each_dataset_name].shape(), each_dataset_name)
+            each_layer = None
+            if issubclass(group_data[each_dataset_name].dtype().type, numpy.integer):
+                each_layer = viewer.addColorTableHDF5Source(group_data[each_dataset_name], group_data[each_dataset_name].shape(), each_dataset_name)
+            elif issubclass(group_data[each_dataset_name].dtype().type, numpy.floating):
+                each_layer = viewer.addGrayscaleHDF5Source(group_data[each_dataset_name], group_data[each_dataset_name].shape(), each_dataset_name)
+            elif issubclass(group_data[each_dataset_name].dtype().type, numpy.bool_) or issubclass(group_data[each_dataset_name].dtype().type, numpy.bool):
+                each_layer = viewer.addColorTableHDF5Source(group_data[each_dataset_name], group_data[each_dataset_name].shape(), each_dataset_name)
+
             each_layer.visible = False
 
         logger.debug("Added all datasets as layers for : \"" + neuron_sets + "\"." )
