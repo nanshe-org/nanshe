@@ -186,6 +186,8 @@ def main(*argv):
     # Only necessary if running main (normally if calling command line). No point in importing otherwise.
     import argparse
 
+    argv = list(argv)
+
     # Creates command line parser
     parser = argparse.ArgumentParser(description = "Parses input from the command line for a batch job.")
 
