@@ -71,6 +71,7 @@ class HDF5DataSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
+    @advanced_debugging.log_call(logger)
     def __init__( self, full_path, shape = None, dtype = None):
         super(HDF5DataSource, self).__init__()
 
@@ -129,9 +130,11 @@ class HDF5DataSource( QObject ):
 
         self.dataset_shape = tuple(self.dataset_shape)
 
+    @advanced_debugging.log_call(logger)
     def numberOfChannels(self):
         return self.dataset_shape[-1]
 
+    @advanced_debugging.log_call(logger)
     def clean_up(self):
         self.full_path = None
         self.file_path = None
@@ -139,12 +142,15 @@ class HDF5DataSource( QObject ):
         self.dataset_dtype = None
         self.dataset_shape = None
 
+    @advanced_debugging.log_call(logger)
     def dtype(self):
         return self.dataset_dtype
 
+    @advanced_debugging.log_call(logger)
     def shape(self):
         return self.dataset_shape
 
+    @advanced_debugging.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('HDF5DataSource: slicing is not pure')
@@ -160,17 +166,20 @@ class HDF5DataSource( QObject ):
 
         return HDF5DataRequest(self.file_path, self.dataset_path, self.axis_order, self.dataset_dtype, slicing)
 
+    @advanced_debugging.log_call(logger)
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
         self.isDirty.emit( slicing )
 
+    @advanced_debugging.log_call(logger)
     def __eq__( self, other ):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
+    @advanced_debugging.log_call(logger)
     def __ne__( self, other ):
         if other is None:
             return True
@@ -181,9 +190,7 @@ assert issubclass(HDF5DataSource, SourceABC)
 
 
 class HDF5DataRequest( object ):
-
-
-
+    @advanced_debugging.log_call(logger)
     def __init__( self, file_path, dataset_path, axis_order, dataset_dtype, slicing, throw_on_not_found = False ):
         # TODO: Look at adding assertion check on slices.
 
@@ -210,6 +217,7 @@ class HDF5DataRequest( object ):
 
         self.actual_slicing = tuple(self.actual_slicing)
 
+    @advanced_debugging.log_call(logger)
     def wait( self ):
         if self._result is None:
             if True:
@@ -238,20 +246,25 @@ class HDF5DataRequest( object ):
 
         return self._result
 
+    @advanced_debugging.log_call(logger)
     def getResult(self):
         return self._result
 
+    @advanced_debugging.log_call(logger)
     def cancel( self ):
         pass
 
+    @advanced_debugging.log_call(logger)
     def submit( self ):
         pass
 
     # callback( result = result, **kwargs )
+    @advanced_debugging.log_call(logger)
     def notify( self, callback, **kwargs ):
         t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
         t.start()
 
+    @advanced_debugging.log_call(logger)
     def _doNotify( self, callback, kwargs ):
         result = self.wait()
         callback(result, **kwargs)
@@ -259,9 +272,11 @@ assert issubclass(HDF5DataRequest, RequestABC)
 
 
 class HDF5Viewer(Viewer):
+    @advanced_debugging.log_call(logger)
     def __init__(self, parent=None):
         super(HDF5Viewer, self).__init__(parent)
 
+    @advanced_debugging.log_call(logger)
     def addGrayscaleHDF5Source(self, source, shape, name=None, direct=False):
         self.dataShape = shape
         layer = GrayscaleLayer(source, direct=direct)
@@ -272,6 +287,7 @@ class HDF5Viewer(Viewer):
         self.layerstack.append(layer)
         return layer
 
+    @advanced_debugging.log_call(logger)
     def addGrayscaleHDF5Layer(self, a, name=None, direct=False):
         source, self.dataShape = createHDF5DataSource(a, True)
         layer = GrayscaleLayer(source, direct=direct)
@@ -282,6 +298,7 @@ class HDF5Viewer(Viewer):
         self.layerstack.append(layer)
         return layer
 
+    @advanced_debugging.log_call(logger)
     def addAlphaModulatedHDF5Layer(self, a, name=None):
         source,self.dataShape = createHDF5DataSource(a, True)
         layer = AlphaModulatedLayer(source)
@@ -290,6 +307,7 @@ class HDF5Viewer(Viewer):
         self.layerstack.append(layer)
         return layer
 
+    @advanced_debugging.log_call(logger)
     def addRGBAHDF5Layer(self, a, name=None):
         # TODO: Avoid this array indexing as it is a filename.
         assert(False)
@@ -305,12 +323,14 @@ class HDF5Viewer(Viewer):
         self.layerstack.append(layer)
         return layer
 
+    @advanced_debugging.log_call(logger)
     def addRandomColorsHDF5Layer(self, a, name=None, direct=False):
         layer = self.addColorTableLayer(a, name, colortable=None, direct=direct)
         layer.colortableIsRandom = True
         layer.zeroIsTransparent = True
         return layer
 
+    @advanced_debugging.log_call(logger)
     def addColorTableHDF5Source(self, source, shape, name=None, colortable=None, direct=False, clickFunctor=None):
         self.dataShape = shape
 
@@ -329,6 +349,7 @@ class HDF5Viewer(Viewer):
         self.layerstack.append(layer)
         return layer
 
+    @advanced_debugging.log_call(logger)
     def addColorTableHDF5Layer(self, a, name=None, colortable=None, direct=False, clickFunctor=None):
         source, self.dataShape = createHDF5DataSource(a,True)
 
@@ -351,6 +372,7 @@ class HDF5Viewer(Viewer):
 
 
 @multimethod(str, bool)
+@advanced_debugging.log_call(logger)
 def createHDF5DataSource(full_path, withShape = False):
     # Get a source for the HDF5 file.
     src = HDF5DataSource(full_path)
@@ -361,6 +383,7 @@ def createHDF5DataSource(full_path, withShape = False):
         return src
 
 @multimethod(str)
+@advanced_debugging.log_call(logger)
 def createHDF5DataSource(full_path):
     return createHDF5DataSource(full_path, False)
 
@@ -369,6 +392,7 @@ class HDF5DataFusedSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
+    @advanced_debugging.log_call(logger)
     def __init__( self, fuse_axis, *data_sources):
         super(HDF5DataFusedSource, self).__init__()
 
@@ -404,21 +428,26 @@ class HDF5DataFusedSource( QObject ):
         if self.fuse_axis < 0:
             self.fuse_axis += len(self.data_shape)
 
+    @advanced_debugging.log_call(logger)
     def numberOfChannels(self):
         return self.dataset_shape[-1]
 
+    @advanced_debugging.log_call(logger)
     def clean_up(self):
         self.fuse_axis = None
         self.data_sources = None
         self.data_dtype = None
         self.data_shape = None
 
+    @advanced_debugging.log_call(logger)
     def dtype(self):
         return self.data_dtype
 
+    @advanced_debugging.log_call(logger)
     def shape(self):
         return self.data_shape
 
+    @advanced_debugging.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('HDF5DataFusedSource: slicing is not pure')
@@ -459,17 +488,20 @@ class HDF5DataFusedSource( QObject ):
 
         return(request)
 
+    @advanced_debugging.log_call(logger)
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
         self.isDirty.emit( slicing )
 
+    @advanced_debugging.log_call(logger)
     def __eq__( self, other ):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
+    @advanced_debugging.log_call(logger)
     def __ne__( self, other ):
         if other is None:
             return True
@@ -481,6 +513,7 @@ assert issubclass(HDF5DataFusedSource, SourceABC)
 
 class HDF5DataFusedRequest( object ):
 
+    @advanced_debugging.log_call(logger)
     def __init__( self, fuse_axis, data_shape, data_dtype, *data_requests ):
         # TODO: Look at adding assertion check on slices.
 
@@ -491,6 +524,7 @@ class HDF5DataFusedRequest( object ):
 
         self._result = None
 
+    @advanced_debugging.log_call(logger)
     def wait( self ):
         if self._result is None:
             if True:
@@ -507,32 +541,36 @@ class HDF5DataFusedRequest( object ):
 
         return self._result
 
+    @advanced_debugging.log_call(logger)
     def getResult(self):
         return self._result
 
+    @advanced_debugging.log_call(logger)
     def cancel( self ):
         pass
 
+    @advanced_debugging.log_call(logger)
     def submit( self ):
         pass
 
     # callback( result = result, **kwargs )
+    @advanced_debugging.log_call(logger)
     def notify( self, callback, **kwargs ):
         t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
         t.start()
 
+    @advanced_debugging.log_call(logger)
     def _doNotify( self, callback, kwargs ):
         result = self.wait()
         callback(result, **kwargs)
 assert issubclass(HDF5DataFusedRequest, RequestABC)
 
 
+@advanced_debugging.log_call(logger)
+def main(*argv):
+    argv = list(argv)
 
-
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QApplication(argv)
     viewer = HDF5Viewer()
     viewer.show()
 
@@ -622,4 +660,14 @@ if __name__ == "__main__":
 
         logger.debug("Added all datasets as layers for : \"" + neuron_sets + "\"." )
 
-    app.exec_()
+    return(app.exec_())
+
+
+
+if __name__ == "__main__":
+    # only necessary if running main (normally if calling command line). no point in importing otherwise.
+    import sys
+
+    # call main if the script is loaded from command line. otherwise, user can import package without main being called.
+    sys.exit(main(*sys.argv))
+
