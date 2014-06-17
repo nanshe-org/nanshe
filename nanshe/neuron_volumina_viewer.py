@@ -88,6 +88,8 @@ class HDF5DataSource( QObject ):
         self.axis_order = [-1, -1, -1, -1, -1]
 
         with h5py.File(self.file_path, "r") as fid:
+            #print "Opening HDF5 file"
+
             if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
                 dataset = fid[self.dataset_path]
                 self.dataset_shape = list(dataset.shape)
@@ -224,7 +226,11 @@ class HDF5DataRequest( object ):
                 slicing_shape = advanced_iterators.len_slices(self.slicing)
                 self._result = numpy.zeros(slicing_shape, dtype = self.dataset_dtype)
 
+
+                #print ("Slicing: " + str(self.slicing))
+                #print "path: " + self.dataset_path
                 with h5py.File(self.file_path, "r") as fid:
+                    #print "Opening HDF5 file"
                     try:
                         dataset = fid[self.dataset_path]
                         a_result = dataset[self.actual_slicing]
@@ -574,21 +580,21 @@ def main(*argv):
     viewer = HDF5Viewer()
     viewer.show()
 
-    original_images = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/original_data"
+    original_images_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/original_data"
+    original_images = viewer.addGrayscaleHDF5Layer(original_images_location, "original_data")
+    original_images.visible = False
 
-    viewer.addGrayscaleHDF5Layer(original_images, "original_data").visible = False
+    images_max_projection_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/images_max_projection"
+    images_max_projection = viewer.addGrayscaleHDF5Layer(images_max_projection_location, "images_max_projection")
+    images_max_projection.visible = False
 
-    images_max_projection = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/images_max_projection"
+    dictionary_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/dictionary"
+    dictionary = viewer.addGrayscaleHDF5Layer(dictionary_location, "dictionary")
+    dictionary.visible = False
 
-    viewer.addGrayscaleHDF5Layer(images_max_projection, "images_max_projection").visible = False
-
-    original_images = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/original_data"
-
-    viewer.addGrayscaleHDF5Layer(original_images, "original_data").visible = False
-
-    dictionary_images_max_projection = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/dictionary_images_max_projection"
-
-    viewer.addGrayscaleHDF5Layer(dictionary_images_max_projection, "dictionary_images_max_projection").visible = False
+    dictionary_images_max_projection_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/dictionary_images_max_projection"
+    dictionary_images_max_projection = viewer.addGrayscaleHDF5Layer(dictionary_images_max_projection_location, "dictionary_images_max_projection")
+    dictionary_images_max_projection.visible = False
 
 
     #neurons = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/neurons"
@@ -627,6 +633,10 @@ def main(*argv):
         logger.debug("Determined properties of all datasets in : \"" + neuron_sets + "\"." )
 
 
+        layer_sync_list =  []
+
+        layer_sync_list.append(dictionary)
+
         group_data = dict()
         for each_dataset_name, (each_shape, each_dtype) in group_data_shape_dtype.items():
             if isinstance(each_dtype, numpy.dtype):
@@ -658,7 +668,22 @@ def main(*argv):
 
             each_layer.visible = False
 
+            layer_sync_list.append(each_layer)
+
         logger.debug("Added all datasets as layers for : \"" + neuron_sets + "\"." )
+
+        currently_syncing_list = [False]
+        def easy_sync_callback(channel):
+            if currently_syncing_list[0]:
+                return
+            currently_syncing_list[0] = True
+            for each_layer in layer_sync_list:
+                #print( each_layer.name )
+                each_layer.channel = channel
+            currently_syncing_list[0] = False
+
+        for each_layer in layer_sync_list:
+            each_layer.channelChanged.connect(easy_sync_callback)
 
     return(app.exec_())
 
