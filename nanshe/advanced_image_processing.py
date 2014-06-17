@@ -579,6 +579,7 @@ def region_properties(new_label_image, *args, **kwargs):
 @advanced_debugging.log_call(logger)
 def get_neuron_dtype(new_image):
     neurons_dtype = [("mask", bool, new_image.shape),
+                     ("contour", bool, new_image.shape),
                      # ("image", new_image.dtype, new_image.shape),
                      ("image", new_image.dtype, new_image.shape),
                      # ("segmentation", new_wavelet_image_denoised.dtype, new_wavelet_image_denoised.shape),
@@ -1097,6 +1098,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                                            array_debug_logger = extended_region_props_0_array_debug_logger)
 
         array_debug_logger("centroid_label_image_0", local_maxima.get_centroid_label_image())
+        array_debug_logger("centroid_label_image_contours_0", advanced_numpy.generate_labeled_contours(local_maxima.get_centroid_label_image() > 0))
         array_debug_logger("centroid_active_label_image_0", local_maxima.get_centroid_label_image())
         array_debug_logger("intensity_image_0", local_maxima.intensity_image)
 
@@ -1104,12 +1106,14 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                                                          **parameters["remove_low_intensity_local_maxima"])
 
         array_debug_logger("centroid_label_image_1", local_maxima.get_centroid_label_image())
+        array_debug_logger("centroid_label_image_contours_1", advanced_numpy.generate_labeled_contours(local_maxima.get_centroid_label_image() > 0))
         array_debug_logger("centroid_active_label_image_1", local_maxima.get_centroid_label_image())
         array_debug_logger("intensity_image_1", local_maxima.intensity_image)
 
         local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
 
         array_debug_logger("centroid_label_image_2", local_maxima.get_centroid_label_image())
+        array_debug_logger("centroid_label_image_contours_2", advanced_numpy.generate_labeled_contours(local_maxima.get_centroid_label_image() > 0))
         array_debug_logger("centroid_active_label_image_2", local_maxima.get_centroid_label_image())
         array_debug_logger("intensity_image_2", local_maxima.intensity_image)
 
@@ -1135,6 +1139,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                                                                                        mask = (local_maxima.intensity_image > 0))
 
                 array_debug_logger("watershed_segmentation", new_wavelet_image_denoised_segmentation)
+                array_debug_logger("watershed_segmentation_contours", advanced_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation))
 
                 extended_region_props_1_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger(
                     "extended_region_props_1", array_debug_logger)
@@ -1144,6 +1149,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                                                              properties = ["centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
 
                 array_debug_logger("watershed_local_maxima_label_image_0", watershed_local_maxima.label_image)
+                array_debug_logger("watershed_local_maxima_label_image_contours_0", advanced_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0))
 
 
                 array_debug_logger("watershed_local_maxima_props_0", watershed_local_maxima.props)
@@ -1190,6 +1196,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                 watershed_local_maxima.remove_prop_mask(new_watershed_local_maxima_props_duplicates_mask)
 
                 array_debug_logger("watershed_local_maxima_label_image_1", watershed_local_maxima.label_image)
+                array_debug_logger("watershed_local_maxima_label_image_contours_1", advanced_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0))
 
                 if watershed_local_maxima.props.size:
                     array_debug_logger("watershed_local_maxima_props_1", watershed_local_maxima.props)
@@ -1220,6 +1227,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                 watershed_local_maxima.remove_prop_mask(not_within_bound)
 
                 array_debug_logger("watershed_local_maxima_label_image_2", watershed_local_maxima.label_image)
+                array_debug_logger("watershed_local_maxima_label_image_contours_2", advanced_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0))
 
                 if watershed_local_maxima.props.size:
                     array_debug_logger("watershed_local_maxima_props_2", watershed_local_maxima.props)
@@ -1246,6 +1254,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                     for i in xrange(len(neurons)):
                         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
+                        neurons["contour"][i] = advanced_numpy.generate_contour(neurons["mask"][i])
                         neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
                         neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
@@ -1302,6 +1311,8 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArray
     new_neuron = numpy.zeros(neuron_1.shape, dtype = neuron_1.dtype)
 
     new_neuron["mask"] = mean_neuron_mask
+
+    new_neuron["contour"] = advanced_numpy.generate_contour(new_neuron["mask"])
 
     new_neuron["image"] = mean_neuron * new_neuron["mask"]
 
@@ -1528,15 +1539,21 @@ def generate_neurons(new_images, array_debug_logger = HDF5_logger.EmptyArrayDebu
             dict: the dictionary found.
     """
 
-    array_debug_logger("new_images", new_images)
+    array_debug_logger("images", new_images)
+
+    array_debug_logger("images_max_projection", new_images.max(axis = 0))
 
     new_preprocessed_images = normalize_data(new_images, array_debug_logger = array_debug_logger, **parameters["normalize_data"])
 
-    array_debug_logger("new_preprocessed_images", new_preprocessed_images)
+    array_debug_logger("preprocessed_images", new_preprocessed_images)
+
+    array_debug_logger("preprocessed_images_max_projection", new_images.max(axis = 0))
 
     new_dictionary = generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
 
     array_debug_logger("dictionary", new_dictionary)
+
+    array_debug_logger("dictionary_images_max_projection", new_images.max(axis = 0))
 
     def array_debug_logger_enumerator(new_list):
         neuron_sets_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger("neuron_sets",
@@ -1547,15 +1564,31 @@ def generate_neurons(new_images, array_debug_logger = HDF5_logger.EmptyArrayDebu
 
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])
+    unmerged_neuron_set = get_empty_neuron(new_images[0])
     for i, each_new_dictionary_image, each_array_debug_logger in array_debug_logger_enumerator(new_dictionary):
         each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, array_debug_logger = each_array_debug_logger,
                                                 **parameters["wavelet_denoising"])
 
         logger.debug("Denoised a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
 
+        unmerged_neuron_set = numpy.hstack([unmerged_neuron_set, each_new_neuron_set])
         new_neurons_set = merge_neuron_sets(new_neurons_set, each_new_neuron_set, array_debug_logger = each_array_debug_logger,
                                             **parameters["merge_neuron_sets"])
 
         logger.debug("Merged a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
+
+    array_debug_logger("unmerged_neuron_set", unmerged_neuron_set)
+
+    array_debug_logger("new_neurons_set", new_neurons_set)
+
+    unmerged_neuron_set_contours = unmerged_neuron_set["contour"]
+    unmerged_neuron_set_contours = (unmerged_neuron_set_contours * advanced_numpy.expand_view(numpy.arange(1, 1 + len(unmerged_neuron_set_contours)), reps_after = unmerged_neuron_set_contours.shape[1:])).max(axis = 0)
+
+    array_debug_logger("unmerged_neuron_set_contours", unmerged_neuron_set_contours)
+
+    new_neurons_set_contours = new_neurons_set["contour"]
+    new_neurons_set_contours = (new_neurons_set_contours * advanced_numpy.expand_view(numpy.arange(1, 1 + len(new_neurons_set_contours)), reps_after = new_neurons_set_contours.shape[1:])).max(axis = 0)
+
+    array_debug_logger("new_neurons_set_contours", new_neurons_set_contours)
 
     return(new_neurons_set)

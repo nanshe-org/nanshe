@@ -540,14 +540,28 @@ if __name__ == "__main__":
 
     viewer.addGrayscaleHDF5Layer(original_images, "original_data").visible = False
 
-    dictionary = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/dictionary"
+    images_max_projection = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/images_max_projection"
 
-    viewer.addGrayscaleHDF5Layer(dictionary, "dictionary").visible = False
+    viewer.addGrayscaleHDF5Layer(images_max_projection, "images_max_projection").visible = False
+
+    original_images = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/original_data"
+
+    viewer.addGrayscaleHDF5Layer(original_images, "original_data").visible = False
+
+    dictionary_images_max_projection = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/dictionary_images_max_projection"
+
+    viewer.addGrayscaleHDF5Layer(dictionary_images_max_projection, "dictionary_images_max_projection").visible = False
+
 
     #neurons = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/neurons"
 
     #viewer.addGrayscaleHDF5Layer(dictionary, "neurons")
 
+    unmerged_neuron_set_contours = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/unmerged_neuron_set_contours"
+    viewer.addColorTableHDF5Layer(unmerged_neuron_set_contours, "unmerged_neuron_set_contours").visible = False
+
+    neurons_set_contours = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/new_neurons_set_contours"
+    viewer.addColorTableHDF5Layer(neurons_set_contours, "neurons_set_contours").visible = False
 
     neuron_sets = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/neuron_sets"
 

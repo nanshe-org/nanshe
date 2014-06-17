@@ -10,6 +10,8 @@ import scipy
 import operator
 
 import scipy.spatial
+import scipy.ndimage
+import scipy.ndimage.morphology
 
 # Need in order to have logging information no matter what.
 import advanced_debugging
@@ -1070,3 +1072,113 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
                                                                  "cosine")
 
     return(vector_pairs_cosine_angle)
+
+
+def generate_contour(a_image, separation_distance = 1.0, margin = 1.0):
+    """
+        Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge and some margin.
+
+        Args:
+            a_image(numpy.ndarray):            takes an image.
+            separation_distance(float):        a separation distance from the edge of the mask for the center of the contour.
+            margin(float):                     the width of contour.
+
+        Returns:
+            (numpy.ndarray):                   an array with the labeled contours.
+
+        Examples:
+            >>> a = numpy.array([[ True,  True, False],
+            ...                  [False, False, False],
+            ...                  [ True,  True,  True]], dtype=bool);
+            >>> generate_contour(a)
+            array([[ True,  True, False],
+                   [False, False, False],
+                   [ True,  True,  True]], dtype=bool)
+
+            >>> generate_contour(numpy.eye(3))
+            array([[ 1.,  0.,  0.],
+                   [ 0.,  1.,  0.],
+                   [ 0.,  0.,  1.]])
+
+            >>> a = numpy.array([[False, False,  True, False, False, False,  True],
+            ...                  [ True, False, False, False,  True, False, False],
+            ...                  [ True,  True, False,  True,  True, False,  True],
+            ...                  [ True, False, False,  True,  True, False, False],
+            ...                  [ True, False, False, False, False, False, False],
+            ...                  [False,  True, False, False, False, False,  True],
+            ...                  [False,  True,  True, False, False, False, False]], dtype=bool)
+            >>> generate_contour(a)
+            array([[False, False,  True, False, False, False,  True],
+                   [ True, False, False, False,  True, False, False],
+                   [ True,  True, False,  True,  True, False,  True],
+                   [ True, False, False,  True,  True, False, False],
+                   [ True, False, False, False, False, False, False],
+                   [False,  True, False, False, False, False,  True],
+                   [False,  True,  True, False, False, False, False]], dtype=bool)
+    """
+
+    half_thickness = margin / 2
+
+    lower_threshold = separation_distance - half_thickness
+    upper_threshold = separation_distance + half_thickness
+
+    a_mask_transformed = scipy.ndimage.morphology.distance_transform_edt(a_image)
+
+    above_lower_threshold = (lower_threshold <= a_mask_transformed)
+    below_upper_threshold = (a_mask_transformed <= upper_threshold)
+
+    a_mask_transformed_thresholded = (above_lower_threshold & below_upper_threshold)
+
+    a_image_contours = a_image * a_mask_transformed_thresholded
+
+    return(a_image_contours)
+
+
+def generate_labeled_contours(a_mask, separation_distance = 1.0, margin = 1.0):
+    """
+        Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge and some margin.
+
+        Args:
+            a_mask(numpy.ndarray):             takes a bool mask.
+            separation_distance(float):        a separation distance from the edge of the mask for the center of the contour.
+            margin(float):                     the width of contour.
+
+        Returns:
+            (numpy.ndarray):                   an array with the labeled contours.
+
+        Examples:
+            >>> a = numpy.array([[ True,  True, False],
+            ...                  [False, False, False],
+            ...                  [ True,  True,  True]], dtype=bool);
+            >>> generate_labeled_contours(a)
+            array([[1, 1, 0],
+                   [0, 0, 0],
+                   [2, 2, 2]], dtype=int32)
+
+            >>> generate_labeled_contours(numpy.eye(3))
+            array([[1, 0, 0],
+                   [0, 1, 0],
+                   [0, 0, 1]], dtype=int32)
+
+            >>> a = numpy.array([[False, False,  True, False, False, False,  True],
+            ...                  [ True, False, False, False,  True, False, False],
+            ...                  [ True,  True, False,  True,  True, False,  True],
+            ...                  [ True, False, False,  True,  True, False, False],
+            ...                  [ True, False, False, False, False, False, False],
+            ...                  [False,  True, False, False, False, False,  True],
+            ...                  [False,  True,  True, False, False, False, False]], dtype=bool);
+            >>> generate_labeled_contours(a)
+            array([[0, 0, 1, 0, 0, 0, 2],
+                   [3, 0, 0, 0, 4, 0, 0],
+                   [3, 3, 0, 4, 4, 0, 5],
+                   [3, 0, 0, 4, 4, 0, 0],
+                   [3, 0, 0, 0, 0, 0, 0],
+                   [0, 3, 0, 0, 0, 0, 6],
+                   [0, 3, 3, 0, 0, 0, 0]], dtype=int32)
+    """
+
+    a_mask_contoured = generate_contour(a_mask, separation_distance = separation_distance, margin = margin)
+
+    a_mask_contoured_labeled = scipy.ndimage.label(a_mask_contoured, structure = numpy.ones( (3,) * a_mask.ndim ))[0]
+
+    return(a_mask_contoured_labeled)
