@@ -84,7 +84,7 @@ def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayDebugLog
 
     # Renormalize each row vector using some specified normalization
     new_data_processed = simple_image_processing.renormalized_images(new_data_processed,
-                                                                     **parameters["renormalized_images"])
+                                                                     **parameters["simple_image_processing.renormalized_images"])
 
     return(new_data_processed)
 
@@ -989,11 +989,11 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
 
     # Contains a bool array with significant values True and noise False.
     new_image_noise_estimate = denoising.estimate_noise(new_image,
-                                                        significance_threshhold = parameters["significance_threshhold"])
+                                                        **parameters["denoising.estimate_noise"])
 
     # Dictionary with wavelet transform applied. Wavelet transform is the first index.
-    new_wavelet_transformed_image = numpy.zeros((parameters["scale"],) + new_image.shape)
-    new_wavelet_transformed_image[:] = wavelet_transform.wavelet_transform(new_image, scale = parameters["scale"])
+    new_wavelet_transformed_image = wavelet_transform.wavelet_transform(new_image,
+                                                                        **parameters["wavelet_transform.wavelet_transform"])
 
     for i in xrange(len(new_wavelet_transformed_image)):
         array_debug_logger("new_wavelet_transformed_image_" + repr(i), new_wavelet_transformed_image[i])
@@ -1102,8 +1102,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
         array_debug_logger("centroid_active_label_image_0", local_maxima.get_centroid_label_image())
         array_debug_logger("intensity_image_0", local_maxima.intensity_image)
 
-        local_maxima = remove_low_intensity_local_maxima(local_maxima,
-                                                         **parameters["remove_low_intensity_local_maxima"])
+        local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
 
         array_debug_logger("centroid_label_image_1", local_maxima.get_centroid_label_image())
         array_debug_logger("centroid_label_image_contours_1", advanced_numpy.generate_labeled_contours(local_maxima.get_centroid_label_image() > 0))
@@ -1248,8 +1247,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
 
                     neurons["area"] = watershed_local_maxima.props["area"]
 
-                    neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(
-                        axis = 1)
+                    neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(axis = 1)
 
                     for i in xrange(len(neurons)):
                         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
