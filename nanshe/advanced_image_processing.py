@@ -750,7 +750,7 @@ class ExtendedRegionProps(object):
 
         logger.debug("Found the local maxima and properties.")
 
-        # Remove maxima in the backgroun
+        # Remove maxima in the background
         background_maxima_mask = (self.props["label"] == 0)
         if (numpy.any(background_maxima_mask)):
             # There shouldn't be any maximums in the background. This should never happen.
