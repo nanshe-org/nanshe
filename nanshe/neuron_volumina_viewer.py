@@ -65,7 +65,8 @@ import advanced_iterators
 
 
 
-
+class HDF5DatasetNotFoundException( Exception ):
+    pass
 
 class HDF5DataSource( QObject ):
     isDirty = pyqtSignal( object )
@@ -89,9 +90,12 @@ class HDF5DataSource( QObject ):
 
         with h5py.File(self.file_path, "r") as fid:
             #print "Opening HDF5 file"
+            if self.dataset_path not in fid:
+                raise(HDF5DatasetNotFoundException("Could not find the path \"" + self.dataset_path + "\" in filename " + "\"" + self.file_path + "\"."))
 
             if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
                 dataset = fid[self.dataset_path]
+                #print dataset.name
                 self.dataset_shape = list(dataset.shape)
                 self.dataset_dtype = dataset.dtype
             elif (self.dataset_shape is None):
@@ -394,40 +398,57 @@ def createHDF5DataSource(full_path):
     return createHDF5DataSource(full_path, False)
 
 
+class HDF5NoFusedSourceException( Exception ):
+    pass
+
+class HDF5UndefinedShapeDtypeException( Exception ):
+    pass
+
 class HDF5DataFusedSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @advanced_debugging.log_call(logger)
-    def __init__( self, fuse_axis, *data_sources):
+    def __init__( self, fuse_axis, *data_sources, **kwargs):
         super(HDF5DataFusedSource, self).__init__()
 
         if len(data_sources) == 0:
-            raise Exception("Have no data sources to fuse.")
+            raise HDF5NoFusedSourceException("Have no data sources to fuse.")
 
         self.fuse_axis = fuse_axis
 
         self.data_sources = data_sources
 
-        self.data_dtype = data_sources[0].dtype()
-        self.data_shape = -numpy.ones((5,), dtype = int)
-        for each in self.data_sources[1:]:
-            try:
-                each_shape = each.shape()
-                each_shape = numpy.array(each_shape)
+        self.data_sources_defined = numpy.array(self.data_sources)
+        self.data_sources_defined = self.data_sources_defined[self.data_sources_defined != numpy.array(None)]
+        self.data_sources_defined = list(self.data_sources_defined)
 
-                self.data_shape = numpy.array([self.data_shape, each_shape.astype(int)]).max(axis = 0)
-            except AttributeError:
-                pass
+        if len(self.data_sources_defined) == 0:
+            if (("dtype" in kwargs) and ("shape" in kwargs)):
+                self.data_dtype = kwargs["dtype"]
+                self.data_shape = kwargs["shape"]
+            else:
+                raise HDF5UndefinedShapeDtypeException("Have no defined data sources to fuse and no shape or dtype to fallback on.")
+        else:
+            self.data_dtype = self.data_sources_defined[0].dtype()
+            self.data_shape = -numpy.ones((5,), dtype = int)
+            for each in self.data_sources_defined[1:]:
+                try:
+                    each_shape = each.shape()
+                    each_shape = numpy.array(each_shape)
 
-            each_dtype = each.dtype()
-            if not numpy.can_cast(each_dtype, self.data_dtype):
-                if numpy.can_cast(self.data_dtype, each_dtype):
-                    self.data_dtype = each_dtype
-                else:
-                    raise Exception("Cannot find safe conversion between self.data_dtype = " + repr(self.data_dtype) + " and each_dtype = " + repr(each_dtype) + ".")
+                    self.data_shape = numpy.array([self.data_shape, each_shape.astype(int)]).max(axis = 0)
+                except AttributeError:
+                    pass
 
-        self.data_shape[self.fuse_axis] = len(data_sources)
+                each_dtype = each.dtype()
+                if not numpy.can_cast(each_dtype, self.data_dtype):
+                    if numpy.can_cast(self.data_dtype, each_dtype):
+                        self.data_dtype = each_dtype
+                    else:
+                        raise Exception("Cannot find safe conversion between self.data_dtype = " + repr(self.data_dtype) + " and each_dtype = " + repr(each_dtype) + ".")
+
+        self.data_shape[self.fuse_axis] = len(self.data_sources)
         self.data_shape = tuple(self.data_shape)
 
         self.fuse_axis %= len(self.data_shape)
@@ -487,7 +508,10 @@ class HDF5DataFusedSource( QObject ):
 
         selected_data_requests = []
         for each_data_source in selected_data_sources:
-            each_data_request = each_data_source.request(non_fuse_slicing)
+            each_data_request = None
+            if each_data_source is not None:
+                each_data_request = each_data_source.request(non_fuse_slicing)
+
             selected_data_requests.append(each_data_request)
 
         request = HDF5DataFusedRequest( self.fuse_axis, slicing_shape, self.data_dtype, *selected_data_requests )
@@ -537,11 +561,12 @@ class HDF5DataFusedRequest( object ):
                 self._result = numpy.zeros(self.data_shape, dtype = self.data_dtype)
 
                 for i, each_data_request in enumerate(self.data_requests):
-                    each_result = each_data_request.wait()
+                    if each_data_request is not None:
+                        each_result = each_data_request.wait()
 
-                    result_view = advanced_numpy.index_axis_at_pos(self._result, self.fuse_axis, i)
-                    each_result_view = advanced_numpy.index_axis_at_pos(each_result, self.fuse_axis, i)
-                    result_view[:] = each_result_view
+                        result_view = advanced_numpy.index_axis_at_pos(self._result, self.fuse_axis, i)
+                        each_result_view = advanced_numpy.index_axis_at_pos(each_result, self.fuse_axis, i)
+                        result_view[:] = each_result_view
 
                 logger.debug("Found the result.")
 
@@ -572,6 +597,29 @@ class HDF5DataFusedRequest( object ):
 assert issubclass(HDF5DataFusedRequest, RequestABC)
 
 
+class SyncedChannelLayers(object):
+    def __init__(self, *layers):
+        self.layers = list(layers)
+        self.currently_syncing_list = False
+
+        #logger.warning(repr([_.name for _ in self.layers]))
+
+        for each_layer in self.layers:
+            each_layer.channelChanged.connect(self)
+
+
+    def __call__(self, channel):
+        if not self.currently_syncing_list:
+            self.currently_syncing_list = True
+
+            for each_layer in self.layers:
+                #logger.warning( each_layer.name )
+                each_layer.channel = channel
+            
+            self.currently_syncing_list = False
+
+
+
 @advanced_debugging.log_call(logger)
 def main(*argv):
     argv = list(argv)
@@ -580,110 +628,62 @@ def main(*argv):
     viewer = HDF5Viewer()
     viewer.show()
 
-    original_images_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/original_data"
-    original_images = viewer.addGrayscaleHDF5Layer(original_images_location, "original_data")
-    original_images.visible = False
 
-    images_max_projection_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/images_max_projection"
-    images_max_projection = viewer.addGrayscaleHDF5Layer(images_max_projection_location, "images_max_projection")
-    images_max_projection.visible = False
-
-    dictionary_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/dictionary"
-    dictionary = viewer.addGrayscaleHDF5Layer(dictionary_location, "dictionary")
-    dictionary.visible = False
-
-    dictionary_images_max_projection_location = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/dictionary_images_max_projection"
-    dictionary_images_max_projection = viewer.addGrayscaleHDF5Layer(dictionary_images_max_projection_location, "dictionary_images_max_projection")
-    dictionary_images_max_projection.visible = False
+    import read_config
+    layer_names_locations_groups = read_config.read_parameters("/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/neuron_volumina_viewer_config_mod.json", maintain_order = True)
 
 
-    #neurons = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/neurons"
+    for each_layer_names_locations_group in reversed(layer_names_locations_groups):
+        layer_sync_list = []
 
-    #viewer.addGrayscaleHDF5Layer(dictionary, "neurons")
+        for (each_layer_name, each_layer_sources) in reversed(each_layer_names_locations_group.items()):
+            each_source = None
 
-    unmerged_neuron_set_contours = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/unmerged_neuron_set_contours"
-    viewer.addColorTableHDF5Layer(unmerged_neuron_set_contours, "unmerged_neuron_set_contours").visible = False
+            #print each_layer_name
 
-    neurons_set_contours = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/new_neurons_set_contours"
-    viewer.addColorTableHDF5Layer(neurons_set_contours, "neurons_set_contours").visible = False
+            if isinstance(each_layer_sources, str):
+                # Non-Fuse source
+                each_source = HDF5DataSource(each_layer_sources)
+            elif isinstance(each_layer_sources, list):
+                # Fuse source
+                each_source = list()
 
-    neuron_sets = "/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/data_invitro_susanne.h5/ADINA_results/images/debug/neuron_sets"
+                for each_source_id, each_source_loc in enumerate(each_layer_sources):
+                    #print each_source_loc
 
-
-    neuron_sets_path_comps = pathHelpers.PathComponents(neuron_sets)
-    neuron_sets_file_path, neuron_sets_group_path = neuron_sets_path_comps.externalPath, neuron_sets_path_comps.internalPath
-
-    # group_data = {}
-    group_data_shape_dtype = dict()
-    with h5py.File(neuron_sets_file_path, "r") as fid:
-        logger.debug("Opened HDF5 file: \"" + neuron_sets_file_path + "\".")
-
-        group = fid[neuron_sets_group_path]
-
-        for each_group_id, (each_group_name, each_group) in enumerate(group.items()):
-            for each_dataset_name, each_dataset in each_group.items():
-                if isinstance(each_dataset, h5py.Dataset):
-                    if each_dataset_name not in group_data_shape_dtype:
-                        # group_data[each_dataset_name] = {each_group_id : each_dataset}
-                        group_data_shape_dtype[each_dataset_name] = (each_dataset.shape, each_dataset.dtype)
-                    else:
-                        assert(group_data_shape_dtype[each_dataset_name][0] == each_dataset.shape, "Shape mismatch.")
-                        assert(group_data_shape_dtype[each_dataset_name][1] == each_dataset.dtype, "Type mismatch.")
-
-        logger.debug("Determined properties of all datasets in : \"" + neuron_sets + "\"." )
+                    each_file_source = None
+                    try:
+                        each_file_source = HDF5DataSource(each_source_loc)
+                        each_source.append(each_file_source)
+                    except HDF5DatasetNotFoundException:
+                        each_file_source = None
+                        each_source.append(each_file_source)
 
 
-        layer_sync_list =  []
+                try:
+                    each_source = HDF5DataFusedSource(-1, *each_source)
+                except HDF5UndefinedShapeDtypeException:
+                    each_source = None
 
-        layer_sync_list.append(dictionary)
+            else:
+                raise Exception("Unknown value.")
 
-        group_data = dict()
-        for each_dataset_name, (each_shape, each_dtype) in group_data_shape_dtype.items():
-            if isinstance(each_dtype, numpy.dtype):
-                if each_dtype.names:
-                    continue
 
-            if len(each_shape) < 2:
-                continue
+            if each_source is not None:
+                each_layer = None
+                if issubclass(each_source.dtype().type, numpy.integer):
+                    each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
+                elif issubclass(each_source.dtype().type, numpy.floating):
+                    each_layer = viewer.addGrayscaleHDF5Source(each_source, each_source.shape(), each_layer_name)
+                elif issubclass(each_source.dtype().type, numpy.bool_) or issubclass(each_source.dtype().type, numpy.bool):
+                    each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
 
-            if each_dataset_name.endswith("flattened_mask") or each_dataset_name.endswith("flattened"):
-                continue
+                each_layer.visible = False
 
-            group_data[each_dataset_name] = list()
 
-            for each_group_id, each_group_name in enumerate(group.keys()):
-                each_dataset_source = HDF5DataSource( neuron_sets + "/" + each_group_name + "/" + each_dataset_name + "/", shape = each_shape, dtype = each_dtype)
+                layer_sync_list.append(each_layer)
 
-                group_data[each_dataset_name].append(each_dataset_source)
-
-            group_data[each_dataset_name] = HDF5DataFusedSource(-1, *group_data[each_dataset_name])
-
-            each_layer = None
-            if issubclass(group_data[each_dataset_name].dtype().type, numpy.integer):
-                each_layer = viewer.addColorTableHDF5Source(group_data[each_dataset_name], group_data[each_dataset_name].shape(), each_dataset_name)
-            elif issubclass(group_data[each_dataset_name].dtype().type, numpy.floating):
-                each_layer = viewer.addGrayscaleHDF5Source(group_data[each_dataset_name], group_data[each_dataset_name].shape(), each_dataset_name)
-            elif issubclass(group_data[each_dataset_name].dtype().type, numpy.bool_) or issubclass(group_data[each_dataset_name].dtype().type, numpy.bool):
-                each_layer = viewer.addColorTableHDF5Source(group_data[each_dataset_name], group_data[each_dataset_name].shape(), each_dataset_name)
-
-            each_layer.visible = False
-
-            layer_sync_list.append(each_layer)
-
-        logger.debug("Added all datasets as layers for : \"" + neuron_sets + "\"." )
-
-        currently_syncing_list = [False]
-        def easy_sync_callback(channel):
-            if currently_syncing_list[0]:
-                return
-            currently_syncing_list[0] = True
-            for each_layer in layer_sync_list:
-                #print( each_layer.name )
-                each_layer.channel = channel
-            currently_syncing_list[0] = False
-
-        for each_layer in layer_sync_list:
-            each_layer.channelChanged.connect(easy_sync_callback)
+        SyncedChannelLayers(*layer_sync_list)
 
     return(app.exec_())
 
