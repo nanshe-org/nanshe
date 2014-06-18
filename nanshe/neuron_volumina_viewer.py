@@ -1,3 +1,5 @@
+import multiprocessing
+
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 09, 2014 8:51:33AM$"
 
@@ -73,66 +75,77 @@ class HDF5DataSource( QObject ):
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @advanced_debugging.log_call(logger)
-    def __init__( self, full_path, shape = None, dtype = None):
+    def __init__( self, file_handle, internal_path, shape = None, dtype = None):
         super(HDF5DataSource, self).__init__()
 
-        self.full_path = full_path
+        self.file_handle = None
 
-        data_path_comps = pathHelpers.PathComponents(self.full_path)
+        self.file_path = ""
+        self.dataset_path = ""
 
-        self.file_path = data_path_comps.externalPath
-        self.dataset_path = data_path_comps.internalPath
+        self.full_path = ""
 
         self.dataset_shape = shape
         self.dataset_dtype = dtype
 
         self.axis_order = [-1, -1, -1, -1, -1]
 
-        with h5py.File(self.file_path, "r") as fid:
-            #print "Opening HDF5 file"
-            if self.dataset_path not in fid:
-                raise(HDF5DatasetNotFoundException("Could not find the path \"" + self.dataset_path + "\" in filename " + "\"" + self.file_path + "\"."))
 
-            if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
-                dataset = fid[self.dataset_path]
-                #print dataset.name
-                self.dataset_shape = list(dataset.shape)
-                self.dataset_dtype = dataset.dtype
-            elif (self.dataset_shape is None):
-                dataset = fid[self.dataset_path]
-                self.dataset_shape = list(dataset.shape)
-            elif (self.dataset_dtype is None):
-                dataset = fid[self.dataset_path]
-                self.dataset_dtype = dataset.dtype
-            else:
-                self.dataset_shape = list(self.dataset_shape)
+        if isinstance(file_handle, str):
+            file_handle.rstrip("/")
+            file_handle = h5py.File(file_handle)
 
-            if len(self.dataset_shape) == 2:
-                # Pretend that the shape is ( (1,) + self.dataset_shape + (1,1) )
-                self.dataset_shape = [1, self.dataset_shape[0], self.dataset_shape[1], 1, 1]
-                self.axis_order = [-1, 0, 1, -1, -1]
-            elif len(self.dataset_shape) == 3 and self.dataset_shape[2] <= 4:
-                # Pretend that the shape is ( (1,) + self.dataset_shape[0:2] + (1,) + (self.dataset_shape[2],) )
-                self.dataset_shape = [1, self.dataset_shape[0], self.dataset_shape[1], 1, self.dataset_shape[2]]
-                self.axis_order = [-1, 0, 1, -1, 2]
-            elif len(self.dataset_shape) == 3:
-                # Pretend that the shape is ( (1,) + self.dataset_shape + (1,) )
-                #self.dataset_shape = [self.dataset_shape[0], self.dataset_shape[1], self.dataset_shape[2], 1, 1]
-                self.dataset_shape = [1, self.dataset_shape[1], self.dataset_shape[2], 1, self.dataset_shape[0]]
-                self.axis_order = [-1, 1, 2, -1, 0]
-            elif len(self.dataset_shape) == 4:
-                # Pretend that the shape is ( (1,) + self.dataset_shape )
-                #self.dataset_shape = [self.dataset_shape[0], self.dataset_shape[1], self.dataset_shape[2], self.dataset_shape[3], 1]
-                self.dataset_shape = [1, self.dataset_shape[1], self.dataset_shape[2], self.dataset_shape[3], self.dataset_shape[0]]
-                self.axis_order = [-1, 1, 2, 3, 0]
-            # elif len(self.dataset_shape) == 1:
-            #     # Pretend that the shape is ( (1,) + self.dataset_shape + (1,1) )
-            #     self.dataset_shape = [1, self.dataset_shape[0], 1, 1, 1]
-            else:
-                pass
-                # assert(False, \
-                # "slicing into an array of shape=%r requested, but slicing is %r" \
-                # % (self.dataset_shape, slicing) )
+        self.file_handle = file_handle
+
+        self.file_path = self.file_handle.filename
+        self.dataset_path = "/" + internal_path.strip("/")
+
+        self.full_path = self.file_path + self.dataset_path
+
+
+        if self.dataset_path not in self.file_handle:
+            raise(HDF5DatasetNotFoundException("Could not find the path \"" + self.dataset_path + "\" in filename " + "\"" + self.file_path + "\"."))
+
+        if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
+            dataset = self.file_handle[self.dataset_path]
+            #print dataset.name
+            self.dataset_shape = list(dataset.shape)
+            self.dataset_dtype = dataset.dtype
+        elif (self.dataset_shape is None):
+            dataset = self.file_handle[self.dataset_path]
+            self.dataset_shape = list(dataset.shape)
+        elif (self.dataset_dtype is None):
+            dataset = self.file_handle[self.dataset_path]
+            self.dataset_dtype = dataset.dtype
+        else:
+            self.dataset_shape = list(self.dataset_shape)
+
+        if len(self.dataset_shape) == 2:
+            # Pretend that the shape is ( (1,) + self.dataset_shape + (1,1) )
+            self.dataset_shape = [1, self.dataset_shape[0], self.dataset_shape[1], 1, 1]
+            self.axis_order = [-1, 0, 1, -1, -1]
+        elif len(self.dataset_shape) == 3 and self.dataset_shape[2] <= 4:
+            # Pretend that the shape is ( (1,) + self.dataset_shape[0:2] + (1,) + (self.dataset_shape[2],) )
+            self.dataset_shape = [1, self.dataset_shape[0], self.dataset_shape[1], 1, self.dataset_shape[2]]
+            self.axis_order = [-1, 0, 1, -1, 2]
+        elif len(self.dataset_shape) == 3:
+            # Pretend that the shape is ( (1,) + self.dataset_shape + (1,) )
+            #self.dataset_shape = [self.dataset_shape[0], self.dataset_shape[1], self.dataset_shape[2], 1, 1]
+            self.dataset_shape = [1, self.dataset_shape[1], self.dataset_shape[2], 1, self.dataset_shape[0]]
+            self.axis_order = [-1, 1, 2, -1, 0]
+        elif len(self.dataset_shape) == 4:
+            # Pretend that the shape is ( (1,) + self.dataset_shape )
+            #self.dataset_shape = [self.dataset_shape[0], self.dataset_shape[1], self.dataset_shape[2], self.dataset_shape[3], 1]
+            self.dataset_shape = [1, self.dataset_shape[1], self.dataset_shape[2], self.dataset_shape[3], self.dataset_shape[0]]
+            self.axis_order = [-1, 1, 2, 3, 0]
+        # elif len(self.dataset_shape) == 1:
+        #     # Pretend that the shape is ( (1,) + self.dataset_shape + (1,1) )
+        #     self.dataset_shape = [1, self.dataset_shape[0], 1, 1, 1]
+        else:
+            pass
+            # assert(False, \
+            # "slicing into an array of shape=%r requested, but slicing is %r" \
+            # % (self.dataset_shape, slicing) )
 
         self.dataset_shape = tuple(self.dataset_shape)
 
@@ -170,7 +183,7 @@ class HDF5DataSource( QObject ):
 
         assert(len(slicing) == len(self.dataset_shape), "Expect a slicing for a txyzc array.")
 
-        return HDF5DataRequest(self.file_path, self.dataset_path, self.axis_order, self.dataset_dtype, slicing)
+        return HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing)
 
     @advanced_debugging.log_call(logger)
     def setDirty( self, slicing):
@@ -197,10 +210,10 @@ assert issubclass(HDF5DataSource, SourceABC)
 
 class HDF5DataRequest( object ):
     @advanced_debugging.log_call(logger)
-    def __init__( self, file_path, dataset_path, axis_order, dataset_dtype, slicing, throw_on_not_found = False ):
+    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, throw_on_not_found = False ):
         # TODO: Look at adding assertion check on slices.
 
-        self.file_path = file_path
+        self.file_handle = file_handle
         self.dataset_path = dataset_path
         self.axis_order = axis_order
         self.dataset_dtype = dataset_dtype
@@ -230,27 +243,24 @@ class HDF5DataRequest( object ):
                 slicing_shape = advanced_iterators.len_slices(self.slicing)
                 self._result = numpy.zeros(slicing_shape, dtype = self.dataset_dtype)
 
+                try:
+                    #print self.file_handle
+                    #print self.dataset_path
+                    dataset = self.file_handle[self.dataset_path]
+                    a_result = dataset[self.actual_slicing]
+                    a_result = numpy.array(a_result)
 
-                #print ("Slicing: " + str(self.slicing))
-                #print "path: " + self.dataset_path
-                with h5py.File(self.file_path, "r") as fid:
-                    #print "Opening HDF5 file"
-                    try:
-                        dataset = fid[self.dataset_path]
-                        a_result = dataset[self.actual_slicing]
-                        a_result = numpy.array(a_result)
+                    the_axis_order = numpy.array(self.axis_order)
+                    a_result = a_result.transpose(the_axis_order[the_axis_order != -1])
 
-                        the_axis_order = numpy.array(self.axis_order)
-                        a_result = a_result.transpose(the_axis_order[the_axis_order != -1])
+                    for i, each_axis_order in enumerate(self.axis_order):
+                        if each_axis_order == -1:
+                            a_result = advanced_numpy.add_singleton_axis_pos(a_result, i)
 
-                        for i, each_axis_order in enumerate(self.axis_order):
-                            if each_axis_order == -1:
-                                a_result = advanced_numpy.add_singleton_axis_pos(a_result, i)
-
-                        self._result[:] = a_result
-                    except KeyError:
-                        if self.throw_on_not_found:
-                           raise
+                    self._result[:] = a_result
+                except KeyError:
+                    if self.throw_on_not_found:
+                       raise
 
                 logger.debug("Found the result.")
 
@@ -615,77 +625,121 @@ class SyncedChannelLayers(object):
             for each_layer in self.layers:
                 #logger.warning( each_layer.name )
                 each_layer.channel = channel
-            
+
             self.currently_syncing_list = False
 
 
 
 @advanced_debugging.log_call(logger)
 def main(*argv):
+    # Only necessary if running main (normally if calling command line). No point in importing otherwise.
+    import read_config
+    import argparse
+    import os
+
     argv = list(argv)
 
-    app = QApplication(argv)
+    # Creates command line parser
+    parser = argparse.ArgumentParser(description = "Parses input from the command line for a batch job.")
+
+    # Takes a config file and then a series of one or more HDF5 files.
+    parser.add_argument("config_filename", metavar = "CONFIG_FILE", type = str,
+                        help = "JSON file that provides configuration options for how to use dictionary learning on the input files.")
+    parser.add_argument("input_files", metavar = "INPUT_FILE", type = str, nargs = '+',
+                        help = "HDF5 file(s) to process (a single dataset or video will be expected in /images (time must be the first dimension) the results will be placed in /results (will overwrite old data) of the respective file with attribute tags related to the parameters used).")
+
+    # Results of parsing arguments (ignore the first one as it is the command line call).
+    parsed_args = parser.parse_args(argv[1:])
+
+    # Go ahead and stuff in parameters with the other parsed_args
+    # A little risky if parsed_args may later contain a parameters variable due to changing the main file
+    # or argparse changing behavior; however, this keeps all arguments in the same place.
+    parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename, maintain_order = True)
+
+    parsed_args.file_handles = []
+    for i in xrange(len(parsed_args.input_files)):
+        parsed_args.input_files[i] = parsed_args.input_files[i].rstrip("/")
+        parsed_args.input_files[i] = os.path.abspath(parsed_args.input_files[i])
+
+        parsed_args.file_handles.append(h5py.File(parsed_args.input_files[i], "r"))
+
+    app = QApplication([""])#argv)
     viewer = HDF5Viewer()
     viewer.show()
 
 
-    import read_config
-    layer_names_locations_groups = read_config.read_parameters("/Users/kirkhamj/Developer/PyCharmCE/nanshe/nanshe/data_test/neuron_volumina_viewer_config_mod.json", maintain_order = True)
+    layer_names_locations_groups = parsed_args.parameters
 
+    for (each_input_filename, each_file) in reversed(zip(parsed_args.input_files, parsed_args.file_handles)):
+        for each_layer_names_locations_group in reversed(layer_names_locations_groups):
+            layer_sync_list = []
 
-    for each_layer_names_locations_group in reversed(layer_names_locations_groups):
-        layer_sync_list = []
+            for (each_layer_name, each_layer_source_location_list) in reversed(each_layer_names_locations_group.items()):
+                each_source = None
 
-        for (each_layer_name, each_layer_sources) in reversed(each_layer_names_locations_group.items()):
-            each_source = None
+                #print each_layer_name
 
-            #print each_layer_name
+                if isinstance(each_layer_source_location_list, str):
+                    # Non-Fuse source
+                    each_source_loc = each_layer_source_location_list
+                    each_source_loc = each_source_loc.lstrip("/")
 
-            if isinstance(each_layer_sources, str):
-                # Non-Fuse source
-                each_source = HDF5DataSource(each_layer_sources)
-            elif isinstance(each_layer_sources, list):
-                # Fuse source
-                each_source = list()
+                    each_source = HDF5DataSource(each_file, each_source_loc)
+                elif isinstance(each_layer_source_location_list, list):
+                    # Fuse source
+                    each_source = list()
 
-                for each_source_id, each_source_loc in enumerate(each_layer_sources):
-                    #print each_source_loc
+                    for each_source_id, each_source_loc in enumerate(each_layer_source_location_list):
+                        #print each_source_loc
 
-                    each_file_source = None
-                    try:
-                        each_file_source = HDF5DataSource(each_source_loc)
-                        each_source.append(each_file_source)
-                    except HDF5DatasetNotFoundException:
+                        each_source_loc = each_source_loc.lstrip("/")
+
                         each_file_source = None
+                        try:
+                            each_file_source = HDF5DataSource(each_file, each_source_loc)
+                        except HDF5DatasetNotFoundException:
+                            each_file_source = None
+
                         each_source.append(each_file_source)
 
 
-                try:
-                    each_source = HDF5DataFusedSource(-1, *each_source)
-                except HDF5UndefinedShapeDtypeException:
-                    each_source = None
+                    try:
+                        each_source = HDF5DataFusedSource(-1, *each_source)
+                    except HDF5UndefinedShapeDtypeException:
+                        each_source = None
 
-            else:
-                raise Exception("Unknown value.")
-
-
-            if each_source is not None:
-                each_layer = None
-                if issubclass(each_source.dtype().type, numpy.integer):
-                    each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
-                elif issubclass(each_source.dtype().type, numpy.floating):
-                    each_layer = viewer.addGrayscaleHDF5Source(each_source, each_source.shape(), each_layer_name)
-                elif issubclass(each_source.dtype().type, numpy.bool_) or issubclass(each_source.dtype().type, numpy.bool):
-                    each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
-
-                each_layer.visible = False
+                else:
+                    raise Exception("Unknown value.")
 
 
-                layer_sync_list.append(each_layer)
+                if each_source is not None:
+                    each_layer = None
+                    if issubclass(each_source.dtype().type, numpy.integer):
+                        each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
+                    elif issubclass(each_source.dtype().type, numpy.floating):
+                        each_layer = viewer.addGrayscaleHDF5Source(each_source, each_source.shape(), each_layer_name)
+                    elif issubclass(each_source.dtype().type, numpy.bool_) or issubclass(each_source.dtype().type, numpy.bool):
+                        each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
 
-        SyncedChannelLayers(*layer_sync_list)
+                    each_layer.visible = False
 
-    return(app.exec_())
+
+                    layer_sync_list.append(each_layer)
+
+            SyncedChannelLayers(*layer_sync_list)
+
+    exit_code = app.exec_()
+
+    # Close and clean up files
+    parsed_args.file_handles = []
+    for i in xrange(len(parsed_args.file_handles)):
+        parsed_args.file_handles[i].close()
+        parsed_args.file_handles[i] = None
+
+    parsed_args.file_handles = None
+    del parsed_args.file_handles
+
+    return(exit_code)
 
 
 
