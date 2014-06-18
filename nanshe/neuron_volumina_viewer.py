@@ -644,9 +644,9 @@ def main(*argv):
 
     # Takes a config file and then a series of one or more HDF5 files.
     parser.add_argument("config_filename", metavar = "CONFIG_FILE", type = str,
-                        help = "JSON file that provides configuration options for how to use dictionary learning on the input files.")
+                        help = "JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations.")
     parser.add_argument("input_files", metavar = "INPUT_FILE", type = str, nargs = '+',
-                        help = "HDF5 file(s) to process (a single dataset or video will be expected in /images (time must be the first dimension) the results will be placed in /results (will overwrite old data) of the respective file with attribute tags related to the parameters used).")
+                        help = "HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file.")
 
     # Results of parsing arguments (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
