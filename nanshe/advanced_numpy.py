@@ -154,48 +154,59 @@ def index_axis_at_pos(new_array, axis, pos):
 
 
 @advanced_debugging.log_call(logger)
-def add_singleton_axis_pos(new_array, new_axis = 0):
+def add_singleton_axis_pos(a_array, new_axis = 0):
     """
         Adds a singleton axis to the given position.
         Allows negative values for new_axis.
         Also, automatically bounds new_axis in an acceptable regime if it is not already.
         
         Args:
-            new_array(numpy.ndarray):            array to add the singleton axis to.
-            new_axis(int):                       position for the axis to be in the final array (defaults to zero ).
+            a_array(numpy.ndarray):            array to add the singleton axis to.
+            new_axis(int):                     position for the axis to be in the final array (defaults to zero ).
         
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added.
+            (numpy.ndarray):                   a numpy array with the singleton axis added (should be a view).
         
         Examples:
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4))).shape
-            (1, 2, 3, 4)
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6))).shape
+            (1, 7, 9, 6)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), 0).shape
-            (1, 2, 3, 4)
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), 0).shape
+            (1, 7, 9, 6)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 0).shape
-            (1, 2, 3, 4)
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = 0).shape
+            (1, 7, 9, 6)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 1).shape
-            (2, 1, 3, 4)
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = 1).shape
+            (7, 1, 9, 6)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 2).shape
-            (2, 3, 1, 4)
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = 2).shape
+            (7, 9, 1, 6)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = 3).shape
-            (2, 3, 4, 1)
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = 3).shape
+            (7, 9, 6, 1)
             
-            >>> add_singleton_axis_pos(numpy.ones((2,3,4)), new_axis = -1).shape
-            (2, 3, 4, 1)
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = -1).shape
+            (7, 9, 6, 1)
             
     """
 
-    new_axis %= (new_array.ndim + 1)
+    # Clean up new_axis to be within the allowable range.
+    new_axis %= (a_array.ndim + 1)
     if new_axis < 0:
-        new_axis += new_array.ndim + 1
+        new_axis += a_array.ndim + 1
 
-    return( numpy.rollaxis(new_array[None], 0, new_axis + 1) )
+    # Constructing the current ordering of axis and the singleton dime
+    new_array_shape = range(1, a_array.ndim + 1)
+    new_array_shape.insert(new_axis, 0)
+    new_array_shape = tuple(new_array_shape)
+
+    # Adds singleton dimension at front.
+    # Then changes the order so it is elsewhere.
+    new_array = a_array[None]
+    new_array = new_array.transpose(new_array_shape)
+
+    return( new_array )
 
 
 @advanced_debugging.log_call(logger)
@@ -207,11 +218,11 @@ def add_singleton_axis_beginning(new_array):
             new_array(numpy.ndarray):            array to add the singleton axis to.
         
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end.
+            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be a view).
         
         Examples:
-            >>> add_singleton_axis_beginning(numpy.ones((2,3,4))).shape
-            (1, 2, 3, 4)
+            >>> add_singleton_axis_beginning(numpy.ones((7,9,6))).shape
+            (1, 7, 9, 6)
             
             >>> add_singleton_axis_beginning(numpy.eye(3)).shape
             (1, 3, 3)
@@ -231,11 +242,11 @@ def add_singleton_axis_end(new_array):
             new_array(numpy.ndarray):            array to add the singleton axis to.
         
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end.
+            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be a view).
         
         Examples:
-            >>> add_singleton_axis_end(numpy.ones((2,3,4))).shape
-            (2, 3, 4, 1)
+            >>> add_singleton_axis_end(numpy.ones((7,9,6))).shape
+            (7, 9, 6, 1)
             
             >>> add_singleton_axis_end(numpy.eye(3)).shape
             (3, 3, 1)
