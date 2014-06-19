@@ -1,11 +1,5 @@
-import multiprocessing
-
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 09, 2014 8:51:33AM$"
-
-
-import volumina
-import volumina.pixelpipeline
 
 
 # This program is free software; you can redistribute it and/or
@@ -29,38 +23,47 @@ import volumina.pixelpipeline
 """
 
 
+import multiprocessing
+from nanshe import HDF5_searchers
+
+import volumina
+import volumina.pixelpipeline
+from volumina.multimethods import multimethod
+
 import advanced_debugging
 
 logger = advanced_debugging.logging.getLogger(__name__)
 advanced_debugging.logging.getLogger().setLevel(advanced_debugging.logging.WARN)
 
-import volumina
-from volumina.multimethods import multimethod
 from volumina.viewer import Viewer
 from volumina.pixelpipeline.datasources import *
 from volumina.pixelpipeline.datasourcefactories import *
 from volumina.layer import *
+
+
 from volumina.layerstack import LayerStackModel
 from volumina.navigationControler import NavigationInterpreter
 from volumina import colortables
 
 
-
 from PyQt4.QtCore import QTimer, pyqtSignal
 from PyQt4.QtGui import QMainWindow, QApplication, QIcon, QAction, qApp
 from PyQt4.uic import loadUi
+from PyQt4.QtCore import pyqtSignal
 
 
 #advanced_debugging.logging.getLogger().setLevel(advanced_debugging.logging.WARN)
 
 import os
 import random
+import collections
 import itertools
 
 
-import pathHelpers
 import h5py
 
+
+import pathHelpers
 
 import advanced_numpy
 import advanced_iterators
@@ -635,7 +638,6 @@ def main(*argv):
     # Only necessary if running main (normally if calling command line). No point in importing otherwise.
     import read_config
     import argparse
-    import os
 
     argv = list(argv)
 
@@ -656,6 +658,7 @@ def main(*argv):
     # or argparse changing behavior; however, this keeps all arguments in the same place.
     parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename, maintain_order = True)
 
+    # Open all of the files and store their handles
     parsed_args.file_handles = []
     for i in xrange(len(parsed_args.input_files)):
         parsed_args.input_files[i] = parsed_args.input_files[i].rstrip("/")
@@ -663,53 +666,63 @@ def main(*argv):
 
         parsed_args.file_handles.append(h5py.File(parsed_args.input_files[i], "r"))
 
+    # Make all each_layer_source_location_list is a lists whether they were or not before
+    for i in xrange(len(parsed_args.parameters)):
+        for (each_layer_name, each_layer_source_location_list) in parsed_args.parameters[i].items():
+            if isinstance(each_layer_source_location_list, str):
+                parsed_args.parameters[i][each_layer_name] = [ each_layer_source_location_list ]
+
+    # Find all matches and store them for later
+    parsed_args.parameters_expanded = list()
+    for each_layer_names_locations_group in parsed_args.parameters:
+
+        parsed_args.parameters_expanded.append(collections.OrderedDict())
+        for (each_layer_name, each_layer_source_location_list) in each_layer_names_locations_group.items():
+
+            parsed_args.parameters_expanded[-1][each_layer_name] = collections.OrderedDict()
+            for each_layer_source_location in each_layer_source_location_list:
+                for each_file in parsed_args.file_handles:
+                    new_matches = HDF5_searchers.get_matching_paths_groups_found(each_file, each_layer_source_location)
+                    parsed_args.parameters_expanded[-1][each_layer_name].update(new_matches)
+
+
+    layer_names_locations_groups = parsed_args.parameters_expanded
+
     app = QApplication([""])#argv)
     viewer = HDF5Viewer()
     viewer.show()
 
 
-    layer_names_locations_groups = parsed_args.parameters
-
-    for (each_input_filename, each_file) in reversed(zip(parsed_args.input_files, parsed_args.file_handles)):
+    for each_file in reversed(parsed_args.file_handles):
         for each_layer_names_locations_group in reversed(layer_names_locations_groups):
             layer_sync_list = []
 
-            for (each_layer_name, each_layer_source_location_list) in reversed(each_layer_names_locations_group.items()):
-                each_source = None
+            for (each_layer_name, each_layer_source_dict_location_found) in reversed(each_layer_names_locations_group.items()):
+                each_source = []
 
-                #print each_layer_name
+                for each_layer_source_location, each_layer_source_location_found in each_layer_source_dict_location_found.items():
+                    each_layer_source_location = each_layer_source_location.lstrip("/")
 
-                if isinstance(each_layer_source_location_list, str):
-                    # Non-Fuse source
-                    each_source_loc = each_layer_source_location_list
-                    each_source_loc = each_source_loc.lstrip("/")
+                    each_file_source = None
 
-                    each_source = HDF5DataSource(each_file, each_source_loc)
-                elif isinstance(each_layer_source_location_list, list):
-                    # Fuse source
-                    each_source = list()
+                    if each_layer_source_location_found:
+                        each_file_source = HDF5DataSource(each_file, each_layer_source_location)
 
-                    for each_source_id, each_source_loc in enumerate(each_layer_source_location_list):
-                        #print each_source_loc
+                    each_source.append(each_file_source)
 
-                        each_source_loc = each_source_loc.lstrip("/")
+                print each_layer_name
+                print len(each_source)
+                print each_layer_source_dict_location_found.keys()
 
-                        each_file_source = None
-                        try:
-                            each_file_source = HDF5DataSource(each_file, each_source_loc)
-                        except HDF5DatasetNotFoundException:
-                            each_file_source = None
-
-                        each_source.append(each_file_source)
-
-
+                if len(each_source) > 1:
                     try:
                         each_source = HDF5DataFusedSource(-1, *each_source)
                     except HDF5UndefinedShapeDtypeException:
                         each_source = None
-
+                elif len(each_source) == 1:
+                    each_source = each_source[0]
                 else:
-                    raise Exception("Unknown value.")
+                    each_source = None
 
 
                 if each_source is not None:
