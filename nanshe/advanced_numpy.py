@@ -19,7 +19,6 @@ import advanced_debugging
 
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
-logger.setLevel(advanced_debugging.logging.WARN)
 
 
 @advanced_debugging.log_call(logger)
