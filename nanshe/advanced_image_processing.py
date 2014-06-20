@@ -56,8 +56,37 @@ import HDF5_logger
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
 
+
+
 @advanced_debugging.log_call(logger)
-def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
+def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+    """
+        Generates a dictionary using the data and parameters given for trainDL.
+
+        Args:
+            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
+            parameters(dict):             passed directly to spams.trainDL.
+
+        Note:
+            Todo
+            Look into move data normalization into separate method (have method chosen by config file).
+
+        Returns:
+            dict: the dictionary found.
+    """
+
+    # Remove the mean of each row vector
+    new_data_mean_zeroed = simple_image_processing.zeroed_mean_images(new_data)
+
+    # Renormalize each row vector using some specified normalization
+    new_data_renormalized = simple_image_processing.renormalized_images(new_data_mean_zeroed,
+                                                                        **parameters["simple_image_processing.renormalized_images"])
+
+    return(new_data_renormalized)
+
+
+@advanced_debugging.log_call(logger)
+def preprocess_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
         
@@ -73,203 +102,18 @@ def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayDebugLog
             dict: the dictionary found.
     """
 
-    # TODO: Add preprocessing step wavelet transform, F_0, etc.
+    # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
 
     # Maybe should copy data so as not to change the original.
     # new_data_processed = new_data.copy()
-    new_data_processed = new_data
-
-    # Remove the mean of each row vector
-    new_data_processed = simple_image_processing.zeroed_mean_images(new_data_processed)
-
-    # Renormalize each row vector using some specified normalization
-    new_data_processed = simple_image_processing.renormalized_images(new_data_processed,
-                                                                     **parameters["simple_image_processing.renormalized_images"])
+    new_data_processed = normalize_data(new_data, **parameters["normalize_data"])
+    logger.debug("(new_data_processed > 0).sum() = " + repr((new_data_processed > 0).sum()))
 
     return(new_data_processed)
 
 
 @advanced_debugging.log_call(logger)
-def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
-    """
-        Designed to run spams.trainDL in a separate process.
-        
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the 
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
-        
-        This particular version uses a multiprocessing.Queue to return the resulting dictionary.
-        
-        
-        Args:
-            out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
-        
-        Note:
-            Todo
-            Look into having the raw data for input for spams.trainDL copied in.
-    """
-
-    # It is not needed outside of calling spams.trainDL.
-    # Also, it takes a long time to load this module.
-    import spams
-
-    result = spams.trainDL(*args, **kwargs)
-    out_queue.put(result)
-
-
-@advanced_debugging.log_call(logger)
-def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
-    """
-        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
-        
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the 
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
-        
-        This particular version uses a multiprocessing.Queue to return the resulting dictionary.
-        
-        
-        Args:
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
-        
-        Note:
-            Todo
-            Look into having the raw data for input for spams.trainDL copied in.
-        
-        Returns:
-            result(numpy.matrix): the dictionary found
-    """
-
-    # Only necessary for dealing with SPAMS
-    import multiprocessing
-
-    out_queue = multiprocessing.Queue()
-
-    p = multiprocessing.Process(target = run_multiprocessing_queue_spams_trainDL, args = (out_queue,) + args,
-                                kwargs = kwargs)
-    p.start()
-    result = out_queue.get()
-    p.join()
-
-    return(result)
-
-
-@advanced_debugging.log_call(logger)
-def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
-    """
-        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
-        
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the 
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
-        
-        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.
-        
-        
-        Args:
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
-        
-        Note:
-            This is somewhat faster than using multiprocessing.Queue.
-            
-            Todo
-            Need to deal with return_model case.
-            Look into having the raw data for input for spams.trainDL copied in.
-    """
-
-    # Just to make sure this exists in the new process. Shouldn't be necessary.
-    import numpy
-    # Just to make sure this exists in the new process. Shouldn't be necessary.
-    # Also, it is not needed outside of calling this function.
-    import spams
-
-    # Create a numpy.ndarray that uses the shared buffer.
-    result = numpy.frombuffer(output_array.get_obj(), dtype = float).reshape((-1, kwargs["K"]))
-    result = numpy.asmatrix(result)
-
-    result[:] = spams.trainDL(*args, **kwargs)
-
-
-@advanced_debugging.log_call(logger)
-def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
-    """
-        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
-        
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the 
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
-        
-        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.
-        
-        
-        Args:
-            X(numpy.matrix)                         a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
-        
-        Note:
-            This is somewhat faster than using multiprocessing.Queue.
-            
-            Todo
-            Need to deal with return_model case.
-            Look into having the raw data for input for spams.trainDL copied in.
-    """
-
-    # Only necessary for dealing with SPAMS
-    import multiprocessing
-    # Only necessary for dealing with multiprocessing.Array for SPAMS
-    import ctypes
-    # Just to make sure this exists in the new process. Shouldn't be necessary.
-    import numpy
-
-    output_array_size = X.shape[0] * kwargs["K"]
-    output_array = multiprocessing.Array(ctypes.c_double, output_array_size)
-
-    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (output_array, X,) + args,
-                                kwargs = kwargs)
-    p.start()
-    p.join()
-
-    result = numpy.frombuffer(output_array.get_obj(), dtype = float).reshape((-1, kwargs["K"]))
-    result = result.copy()
-
-    return(result)
-
-
-@advanced_debugging.log_call(logger)
-def call_spams_trainDL(*args, **kwargs):
-    """
-        Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.
-        Designed to be like the multiprocessing calls.
-        
-        Args:
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
-        
-        Note:
-            For legacy.
-    """
-
-    result = spams.trainDL(*args, **kwargs)
-    result = result.copy()
-
-    return(result)
-
-
-@advanced_debugging.log_call(logger)
-def generate_dictionary(new_data, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
+def generate_dictionary(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
         
@@ -280,6 +124,8 @@ def generate_dictionary(new_data, array_debug_logger = HDF5_logger.EmptyArrayDeb
         Returns:
             dict: the dictionary found.
     """
+
+    import spams_sandbox
 
     # It takes a loooong time to load spams. so, we shouldn't do this until we are sure that we are ready to generate the dictionary
     # (i.e. the user supplied a bad config file, /images does not exist, etc.).
@@ -300,12 +146,12 @@ def generate_dictionary(new_data, array_debug_logger = HDF5_logger.EmptyArrayDeb
 
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
-    new_dictionary = call_multiprocessing_array_spams_trainDL(new_data_processed, **parameters["spams_trainDL"])
+    new_dictionary = spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(new_data_processed, **parameters["spams.trainDL"])
 
     # Fix dictionary so that the first index will be the particular image.
     # The rest will be the shape of an image (same as input shape).
     new_dictionary = new_dictionary.transpose()
-    new_dictionary = numpy.asarray(new_dictionary).reshape((parameters["spams_trainDL"]["K"],) + new_data.shape[1:])
+    new_dictionary = numpy.asarray(new_dictionary).reshape((parameters["spams.trainDL"]["K"],) + new_data.shape[1:])
 
     return(new_dictionary)
 
@@ -735,7 +581,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
 
 class ExtendedRegionProps(object):
     @advanced_debugging.log_call(logger)
-    def __init__(self, new_intensity_image, new_label_image, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), properties = ["centroid"]):
+    def __init__(self, new_intensity_image, new_label_image, array_debug_logger = HDF5_logger.EmptyArrayLogger(), properties = ["centroid"]):
         self.intensity_image = new_intensity_image
         self.label_image = new_label_image
         self.image_mask = (self.label_image > 0)
@@ -936,6 +782,8 @@ def remove_low_intensity_local_maxima(local_maxima, **parameters):
 
     new_local_maxima.remove_prop_mask(low_intensities__local_maxima_label_mask__to_remove)
 
+    logger.debug("Removed low intensity maxima that are too close.")
+
     return(new_local_maxima)
 
 
@@ -964,11 +812,13 @@ def remove_too_close_local_maxima(local_maxima, **parameters):
 
     new_local_maxima.remove_prop_mask(too_close__local_maxima_label_mask__to_remove)
 
+    logger.debug("Removed local maxima that are too close.")
+
     return(new_local_maxima)
 
 
 @advanced_debugging.log_call(logger)
-def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
+def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Performs wavelet denoising on the given dictionary.
         
@@ -1091,32 +941,25 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
 
         logger.debug("Found new label image.")
 
-        extended_region_props_0_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger(
+        extended_region_props_0_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_logger(
             "extended_region_props_0", array_debug_logger)
 
         local_maxima = ExtendedRegionProps(new_wavelet_image_denoised, new_wavelet_image_denoised_label_image,
                                            array_debug_logger = extended_region_props_0_array_debug_logger)
 
-        array_debug_logger("centroid_label_image_0", local_maxima.get_centroid_label_image())
-        array_debug_logger("centroid_label_image_contours_0", advanced_numpy.generate_labeled_contours(local_maxima.get_centroid_label_image() > 0))
-        array_debug_logger("centroid_active_label_image_0", local_maxima.get_centroid_label_image())
-        array_debug_logger("intensity_image_0", local_maxima.intensity_image)
+        local_maxima.label_image
+        array_debug_logger("local_maxima_label_image_0", local_maxima.label_image)
+        array_debug_logger("local_maxima_image_contours_0", advanced_numpy.generate_labeled_contours(local_maxima.label_image > 0))
 
         local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
 
-        array_debug_logger("centroid_label_image_1", local_maxima.get_centroid_label_image())
-        array_debug_logger("centroid_label_image_contours_1", advanced_numpy.generate_labeled_contours(local_maxima.get_centroid_label_image() > 0))
-        array_debug_logger("centroid_active_label_image_1", local_maxima.get_centroid_label_image())
-        array_debug_logger("intensity_image_1", local_maxima.intensity_image)
+        array_debug_logger("local_maxima_label_image_1", local_maxima.label_image)
+        array_debug_logger("local_maxima_label_image_contours_1", advanced_numpy.generate_labeled_contours(local_maxima.label_image > 0))
 
         local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
 
-        array_debug_logger("centroid_label_image_2", local_maxima.get_centroid_label_image())
-        array_debug_logger("centroid_label_image_contours_2", advanced_numpy.generate_labeled_contours(local_maxima.get_centroid_label_image() > 0))
-        array_debug_logger("centroid_active_label_image_2", local_maxima.get_centroid_label_image())
-        array_debug_logger("intensity_image_2", local_maxima.intensity_image)
-
-        logger.debug("Removed local maxima that are too close.")
+        array_debug_logger("local_maxima_label_image_2", local_maxima.label_image)
+        array_debug_logger("local_maxima_label_image_contours_2", advanced_numpy.generate_labeled_contours(local_maxima.label_image > 0))
 
         if local_maxima.props.size:
             if parameters["use_watershed"]:
@@ -1140,8 +983,9 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
                 array_debug_logger("watershed_segmentation", new_wavelet_image_denoised_segmentation)
                 array_debug_logger("watershed_segmentation_contours", advanced_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation))
 
-                extended_region_props_1_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger(
+                extended_region_props_1_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_logger(
                     "extended_region_props_1", array_debug_logger)
+
                 watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
                                                              new_wavelet_image_denoised_segmentation,
                                                              array_debug_logger = extended_region_props_1_array_debug_logger,
@@ -1149,7 +993,6 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
 
                 array_debug_logger("watershed_local_maxima_label_image_0", watershed_local_maxima.label_image)
                 array_debug_logger("watershed_local_maxima_label_image_contours_0", advanced_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0))
-
 
                 array_debug_logger("watershed_local_maxima_props_0", watershed_local_maxima.props)
                 array_debug_logger("watershed_local_maxima_count_0", watershed_local_maxima.count)
@@ -1277,7 +1120,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayDebu
 
 
 @advanced_debugging.log_call(logger)
-def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
+def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Merges the two neurons into one (treats the first with preference).
         
@@ -1337,7 +1180,7 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArray
 
 
 @advanced_debugging.log_call(logger)
-def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
+def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Merges the two sets of neurons into one (treats the first with preference).
         
@@ -1489,7 +1332,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = H
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the new_neuron_set (composed of new_neuron_set_1)
         for i, j in itertools.izip(new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse):
-            new_fusing_neurons_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger("__".join(["fusing_neurons",
+            new_fusing_neurons_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_logger("__".join(["fusing_neurons",
                                                                                                                    "new_neuron_set_1_" + str(i),
                                                                                                                    "new_neuron_set_2_" + str(j)]),
                                                                                                         array_debug_logger)
@@ -1520,7 +1363,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = H
 
 
 @advanced_debugging.log_call(logger)
-def generate_neurons(new_images, array_debug_logger = HDF5_logger.EmptyArrayDebugLogger(), **parameters):
+def generate_neurons(new_images, resume_logger = HDF5_logger.EmptyArrayLogger(), array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates the neurons.
         
@@ -1537,28 +1380,24 @@ def generate_neurons(new_images, array_debug_logger = HDF5_logger.EmptyArrayDebu
             dict: the dictionary found.
     """
 
-    array_debug_logger("images", new_images)
+    new_preprocessed_images = preprocess_data(new_images, array_debug_logger = array_debug_logger, **parameters["preprocess_data"])
 
-    array_debug_logger("images_max_projection", new_images.max(axis = 0))
+    resume_logger("preprocessed_images", new_preprocessed_images)
 
-    new_preprocessed_images = normalize_data(new_images, array_debug_logger = array_debug_logger, **parameters["normalize_data"])
-
-    array_debug_logger("preprocessed_images", new_preprocessed_images)
-
-    array_debug_logger("preprocessed_images_max_projection", new_images.max(axis = 0))
+    array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
 
     new_dictionary = generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
 
-    array_debug_logger("dictionary", new_dictionary)
+    resume_logger("dictionary", new_dictionary)
 
-    array_debug_logger("dictionary_images_max_projection", new_images.max(axis = 0))
+    array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
 
     def array_debug_logger_enumerator(new_list):
-        neuron_sets_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_debug_logger("neuron_sets",
+        neuron_sets_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_logger("neuron_sets",
                                                                                              array_debug_logger)
 
         for i, i_str, each in advanced_iterators.filled_stringify_enumerate(new_list):
-            yield ( (i, each, HDF5_logger.create_subgroup_HDF5_array_debug_logger(i_str, neuron_sets_array_debug_logger)) )
+            yield ( (i, each, HDF5_logger.create_subgroup_HDF5_array_logger(i_str, neuron_sets_array_debug_logger)) )
 
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(new_images[0])

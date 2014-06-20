@@ -28,25 +28,26 @@ import vigra.impex
 logger = advanced_debugging.logging.getLogger(__name__)
 
 
+
 @advanced_debugging.log_call(logger)
-def batch_generate_save_dictionary(*new_filenames, **parameters):
+def batch_generate_save_neurons(*new_filenames, **parameters):
     """
-        Uses generate_save_dictionary to process a list of filename (HDF5 files) with the given parameters for trainDL.
+        Uses generate_save_neurons to process a list of filename (HDF5 files) with the given parameters for trainDL.
         Results will be saved in each file.
         
         Args:
             new_filenames     names of the files to read.
-            parameters        passed directly to generate_save_dictionary.
+            parameters        passed directly to generate_save_neurons.
     """
 
     # simple. iterates over each call to generate and save results in given HDF5 file.
     for each_new_filename in new_filenames:
         # runs each one and saves results in each file
-        generate_save_dictionary(each_new_filename, **parameters)
+        generate_save_neurons(each_new_filename, **parameters)
 
 
 @advanced_debugging.log_call(logger)
-def generate_save_dictionary(new_filename, debug = False, **parameters):
+def generate_save_neurons(new_filename, debug = False, **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
         
@@ -147,23 +148,30 @@ def generate_save_dictionary(new_filename, debug = False, **parameters):
         new_file.create_group(output_directory)
 
         # Create a hardlink (does not copy) the original data
-        new_file[output_directory]["original_data"] = new_file[new_hdf5_filepath_details.internalPath]
+        new_file[output_directory]["original_images"] = new_file[new_hdf5_filepath_details.internalPath]
 
         # Copy out images for manipulation in memory
-        new_data = new_file[output_directory]["original_data"][:]
+        new_images = new_file[output_directory]["original_images"][:]
 
         # Get a debug logger for the HDF5 file (if needed)
-        array_debug_logger = HDF5_logger.generate_HDF5_array_debug_logger(new_file[output_directory], debug = debug,
-                                                                          overwrite_group = True)
+        array_debug_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory],
+                                                                    group_name = "debug",
+                                                                    enable = debug,
+                                                                    overwrite_group = True)
+
+        resume_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory])
+
+        array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
 
         # Generate the new neurons
-        new_neurons = advanced_image_processing.generate_neurons(new_data, array_debug_logger = array_debug_logger,
+        new_neurons = advanced_image_processing.generate_neurons(new_images,
+                                                                 resume_logger = resume_logger,
+                                                                 array_debug_logger = array_debug_logger,
                                                                  **parameters)
 
         # Save them
         if new_neurons.size:
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons,
-                                                                  True)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
         else:
             logger.warning("No neurons were found in the data.")
 
@@ -206,7 +214,7 @@ def main(*argv):
     parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
 
     # Runs the dictionary learning algorithm on each file with the given parameters and saves the results in the given files.
-    batch_generate_save_dictionary(*parsed_args.input_files, **parsed_args.parameters)
+    batch_generate_save_neurons(*parsed_args.input_files, **parsed_args.parameters)
 
     return(0)
 
