@@ -33,7 +33,6 @@ from volumina.multimethods import multimethod
 import advanced_debugging
 
 logger = advanced_debugging.logging.getLogger(__name__)
-advanced_debugging.logging.getLogger().setLevel(advanced_debugging.logging.WARN)
 
 from volumina.viewer import Viewer
 from volumina.pixelpipeline.datasources import *
