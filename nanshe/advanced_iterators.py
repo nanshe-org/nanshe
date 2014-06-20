@@ -9,6 +9,7 @@ import advanced_debugging
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
 
+
 @advanced_debugging.log_call(logger)
 def index_generator(*sizes):
     """
@@ -315,7 +316,7 @@ def filled_stringify_enumerate(new_list):
         yield ( (i, str(i).zfill(digits), each) )
 
 
-@advanced_debugging.log_call(logger, True)
+@advanced_debugging.log_call(logger)
 def reformat_slice(a_slice, a_length = None):
     """
         Takes a slice and reformats it to fill in as many undefined values as possible.
@@ -395,7 +396,7 @@ def reformat_slice(a_slice, a_length = None):
     return(new_slice)
 
 
-@advanced_debugging.log_call(logger, True)
+@advanced_debugging.log_call(logger)
 def reformat_slices(slices, lengths = None):
     """
         Takes a tuple of slices and reformats them to fill in as many undefined values as possible.
@@ -429,7 +430,7 @@ class UnknownSliceLengthException(Exception):
     pass
 
 
-@advanced_debugging.log_call(logger, True)
+@advanced_debugging.log_call(logger)
 def len_slice(a_slice, a_length = None):
     """
         Determines how many elements a slice will contain.
@@ -495,7 +496,7 @@ def len_slice(a_slice, a_length = None):
     return(new_slice_size)
 
 
-@advanced_debugging.log_call(logger, True)
+@advanced_debugging.log_call(logger)
 def len_slices(slices, lengths = None):
     """
         Takes a tuple of slices and reformats them to fill in as many undefined values as possible.
