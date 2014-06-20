@@ -6,10 +6,8 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 14, 2014 8:37:08PM$"
 
 __all__ = ["..", "advanced_debugging", "advanced_image_processing", "advanced_iterators", "advanced_numpy",
-           "batch_learner", "denoising", "HDF5_logger", "HDF5_searchers", "HDF5_serializers",
-           "neuron_matplotlib_viewer", "neuron_volumina_viewer", "pathHelpers", "read_config",
-           "simple_image_processing", "wavelet_transform"]
-
+           "batch_learner", "denoising", "HDF5_logger", "HDF5_searchers", "HDF5_serializers", #"neuron_volumina_viewer",
+           "pathHelpers", "read_config", "simple_image_processing", "wavelet_transform"]
 
 import advanced_debugging
 import advanced_image_processing
@@ -21,7 +19,7 @@ import HDF5_logger
 import HDF5_searchers
 import HDF5_serializers
 import neuron_matplotlib_viewer
-import neuron_volumina_viewer
+# import neuron_volumina_viewer    # Must be commented as there is some segfault coming from Volumina.
 import pathHelpers
 import read_config
 import simple_image_processing
