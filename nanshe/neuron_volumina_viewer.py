@@ -71,14 +71,45 @@ import advanced_iterators
 
 
 class HDF5DatasetNotFoundException( Exception ):
+    """
+        An exception raised when a dataset is not found in an HDF5 file.
+    """
     pass
 
 class HDF5DataSource( QObject ):
+    """
+        Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.
+
+        Attributes:
+          file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
+          file_path(str):                          External path to the file
+          dataset_path(str):                       Internal path to the dataset
+          full_path(str):                          Both external and internal paths combined as one path
+          dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
+          dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
+          axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
+
+    """
+
+    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @advanced_debugging.log_call(logger)
     def __init__( self, file_handle, internal_path, shape = None, dtype = None):
+        """
+            Constructs an HDF5DataSource using a given file and path to the dataset. Optionally, the shape and dtype
+            can be specified.
+
+            Args:
+                file_handle(h5py.File or str):          A file handle for the HDF5 file..
+                internal_path(str):                     path to the dataset inside of the HDF5 file.
+                shape(tuple of ints):                   shape of underlying dataset if not specified defaults to that of the dataset.
+                dtype(numpy.dtype or type):             type of underlying dataset if not specified defaults to that of the dataset.
+        """
+        #TODO: Get rid of shape and dtype as arguments.
+
         super(HDF5DataSource, self).__init__()
 
         self.file_handle = None
@@ -88,12 +119,13 @@ class HDF5DataSource( QObject ):
 
         self.full_path = ""
 
-        self.dataset_shape = shape
-        self.dataset_dtype = dtype
+        # Constructed standard shape and dtype if provided
+        self.dataset_shape = tuple(shape) if shape is not None else None
+        self.dataset_dtype = numpy.dtype(dtype) if dtype is not None else None
 
         self.axis_order = [-1, -1, -1, -1, -1]
 
-
+        # If it is a filename, get the file handle.
         if isinstance(file_handle, str):
             file_handle.rstrip("/")
             file_handle = h5py.File(file_handle)
@@ -105,88 +137,77 @@ class HDF5DataSource( QObject ):
 
         self.full_path = self.file_path + self.dataset_path
 
-
+        # Check to see if the dataset exists in the file. Otherwise throw an Exception for it.
         if self.dataset_path not in self.file_handle:
             raise(HDF5DatasetNotFoundException("Could not find the path \"" + self.dataset_path + "\" in filename " + "\"" + self.file_path + "\"."))
 
+        # Fill in the shape and or dtype information if it doesn't already exist.
         if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
             dataset = self.file_handle[self.dataset_path]
             #print dataset.name
-            self.dataset_shape = list(dataset.shape)
+            self.dataset_shape = dataset.shape
             self.dataset_dtype = dataset.dtype
         elif (self.dataset_shape is None):
             dataset = self.file_handle[self.dataset_path]
-            self.dataset_shape = list(dataset.shape)
+            self.dataset_shape = dataset.shape
         elif (self.dataset_dtype is None):
             dataset = self.file_handle[self.dataset_path]
             self.dataset_dtype = dataset.dtype
-        else:
-            self.dataset_shape = list(self.dataset_shape)
 
+        # Using the shape information, determine how to reshape the axes to present the data as we wish.
+        if len(self.dataset_shape) == 1:
+            self.axis_order = [-1, 0, -1, -1, -1]
         if len(self.dataset_shape) == 2:
-            # Pretend that the shape is ( (1,) + self.dataset_shape + (1,1) )
-            self.dataset_shape = [1, self.dataset_shape[0], self.dataset_shape[1], 1, 1]
             self.axis_order = [-1, 0, 1, -1, -1]
-        elif len(self.dataset_shape) == 3 and self.dataset_shape[2] <= 4:
-            # Pretend that the shape is ( (1,) + self.dataset_shape[0:2] + (1,) + (self.dataset_shape[2],) )
-            self.dataset_shape = [1, self.dataset_shape[0], self.dataset_shape[1], 1, self.dataset_shape[2]]
+        elif (len(self.dataset_shape) == 3) and (self.dataset_shape[2] <= 4):
             self.axis_order = [-1, 0, 1, -1, 2]
         elif len(self.dataset_shape) == 3:
-            # Pretend that the shape is ( (1,) + self.dataset_shape + (1,) )
-            #self.dataset_shape = [self.dataset_shape[0], self.dataset_shape[1], self.dataset_shape[2], 1, 1]
-            self.dataset_shape = [1, self.dataset_shape[1], self.dataset_shape[2], 1, self.dataset_shape[0]]
             self.axis_order = [-1, 1, 2, -1, 0]
         elif len(self.dataset_shape) == 4:
-            # Pretend that the shape is ( (1,) + self.dataset_shape )
-            #self.dataset_shape = [self.dataset_shape[0], self.dataset_shape[1], self.dataset_shape[2], self.dataset_shape[3], 1]
-            self.dataset_shape = [1, self.dataset_shape[1], self.dataset_shape[2], self.dataset_shape[3], self.dataset_shape[0]]
             self.axis_order = [-1, 1, 2, 3, 0]
-        # elif len(self.dataset_shape) == 1:
-        #     # Pretend that the shape is ( (1,) + self.dataset_shape + (1,1) )
-        #     self.dataset_shape = [1, self.dataset_shape[0], 1, 1, 1]
+        elif len(self.dataset_shape) == 5:
+            self.axis_order = [0, 1, 2, 3, 4]
         else:
-            pass
-            # assert(False, \
-            # "slicing into an array of shape=%r requested, but slicing is %r" \
-            # % (self.dataset_shape, slicing) )
+            raise Exception("Unacceptable shape provided for display. Found shape to be \"" + self.dataset_shape + "\".")
 
-        self.dataset_shape = tuple(self.dataset_shape)
+        # Construct the shape to be singleton if the axis order is irrelevant or the appropriate shape for the reordered axis.
+        self.dataset_shape = tuple([1 if _ == -1 else self.dataset_shape[_] for _ in self.axis_order])
 
     @advanced_debugging.log_call(logger)
     def numberOfChannels(self):
-        return self.dataset_shape[-1]
+        return(self.dataset_shape[-1])
 
     @advanced_debugging.log_call(logger)
     def clean_up(self):
-        self.full_path = None
+        # Close file
+        if self.file_handle is not None:
+            self.file_handle.close()
+            self.file_handle = None
+
         self.file_path = None
         self.dataset_path = None
+        self.full_path = None
         self.dataset_dtype = None
         self.dataset_shape = None
 
     @advanced_debugging.log_call(logger)
     def dtype(self):
-        return self.dataset_dtype
+        return(self.dataset_dtype)
 
     @advanced_debugging.log_call(logger)
     def shape(self):
-        return self.dataset_shape
+        return(self.dataset_shape)
 
     @advanced_debugging.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('HDF5DataSource: slicing is not pure')
 
-        slicing = list(slicing)
-
-        for i, (each_slicing, each_shape) in enumerate(itertools.izip(slicing, self.dataset_shape)):
-            slicing[i] = advanced_iterators.reformat_slice(each_slicing, each_shape)
-
-        slicing = tuple(slicing)
-
         assert(len(slicing) == len(self.dataset_shape), "Expect a slicing for a txyzc array.")
 
-        return HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing)
+        advanced_iterators.reformat_slices(slicing, self.dataset_shape)
+
+        return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing))
 
     @advanced_debugging.log_call(logger)
     def setDirty( self, slicing):
@@ -212,8 +233,39 @@ assert issubclass(HDF5DataSource, SourceABC)
 
 
 class HDF5DataRequest( object ):
+    """
+        Created by an HDF5DataSource to provide a way to request slices of the HDF5 file in a nice way.
+
+        Attributes:
+          file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
+          dataset_path(str):                       Internal path to the dataset
+          axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request.
+          dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
+          throw_on_not_found(bool):                Whether to throw an exception if the dataset is not found.
+
+    """
+
+    #TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
+    #TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.
+
     @advanced_debugging.log_call(logger)
     def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, throw_on_not_found = False ):
+        """
+            Constructs an HDF5DataRequest using a given file and path to the dataset. Optionally, throwing can be
+            suppressed if the source is not found.
+
+            Args:
+                file_handle(h5py.File or str):              A file handle for the HDF5 file.
+                dataset_path(str):                          Internal path to the dataset
+                axis_order(tuple of ints):                  A tuple representing how to reshape the array before returning a request.
+                dataset_dtype(numpy.dtype or type):         The type of the underlying dataset.
+                slicing(tuple of ints):                     The slicing to extract from the HDF5 file.
+                throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.
+
+            Returns:
+                (slice):                     a tuple of slices with all default values filled if possible.
+        """
+
         # TODO: Look at adding assertion check on slices.
 
         self.file_handle = file_handle
@@ -224,6 +276,9 @@ class HDF5DataRequest( object ):
 
         self._result = None
 
+        # Clean up slicing. Here self.slicing is the requested slicing.
+        # actual_slicing_dict includes a key for each_axis.
+        # To construct the list requires a second pass either way.
         self.slicing = list()
         actual_slicing_dict = dict()
         for i, (each_slice, each_axis) in enumerate(itertools.izip(slicing, self.axis_order)):
@@ -233,39 +288,43 @@ class HDF5DataRequest( object ):
 
         self.slicing = tuple(self.slicing)
 
-        self.actual_slicing = numpy.zeros((len(actual_slicing_dict),), dtype = slice)
-        for each_axis in sorted(actual_slicing_dict.keys()):
-            self.actual_slicing[each_axis] = actual_slicing_dict[each_axis]
+        # As the dictionary sorts by keys, we are ensured to have the slices in the order of the axes.
+        self.actual_slicing = actual_slicing_dict.values()
 
+        # Convert to tuple as it is expected.
         self.actual_slicing = tuple(self.actual_slicing)
 
     @advanced_debugging.log_call(logger)
     def wait( self ):
         if self._result is None:
-            if True:
-                slicing_shape = advanced_iterators.len_slices(self.slicing)
-                self._result = numpy.zeros(slicing_shape, dtype = self.dataset_dtype)
+            # Construct a result the size of the slicing
+            slicing_shape = advanced_iterators.len_slices(self.slicing)
+            self._result = numpy.zeros(slicing_shape, dtype = self.dataset_dtype)
 
-                try:
-                    #print self.file_handle
-                    #print self.dataset_path
-                    dataset = self.file_handle[self.dataset_path]
-                    a_result = dataset[self.actual_slicing]
-                    a_result = numpy.array(a_result)
+            try:
+                dataset = self.file_handle[self.dataset_path]
 
-                    the_axis_order = numpy.array(self.axis_order)
-                    a_result = a_result.transpose(the_axis_order[the_axis_order != -1])
+                a_result = dataset[self.actual_slicing]
+                a_result = numpy.array(a_result)
 
-                    for i, each_axis_order in enumerate(self.axis_order):
-                        if each_axis_order == -1:
-                            a_result = advanced_numpy.add_singleton_axis_pos(a_result, i)
+                # Get the axis order without the singleton axes
+                the_axis_order = numpy.array(self.axis_order)
+                the_axis_order = the_axis_order[the_axis_order != -1]
 
-                    self._result[:] = a_result
-                except KeyError:
-                    if self.throw_on_not_found:
-                       raise
+                # Reorder the axes for Volumina
+                a_result = a_result.transpose(the_axis_order)
 
-                logger.debug("Found the result.")
+                # Insert singleton axes to make 5D for Volumina
+                for i, each_axis_order in enumerate(self.axis_order):
+                    if each_axis_order == -1:
+                        a_result = advanced_numpy.add_singleton_axis_pos(a_result, i)
+
+                self._result[:] = a_result
+            except KeyError:
+                if self.throw_on_not_found:
+                   raise
+
+            logger.debug("Found the result.")
 
         return self._result
 
@@ -295,6 +354,20 @@ assert issubclass(HDF5DataRequest, RequestABC)
 
 
 class HDF5Viewer(Viewer):
+    """
+        Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.
+
+        Attributes:
+          file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
+          file_path(str):                          External path to the file
+          dataset_path(str):                       Internal path to the dataset
+          full_path(str):                          Both external and internal paths combined as one path
+          dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
+          dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
+          axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
+
+    """
+
     @advanced_debugging.log_call(logger)
     def __init__(self, parent=None):
         super(HDF5Viewer, self).__init__(parent)
@@ -635,6 +708,8 @@ class SyncedChannelLayers(object):
 
 @advanced_debugging.log_call(logger)
 def main(*argv):
+    # TODO: Try to extract code for viewing each file with each viewer. This way multiple files generates multiple viewers.
+
     # Only necessary if running main (normally if calling command line). No point in importing otherwise.
     import read_config
     import argparse
@@ -672,18 +747,25 @@ def main(*argv):
             if isinstance(each_layer_source_location_list, str):
                 parsed_args.parameters[i][each_layer_name] = [ each_layer_source_location_list ]
 
-    # Find all matches and store them for later
+    # Find all possible matches and whether they exist or not
     parsed_args.parameters_expanded = list()
     for each_layer_names_locations_group in parsed_args.parameters:
 
+        # As we go through all files, we don't want to include the same layer more than once.
+        # Also, we want to preserve the layer order in the configure file.
         parsed_args.parameters_expanded.append(collections.OrderedDict())
         for (each_layer_name, each_layer_source_location_list) in each_layer_names_locations_group.items():
 
+            # Ensure the order of files is preserved (probably not an issue if were sorted) and each is unique.
+            # This way we know they get fused in the right sequential order if necessary.
             parsed_args.parameters_expanded[-1][each_layer_name] = collections.OrderedDict()
             for each_layer_source_location in each_layer_source_location_list:
+
+                # TODO: See if we can't move this loop out. (Could change this parsed_args.parameters_expanded to an collections.OrderedDict and store none for values (ordered set).)
                 for each_file in parsed_args.file_handles:
-                    new_matches = HDF5_searchers.get_matching_paths_groups_found(each_file, each_layer_source_location)
-                    parsed_args.parameters_expanded[-1][each_layer_name].update(new_matches)
+                    new_matches = HDF5_searchers.get_matching_grouped_paths(each_file, each_layer_source_location)
+                    new_matches_ldict = itertools.izip(new_matches, itertools.repeat(None))
+                    parsed_args.parameters_expanded[-1][each_layer_name].update(new_matches_ldict)
 
 
     layer_names_locations_groups = parsed_args.parameters_expanded
@@ -692,7 +774,7 @@ def main(*argv):
     viewer = HDF5Viewer()
     viewer.show()
 
-
+    # Must reverse as Volumina puts the last items near the top.
     for each_file in reversed(parsed_args.file_handles):
         for each_layer_names_locations_group in reversed(layer_names_locations_groups):
             layer_sync_list = []
@@ -700,19 +782,19 @@ def main(*argv):
             for (each_layer_name, each_layer_source_dict_location_found) in reversed(each_layer_names_locations_group.items()):
                 each_source = []
 
-                for each_layer_source_location, each_layer_source_location_found in each_layer_source_dict_location_found.items():
+                # Ignore whether the file exists as that may differ for different files
+                for each_layer_source_location in each_layer_source_dict_location_found.keys():
                     each_layer_source_location = each_layer_source_location.lstrip("/")
 
                     each_file_source = None
 
-                    if each_layer_source_location_found:
+                    # Try to make the source. If it fails, we take no source.
+                    try:
                         each_file_source = HDF5DataSource(each_file, each_layer_source_location)
+                    except HDF5DatasetNotFoundException:
+                        each_file_source = None
 
                     each_source.append(each_file_source)
-
-                print each_layer_name
-                print len(each_source)
-                print each_layer_source_dict_location_found.keys()
 
                 if len(each_source) > 1:
                     try:
