@@ -126,7 +126,35 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
     return(groups)
 
 
-def get_matching_paths_groups_found(a_filehandle, a_path_pattern):
+def get_matching_grouped_paths(a_filehandle, a_path_pattern):
+    """
+        Looks for existing paths that match the full provide pattern path.
+        Returns a list of matches as keys and whether they are found in the HDF5 file or not.
+
+        Args:
+            a_filehandle(h5py.File):        an HDF5 file.
+            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
+
+        Note:
+            TODO: Write doctests.
+
+        Returns:
+            (list):                         an ordered dictionary with possible paths that fit the pattern and whether they are found.
+    """
+
+    paths_found = collections.OrderedDict()
+
+    for each_path_components in itertools.product(*get_matching_paths_groups(a_filehandle, a_path_pattern)):
+        each_path = "/" + "/".join([_ for _ in each_path_components])
+
+        paths_found[each_path] = None
+
+    paths_found = paths_found.keys()
+
+    return(paths_found)
+
+
+def get_matching_grouped_paths_found(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
         Returns a list of matches as keys and whether they are found in the HDF5 file or not.
