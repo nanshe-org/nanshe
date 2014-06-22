@@ -374,7 +374,7 @@ def region_properties(new_label_image, *args, **kwargs):
                 each_type = type(each_sample_value)
                 each_shape = tuple()
 
-                if (each_type is numpy.ndarray) and (each_name in fixed_shape_properties):
+                if isinstance(each_sample_value, numpy.ndarray) and (each_name in fixed_shape_properties):
                     each_type = each_sample_value.dtype
                     each_shape = each_sample_value.shape
                 else:
