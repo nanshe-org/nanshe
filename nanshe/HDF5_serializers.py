@@ -39,7 +39,7 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
 
     close_fid = False
 
-    if type(fid) is str:
+    if isinstance(fid, str):
         fid = h5py.File(fid, "a")
         close_fid = True
 
@@ -79,7 +79,7 @@ def read_numpy_structured_array_from_HDF5(fid, internalPath):
 
     close_fid = False
 
-    if type(fid) is str:
+    if isinstance(fid, str):
         fid = h5py.File(fid, "r")
         close_fid = True
 
