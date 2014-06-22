@@ -83,7 +83,7 @@ def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, over
             A function, which will take a given array name and value and write them out.
     """
 
-    if type(hdf5_handle) is str:
+    if isinstance(hdf5_handle, str):
         hdf5_handle = h5py.File(hdf5_handle, "a")
 
     if (enable):
