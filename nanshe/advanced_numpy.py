@@ -488,10 +488,10 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
             
     """
 
-    if type(reps_after) is not tuple:
+    if not isinstance(reps_after, tuple):
         reps_after = (reps_after,)
 
-    if type(reps_before) is not tuple:
+    if not isinstance(reps_before, tuple):
         reps_before = (reps_before,)
 
     if (not reps_after) and (not reps_before):
