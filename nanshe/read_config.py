@@ -71,8 +71,22 @@ def read_parameters(config_filename, maintain_order = False):
         for each_value in data:
             if isinstance(each_value, json_dict):
                 each_value = ascii_encode_dict(each_value)
+
+                # Drop comments from dictionaries
+                new_each_value = json_dict()
+                for each_key_in_each_value, each_value_in_each_value in each_value.items():
+                    if not each_key_in_each_value.startswith("__comment__"):
+                        new_each_value[each_key_in_each_value] = each_value_in_each_value
+                each_value = new_each_value
             elif isinstance(each_value, list):
                 each_value = ascii_encode_list(each_value)
+
+                # Drop comments from lists
+                new_each_value = list()
+                for each_value_in_each_value in each_value.items():
+                    if not each_value_in_each_value.startswith("__comment__"):
+                        new_each_value.append(each_value_in_each_value)
+                each_value = new_each_value
             elif isinstance(each_value, unicode) or isinstance(each_value, str):
                 each_value = ascii_encode_str(each_value)
 
