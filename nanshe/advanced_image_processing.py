@@ -12,6 +12,7 @@ import numpy
 
 # For image processing.
 import scipy
+import scipy.interpolate
 import scipy.ndimage
 import scipy.spatial
 import scipy.spatial.distance
@@ -56,6 +57,44 @@ import HDF5_logger
 # Get the logger
 logger = advanced_debugging.logging.getLogger(__name__)
 
+
+
+@advanced_debugging.log_call(logger)
+def removing_lines(new_data, **parameters):
+    """
+        Due to registration errors, there will sometimes be lines that are zero. To correct this, we find an interpolated
+        value and
+
+        Args:
+            new_data(numpy.ndarray):      array of raw data.
+            parameters(dict):             essentially unused.
+
+        Returns:
+            numpy.ndarray:                a new array with the lines interpolated away.
+    """
+
+    result = numpy.zeros(new_data.shape)
+
+    points = numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij")
+
+    for i in xrange(new_data.shape[0]):
+        new_data_i = new_data[i]
+        zero_mask = (new_data_i == 0)
+
+        erosion_structure = numpy.ones(tuple(parameters["erosion_shape"]))
+        dilation_structure = numpy.ones(tuple(parameters["dilation_shape"]))
+
+        zero_mask_eroded = skimage.morphology.binary_erosion(zero_mask, erosion_structure)
+        zero_mask_dilated = skimage.morphology.binary_dilation(zero_mask, dilation_structure)
+
+        zero_mask_outline = zero_mask_dilated - zero_mask_eroded
+        zero_mask_outline_points = points[:, zero_mask_outline]
+
+        new_data_i_zero_mask_outline_interpolation = scipy.interpolate.griddata(zero_mask_outline_points, new_data_i[zero_mask_outline], tuple(points), method = "linear")
+
+        result[i] = numpy.where(zero_mask, new_data_i_zero_mask_outline_interpolation, new_data_i)
+
+    return(result)
 
 
 @advanced_debugging.log_call(logger)
