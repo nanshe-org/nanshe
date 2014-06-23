@@ -81,16 +81,23 @@ def removing_lines(new_data, **parameters):
         new_data_i = new_data[i]
         zero_mask = (new_data_i == 0)
 
+        # Get an outline of the region around the parts of the image that contain zeros
         erosion_structure = numpy.ones(tuple(parameters["erosion_shape"]))
         dilation_structure = numpy.ones(tuple(parameters["dilation_shape"]))
 
         zero_mask_eroded = skimage.morphology.binary_erosion(zero_mask, erosion_structure)
         zero_mask_dilated = skimage.morphology.binary_dilation(zero_mask, dilation_structure)
-
         zero_mask_outline = zero_mask_dilated - zero_mask_eroded
+
+        # Get the points that correspond to those
         zero_mask_outline_points = points[:, zero_mask_outline]
 
         new_data_i_zero_mask_outline_interpolation = scipy.interpolate.griddata(zero_mask_outline_points, new_data_i[zero_mask_outline], tuple(points), method = "linear")
+
+        # Only need to check for nan in our case.
+        new_data_i_zero_mask_outline_interpolation = numpy.where((new_data_i_zero_mask_outline_interpolation == numpy.nan),
+                                                                 new_data_i_zero_mask_outline_interpolation,
+                                                                 0)
 
         result[i] = numpy.where(zero_mask, new_data_i_zero_mask_outline_interpolation, new_data_i)
 
@@ -143,10 +150,9 @@ def preprocess_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(
 
     # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
 
-    # Maybe should copy data so as not to change the original.
-    # new_data_processed = new_data.copy()
-    new_data_processed = normalize_data(new_data, **parameters["normalize_data"])
-    logger.debug("(new_data_processed > 0).sum() = " + repr((new_data_processed > 0).sum()))
+    new_data_lines_removed = removing_lines(new_data)
+
+    new_data_processed = normalize_data(new_data_lines_removed, **parameters["normalize_data"])
 
     return(new_data_processed)
 
