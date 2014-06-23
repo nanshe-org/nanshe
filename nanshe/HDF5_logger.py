@@ -32,6 +32,10 @@ class EmptyArrayLogger(object):
     __bool__ = __nonzero__
 
     @advanced_debugging.log_call(logger)
+    def __contains__(self, array_name):
+        return(False)
+
+    @advanced_debugging.log_call(logger)
     def __call__(self, array_name, array_value):
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
         if array_value.size:
@@ -51,6 +55,10 @@ class HDF5ArrayLogger(object):
 
     # For forward compatibility with Python 3
     __bool__ = __nonzero__
+
+    @advanced_debugging.log_call(logger)
+    def __contains__(self, array_name):
+        return(array_name in self.hdf5_handle)
 
     @advanced_debugging.log_call(logger)
     def __call__(self, array_name, array_value):
