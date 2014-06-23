@@ -47,7 +47,7 @@ def batch_generate_save_neurons(*new_filenames, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def generate_save_neurons(new_filename, debug = False, resume = False, **parameters):
+def generate_save_neurons(new_filename, debug = False, resume = False, run_stage = "all", **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
         
@@ -170,6 +170,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, **paramet
             resume_logger("preprocessed_images", new_preprocessed_images)
             array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
 
+        if run_stage == "preprocessing":
+            return
+
         # Find the dictionary
         new_dictionary = None
         if "dictionary" in resume_logger:
@@ -178,6 +181,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, **paramet
             new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
             resume_logger("dictionary", new_dictionary)
             array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
+
+        if run_stage == "dictionary":
+            return
 
         # Find the neurons
         new_neurons = None
@@ -191,6 +197,7 @@ def generate_save_neurons(new_filename, debug = False, resume = False, **paramet
 
         # Save the configuration parameters in the attributes as a string.
         if "parameters" not in new_file[output_directory].attrs:
+            # Write the configuration parameters in the attributes as a string.
             new_file[output_directory].attrs["parameters"] = repr(parameters)
 
 
