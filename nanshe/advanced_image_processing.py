@@ -1365,44 +1365,24 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = H
 
 
 @advanced_debugging.log_call(logger)
-def generate_neurons(new_images, resume_logger = HDF5_logger.EmptyArrayLogger(), array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+def postprocess_data(new_dictionary, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
-        Generates the neurons.
+        Generates neurons from the dictionary.
         
         Args:
-            neuron_1(numpy.ndarray):      first neuron (prefered for tie breaking).
-            neuron_2(numpy.ndarray):      second neuron (one to merge in).
-            parameters(dict):             dictionary of parameters
-        
-        Note:
-            Todo
-            Look into move data normalization into separate method (have method chosen by config file).
+            new_dictionary(numpy.ndarray):        dictionary of basis images to analyze.
+            array_debug_logger(callable):         logger for array debug output.
+            parameters(dict):                     dictionary of parameters
         
         Returns:
-            dict: the dictionary found.
+            numpy.ndarray:                        structured array with relevant information for each neuron.
     """
 
+
     new_neurons_set = None
-    new_dictionary = None
-
-    if "dictionary" in resume_logger:
-        new_dictionary = resume_logger["dictionary"]
-    else:
-        new_preprocessed_images = None
-
-        if "preprocessed_images" in resume_logger:
-            new_preprocessed_images = resume_logger["preprocessed_images"]
-        else:
-            new_preprocessed_images = preprocess_data(new_images, array_debug_logger = array_debug_logger, **parameters["preprocess_data"])
-            resume_logger("preprocessed_images", new_preprocessed_images)
-            array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
 
 
-        new_dictionary = generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
-        resume_logger("dictionary", new_dictionary)
-        array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
-
-
+    # Puts each dictionary basis debug log into a separate group depending on which basis image it was a part of.
     def array_debug_logger_enumerator(new_list):
         neuron_sets_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_logger("neuron_sets",
                                                                                              array_debug_logger)
@@ -1411,8 +1391,8 @@ def generate_neurons(new_images, resume_logger = HDF5_logger.EmptyArrayLogger(),
             yield ( (i, each, HDF5_logger.create_subgroup_HDF5_array_logger(i_str, neuron_sets_array_debug_logger)) )
 
     # Get all neurons for all images
-    new_neurons_set = get_empty_neuron(new_images[0])
-    unmerged_neuron_set = get_empty_neuron(new_images[0])
+    new_neurons_set = get_empty_neuron(new_dictionary[0])
+    unmerged_neuron_set = get_empty_neuron(new_dictionary[0])
     for i, each_new_dictionary_image, each_array_debug_logger in array_debug_logger_enumerator(new_dictionary):
         each_new_neuron_set = wavelet_denoising(each_new_dictionary_image, array_debug_logger = each_array_debug_logger,
                                                 **parameters["wavelet_denoising"])
@@ -1439,4 +1419,53 @@ def generate_neurons(new_images, resume_logger = HDF5_logger.EmptyArrayLogger(),
 
     array_debug_logger("new_neurons_set_contours", new_neurons_set_contours)
 
+
     return(new_neurons_set)
+
+
+@advanced_debugging.log_call(logger)
+def generate_neurons(new_images, resume_logger = HDF5_logger.EmptyArrayLogger(), array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+    """
+        Generates neurons from raw images.
+
+        Args:
+            new_images(numpy.ndarray):            raw images for analysis.
+            array_debug_logger(callable):         logger for array debug output.
+            parameters(dict):                     dictionary of parameters
+
+        Returns:
+            numpy.ndarray:                        structured array with relevant information for each neuron.
+    """
+
+
+    new_neurons = None
+
+
+    new_preprocessed_images = None
+    if "preprocessed_images" in resume_logger:
+        new_preprocessed_images = resume_logger["preprocessed_images"]
+    else:
+        new_preprocessed_images = preprocess_data(new_images, array_debug_logger = array_debug_logger, **parameters["preprocess_data"])
+        resume_logger("preprocessed_images", new_preprocessed_images)
+        array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
+
+
+    new_dictionary = None
+    if "dictionary" in resume_logger:
+        new_dictionary = resume_logger["dictionary"]
+    else:
+        new_dictionary = generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
+        resume_logger("dictionary", new_dictionary)
+        array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
+
+
+    if "neurons" in resume_logger:
+        new_neurons = resume_logger["neurons"]
+    else:
+        new_neurons = postprocess_data(new_dictionary, array_debug_logger, **parameters["postprocess_data"])
+        resume_logger("neurons", new_neurons)
+        if new_neurons.size == 0:
+            logger.warning("No neurons were found in the data.")
+
+
+    return(new_neurons)

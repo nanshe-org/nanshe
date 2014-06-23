@@ -171,11 +171,6 @@ def generate_save_neurons(new_filename, debug = False, resume = False, **paramet
                                                                      array_debug_logger = array_debug_logger,
                                                                      **parameters)
 
-            if new_neurons.size:
-                HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
-            else:
-                logger.warning("No neurons were found in the data.")
-
         if "parameters" not in new_file[output_directory].attrs:
             # Write the configuration parameters in the attributes as a string.
             new_file[output_directory].attrs["parameters"] = repr(parameters)
