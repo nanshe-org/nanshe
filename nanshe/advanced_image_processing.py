@@ -1382,17 +1382,26 @@ def generate_neurons(new_images, resume_logger = HDF5_logger.EmptyArrayLogger(),
             dict: the dictionary found.
     """
 
-    new_preprocessed_images = preprocess_data(new_images, array_debug_logger = array_debug_logger, **parameters["preprocess_data"])
+    new_neurons_set = None
+    new_dictionary = None
 
-    resume_logger("preprocessed_images", new_preprocessed_images)
+    if "dictionary" in resume_logger:
+        new_dictionary = resume_logger["dictionary"]
+    else:
+        new_preprocessed_images = None
 
-    array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
+        if "preprocessed_images" in resume_logger:
+            new_preprocessed_images = resume_logger["preprocessed_images"]
+        else:
+            new_preprocessed_images = preprocess_data(new_images, array_debug_logger = array_debug_logger, **parameters["preprocess_data"])
+            resume_logger("preprocessed_images", new_preprocessed_images)
+            array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
 
-    new_dictionary = generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
 
-    resume_logger("dictionary", new_dictionary)
+        new_dictionary = generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
+        resume_logger("dictionary", new_dictionary)
+        array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
 
-    array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
 
     def array_debug_logger_enumerator(new_list):
         neuron_sets_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_logger("neuron_sets",

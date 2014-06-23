@@ -47,7 +47,7 @@ def batch_generate_save_neurons(*new_filenames, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def generate_save_neurons(new_filename, debug = False, **parameters):
+def generate_save_neurons(new_filename, debug = False, resume = False, **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
         
@@ -118,65 +118,67 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
     with h5py.File(new_hdf5_filepath_details.externalPath, "a") as new_file:
         # Must contain the internal path in question
         if new_hdf5_filepath_details.internalPath not in new_file:
-            raise Exception(
-                "The given data file \"" + new_filename + "\" does not contain \"" + new_hdf5_filepath_details.internalPath + "\".")
+            raise Exception( "The given data file \"" + new_filename + "\" does not contain \"" + new_hdf5_filepath_details.internalPath + "\".")
 
         # Must be a path to a h5py.Dataset not a h5py.Group (would be nice to relax this constraint)
         elif not isinstance(new_file[new_hdf5_filepath_details.internalPath], h5py.Dataset):
-            raise Exception(
-                "The given data file \"" + new_filename + "\" does not not contain a dataset for \"" + new_hdf5_filepath_details.internalPath + "\".")
+            raise Exception("The given data file \"" + new_filename + "\" does not contain a dataset at location \"" + new_hdf5_filepath_details.internalPath + "\".")
 
         # Where to read data files from
         input_directory = new_hdf5_filepath_details.internalDirectory.rstrip("/")
 
         # Where the results will be saved to
         output_directory = ""
-
         if input_directory == "":
             # if we are at the root
             output_directory = "/ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip("/")
         else:
             # otherwise (not at that the root)
-            output_directory = input_directory + "_ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip(
-                "/")
+            output_directory = input_directory + "_ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip("/")
 
         # Delete the old output directory if it exists.
-        if output_directory in new_file:
+        if (not resume) and (output_directory in new_file):
+            # Purge the output directory.
             del new_file[output_directory]
+            new_file.create_group(output_directory)
+        elif output_directory not in new_file:
+            # Create a new output directory.
+            new_file.create_group(output_directory)
 
-        # Create a new output directory.
-        new_file.create_group(output_directory)
-
-        # Create a hardlink (does not copy) the original data
-        new_file[output_directory]["original_images"] = new_file[new_hdf5_filepath_details.internalPath]
-
-        # Copy out images for manipulation in memory
-        new_images = new_file[output_directory]["original_images"][:]
-
-        # Get a debug logger for the HDF5 file (if needed)
-        array_debug_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory],
-                                                                    group_name = "debug",
-                                                                    enable = debug,
-                                                                    overwrite_group = True)
-
-        resume_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory])
-
-        array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
-
-        # Generate the new neurons
-        new_neurons = advanced_image_processing.generate_neurons(new_images,
-                                                                 resume_logger = resume_logger,
-                                                                 array_debug_logger = array_debug_logger,
-                                                                 **parameters)
+        # Create a hardlink (does not copy the original data)
+        if "original_images" not in new_file[output_directory]:
+            new_file[output_directory]["original_images"] = new_file[new_hdf5_filepath_details.internalPath]
 
         # Save them
-        if new_neurons.size:
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
-        else:
-            logger.warning("No neurons were found in the data.")
+        if ("neurons" not in new_file[output_directory]):
+            # Copy out images for manipulation in memory
+            new_images = new_file[output_directory]["original_images"][:]
 
-        # Write the configuration parameters in the attributes as a string.
-        new_file[output_directory].attrs["parameters"] = repr(parameters)
+            # Get a debug logger for the HDF5 file (if needed)
+            array_debug_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory],
+                                                                        group_name = "debug",
+                                                                        enable = debug,
+                                                                        overwrite_group = True)
+
+            resume_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory])
+
+            if "original_images_max_projection" not in array_debug_logger:
+                array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
+
+            # Generate the new neurons
+            new_neurons = advanced_image_processing.generate_neurons(new_images,
+                                                                     resume_logger = resume_logger,
+                                                                     array_debug_logger = array_debug_logger,
+                                                                     **parameters)
+
+            if new_neurons.size:
+                HDF5_serializers.write_numpy_structured_array_to_HDF5(new_file[output_directory], "neurons", new_neurons, True)
+            else:
+                logger.warning("No neurons were found in the data.")
+
+        if "parameters" not in new_file[output_directory].attrs:
+            # Write the configuration parameters in the attributes as a string.
+            new_file[output_directory].attrs["parameters"] = repr(parameters)
 
 
 @advanced_debugging.log_call(logger)
