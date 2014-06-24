@@ -12,6 +12,8 @@ import operator
 import scipy.spatial
 import scipy.ndimage
 import scipy.ndimage.morphology
+import scipy.stats
+import scipy.stats.mstats
 
 # Need in order to have logging information no matter what.
 import advanced_debugging
@@ -1192,3 +1194,63 @@ def generate_labeled_contours(a_mask, separation_distance = 1.0, margin = 1.0):
     a_mask_contoured_labeled = scipy.ndimage.label(a_mask_contoured, structure = numpy.ones( (3,) * a_mask.ndim ))[0]
 
     return(a_mask_contoured_labeled)
+
+
+def quantile(data, probs):
+    """
+        Determines the quantiles for given data much like MATLAB's function
+
+        Args:
+            data(numpy.ndarray):               to find the quantiles of.
+            probs(int or numpy.ndarray):       either some sort of integer for the number of quantiles
+                                                    or an array of floats specifying the division for each quantile
+                                                    in the the range (0, 1)
+
+        Returns:
+            (numpy.ma.MaskedArray):            an array with the quantiles (the first dimension will be the same length as probs).
+
+        Examples:
+            >>> quantile(numpy.array([ 1.,  2.,  3.]), 2)
+            masked_array(data = [ 1.5  2.5],
+                         mask = False,
+                   fill_value = 1e+20)
+            <BLANKLINE>
+
+            >>> quantile(numpy.array([ 1.,  2.,  3.]), 3)
+            masked_array(data = [ 1.25  2.    2.75],
+                         mask = False,
+                   fill_value = 1e+20)
+            <BLANKLINE>
+
+            >>> quantile(numpy.array([ 1.,  2.,  3.]), numpy.array([ 0.25,  0.5,  0.75]))
+            masked_array(data = [ 1.25  2.    2.75],
+                         mask = False,
+                   fill_value = 1e+20)
+            <BLANKLINE>
+
+            >>> a = numpy.array([[-1.1176, -0.0679, -0.3031,  0.8261],
+            ...                  [ 1.2607, -0.1952,  0.023 ,  1.527 ],
+            ...                  [ 0.6601, -0.2176,  0.0513,  0.4669]])
+            >>> quantile(a, 2)
+            masked_array(data =
+             [[-0.22875 -0.2064  -0.14005  0.6465 ]
+             [ 0.9604  -0.13155  0.03715  1.17655]],
+                         mask =
+             False,
+                   fill_value = 1e+20)
+            <BLANKLINE>
+
+    """
+
+
+    probs_array = None
+    if isinstance(probs, (numpy.int, numpy.int_, numpy.int8, numpy.int16, numpy.int32, numpy.int64)):
+        probs_array = numpy.linspace(0, 1, probs + 2)[1:-1]
+    else:
+        probs_array = numpy.array(probs)
+
+
+    new_quantiles = scipy.stats.mstats.mquantiles(data, probs_array, alphap=0.5, betap=0.5, axis=0)
+
+
+    return(new_quantiles)
