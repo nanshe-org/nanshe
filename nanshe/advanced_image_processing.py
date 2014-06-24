@@ -105,6 +105,76 @@ def removing_lines(new_data, **parameters):
 
 
 @advanced_debugging.log_call(logger)
+def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **params):
+    @advanced_debugging.log_call(logger)
+    def extract_quantile(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **params):
+        if (params["step_size"] > new_data.shape[0]):
+            raise Exception("The step size provided, " + params["step_size"] + ", is larger than the number of frames in the data, " + new_data.shape[0] + ".")
+
+        window_centers = numpy.arange(0, new_data.shape[0], params["step_size"])
+
+        if window_centers[-1] != new_data.shape[0]:
+            window_centers = numpy.append(window_centers, new_data.shape[0])
+
+        def window_shape_iterator(window_centers = window_centers):
+            for each_window_center in window_centers:
+                each_window_lower = max(window_centers[0], each_window_center - params["half_window_size"])
+                each_window_upper = min(window_centers[-1], each_window_center + params["half_window_size"])
+
+                yield( (each_window_lower, each_window_center, each_window_upper) )
+
+        which_quantile = advanced_numpy.get_quantiles(params["which_quantile"])
+
+        window_quantiles = numpy.zeros( window_centers.shape + which_quantile.shape )
+        for i, (each_window_lower, each_window_center, each_window_upper) in enumerate(window_shape_iterator()):
+            each_quantile = advanced_numpy.quantile(new_data[each_window_lower:each_window_upper], params["which_quantile"], axis=None)
+
+            # Are there bad values in our result (shouldn't be if axis=None)
+            if each_quantile.mask.any():
+                msg = "Found erroneous regions in quantile calculation. Dropping in HDF5 logger."
+
+                logger.error(msg)
+                array_debug_logger("each_quantile_" + repr(i), each_quantile)
+                raise Exception(msg)
+            else:
+                each_quantile = each_quantile.data
+
+            window_quantiles[i] = each_quantile
+
+        # Should only be one quantile. Drop the singleton dimension.
+        window_quantiles = window_quantiles[:, 0]
+
+        new_data_quantiled = scipy.interpolate.interp1d(window_centers, window_quantiles)(numpy.arange(new_data.shape[0]))
+
+        return(new_data_quantiled)
+
+
+    temporal_smoothing_gaussian_filter = vigra.filters.Kernel1D()
+    # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
+    temporal_smoothing_gaussian_filter.initGaussian(params["temporal_smoothing_gaussian_filter_stdev"], 1.0, 5 * params["temporal_smoothing_gaussian_filter_stdev"])
+    # TODO: Check what border treatment to use
+    temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
+
+    new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data, 0, temporal_smoothing_gaussian_filter)
+
+    new_data_quantiled = extract_quantile(new_data_temporally_smoothed, **params["extract_quantile"])
+
+    spatial_smoothing_gaussian_filter = vigra.filters.Kernel1D()
+    # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
+    spatial_smoothing_gaussian_filter.initGaussian(params["spatial_smoothing_gaussian_filter_stdev"], 1.0, 5 * params["spatial_smoothing_gaussian_filter_stdev"])
+    # TODO: Check what border treatment to use
+    spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
+
+    new_data_spatialy_smoothed = spatial_smoothing_gaussian_filter.copy()
+    for d in xrange(1, new_data_spatialy_smoothed.ndim):
+        new_data_spatialy_smoothed = vigra.filters.convolveOneDimension(new_data_spatialy_smoothed, d, spatial_smoothing_gaussian_filter)
+
+    new_data_baselined = (new_data - new_data_spatialy_smoothed) / new_data_spatialy_smoothed
+
+    return(new_data_baselined)
+
+
+@advanced_debugging.log_call(logger)
 def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
