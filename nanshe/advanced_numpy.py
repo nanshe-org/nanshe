@@ -1196,15 +1196,20 @@ def generate_labeled_contours(a_mask, separation_distance = 1.0, margin = 1.0):
     return(a_mask_contoured_labeled)
 
 
-def quantile(data, probs):
+def quantile(data, probs, axis = None):
     """
         Determines the quantiles for given data much like MATLAB's function
 
         Args:
-            data(numpy.ndarray):               to find the quantiles of.
-            probs(int or numpy.ndarray):       either some sort of integer for the number of quantiles
-                                                    or an array of floats specifying the division for each quantile
-                                                    in the the range (0, 1)
+            data(numpy.ndarray):                        to find the quantiles of.
+
+            probs(int or float or numpy.ndarray):       either some sort of integer for the number of quantiles
+                                                            or a single float specifying which quantile to get
+                                                            or an array of floats specifying the division for
+                                                            each quantile in the the range (0, 1).
+
+            axis(int or None):                          the axis to perform the calculation on (if default (None) then
+                                                            all, otherwise only on a particular axis.
 
         Returns:
             (numpy.ma.MaskedArray):            an array with the quantiles (the first dimension will be the same length as probs).
@@ -1213,31 +1218,37 @@ def quantile(data, probs):
             >>> quantile(numpy.array([ 1.,  2.,  3.]), 2)
             masked_array(data = [ 1.5  2.5],
                          mask = False,
-                   fill_value = 1e+20)
+                   fill_value = nan)
             <BLANKLINE>
 
             >>> quantile(numpy.array([ 1.,  2.,  3.]), 3)
             masked_array(data = [ 1.25  2.    2.75],
                          mask = False,
-                   fill_value = 1e+20)
+                   fill_value = nan)
             <BLANKLINE>
 
             >>> quantile(numpy.array([ 1.,  2.,  3.]), numpy.array([ 0.25,  0.5,  0.75]))
             masked_array(data = [ 1.25  2.    2.75],
                          mask = False,
-                   fill_value = 1e+20)
+                   fill_value = nan)
+            <BLANKLINE>
+
+            >>> quantile(numpy.array([ 1.,  2.,  3.]), 0.5)
+            masked_array(data = [ 2.],
+                         mask = False,
+                   fill_value = nan)
             <BLANKLINE>
 
             >>> a = numpy.array([[-1.1176, -0.0679, -0.3031,  0.8261],
             ...                  [ 1.2607, -0.1952,  0.023 ,  1.527 ],
             ...                  [ 0.6601, -0.2176,  0.0513,  0.4669]])
-            >>> quantile(a, 2)
+            >>> quantile(a, 2, axis = 0)
             masked_array(data =
              [[-0.22875 -0.2064  -0.14005  0.6465 ]
              [ 0.9604  -0.13155  0.03715  1.17655]],
                          mask =
              False,
-                   fill_value = 1e+20)
+                   fill_value = nan)
             <BLANKLINE>
 
     """
@@ -1250,7 +1261,13 @@ def quantile(data, probs):
         probs_array = numpy.array(probs)
 
 
-    new_quantiles = scipy.stats.mstats.mquantiles(data, probs_array, alphap=0.5, betap=0.5, axis=0)
+    new_quantiles = scipy.stats.mstats.mquantiles(data, probs_array, alphap=0.5, betap=0.5, axis=axis)
+
+
+    if not isinstance(new_quantiles, numpy.ma.MaskedArray):
+        new_quantiles = numpy.ma.MaskedArray(new_quantiles)
+
+    new_quantiles.set_fill_value(numpy.nan)
 
 
     return(new_quantiles)
