@@ -1196,6 +1196,64 @@ def generate_labeled_contours(a_mask, separation_distance = 1.0, margin = 1.0):
     return(a_mask_contoured_labeled)
 
 
+def get_quantiles(probs):
+    """
+        Determines the probabilites for quantiles for given data much like MATLAB's function
+
+        Args:
+            data(numpy.ndarray):                        to find the quantiles of.
+
+            probs(int or float or numpy.ndarray):       either some sort of integer for the number of quantiles
+                                                            or a single float specifying which quantile to get
+                                                            or an array of floats specifying the division for
+                                                            each quantile in the the range (0, 1).
+
+            axis(int or None):                          the axis to perform the calculation on (if default (None) then
+                                                            all, otherwise only on a particular axis.
+
+        Returns:
+            (numpy.ma.MaskedArray):            an array with the quantiles (the first dimension will be the same length as probs).
+
+        Examples:
+            >>> get_quantiles(0)
+            array([], dtype=float64)
+
+            >>> get_quantiles(1)
+            array([ 0.5])
+
+            >>> get_quantiles(3)
+            array([ 0.25,  0.5 ,  0.75])
+
+            >>> get_quantiles(0.5)
+            array([ 0.5])
+
+            >>> get_quantiles([0.25, 0.75])
+            array([ 0.25,  0.75])
+
+            >>> get_quantiles(numpy.array([0.25, 0.75]))
+            array([ 0.25,  0.75])
+
+    """
+
+    probs_array = None
+    if isinstance(probs, (numpy.int, numpy.int_, numpy.int8, numpy.int16, numpy.int32, numpy.int64)):
+        num_quantiles = probs
+        probs_array = numpy.linspace(0, 1, num_quantiles + 2)[1:-1]
+    elif isinstance(probs, (numpy.float, numpy.float_, numpy.float128, numpy.float16, numpy.float32, numpy.float64)):
+        a_quantile = probs
+        probs_array = numpy.array([a_quantile])
+    else:
+        probs_array = numpy.array(probs)
+        probs_array.sort()
+
+
+    if not ((0 < probs_array) & (probs_array < 1)).all():
+        raise Exception("Cannot pass values that are not within the range (0, 1).")
+
+
+    return(probs_array)
+
+
 def quantile(data, probs, axis = None):
     """
         Determines the quantiles for given data much like MATLAB's function
@@ -1253,21 +1311,13 @@ def quantile(data, probs, axis = None):
 
     """
 
-
-    probs_array = None
-    if isinstance(probs, (numpy.int, numpy.int_, numpy.int8, numpy.int16, numpy.int32, numpy.int64)):
-        probs_array = numpy.linspace(0, 1, probs + 2)[1:-1]
-    else:
-        probs_array = numpy.array(probs)
-
+    probs_array = get_quantiles(probs)
 
     new_quantiles = scipy.stats.mstats.mquantiles(data, probs_array, alphap=0.5, betap=0.5, axis=axis)
-
 
     if not isinstance(new_quantiles, numpy.ma.MaskedArray):
         new_quantiles = numpy.ma.MaskedArray(new_quantiles)
 
     new_quantiles.set_fill_value(numpy.nan)
-
 
     return(new_quantiles)
