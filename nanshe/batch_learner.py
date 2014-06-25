@@ -156,7 +156,7 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         array_debug_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory],
                                                                         group_name = "debug",
                                                                         enable = debug,
-                                                                        overwrite_group = True)
+                                                                        overwrite_group = False)
 
         # Saves intermediate result to make resuming easier
         resume_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory])
