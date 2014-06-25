@@ -60,7 +60,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 @advanced_debugging.log_call(logger)
-def removing_lines(new_data, **parameters):
+def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(),**parameters):
     """
         Due to registration errors, there will sometimes be lines that are zero. To correct this, we find an interpolated
         value and
@@ -161,7 +161,7 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
 
     new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data.astype(numpy.float32), 0, temporal_smoothing_gaussian_filter)
 
-    new_data_quantiled = extract_quantile(new_data_temporally_smoothed, **params["extract_quantile"])
+    new_data_quantiled = extract_quantile(new_data_temporally_smoothed, array_debug_logger, **params["extract_quantile"])
 
     spatial_smoothing_gaussian_filter = vigra.filters.Kernel1D()
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
@@ -225,20 +225,20 @@ def preprocess_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(
     # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
 
     # Remove line
-    new_data_lines_removed = removing_lines(new_data, **parameters["removing_lines"])
+    new_data_lines_removed = removing_lines(new_data, array_debug_logger, **parameters["removing_lines"])
 
     # Add the bias param
     new_data_bias = new_data + parameters["bias"]
 
     new_data_f0_result = new_data_bias.copy()
     if "extract_f0" in parameters:
-        new_data_f0_result = extract_f0(new_data_f0_result, **parameters["extract_f0"])
+        new_data_f0_result = extract_f0(new_data_f0_result, array_debug_logger, **parameters["extract_f0"])
 
     new_data_wavelet_result = new_data_f0_result.copy()
     if "wavelet_transform" in parameters:
-        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_wavelet_result, **parameters["wavelet_transform"])
+        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_wavelet_result, array_debug_logger, **parameters["wavelet_transform"])
 
-    new_data_processed = normalize_data(new_data_wavelet_result, **parameters["normalize_data"])
+    new_data_processed = normalize_data(new_data_wavelet_result, array_debug_logger, **parameters["normalize_data"])
 
     return(new_data_processed)
 
