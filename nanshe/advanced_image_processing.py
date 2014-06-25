@@ -126,7 +126,7 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
 
         which_quantile = advanced_numpy.get_quantiles(params["which_quantile"])
 
-        window_quantiles = numpy.zeros( window_centers.shape + which_quantile.shape )
+        window_quantiles = numpy.zeros( (window_centers.shape[0] - 1,) + new_data.shape[1:] )
         for i, (each_window_lower, each_window_center, each_window_upper) in enumerate(window_shape_iterator()):
             new_data_i = new_data[each_window_lower:each_window_upper]
 
