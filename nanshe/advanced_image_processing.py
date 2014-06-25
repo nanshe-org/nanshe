@@ -75,7 +75,7 @@ def removing_lines(new_data, **parameters):
 
     result = numpy.zeros(new_data.shape)
 
-    points = numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij")
+    points = numpy.array(numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij"))
 
     for i in xrange(new_data.shape[0]):
         new_data_i = new_data[i]
