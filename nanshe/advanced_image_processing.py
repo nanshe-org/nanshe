@@ -606,7 +606,7 @@ def generate_local_maxima_vigra(new_intensity_image):
 
 
 @advanced_debugging.log_call(logger)
-def generate_local_maxima_scikit_image(new_intensity_image, neighborhood_size = 1):
+def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborhood_size = 1):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
         Uses scikit image's skimage.feature.peak_local_max.
