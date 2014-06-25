@@ -228,15 +228,13 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
     except TypeError:
         scale = numpy.repeat([scale], im0.ndim)
 
-    imOut = numpy.zeros((
-                        scale.max() + 1,) + im0.shape)  # Why 6? When are we doing the 5th? I know Ferran told us before, but let's check again.
-    W = numpy.zeros(
-        (scale.max(),) + im0.shape)  # Need differences, but should we have 5 dimensions? Made 5 anyways, unlike Ferran.
+    imOut = numpy.zeros((scale.max() + 1,) + im0.shape)
+    W = numpy.zeros((scale.max(),) + im0.shape)
 
     imOut[0] = im0
     imPrev = im0.copy()
     imCur = im0.copy()
-    for i in xrange(1, scale.max() + 1):  # Ferran does not do the 5th yet, but we will
+    for i in xrange(1, scale.max() + 1):
 
         h_ker = binomial_1D_vigra_kernel(i)
 
