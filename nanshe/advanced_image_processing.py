@@ -156,7 +156,7 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
     # TODO: Check what border treatment to use
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data, 0, temporal_smoothing_gaussian_filter)
+    new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data.astype(numpy.float32), 0, temporal_smoothing_gaussian_filter)
 
     new_data_quantiled = extract_quantile(new_data_temporally_smoothed, **params["extract_quantile"])
 
@@ -168,7 +168,7 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
 
     new_data_spatialy_smoothed = new_data_quantiled.copy()
     for d in xrange(1, new_data_spatialy_smoothed.ndim):
-        new_data_spatialy_smoothed = vigra.filters.convolveOneDimension(new_data_spatialy_smoothed, d, spatial_smoothing_gaussian_filter)
+        new_data_spatialy_smoothed = vigra.filters.convolveOneDimension(new_data_spatialy_smoothed.astype(numpy.float32), d, spatial_smoothing_gaussian_filter)
 
     new_data_baselined = (new_data - new_data_spatialy_smoothed) / new_data_spatialy_smoothed
 
