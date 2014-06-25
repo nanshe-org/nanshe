@@ -161,6 +161,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         # Saves intermediate result to make resuming easier
         resume_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory])
 
+        if "original_images_max_projection" not in new_file[output_directory]:
+            array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
+
         # Preprocess images
         new_preprocessed_images = None
         if "preprocessed_images" in resume_logger:
