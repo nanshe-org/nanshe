@@ -120,7 +120,7 @@ class HDF5DataSource( QObject ):
 
         # Constructed standard shape and dtype if provided
         self.dataset_shape = tuple(shape) if shape is not None else None
-        self.dataset_dtype = numpy.dtype(dtype) if dtype is not None else None
+        self.dataset_dtype = numpy.dtype(dtype).type if dtype is not None else None
 
         self.axis_order = [-1, -1, -1, -1, -1]
 
@@ -145,13 +145,13 @@ class HDF5DataSource( QObject ):
             dataset = self.file_handle[self.dataset_path]
             #print dataset.name
             self.dataset_shape = dataset.shape
-            self.dataset_dtype = dataset.dtype
+            self.dataset_dtype = dataset.dtype.type
         elif (self.dataset_shape is None):
             dataset = self.file_handle[self.dataset_path]
             self.dataset_shape = dataset.shape
         elif (self.dataset_dtype is None):
             dataset = self.file_handle[self.dataset_path]
-            self.dataset_dtype = dataset.dtype
+            self.dataset_dtype = dataset.dtype.type
 
         # Using the shape information, determine how to reshape the axes to present the data as we wish.
         if len(self.dataset_shape) == 1:
