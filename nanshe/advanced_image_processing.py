@@ -166,7 +166,7 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
     # TODO: Check what border treatment to use
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_spatialy_smoothed = spatial_smoothing_gaussian_filter.copy()
+    new_data_spatialy_smoothed = new_data_quantiled.copy()
     for d in xrange(1, new_data_spatialy_smoothed.ndim):
         new_data_spatialy_smoothed = vigra.filters.convolveOneDimension(new_data_spatialy_smoothed, d, spatial_smoothing_gaussian_filter)
 
