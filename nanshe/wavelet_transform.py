@@ -8,7 +8,10 @@ __date__ = "$May 1, 2014 2:24:55PM$"
 import numpy
 import scipy
 import scipy.misc
+
 import vigra
+
+import HDF5_logger
 
 
 # Need in order to have logging information no matter what.
@@ -181,7 +184,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 
 
 @advanced_debugging.log_call(logger)
-def wavelet_transform(im0, scale = 5, include_intermediates = False):
+def wavelet_transform(im0, array_debug_logger = HDF5_logger.EmptyArrayLogger(), scale = 5, include_intermediates = False):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
         
