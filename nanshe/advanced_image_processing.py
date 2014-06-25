@@ -229,11 +229,11 @@ def preprocess_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(
 
     new_data_f0_result = new_data_bias.copy()
     if "extract_f0" in parameters:
-        new_data_f0_result = extract_f0(new_data_f0_result)
+        new_data_f0_result = extract_f0(new_data_f0_result, **parameters["extract_f0"])
 
     new_data_wavelet_result = new_data_f0_result.copy()
     if "wavelet_transform" in parameters:
-        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_wavelet_result)
+        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_wavelet_result, **parameters["wavelet_transform"])
 
     new_data_processed = normalize_data(new_data_wavelet_result, **parameters["normalize_data"])
 
