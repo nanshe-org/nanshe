@@ -128,7 +128,10 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
 
         window_quantiles = numpy.zeros( window_centers.shape + which_quantile.shape )
         for i, (each_window_lower, each_window_center, each_window_upper) in enumerate(window_shape_iterator()):
-            each_quantile = advanced_numpy.quantile(new_data[each_window_lower:each_window_upper], params["which_quantile"], axis=None)
+            new_data_i = new_data[each_window_lower:each_window_upper]
+
+            each_quantile = advanced_numpy.quantile(new_data_i.reshape(new_data_i.shape[0], -1), params["which_quantile"], axis=0)
+            each_quantile = each_quantile.reshape(each_quantile.shape[0], *new_data_i.shape[1:])
 
             # Are there bad values in our result (shouldn't be if axis=None)
             if each_quantile.mask.any():
