@@ -224,23 +224,36 @@ def preprocess_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(
 
     # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
 
-    # Remove line
-    new_data_lines_removed = removing_lines(new_data, array_debug_logger, **parameters["removing_lines"])
+    # Remove lines
+    if "removing_lines" in parameters:
+        new_data_lines_removed = removing_lines(new_data, array_debug_logger, **parameters["removing_lines"])
+        array_debug_logger("images_lines_removed", new_data_lines_removed)
+    else:
+        new_data_lines_removed = new_data
 
     # Add the bias param
-    new_data_bias = new_data + parameters["bias"]
+    if "bias" in parameters:
+        new_data_bias = new_data_lines_removed + parameters["bias"]
+        array_debug_logger("images_biased", new_data_bias)
+    else:
+        new_data_bias = new_data_lines_removed
 
-    new_data_f0_result = new_data_bias.copy()
     if "extract_f0" in parameters:
-        new_data_f0_result = extract_f0(new_data_f0_result, array_debug_logger, **parameters["extract_f0"])
+        new_data_f0_result = extract_f0(new_data_bias, array_debug_logger, **parameters["extract_f0"])
+        array_debug_logger("images_f0", new_data_f0_result)
+    else:
+        new_data_f0_result = new_data_bias
 
-    new_data_wavelet_result = new_data_f0_result.copy()
     if "wavelet_transform" in parameters:
-        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_wavelet_result, array_debug_logger, **parameters["wavelet_transform"])[-1]
+        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_f0_result, array_debug_logger, **parameters["wavelet_transform"])[-1]
+        array_debug_logger("images_wavelet_transformed", new_data_wavelet_result)
+    else:
+        new_data_wavelet_result = new_data_f0_result
 
-    new_data_processed = normalize_data(new_data_wavelet_result, array_debug_logger, **parameters["normalize_data"])
+    new_data_normalized = normalize_data(new_data_wavelet_result, array_debug_logger, **parameters["normalize_data"])
+    array_debug_logger("images_normalized", new_data_normalized)
 
-    return(new_data_processed)
+    return(new_data_normalized)
 
 
 @advanced_debugging.log_call(logger)
