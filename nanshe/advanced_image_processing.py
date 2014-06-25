@@ -85,8 +85,8 @@ def removing_lines(new_data, **parameters):
         erosion_structure = numpy.ones(tuple(parameters["erosion_shape"]))
         dilation_structure = numpy.ones(tuple(parameters["dilation_shape"]))
 
-        zero_mask_eroded = skimage.morphology.binary_erosion(zero_mask, erosion_structure)
-        zero_mask_dilated = skimage.morphology.binary_dilation(zero_mask, dilation_structure)
+        zero_mask_dilated = skimage.morphology.binary_dilation(zero_mask, dilation_structure).astype(bool)
+        zero_mask_eroded = skimage.morphology.binary_erosion(zero_mask, erosion_structure).astype(bool)
         zero_mask_outline = zero_mask_dilated - zero_mask_eroded
 
         # Get the points that correspond to those
