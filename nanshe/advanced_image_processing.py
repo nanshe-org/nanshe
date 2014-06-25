@@ -90,7 +90,7 @@ def removing_lines(new_data, **parameters):
         zero_mask_outline = zero_mask_dilated - zero_mask_eroded
 
         # Get the points that correspond to those
-        zero_mask_outline_points = points[:, zero_mask_outline]
+        zero_mask_outline_points = points[:, i, zero_mask_outline]
 
         new_data_i_zero_mask_outline_interpolation = scipy.interpolate.griddata(zero_mask_outline_points, new_data_i[zero_mask_outline], tuple(points), method = "linear")
 
