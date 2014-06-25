@@ -123,6 +123,10 @@ def renormalized_images(input_array, ord = 2, output_array = None):
                    
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == renormalized_images(a, output_array = a))
             True
+
+            >>> renormalized_images(numpy.zeros((2,3,)))
+            array([[ 0.,  0.,  0.],
+                   [ 0.,  0.,  0.]])
     """
 
     if output_array is None:
@@ -132,6 +136,10 @@ def renormalized_images(input_array, ord = 2, output_array = None):
     # take each image at each time turn the image into a vector and find the norm.
     # divide each image by this norm. (required for spams.trainDL)
     for i in xrange(output_array.shape[0]):
-        output_array[i] /= numpy.linalg.norm(output_array[i].ravel(), ord = ord)
+        output_array_i = output_array[i]
+        output_array_i_norm = numpy.linalg.norm(output_array[i].ravel(), ord = ord)
+
+        if output_array_i_norm != 0:
+            output_array_i /= output_array_i_norm
 
     return(output_array)
