@@ -148,7 +148,7 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
         # Should only be one quantile. Drop the singleton dimension.
         window_quantiles = window_quantiles[:, 0]
 
-        new_data_quantiled = scipy.interpolate.interp1d(window_centers, window_quantiles)(numpy.arange(new_data.shape[0]))
+        new_data_quantiled = scipy.interpolate.interp1d(window_centers, window_quantiles, axis=0)(numpy.arange(new_data.shape[0]))
 
         return(new_data_quantiled)
 
