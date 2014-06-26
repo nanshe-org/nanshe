@@ -234,8 +234,6 @@ def main(*argv):
     parsed_args = parser.parse_args(argv[1:])
 
     # Go ahead and stuff in parameters with the other parsed_args
-    # A little risky if parsed_args may later contain a parameters variable due to changing the main file
-    # or argparse changing behavior; however, this keeps all arguments in the same place.
     parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
 
     # Runs the dictionary learning algorithm on each file with the given parameters and saves the results in the given files.
