@@ -309,6 +309,9 @@ def filled_stringify_enumerate(new_list):
             [(0, '0', 5), (1, '1', 7)]
     """
 
+    if not isinstance(new_list, list):
+        new_list = list(new_list)
+
     if len(new_list):
         digits = int(numpy.floor(numpy.log10(len(new_list))))
 
