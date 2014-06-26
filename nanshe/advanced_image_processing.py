@@ -92,6 +92,7 @@ def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
         # Get the points that correspond to those
         zero_mask_outline_points = points[:, i, zero_mask_outline]
 
+        new_data_i_zero_mask_outline_interpolation = numpy.zeros(new_data_i.shape)
         if zero_mask_outline.any():
             new_data_i_zero_mask_outline_interpolation = scipy.interpolate.griddata(zero_mask_outline_points, new_data_i[zero_mask_outline], tuple(points), method = "linear")
 
@@ -100,7 +101,7 @@ def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
                                                                      new_data_i_zero_mask_outline_interpolation,
                                                                      0)
 
-            result[i] = numpy.where(zero_mask, new_data_i_zero_mask_outline_interpolation, new_data_i)
+        result[i] = numpy.where(zero_mask, new_data_i_zero_mask_outline_interpolation, new_data_i)
 
     return(result)
 
