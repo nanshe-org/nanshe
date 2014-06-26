@@ -60,7 +60,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 @advanced_debugging.log_call(logger)
-def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(),**parameters):
+def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Due to registration errors, there will sometimes be lines that are zero. To correct this, we find an interpolated
         value and
@@ -75,15 +75,15 @@ def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
 
     result = numpy.zeros(new_data.shape)
 
+    # Get an outline of the region around the parts of the image that contain zeros
+    erosion_structure = numpy.ones(tuple(parameters["erosion_shape"]))
+    dilation_structure = numpy.ones(tuple(parameters["dilation_shape"]))
+
     points = numpy.array(numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij"))
 
     for i in xrange(new_data.shape[0]):
         new_data_i = new_data[i]
         zero_mask = (new_data_i == 0)
-
-        # Get an outline of the region around the parts of the image that contain zeros
-        erosion_structure = numpy.ones(tuple(parameters["erosion_shape"]))
-        dilation_structure = numpy.ones(tuple(parameters["dilation_shape"]))
 
         zero_mask_dilated = skimage.morphology.binary_dilation(zero_mask, dilation_structure).astype(bool)
         zero_mask_eroded = skimage.morphology.binary_erosion(zero_mask, erosion_structure).astype(bool)
