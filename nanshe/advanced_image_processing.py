@@ -1094,7 +1094,6 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
         local_maxima = ExtendedRegionProps(new_wavelet_image_denoised, new_wavelet_image_denoised_label_image,
                                            array_debug_logger = extended_region_props_0_array_debug_logger)
 
-        local_maxima.label_image
         array_debug_logger("local_maxima_label_image_0", local_maxima.label_image)
         array_debug_logger("local_maxima_label_image_contours_0", advanced_numpy.generate_labeled_contours(local_maxima.label_image > 0))
 
