@@ -306,8 +306,9 @@ def region_properties(new_label_image, *args, **kwargs):
         Grabs region properties from a label .
         
         Args:
-            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
-            parameters(dict):             passed directly to spams.trainDL.
+            new_label_image(numpy.ndarray):      label image used for generating properties.
+            args(list):                          additional position arguments to pass skimage.measure.regionprops.
+            parameters(dict):                    additional keyword arguments to pass skimage.measure.regionprops.
         
         Returns:
             dict: the dictionary found.
