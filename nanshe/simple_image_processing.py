@@ -28,7 +28,8 @@ def zeroed_mean_images(input_array, ord = 2, output_array = None):
             output_array(numpy.ndarray):        provides a location to store the result (optional)
         
         Returns:
-            result(numpy.ndarray):              The same array with each images mean removed. Where means[i] = mean(new_numpy_array[i])
+            result(numpy.ndarray):              The same array with each images mean removed.
+                                                Where means[i] = mean(new_numpy_array[i])
         
         
         Examples:
@@ -94,7 +95,8 @@ def renormalized_images(input_array, ord = 2, output_array = None):
             output_array(numpy.ndarray):        provides a location to store the result (optional)
         
         Returns:
-            result(numpy.ndarray):              The same array with each images mean removed. Where means[i] = mean(new_numpy_array[i])
+            result(numpy.ndarray):              The same array with each images mean removed.
+                                                Where means[i] = mean(new_numpy_array[i])
         
         
         Examples:
@@ -132,7 +134,8 @@ def renormalized_images(input_array, ord = 2, output_array = None):
     if output_array is None:
         output_array = input_array.copy().astype(float)
 
-    # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword. So, we must use a for loop.
+    # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword.
+    # So, we must use a for loop.
     # take each image at each time turn the image into a vector and find the norm.
     # divide each image by this norm. (required for spams.trainDL)
     for i in xrange(output_array.shape[0]):
