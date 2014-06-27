@@ -687,8 +687,6 @@ class SyncedChannelLayers(object):
         self.layers = list(layers)
         self.currently_syncing_list = False
 
-        #logger.warning(repr([_.name for _ in self.layers]))
-
         for each_layer in self.layers:
             each_layer.channelChanged.connect(self)
 
@@ -698,7 +696,6 @@ class SyncedChannelLayers(object):
             self.currently_syncing_list = True
 
             for each_layer in self.layers:
-                #logger.warning( each_layer.name )
                 each_layer.channel = channel
 
             self.currently_syncing_list = False
