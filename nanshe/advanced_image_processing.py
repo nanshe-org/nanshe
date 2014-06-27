@@ -60,7 +60,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 @advanced_debugging.log_call(logger)
-def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+def removing_lines(new_data, erosion_shape, dilation_shape, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Due to registration errors, there will sometimes be lines that are zero. To correct this, we find an interpolated
         value and
@@ -76,8 +76,8 @@ def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
     result = numpy.zeros(new_data.shape)
 
     # Get an outline of the region around the parts of the image that contain zeros
-    erosion_structure = numpy.ones(tuple(parameters["erosion_shape"]))
-    dilation_structure = numpy.ones(tuple(parameters["dilation_shape"]))
+    erosion_structure = numpy.ones(tuple(erosion_shape))
+    dilation_structure = numpy.ones(tuple(dilation_shape))
 
     points = numpy.array(numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij"))
 
@@ -107,31 +107,31 @@ def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
 
 
 @advanced_debugging.log_call(logger)
-def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **params):
+def extract_f0(new_data, temporal_smoothing_gaussian_filter_stdev, spatial_smoothing_gaussian_filter_stdev, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     @advanced_debugging.log_call(logger)
-    def extract_quantile(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **params):
-        if (params["step_size"] > new_data.shape[0]):
-            raise Exception("The step size provided, " + params["step_size"] + ", is larger than the number of frames in the data, " + new_data.shape[0] + ".")
+    def extract_quantile(new_data, step_size, half_window_size, which_quantile, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+        if (step_size > new_data.shape[0]):
+            raise Exception("The step size provided, " + step_size + ", is larger than the number of frames in the data, " + new_data.shape[0] + ".")
 
-        window_centers = numpy.arange(0, new_data.shape[0], params["step_size"])
+        window_centers = numpy.arange(0, new_data.shape[0], step_size)
 
         if window_centers[-1] != new_data.shape[0]:
             window_centers = numpy.append(window_centers, new_data.shape[0])
 
         def window_shape_iterator(window_centers = window_centers):
             for each_window_center in window_centers:
-                each_window_lower = max(window_centers[0], each_window_center - params["half_window_size"])
-                each_window_upper = min(window_centers[-1], each_window_center + params["half_window_size"])
+                each_window_lower = max(window_centers[0], each_window_center - half_window_size)
+                each_window_upper = min(window_centers[-1], each_window_center + half_window_size)
 
                 yield( (each_window_lower, each_window_center, each_window_upper) )
 
-        which_quantile = advanced_numpy.get_quantiles(params["which_quantile"])
+        which_quantile = advanced_numpy.get_quantiles(which_quantile)
 
         window_quantiles = numpy.zeros( (window_centers.shape[0],) + which_quantile.shape + new_data.shape[1:] )
         for i, (each_window_lower, each_window_center, each_window_upper) in enumerate(window_shape_iterator()):
             new_data_i = new_data[each_window_lower:each_window_upper]
 
-            each_quantile = advanced_numpy.quantile(new_data_i.reshape(new_data_i.shape[0], -1), params["which_quantile"], axis=0)
+            each_quantile = advanced_numpy.quantile(new_data_i.reshape(new_data_i.shape[0], -1), which_quantile, axis=0)
             each_quantile = each_quantile.reshape(each_quantile.shape[0], *new_data_i.shape[1:])
 
             # Are there bad values in our result (shouldn't be if axis=None)
@@ -156,17 +156,17 @@ def extract_f0(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **
 
     temporal_smoothing_gaussian_filter = vigra.filters.Kernel1D()
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
-    temporal_smoothing_gaussian_filter.initGaussian(params["temporal_smoothing_gaussian_filter_stdev"], 1.0, 5 * params["temporal_smoothing_gaussian_filter_stdev"])
+    temporal_smoothing_gaussian_filter.initGaussian(temporal_smoothing_gaussian_filter_stdev, 1.0, 5 * temporal_smoothing_gaussian_filter_stdev)
     # TODO: Check what border treatment to use
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
     new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data.astype(numpy.float32), 0, temporal_smoothing_gaussian_filter)
 
-    new_data_quantiled = extract_quantile(new_data_temporally_smoothed, array_debug_logger, **params["extract_quantile"])
+    new_data_quantiled = extract_quantile(new_data_temporally_smoothed, array_debug_logger = array_debug_logger, **parameters["extract_quantile"])
 
     spatial_smoothing_gaussian_filter = vigra.filters.Kernel1D()
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
-    spatial_smoothing_gaussian_filter.initGaussian(params["spatial_smoothing_gaussian_filter_stdev"], 1.0, 5 * params["spatial_smoothing_gaussian_filter_stdev"])
+    spatial_smoothing_gaussian_filter.initGaussian(spatial_smoothing_gaussian_filter_stdev, 1.0, 5 * spatial_smoothing_gaussian_filter_stdev)
     # TODO: Check what border treatment to use
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
@@ -206,7 +206,7 @@ def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
 
 
 @advanced_debugging.log_call(logger)
-def preprocess_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+def preprocess_data(new_data, bias, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
         
@@ -226,31 +226,31 @@ def preprocess_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(
 
     # Remove lines
     if "removing_lines" in parameters:
-        new_data_lines_removed = removing_lines(new_data, array_debug_logger, **parameters["removing_lines"])
+        new_data_lines_removed = removing_lines(new_data, array_debug_logger = array_debug_logger, **parameters["removing_lines"])
         array_debug_logger("images_lines_removed", new_data_lines_removed)
     else:
         new_data_lines_removed = new_data
 
     # Add the bias param
     if "bias" in parameters:
-        new_data_bias = new_data_lines_removed + parameters["bias"]
+        new_data_bias = new_data_lines_removed + bias
         array_debug_logger("images_biased", new_data_bias)
     else:
         new_data_bias = new_data_lines_removed
 
     if "extract_f0" in parameters:
-        new_data_f0_result = extract_f0(new_data_bias, array_debug_logger, **parameters["extract_f0"])
+        new_data_f0_result = extract_f0(new_data_bias, array_debug_logger = array_debug_logger, **parameters["extract_f0"])
         array_debug_logger("images_f0", new_data_f0_result)
     else:
         new_data_f0_result = new_data_bias
 
     if "wavelet_transform" in parameters:
-        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_f0_result, array_debug_logger, **parameters["wavelet_transform"])[-1]
+        new_data_wavelet_result = wavelet_transform.wavelet_transform(new_data_f0_result, array_debug_logger = array_debug_logger, **parameters["wavelet_transform"])[-1]
         array_debug_logger("images_wavelet_transformed", new_data_wavelet_result)
     else:
         new_data_wavelet_result = new_data_f0_result
 
-    new_data_normalized = normalize_data(new_data_wavelet_result, array_debug_logger, **parameters["normalize_data"])
+    new_data_normalized = normalize_data(new_data_wavelet_result, array_debug_logger = array_debug_logger, **parameters["normalize_data"])
     array_debug_logger("images_normalized", new_data_normalized)
 
     return(new_data_normalized)
@@ -900,7 +900,7 @@ class ExtendedRegionProps(object):
 
 
 @advanced_debugging.log_call(logger)
-def remove_low_intensity_local_maxima(local_maxima, **parameters):
+def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max, **parameters):
     # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
     low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
     for i in xrange(len(local_maxima.props)):
@@ -923,7 +923,7 @@ def remove_low_intensity_local_maxima(local_maxima, **parameters):
 
         # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
         low_intensities__local_maxima_label_mask__to_remove[i] = (
-            each_region_image_wavelet_ratio_pixels < parameters["percentage_pixels_below_max"])
+            each_region_image_wavelet_ratio_pixels < percentage_pixels_below_max)
 
     new_local_maxima = copy.copy(local_maxima)
 
@@ -935,7 +935,7 @@ def remove_low_intensity_local_maxima(local_maxima, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def remove_too_close_local_maxima(local_maxima, **parameters):
+def remove_too_close_local_maxima(local_maxima, min_centroid_distance, **parameters):
     # Deleting close local maxima below 16 pixels
     too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
 
@@ -943,7 +943,7 @@ def remove_too_close_local_maxima(local_maxima, **parameters):
     local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
     local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima.props["local_max"], metric = "euclidean")
 
-    too_close_local_maxima_labels_mask = local_maxima_centroid_distance < parameters["min_centroid_distance"]
+    too_close_local_maxima_labels_mask = local_maxima_centroid_distance < min_centroid_distance
     too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
 
     for each_too_close_local_maxima_pairs in too_close_local_maxima_pairs:
@@ -965,7 +965,7 @@ def remove_too_close_local_maxima(local_maxima, **parameters):
 
 
 @advanced_debugging.log_call(logger)
-def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+def wavelet_denoising(new_image, accepted_region_shape_constraints, use_watershed, accepted_neuron_shape_constraints, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Performs wavelet denoising on the given dictionary.
         
@@ -998,8 +998,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
     # Contains a bool array with significant values True and noise False for all wavelet transforms.
     new_wavelet_transformed_image_significant_mask = denoising.significant_mask(new_wavelet_transformed_image,
                                                                                 noise_estimate = new_image_noise_estimate,
-                                                                                noise_threshhold = parameters[
-                                                                                    "noise_threshhold"])
+                                                                                **parameters["denoising.significant_mask"])
 
     for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
         array_debug_logger("new_wavelet_transformed_image_significant_mask_" + repr(i), new_wavelet_transformed_image_significant_mask[i])
@@ -1027,8 +1026,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
 
         # For holding the label image properties
         new_wavelet_image_denoised_labeled_props = region_properties(new_wavelet_image_denoised_labeled,
-                                                                     properties = parameters[
-                                                                         "accepted_region_shape_constraints"].keys())
+                                                                     properties = accepted_region_shape_constraints.keys())
 
         logger.debug("Determined the properties of the label image.")
 
@@ -1037,10 +1035,10 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
         not_within_bound = numpy.zeros(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
 
         # Go through each property and make sure they are within the bounds
-        for each_prop in parameters["accepted_region_shape_constraints"]:
+        for each_prop in accepted_region_shape_constraints:
             # Get lower and upper bounds for the current property
-            lower_bound = parameters["accepted_region_shape_constraints"][each_prop]["min"]
-            upper_bound = parameters["accepted_region_shape_constraints"][each_prop]["max"]
+            lower_bound = accepted_region_shape_constraints[each_prop]["min"]
+            upper_bound = accepted_region_shape_constraints[each_prop]["max"]
 
             # Determine whether lower or upper bound is satisfied
             is_lower_bounded = (lower_bound <= new_wavelet_image_denoised_labeled_props[each_prop])
@@ -1108,7 +1106,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
         array_debug_logger("local_maxima_label_image_contours_2", advanced_numpy.generate_labeled_contours(local_maxima.label_image > 0))
 
         if local_maxima.props.size:
-            if parameters["use_watershed"]:
+            if use_watershed:
                 # ############### TODO: Revisit to make sure all of Ferran's algorithm is implemented and this is working properly.
 
                 # Perform the watershed segmentation.
@@ -1135,7 +1133,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
                 watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
                                                              new_wavelet_image_denoised_segmentation,
                                                              array_debug_logger = extended_region_props_1_array_debug_logger,
-                                                             properties = ["centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
+                                                             properties = ["centroid"] + accepted_neuron_shape_constraints.keys())
 
                 array_debug_logger("watershed_local_maxima_label_image_0", watershed_local_maxima.label_image)
                 array_debug_logger("watershed_local_maxima_label_image_contours_0", advanced_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0))
@@ -1166,7 +1164,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
                 #new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
 
                 # Find properties of all regions
-                #new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["centroid"] + parameters["accepted_neuron_shape_constraints"].keys())
+                #new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["centroid"] + accepted_neuron_shape_constraints.keys())
 
                 #new_wavelet_image_denoised_segmentation_props["label"] = reverse_label_mapping[ new_wavelet_image_denoised_segmentation_props["label"] ]
 
@@ -1194,10 +1192,10 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
                 not_within_bound = numpy.zeros(watershed_local_maxima.props.shape, dtype = bool)
 
                 # Go through each property and make sure they are within the bounds
-                for each_prop in parameters["accepted_neuron_shape_constraints"]:
+                for each_prop in accepted_neuron_shape_constraints:
                     # Get lower and upper bounds for the current property
-                    lower_bound = parameters["accepted_neuron_shape_constraints"][each_prop]["min"]
-                    upper_bound = parameters["accepted_neuron_shape_constraints"][each_prop]["max"]
+                    lower_bound = accepted_neuron_shape_constraints[each_prop]["min"]
+                    upper_bound = accepted_neuron_shape_constraints[each_prop]["max"]
 
                     # Determine whether lower or upper bound is satisfied
                     is_lower_bounded = lower_bound <= watershed_local_maxima.props[each_prop]
@@ -1266,7 +1264,7 @@ def wavelet_denoising(new_image, array_debug_logger = HDF5_logger.EmptyArrayLogg
 
 
 @advanced_debugging.log_call(logger)
-def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+def fuse_neurons(neuron_1, neuron_2, fraction_mean_neuron_max_threshold, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Merges the two neurons into one (treats the first with preference).
         
@@ -1290,7 +1288,7 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArray
     assert (neuron_1.dtype == neuron_2.dtype)
 
     mean_neuron = numpy.array([neuron_1["image"], neuron_2["image"]]).mean(axis = 0)
-    mean_neuron_mask = mean_neuron > (parameters["fraction_mean_neuron_max_threshold"] * mean_neuron.max())
+    mean_neuron_mask = mean_neuron > (fraction_mean_neuron_max_threshold * mean_neuron.max())
 
     # Gaussian mixture model ??? Skipped this.
 
@@ -1326,7 +1324,7 @@ def fuse_neurons(neuron_1, neuron_2, array_debug_logger = HDF5_logger.EmptyArray
 
 
 @advanced_debugging.log_call(logger)
-def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, alignment_min_threshold, overlap_min_threshold, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Merges the two sets of neurons into one (treats the first with preference).
         
@@ -1429,12 +1427,12 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = H
 
         # Get masks that indicate which measurements have the best matching neuron
         new_neuron_set_angle_maxes_significant[
-            new_neuron_set_angle_maxes > parameters["alignment_min_threshold"]] = True
+            new_neuron_set_angle_maxes > alignment_min_threshold] = True
         new_neuron_set_masks_overlaid_1_maxes_significant[~new_neuron_set_angle_maxes_significant & (
-            new_neuron_set_masks_overlaid_2_maxes > parameters["overlap_min_threshold"])] = True
+            new_neuron_set_masks_overlaid_2_maxes > overlap_min_threshold)] = True
         new_neuron_set_masks_overlaid_2_maxes_significant[
             ~new_neuron_set_angle_maxes_significant & ~new_neuron_set_masks_overlaid_1_maxes_significant & (
-                new_neuron_set_masks_overlaid_1_maxes > parameters["overlap_min_threshold"])] = True
+                new_neuron_set_masks_overlaid_1_maxes > overlap_min_threshold)] = True
 
         array_debug_logger("new_neuron_set_angle_maxes_significant_1", new_neuron_set_angle_maxes_significant)
         array_debug_logger("new_neuron_set_masks_overlaid_1_maxes_significant_1",
@@ -1483,7 +1481,7 @@ def merge_neuron_sets(new_neuron_set_1, new_neuron_set_2, array_debug_logger = H
                                                                                                                    "new_neuron_set_2_" + str(j)]),
                                                                                                         array_debug_logger)
 
-            new_neuron_set[i] = fuse_neurons(new_neuron_set_1[i], new_neuron_set_2[j], new_fusing_neurons_array_debug_logger, **parameters["fuse_neurons"])
+            new_neuron_set[i] = fuse_neurons(new_neuron_set_1[i], new_neuron_set_2[j], array_debug_logger = new_fusing_neurons_array_debug_logger, **parameters["fuse_neurons"])
 
         logger.debug("Fused \"" + repr(len(new_neuron_set_all_j_fuse)) + "\" neurons to the existing set.")
 
