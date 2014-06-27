@@ -36,7 +36,8 @@ def renumber_label_image(new_array):
             new_array(numpy.ndarray):                               the label image.
             
         Returns:
-            (numpy.ndarray, numpy.ndarray, numpy.ndarray):          the relabeled label image, the forward label mapping, and the reverse label mapping
+            (numpy.ndarray, numpy.ndarray, numpy.ndarray):          the relabeled label image, the forward label mapping
+                                                                    and the reverse label mapping
         
         Examples:
             >>> renumber_label_image(numpy.array([1, 2, 3]))
@@ -165,7 +166,7 @@ def add_singleton_axis_pos(a_array, new_axis = 0):
         
         Args:
             a_array(numpy.ndarray):            array to add the singleton axis to.
-            new_axis(int):                     position for the axis to be in the final array (defaults to zero ).
+            new_axis(int):                     position for the axis to be in the final array (defaults to zero).
         
         Returns:
             (numpy.ndarray):                   a numpy array with the singleton axis added (should be a view).
@@ -221,7 +222,7 @@ def add_singleton_axis_beginning(new_array):
             new_array(numpy.ndarray):            array to add the singleton axis to.
         
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be a view).
+            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be view)
         
         Examples:
             >>> add_singleton_axis_beginning(numpy.ones((7,9,6))).shape
@@ -245,7 +246,7 @@ def add_singleton_axis_end(new_array):
             new_array(numpy.ndarray):            array to add the singleton axis to.
         
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be a view).
+            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be view)
         
         Examples:
             >>> add_singleton_axis_end(numpy.ones((7,9,6))).shape
@@ -321,8 +322,8 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
         
         Args:
             new_array(numpy.ndarray):            array to tile.
-            reps_after(tuple):                   repetitions dimension size to add before (if an int will turn into a tuple).
-            reps_before(tuple):                  repetitions dimension size to add after (if an int will turn into a tuple).
+            reps_after(tuple):                   repetitions dimension size to add before (if int will turn into tuple).
+            reps_before(tuple):                  repetitions dimension size to add after (if int will turn into tuple).
         
         Returns:
             (numpy.ndarray):                     a view of a numpy array with tiling in various dimension.
@@ -776,7 +777,7 @@ def dot_product(new_vector_set_1, new_vector_set_2):
             new_vector_set_2(numpy.ndarray):      second set of vectors.
         
         Returns:
-            (numpy.ndarray):                      an array with the distances between each pair of vectors from the first and second set.
+            (numpy.ndarray):                      an array with the distances between each pair of vectors.
         
         Examples:
             >>> (dot_product(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
@@ -820,7 +821,8 @@ def norm(new_vector_set, ord = 2):
         
         Args:
             new_vector_set(numpy.ndarray):        either a single vector or a set of vectors (matrix).
-            ord(optional):                        basically the same arguments as numpy.linalg.norm (though some are redundant here).
+            ord(optional):                        basically the same arguments as numpy.linalg.norm
+                                                  (though some are redundant here).
         
         Returns:
             (numpy.ndarray):                      an array with .
@@ -892,15 +894,16 @@ def norm(new_vector_set, ord = 2):
 @advanced_debugging.log_call(logger)
 def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
-        Determines the dot product between the two pairs of vectors from each set and creates a tuple with the dot product divided by one norm or the other.
+        Determines the dot product between the two pairs of vectors from each set and creates a tuple
+        with the dot product divided by one norm or the other.
         
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
             new_vector_set_2(numpy.ndarray):      second set of vectors.
-            ord(optional):                        basically the same arguments as numpy.linalg.norm (though some are redundant here).
+            ord(optional):                        basically the same arguments as numpy.linalg.norm
         
         Returns:
-            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors from the first and second set.
+            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
         
         Examples:
             >>> (numpy.array(dot_product_partially_normalized(numpy.eye(2), numpy.eye(2), 2)) == numpy.array((numpy.eye(2), numpy.eye(2),))).all()
@@ -964,15 +967,15 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
 @advanced_debugging.log_call(logger)
 def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
-        Determines the dot product between the two pairs of vectors from each set and divides them by the norm of the two.
+        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
         
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
             new_vector_set_2(numpy.ndarray):      second set of vectors.
-            ord(optional):                        basically the same arguments as numpy.linalg.norm (though some are redundant here).
+            ord(optional):                        basically the same arguments as numpy.linalg.norm.
         
         Returns:
-            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors from the first and second set.
+            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
         
         Examples:
             >>> (dot_product_normalized(numpy.eye(2), numpy.eye(2), 2) == numpy.eye(2)).all()
@@ -1038,14 +1041,14 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
 @advanced_debugging.log_call(logger)
 def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
-        Determines the dot product between the two pairs of vectors from each set and divides them by the L_2 norm of the two.
+        Determines the dot product between a pair of vectors from each set and divides them by the L_2 norm of the two.
         
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
             new_vector_set_2(numpy.ndarray):      second set of vectors.
         
         Returns:
-            (numpy.ndarray):                      an array with the distances between each pair of vectors from the first and second set.
+            (numpy.ndarray):                      an array with the distances between each pair of vectors.
         
         Examples:
             >>> (dot_product_L2_normalized(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
@@ -1090,7 +1093,8 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
 
 def generate_contour(a_image, separation_distance = 1.0, margin = 1.0):
     """
-        Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge and some margin.
+        Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge
+        and some margin.
 
         Args:
             a_image(numpy.ndarray):            takes an image.
@@ -1150,7 +1154,8 @@ def generate_contour(a_image, separation_distance = 1.0, margin = 1.0):
 
 def generate_labeled_contours(a_mask, separation_distance = 1.0, margin = 1.0):
     """
-        Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge and some margin.
+        Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge
+        and some margin.
 
         Args:
             a_mask(numpy.ndarray):             takes a bool mask.
@@ -1214,7 +1219,8 @@ def get_quantiles(probs):
                                                             all, otherwise only on a particular axis.
 
         Returns:
-            (numpy.ma.MaskedArray):            an array with the quantiles (the first dimension will be the same length as probs).
+            (numpy.ma.MaskedArray):                     an array with the quantiles (the first dimension will be
+                                                        the same length as probs).
 
         Examples:
             >>> get_quantiles(0)
@@ -1272,7 +1278,8 @@ def quantile(data, probs, axis = None):
                                                             all, otherwise only on a particular axis.
 
         Returns:
-            (numpy.ma.MaskedArray):            an array with the quantiles (the first dimension will be the same length as probs).
+            (numpy.ma.MaskedArray):                     an array with the quantiles (the first dimension will be the
+                                                        same length as probs).
 
         Examples:
             >>> quantile(numpy.array([ 1.,  2.,  3.]), 2)
