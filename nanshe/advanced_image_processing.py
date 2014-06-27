@@ -83,25 +83,25 @@ def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
 
     for i in xrange(new_data.shape[0]):
         new_data_i = new_data[i]
-        zero_mask = (new_data_i == 0)
+        zero_mask_i = (new_data_i == 0)
 
-        zero_mask_dilated = skimage.morphology.binary_dilation(zero_mask, dilation_structure).astype(bool)
-        zero_mask_eroded = skimage.morphology.binary_erosion(zero_mask, erosion_structure).astype(bool)
-        zero_mask_outline = zero_mask_dilated - zero_mask_eroded
+        zero_mask_i_dilated = skimage.morphology.binary_dilation(zero_mask_i, dilation_structure).astype(bool)
+        zero_mask_i_eroded = skimage.morphology.binary_erosion(zero_mask_i, erosion_structure).astype(bool)
+        zero_mask_i_outline = zero_mask_i_dilated - zero_mask_i_eroded
 
         # Get the points that correspond to those
-        zero_mask_outline_points = points[:, i, zero_mask_outline]
+        zero_mask_i_outline_points = numpy.array(zero_mask_i_outline.nonzero()).transpose()
 
-        new_data_i_zero_mask_outline_interpolation = numpy.zeros(new_data_i.shape)
-        if zero_mask_outline.any():
-            new_data_i_zero_mask_outline_interpolation = scipy.interpolate.griddata(zero_mask_outline_points, new_data_i[zero_mask_outline], tuple(points), method = "linear")
+        new_data_i_zero_mask_i_outline_interpolation = numpy.zeros(new_data_i.shape)
+        if zero_mask_i_outline.any():
+            new_data_i_zero_mask_i_outline_interpolation = scipy.interpolate.griddata(zero_mask_i_outline_points, new_data_i[zero_mask_i_outline], tuple(points), method = "linear")
 
             # Only need to check for nan in our case.
-            new_data_i_zero_mask_outline_interpolation = numpy.where(numpy.isnan(new_data_i_zero_mask_outline_interpolation),
-                                                                     new_data_i_zero_mask_outline_interpolation,
-                                                                     0)
+            new_data_i_zero_mask_i_outline_interpolation = numpy.where(numpy.isnan(new_data_i_zero_mask_i_outline_interpolation),
+                                                                                   new_data_i_zero_mask_i_outline_interpolation,
+                                                                                   0)
 
-        result[i] = numpy.where(zero_mask, new_data_i_zero_mask_outline_interpolation, new_data_i)
+        result[i] = numpy.where(zero_mask_i, new_data_i_zero_mask_i_outline_interpolation, new_data_i)
 
     return(result)
 
