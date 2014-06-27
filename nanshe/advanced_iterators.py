@@ -219,7 +219,9 @@ def cumulative_generator(new_op, new_iter):
         factorials up to and including the factorial of 4 (24).
         
         Args:
-            new_op(callabel):      something that can be called on two values and return a result with a type that is a permissible argument.
+            new_op(callabel):      something that can be called on two values and return a result with a type that is a
+                                   permissible argument.
+
             new_iter(iter):        an iterator or something that can be turned into an iterator.
         
         Returns:
