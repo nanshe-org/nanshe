@@ -137,7 +137,7 @@ def binomial_1D_array_kernel(i, n = 4):
 
         r.append(cs[-1])
     else:
-        r.append(_)
+        r.append(cs)
 
     r = numpy.array(r)
     r = r.astype(float)
