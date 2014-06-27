@@ -171,7 +171,10 @@ def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_ch
     if pages_to_channel > 1:
         new_tiff_array = new_tiff_array.reshape(new_tiff_array.shape[:-2] + (new_tiff_array.shape[-2] / pages_to_channel, pages_to_channel * new_tiff_array.shape[-1],))
 
-    new_tiff_array = advanced_numpy.tagging_reorder_array(new_tiff_array, from_axis_order = "zyxtc", to_axis_order = axis_order, to_copy = True)
+    new_tiff_array = advanced_numpy.tagging_reorder_array(new_tiff_array,
+                                                          from_axis_order = "zyxtc",
+                                                          to_axis_order = axis_order,
+                                                          to_copy = True)
 
     return(new_tiff_array)
 
@@ -212,7 +215,9 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
     new_hdf5_dataset_shape = numpy.zeros((3,), dtype = int)
     new_hdf5_dataset_dtype = bool
     for each_new_tiff_filename in new_tiff_filenames:
-        each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(each_new_tiff_filename, axis_order = "cztyx", pages_to_channel = pages_to_channel).values()
+        each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(each_new_tiff_filename,
+                                                                                                        axis_order = "cztyx",
+                                                                                                        pages_to_channel = pages_to_channel).values()
         each_new_tiff_file_shape = each_new_tiff_file_shape[2:]
 
         # Find the increase on the merge axis. Find the largest shape for the rest.
@@ -243,12 +248,16 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
             new_hdf5_file.create_group(new_hdf5_groupname)
 
         new_hdf5_group = new_hdf5_file[new_hdf5_groupname]
-        new_hdf5_dataset = new_hdf5_group.create_dataset(new_hdf5_dataset_name, new_hdf5_dataset_shape, new_hdf5_dataset_dtype)
+        new_hdf5_dataset = new_hdf5_group.create_dataset(new_hdf5_dataset_name,
+                                                         new_hdf5_dataset_shape,
+                                                         new_hdf5_dataset_dtype)
 
         new_hdf5_dataset_axis_pos = 0
         for each_new_tiff_filename in new_tiff_filenames:
             # Read the data in the format specified.
-            each_new_tiff_array = get_standard_tiff_array(each_new_tiff_filename, axis_order = "cztyx", pages_to_channel = pages_to_channel)
+            each_new_tiff_array = get_standard_tiff_array(each_new_tiff_filename,
+                                                          axis_order = "cztyx",
+                                                          pages_to_channel = pages_to_channel)
 
             # Take channel and z selection
             # TODO: Could we drop the channel constraint by saving different channels to different arrays? Need to think about it.
