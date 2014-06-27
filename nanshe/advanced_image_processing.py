@@ -573,9 +573,7 @@ def region_properties(new_label_image, *args, **kwargs):
 def get_neuron_dtype(new_image):
     neurons_dtype = [("mask", bool, new_image.shape),
                      ("contour", bool, new_image.shape),
-                     # ("image", new_image.dtype, new_image.shape),
                      ("image", new_image.dtype, new_image.shape),
-                     # ("segmentation", new_wavelet_image_denoised.dtype, new_wavelet_image_denoised.shape),
                      ("area", float),
                      ("max_F", float),
                      ("gaussian_mean", float, (new_image.ndim,)),
@@ -779,24 +777,6 @@ class ExtendedRegionProps(object):
             self.array_debug_logger("count", self.count)
             self.array_debug_logger("masks", advanced_numpy.all_permutations_equal(failed_labels, self.label_image))
             self.array_debug_logger("masks_labels", failed_labels)
-
-            # with h5py.File("missing_labels.h5", "a") as fid:
-            # curtime = time.time()
-            #                curtime_str = str(curtime)
-            #
-            #                fid.create_group(curtime_str)
-            #                fid[curtime_str]["intensity_image"] = self.intensity_image
-            #                fid[curtime_str]["label_image"] = self.label_image
-            #
-            #                if self.props.size:
-            #                    HDF5_serializers.write_numpy_structured_array_to_HDF5(fid, curtime_str + "/props", self.props)
-            #
-            #                HDF5_serializers.write_numpy_structured_array_to_HDF5(fid, curtime_str + "/count", self.count)
-            #
-            #                fid[curtime_str]["masks"] = advanced_numpy.all_permutations_equal(failed_labels, self.label_image)
-            #
-            #                for i, each_label in enumerate(failed_labels):
-            #                    fid[curtime_str]["masks"].attrs[repr(i)] = repr(each_label)
 
             # Renumber labels. This way there are no labels without local maxima.
             self.renumber_labels()
@@ -1111,7 +1091,7 @@ def wavelet_denoising(new_image, accepted_region_shape_constraints, use_watershe
 
                 # Perform the watershed segmentation.
 
-                # First perform disc opening on the image. (Actually, we don't do this.)
+                # First perform disc opening on the image. (Actually, we don't do this according to Ferran.)
                 # new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised.astype(numpy.float32), radius = 1)
 
                 # We could look for seeds using local maxima. However, we already know what these should be as these are the centroids we have found.
@@ -1141,39 +1121,7 @@ def wavelet_denoising(new_image, accepted_region_shape_constraints, use_watershe
                 array_debug_logger("watershed_local_maxima_props_0", watershed_local_maxima.props)
                 array_debug_logger("watershed_local_maxima_count_0", watershed_local_maxima.count)
 
-                # if watershed_local_maxima.props.size:
-                #     array_debug_logger("watershed_local_maxima_props_0", watershed_local_maxima.props)
-                # if watershed_local_maxima.count.size:
-                #     array_debug_logger("watershed_local_maxima_count_0", watershed_local_maxima.count)
-
-
-                # Renumber all labels sequentially
-                #new_wavelet_image_denoised_segmentation = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)[0]
-
-                # Get the regions created in segmentation (drop zero as it is the background)
-                #new_wavelet_image_denoised_segmentation_regions = numpy.unique(new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation != 0])
-                #new_wavelet_image_denoised_segmentation_regions = watershed_local_maxima.count[watershed_local_maxima.count["count"] > 0]
-
-                ## Drop the first two as 0's are the region edges and 1's are the background. Not necessary in our code as seeds for the watershed are set.
-                #new_wavelet_image_denoised_segmentation[new_wavelet_image_denoised_segmentation == 1] = 0
-                #new_wavelet_image_denoised_segmentation_regions = new_wavelet_image_denoised_segmentation_regions[2:]
-
-                ## TODO: Replace with numpy.bincount.
-
-                # Renumber all labels sequentially.
-                #new_wavelet_image_denoised_segmentation, forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(new_wavelet_image_denoised_segmentation)
-
-                # Find properties of all regions
-                #new_wavelet_image_denoised_segmentation_props = region_properties(new_wavelet_image_denoised_segmentation, properties = ["centroid"] + accepted_neuron_shape_constraints.keys())
-
-                #new_wavelet_image_denoised_segmentation_props["label"] = reverse_label_mapping[ new_wavelet_image_denoised_segmentation_props["label"] ]
-
-
-                #new_wavelet_image_denoised_segmentation_props_labels_count = numpy.bincount(new_wavelet_image_denoised_segmentation_props["label"])[1:]
-
-                #new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask = (new_wavelet_image_denoised_segmentation_props_labels_count > 1)
-                #new_wavelet_image_denoised_segmentation_props_labels_duplicates = numpy.unique(new_wavelet_image_denoised_segmentation_props["label"][new_wavelet_image_denoised_segmentation_props_labels_duplicates_mask])
-
+                # Remove duplicates
                 new_watershed_local_maxima_count_duplicates_mask = (watershed_local_maxima.count["count"] > 1)
                 new_watershed_local_maxima_count_duplicate_labels = watershed_local_maxima.count["label"][
                     new_watershed_local_maxima_count_duplicates_mask]
@@ -1209,7 +1157,6 @@ def wavelet_denoising(new_image, accepted_region_shape_constraints, use_watershe
                     not_within_bound |= is_not_within_bound
 
                 # Get labels outside of bounds and remove them
-                #new_wavelet_image_denoised_segmentation_props_unbounded_labels = watershed_local_maxima.props["label"][not_within_bound]
                 watershed_local_maxima.remove_prop_mask(not_within_bound)
 
                 array_debug_logger("watershed_local_maxima_label_image_2", watershed_local_maxima.label_image)
@@ -1227,8 +1174,6 @@ def wavelet_denoising(new_image, accepted_region_shape_constraints, use_watershe
                     # Get masks for all cells
                     neurons["mask"] = advanced_numpy.all_permutations_equal(watershed_local_maxima.props["label"],
                                                                             new_wavelet_image_denoised_segmentation)
-
-                    #neurons["image"] = new_wavelet_image_denoised * neurons["mask"]
 
                     neurons["image"] = new_image * neurons["mask"]
 
@@ -1306,15 +1251,8 @@ def fuse_neurons(neuron_1, neuron_2, fraction_mean_neuron_max_threshold, array_d
     new_neuron["max_F"] = new_neuron["image"].max()
 
     new_neuron_mask_points = numpy.array(new_neuron["mask"].nonzero())
-
     new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis = 1)
     new_neuron["gaussian_cov"] = numpy.cov(new_neuron_mask_points)
-
-    #    for i in xrange(len(new_neuron)):
-    #        new_neuron_mask_points = numpy.array(new_neuron["mask"][i].nonzero())
-    #        
-    #        new_neuron["gaussian_mean"][i] = new_neuron_mask_points.mean(axis = 1)
-    #        new_neuron["gaussian_cov"][i] = numpy.cov(new_neuron_mask_points)
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
 
