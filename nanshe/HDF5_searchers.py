@@ -139,7 +139,8 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
             TODO: Write doctests.
 
         Returns:
-            (list):                         an ordered dictionary with possible paths that fit the pattern and whether they are found.
+            (list):                         an ordered dictionary with possible paths that fit the pattern and whether
+                                            they are found.
     """
 
     paths_found = collections.OrderedDict()
@@ -167,7 +168,8 @@ def get_matching_grouped_paths_found(a_filehandle, a_path_pattern):
             TODO: Write doctests.
 
         Returns:
-            (collections.OrderedDict):      an ordered dictionary with possible paths that fit the pattern and whether they are found.
+            (collections.OrderedDict):      an ordered dictionary with possible paths that fit the pattern
+                                            and whether they are found.
     """
 
     paths_found = collections.OrderedDict()
