@@ -50,8 +50,9 @@ class EmptyArrayLogger(object):
 
 class HDF5ArrayLogger(object):
     @debugging_tools.log_call(logger)
-    def __init__(self, hdf5_handle):
+    def __init__(self, hdf5_handle, overwrite_dataset = False):
         self.hdf5_handle = hdf5_handle
+        self.overwrite_dataset = overwrite_dataset
 
     @debugging_tools.log_call(logger)
     def __nonzero__(self):
@@ -76,14 +77,14 @@ class HDF5ArrayLogger(object):
             HDF5_serializers.write_numpy_structured_array_to_HDF5(self.hdf5_handle,
                                                                   array_name,
                                                                   array_value,
-                                                                  overwrite = False)
+                                                                  overwrite = self.overwrite_dataset)
             self.hdf5_handle.file.flush()
         else:
             raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
 
 
 @debugging_tools.log_call(logger)
-def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, overwrite_group = False):
+def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, overwrite_group = False, allow_overwrite_dataset = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to a group in an HDF5 file.
@@ -93,6 +94,8 @@ def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, over
 
             group_name:         The name of the group within hdf5_handle to save the contents to.
                                 (If set to the empty string, data will be saved to hdf5_handle directly)
+
+            enable:             Whether to generate a real logger or a fake one.
             
             debug:              Whether to actually write the debug contents (True by default).
             
@@ -127,7 +130,7 @@ def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, over
 
             hdf5_logging_handle = hdf5_handle[group_name]
 
-        return(HDF5ArrayLogger(hdf5_logging_handle))
+        return(HDF5ArrayLogger(hdf5_logging_handle, overwrite_dataset = allow_overwrite_dataset))
     else:
         return(EmptyArrayLogger())
 
@@ -139,7 +142,7 @@ def create_subgroup_HDF5_array_logger(group_name, array_debug_logger, overwrite_
         to a group within the current group in an HDF5 file.
         
         Args:
-            hdf5_handle:                The HDF5 file group to place the debug contents into.
+            hdf5_handle:        The HDF5 file group to place the debug contents into.
             
             debug:              Whether to actually write the debug contents (True by default).
             
