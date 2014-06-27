@@ -81,6 +81,10 @@ def removing_lines(new_data, erosion_shape, dilation_shape, array_debug_logger =
 
     points = numpy.array(numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij"))
 
+    zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
+    zero_masks_eroded = numpy.zeros(new_data.shape, dtype=bool)
+    zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
+
     for i in xrange(new_data.shape[0]):
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
@@ -88,6 +92,10 @@ def removing_lines(new_data, erosion_shape, dilation_shape, array_debug_logger =
         zero_mask_i_dilated = skimage.morphology.binary_dilation(zero_mask_i, dilation_structure).astype(bool)
         zero_mask_i_eroded = skimage.morphology.binary_erosion(zero_mask_i, erosion_structure).astype(bool)
         zero_mask_i_outline = zero_mask_i_dilated - zero_mask_i_eroded
+
+        zero_masks_dilated[i] = zero_mask_i_dilated
+        zero_masks_eroded[i] = zero_mask_i_eroded
+        zero_masks_outline[i] = zero_mask_i_outline
 
         # Get the points that correspond to those
         zero_mask_i_outline_points = numpy.array(zero_mask_i_outline.nonzero()).transpose()
@@ -102,6 +110,10 @@ def removing_lines(new_data, erosion_shape, dilation_shape, array_debug_logger =
                                                                                    0)
 
         result[i] = numpy.where(zero_mask_i, new_data_i_zero_mask_i_outline_interpolation, new_data_i)
+
+    array_debug_logger("zero_masks_dilated", zero_masks_dilated)
+    array_debug_logger("zero_masks_eroded", zero_masks_eroded)
+    array_debug_logger("zero_masks_outline", zero_masks_outline)
 
     return(result)
 
