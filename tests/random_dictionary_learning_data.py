@@ -2,12 +2,12 @@ import numpy
 import scipy
 import scipy.ndimage
 
-import nanshe.advanced_debugging
+import nanshe.debugging_tools
 import nanshe.additional_generators
 
 
 # Get the logger
-logger = nanshe.advanced_debugging.logging.getLogger(__name__)
+logger = nanshe.debugging_tools.logging.getLogger(__name__)
 
 
 

@@ -38,7 +38,7 @@ import vigra.filters
 import vigra.analysis
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 import expanded_numpy
 
@@ -55,11 +55,11 @@ import HDF5_logger
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def removing_lines(new_data,
                    erosion_shape,
                    dilation_shape,
@@ -125,13 +125,13 @@ def removing_lines(new_data,
     return(result)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def extract_f0(new_data,
                temporal_smoothing_gaussian_filter_stdev,
                spatial_smoothing_gaussian_filter_stdev,
                array_debug_logger = HDF5_logger.EmptyArrayLogger(),
                **parameters):
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def extract_quantile(new_data,
                          step_size,
                          half_window_size,
@@ -216,7 +216,7 @@ def extract_f0(new_data,
     return(new_data_baselined)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
@@ -243,7 +243,7 @@ def normalize_data(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
     return(new_data_renormalized)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def preprocess_data(new_data, bias, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
@@ -302,7 +302,7 @@ def preprocess_data(new_data, bias, array_debug_logger = HDF5_logger.EmptyArrayL
     return(new_data_normalized)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def generate_dictionary(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
@@ -348,7 +348,7 @@ def generate_dictionary(new_data, array_debug_logger = HDF5_logger.EmptyArrayLog
     return(new_dictionary)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def region_properties(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label .
@@ -619,7 +619,7 @@ def region_properties(new_label_image, *args, **kwargs):
     return(new_label_image_props_with_arrays)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def get_neuron_dtype(new_image):
     neurons_dtype = [("mask", bool, new_image.shape),
                      ("contour", bool, new_image.shape),
@@ -633,7 +633,7 @@ def get_neuron_dtype(new_image):
     return(neurons_dtype)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def get_empty_neuron(new_image):
     neurons_dtype = get_neuron_dtype(new_image)
     neurons = numpy.zeros((0,), dtype = neurons_dtype)
@@ -641,7 +641,7 @@ def get_empty_neuron(new_image):
     return(neurons)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def get_one_neuron(new_image):
     neurons_dtype = get_neuron_dtype(new_image)
     neurons = numpy.zeros((1,), dtype = neurons_dtype)
@@ -649,7 +649,7 @@ def get_one_neuron(new_image):
     return(neurons)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def generate_local_maxima_vigra(new_intensity_image):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
@@ -667,7 +667,7 @@ def generate_local_maxima_vigra(new_intensity_image):
     return(local_maxima_mask)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborhood_size = 1):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
@@ -688,7 +688,7 @@ def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborho
     return(local_maxima_mask)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def generate_local_maxima(new_intensity_image):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
@@ -703,7 +703,7 @@ def generate_local_maxima(new_intensity_image):
     return(generate_local_maxima_vigra(new_intensity_image))
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def extended_region_local_maxima_properties(new_intensity_image, new_label_image = None, new_label_image_threshhold = 0,
                                             **kwargs):
     """
@@ -776,7 +776,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
 
 
 class ExtendedRegionProps(object):
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __init__(self, new_intensity_image,
                  new_label_image,
                  array_debug_logger = HDF5_logger.EmptyArrayLogger(),
@@ -839,12 +839,12 @@ class ExtendedRegionProps(object):
         logger.debug("Refinined properties for local maxima.")
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def get_centroid_index_array(self):
         return(tuple(self.props["local_max"].T))
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def get_centroid_mask(self):
         # Returns a label image containing each centroid and its labels.
         new_centroid_mask = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
@@ -855,7 +855,7 @@ class ExtendedRegionProps(object):
         return(new_centroid_mask)
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def get_centroid_label_image(self):
         # Returns a label image containing each centroid and its labels.
         new_centroid_label_image = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
@@ -866,7 +866,7 @@ class ExtendedRegionProps(object):
         return(new_centroid_label_image)
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
         # Get the labels to remove
         remove_labels = self.props["label"][remove_prop_indices_mask]
@@ -895,7 +895,7 @@ class ExtendedRegionProps(object):
             self.renumber_labels()
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def remove_prop_indices(self, *i):
         # A mask of the indices to remove
         remove_prop_indices_mask = numpy.zeros((len(self.props),), dtype = bool)
@@ -903,7 +903,7 @@ class ExtendedRegionProps(object):
 
         self.remove_prop_mask(remove_prop_indices_mask)
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def renumber_labels(self):
         # Renumber all labels sequentially starting with the label image
         self.label_image[:], forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(
@@ -937,7 +937,7 @@ class ExtendedRegionProps(object):
         self.count = self.count[:len(reverse_label_mapping)].copy()
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max, **parameters):
     # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
     low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
@@ -972,7 +972,7 @@ def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max,
     return(new_local_maxima)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def remove_too_close_local_maxima(local_maxima, min_centroid_distance, **parameters):
     # Deleting close local maxima below 16 pixels
     too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
@@ -1002,7 +1002,7 @@ def remove_too_close_local_maxima(local_maxima, min_centroid_distance, **paramet
     return(new_local_maxima)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def wavelet_denoising(new_image,
                       accepted_region_shape_constraints,
                       use_watershed,
@@ -1280,7 +1280,7 @@ def wavelet_denoising(new_image,
     return(neurons)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def fuse_neurons(neuron_1,
                  neuron_2,
                  fraction_mean_neuron_max_threshold,
@@ -1337,7 +1337,7 @@ def fuse_neurons(neuron_1,
     return(new_neuron)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def merge_neuron_sets(new_neuron_set_1,
                       new_neuron_set_2,
                       alignment_min_threshold,
@@ -1521,7 +1521,7 @@ def merge_neuron_sets(new_neuron_set_1,
     return(new_neuron_set)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def postprocess_data(new_dictionary, array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
     """
         Generates neurons from the dictionary.

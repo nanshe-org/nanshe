@@ -7,11 +7,11 @@ __date__ = "$Apr 3, 2014 8:20:39PM$"
 
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 import matplotlib as mpl
 import matplotlib.figure
@@ -26,7 +26,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         Wraps a Matplotlib figure instance.
     """
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __init__(self, *args, **kwargs):
         """
             Initializes a NeuronMatplotlibViewer using the given figure to clone and image stack to view.
@@ -52,7 +52,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
         #self.set_images(kwargs["neuron_images"])
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def set_images(self, new_neuron_images, cmap = mpl.cm.RdBu, use_matshow = False):
         """
             Sets the images to be viewed.
@@ -89,7 +89,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
             self.time_nav_cid = self.time_nav.on_time_update(self.time_update)
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def time_update(self):
         """
             Method to be called by the TimeNavigator when the time changes. Updates image displayed.
@@ -100,7 +100,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
 
 class TimeNavigator(object):
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __init__(self, fig, max_time, min_time = 0, time_step = 1, axcolor = 'lightgoldenrodyellow',
                  hovercolor = '0.975'):
         """
@@ -153,7 +153,7 @@ class TimeNavigator(object):
 
         self.callbacks = {}
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def begin_time(self, event):
         """
             Sets time to min_time.
@@ -169,7 +169,7 @@ class TimeNavigator(object):
         logger.debug("Value of slider after setting to the beginning is \"" + str(self.stime.val) + "\".")
         assert (self.min_time == self.stime.val)
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def prev_time(self, event):
         """
             Sets time to one time_step prior.
@@ -184,7 +184,7 @@ class TimeNavigator(object):
 
         logger.debug("Value of slider after going to the previous time is \"" + str(self.stime.val) + "\".")
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def next_time(self, event):
         """
             Sets time to one time_step after.
@@ -199,7 +199,7 @@ class TimeNavigator(object):
 
         logger.debug("Value of slider after going to the next time is \"" + str(self.stime.val) + "\".")
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def end_time(self, event):
         """
             Sets time to max_time.
@@ -212,7 +212,7 @@ class TimeNavigator(object):
 
         assert (self.max_time == self.stime.val)
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def normalize_val(self, val):
         """
             Takes the time value and normalizes it to fit within the range.
@@ -232,7 +232,7 @@ class TimeNavigator(object):
         else:
             return(int(round((val - self.min_time) / self.time_step)))
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def time_update(self, val):
         """
             Takes the time value and normalizes it within the range if it does not fit.
@@ -255,7 +255,7 @@ class TimeNavigator(object):
 
             return
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def disconnect(self, cid):
         """
             Disconnects the given cid from being notified of time updates.
@@ -272,7 +272,7 @@ class TimeNavigator(object):
         logger.debug("After disconnecting the caller id for time_update with value \"" + str(cid) + "\".")
         logger.debug("Contents of the callback dictionary after disconnecting\"" + str(self.callbacks) + "\".")
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def on_time_update(self, func):
         """
             Registers a callback function for notification when the time is updated.

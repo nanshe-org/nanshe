@@ -5,11 +5,11 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 14, 2014 8:37:08PM$"
 
-__all__ = ["..", "advanced_debugging", "advanced_image_processing", "additional_generators", "expanded_numpy",
+__all__ = ["..", "debugging_tools", "advanced_image_processing", "additional_generators", "expanded_numpy",
            "batch_learner", "denoising", "HDF5_logger", "HDF5_searchers", "HDF5_serializers", #"neuron_volumina_viewer",
            "pathHelpers", "read_config", "simple_image_processing", "wavelet_transform"]
 
-import advanced_debugging
+import debugging_tools
 import advanced_image_processing
 import additional_generators
 import expanded_numpy

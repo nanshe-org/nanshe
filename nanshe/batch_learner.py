@@ -9,7 +9,7 @@ import os
 import numpy
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 import HDF5_logger
 
@@ -25,11 +25,11 @@ import vigra
 import vigra.impex
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def batch_generate_save_neurons(new_filenames, parameters):
     """
         Uses generate_save_neurons to process a list of filename (HDF5 files) with the given parameters for trainDL.
@@ -46,7 +46,7 @@ def batch_generate_save_neurons(new_filenames, parameters):
         generate_save_neurons(each_new_filename, **parameters)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def generate_save_neurons(new_filename, debug = False, resume = False, run_stage = "all", **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files)
@@ -191,7 +191,7 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
             output_group.attrs["parameters"] = repr(parameters)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def main(*argv):
     """
         Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.

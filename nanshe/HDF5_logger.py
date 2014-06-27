@@ -12,34 +12,34 @@ import h5py
 import HDF5_serializers
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
 class EmptyArrayLogger(object):
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __init__(self):
         pass
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __nonzero__(self):
         return(False)
 
     # For forward compatibility with Python 3
     __bool__ = __nonzero__
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __contains__(self, array_name):
         return(False)
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __getitem__(self, array_name):
         return(None)
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __call__(self, array_name, array_value):
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
         if array_value.size:
@@ -49,26 +49,26 @@ class EmptyArrayLogger(object):
 
 
 class HDF5ArrayLogger(object):
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __init__(self, hdf5_handle):
         self.hdf5_handle = hdf5_handle
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __nonzero__(self):
         return(True)
 
     # For forward compatibility with Python 3
     __bool__ = __nonzero__
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __contains__(self, array_name):
         return(array_name in self.hdf5_handle)
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __getitem__(self, array_name):
         return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, array_name))
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def __call__(self, array_name, array_value):
         # Attempt to create a dataset in self.hdf5_handle named array_name with array_value and do not overwrite.
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
@@ -82,7 +82,7 @@ class HDF5ArrayLogger(object):
             raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, overwrite_group = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
@@ -132,7 +132,7 @@ def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, over
         return(EmptyArrayLogger())
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def create_subgroup_HDF5_array_logger(group_name, array_debug_logger, overwrite_group = False):
     """
         Generates a function used for writing arrays (structured or otherwise)

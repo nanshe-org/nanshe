@@ -11,14 +11,14 @@ __date__ = "$Apr 30, 2014 5:14:50PM$"
 import numpy
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def zeroed_mean_images(input_array, ord = 2, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
@@ -85,7 +85,7 @@ def zeroed_mean_images(input_array, ord = 2, output_array = None):
     return(output_array)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def renormalized_images(input_array, ord = 2, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.

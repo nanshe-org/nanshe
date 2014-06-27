@@ -10,14 +10,14 @@ import h5py
 
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
@@ -56,7 +56,7 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
         fid.close()
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def read_numpy_structured_array_from_HDF5(fid, internalPath):
     """
         Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.

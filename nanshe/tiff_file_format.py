@@ -13,7 +13,7 @@ import vigra
 import vigra.impex
 import pathHelpers
 
-import advanced_debugging
+import debugging_tools
 import additional_generators
 import additional_io
 import expanded_numpy
@@ -21,11 +21,11 @@ import expanded_numpy
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def get_multipage_tiff_shape_dtype(new_tiff_filename):
     """
         Gets the info about the shape (including page number as time) and dtype.
@@ -50,7 +50,7 @@ def get_multipage_tiff_shape_dtype(new_tiff_filename):
     return(shape_dtype_result)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order = "zyxtc", pages_to_channel = 1):
     """
         Gets the info about the shape and dtype after some transformations have been performed .
@@ -100,7 +100,7 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order = "
     return(shape_dtype_result)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_channel = 1):
     """
         Reads a tiff file and returns a standard 5D array.
@@ -179,7 +179,7 @@ def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_ch
     return(new_tiff_array)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, z_index = 0, pages_to_channel = 1):
     """
         Convert a stack of tiffs to an HDF5 file.

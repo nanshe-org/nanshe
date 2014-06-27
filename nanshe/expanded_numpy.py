@@ -18,14 +18,14 @@ import scipy.stats.mstats
 import vigra
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def renumber_label_image(new_array):
     """
         Takes a label image with non-consecutive numbering and renumbers it to be consecutive.
@@ -79,7 +79,7 @@ def renumber_label_image(new_array):
     return((new_array_relabeled, forward_label_mapping, reverse_label_mapping))
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def index_axis_at_pos(new_array, axis, pos):
     """
         Indexes an arbitrary axis to the given position, which may be an index, a slice, or any other NumPy allowed
@@ -157,7 +157,7 @@ def index_axis_at_pos(new_array, axis, pos):
     return( new_subarray )
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def add_singleton_axis_pos(a_array, new_axis = 0):
     """
         Adds a singleton axis to the given position.
@@ -213,7 +213,7 @@ def add_singleton_axis_pos(a_array, new_axis = 0):
     return( new_array )
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def add_singleton_axis_beginning(new_array):
     """
         Adds a singleton axis to the beginning of the array.
@@ -237,7 +237,7 @@ def add_singleton_axis_beginning(new_array):
     return( add_singleton_axis_pos(new_array, new_axis = 0) )
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def add_singleton_axis_end(new_array):
     """
         Adds a singleton axis to the end of the array.
@@ -261,7 +261,7 @@ def add_singleton_axis_end(new_array):
     return( add_singleton_axis_pos(new_array, new_axis = new_array.ndim) )
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def contains(new_array, to_contain):
     """
         Gets a mask array that is true every time something from to_contain appears in new_array.
@@ -309,7 +309,7 @@ def contains(new_array, to_contain):
     return(numpy.in1d(new_array, to_contain).reshape(new_array.shape))
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
     """
         Behaves like NumPy tile except that it always returns a view and not a copy.
@@ -506,7 +506,7 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
                                                len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)) )
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
@@ -599,7 +599,7 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
     return( new_op(new_array_1_tiled, new_array_2_tiled) )
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def all_permutations_equal(new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
@@ -714,7 +714,7 @@ class NotNumPyStructuredArrayType(Exception):
     pass
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def numpy_structured_array_dtype_generator(new_array):
     """
         Takes a NumPy structured array and returns a generator that goes over
@@ -745,7 +745,7 @@ def numpy_structured_array_dtype_generator(new_array):
         raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def numpy_array_dtype_list(new_array):
     """
         Takes any NumPy array and returns either a list for a NumPy structured array
@@ -767,7 +767,7 @@ def numpy_array_dtype_list(new_array):
         return(new_array.dtype.type)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def dot_product(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each set.
@@ -814,7 +814,7 @@ def dot_product(new_vector_set_1, new_vector_set_2):
     return(vector_pairs_dot_product)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def norm(new_vector_set, ord = 2):
     """
         Determines the norm of a vector or a set of vectors.
@@ -891,7 +891,7 @@ def norm(new_vector_set, ord = 2):
     return(result)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
@@ -964,7 +964,7 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
     return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
@@ -1038,7 +1038,7 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     return(vector_pairs_dot_product_normalized)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the L_2 norm of the two.
@@ -1332,7 +1332,7 @@ def quantile(data, probs, axis = None):
     return(new_quantiles)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def tagging_reorder_array(new_array, from_axis_order = "tzyxc", to_axis_order = "tzyxc", to_copy = False):
     """
         Transforms one axis ordering to another giving a view of the array (unless otherwise specified).

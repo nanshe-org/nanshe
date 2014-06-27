@@ -7,14 +7,14 @@ __date__ = "$Apr 30, 2014 4:54:30PM$"
 
 
 # Need in order to have logging information no matter what.
-import advanced_debugging
+import debugging_tools
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = debugging_tools.logging.getLogger(__name__)
 
 
-@advanced_debugging.log_call(logger)
+@debugging_tools.log_call(logger)
 def read_parameters(config_filename, maintain_order = False):
     """
         Reads the contents of a json config file and returns the parameters.
@@ -41,7 +41,7 @@ def read_parameters(config_filename, maintain_order = False):
         json_dict = dict
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def ascii_encode_str(data, json_dict = json_dict):
         """
             Encodes the str.
@@ -55,7 +55,7 @@ def read_parameters(config_filename, maintain_order = False):
         return(data.encode("utf-8"))
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def ascii_encode_list(data, json_dict = json_dict):
         """
             Encodes the list (and its contents).
@@ -95,7 +95,7 @@ def read_parameters(config_filename, maintain_order = False):
         return(transformed_list)
 
 
-    @advanced_debugging.log_call(logger)
+    @debugging_tools.log_call(logger)
     def ascii_encode_dict(data, json_dict = json_dict):
         """
             Encodes the dict (and its contents).
