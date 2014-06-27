@@ -15,6 +15,8 @@ import scipy.ndimage.morphology
 import scipy.stats
 import scipy.stats.mstats
 
+import vigra
+
 # Need in order to have logging information no matter what.
 import advanced_debugging
 
@@ -1321,3 +1323,41 @@ def quantile(data, probs, axis = None):
     new_quantiles.set_fill_value(numpy.nan)
 
     return(new_quantiles)
+
+
+@advanced_debugging.log_call(logger)
+def tagging_reorder_array(new_array, from_axis_order = "tzyxc", to_axis_order = "tzyxc", to_copy = False):
+    """
+        Transforms one axis ordering to another giving a view of the array (unless otherwise specified).
+
+        Args:
+            new_array(numpy.ndarray):                   the array to reorder
+
+            from_axis_order(str or list of str):        current labeled axis order.
+
+            to_axis_order(str or list of str):          desired labeled axis order
+
+            to_copy(bool):                              whether to return a view or a copy
+
+        Returns:
+            (numpy.ndarray):                            an array with the axis order specified (view).
+    """
+
+    if not isinstance(from_axis_order, str):
+        from_axis_order = "".join([_ for _ in from_axis_order])
+
+    if not isinstance(to_axis_order, str):
+        to_axis_order = "".join([_ for _ in to_axis_order])
+
+    if (from_axis_order != to_axis_order):
+        # Change view to the specified one
+        new_array = vigra.taggedView(new_array, from_axis_order)
+        # Reorder to the user specified one
+        new_array = new_array.withAxes(*to_axis_order)
+        # Dump the VIGRA array as we do not care
+        new_array = new_array.view(numpy.ndarray)
+
+    if to_copy:
+        new_array = new_array.copy()
+
+    return(new_array)
