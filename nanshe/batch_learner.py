@@ -134,6 +134,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         if "original_images_max_projection" not in output_group:
             array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
 
+        if (run_stage == "preprocessing") and ("preprocessed_images" in output_group):
+            del output_group["preprocessed_images"]
+
         # Preprocess images
         new_preprocessed_images = None
         if "preprocessed_images" in resume_logger:
@@ -146,6 +149,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         if run_stage == "preprocessing":
             return
 
+        if (run_stage == "dictionary") and ("dictionary" in output_group):
+            del output_group["dictionary"]
+
         # Find the dictionary
         new_dictionary = None
         if "dictionary" in resume_logger:
@@ -157,6 +163,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
 
         if run_stage == "dictionary":
             return
+
+        if (run_stage == "postprocessing") and ("neurons" in output_group):
+            del output_group["neurons"]
 
         # Find the neurons
         new_neurons = None
