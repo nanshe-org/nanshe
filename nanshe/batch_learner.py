@@ -69,44 +69,12 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
     new_filename_ext = new_filename_details.extension
     new_filename_ext = new_filename_ext.lower()
     new_filename_ext = new_filename_ext.replace(os.path.extsep, "", 1)
-    if ( (new_filename_ext == "tif") or (new_filename_ext == "tiff") ):
-        # TIFF file. Convert to HDF5
-        new_hdf5_filename = new_filename_details.externalDirectory + os.path.sep + new_filename_details.filenameBase + os.path.extsep + "h5"
-        internal_path = "images"
-        new_hdf5_filepath = new_hdf5_filename + "/" + internal_path
 
-        logger.info(
-            "Got a TIFF file as input. Will copy over to an HDF5 file, which will be named \"" + new_hdf5_filepath + "\".")
-
-        with h5py.File(new_hdf5_filename, "a") as new_hdf5_file:
-            data = None
-            if vigra.impex.numberImages(new_filename_details.externalPath) > 1:
-                # Our algorithm expect double precision
-                data = vigra.impex.readVolume(new_filename_details.externalPath, dtype = "DOUBLE")
-                data = data.view(numpy.ndarray)
-                # TODO: Very hacky. Need to fix. Should also move this to another function.
-                # Simon's data has channel and then time. One channel is garbage. So, we dump it.
-                # Besides this algorithm does not know what to do with another channel.
-                data = data.reshape(data.shape[0:2] + (data.shape[2] / 2, 2,))
-                data = vigra.taggedView(data, 'xytc')
-                data = data.withAxes('c', 't', 'x', 'y')[0]
-                data = data.view(numpy.ndarray)
-            else:
-                data = vigra.impex.readImage(new_filename_details.externalPath, dtype = "DOUBLE")
-                data = vigra.taggedView(numpy.array(data), 'xyc')
-                data = data.withAxes('c', 'x', 'y')[0]
-                data = data.view(numpy.ndarray)
-
-            if internal_path in new_hdf5_file:
-                del new_hdf5_file[internal_path]
-
-            new_hdf5_file[internal_path] = data
-    elif ( (new_filename_ext == "h5") or (new_filename_ext == "hdf5") or (new_filename_ext == "he5") ):
+    if ( (new_filename_ext == "h5") or (new_filename_ext == "hdf5") or (new_filename_ext == "he5") ):
         # HDF5 file. Nothing to do here.
         new_hdf5_filepath = new_filename
     else:
-        raise Exception(
-            "File with filename: \"" + new_filename + "\"" + " provided with an unknown file extension: \"" + new_filename_ext + "\". Support for ")
+        raise Exception("File with filename: \"" + new_filename + "\"" + " provided with an unknown file extension: \"" + new_filename_ext + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
 
 
     # Inspect path name to get where the file is and its internal path
