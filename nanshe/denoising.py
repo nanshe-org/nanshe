@@ -72,7 +72,9 @@ def significant_mask(input_array, noise_threshhold = 6.0, noise_estimate = None)
         
         Args:
             input_array(numpy.ndarray):          the array, which needs noise removed.
-            noise_threshhold(float):             the estimated noise times this value determines the max value to consider as noise (to zero).
+            noise_threshhold(float):             the estimated noise times this value determines the max value to
+                                                 consider as noise (to zero).
+
             in_place(bool):                      whether to modify input_array directly or to return a copy instead.
         
         Returns:
@@ -116,12 +118,16 @@ def significant_mask(input_array, noise_threshhold = 6.0, noise_estimate = None)
 def noise_mask(input_array, noise_threshhold = 6.0, noise_estimate = None):
     """
         Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.
-        
+
         Args:
             input_array(numpy.ndarray):          the array to use for generating the noise mask.
-            significance_threshhold(float):      the number of standard deviations (of the whole array), below which must be noise.
-            noise_threshhold(float):             the estimated noise times this value determines the max value to consider as noise (to zero).
-        
+
+            significance_threshhold(float):      the number of standard deviations (of the whole array),
+                                                 below which must be noise.
+
+            noise_threshhold(float):             the estimated noise times this value determines the max value
+                                                 to consider as noise (to zero).
+
         Returns:
             result(numpy.ndarray): a numpy array with noise zeroed.
         
