@@ -97,7 +97,7 @@ def removing_lines(new_data, array_debug_logger = HDF5_logger.EmptyArrayLogger()
             new_data_i_zero_mask_outline_interpolation = scipy.interpolate.griddata(zero_mask_outline_points, new_data_i[zero_mask_outline], tuple(points), method = "linear")
 
             # Only need to check for nan in our case.
-            new_data_i_zero_mask_outline_interpolation = numpy.where((new_data_i_zero_mask_outline_interpolation == numpy.nan),
+            new_data_i_zero_mask_outline_interpolation = numpy.where(numpy.isnan(new_data_i_zero_mask_outline_interpolation),
                                                                      new_data_i_zero_mask_outline_interpolation,
                                                                      0)
 
