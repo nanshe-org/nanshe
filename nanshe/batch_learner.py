@@ -113,23 +113,25 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
             # Create a new output directory.
             new_file.create_group(output_directory)
 
+        output_group = new_file[output_directory]
+
         # Create a hardlink (does not copy the original data)
         if "original_images" not in new_file[output_directory]:
-            new_file[output_directory]["original_images"] = new_file[new_hdf5_filepath_details.internalPath]
+            output_group["original_images"] = new_file[new_hdf5_filepath_details.internalPath]
 
         # Copy out images for manipulation in memory
-        new_images = new_file[output_directory]["original_images"][:]
+        new_images = output_group["original_images"][:]
 
         # Get a debug logger for the HDF5 file (if needed)
-        array_debug_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory],
+        array_debug_logger = HDF5_logger.generate_HDF5_array_logger(output_group,
                                                                         group_name = "debug",
                                                                         enable = debug,
                                                                         overwrite_group = False)
 
         # Saves intermediate result to make resuming easier
-        resume_logger = HDF5_logger.generate_HDF5_array_logger(new_file[output_directory])
+        resume_logger = HDF5_logger.generate_HDF5_array_logger(output_group)
 
-        if "original_images_max_projection" not in new_file[output_directory]:
+        if "original_images_max_projection" not in output_group:
             array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
 
         # Preprocess images
@@ -167,9 +169,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
                 logger.warning("No neurons were found in the data.")
 
         # Save the configuration parameters in the attributes as a string.
-        if "parameters" not in new_file[output_directory].attrs:
+        if "parameters" not in output_group.attrs:
             # Write the configuration parameters in the attributes as a string.
-            new_file[output_directory].attrs["parameters"] = repr(parameters)
+            output_group.attrs["parameters"] = repr(parameters)
 
 
 @advanced_debugging.log_call(logger)
