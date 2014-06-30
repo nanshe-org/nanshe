@@ -49,14 +49,16 @@ def batch_generate_save_neurons(new_filenames, parameters):
 @advanced_debugging.log_call(logger)
 def generate_save_neurons(new_filename, debug = False, resume = False, run_stage = "all", **parameters):
     """
-        Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files) with the given parameters for trainDL.
+        Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files)
+        with the given parameters for trainDL.
         
         Args:
             new_filenames     name of the internal file to read (should be a Dataset)
             parameters        passed directly to advanced_image_processing.generate_dictionary.
     """
 
-    # No need unless loading data. thus, won't be loaded if only using numpy arrays with advanced_image_processing.generate_dictionary.
+    # No need unless loading data.
+    # thus, won't be loaded if only using numpy arrays with advanced_image_processing.generate_dictionary.
     import h5py
 
     # Need in order to read h5py path. Otherwise unneeded.
@@ -142,7 +144,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         if "preprocessed_images" in resume_logger:
             new_preprocessed_images = resume_logger["preprocessed_images"]
         else:
-            new_preprocessed_images = advanced_image_processing.preprocess_data(new_images, array_debug_logger = array_debug_logger, **parameters["preprocess_data"])
+            new_preprocessed_images = advanced_image_processing.preprocess_data(new_images,
+                                                                                array_debug_logger = array_debug_logger,
+                                                                                **parameters["preprocess_data"])
             resume_logger("preprocessed_images", new_preprocessed_images)
             array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
 
@@ -157,7 +161,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         if "dictionary" in resume_logger:
             new_dictionary = resume_logger["dictionary"]
         else:
-            new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images, array_debug_logger = array_debug_logger, **parameters["generate_dictionary"])
+            new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images,
+                                                                           array_debug_logger = array_debug_logger,
+                                                                           **parameters["generate_dictionary"])
             resume_logger("dictionary", new_dictionary)
             array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
 
@@ -172,7 +178,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         if "neurons" in resume_logger:
             new_neurons = resume_logger["neurons"]
         else:
-            new_neurons = advanced_image_processing.postprocess_data(new_dictionary, array_debug_logger, **parameters["postprocess_data"])
+            new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
+                                                                     array_debug_logger,
+                                                                     **parameters["postprocess_data"])
             resume_logger("neurons", new_neurons)
             if new_neurons.size == 0:
                 logger.warning("No neurons were found in the data.")
@@ -215,7 +223,8 @@ def main(*argv):
     # Go ahead and stuff in parameters with the other parsed_args
     parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
 
-    # Runs the dictionary learning algorithm on each file with the given parameters and saves the results in the given files.
+    # Runs the dictionary learning algorithm on each file with the given parameters
+    # and saves the results in the given files.
     batch_generate_save_neurons(parsed_args.input_files, parsed_args.parameters)
 
     return(0)
