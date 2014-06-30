@@ -65,7 +65,7 @@ import h5py
 import pathHelpers
 
 import expanded_numpy
-import advanced_iterators
+import additional_generators
 
 
 
@@ -204,7 +204,7 @@ class HDF5DataSource( QObject ):
 
         assert(len(slicing) == len(self.dataset_shape), "Expect a slicing for a txyzc array.")
 
-        advanced_iterators.reformat_slices(slicing, self.dataset_shape)
+        additional_generators.reformat_slices(slicing, self.dataset_shape)
 
         return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing))
 
@@ -297,7 +297,7 @@ class HDF5DataRequest( object ):
     def wait( self ):
         if self._result is None:
             # Construct a result the size of the slicing
-            slicing_shape = advanced_iterators.len_slices(self.slicing)
+            slicing_shape = additional_generators.len_slices(self.slicing)
             self._result = numpy.zeros(slicing_shape, dtype = self.dataset_dtype)
 
             try:
@@ -574,13 +574,13 @@ class HDF5DataFusedSource( QObject ):
             each_slicing_formatted = None
             if i == self.fuse_axis:
                 each_len = len(self.data_sources)
-                fuse_slicing = each_slicing_formatted = advanced_iterators.reformat_slice(each_slicing, each_len)
+                fuse_slicing = each_slicing_formatted = additional_generators.reformat_slice(each_slicing, each_len)
                 non_fuse_slicing.append(slice(0, 1, 1))
             else:
-                each_slicing_formatted = advanced_iterators.reformat_slice(each_slicing, each_len)
+                each_slicing_formatted = additional_generators.reformat_slice(each_slicing, each_len)
                 non_fuse_slicing.append(each_slicing_formatted)
 
-            each_slicing_len = advanced_iterators.len_slice(each_slicing_formatted, each_len)
+            each_slicing_len = additional_generators.len_slice(each_slicing_formatted, each_len)
 
             slicing_formatted.append(each_slicing_formatted)
             slicing_shape.append(each_slicing_len)

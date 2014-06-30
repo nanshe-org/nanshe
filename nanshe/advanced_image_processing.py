@@ -24,7 +24,7 @@ import skimage.feature
 import skimage.morphology
 import skimage.segmentation
 
-import advanced_iterators
+import additional_generators
 
 # To allow for more advanced iteration patterns
 import itertools
@@ -1544,7 +1544,7 @@ def postprocess_data(new_dictionary, array_debug_logger = HDF5_logger.EmptyArray
         neuron_sets_array_debug_logger = HDF5_logger.create_subgroup_HDF5_array_logger("neuron_sets",
                                                                                              array_debug_logger)
 
-        for i, i_str, each in advanced_iterators.filled_stringify_enumerate(new_list):
+        for i, i_str, each in additional_generators.filled_stringify_enumerate(new_list):
             yield ( (i, each, HDF5_logger.create_subgroup_HDF5_array_logger(i_str, neuron_sets_array_debug_logger)) )
 
     # Get all neurons for all images

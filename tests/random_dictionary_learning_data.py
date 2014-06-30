@@ -2,12 +2,12 @@ import numpy
 import scipy
 import scipy.ndimage
 
-from dictionary_learning import advanced_debugging
-from dictionary_learning import advanced_iterators
+import nanshe.advanced_debugging
+import nanshe.additional_generators
 
 
 # Get the logger
-logger = advanced_debugging.logging.getLogger(__name__)
+logger = nanshe.advanced_debugging.logging.getLogger(__name__)
 
 
 
@@ -220,7 +220,7 @@ class DictionaryLearningRandomDataGenerator(object):
             each_result.centroid_activation_frames = []        
             for each_point_group in point_groups:
                 # Get an index array
-                each_point_group_index_array = advanced_iterators.list_indices_to_index_array(each_point_group)
+                each_point_group_index_array = nanshe.additional_generators.list_indices_to_index_array(each_point_group)
                 
                 # Create an empty activation frame
                 each_centroid_activation_frame = numpy.zeros(self.frame_shape)

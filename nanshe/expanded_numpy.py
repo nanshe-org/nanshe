@@ -126,7 +126,7 @@ def index_axis_at_pos(new_array, axis, pos):
 
     """
 
-    import advanced_iterators
+    import additional_generators
 
     # Rescale axis inside the bounds
     axis %= (new_array.ndim)
@@ -139,7 +139,7 @@ def index_axis_at_pos(new_array, axis, pos):
     # Place the chosen axis first (as all axes are positive semi-definite) and then 0 (if it is different from our axis)
     axis_new_ordering += sorted(set([axis, 0]), reverse = True)
     # Skip generating 0 or the chosen axis, but generate all others in normal order
-    axis_new_ordering += list(advanced_iterators.xrange_with_skip(new_array.ndim, to_skip = [0, axis]))
+    axis_new_ordering += list(additional_generators.xrange_with_skip(new_array.ndim, to_skip = [0, axis]))
 
     # Swaps the first with the desired axis (returns a view)
     new_array_swapped = new_array.transpose(axis_new_ordering)
