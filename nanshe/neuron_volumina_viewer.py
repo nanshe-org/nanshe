@@ -64,7 +64,7 @@ import h5py
 
 import pathHelpers
 
-import advanced_numpy
+import expanded_numpy
 import advanced_iterators
 
 
@@ -316,7 +316,7 @@ class HDF5DataRequest( object ):
                 # Insert singleton axes to make 5D for Volumina
                 for i, each_axis_order in enumerate(self.axis_order):
                     if each_axis_order == -1:
-                        a_result = advanced_numpy.add_singleton_axis_pos(a_result, i)
+                        a_result = expanded_numpy.add_singleton_axis_pos(a_result, i)
 
                 self._result[:] = a_result
             except KeyError:
@@ -649,8 +649,8 @@ class HDF5DataFusedRequest( object ):
                     if each_data_request is not None:
                         each_result = each_data_request.wait()
 
-                        result_view = advanced_numpy.index_axis_at_pos(self._result, self.fuse_axis, i)
-                        each_result_view = advanced_numpy.index_axis_at_pos(each_result, self.fuse_axis, i)
+                        result_view = expanded_numpy.index_axis_at_pos(self._result, self.fuse_axis, i)
+                        each_result_view = expanded_numpy.index_axis_at_pos(each_result, self.fuse_axis, i)
                         result_view[:] = each_result_view
 
                 logger.debug("Found the result.")

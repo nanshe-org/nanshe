@@ -16,7 +16,7 @@ import pathHelpers
 import advanced_debugging
 import advanced_iterators
 import advanced_io
-import advanced_numpy
+import expanded_numpy
 
 
 
@@ -155,14 +155,14 @@ def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_ch
         # Convert to normal array
         new_tiff_array = new_tiff_array.view(numpy.ndarray)
         # Need to add singleton time dimension before channel
-        new_tiff_array = advanced_numpy.add_singleton_axis_pos(new_tiff_array, -2)
+        new_tiff_array = expanded_numpy.add_singleton_axis_pos(new_tiff_array, -2)
 
     # Check to make sure the dimensions are ok
     if (new_tiff_array.ndim == 5):
         pass
     elif (new_tiff_array.ndim == 4):
         # Has no z. So, add this.
-        new_tiff_array = advanced_numpy.add_singleton_axis_beginning(new_tiff_array)
+        new_tiff_array = expanded_numpy.add_singleton_axis_beginning(new_tiff_array)
     else:
         raise Exception("Invalid dimensionality for TIFF. Found shape to be \"" + repr(new_tiff_array.shape) + "\".")
 
@@ -171,7 +171,7 @@ def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_ch
     if pages_to_channel > 1:
         new_tiff_array = new_tiff_array.reshape(new_tiff_array.shape[:-2] + (new_tiff_array.shape[-2] / pages_to_channel, pages_to_channel * new_tiff_array.shape[-1],))
 
-    new_tiff_array = advanced_numpy.tagging_reorder_array(new_tiff_array,
+    new_tiff_array = expanded_numpy.tagging_reorder_array(new_tiff_array,
                                                           from_axis_order = "zyxtc",
                                                           to_axis_order = axis_order,
                                                           to_copy = True)
