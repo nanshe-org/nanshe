@@ -30,7 +30,7 @@ logger = advanced_debugging.logging.getLogger(__name__)
 
 
 @advanced_debugging.log_call(logger)
-def batch_generate_save_neurons(*new_filenames, **parameters):
+def batch_generate_save_neurons(new_filenames, parameters):
     """
         Uses generate_save_neurons to process a list of filename (HDF5 files) with the given parameters for trainDL.
         Results will be saved in each file.
@@ -216,7 +216,7 @@ def main(*argv):
     parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
 
     # Runs the dictionary learning algorithm on each file with the given parameters and saves the results in the given files.
-    batch_generate_save_neurons(*parsed_args.input_files, **parsed_args.parameters)
+    batch_generate_save_neurons(parsed_args.input_files, parsed_args.parameters)
 
     return(0)
 
