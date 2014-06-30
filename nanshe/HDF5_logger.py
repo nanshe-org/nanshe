@@ -73,7 +73,10 @@ class HDF5ArrayLogger(object):
         # Attempt to create a dataset in self.hdf5_handle named array_name with array_value and do not overwrite.
         # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
         if array_value.size:
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(self.hdf5_handle, array_name, array_value, overwrite = False)
+            HDF5_serializers.write_numpy_structured_array_to_HDF5(self.hdf5_handle,
+                                                                  array_name,
+                                                                  array_value,
+                                                                  overwrite = False)
             self.hdf5_handle.file.flush()
         else:
             raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
