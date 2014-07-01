@@ -19,7 +19,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def zeroed_mean_images(input_array, ord = 2, output_array = None):
+def zeroed_mean_images(input_array, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
         
