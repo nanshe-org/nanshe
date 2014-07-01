@@ -19,7 +19,7 @@ import debugging_tools
 logger = debugging_tools.logging.getLogger(__name__)
 
 
-class EmptyArrayLogger(object):
+class EmptyArrayRecorder(object):
     @debugging_tools.log_call(logger)
     def __init__(self):
         pass
@@ -48,7 +48,7 @@ class EmptyArrayLogger(object):
             raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
 
 
-class HDF5ArrayLogger(object):
+class HDF5ArrayRecorder(object):
     @debugging_tools.log_call(logger)
     def __init__(self, hdf5_handle, overwrite_dataset = False):
         self.hdf5_handle = hdf5_handle
@@ -84,7 +84,7 @@ class HDF5ArrayLogger(object):
 
 
 @debugging_tools.log_call(logger)
-def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, overwrite_group = False, allow_overwrite_dataset = False):
+def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, overwrite_group = False, allow_overwrite_dataset = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to a group in an HDF5 file.
@@ -109,7 +109,7 @@ def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, over
         hdf5_handle = h5py.File(hdf5_handle, "a")
 
     if (enable):
-        hdf5_logging_handle = hdf5_handle
+        hdf5_recording_handle = hdf5_handle
 
         # Check to if the output must go somewhere special.
         if group_name:
@@ -128,15 +128,15 @@ def generate_HDF5_array_logger(hdf5_handle, group_name = "", enable = True, over
 
                 hdf5_handle.file.flush()
 
-            hdf5_logging_handle = hdf5_handle[group_name]
+            hdf5_recording_handle = hdf5_handle[group_name]
 
-        return(HDF5ArrayLogger(hdf5_logging_handle, overwrite_dataset = allow_overwrite_dataset))
+        return(HDF5ArrayRecorder(hdf5_recording_handle, overwrite_dataset = allow_overwrite_dataset))
     else:
-        return(EmptyArrayLogger())
+        return(EmptyArrayRecorder())
 
 
 @debugging_tools.log_call(logger)
-def create_subgroup_HDF5_array_logger(group_name, array_debug_logger, overwrite_group = False):
+def create_subgroup_HDF5_array_recorder(group_name, array_recorder, overwrite_group = False):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to a group within the current group in an HDF5 file.
@@ -158,28 +158,28 @@ def create_subgroup_HDF5_array_logger(group_name, array_debug_logger, overwrite_
     # Must be a local import. Otherwise log_call will be undefined in HDF5_serializers.
     import HDF5_serializers
 
-    if array_debug_logger:
-        new_array_debug_logger = copy.copy(array_debug_logger)
+    if array_recorder:
+        new_array_debug_recorder = copy.copy(array_recorder)
 
         # Check to if the output must go somewhere special.
         if group_name:
             # If so, check to see if it exists.
-            if group_name in new_array_debug_logger.hdf5_handle:
+            if group_name in new_array_debug_recorder.hdf5_handle:
                 # If it does and we want to overwrite it, do so.
                 if overwrite_group:
-                    del new_array_debug_logger.hdf5_handle[group_name]
+                    del new_array_debug_recorder.hdf5_handle[group_name]
 
-                    new_array_debug_logger.hdf5_handle.create_group(group_name)
+                    new_array_debug_recorder.hdf5_handle.create_group(group_name)
 
-                    new_array_debug_logger.hdf5_handle.file.flush()
+                    new_array_debug_recorder.hdf5_handle.file.flush()
             else:
                 # Create it if it doesn't, exist.
-                new_array_debug_logger.hdf5_handle.create_group(group_name)
+                new_array_debug_recorder.hdf5_handle.create_group(group_name)
 
-                new_array_debug_logger.hdf5_handle.file.flush()
+                new_array_debug_recorder.hdf5_handle.file.flush()
 
-            new_array_debug_logger.hdf5_handle = new_array_debug_logger.hdf5_handle[group_name]
+            new_array_debug_recorder.hdf5_handle = new_array_debug_recorder.hdf5_handle[group_name]
 
-        return(new_array_debug_logger)
+        return(new_array_debug_recorder)
     else:
-        return(array_debug_logger)
+        return(array_recorder)
