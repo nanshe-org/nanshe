@@ -141,6 +141,17 @@ def extract_f0(new_data,
         if (step_size > new_data.shape[0]):
             raise Exception("The step size provided, " + step_size + ", is larger than the number of frames in the data, " + new_data.shape[0] + ".")
 
+        which_quantile_len = None
+        try:
+            which_quantile_len = len(which_quantile)
+        except TypeError:
+            # Does not have len
+            which_quantile_len = 1
+
+        # Only allowed to have one quantile.
+        if (which_quantile_len > 1):
+            raise Exception("Provided more than one quantile \"" + repr(which_quantile) + "\".")
+
         window_centers = numpy.arange(0, new_data.shape[0], step_size)
 
         if window_centers[-1] != new_data.shape[0]:
