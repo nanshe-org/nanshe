@@ -123,7 +123,7 @@ def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
     import spams
 
     # Create a numpy.ndarray that uses the shared buffer.
-    result = numpy.frombuffer(output_array.get_obj(), dtype = float).reshape((-1, kwargs["K"]))
+    result = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, kwargs["K"]))
     result = numpy.asmatrix(result)
 
     result[:] = spams.trainDL(*args, **kwargs)
@@ -174,7 +174,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     if p.exitcode != 0:
         raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
 
-    result = numpy.frombuffer(output_array.get_obj(), dtype = float).reshape((-1, kwargs["K"]))
+    result = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, kwargs["K"]))
     result = result.copy()
 
     return(result)
