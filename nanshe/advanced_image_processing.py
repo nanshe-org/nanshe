@@ -60,7 +60,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def removing_lines(new_data,
+def remove_zeroed_lines(new_data,
                    erosion_shape,
                    dilation_shape,
                    array_debug_logger = HDF5_logger.EmptyArrayLogger(),
@@ -263,10 +263,10 @@ def preprocess_data(new_data, bias, array_debug_logger = HDF5_logger.EmptyArrayL
     # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
 
     # Remove lines
-    if "removing_lines" in parameters:
-        new_data_maybe_lines_removed = removing_lines(new_data,
+    if "remove_zeroed_lines" in parameters:
+        new_data_maybe_lines_removed = remove_zeroed_lines(new_data,
                                                 array_debug_logger = array_debug_logger,
-                                                **parameters["removing_lines"])
+                                                **parameters["remove_zeroed_lines"])
         array_debug_logger("images_lines_removed", new_data_maybe_lines_removed)
     else:
         new_data_maybe_lines_removed = new_data
