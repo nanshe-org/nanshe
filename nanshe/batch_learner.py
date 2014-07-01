@@ -133,7 +133,7 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         # Copy out images for manipulation in memory
         new_images = resume_logger["original_images"]
 
-        if "original_images_max_projection" not in output_group:
+        if "original_images_max_projection" not in array_debug_logger:
             array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
 
         # Preprocess images
