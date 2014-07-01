@@ -47,7 +47,7 @@ def batch_generate_save_neurons(new_filenames, parameters):
 
 
 @debugging_tools.log_call(logger)
-def generate_save_neurons(new_filename, debug = False, run_stage = "all", **parameters):
+def generate_save_neurons(new_filename, debug = False, **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files)
         with the given parameters for trainDL.
@@ -125,61 +125,67 @@ def generate_save_neurons(new_filename, debug = False, run_stage = "all", **para
         # Saves intermediate result to make resuming easier
         resume_logger = HDF5_logger.generate_HDF5_array_logger(output_group, allow_overwrite_dataset = True)
 
-        # Copy out images for manipulation in memory
-        new_images = resume_logger["original_images"]
-
-        if "original_images_max_projection" not in array_debug_logger:
-            array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
-
-        # Preprocess images
-        new_preprocessed_images = None
-        if ("preprocessed_images" in resume_logger) and ((run_stage != "preprocessing") and (run_stage != "all")):
-            new_preprocessed_images = resume_logger["preprocessed_images"]
-        else:
-            new_preprocessed_images = advanced_image_processing.preprocess_data(new_images,
-                                                                                array_debug_logger = array_debug_logger,
-                                                                                **parameters["preprocess_data"])
-            resume_logger("preprocessed_images", new_preprocessed_images)
-
-            if "preprocessed_images_max_projection" not in array_debug_logger:
-                array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
-
-        if run_stage == "preprocessing":
-            return
-
-        # Find the dictionary
-        new_dictionary = None
-        if ("dictionary" in resume_logger) and ((run_stage != "dictionary") and (run_stage != "all")):
-            new_dictionary = resume_logger["dictionary"]
-        else:
-            new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images,
-                                                                           array_debug_logger = array_debug_logger,
-                                                                           **parameters["generate_dictionary"])
-            resume_logger("dictionary", new_dictionary)
-
-            if "dictionary_max_projection" not in array_debug_logger:
-                array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
-
-        if run_stage == "dictionary":
-            return
-
-        # Find the neurons
-        new_neurons = None
-        if ("neurons" in resume_logger) and ((run_stage != "postprocessing") and (run_stage != "all")):
-            new_neurons = resume_logger["neurons"]
-        else:
-            new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
-                                                                     array_debug_logger,
-                                                                     **parameters["postprocess_data"])
-            resume_logger("neurons", new_neurons)
-
-        if new_neurons.size == 0:
-            logger.warning("No neurons were found in the data.")
+        # Generate the neurons and attempt to resume if possible
+        generate_neurons(resume_logger = resume_logger, array_debug_logger = array_debug_logger, **parameters["generate_neurons"])
 
         # Save the configuration parameters in the attributes as a string.
         if "parameters" not in output_group.attrs:
             # Write the configuration parameters in the attributes as a string.
             output_group.attrs["parameters"] = repr(parameters)
+
+
+@debugging_tools.log_call(logger)
+def generate_neurons(run_stage = "all", resume_logger = HDF5_logger.EmptyArrayLogger(), array_debug_logger = HDF5_logger.EmptyArrayLogger(), **parameters):
+    # Copy out images for manipulation in memory
+    new_images = resume_logger["original_images"]
+
+    if "original_images_max_projection" not in array_debug_logger:
+        array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
+
+    # Preprocess images
+    new_preprocessed_images = None
+    if ("preprocessed_images" in resume_logger) and ((run_stage != "preprocessing") and (run_stage != "all")):
+        new_preprocessed_images = resume_logger["preprocessed_images"]
+    else:
+        new_preprocessed_images = advanced_image_processing.preprocess_data(new_images,
+                                                                            array_debug_logger = array_debug_logger,
+                                                                            **parameters["preprocess_data"])
+        resume_logger("preprocessed_images", new_preprocessed_images)
+
+        if "preprocessed_images_max_projection" not in array_debug_logger:
+            array_debug_logger("preprocessed_images_max_projection", new_preprocessed_images.max(axis = 0))
+
+    if run_stage == "preprocessing":
+        return
+
+    # Find the dictionary
+    new_dictionary = None
+    if ("dictionary" in resume_logger) and ((run_stage != "dictionary") and (run_stage != "all")):
+        new_dictionary = resume_logger["dictionary"]
+    else:
+        new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images,
+                                                                       array_debug_logger = array_debug_logger,
+                                                                       **parameters["generate_dictionary"])
+        resume_logger("dictionary", new_dictionary)
+
+        if "dictionary_max_projection" not in array_debug_logger:
+            array_debug_logger("dictionary_max_projection", new_dictionary.max(axis = 0))
+
+    if run_stage == "dictionary":
+        return
+
+    # Find the neurons
+    new_neurons = None
+    if ("neurons" in resume_logger) and ((run_stage != "postprocessing") and (run_stage != "all")):
+        new_neurons = resume_logger["neurons"]
+    else:
+        new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
+                                                                 array_debug_logger,
+                                                                 **parameters["postprocess_data"])
+        resume_logger("neurons", new_neurons)
+
+    if new_neurons.size == 0:
+        logger.warning("No neurons were found in the data.")
 
 
 @debugging_tools.log_call(logger)
