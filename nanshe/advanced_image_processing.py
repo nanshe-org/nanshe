@@ -704,8 +704,7 @@ def generate_local_maxima(new_intensity_image):
 
 
 @debugging_tools.log_call(logger)
-def extended_region_local_maxima_properties(new_intensity_image, new_label_image = None, new_label_image_threshhold = 0,
-                                            **kwargs):
+def extended_region_local_maxima_properties(new_intensity_image, new_label_image, **kwargs):
     """
         Generates local maxima along with other properties for each labeled region
         (therefore at least one entry per label).
@@ -714,8 +713,6 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
         
     """
 
-    if new_label_image is None:
-        new_label_image = scipy.ndimage.label(new_label_image > new_label_image_threshhold)[0]
 
     # Remove the background
     new_image_mask = (new_label_image != 0)
