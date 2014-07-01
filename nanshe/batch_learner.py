@@ -121,9 +121,6 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
         if "original_images" not in new_file[output_directory]:
             output_group["original_images"] = new_file[new_hdf5_filepath_details.internalPath]
 
-        # Copy out images for manipulation in memory
-        new_images = output_group["original_images"][:]
-
         # Get a debug logger for the HDF5 file (if needed)
         array_debug_logger = HDF5_logger.generate_HDF5_array_logger(output_group,
                                                                     group_name = "debug",
@@ -132,6 +129,9 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
 
         # Saves intermediate result to make resuming easier
         resume_logger = HDF5_logger.generate_HDF5_array_logger(output_group, allow_overwrite_dataset = True)
+
+        # Copy out images for manipulation in memory
+        new_images = resume_logger["original_images"]
 
         if "original_images_max_projection" not in output_group:
             array_debug_logger("original_images_max_projection", new_images.max(axis = 0))
