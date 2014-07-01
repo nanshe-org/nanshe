@@ -47,7 +47,7 @@ def batch_generate_save_neurons(new_filenames, parameters):
 
 
 @debugging_tools.log_call(logger)
-def generate_save_neurons(new_filename, debug = False, resume = False, run_stage = "all", **parameters):
+def generate_save_neurons(new_filename, debug = False, run_stage = "all", **parameters):
     """
         Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files)
         with the given parameters for trainDL.
@@ -106,13 +106,8 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
             # otherwise (not at that the root)
             output_directory = input_directory + "_ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip("/")
 
-        # Delete the old output directory if it exists.
-        if (not resume) and (output_directory in new_file):
-            # Purge the output directory.
-            del new_file[output_directory]
-            new_file.create_group(output_directory)
-        elif output_directory not in new_file:
-            # Create a new output directory.
+        # Create a new output directory if doesn't exists.
+        if output_directory not in new_file:
             new_file.create_group(output_directory)
 
         output_group = new_file[output_directory]
@@ -138,7 +133,7 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
 
         # Preprocess images
         new_preprocessed_images = None
-        if ("preprocessed_images" in resume_logger) and (run_stage != "preprocessing"):
+        if ("preprocessed_images" in resume_logger) and ((run_stage != "preprocessing") and (run_stage != "all")):
             new_preprocessed_images = resume_logger["preprocessed_images"]
         else:
             new_preprocessed_images = advanced_image_processing.preprocess_data(new_images,
@@ -154,7 +149,7 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
 
         # Find the dictionary
         new_dictionary = None
-        if ("dictionary" in resume_logger) and (run_stage != "dictionary"):
+        if ("dictionary" in resume_logger) and ((run_stage != "dictionary") and (run_stage != "all")):
             new_dictionary = resume_logger["dictionary"]
         else:
             new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images,
@@ -170,7 +165,7 @@ def generate_save_neurons(new_filename, debug = False, resume = False, run_stage
 
         # Find the neurons
         new_neurons = None
-        if ("neurons" in resume_logger) and (run_stage != "postprocessing"):
+        if ("neurons" in resume_logger) and ((run_stage != "postprocessing") and (run_stage != "all")):
             new_neurons = resume_logger["neurons"]
         else:
             new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
