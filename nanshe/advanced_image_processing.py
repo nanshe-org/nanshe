@@ -58,7 +58,6 @@ import HDF5_recorder
 logger = debugging_tools.logging.getLogger(__name__)
 
 
-
 @debugging_tools.log_call(logger)
 def remove_zeroed_lines(new_data,
                         erosion_shape,
@@ -70,11 +69,14 @@ def remove_zeroed_lines(new_data,
         To correct this, we find an interpolated value and
 
         Args:
-            new_data(numpy.ndarray):      array of raw data.
-            parameters(dict):             essentially unused.
+            new_data(numpy.ndarray):            data to remove lines from (first axis is time).
+            erosion_shape(numpy.ndarray):       shape of the erosion element (will be filled with 1).
+            dilation_shape(numpy.ndarray):      shape of the dilation element (will be filled with 1).
+            array_debug_recorder(callable):     for outputting intermediate results.
+            **parameters(dict):                 essentially unused (catches unneeded arguments).
 
         Returns:
-            numpy.ndarray:                a new array with the lines interpolated away.
+            numpy.ndarray:                      a new array with the zeroed lines interpolated away.
     """
 
     result = numpy.zeros(new_data.shape)
@@ -134,6 +136,19 @@ def extract_f0(new_data,
                spatial_smoothing_gaussian_filter_stdev,
                array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(),
                **parameters):
+    """
+        Attempts to find a new baseline for the given data.
+
+        Args:
+            new_data(numpy.ndarray):                    array of data for finding new baseline (first axis is time).
+            temporal_smoothing_gaussian_filter_stdev:   stdev for gaussian filter to convolve over time.
+            spatial_smoothing_gaussian_filter_stdev:    stdev for gaussian filter to convolve over all other dimensions.
+            array_debug_recorder(callable):             for outputting intermediate results.
+            **parameters(dict):                         essentially unused (catches unneeded arguments).
+
+        Returns:
+            numpy.ndarray:                              a new array with a new baseline.
+    """
 
     temporal_smoothing_gaussian_filter = vigra.filters.Kernel1D()
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
@@ -221,18 +236,15 @@ def extract_f0(new_data,
 @debugging_tools.log_call(logger)
 def normalize_data(new_data, array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(), **parameters):
     """
-        Generates a dictionary using the data and parameters given for trainDL.
+        Removes the mean from each image and normalizes each image as if they were vectors.
 
         Args:
-            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
-            parameters(dict):             passed directly to spams.trainDL.
-
-        Note:
-            Todo
-            Look into move data normalization into separate method (have method chosen by config file).
+            new_data(numpy.ndarray):                array of data for normalization (first axis is time).
+            array_debug_recorder(callable):         for outputting intermediate results.
+            **parameters(dict):                     contains arguments for simple_image_processing.renormalized_images.
 
         Returns:
-            dict: the dictionary found.
+            numpy.ndarray:                          data that has been normalized.
     """
 
     # Remove the mean of each row vector
@@ -248,18 +260,17 @@ def normalize_data(new_data, array_debug_recorder = HDF5_recorder.EmptyArrayReco
 @debugging_tools.log_call(logger)
 def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(), **parameters):
     """
-        Generates a dictionary using the data and parameters given for trainDL.
+        Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and
+        wavelet_transform).
         
         Args:
-            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
-            parameters(dict):             passed directly to spams.trainDL.
-        
-        Note:
-            Todo
-            Look into move data normalization into separate method (have method chosen by config file).
+            new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).
+            bias(float):                        how much to shift the result by (note normalize_data will zero mean).
+            array_debug_recorder(callable):     for outputting intermediate results.
+            **parameters(dict):                 additional parameters for each step of preprocessing.
         
         Returns:
-            dict: the dictionary found.
+            dict:                               the dictionary found.
     """
 
     # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
@@ -310,11 +321,12 @@ def generate_dictionary(new_data, array_debug_recorder = HDF5_recorder.EmptyArra
         Generates a dictionary using the data and parameters given for trainDL.
         
         Args:
-            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
-            parameters(dict):             passed directly to spams.trainDL.
+            new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).
+            array_debug_recorder(callable):     for outputting intermediate results.
+            **parameters(dict):                 passed directly to spams.trainDL.
         
         Returns:
-            dict: the dictionary found.
+            dict:                               the dictionary found.
     """
 
     import spams_sandbox
@@ -353,15 +365,19 @@ def generate_dictionary(new_data, array_debug_recorder = HDF5_recorder.EmptyArra
 @debugging_tools.log_call(logger)
 def region_properties(new_label_image, *args, **kwargs):
     """
-        Grabs region properties from a label .
+        Grabs region properties from a label image.
         
         Args:
             new_label_image(numpy.ndarray):      label image used for generating properties.
             args(list):                          additional position arguments to pass skimage.measure.regionprops.
-            parameters(dict):                    additional keyword arguments to pass skimage.measure.regionprops.
+            **parameters(dict):                  additional keyword arguments to pass skimage.measure.regionprops.
+
+        Note:
+            Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won't be
+            returned.
         
         Returns:
-            dict: the dictionary found.
+            numpy.ndarray:                       a structured array of all the properties found for each label.
         
         
         Examples:
@@ -623,6 +639,16 @@ def region_properties(new_label_image, *args, **kwargs):
 
 @debugging_tools.log_call(logger)
 def get_neuron_dtype(new_image):
+    """
+        Gets the type based on properties of an image.
+
+        Args:
+            new_image(numpy.ndarray):     a single sample image (only spatial dimension).
+
+        Returns:
+            list:                         a list that can be converted to a numpy.dtype using numpy.ndtype's constructor.
+    """
+
     neurons_dtype = [("mask", bool, new_image.shape),
                      ("contour", bool, new_image.shape),
                      ("image", new_image.dtype, new_image.shape),
@@ -637,6 +663,16 @@ def get_neuron_dtype(new_image):
 
 @debugging_tools.log_call(logger)
 def get_empty_neuron(new_image):
+    """
+        Gets a numpy structured array using the type from get_neuron_dtype that has no contents.
+
+        Args:
+            new_image(numpy.ndarray):     an empty numpy structured array with all types needed for a neuron.
+
+        Returns:
+            numpy.ndarray:                a numpy structured array with no contents and type from get_neuron_dtype.
+    """
+
     neurons_dtype = get_neuron_dtype(new_image)
     neurons = numpy.zeros((0,), dtype = neurons_dtype)
 
@@ -645,6 +681,16 @@ def get_empty_neuron(new_image):
 
 @debugging_tools.log_call(logger)
 def get_one_neuron(new_image):
+    """
+        Gets a numpy structured array using the type from get_neuron_dtype that has one neuron with all zeros.
+
+        Args:
+            new_image(numpy.ndarray):     an empty numpy structured array with all types needed for a neuron.
+
+        Returns:
+            numpy.ndarray:                a numpy structured array with one neuron using type from get_neuron_dtype.
+    """
+
     neurons_dtype = get_neuron_dtype(new_image)
     neurons = numpy.zeros((1,), dtype = neurons_dtype)
 
@@ -658,10 +704,11 @@ def generate_local_maxima_vigra(new_intensity_image):
         Uses vigra's vigra.analysis.extendedLocalMaxima.
         
         Args:
-            new_intensity_image(numpy.ndarray):     The image to find local maxima for.
-        
+            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are
+                                                    spatial; however, it will treat all axes the same).
+
         Returns:
-            numpy.ndarray:  A mask of the local maxima.
+            numpy.ndarray:                          A mask of the local maxima.
     """
 
     local_maxima_mask = vigra.analysis.extendedLocalMaxima(new_intensity_image.astype(numpy.float32)).astype(bool)
@@ -676,11 +723,13 @@ def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborho
         Uses scikit image's skimage.feature.peak_local_max.
         
         Args:
-            new_intensity_image(numpy.ndarray):     The image to find local maxima for.
-            neighborhood_size(int):                 Size of the neighborhood to check for a local maxima.
-        
+            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are
+                                                    spatial; however, it will treat all axes the same).
+
+            local_max_neighborhood_size(int):       Size of the neighborhood to check for a local maxima.
+
         Returns:
-            numpy.ndarray:  A mask of the local maxima.
+            numpy.ndarray:                          A mask of the local maxima.
     """
 
     local_maxima_neighborhood = numpy.ones((2 * local_max_neighborhood_size + 1,) * new_intensity_image.ndim)
@@ -696,10 +745,11 @@ def generate_local_maxima(new_intensity_image):
         Creates a mask the same size as the intensity image with local maxima as True and background False.
         
         Args:
-            new_intensity_image(numpy.ndarray):     The image to find local maxima for.
-        
+            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are
+                                                    spatial; however, it will treat all axes the same).
+
         Returns:
-            numpy.ndarray:  A mask of the local maxima.
+            numpy.ndarray:                          A mask of the local maxima.
     """
 
     return(generate_local_maxima_vigra(new_intensity_image))
@@ -711,10 +761,21 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
         Generates local maxima along with other properties for each labeled region
         (therefore at least one entry per label).
         Gets a label image if not provided by using the threshhold (if not provided is zero).
-        
-        
-    """
 
+        Note:
+            This is similar to region_properties. It differs in that it keeps track of all local maxima. So, it is no
+            longer one-to-one in labels, but is one-to-one in local maxima.
+
+        Args:
+            new_intensity_image(numpy.ndarray):     The intensity image to find local maxima for (ideally, all axes are
+                                                    spatial; however, it will treat all axes the same).
+
+            new_label_image(numpy.ndarray):         The label image to find local maxima for (ideally, all axes are
+                                                    spatial; however, it will treat all axes the same).
+
+        Returns:
+            numpy.ndarray:                          A mask of the local maxima.
+    """
 
     # Remove the background
     new_image_mask = (new_label_image != 0)
@@ -775,11 +836,43 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
 
 
 class ExtendedRegionProps(object):
+    """
+        Using the results of extended_region_local_maxima_properties with given intensity and label images, the
+        ExtendedRegionProps attempts to make it easy to get information about local maxima in the image. Further, it
+        provides methods to allow removal of local maxima. When removing local maxima, it will updated the given label
+        image to reflect labels that have been removed completely and will automatically renumber the label image (as
+        some functions expect a label image with sequential numbering, no missing label number). This provides a simple
+        way to maintain a label image, whose local maxima one is more interested in directly manipulating.
+
+        Note:
+            Adding local maxima is not allowed for and wouldn't make sense given its dependency on the intensity image.
+    """
+
     @debugging_tools.log_call(logger)
     def __init__(self, new_intensity_image,
                  new_label_image,
                  array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(),
                  properties = ["centroid"]):
+        """
+            Construct an ExtendedRegionProps instance.
+
+            This uses extended_region_local_maxima_properties to determine local maxima and properties for the labeled
+            region. After doing this, it is possible to remove local maxima and update the label image to reflect this
+            change.
+
+            Args:
+                new_intensity_image(numpy.ndarray):     The intensity image to find local maxima for (ideally, all axes are
+                                                        spatial; however, it will treat all axes the same).
+
+                new_label_image(numpy.ndarray):         The label image to find local maxima for (ideally, all axes are
+                                                        spatial; however, it will treat all axes the same).
+
+                array_debug_recorder(callable):         for outputting intermediate results.
+
+                properties(list):                       used by extended_region_local_maxima_properties to generate
+                                                        initial properties.
+        """
+
         # Copied to ensure purity. Would not want to change outside values.
         self.intensity_image = new_intensity_image.copy()
         self.label_image = new_label_image.copy()
@@ -842,11 +935,25 @@ class ExtendedRegionProps(object):
 
     @debugging_tools.log_call(logger)
     def get_local_max_index_array(self):
+        """
+            Gets a numpy style index array from the local maxima present.
+
+            Returns:
+                tuple:      a numpy styled index array, which can be used on the intensity image, or label image.
+        """
+
         return(tuple(self.props["local_max"].T))
 
 
     @debugging_tools.log_call(logger)
     def get_local_max_mask(self):
+        """
+            Gets a bool numpy array that is True at the locations of the local maxima.
+
+            Returns:
+                numpy.ndarray:      a bool numpy array that is True where a local max is and False everywhere else.
+        """
+
         # Returns a label image containing each local max and its label.
         new_local_max_mask = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
 
@@ -858,6 +965,14 @@ class ExtendedRegionProps(object):
 
     @debugging_tools.log_call(logger)
     def get_local_max_label_image(self):
+        """
+            Gets an int numpy array that contains the labels of the local maxima.
+
+            Returns:
+                numpy.ndarray:      an int numpy array that contains the labels of the local maxima and is zero in the
+                                    background.
+        """
+
         # Returns a label image containing each local max and its labels.
         new_local_max_label_image = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
 
@@ -869,6 +984,18 @@ class ExtendedRegionProps(object):
 
     @debugging_tools.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
+        """
+            Removes the local maxima by the mask over their indices (only False elements will be kept).
+
+            Note:
+                If a label is removed completely, the label image, intensity image, and image mask will be updated.
+                Also, the count (of local maxima per label) will be updated, regardless.
+
+            Args:
+                remove_prop_indices_mask(numpy.ndarray):     A mask of the indices to drop (True for the ones to remove,
+                                                             and False for the ones to keep).
+        """
+
         # Get the labels to remove
         remove_labels = self.props["label"][remove_prop_indices_mask]
         # Get how many of each label to remove
@@ -898,6 +1025,18 @@ class ExtendedRegionProps(object):
 
     @debugging_tools.log_call(logger)
     def remove_prop_indices(self, *i):
+        """
+            Removes the local maxima of the indices listed (like remove_prop_mask except with indices).
+
+            Note:
+                If a label is removed completely, the label image, intensity image, and image mask will be updated.
+                Also, the count (of local maxima per label) will be updated, regardless.
+
+            Args:
+                *i(int):     A mask of the indices to drop (True for the ones to remove,
+                                                             and False for the ones to keep).
+        """
+
         # A mask of the indices to remove
         remove_prop_indices_mask = numpy.zeros((len(self.props),), dtype = bool)
         remove_prop_indices_mask[numpy.array(i)] = True
@@ -906,6 +1045,18 @@ class ExtendedRegionProps(object):
 
     @debugging_tools.log_call(logger)
     def renumber_labels(self):
+        """
+            An internal method to be called after a label is completely removed from the local maxima.
+
+            Ensures all labels are in sequential order in the label image, count, and that all local maxima have their
+            labels updated.
+
+
+            Note:
+                Calling this externally will not make a difference as long as removal has occurred through the usual
+                mechanisms.
+        """
+
         # Renumber all labels sequentially starting with the label image
         self.label_image[:], forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(
             self.label_image
@@ -940,6 +1091,22 @@ class ExtendedRegionProps(object):
 
 @debugging_tools.log_call(logger)
 def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max, **parameters):
+    """
+        Removes the local maxima for regions, which have too many pixels that are below the intensity of their local
+        maxima.
+
+        Args:
+            local_maxima(ExtendedRegionProps):      The local maxima to refine
+
+            percentage_pixels_below_max(float):     The percentage of pixels out of a region that are below the
+                                                    local maxima of the region
+
+            **parameters(dict):                     essentially unused (catches unneeded arguments).
+
+        Returns:
+            ExtendedRegionProps:                    a new instance with the local maxima removed
+    """
+
     # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
     low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
     for i in xrange(len(local_maxima.props)):
@@ -975,6 +1142,20 @@ def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max,
 
 @debugging_tools.log_call(logger)
 def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parameters):
+    """
+        Removes local maxima that are too close to each other.
+
+        Args:
+            local_maxima(ExtendedRegionProps):      The local maxima to refine
+
+            min_local_max_distance(float):          The minimum allowed distance between local maxima
+
+            **parameters(dict):                     essentially unused (catches unneeded arguments).
+
+        Returns:
+            ExtendedRegionProps:                    a new instance with the local maxima removed
+    """
+
     # Deleting close local maxima below 16 pixels
     too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
 
@@ -1014,11 +1195,25 @@ def wavelet_denoising(new_image,
         Performs wavelet denoising on the given dictionary.
         
         Args:
-            new_data(numpy.ndarray):      array of data for generating a dictionary (first axis is time).
-            parameters(dict):             passed directly to spams.trainDL.
+            new_image(numpy.ndarray):                   array of data for generating a dictionary (first axis is time).
+
+            accepted_region_shape_constraints(dict):    a dictionary containing properties (that could be passed to
+                                                        region_properties) under this should be a dictionary that
+                                                        contains the keys min and/or max with a value for each.
+
+            use_watershed(bool):                        whether to use watershed for segmentation (currently, this is
+                                                        the only option).
+
+            accepted_neuron_shape_constraints(dict):    a dictionary containing properties (that could be passed to
+                                                        region_properties) under this should be a dictionary that
+                                                        contains the keys min and/or max with a value for each.
+
+            array_debug_recorder(callable):             for outputting intermediate results.
+
+            **parameters(dict):                         passed directly to spams.trainDL.
         
         Returns:
-            dict: the dictionary found.
+            numpy.ndarray:                              a structured array of candidate neurons.
     """
 
     neurons = get_empty_neuron(new_image)
@@ -1304,19 +1499,24 @@ def fuse_neurons(neuron_1,
                  array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(),
                  **parameters):
     """
-        Merges the two neurons into one (treats the first with preference).
-        
-        Args:
-            neuron_1(numpy.ndarray):      first neuron (prefered for tie breaking).
-            neuron_2(numpy.ndarray):      second neuron (one to merge in).
-            parameters(dict):             dictionary of parameters
-        
+        Merges the two neurons into one neuron, which is returned.
+
         Note:
-            Todo
-            Look into move data normalization into separate method (have method chosen by config file).
-        
+            The first neuron (neuron_1) is preferred in tie-breaking situations.
+
+        Args:
+            neuron_1(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the first
+                                                neuron.
+
+            neuron_2(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the second
+                                                neuron.
+
+            array_debug_recorder(callable):     for outputting intermediate results.
+
+            **parameters(dict):                 dictionary of parameters
+
         Returns:
-            dict: the dictionary found.
+            numpy.ndarray:                      a new neuron that is the result of fusing the two.
     """
 
     array_debug_recorder("neuron_1", neuron_1)
@@ -1362,15 +1562,37 @@ def merge_neuron_sets(new_neuron_set_1,
                       array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(),
                       **parameters):
     """
-        Merges the two sets of neurons into one (treats the first with preference).
+        Merges the two sets of neurons into one. Appends neurons that cannot be merged with the existing set.
+
+        In the functions that follow, it helps to think of each neuron as a vector (instead of as an image). So, dot
+        products for vectors are important.
+
+        Note:
+            The first neuron set (new_neuron_set_1) is preferred and treated as the set to merge into. However, this
+            function will not change the original argument.
         
         Args:
-            neuron_1(numpy.ndarray):      first neuron (prefered for tie breaking).
-            neuron_2(numpy.ndarray):      second neuron (one to merge in).
-            parameters(dict):             dictionary of parameters
+            new_neuron_set_1(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the
+                                                        first neuron set (preferred for tie breaking).
+
+            new_neuron_set_2(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the
+                                                        second neuron set.
+
+            alignment_min_threshold(float):             The minimum required cosine of the angle between two neurons for
+                                                        them to be treated as candidates for merging (uses the function
+                                                        expanded_numpy.dot_product_L2_normalized).
+
+            overlap_min_threshold(numpy.ndarray):       The minimum required dot product (divided by the L1 norm of one
+                                                        of the neurons) for them to be treated as candidates for merging
+                                                        (uses the function expanded_numpy.dot_product_partially_normalized).
+
+            array_debug_recorder(callable):             for outputting intermediate results.
+
+            **parameters(dict):                         dictionary of parameters
         
         Returns:
-            dict: the dictionary found.
+            numpy.ndarray:                              a numpy structured array that contains the result of merging the
+                                                        two sets (or appending for neurons that could not be merged).
     """
 
     if new_neuron_set_1.size:
@@ -1544,12 +1766,12 @@ def postprocess_data(new_dictionary, array_debug_recorder = HDF5_recorder.EmptyA
         Generates neurons from the dictionary.
         
         Args:
-            new_dictionary(numpy.ndarray):        dictionary of basis images to analyze.
+            new_dictionary(numpy.ndarray):        dictionary of basis images to analyze for neurons.
             array_debug_recorder(callable):       logger for array debug output.
-            parameters(dict):                     dictionary of parameters
+            **parameters(dict):                   dictionary of parameters
         
         Returns:
-            numpy.ndarray:                        structured array with relevant information for each neuron.
+            numpy.ndarray:                        structured array with relevant information for each neuron found.
     """
 
 
