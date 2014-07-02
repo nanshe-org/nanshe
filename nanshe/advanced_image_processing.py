@@ -1081,17 +1081,25 @@ def wavelet_denoising(new_image,
         not_within_bound = numpy.zeros(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
 
         # Go through each property and make sure they are within the bounds
-        for each_prop in accepted_region_shape_constraints:
-            # Get lower and upper bounds for the current property
-            lower_bound = accepted_region_shape_constraints[each_prop]["min"]
-            upper_bound = accepted_region_shape_constraints[each_prop]["max"]
+        for each_prop, each_prop_constraints in accepted_region_shape_constraints.items():
+            # If there is a lower bound, checks to see which are above it.
+            is_lower_bounded_maybe = None
+            if "min" in each_prop_constraints:
+                lower_bound = each_prop_constraints["min"]
+                is_lower_bounded_maybe = (lower_bound <= new_wavelet_image_denoised_labeled_props[each_prop])
+            else:
+                is_lower_bounded_maybe = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
 
-            # Determine whether lower or upper bound is satisfied
-            is_lower_bounded = (lower_bound <= new_wavelet_image_denoised_labeled_props[each_prop])
-            is_upper_bounded = (new_wavelet_image_denoised_labeled_props[each_prop] <= upper_bound)
+            # If there is an upper bound, checks to see which are below it.
+            is_upper_bounded_maybe = None
+            if "max" in each_prop_constraints:
+                upper_bound = each_prop_constraints["max"]
+                is_upper_bounded_maybe = (new_wavelet_image_denoised_labeled_props[each_prop] <= upper_bound)
+            else:
+                is_upper_bounded_maybe = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
 
             # See whether both or neither bound is satisified.
-            is_within_bound = is_lower_bounded & is_upper_bounded
+            is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
             is_not_within_bound = ~is_within_bound
 
             # Collect the unbounded ones
@@ -1210,17 +1218,25 @@ def wavelet_denoising(new_image,
                 not_within_bound = numpy.zeros(watershed_local_maxima.props.shape, dtype = bool)
 
                 # Go through each property and make sure they are within the bounds
-                for each_prop in accepted_neuron_shape_constraints:
-                    # Get lower and upper bounds for the current property
-                    lower_bound = accepted_neuron_shape_constraints[each_prop]["min"]
-                    upper_bound = accepted_neuron_shape_constraints[each_prop]["max"]
+                for each_prop, each_prop_constraints in accepted_neuron_shape_constraints.items():
+                    # If there is a lower bound, checks to see which are above it.
+                    is_lower_bounded_maybe = None
+                    if "min" in each_prop_constraints:
+                        lower_bound = each_prop_constraints["min"]
+                        is_lower_bounded_maybe = (lower_bound <= watershed_local_maxima.props[each_prop])
+                    else:
+                        is_lower_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
 
-                    # Determine whether lower or upper bound is satisfied
-                    is_lower_bounded = lower_bound <= watershed_local_maxima.props[each_prop]
-                    is_upper_bounded = watershed_local_maxima.props[each_prop] <= upper_bound
+                    # If there is an upper bound, checks to see which are below it.
+                    is_upper_bounded_maybe = None
+                    if "max" in each_prop_constraints:
+                        upper_bound = each_prop_constraints["max"]
+                        is_upper_bounded_maybe = (watershed_local_maxima.props[each_prop] <= upper_bound)
+                    else:
+                        is_upper_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
 
-                    # See whether both or neither bound is satisfied.
-                    is_within_bound = is_lower_bounded & is_upper_bounded
+                    # See whether both or neither bound is satisified.
+                    is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
                     is_not_within_bound = ~is_within_bound
 
                     # Collect the unbounded ones
