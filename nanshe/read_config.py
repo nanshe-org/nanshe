@@ -42,17 +42,22 @@ def read_parameters(config_filename, maintain_order = False):
 
 
     @debugging_tools.log_call(logger)
-    def ascii_encode_str(data, json_dict = json_dict):
+    def ascii_encode_str(value, json_dict = json_dict):
         """
             Encodes the str.
 
             Args:
-                data(str):      string to encode.
+                value(str):     string to encode.
 
             Returns:
                 str:            Properly encoded str.
         """
-        return(data.encode("utf-8"))
+
+        new_value = None
+        if not value.startswith("__comment__"):
+            new_value = value.encode("utf-8")
+
+        return(new_value)
 
 
     @debugging_tools.log_call(logger)
@@ -69,28 +74,16 @@ def read_parameters(config_filename, maintain_order = False):
         transformed_list = []
 
         for each_value in data:
-            if isinstance(each_value, json_dict):
-                each_value = ascii_encode_dict(each_value)
+            new_each_value = each_value
+            if isinstance(new_each_value, json_dict):
+                new_each_value = ascii_encode_dict(new_each_value)
+            elif isinstance(new_each_value, list):
+                new_each_value = ascii_encode_list(new_each_value)
+            elif isinstance(new_each_value, unicode) or isinstance(new_each_value, str):
+                new_each_value = ascii_encode_str(new_each_value)
 
-                # Drop comments from dictionaries
-                new_each_value = json_dict()
-                for each_key_in_each_value, each_value_in_each_value in each_value.items():
-                    if not each_key_in_each_value.startswith("__comment__"):
-                        new_each_value[each_key_in_each_value] = each_value_in_each_value
-                each_value = new_each_value
-            elif isinstance(each_value, list):
-                each_value = ascii_encode_list(each_value)
-
-                # Drop comments from lists
-                new_each_value = list()
-                for each_value_in_each_value in each_value.items():
-                    if not each_value_in_each_value.startswith("__comment__"):
-                        new_each_value.append(each_value_in_each_value)
-                each_value = new_each_value
-            elif isinstance(each_value, unicode) or isinstance(each_value, str):
-                each_value = ascii_encode_str(each_value)
-
-            transformed_list.append( each_value )
+            if new_each_value is not None:
+                transformed_list.append( new_each_value )
 
         return(transformed_list)
 
@@ -112,16 +105,19 @@ def read_parameters(config_filename, maintain_order = False):
         transformed_dict = []
 
         for each_key, each_value in new_dict.items():
-            each_key = each_key.encode("utf-8")
+            new_each_key = ascii_encode_str(each_key)
 
-            if isinstance(each_value, json_dict):
-                each_value = ascii_encode_dict(each_value)
-            elif isinstance(each_value, list):
-                each_value = ascii_encode_list(each_value)
-            elif isinstance(each_value, unicode) or isinstance(each_value, str):
-                each_value = ascii_encode_str(each_value)
+            new_each_value = each_value
+            if new_each_key is not None:
+                if isinstance(new_each_value, json_dict):
+                    new_each_value = ascii_encode_dict(new_each_value)
+                elif isinstance(new_each_value, list):
+                    new_each_value = ascii_encode_list(new_each_value)
+                elif isinstance(new_each_value, unicode) or isinstance(new_each_value, str):
+                    new_each_value = ascii_encode_str(new_each_value)
 
-            transformed_dict.append( (each_key, each_value) )
+                if new_each_value is not None:
+                    transformed_dict.append( (new_each_key, new_each_value) )
 
         transformed_dict = json_dict(transformed_dict)
 
