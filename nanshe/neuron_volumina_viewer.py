@@ -62,13 +62,13 @@ class HDF5DataSource( QObject ):
         Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.
 
         Attributes:
-          file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
-          file_path(str):                          External path to the file
-          dataset_path(str):                       Internal path to the dataset
-          full_path(str):                          Both external and internal paths combined as one path
-          dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
-          dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
-          axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
+              file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
+              file_path(str):                          External path to the file
+              dataset_path(str):                       Internal path to the dataset
+              full_path(str):                          Both external and internal paths combined as one path
+              dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
+              dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
+              axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
 
     """
 
@@ -228,6 +228,14 @@ class HDF5DataRequest( object ):
           axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request.
           dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
           throw_on_not_found(bool):                Whether to throw an exception if the dataset is not found.
+          slicing(tuple of slices):                The slicing request by Volumina.
+          actual_slicing(tuple of slices):         The actual slicing that will be performed on the dataset.
+          throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.
+
+        Note:
+             Before returning the result to Volumina the axes will likely need to be transposed. Also, singleton axes
+             will need to be inserted to ensure the dimensionality is 5 as Volumina expects. This result will be cached
+             inside the request instance. So, if this request instance is kept, this won't need to be repeated.
 
     """
 
@@ -247,9 +255,6 @@ class HDF5DataRequest( object ):
                 dataset_dtype(numpy.dtype or type):         The type of the underlying dataset.
                 slicing(tuple of ints):                     The slicing to extract from the HDF5 file.
                 throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.
-
-            Returns:
-                (slice):                     a tuple of slices with all default values filled if possible.
         """
 
         # TODO: Look at adding assertion check on slices.
@@ -344,13 +349,13 @@ class HDF5Viewer(Viewer):
         Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.
 
         Attributes:
-          file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
-          file_path(str):                          External path to the file
-          dataset_path(str):                       Internal path to the dataset
-          full_path(str):                          Both external and internal paths combined as one path
-          dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
-          dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
-          axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
+              file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
+              file_path(str):                          External path to the file
+              dataset_path(str):                       Internal path to the dataset
+              full_path(str):                          Both external and internal paths combined as one path
+              dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
+              dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
+              axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
 
     """
 
