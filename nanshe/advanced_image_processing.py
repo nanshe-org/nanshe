@@ -749,14 +749,14 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     # Makes a new properties array that contains enough entries to hold the old one and has all the types we desire.
     new_local_maxima_props = numpy.zeros(local_maxima_props.shape, dtype = numpy.dtype(props_dtype))
 
-    # Take the centroids and old labels
+    # Take the centroids and old labels as the label and local max
     new_local_maxima_props["label"] = local_maxima_props["label"]
     new_local_maxima_props["local_max"] = local_maxima_props["centroid"].round().astype(int)
 
     # Replace the old structured array with the enlarged version.
     local_maxima_props = new_local_maxima_props
 
-    # Stores the value from wavelet denoising at the centroid for easy retrieval
+    # Stores the intensity at the local max for easy retrieval
     # Replace the labels by using the values from the label image
     if local_maxima_props.size:
         local_maxima_props["intensity"] = new_intensity_image[tuple(local_maxima_props["local_max"].T)]
@@ -841,30 +841,30 @@ class ExtendedRegionProps(object):
 
 
     @debugging_tools.log_call(logger)
-    def get_centroid_index_array(self):
+    def get_local_max_index_array(self):
         return(tuple(self.props["local_max"].T))
 
 
     @debugging_tools.log_call(logger)
-    def get_centroid_mask(self):
-        # Returns a label image containing each centroid and its labels.
-        new_centroid_mask = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
+    def get_local_max_mask(self):
+        # Returns a label image containing each local max and its label.
+        new_local_max_mask = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
 
-        # Set the given centroids to be the same as their labels
-        new_centroid_mask[self.get_centroid_index_array()] = True
+        # Set the given local maxima to be the same as their labels
+        new_local_max_mask[self.get_local_max_index_array()] = True
 
-        return(new_centroid_mask)
+        return(new_local_max_mask)
 
 
     @debugging_tools.log_call(logger)
-    def get_centroid_label_image(self):
-        # Returns a label image containing each centroid and its labels.
-        new_centroid_label_image = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
+    def get_local_max_label_image(self):
+        # Returns a label image containing each local max and its labels.
+        new_local_max_label_image = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
 
-        # Set the given centroids to be the same as their labels
-        new_centroid_label_image[self.get_centroid_index_array()] = self.props["label"]
+        # Set the given local maxima to be the same as their labels
+        new_local_max_label_image[self.get_local_max_index_array()] = self.props["label"]
 
-        return(new_centroid_label_image)
+        return(new_local_max_label_image)
 
 
     @debugging_tools.log_call(logger)
@@ -880,7 +880,7 @@ class ExtendedRegionProps(object):
         # Reduce the count by the number of each label
         self.count["count"] -= label_count_to_remove
 
-        # Mask over self.count to find labels that do not have centroid(s)
+        # Mask over self.count to find labels that do not have local maxima
         inactive_label_count_mask = (self.count["count"] == 0)
 
         # Are there labels that do not exist now? If so, we will dump them.
@@ -951,11 +951,11 @@ def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max,
         each_region_image_wavelet_num_pixels = float(each_region_image_wavelet.size)
 
         # Get the value of the max for that region
-        each_region_image_wavelet_centroid_value = local_maxima.props["intensity"][i]
+        each_region_image_wavelet_local_max_value = local_maxima.props["intensity"][i]
 
         # Get a mask of the pixels below that max for that region
         each_region_image_wavelet_num_pixels_below_max = float(
-            (each_region_image_wavelet < each_region_image_wavelet_centroid_value).sum())
+            (each_region_image_wavelet < each_region_image_wavelet_local_max_value).sum())
 
         # Get a ratio of the number of pixels below that max for that region
         each_region_image_wavelet_ratio_pixels = each_region_image_wavelet_num_pixels_below_max / each_region_image_wavelet_num_pixels
@@ -974,15 +974,15 @@ def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max,
 
 
 @debugging_tools.log_call(logger)
-def remove_too_close_local_maxima(local_maxima, min_centroid_distance, **parameters):
+def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parameters):
     # Deleting close local maxima below 16 pixels
     too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
 
-    # Find the distance between every centroid (efficiently)
+    # Find the distance between every local max (efficiently)
     local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
-    local_maxima_centroid_distance = scipy.spatial.distance.pdist(local_maxima.props["local_max"], metric = "euclidean")
+    local_maxima_distances = scipy.spatial.distance.pdist(local_maxima.props["local_max"], metric = "euclidean")
 
-    too_close_local_maxima_labels_mask = local_maxima_centroid_distance < min_centroid_distance
+    too_close_local_maxima_labels_mask = local_maxima_distances < min_local_max_distance
     too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
 
     for each_too_close_local_maxima_pairs in too_close_local_maxima_pairs:
@@ -1161,11 +1161,11 @@ def wavelet_denoising(new_image,
                 # new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised.astype(numpy.float32), radius = 1)
 
                 # We could look for seeds using local maxima.
-                # However, we already know what these should be as these are the centroids we have found.
-                new_wavelet_image_denoised_maxima = local_maxima.get_centroid_label_image()
+                # However, we already know what these should be as these are the local maxima we have found.
+                new_wavelet_image_denoised_maxima = local_maxima.get_local_max_label_image()
 
                 # Segment with watershed on minimum image
-                # Use seeds from centroids of local minima
+                # Use seeds from local maxima as local minima
                 # Also, include mask
                 new_wavelet_image_denoised_segmentation = skimage.morphology.watershed(local_maxima.intensity_image,
                                                                                        new_wavelet_image_denoised_maxima,
