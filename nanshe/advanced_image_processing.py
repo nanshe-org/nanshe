@@ -780,8 +780,10 @@ class ExtendedRegionProps(object):
                  new_label_image,
                  array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(),
                  properties = ["centroid"]):
-        self.intensity_image = new_intensity_image
-        self.label_image = new_label_image
+        # Copied to ensure purity. Would not want to change outside values.
+        self.intensity_image = new_intensity_image.copy()
+        self.label_image = new_label_image.copy()
+
         self.image_mask = (self.label_image > 0)
         self.props = None
         self.count = None
