@@ -39,15 +39,7 @@ from volumina.pixelpipeline.datasources import *
 from volumina.pixelpipeline.datasourcefactories import *
 from volumina.layer import *
 
-
-from volumina.layerstack import LayerStackModel
-from volumina.navigationControler import NavigationInterpreter
-from volumina import colortables
-
-
-from PyQt4.QtCore import QTimer, pyqtSignal
-from PyQt4.QtGui import QMainWindow, QApplication, QIcon, QAction, qApp
-from PyQt4.uic import loadUi
+from PyQt4.QtGui import QApplication
 from PyQt4.QtCore import pyqtSignal
 
 
