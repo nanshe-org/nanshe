@@ -659,6 +659,179 @@ class SyncedChannelLayers(object):
             self.currently_syncing_list = False
 
 
+class MaxProjectionConstantSource( QObject ):
+    """
+        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.
+
+        Note:
+            This was not designed to know about dirtiness or any sort of changing data.
+
+        Attributes:
+            constant_source(a constant SourceABC):      Source to take the max projection of.
+            axis(int):                                  The axis to take compute the max along.
+            _shape(tuple of ints):                      The shape of the source.
+
+    """
+
+    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+
+    isDirty = pyqtSignal( object )
+    numberOfChannelsChanged = pyqtSignal(int) # Never emitted
+
+    @debugging_tools.log_call(logger)
+    def __init__( self, constant_source, axis = -1):
+        """
+            Constructs an MaxProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
+            can be specified.
+
+            Args:
+                constant_source(a constant SourceABC):      Source to take the max projection of.
+                axis(int):                                  The axis to take compute the max along.
+        """
+        #TODO: Get rid of shape and dtype as arguments.
+
+        super(MaxProjectionConstantSource, self).__init__()
+
+        self.constant_source = constant_source
+        self.axis = axis
+        self._shape = self.constant_source.shape()
+
+        self._shape = list(self._shape)
+        self._shape[self.axis] = 1
+        self._shape = tuple(self._shape)
+
+    @debugging_tools.log_call(logger)
+    def numberOfChannels(self):
+        return(self.dataset_shape[-1])
+
+    @debugging_tools.log_call(logger)
+    def clean_up(self):
+        # Close file
+        self.constant_source = None
+        self.axis = None
+
+    @debugging_tools.log_call(logger)
+    def dtype(self):
+        return(self.constant_source.dtype())
+
+    @debugging_tools.log_call(logger)
+    def shape(self):
+        return(self._shape)
+
+    @debugging_tools.log_call(logger)
+    def request( self, slicing ):
+        if not is_pure_slicing(slicing):
+            raise Exception('MaxProjectionConstantSource: slicing is not pure')
+
+        # Drop the slicing for the axis where the projection is being applied.
+        constant_source_slicing = list(slicing)
+        constant_source_slicing[self.axis] = slice(None)
+        constant_source_slicing = tuple(constant_source_slicing)
+
+        return(MaxProjectionConstantRequest(self.constant_source.request(constant_source_slicing), self.axis, slicing))
+
+    @debugging_tools.log_call(logger)
+    def setDirty( self, slicing):
+        if not is_pure_slicing(slicing):
+            raise Exception('dirty region: slicing is not pure')
+        self.isDirty.emit( slicing )
+
+    @debugging_tools.log_call(logger)
+    def __eq__( self, other ):
+        if other is None:
+            return False
+
+        return(self.full_path == other.full_path)
+
+    @debugging_tools.log_call(logger)
+    def __ne__( self, other ):
+        if other is None:
+            return True
+
+        return(self.full_path != other.full_path)
+
+assert issubclass(MaxProjectionConstantSource, SourceABC)
+
+
+class MaxProjectionConstantRequest( object ):
+    """
+        Created by an MaxProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+
+        Note:
+            This was not designed to know about dirtiness or any sort of changing data.
+
+        Attributes:
+            constant_request(a constant RequestABC):         The request to take the max projection of.
+            axis(int):                                       The axis to take the max projection along.
+            slicing(tuple of slices):                        Slicing to be returned.
+
+    """
+
+    @debugging_tools.log_call(logger)
+    def __init__( self, constant_request, axis, slicing ):
+        """
+            Constructs an MaxProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
+            suppressed if the source is not found.
+
+            Args:
+                constant_request(a constant RequestABC):         The request to take the max projection of.
+                axis(int):                                       The axis to take the max projection along.
+                slicing(tuple of slices):                        Slicing to be returned.
+        """
+
+        # TODO: Look at adding assertion check on slices.
+
+        self.constant_request = constant_request
+        self.axis = axis
+        self.slicing = slicing
+
+        self._result = None
+
+    @debugging_tools.log_call(logger)
+    def wait( self ):
+        if self._result is None:
+            # Get the result of the request needed
+            self._result = self.constant_request.wait()
+
+            # Perform max
+            self._result = numpy.max(self._result, axis=self.axis)
+
+            # Add singleton axis where max was performed
+            self._result = expanded_numpy.add_singleton_axis_pos(self._result, new_axis=self.axis)
+
+            # Take the slice the viewer wanted
+            self._result = self._result[self.slicing]
+
+            logger.debug("Found the result.")
+
+        return self._result
+
+    @debugging_tools.log_call(logger)
+    def getResult(self):
+        return self._result
+
+    @debugging_tools.log_call(logger)
+    def cancel( self ):
+        pass
+
+    @debugging_tools.log_call(logger)
+    def submit( self ):
+        pass
+
+    # callback( result = result, **kwargs )
+    @debugging_tools.log_call(logger)
+    def notify( self, callback, **kwargs ):
+        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+        t.start()
+
+    @debugging_tools.log_call(logger)
+    def _doNotify( self, callback, kwargs ):
+        result = self.wait()
+        callback(result, **kwargs)
+
+assert issubclass(MaxProjectionConstantRequest, RequestABC)
+
+
 
 @debugging_tools.log_call(logger)
 def main(*argv):
@@ -695,11 +868,20 @@ def main(*argv):
 
         parsed_args.file_handles.append(h5py.File(parsed_args.input_files[i], "r"))
 
-    # Make all each_layer_source_location_list is a lists whether they were or not before
+    # Make all each_layer_source_location_dict is a dict whether they were or not before
+    # The key will be the operation to perform and the values will be what to perform the operation on.
+    # If the key is a null string, no operation is performed.
     for i in xrange(len(parsed_args.parameters)):
-        for (each_layer_name, each_layer_source_location_list) in parsed_args.parameters[i].items():
-            if isinstance(each_layer_source_location_list, str):
-                parsed_args.parameters[i][each_layer_name] = [ each_layer_source_location_list ]
+        for (each_layer_name, each_layer_source_location_dict) in parsed_args.parameters[i].items():
+            if isinstance(each_layer_source_location_dict, dict):
+                assert(len(each_layer_source_location_dict) == 1)
+                each_layer_source_location_dict = dict([(_k, _v) if isinstance(_v, list) else (_k, [ _v ])  for _k, _v in each_layer_source_location_dict.items()])
+            elif isinstance(each_layer_source_location_dict, list):
+                each_layer_source_location_dict = {"" : each_layer_source_location_dict}
+            elif isinstance(each_layer_source_location_dict, str):
+                each_layer_source_location_dict = {"" : [each_layer_source_location_dict]}
+
+            parsed_args.parameters[i][each_layer_name] = each_layer_source_location_dict
 
     # Find all possible matches and whether they exist or not
     parsed_args.parameters_expanded = list()
@@ -708,18 +890,22 @@ def main(*argv):
         # As we go through all files, we don't want to include the same layer more than once.
         # Also, we want to preserve the layer order in the configure file.
         parsed_args.parameters_expanded.append(collections.OrderedDict())
-        for (each_layer_name, each_layer_source_location_list) in each_layer_names_locations_group.items():
+        for (each_layer_name, each_layer_source_location_dict) in each_layer_names_locations_group.items():
 
-            # Ensure the order of files is preserved (probably not an issue if were sorted) and each is unique.
+            # Fetch out the operation that we will use.
+            [(each_layer_source_operation_name, each_layer_source_location_list)] = each_layer_source_location_dict.items()
+
+            # Ensure the order of files is preserved (probably not an issue if they were sorted) and each is unique.
             # This way we know they get fused in the right sequential order if necessary.
             parsed_args.parameters_expanded[-1][each_layer_name] = collections.OrderedDict()
+            parsed_args.parameters_expanded[-1][each_layer_name][each_layer_source_operation_name] = collections.OrderedDict()
             for each_layer_source_location in each_layer_source_location_list:
 
                 # TODO: See if we can't move this loop out. (Could change this parsed_args.parameters_expanded to an collections.OrderedDict and store none for values (ordered set).)
                 for each_file in parsed_args.file_handles:
                     new_matches = HDF5_searchers.get_matching_grouped_paths(each_file, each_layer_source_location)
                     new_matches_ldict = itertools.izip(new_matches, itertools.repeat(None))
-                    parsed_args.parameters_expanded[-1][each_layer_name].update(new_matches_ldict)
+                    parsed_args.parameters_expanded[-1][each_layer_name][each_layer_source_operation_name].update(new_matches_ldict)
 
 
     layer_names_locations_groups = parsed_args.parameters_expanded
@@ -733,11 +919,13 @@ def main(*argv):
         for each_layer_names_locations_group in reversed(layer_names_locations_groups):
             layer_sync_list = []
 
-            for (each_layer_name, each_layer_source_dict_location_found) in reversed(each_layer_names_locations_group.items()):
+            for (each_layer_name, each_layer_source_location_dict) in reversed(each_layer_names_locations_group.items()):
+                [(each_layer_source_operation_name, each_layer_source_location_list)] = each_layer_source_location_dict.items()
+
                 each_source = []
 
                 # Ignore whether the file exists as that may differ for different files
-                for each_layer_source_location in each_layer_source_dict_location_found.keys():
+                for each_layer_source_location in each_layer_source_location_list.keys():
                     each_layer_source_location = each_layer_source_location.lstrip("/")
 
                     each_file_source = None
@@ -760,6 +948,11 @@ def main(*argv):
                 else:
                     each_source = None
 
+                if (each_source is not None) and (each_layer_source_operation_name):
+                    if (each_layer_source_operation_name == "max"):
+                        each_source = MaxProjectionConstantSource(each_source)
+                    else:
+                        raise Exception("Unknown operation to perform on source \"" + repr(each_layer_source_operation_name) + "\".")
 
                 if each_source is not None:
                     each_layer = None
