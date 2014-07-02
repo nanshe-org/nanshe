@@ -149,15 +149,20 @@ class HDF5DataSource( QObject ):
         if len(self.dataset_shape) == 1:
             self.axis_order = [-1, 0, -1, -1, -1]
         if len(self.dataset_shape) == 2:
-            self.axis_order = [-1, 0, 1, -1, -1]
+            # self.axis_order = [-1, 0, 1, -1, -1]
+            self.axis_order = [-1, 1, 0, -1, -1]
         elif (len(self.dataset_shape) == 3) and (self.dataset_shape[2] <= 4):
-            self.axis_order = [-1, 0, 1, -1, 2]
+            # self.axis_order = [-1, 0, 1, -1, 2]
+            self.axis_order = [-1, 1, 0, -1, 2]
         elif len(self.dataset_shape) == 3:
-            self.axis_order = [-1, 1, 2, -1, 0]
+            # self.axis_order = [-1, 1, 2, -1, 0]
+            self.axis_order = [-1, 2, 1, -1, 0]
         elif len(self.dataset_shape) == 4:
-            self.axis_order = [-1, 1, 2, 3, 0]
+            # self.axis_order = [-1, 1, 2, 3, 0]
+            self.axis_order = [-1, 3, 2, 1, 0]
         elif len(self.dataset_shape) == 5:
-            self.axis_order = [0, 1, 2, 3, 4]
+            # self.axis_order = [0, 1, 2, 3, 4]
+            self.axis_order = [0, 3, 2, 1, 4]
         else:
             raise Exception("Unacceptable shape provided for display. Found shape to be \"" + self.dataset_shape + "\".")
 
