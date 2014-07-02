@@ -282,6 +282,7 @@ def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyAr
                                                            array_debug_recorder = array_debug_recorder,
                                                            **parameters["remove_zeroed_lines"])
         array_debug_recorder("images_lines_removed", new_data_maybe_lines_removed)
+        array_debug_recorder("images_lines_removed_max", new_data_maybe_lines_removed.max(axis = 0))
     else:
         new_data_maybe_lines_removed = new_data
 
@@ -299,6 +300,7 @@ def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyAr
                                               array_debug_recorder = array_debug_recorder,
                                               **parameters["extract_f0"])
         array_debug_recorder("images_f0", new_data_maybe_f0_result)
+        array_debug_recorder("images_f0_max", new_data_maybe_f0_result.max(axis = 0))
     else:
         new_data_maybe_f0_result = new_data_maybe_bias
 
@@ -308,6 +310,7 @@ def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyAr
                                                                             array_debug_recorder = array_debug_recorder,
                                                                             **parameters["wavelet_transform"])[-1]
         array_debug_recorder("images_wavelet_transformed", new_data_maybe_wavelet_result)
+        array_debug_recorder("images_wavelet_transformed_max", new_data_maybe_wavelet_result.max(axis = 0))
     else:
         new_data_maybe_wavelet_result = new_data_maybe_f0_result
 
@@ -315,6 +318,7 @@ def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyAr
                                          array_debug_recorder = array_debug_recorder,
                                          **parameters["normalize_data"])
     array_debug_recorder("images_normalized", new_data_normalized)
+    array_debug_recorder("images_normalized_max", new_data_normalized.max(axis = 0))
 
     return(new_data_normalized)
 
