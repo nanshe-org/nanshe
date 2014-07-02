@@ -23,39 +23,29 @@ __date__ = "$Jun 09, 2014 8:51:33AM$"
 """
 
 
-import multiprocessing
-from nanshe import HDF5_searchers
-
-import volumina
-import volumina.pixelpipeline
-from volumina.multimethods import multimethod
-
 import debugging_tools
 
 logger = debugging_tools.logging.getLogger(__name__)
 
-from volumina.viewer import Viewer
-from volumina.pixelpipeline.datasources import *
-from volumina.pixelpipeline.datasourcefactories import *
-from volumina.layer import *
+import os
+import collections
+import itertools
+import threading
+
+import h5py
+import numpy
 
 from PyQt4.QtGui import QApplication
 from PyQt4.QtCore import pyqtSignal
+from PyQt4.QtCore import QObject
 
+from volumina.multimethods import multimethod
+from volumina.pixelpipeline.datasources import SourceABC, RequestABC
+from volumina.pixelpipeline.datasources import is_pure_slicing
+from volumina.layer import GrayscaleLayer, RGBALayer, ColortableLayer, ClickableColortableLayer, AlphaModulatedLayer
+from volumina.viewer import Viewer
 
-#advanced_debugging.logging.getLogger().setLevel(advanced_debugging.logging.WARN)
-
-import os
-import random
-import collections
-import itertools
-
-
-import h5py
-
-
-import pathHelpers
-
+import HDF5_searchers
 import expanded_numpy
 import additional_generators
 
