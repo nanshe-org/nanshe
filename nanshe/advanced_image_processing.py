@@ -115,8 +115,8 @@ def remove_zeroed_lines(new_data,
 
             # Only need to check for nan in our case.
             new_data_i_zero_mask_interpolation = numpy.where(numpy.isnan(new_data_i_zero_mask_interpolation),
-                                                             new_data_i_zero_mask_interpolation,
-                                                             0)
+                                                             0,
+                                                             new_data_i_zero_mask_interpolation)
 
         result[i] = numpy.where(zero_mask_i, new_data_i_zero_mask_interpolation, new_data_i)
 
