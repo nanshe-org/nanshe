@@ -276,6 +276,7 @@ def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyAr
     # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
 
     # Remove lines
+    new_data_maybe_lines_removed = None
     if "remove_zeroed_lines" in parameters:
         new_data_maybe_lines_removed = remove_zeroed_lines(new_data,
                                                            array_debug_recorder = array_debug_recorder,
@@ -285,12 +286,14 @@ def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyAr
         new_data_maybe_lines_removed = new_data
 
     # Add the bias param
+    new_data_maybe_bias = None
     if "bias" in parameters:
         new_data_maybe_bias = new_data_maybe_lines_removed + bias
         array_debug_recorder("images_biased", new_data_maybe_bias)
     else:
         new_data_maybe_bias = new_data_maybe_lines_removed
 
+    new_data_maybe_f0_result = None
     if "extract_f0" in parameters:
         new_data_maybe_f0_result = extract_f0(new_data_maybe_bias,
                                               array_debug_recorder = array_debug_recorder,
@@ -299,6 +302,7 @@ def preprocess_data(new_data, bias, array_debug_recorder = HDF5_recorder.EmptyAr
     else:
         new_data_maybe_f0_result = new_data_maybe_bias
 
+    new_data_maybe_wavelet_result = None
     if "wavelet_transform" in parameters:
         new_data_maybe_wavelet_result = wavelet_transform.wavelet_transform(new_data_maybe_f0_result,
                                                                             array_debug_recorder = array_debug_recorder,
