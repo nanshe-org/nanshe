@@ -500,7 +500,7 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
         reps_before = (reps_before,)
 
     if (not reps_after) and (not reps_before):
-        raise Exception("expand_view() requires reps_after or reps_before to specified.")
+        return(new_array.view())
 
     return(numpy.lib.stride_tricks.as_strided(new_array, reps_before + new_array.shape + reps_after,
                                                len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)) )
