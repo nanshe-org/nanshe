@@ -191,7 +191,7 @@ class HDF5DataSource( QObject ):
 
         assert(len(slicing) == len(self.dataset_shape), "Expect a slicing for a txyzc array.")
 
-        additional_generators.reformat_slices(slicing, self.dataset_shape)
+        slicing = additional_generators.reformat_slices(slicing, self.dataset_shape)
 
         return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing))
 
