@@ -224,11 +224,13 @@ def extract_f0(new_data,
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
     for d in xrange(1, new_data_quantiled.ndim):
-        new_data_spatialy_smoothed = vigra.filters.convolveOneDimension(new_data_quantiled.astype(numpy.float32),
+        new_data_spatially_smoothed = vigra.filters.convolveOneDimension(new_data_quantiled.astype(numpy.float32),
                                                                         d,
                                                                         spatial_smoothing_gaussian_filter)
 
-    new_data_baselined = (new_data - new_data_spatialy_smoothed) / new_data_spatialy_smoothed
+    array_debug_recorder("new_data_spatially_smoothed", new_data_spatially_smoothed)
+
+    new_data_baselined = (new_data - new_data_spatially_smoothed) / new_data_spatially_smoothed
 
     return(new_data_baselined)
 
