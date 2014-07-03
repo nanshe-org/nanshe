@@ -506,6 +506,74 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
                                                len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)) )
 
 
+def expand_arange(start, stop = None, step = 1, dtype=numpy.int64, reps_before = tuple(), reps_after = tuple()):
+    """
+        Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a
+        larger cube.
+
+        This is very useful for situations where broadcasting is desired.
+
+        Args:
+            start(int):                          starting point (or stopping point if only one is specified).
+            stop(int):                           stopping point (if the starting point is specified) (0 by default).
+            step(int):                           size of steps to take between value (1 by default).
+            reps_after(tuple):                   repetitions dimension size to add before (if int will turn into tuple).
+            reps_before(tuple):                  repetitions dimension size to add after (if int will turn into tuple).
+
+        Returns:
+            (numpy.ndarray):                     a view of a numpy arange with tiling in various dimension.
+
+        Examples:
+            >>> expand_arange(3, reps_before=3)
+            array([[0, 1, 2],
+                   [0, 1, 2],
+                   [0, 1, 2]])
+
+            >>> expand_arange(3, reps_after=3)
+            array([[0, 0, 0],
+                   [1, 1, 1],
+                   [2, 2, 2]])
+
+            >>> expand_arange(4, reps_before=3)
+            array([[0, 1, 2, 3],
+                   [0, 1, 2, 3],
+                   [0, 1, 2, 3]])
+
+            >>> expand_arange(4, reps_after=3)
+            array([[0, 0, 0],
+                   [1, 1, 1],
+                   [2, 2, 2],
+                   [3, 3, 3]])
+
+            >>> expand_arange(4, reps_before=3, reps_after=2)
+            array([[[0, 0],
+                    [1, 1],
+                    [2, 2],
+                    [3, 3]],
+            <BLANKLINE>
+                   [[0, 0],
+                    [1, 1],
+                    [2, 2],
+                    [3, 3]],
+            <BLANKLINE>
+                   [[0, 0],
+                    [1, 1],
+                    [2, 2],
+                    [3, 3]]])
+
+    """
+
+    if (stop is None):
+        stop = start
+        start = 0
+
+    an_arange = numpy.arange(start = start, stop = stop, step = step, dtype = dtype)
+
+    an_arange = expand_view(an_arange, reps_before=reps_before, reps_after=reps_after)
+
+    return(an_arange)
+
+
 @debugging_tools.log_call(logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
