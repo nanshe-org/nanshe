@@ -574,6 +574,73 @@ def expand_arange(start, stop = None, step = 1, dtype=numpy.int64, reps_before =
     return(an_arange)
 
 
+def expand_enumerate(new_array, axis = 0, start = 0, step = 1):
+    """
+        Builds on expand_arange, which has the same shape as the original array. Specifies the increments to occur along
+        the given axis, which by default is the zeroth axis.
+
+        Provides mechanisms for changing the starting value and also the increment.
+
+        Args:
+            new_array(numpy.ndarray):            array to enumerate
+            axis(int):                           axis to enumerate along (0 by default).
+            start(int):                          starting point (0 by default).
+            step(int):                           size of steps to take between value (1 by default).
+
+        Returns:
+            (numpy.ndarray):                     a view of a numpy arange with tiling in various dimension.
+
+        Examples:
+            >>> expand_enumerate(numpy.ones((4,5)))
+            array([[0, 0, 0, 0, 0],
+                   [1, 1, 1, 1, 1],
+                   [2, 2, 2, 2, 2],
+                   [3, 3, 3, 3, 3]])
+
+            >>> expand_enumerate(numpy.ones((4,5)), axis=0)
+            array([[0, 0, 0, 0, 0],
+                   [1, 1, 1, 1, 1],
+                   [2, 2, 2, 2, 2],
+                   [3, 3, 3, 3, 3]])
+
+            >>> expand_enumerate(numpy.ones((4,5)), axis=0, start=1)
+            array([[1, 1, 1, 1, 1],
+                   [2, 2, 2, 2, 2],
+                   [3, 3, 3, 3, 3],
+                   [4, 4, 4, 4, 4]])
+
+            >>> expand_enumerate(numpy.ones((4,5)), axis=0, start=1, step=2)
+            array([[1, 1, 1, 1, 1],
+                   [3, 3, 3, 3, 3],
+                   [5, 5, 5, 5, 5],
+                   [7, 7, 7, 7, 7]])
+
+            >>> expand_enumerate(numpy.ones((4,5)), axis=1)
+            array([[0, 1, 2, 3, 4],
+                   [0, 1, 2, 3, 4],
+                   [0, 1, 2, 3, 4],
+                   [0, 1, 2, 3, 4]])
+
+            >>> expand_enumerate(numpy.ones((4,5)), axis=1, start=1)
+            array([[1, 2, 3, 4, 5],
+                   [1, 2, 3, 4, 5],
+                   [1, 2, 3, 4, 5],
+                   [1, 2, 3, 4, 5]])
+
+            >>> expand_enumerate(numpy.ones((4,5)), axis=1, start=1, step=2)
+            array([[1, 3, 5, 7, 9],
+                   [1, 3, 5, 7, 9],
+                   [1, 3, 5, 7, 9],
+                   [1, 3, 5, 7, 9]])
+
+    """
+
+    an_enumeration = expand_arange(start = start, stop = start + step * new_array.shape[axis], step = step,
+                                   reps_before = new_array.shape[:axis], reps_after = new_array.shape[(axis+1):])
+
+    return(an_enumeration)
+
+
 @debugging_tools.log_call(logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
