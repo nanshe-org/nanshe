@@ -1817,13 +1817,17 @@ def postprocess_data(new_dictionary, array_debug_recorder = HDF5_recorder.EmptyA
 
     array_debug_recorder("new_neurons_set", new_neurons_set)
 
-    unmerged_neuron_set_contours = unmerged_neuron_set["contour"]
-    unmerged_neuron_set_contours = (unmerged_neuron_set_contours * expanded_numpy.expand_view(numpy.arange(1, 1 + len(unmerged_neuron_set_contours)), reps_after = unmerged_neuron_set_contours.shape[1:])).max(axis = 0)
+    unmerged_neuron_set_contours = unmerged_neuron_set["contour"].copy()
+
+    unmerged_neuron_set_contours *= expanded_numpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
+    unmerged_neuron_set_contours = unmerged_neuron_set_contours.max(axis = 0)
 
     array_debug_recorder("unmerged_neuron_set_contours", unmerged_neuron_set_contours)
 
-    new_neurons_set_contours = new_neurons_set["contour"]
-    new_neurons_set_contours = (new_neurons_set_contours * expanded_numpy.expand_view(numpy.arange(1, 1 + len(new_neurons_set_contours)), reps_after = new_neurons_set_contours.shape[1:])).max(axis = 0)
+    new_neurons_set_contours = new_neurons_set["contour"].copy()
+
+    new_neurons_set_contours *= expanded_numpy.expand_enumerate(new_neurons_set_contours, start = 1)
+    new_neurons_set_contours = new_neurons_set_contours.max(axis = 0)
 
     array_debug_recorder("new_neurons_set_contours", new_neurons_set_contours)
 
