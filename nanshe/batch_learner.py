@@ -142,6 +142,9 @@ def generate_neurons(run_stage = "all", resume_logger = HDF5_recorder.EmptyArray
     if "original_images_max_projection" not in array_debug_recorder:
         array_debug_recorder("original_images_max_projection", new_images.max(axis = 0))
 
+    if "original_images_mean_projection" not in array_debug_recorder:
+        array_debug_recorder("original_images_mean_projection", new_images.mean(axis = 0))
+
     # Preprocess images
     new_preprocessed_images = None
     if ("preprocessed_images" in resume_logger) and ((run_stage != "preprocessing") and (run_stage != "all")):
