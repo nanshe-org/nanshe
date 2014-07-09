@@ -150,11 +150,10 @@ def extract_f0(new_data,
             numpy.ndarray:                              a new array with a new baseline.
     """
 
-    temporal_smoothing_gaussian_filter = vigra.filters.Kernel1D()
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
-    temporal_smoothing_gaussian_filter.initGaussian(temporal_smoothing_gaussian_filter_stdev,
-                                                    1.0,
-                                                    5 * temporal_smoothing_gaussian_filter_stdev)
+    temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
+                                                                      1.0,
+                                                                      5 * temporal_smoothing_gaussian_filter_stdev)
     # TODO: Check what border treatment to use
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
@@ -215,11 +214,11 @@ def extract_f0(new_data,
     quantile_interpolator = scipy.interpolate.interp1d(window_centers, window_quantiles, axis=0)
     new_data_quantiled = quantile_interpolator(numpy.arange(new_data_temporally_smoothed.shape[0]))
 
-    spatial_smoothing_gaussian_filter = vigra.filters.Kernel1D()
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
-    spatial_smoothing_gaussian_filter.initGaussian(spatial_smoothing_gaussian_filter_stdev,
-                                                   1.0,
-                                                   5 * spatial_smoothing_gaussian_filter_stdev)
+    spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
+                                                                     1.0,
+                                                                     5 * spatial_smoothing_gaussian_filter_stdev)
+
     # TODO: Check what border treatment to use
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
