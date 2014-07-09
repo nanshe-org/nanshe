@@ -118,9 +118,9 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
 
         # Get a debug logger for the HDF5 file (if needed)
         array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
-                                                                    group_name = "debug",
-                                                                    enable = debug,
-                                                                    overwrite_group = False)
+                                                                          group_name = "debug",
+                                                                          enable = debug,
+                                                                          overwrite_group = False)
 
         # Saves intermediate result to make resuming easier
         resume_logger = HDF5_recorder.generate_HDF5_array_recorder(output_group, allow_overwrite_dataset = True)
