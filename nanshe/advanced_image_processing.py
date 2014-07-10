@@ -153,7 +153,7 @@ def extract_f0(new_data,
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
-                                                                      5 * temporal_smoothing_gaussian_filter_stdev)
+                                                                      5)
     # TODO: Check what border treatment to use
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
@@ -217,7 +217,7 @@ def extract_f0(new_data,
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
                                                                      1.0,
-                                                                     5 * spatial_smoothing_gaussian_filter_stdev)
+                                                                     5)
 
     # TODO: Check what border treatment to use
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
