@@ -32,20 +32,20 @@ class EmptyArrayRecorder(object):
     __bool__ = __nonzero__
 
     @debugging_tools.log_call(logger)
-    def __contains__(self, array_name):
+    def __contains__(self, key):
         return(False)
 
     @debugging_tools.log_call(logger)
-    def __getitem__(self, array_name):
+    def __getitem__(self, key):
         return(None)
 
     @debugging_tools.log_call(logger)
-    def __call__(self, array_name, array_value):
-        # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
-        if array_value.size:
+    def __call__(self, key, value):
+        # Exception will be thrown if value is empty or if key already exists (as intended).
+        if value.size:
             pass
         else:
-            raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
+            raise Exception("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
 class HDF5ArrayRecorder(object):
@@ -62,25 +62,25 @@ class HDF5ArrayRecorder(object):
     __bool__ = __nonzero__
 
     @debugging_tools.log_call(logger)
-    def __contains__(self, array_name):
-        return(array_name in self.hdf5_handle)
+    def __contains__(self, key):
+        return(key in self.hdf5_handle)
 
     @debugging_tools.log_call(logger)
-    def __getitem__(self, array_name):
-        return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, array_name))
+    def __getitem__(self, key):
+        return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
 
     @debugging_tools.log_call(logger)
-    def __call__(self, array_name, array_value):
-        # Attempt to create a dataset in self.hdf5_handle named array_name with array_value and do not overwrite.
-        # Exception will be thrown if array_value is empty or if array_name already exists (as intended).
-        if array_value.size:
+    def __call__(self, key, value):
+        # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
+        # Exception will be thrown if value is empty or if key already exists (as intended).
+        if value.size:
             HDF5_serializers.write_numpy_structured_array_to_HDF5(self.hdf5_handle,
-                                                                  array_name,
-                                                                  array_value,
+                                                                  key,
+                                                                  value,
                                                                   overwrite = self.overwrite_dataset)
             self.hdf5_handle.file.flush()
         else:
-            raise Exception("The array provided for output by the name: \"" + array_name + "\" is empty.")
+            raise Exception("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
 @debugging_tools.log_call(logger)
