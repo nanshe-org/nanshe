@@ -4,6 +4,8 @@ __author__ = "John Kirkham"
 __date__ = "$Apr 9, 2014 4:00:40PM$"
 
 
+import os
+
 # Generally useful and fast to import so done immediately.
 import numpy
 
@@ -32,78 +34,93 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def batch_generate_save_neurons(new_filenames, parameters):
+def generate_neurons_io_handler(input_filename, output_filename, parameters_filename):
     """
-        Uses generate_save_neurons to process a list of filename (HDF5 files) with the given parameters for trainDL.
-        Results will be saved in each file.
-        
+        Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
+        dataset). Also,
+
         Args:
-            new_filenames     names of the files to read.
-            parameters        passed directly to generate_save_neurons.
-    """
-
-    # simple. iterates over each call to generate and save results in given HDF5 file.
-    for each_new_filename in new_filenames:
-        # runs each one and saves results in each file
-        generate_save_neurons(each_new_filename, **parameters)
-
-
-@debugging_tools.log_call(logger)
-def generate_save_neurons(new_filename, debug = False, **parameters):
-    """
-        Uses advanced_image_processing.generate_dictionary to process a given filename (HDF5 files)
-        with the given parameters for trainDL.
-        
-        Args:
-            new_filenames     name of the internal file to read (should be a Dataset)
-            parameters        passed directly to advanced_image_processing.generate_dictionary.
+            input_filename          HDF5 filename to read from (should be a path to a h5py.Dataset)
+            output_filename         HDF5 filename to write to (should be a path to a h5py.Group)
+            parameters_filename     JSON filename with parameters.
     """
 
 
-    new_filename_details = pathHelpers.PathComponents(new_filename)
+    # Extract and validate file extensions.
 
-    new_filename_ext = new_filename_details.extension
-    new_filename_ext = new_filename_ext.lower()
-    new_filename_ext = new_filename_ext.replace(os.path.extsep, "", 1)
+    # Parse input filename and validate that the name is acceptable
+    input_filename_details = pathHelpers.PathComponents(input_filename)
+    # Clean up the extension so it fits the standard.
+    input_filename_details.extension = input_filename_details.extension.lower()
+    input_filename_details.extension = input_filename_details.extension.lstrip(os.extsep)
+    if ( input_filename_details.extension not in ["h5", "hdf5", "he5"] ):
+        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
 
-    if ( (new_filename_ext == "h5") or (new_filename_ext == "hdf5") or (new_filename_ext == "he5") ):
-        raise Exception("File with filename: \"" + new_filename + "\"" + " provided with an unknown file extension: \"" + new_filename_ext + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+    # Parse output filename and validate that the name is acceptable
+    output_filename_details = pathHelpers.PathComponents(output_filename)
+    # Clean up the extension so it fits the standard.
+    output_filename_details.extension = output_filename_details.extension.lower()
+    output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
+    if ( output_filename_details.extension not in ["h5", "hdf5", "he5"] ):
+        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
 
-    # The name of the data without the its path
-    new_filename_details.internalDatasetName = new_filename_details.internalDatasetName.strip("/")
+    # Parse parameter filename and validate that the name is acceptable
+    parameters_filename_details = pathHelpers.PathComponents(parameters_filename)
+    # Clean up the extension so it fits the standard.
+    parameters_filename_details.extension = parameters_filename_details.extension.lower()
+    parameters_filename_details.extension = parameters_filename_details.extension.lstrip(os.extsep)
+    if ( parameters_filename_details.extension not in ["json"] ):
+        raise Exception("Parameter file with filename: \"" + parameters_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
 
-    with h5py.File(new_filename_details.externalPath, "a") as new_file:
-        # Must contain the internal path in question
-        if new_filename_details.internalPath not in new_file:
-            raise Exception( "The given data file \"" + new_filename + "\" does not contain \"" + new_filename_details.internalPath + "\".")
 
-        # Must be a path to a h5py.Dataset not a h5py.Group (would be nice to relax this constraint)
-        elif not isinstance(new_file[new_filename_details.internalPath], h5py.Dataset):
-            raise Exception("The given data file \"" + new_filename + "\" does not contain a dataset at location \"" + new_filename_details.internalPath + "\".")
+    # Store useful values
 
-        # Where to read data files from
-        input_directory = new_filename_details.internalDirectory.rstrip("/")
+    # Parse the parameters from the json file.
+    parameters = read_config.read_parameters(parameters_filename)
 
-        # Where the results will be saved to
-        output_directory = ""
-        if input_directory == "":
-            # if we are at the root
-            output_directory = "/ADINA_results" + "/" + new_filename_details.internalDatasetName.rstrip("/")
+    # Grab the debug value from the parameters. Let it default to false if it is not present.
+    debug = parameters.get("debug", False)
+
+    # Where the original images are.
+    input_dataset_name = input_filename_details.internalPath
+
+    # Name of the group where all data will be stored.
+    output_group_name = output_filename_details.internalPath
+
+
+    # Read the input data.
+    original_images = None
+    with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
+        original_images_object = HDF5_serializers.read_numpy_structured_array_from_HDF5(input_file_handle, input_dataset_name)
+
+        # TODO: Refactor into HDF5_serializers.read_numpy_structured_array_from_HDF5.
+        # Read the original images in and also handle the case of a reference or region reference.
+        if isinstance(original_images_object, numpy.ndarray):
+            original_images = original_images_object
+        elif isinstance(original_images_object, h5py.Reference):
+            original_images = input_file_handle[original_images_object]
+        elif isinstance(original_images_object, h5py.RegionReference):
+            original_images = input_file_handle[original_images_object]
         else:
-            # otherwise (not at that the root)
-            output_directory = input_directory + "_ADINA_results" + "/" + new_filename_details.internalDatasetName.rstrip("/")
+            raise Exception("Unknown type of, \"" + repr(type(original_images_object)) + "\", in the HDF5 input file named, \"" + input_filename + "\".")
 
+
+    # Write out the output.
+    with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
         # Create a new output directory if doesn't exists.
-        if output_directory not in new_file:
-            new_file.create_group(output_directory)
+        if output_group_name not in output_file_handle:
+            output_file_handle.create_group(output_group_name)
 
-        output_group = new_file[output_directory]
+        # Group where all data will be stored.
+        output_group = output_file_handle[output_group_name]
 
-        # Create a hardlink (does not copy the original data)
-        if "original_images" not in new_file[output_directory]:
-            output_group["original_images"] = new_file[new_filename_details.internalPath]
-
-        original_images = output_group["original_images"]
+        # Create a soft link to the original images. But use the appropriate type of soft link depending on whether
+        # the input and output file are the same.
+        if input_dataset_name not in output_group:
+            if input_filename_details.externalPath == output_filename_details.externalPath:
+                output_group["original_images"] = h5py.SoftLink(input_dataset_name)
+            else:
+                output_group["original_images"] = h5py.ExternalLink(input_filename_details.externalPath, input_dataset_name)
 
         # Get a debug logger for the HDF5 file (if needed)
         array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
@@ -195,18 +212,21 @@ def main(*argv):
     # Takes a config file and then a series of one or more HDF5 files.
     parser.add_argument("config_filename", metavar = "CONFIG_FILE", type = str,
                         help = "JSON file that provides configuration options for how to use dictionary learning on the input files.")
-    parser.add_argument("input_files", metavar = "INPUT_FILE", type = str, nargs = '+',
-                        help = "HDF5 file(s) to process (a single dataset or video will be expected in /images (time must be the first dimension) the results will be placed in /results (will overwrite old data) of the respective file with attribute tags related to the parameters used).")
+    parser.add_argument("input_file", metavar = "INPUT_FILE", type = str, nargs = 1,
+                        help = "HDF5 file with an array of images. A single dataset or video will be expected at the internal path. Time must be the first dimension.")
+    parser.add_argument("output_file", metavar = "OUTPUT_FILE", type = str, nargs = 1,
+                            help = "HDF5 file(s) to write output. If a specific group is desired, that should be included in the filename.")
 
     # Results of parsing arguments (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
 
-    # Go ahead and stuff in parameters with the other parsed_args
-    parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
+    # Remove args from singleton lists
+    parsed_args.input_file = parsed_args.input_file[0]
+    parsed_args.output_file = parsed_args.output_file[0]
 
     # Runs the dictionary learning algorithm on each file with the given parameters
     # and saves the results in the given files.
-    batch_generate_save_neurons(parsed_args.input_files, parsed_args.parameters)
+    generate_neurons_io_handler(parsed_args.input_file, parsed_args.output_file, parsed_args.config_filename)
 
     return(0)
 
