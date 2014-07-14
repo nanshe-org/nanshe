@@ -3,10 +3,14 @@
 __author__ = "John Kirkham"
 __date__ = "$Apr 9, 2014 4:00:40PM$"
 
-import os
 
 # Generally useful and fast to import so done immediately.
 import numpy
+
+import h5py
+
+#import lazyflow.utility.pathHelpers
+import pathHelpers
 
 # Need in order to have logging information no matter what.
 import debugging_tools
@@ -21,8 +25,6 @@ import read_config
 
 import HDF5_serializers
 
-import vigra
-import vigra.impex
 
 # Get the logger
 logger = debugging_tools.logging.getLogger(__name__)
@@ -56,14 +58,6 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
             new_filenames     name of the internal file to read (should be a Dataset)
             parameters        passed directly to advanced_image_processing.generate_dictionary.
     """
-
-    # No need unless loading data.
-    # thus, won't be loaded if only using numpy arrays with advanced_image_processing.generate_dictionary.
-    import h5py
-
-    # Need in order to read h5py path. Otherwise unneeded.
-    #import lazyflow.utility.pathHelpers as pathHelpers # Use this when merged into the ilastik framework.
-    import pathHelpers
 
 
     new_filename_details = pathHelpers.PathComponents(new_filename)
