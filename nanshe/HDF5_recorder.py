@@ -32,6 +32,10 @@ class EmptyArrayRecorder(object):
     __bool__ = __nonzero__
 
     @debugging_tools.log_call(logger)
+    def get(self, key, default=None):
+        return(default)
+
+    @debugging_tools.log_call(logger)
     def __contains__(self, key):
         return(False)
 
@@ -60,6 +64,17 @@ class HDF5ArrayRecorder(object):
 
     # For forward compatibility with Python 3
     __bool__ = __nonzero__
+
+    @debugging_tools.log_call(logger)
+    def get(self, key, default=None):
+        value = default
+
+        try:
+            value = self.__getitem__(key)
+        except KeyError:
+            pass
+
+        return(value)
 
     @debugging_tools.log_call(logger)
     def __contains__(self, key):
