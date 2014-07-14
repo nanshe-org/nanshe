@@ -109,6 +109,8 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
         if "original_images" not in new_file[output_directory]:
             output_group["original_images"] = new_file[new_filename_details.internalPath]
 
+        original_images = output_group["original_images"]
+
         # Get a debug logger for the HDF5 file (if needed)
         array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
                                                                           group_name = "debug",
@@ -119,7 +121,7 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
         resume_logger = HDF5_recorder.generate_HDF5_array_recorder(output_group, allow_overwrite_dataset = True)
 
         # Generate the neurons and attempt to resume if possible
-        generate_neurons(resume_logger = resume_logger, array_debug_recorder = array_debug_recorder, **parameters["generate_neurons"])
+        generate_neurons(original_images = original_images, resume_logger = resume_logger, array_debug_recorder = array_debug_recorder, **parameters["generate_neurons"])
 
         # Save the configuration parameters in the attributes as a string.
         if "parameters" not in output_group.attrs:
@@ -128,22 +130,19 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
 
 
 @debugging_tools.log_call(logger)
-def generate_neurons(run_stage = "all", resume_logger = HDF5_recorder.EmptyArrayRecorder(), array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(), **parameters):
-    # Copy out images for manipulation in memory
-    new_images = resume_logger["original_images"]
-
+def generate_neurons(original_images, run_stage = "all", resume_logger = HDF5_recorder.EmptyArrayRecorder(), array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(), **parameters):
     if "original_images_max_projection" not in array_debug_recorder:
-        array_debug_recorder("original_images_max_projection", new_images.max(axis = 0))
+        array_debug_recorder("original_images_max_projection", original_images.max(axis = 0))
 
     if "original_images_mean_projection" not in array_debug_recorder:
-        array_debug_recorder("original_images_mean_projection", new_images.mean(axis = 0))
+        array_debug_recorder("original_images_mean_projection", original_images.mean(axis = 0))
 
     # Preprocess images
     new_preprocessed_images = None
     if ("preprocessed_images" in resume_logger) and ((run_stage != "preprocessing") and (run_stage != "all")):
         new_preprocessed_images = resume_logger["preprocessed_images"]
     else:
-        new_preprocessed_images = advanced_image_processing.preprocess_data(new_images,
+        new_preprocessed_images = advanced_image_processing.preprocess_data(original_images,
                                                                             array_debug_recorder = array_debug_recorder,
                                                                             **parameters["preprocess_data"])
         resume_logger("preprocessed_images", new_preprocessed_images)
