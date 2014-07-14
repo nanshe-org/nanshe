@@ -73,38 +73,31 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
     new_filename_ext = new_filename_ext.replace(os.path.extsep, "", 1)
 
     if ( (new_filename_ext == "h5") or (new_filename_ext == "hdf5") or (new_filename_ext == "he5") ):
-        # HDF5 file. Nothing to do here.
-        new_hdf5_filepath = new_filename
-    else:
         raise Exception("File with filename: \"" + new_filename + "\"" + " provided with an unknown file extension: \"" + new_filename_ext + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
 
-
-    # Inspect path name to get where the file is and its internal path
-    new_hdf5_filepath_details = pathHelpers.PathComponents(new_hdf5_filepath)
-
     # The name of the data without the its path
-    new_hdf5_filepath_details.internalDatasetName = new_hdf5_filepath_details.internalDatasetName.strip("/")
+    new_filename_details.internalDatasetName = new_filename_details.internalDatasetName.strip("/")
 
-    with h5py.File(new_hdf5_filepath_details.externalPath, "a") as new_file:
+    with h5py.File(new_filename_details.externalPath, "a") as new_file:
         # Must contain the internal path in question
-        if new_hdf5_filepath_details.internalPath not in new_file:
-            raise Exception( "The given data file \"" + new_filename + "\" does not contain \"" + new_hdf5_filepath_details.internalPath + "\".")
+        if new_filename_details.internalPath not in new_file:
+            raise Exception( "The given data file \"" + new_filename + "\" does not contain \"" + new_filename_details.internalPath + "\".")
 
         # Must be a path to a h5py.Dataset not a h5py.Group (would be nice to relax this constraint)
-        elif not isinstance(new_file[new_hdf5_filepath_details.internalPath], h5py.Dataset):
-            raise Exception("The given data file \"" + new_filename + "\" does not contain a dataset at location \"" + new_hdf5_filepath_details.internalPath + "\".")
+        elif not isinstance(new_file[new_filename_details.internalPath], h5py.Dataset):
+            raise Exception("The given data file \"" + new_filename + "\" does not contain a dataset at location \"" + new_filename_details.internalPath + "\".")
 
         # Where to read data files from
-        input_directory = new_hdf5_filepath_details.internalDirectory.rstrip("/")
+        input_directory = new_filename_details.internalDirectory.rstrip("/")
 
         # Where the results will be saved to
         output_directory = ""
         if input_directory == "":
             # if we are at the root
-            output_directory = "/ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip("/")
+            output_directory = "/ADINA_results" + "/" + new_filename_details.internalDatasetName.rstrip("/")
         else:
             # otherwise (not at that the root)
-            output_directory = input_directory + "_ADINA_results" + "/" + new_hdf5_filepath_details.internalDatasetName.rstrip("/")
+            output_directory = input_directory + "_ADINA_results" + "/" + new_filename_details.internalDatasetName.rstrip("/")
 
         # Create a new output directory if doesn't exists.
         if output_directory not in new_file:
@@ -114,7 +107,7 @@ def generate_save_neurons(new_filename, debug = False, **parameters):
 
         # Create a hardlink (does not copy the original data)
         if "original_images" not in new_file[output_directory]:
-            output_group["original_images"] = new_file[new_hdf5_filepath_details.internalPath]
+            output_group["original_images"] = new_file[new_filename_details.internalPath]
 
         # Get a debug logger for the HDF5 file (if needed)
         array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
