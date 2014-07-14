@@ -138,10 +138,8 @@ def generate_neurons(original_images, run_stage = "all", resume_logger = HDF5_re
         array_debug_recorder("original_images_mean_projection", original_images.mean(axis = 0))
 
     # Preprocess images
-    new_preprocessed_images = None
-    if ("preprocessed_images" in resume_logger) and ((run_stage != "preprocessing") and (run_stage != "all")):
-        new_preprocessed_images = resume_logger["preprocessed_images"]
-    else:
+    new_preprocessed_images = resume_logger.get("preprocessed_images", None)
+    if (new_preprocessed_images is None) or (run_stage == "preprocessing") or (run_stage == "all"):
         new_preprocessed_images = advanced_image_processing.preprocess_data(original_images,
                                                                             array_debug_recorder = array_debug_recorder,
                                                                             **parameters["preprocess_data"])
@@ -154,10 +152,8 @@ def generate_neurons(original_images, run_stage = "all", resume_logger = HDF5_re
         return
 
     # Find the dictionary
-    new_dictionary = None
-    if ("dictionary" in resume_logger) and ((run_stage != "dictionary") and (run_stage != "all")):
-        new_dictionary = resume_logger["dictionary"]
-    else:
+    new_dictionary = resume_logger.get("dictionary", None)
+    if (new_dictionary is None) or (run_stage == "dictionary") or (run_stage == "all"):
         new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images,
                                                                        array_debug_recorder = array_debug_recorder,
                                                                        **parameters["generate_dictionary"])
@@ -171,9 +167,8 @@ def generate_neurons(original_images, run_stage = "all", resume_logger = HDF5_re
 
     # Find the neurons
     new_neurons = None
-    if ("neurons" in resume_logger) and ((run_stage != "postprocessing") and (run_stage != "all")):
-        new_neurons = resume_logger["neurons"]
-    else:
+    new_neurons = resume_logger.get("neurons", None)
+    if (new_neurons is None) or (run_stage == "postprocessing") or (run_stage == "all"):
         new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
                                                                  array_debug_recorder,
                                                                  **parameters["postprocess_data"])
