@@ -11,8 +11,7 @@ import numpy
 
 import h5py
 
-#import lazyflow.utility.pathHelpers
-import pathHelpers
+import lazyflow.utility.pathHelpers
 
 # Need in order to have logging information no matter what.
 import debugging_tools
@@ -49,7 +48,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
     # Extract and validate file extensions.
 
     # Parse input filename and validate that the name is acceptable
-    input_filename_details = pathHelpers.PathComponents(input_filename)
+    input_filename_details = lazyflow.utility.pathHelpers.PathComponents(input_filename)
     # Clean up the extension so it fits the standard.
     input_filename_details.extension = input_filename_details.extension.lower()
     input_filename_details.extension = input_filename_details.extension.lstrip(os.extsep)
@@ -57,7 +56,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
         raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
 
     # Parse output filename and validate that the name is acceptable
-    output_filename_details = pathHelpers.PathComponents(output_filename)
+    output_filename_details = lazyflow.utility.pathHelpers.PathComponents(output_filename)
     # Clean up the extension so it fits the standard.
     output_filename_details.extension = output_filename_details.extension.lower()
     output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
@@ -65,7 +64,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
         raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
 
     # Parse parameter filename and validate that the name is acceptable
-    parameters_filename_details = pathHelpers.PathComponents(parameters_filename)
+    parameters_filename_details = lazyflow.utility.pathHelpers.PathComponents(parameters_filename)
     # Clean up the extension so it fits the standard.
     parameters_filename_details.extension = parameters_filename_details.extension.lower()
     parameters_filename_details.extension = parameters_filename_details.extension.lstrip(os.extsep)
