@@ -129,12 +129,12 @@ def remove_zeroed_lines(new_data,
 
 @debugging_tools.log_call(logger)
 def extract_f0(new_data,
-               bias,
                step_size,
                half_window_size,
                which_quantile,
                temporal_smoothing_gaussian_filter_stdev,
                spatial_smoothing_gaussian_filter_stdev,
+               bias = None,
                array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(),
                **parameters):
     """
@@ -152,7 +152,10 @@ def extract_f0(new_data,
     """
 
     # Add the bias param
-    new_data_biased = new_data + bias
+    if bias is None:
+        new_data_biased = new_data - new_data.min() + 1
+    else:
+        new_data_biased = new_data + bias
 
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
