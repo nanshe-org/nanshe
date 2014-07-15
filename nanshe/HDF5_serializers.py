@@ -18,7 +18,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = False):
+def write_numpy_structured_array_to_HDF5(file_handle, internalPath, data, overwrite = False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
         Also, will handle normal NumPy arrays and scalars, as well.
@@ -31,33 +31,33 @@ def write_numpy_structured_array_to_HDF5(fid, internalPath, data, overwrite = Fa
             TODO: Write doctests.
         
         Args:
-            fid(HDF5 file):         either an HDF5 file or an HDF5 filename.
-            internalPath(str):      an internal path for the HDF5 file.
-            data(numpy.ndarray):    the NumPy structure array to save (or normal NumPy array).
-            overwrite(bool):        whether to overwrite what is already there (defaults to False).
+            file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.
+            internalPath(str):          an internal path for the HDF5 file.
+            data(numpy.ndarray):        the NumPy structure array to save (or normal NumPy array).
+            overwrite(bool):            whether to overwrite what is already there (defaults to False).
     """
 
-    close_fid = False
+    close_file_handle = False
 
-    if isinstance(fid, str):
-        fid = h5py.File(fid, "a")
-        close_fid = True
+    if isinstance(file_handle, str):
+        file_handle = h5py.File(file_handle, "a")
+        close_file_handle = True
 
     try:
-        fid.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
+        file_handle.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
     except RuntimeError:
         if overwrite:
-            del fid[internalPath]
-            fid.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
+            del file_handle[internalPath]
+            file_handle.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
         else:
             raise
 
-    if close_fid:
-        fid.close()
+    if close_file_handle:
+        file_handle.close()
 
 
 @debugging_tools.log_call(logger)
-def read_numpy_structured_array_from_HDF5(fid, internalPath):
+def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
     """
         Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.
         Also, it will handle normal NumPy arrays and scalars, as well.
@@ -67,8 +67,8 @@ def read_numpy_structured_array_from_HDF5(fid, internalPath):
             else (perhaps strs of fixed size) must be performed first.
         
         Args:
-            fid(HDF5 file):         either an HDF5 file or an HDF5 filename.
-            internalPath(str):      an internal path for the HDF5 file.
+            file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.
+            internalPath(str):          an internal path for the HDF5 file.
         
         Note:
             TODO: Write doctests.
@@ -77,15 +77,15 @@ def read_numpy_structured_array_from_HDF5(fid, internalPath):
             data(numpy.ndarray):    the NumPy structure array.
     """
 
-    close_fid = False
+    close_file_handle = False
 
-    if isinstance(fid, str):
-        fid = h5py.File(fid, "r")
-        close_fid = True
+    if isinstance(file_handle, str):
+        file_handle = h5py.File(file_handle, "r")
+        close_file_handle = True
 
-    data = fid[internalPath].value
+    data = file_handle[internalPath].value
 
-    if close_fid:
-        fid.close()
+    if close_file_handle:
+        file_handle.close()
 
     return(data)
