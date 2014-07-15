@@ -129,6 +129,7 @@ def remove_zeroed_lines(new_data,
 
 @debugging_tools.log_call(logger)
 def extract_f0(new_data,
+               bias,
                step_size,
                half_window_size,
                which_quantile,
@@ -150,6 +151,9 @@ def extract_f0(new_data,
             numpy.ndarray:                              a new array with a new baseline.
     """
 
+    # Add the bias param
+    new_data_biased = new_data + bias
+
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
@@ -157,7 +161,7 @@ def extract_f0(new_data,
     # TODO: Check what border treatment to use
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data.astype(numpy.float32),
+    new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data_biased.astype(numpy.float32),
                                                                       0,
                                                                       temporal_smoothing_gaussian_filter)
 
@@ -230,7 +234,7 @@ def extract_f0(new_data,
 
     array_debug_recorder("new_data_spatially_smoothed", new_data_spatially_smoothed)
 
-    new_data_baselined = (new_data - new_data_spatially_smoothed) / new_data_spatially_smoothed
+    new_data_baselined = (new_data_biased - new_data_spatially_smoothed) / new_data_spatially_smoothed
 
     return(new_data_baselined)
 
@@ -260,7 +264,7 @@ def normalize_data(new_data, array_debug_recorder = HDF5_recorder.EmptyArrayReco
 
 
 @debugging_tools.log_call(logger)
-def preprocess_data(new_data, bias = 0, array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(), **parameters):
+def preprocess_data(new_data, array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(), **parameters):
     """
         Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and
         wavelet_transform).
@@ -288,19 +292,15 @@ def preprocess_data(new_data, bias = 0, array_debug_recorder = HDF5_recorder.Emp
     else:
         new_data_maybe_lines_removed = new_data
 
-    # Add the bias param
-    new_data_biased = new_data_maybe_lines_removed + bias
-    array_debug_recorder("images_biased", new_data_biased)
-
     new_data_maybe_f0_result = None
     if "extract_f0" in parameters:
-        new_data_maybe_f0_result = extract_f0(new_data_biased,
+        new_data_maybe_f0_result = extract_f0(new_data_maybe_lines_removed,
                                               array_debug_recorder = array_debug_recorder,
                                               **parameters["extract_f0"])
         array_debug_recorder("images_f0", new_data_maybe_f0_result)
         array_debug_recorder("images_f0_max", new_data_maybe_f0_result.max(axis = 0))
     else:
-        new_data_maybe_f0_result = new_data_biased
+        new_data_maybe_f0_result = new_data_maybe_lines_removed
 
     new_data_maybe_wavelet_result = None
     if "wavelet_transform" in parameters:
