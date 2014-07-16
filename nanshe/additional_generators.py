@@ -13,7 +13,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 @debugging_tools.log_call(logger)
 def index_generator(*sizes):
     """
-        Takes an argument list of sizes and iterates through them from 0 up to (but including) each size.
+        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size.
         
         Args:
             *sizes(int):            an argument list of ints for the max sizes in each index.
@@ -48,7 +48,7 @@ def index_generator(*sizes):
     # Creates a list of xrange generator objects over each respective dimension of sizes
     gens = [xrange(_) for _ in sizes]
 
-    # Combines the generators to a single generator of indicies that go throughout sizes
+    # Combines the generators to a single generator of indices that go throughout sizes
     chain_gen = itertools.product(*gens)
 
     return(chain_gen)
