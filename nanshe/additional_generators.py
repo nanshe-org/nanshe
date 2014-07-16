@@ -55,6 +55,51 @@ def index_generator(*sizes):
 
 
 @debugging_tools.log_call(logger)
+def index_enumerator(*sizes):
+    """
+        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size (i.e. like
+        index_generator). However, also included is an index corresponding to how many elements have been seen.
+
+        Args:
+            *sizes(int):            an argument list of ints for the max sizes in each index.
+
+        Returns:
+            chain_gen(generator):   a generator over every possible coordinated
+
+
+        Examples:
+            >>> index_enumerator(0) #doctest: +ELLIPSIS
+            <enumerate object at 0x...>
+
+            >>> list(index_enumerator(0))
+            []
+
+            >>> list(index_enumerator(0, 2))
+            []
+
+            >>> list(index_enumerator(2, 0))
+            []
+
+            >>> list(index_enumerator(2, 1))
+            [(0, (0, 0)), (1, (1, 0))]
+
+            >>> list(index_enumerator(1, 2))
+            [(0, (0, 0)), (1, (0, 1))]
+
+            >>> list(index_enumerator(3, 2))
+            [(0, (0, 0)), (1, (0, 1)), (2, (1, 0)), (3, (1, 1)), (4, (2, 0)), (5, (2, 1))]
+    """
+
+    # Creates a list of xrange generator objects over each respective dimension of sizes
+    gens = [xrange(_) for _ in sizes]
+
+    # Combines the generators to a single generator of indices that go throughout sizes
+    chain_gen = enumerate(itertools.product(*gens))
+
+    return(chain_gen)
+
+
+@debugging_tools.log_call(logger)
 def list_indices_to_index_array(list_indices):
     """
         Converts a list of tuple indices to numpy index array.
