@@ -332,6 +332,71 @@ def reverse_each_element(new_iter):
 
 
 @debugging_tools.log_call(logger)
+def lagged_generators(new_iter, n = 2):
+    """
+        Creates a tuple of generators with each next generator one step ahead of the previous generator.
+
+        Args:
+            new_iter(iter):                 an iterator or something that can be turned into an iterator
+            n(int):                         number of generators to create as lagged
+
+        Returns:
+            (tuple of generator objects):   a tuple of iterators with each one step in front of the others.
+
+        Examples:
+            >>> lagged_generators(xrange(5), 1) #doctest: +ELLIPSIS
+            (<itertools.tee object at 0x...>,)
+
+            >>> zip(*lagged_generators(xrange(5), 1))
+            [(0,), (1,), (2,), (3,), (4,)]
+
+            >>> zip(*lagged_generators(xrange(5), 2))
+            [(0, 1), (1, 2), (2, 3), (3, 4)]
+
+            >>> zip(*lagged_generators(xrange(5)))
+            [(0, 1), (1, 2), (2, 3), (3, 4)]
+
+            >>> zip(*lagged_generators(xrange(5), 3))
+            [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
+
+            >>> list(itertools.izip_longest(*lagged_generators(xrange(5))))
+            [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]
+
+            >>> list(itertools.izip_longest(*lagged_generators(xrange(5), 3)))
+            [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
+    """
+
+    # Only a positive semi-definite number of generators can be created
+    assert(n >= 0)
+
+    # Where they will be stored
+    all_iters = tuple()
+
+    # If some positive definite number of generators is requested, then fill the list.
+    if n > 0:
+        # Convert to the same type
+        next_iter = itertools.tee(new_iter, 1)[0]
+        for i in xrange(1, n):
+            # Duplicate the iterator
+            prev_iter, next_iter = itertools.tee(next_iter, 2)
+
+            # Store the copy of the old one
+            all_iters += (prev_iter,)
+
+            # Attempt to advance the next one
+            # If it fails, create an empty iterator.
+            try:
+                next(next_iter)
+            except StopIteration:
+                next_iter = itertools.tee([], 1)[0]
+
+        # Add the last one. If n == 1, the last one is the only one.
+        all_iters += (next_iter,)
+
+    return(all_iters)
+
+
+@debugging_tools.log_call(logger)
 def filled_stringify_numbers(new_iter, include_numbers = False):
     """
         Like enumerate except it also returns a string with the number from enumeration with left padding by zero.
