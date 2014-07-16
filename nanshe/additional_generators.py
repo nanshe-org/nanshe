@@ -332,7 +332,7 @@ def reverse_each_element(new_iter):
 
 
 @debugging_tools.log_call(logger)
-def filled_stringify_enumerate(new_iter):
+def filled_stringify_numbers(new_iter, include_numbers = False):
     """
         Like enumerate except it also returns a string with the number from enumeration with left padding by zero.
         
@@ -342,6 +342,58 @@ def filled_stringify_enumerate(new_iter):
         Returns:
             (generator object):    an iterator over the reversed elements.
         
+        Examples:
+            >>> filled_stringify_numbers([5, 7]) #doctest: +ELLIPSIS
+            <generator object filled_stringify_numbers at 0x...>
+
+            >>> list(filled_stringify_numbers([]))
+            []
+
+            >>> list(filled_stringify_numbers([5]))
+            ['5']
+
+            >>> list(filled_stringify_numbers([5, 7]))
+            ['5', '7']
+
+            >>> list(filled_stringify_numbers([5, 7, 11]))
+            ['05', '07', '11']
+
+            >>> list(filled_stringify_numbers([5, 7, 11], include_numbers = True))
+            [(5, '05'), (7, '07'), (11, '11')]
+    """
+
+    new_list = new_iter
+    if not isinstance(new_list, list):
+        new_list = list(new_list)
+
+    new_array = numpy.array(new_list)
+
+    if len(new_array):
+        new_array_max = new_array.max()
+        if new_array_max:
+            digits = int(numpy.floor(numpy.log10(new_array.max()))) + 1
+        else:
+            digits = 1
+
+    if include_numbers:
+        for each in new_array:
+            yield( (each, str(each).zfill(digits)) )
+    else:
+        for each in new_array:
+            yield( str(each).zfill(digits) )
+
+
+@debugging_tools.log_call(logger)
+def filled_stringify_enumerate(new_iter):
+    """
+        Takes each element yielded by new_iter and reverses it using reversed.
+
+        Args:
+            new_iter(iter):        a list or an iterator to use for enumeration over.
+
+        Returns:
+            (generator object):    an iterator over the reversed elements.
+
         Examples:
             >>> filled_stringify_enumerate([5, 7]) #doctest: +ELLIPSIS
             <generator object filled_stringify_enumerate at 0x...>
@@ -364,11 +416,11 @@ def filled_stringify_enumerate(new_iter):
     if not isinstance(new_list, list):
         new_list = list(new_list)
 
-    if len(new_list):
-        digits = int(numpy.floor(numpy.log10(len(new_list)))) + 1
+    new_list_index_gen = xrange(len(new_list))
+    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers = True)
 
-    for i, each in enumerate(new_list):
-        yield ( (i, str(i).zfill(digits), each) )
+    for (i, i_str), each in itertools.izip(new_list_index_gen_stringified, new_list):
+        yield ( (i, i_str, each) )
 
 
 @debugging_tools.log_call(logger)
