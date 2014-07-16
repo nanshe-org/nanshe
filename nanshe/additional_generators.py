@@ -332,12 +332,12 @@ def reverse_each_element(new_iter):
 
 
 @debugging_tools.log_call(logger)
-def filled_stringify_enumerate(new_list):
+def filled_stringify_enumerate(new_iter):
     """
-        Takes each element yielded by new_iter and reverses it using reversed.
+        Like enumerate except it also returns a string with the number from enumeration with left padding by zero.
         
         Args:
-            new_list(list):        an iterator or something that can be turned into an iterator.
+            new_iter(iter):        a list or an iterator to use for enumeration over.
         
         Returns:
             (generator object):    an iterator over the reversed elements.
@@ -345,22 +345,27 @@ def filled_stringify_enumerate(new_list):
         Examples:
             >>> filled_stringify_enumerate([5, 7]) #doctest: +ELLIPSIS
             <generator object filled_stringify_enumerate at 0x...>
-            
+
             >>> list(filled_stringify_enumerate([]))
             []
-            
+
             >>> list(filled_stringify_enumerate([5]))
             [(0, '0', 5)]
-            
+
             >>> list(filled_stringify_enumerate([5, 7]))
             [(0, '0', 5), (1, '1', 7)]
+
+            >>> list(filled_stringify_enumerate(range(11)))
+            [(0, '00', 0), (1, '01', 1), (2, '02', 2), (3, '03', 3), (4, '04', 4), (5, '05', 5), (6, '06', 6), (7, '07', 7), (8, '08', 8), (9, '09', 9), (10, '10', 10)]
+
     """
 
+    new_list = new_iter
     if not isinstance(new_list, list):
         new_list = list(new_list)
 
     if len(new_list):
-        digits = int(numpy.floor(numpy.log10(len(new_list))))
+        digits = int(numpy.floor(numpy.log10(len(new_list)))) + 1
 
     for i, each in enumerate(new_list):
         yield ( (i, str(i).zfill(digits), each) )
