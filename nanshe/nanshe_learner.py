@@ -180,7 +180,7 @@ def generate_neurons(original_images, run_stage = "all", resume_logger = HDF5_re
     new_neurons = resume_logger.get("neurons", None)
     if (new_neurons is None) or (run_stage == "postprocessing") or (run_stage == "all"):
         new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
-                                                                 array_debug_recorder,
+                                                                 array_debug_recorder = array_debug_recorder,
                                                                  **parameters["postprocess_data"])
         resume_logger("neurons", new_neurons)
 
