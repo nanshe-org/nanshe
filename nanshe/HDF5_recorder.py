@@ -41,7 +41,7 @@ class EmptyArrayRecorder(object):
 
     @debugging_tools.log_call(logger)
     def __getitem__(self, key):
-        raise(KeyError("unable to open object (Symbol table: Can't open object)"))
+        raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + ")"))
 
     @debugging_tools.log_call(logger)
     def __call__(self, key, value):
@@ -85,7 +85,7 @@ class HDF5ArrayRecorder(object):
         try:
             return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
         except:
-            raise(KeyError("unable to open object (Symbol table: Can't open object)"))
+            raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
 
     @debugging_tools.log_call(logger)
     def __call__(self, key, value):
