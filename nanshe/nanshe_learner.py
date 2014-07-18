@@ -153,7 +153,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
 
 
 @debugging_tools.log_call(logger)
-def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, **parameters):
+def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, debug = False, **parameters):
     #TODO: Move this function into a new module with its own command line interface.
     #TODO: Heavy refactoring required on this function.
 
@@ -355,7 +355,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
     # Overwrite the config file always
     with open(intermediate_config, "w") as fid:
-        json.dump(parameters, fid, indent = 4, separators = (",", " : "))
+        json.dump(dict(parameters.items() + {"debug" : debug}.items()), fid, indent = 4, separators = (",", " : "))
 
     # Construct an HDF5 file for each block
     input_filename_block = []
