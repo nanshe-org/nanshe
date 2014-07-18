@@ -7,6 +7,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 14, 2014 5:42:07PM$"
 
 import logging
+import traceback
 import functools
 import os
 
@@ -15,22 +16,24 @@ import os
 logging.basicConfig(level = logging.DEBUG)
 
 
-def log_call(logger, to_log_call = True, to_print_args = False):
+def log_call(logger, to_log_call = True, to_print_args = False, to_print_exception = False):
     """
         Takes a given logger and uses it to log entering and leaving the decorated callable.
         Intended to be used as a decorator that takes a few arguments.
 
         Args:
-            logger      (Logger):    Used for logging entry, exit and possibly arguments.
+            logger      (Logger):          Used for logging entry, exit and possibly arguments.
         
         Keyword Args:
-            to_log_call (bool):      Whether to log call or not. This overrides all other arguments. It will be stored
-                                     as a global variable on the function, which can be changed at runtime.
+            to_log_call (bool):            Whether to log call or not. This overrides all other arguments. It will be
+                                           stored as a global variable on the function, which can be changed at runtime.
 
-            to_print_args  (bool):   Whether to output the arguments and keyword arguments passed to the function.
-                                     This should not automatically be true as some arguments may not be printable or
-                                     may be expensive to print. Thus, it should be up to the developer to use their
-                                     own discretion. Further, we don't want to break their existing code.
+            to_print_args  (bool):         Whether to output the arguments and keyword arguments passed to the function.
+                                           This should not automatically be true as some arguments may not be printable
+                                           or may be expensive to print. Thus, it should be up to the developer to use
+                                           their own discretion. Further, we don't want to break their existing code.
+
+            to_print_exception  (bool):    Whether to print the traceback when an exception is raise.
         
         Returns:
             log_call_decorator (for wrapping)
@@ -76,7 +79,14 @@ def log_call(logger, to_log_call = True, to_print_args = False):
 
                 # We don't return immediately. Why? We want to know if this succeeded or failed.
                 # So, we want the log message below to print after the function runs.
-                result = callable(*args, **kwargs)
+                if log_call_callable_wrapped.to_print_exception:
+                    try:
+                        result = callable(*args, **kwargs)
+                    except:
+                        logger.error(traceback.format_exc())
+                        raise
+                else:
+                    result = callable(*args, **kwargs)
 
                 # Log that we have exited the callable in question.
                 logger.debug("Exiting \"" + callable.__name__ + "\".")
@@ -99,6 +109,10 @@ def log_call(logger, to_log_call = True, to_print_args = False):
         # Copy over the value of to_print_args for later use.
         # Must be defined afterwards as functools.wraps will not copy it over to the wrapped instance.
         log_call_callable_wrapped.to_print_args = to_print_args
+
+        # Copy over the value of to_print_exception for later use.
+        # Must be defined afterwards as functools.wraps will not copy it over to the wrapped instance.
+        log_call_callable_wrapped.to_print_exception = to_print_exception
 
         # The callable wrapped.
         return(log_call_callable_wrapped)
