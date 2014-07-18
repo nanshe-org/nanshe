@@ -397,6 +397,54 @@ def lagged_generators(new_iter, n = 2):
 
 
 @debugging_tools.log_call(logger)
+def lagged_generators_zipped(new_iter, n = 2, longest=False, fillvalue=None):
+    """
+        Creates a tuple of generators with each next generator one step ahead of the previous generator.
+
+        Args:
+            new_iter(iter):                 an iterator or something that can be turned into an iterator
+            n(int):                         number of generators to create as lagged
+            longest(bool):                  whether to continue zipping along the longest generator
+            fillvalue:                      value to use to fill generators shorter than the longest.
+
+        Returns:
+            generator object:               a generator object that will return values from each iterator.
+
+        Examples:
+            >>> lagged_generators_zipped(xrange(5), 1) #doctest: +ELLIPSIS
+            <itertools.izip object at 0x...>
+
+            >>> list(lagged_generators_zipped(xrange(5)))
+            [(0, 1), (1, 2), (2, 3), (3, 4)]
+
+            >>> list(lagged_generators_zipped(xrange(5), 1))
+            [(0,), (1,), (2,), (3,), (4,)]
+
+            >>> list(lagged_generators_zipped(xrange(5), 2))
+            [(0, 1), (1, 2), (2, 3), (3, 4)]
+
+            >>> list(lagged_generators_zipped(xrange(5), 3))
+            [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
+
+            >>> list(lagged_generators_zipped(xrange(5), longest=True))
+            [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]
+
+            >>> list(lagged_generators_zipped(xrange(5), 3, True))
+            [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
+    """
+
+    all_iters = lagged_generators(new_iter, n=n)
+
+    zipped_iters = None
+    if longest:
+        zipped_iters = itertools.izip_longest(*all_iters, fillvalue=fillvalue)
+    else:
+        zipped_iters = itertools.izip(*all_iters)
+
+    return(zipped_iters)
+
+
+@debugging_tools.log_call(logger)
 def filled_stringify_numbers(new_iter, include_numbers = False):
     """
         Like enumerate except it also returns a string with the number from enumeration with left padding by zero.
