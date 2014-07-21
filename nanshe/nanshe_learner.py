@@ -182,7 +182,9 @@ def generate_neurons(original_images, run_stage = "all", resume_logger = HDF5_re
         new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
                                                                  array_debug_recorder = array_debug_recorder,
                                                                  **parameters["postprocess_data"])
-        resume_logger("neurons", new_neurons)
+
+        if new_neurons.size:
+            resume_logger("neurons", new_neurons)
 
     if new_neurons.size == 0:
         logger.warning("No neurons were found in the data.")
