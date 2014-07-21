@@ -658,14 +658,14 @@ def get_neuron_dtype(new_image):
             list:                         a list that can be converted to a numpy.dtype using numpy.ndtype's constructor.
     """
 
-    neurons_dtype = [("mask", bool, new_image.shape),
-                     ("contour", bool, new_image.shape),
-                     ("image", new_image.dtype, new_image.shape),
-                     ("area", float),
-                     ("max_F", float),
-                     ("gaussian_mean", float, (new_image.ndim,)),
-                     ("gaussian_cov", float, (new_image.ndim, new_image.ndim,)),
-                     ("centroid", new_image.dtype, (new_image.ndim,))]
+    neurons_dtype = [("mask", numpy.bool8, new_image.shape),
+                     ("contour", numpy.bool8, new_image.shape),
+                     ("image", new_image.dtype.type, new_image.shape),
+                     ("area", numpy.float64),
+                     ("max_F", numpy.float64),
+                     ("gaussian_mean", numpy.float64, (new_image.ndim,)),
+                     ("gaussian_cov", numpy.float64, (new_image.ndim, new_image.ndim,)),
+                     ("centroid", new_image.dtype.type, (new_image.ndim,))]
 
     return(neurons_dtype)
 
