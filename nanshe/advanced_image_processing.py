@@ -1812,23 +1812,25 @@ def postprocess_data(new_dictionary, array_debug_recorder = HDF5_recorder.EmptyA
 
         logger.debug("Merged a set of neurons from frame " + str(i + 1) + " of " + str(len(new_dictionary)) + ".")
 
-    array_debug_recorder("unmerged_neuron_set", unmerged_neuron_set)
+    if unmerged_neuron_set.size:
+        array_debug_recorder("unmerged_neuron_set", unmerged_neuron_set)
 
-    array_debug_recorder("new_neurons_set", new_neurons_set)
+        unmerged_neuron_set_contours = unmerged_neuron_set["contour"].copy()
 
-    unmerged_neuron_set_contours = unmerged_neuron_set["contour"].copy()
+        unmerged_neuron_set_contours *= expanded_numpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
+        unmerged_neuron_set_contours = unmerged_neuron_set_contours.max(axis = 0)
 
-    unmerged_neuron_set_contours *= expanded_numpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
-    unmerged_neuron_set_contours = unmerged_neuron_set_contours.max(axis = 0)
+        array_debug_recorder("unmerged_neuron_set_contours", unmerged_neuron_set_contours)
 
-    array_debug_recorder("unmerged_neuron_set_contours", unmerged_neuron_set_contours)
+    if new_neurons_set.size:
+        array_debug_recorder("new_neurons_set", new_neurons_set)
 
-    new_neurons_set_contours = new_neurons_set["contour"].copy()
+        new_neurons_set_contours = new_neurons_set["contour"].copy()
 
-    new_neurons_set_contours *= expanded_numpy.expand_enumerate(new_neurons_set_contours, start = 1)
-    new_neurons_set_contours = new_neurons_set_contours.max(axis = 0)
+        new_neurons_set_contours *= expanded_numpy.expand_enumerate(new_neurons_set_contours, start = 1)
+        new_neurons_set_contours = new_neurons_set_contours.max(axis = 0)
 
-    array_debug_recorder("new_neurons_set_contours", new_neurons_set_contours)
+        array_debug_recorder("new_neurons_set_contours", new_neurons_set_contours)
 
 
     return(new_neurons_set)
