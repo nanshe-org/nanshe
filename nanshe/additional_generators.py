@@ -462,6 +462,9 @@ def filled_stringify_numbers(new_iter, include_numbers = False):
             >>> list(filled_stringify_numbers([]))
             []
 
+            >>> list(filled_stringify_numbers(xrange(5)))
+            ['0', '1', '2', '3', '4']
+
             >>> list(filled_stringify_numbers([5]))
             ['5']
 
@@ -473,26 +476,33 @@ def filled_stringify_numbers(new_iter, include_numbers = False):
 
             >>> list(filled_stringify_numbers([5, 7, 11], include_numbers = True))
             [(5, '05'), (7, '07'), (11, '11')]
+
+            >>> list(filled_stringify_numbers(iter([5, 7, 11]), include_numbers = True))
+            [(5, '05'), (7, '07'), (11, '11')]
     """
 
     new_list = new_iter
-    if not isinstance(new_list, list):
+    new_list_len = None
+    new_list_max = None
+    try:
+        new_list_len = len(new_list)
+        new_list_max = max(new_list) if new_list_len else None
+    except TypeError:
         new_list = list(new_list)
+        new_list_len = len(new_list)
+        new_list_max = max(new_list) if new_list_len else None
 
-    new_array = numpy.array(new_list)
-
-    if len(new_array):
-        new_array_max = new_array.max()
-        if new_array_max:
-            digits = int(numpy.floor(numpy.log10(new_array.max()))) + 1
+    if new_list_len:
+        if new_list_max:
+            digits = int(numpy.floor(numpy.log10(new_list_max))) + 1
         else:
             digits = 1
 
     if include_numbers:
-        for each in new_array:
+        for each in new_list:
             yield( (each, str(each).zfill(digits)) )
     else:
-        for each in new_array:
+        for each in new_list:
             yield( str(each).zfill(digits) )
 
 
