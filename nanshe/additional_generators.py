@@ -524,10 +524,16 @@ def filled_stringify_enumerate(new_iter):
             >>> list(filled_stringify_enumerate([]))
             []
 
+            >>> list(filled_stringify_enumerate(xrange(5)))
+            [(0, '0', 0), (1, '1', 1), (2, '2', 2), (3, '3', 3), (4, '4', 4)]
+
             >>> list(filled_stringify_enumerate([5]))
             [(0, '0', 5)]
 
             >>> list(filled_stringify_enumerate([5, 7]))
+            [(0, '0', 5), (1, '1', 7)]
+
+            >>> list(filled_stringify_enumerate(iter([5, 7])))
             [(0, '0', 5), (1, '1', 7)]
 
             >>> list(filled_stringify_enumerate(range(11)))
@@ -536,10 +542,13 @@ def filled_stringify_enumerate(new_iter):
     """
 
     new_list = new_iter
-    if not isinstance(new_list, list):
+    new_list_index_gen = None
+    try:
+        new_list_index_gen = xrange(len(new_list))
+    except TypeError:
         new_list = list(new_list)
+        new_list_index_gen = xrange(len(new_list))
 
-    new_list_index_gen = xrange(len(new_list))
     new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers = True)
 
     for (i, i_str), each in itertools.izip(new_list_index_gen_stringified, new_list):
