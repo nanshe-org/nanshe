@@ -647,7 +647,7 @@ def region_properties(new_label_image, *args, **kwargs):
 
 
 @debugging_tools.log_call(logger)
-def get_neuron_dtype(new_image):
+def get_neuron_dtype(shape, dtype):
     """
         Gets the type based on properties of an image.
 
@@ -658,20 +658,22 @@ def get_neuron_dtype(new_image):
             list:                         a list that can be converted to a numpy.dtype using numpy.ndtype's constructor.
     """
 
-    neurons_dtype = [("mask", numpy.bool8, new_image.shape),
-                     ("contour", numpy.bool8, new_image.shape),
-                     ("image", new_image.dtype.type, new_image.shape),
+    ndim = len(shape)
+
+    neurons_dtype = [("mask", numpy.bool8, shape),
+                     ("contour", numpy.bool8, shape),
+                     ("image", numpy.dtype(dtype).type, shape),
                      ("area", numpy.float64),
                      ("max_F", numpy.float64),
-                     ("gaussian_mean", numpy.float64, (new_image.ndim,)),
-                     ("gaussian_cov", numpy.float64, (new_image.ndim, new_image.ndim,)),
-                     ("centroid", new_image.dtype.type, (new_image.ndim,))]
+                     ("gaussian_mean", numpy.float64, (ndim,)),
+                     ("gaussian_cov", numpy.float64, (ndim, ndim,)),
+                     ("centroid", numpy.dtype(dtype).type, (ndim,))]
 
     return(neurons_dtype)
 
 
 @debugging_tools.log_call(logger)
-def get_empty_neuron(new_image):
+def get_empty_neuron(shape, dtype):
     """
         Gets a numpy structured array using the type from get_neuron_dtype that has no contents.
 
@@ -682,14 +684,14 @@ def get_empty_neuron(new_image):
             numpy.ndarray:                a numpy structured array with no contents and type from get_neuron_dtype.
     """
 
-    neurons_dtype = get_neuron_dtype(new_image)
+    neurons_dtype = get_neuron_dtype(shape=shape, dtype=dtype)
     neurons = numpy.zeros((0,), dtype = neurons_dtype)
 
     return(neurons)
 
 
 @debugging_tools.log_call(logger)
-def get_one_neuron(new_image):
+def get_one_neuron(shape, dtype):
     """
         Gets a numpy structured array using the type from get_neuron_dtype that has one neuron with all zeros.
 
@@ -700,7 +702,7 @@ def get_one_neuron(new_image):
             numpy.ndarray:                a numpy structured array with one neuron using type from get_neuron_dtype.
     """
 
-    neurons_dtype = get_neuron_dtype(new_image)
+    neurons_dtype = get_neuron_dtype(shape=shape, dtype=dtype)
     neurons = numpy.zeros((1,), dtype = neurons_dtype)
 
     return(neurons)
@@ -1225,7 +1227,7 @@ def wavelet_denoising(new_image,
             numpy.ndarray:                              a structured array of candidate neurons.
     """
 
-    neurons = get_empty_neuron(new_image)
+    neurons = get_empty_neuron(shape=new_image.shape, dtype=new_image.dtype)
 
     new_wavelet_image_denoised_segmentation = None
 
@@ -1796,8 +1798,8 @@ def postprocess_data(new_dictionary, array_debug_recorder = HDF5_recorder.EmptyA
             yield ( (i, each, HDF5_recorder.create_subgroup_HDF5_array_recorder(i_str, neuron_sets_array_debug_recorder)) )
 
     # Get all neurons for all images
-    new_neurons_set = get_empty_neuron(new_dictionary[0])
-    unmerged_neuron_set = get_empty_neuron(new_dictionary[0])
+    new_neurons_set = get_empty_neuron(shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype)
+    unmerged_neuron_set = get_empty_neuron(shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype)
     for i, each_new_dictionary_image, each_array_debug_recorder in array_debug_recorder_enumerator(new_dictionary):
         each_new_neuron_set = wavelet_denoising(each_new_dictionary_image,
                                                 array_debug_recorder = each_array_debug_recorder,
