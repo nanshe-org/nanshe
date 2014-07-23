@@ -19,7 +19,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def write_numpy_structured_array_to_HDF5(file_handle, internalPath, data, overwrite = False):
+def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overwrite = False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
         Also, will handle normal NumPy arrays and scalars, as well.

@@ -92,7 +92,7 @@ class HDF5ArrayRecorder(object):
         # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
         # Exception will be thrown if value is empty or if key already exists (as intended).
         if value.size:
-            HDF5_serializers.write_numpy_structured_array_to_HDF5(self.hdf5_handle,
+            HDF5_serializers.create_numpy_structured_array_in_HDF5(self.hdf5_handle,
                                                                   key,
                                                                   value,
                                                                   overwrite = self.overwrite_dataset)
