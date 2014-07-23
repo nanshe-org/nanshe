@@ -49,7 +49,7 @@ class EmptyArrayRecorder(object):
         if value.size:
             pass
         else:
-            raise Exception("The array provided for output by the name: \"" + key + "\" is empty.")
+            raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
 class HDF5ArrayRecorder(object):
@@ -98,7 +98,7 @@ class HDF5ArrayRecorder(object):
                                                                   overwrite = self.overwrite_dataset)
             self.hdf5_handle.file.flush()
         else:
-            raise Exception("The array provided for output by the name: \"" + key + "\" is empty.")
+            raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
 @debugging_tools.log_call(logger)
