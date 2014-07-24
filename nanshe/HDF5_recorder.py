@@ -7,6 +7,7 @@ __date__ = "$Jun 4, 2014 11:10:55 AM$"
 
 import copy
 
+import numpy
 import h5py
 
 import HDF5_serializers
@@ -125,6 +126,132 @@ class HDF5ArrayRecorder(object):
                 return()
             else:
                 raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
+
+
+@debugging_tools.log_class(logger)
+class HDF5EnumeratedArrayRecorder(object):
+    def __init__(self, hdf5_handle):
+        self.hdf5_handle = hdf5_handle
+
+        # Must be a logger if it already exists.
+        assert(self.hdf5_handle.attrs.get("is_logger", True))
+
+        self.hdf5_handle.attrs["is_logger"] = True
+        self.hdf5_handle.file.flush()
+
+        self.hdf5_index_data_handles = {"." : -1}
+        for each_index in self.hdf5_handle:
+            each_index = int(each_index)
+            self.hdf5_index_data_handles["."] = max(self.hdf5_index_data_handles["."], each_index)
+
+        if self.hdf5_index_data_handles["."] != -1:
+            hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
+            for each_key in hdf5_index_handle:
+                if hdf5_index_handle[each_key].attrs.get("is_logger", False):
+                    self.hdf5_index_data_handles[each_key] = None
+                else:
+                    self.hdf5_index_data_handles[each_key] = -1
+
+                    for each_index in hdf5_index_handle[each_key]:
+                        each_index = int(each_index)
+                        self.hdf5_index_data_handles[each_key] = max(self.hdf5_index_data_handles[each_key], each_index)
+
+    def __nonzero__(self):
+        return(True)
+
+    # For forward compatibility with Python 3
+    __bool__ = __nonzero__
+
+    def get(self, key, default=None):
+        value = default
+
+        try:
+            value = self.__getitem__(key)
+        except KeyError:
+            pass
+
+        return(value)
+
+    def __contains__(self, key):
+        return(key in self.hdf5_handle)
+
+    def __getitem__(self, key):
+        try:
+            root_i = self.hdf5_index_data_handles.get(".", -1)
+            key_i = self.hdf5_index_data_handles.get(key, -1)
+
+            assert(root_i != -1)
+            assert(key_i != -1)
+
+            root_i_str = str(root_i)
+
+            assert(isinstance(self.hdf5_handle[root_i_str], h5py.Group))
+            assert(isinstance(self.hdf5_handle[root_i_str][key], h5py.Group))
+
+            key_handle = self.hdf5_handle[root_i_str][key]
+            if key_i is None:
+                return(HDF5EnumeratedArrayRecorder(key_handle))
+            else:
+                key_i_str = str(key_i)
+                return(HDF5_serializers.read_numpy_structured_array_from_HDF5(key_handle, key_i_str))
+        except KeyError:
+            raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
+
+    def __setitem__(self, key, value):
+        if (key == "."):
+            if not ( (value is None) or (value is h5py.Group) ):
+                raise ValueError("Cannot store dataset in top level group ( " + self.hdf5_handle.name + " ).")
+
+            self.hdf5_index_data_handles = { "." : self.hdf5_index_data_handles["."] + 1 }
+            self.hdf5_handle.create_group(str(self.hdf5_index_data_handles["."]))
+            self.hdf5_handle.file.flush()
+        else:
+            hdf5_index_handle = None
+            try:
+                hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
+            except KeyError:
+                if self.hdf5_index_data_handles["."] == -1:
+                    self.hdf5_index_data_handles = { "." : self.hdf5_index_data_handles["."] + 1 }
+
+                self.hdf5_handle.create_group(str(self.hdf5_index_data_handles["."]))
+                self.hdf5_handle.file.flush()
+
+                hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
+
+            if (value is None) or (value is h5py.Group):
+                # Create a group if it doesn't already exist.
+                hdf5_index_handle.require_group(key)
+                hdf5_index_handle.attrs["is_logger"] = True
+                hdf5_index_handle.file.flush()
+                self.hdf5_index_data_handles[key] = None
+            else:
+                # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
+                # Exception will be thrown if value is empty or if key already exists (as intended).
+
+                # Index into a NumPy structured array can return a void type even though it is a valid array, which can
+                # be stored. So, we must check.
+                try:
+                    assert(isinstance(value, numpy.ndarray))
+                except AssertionError:
+                    if not value.dtype.names:
+                        raise
+                if value.size:
+                    # If so, check to see if it exists.
+                    if key not in self.hdf5_index_data_handles:
+                        hdf5_index_handle.create_group(key)
+                        hdf5_index_handle[key].attrs["is_logger"] = False
+                        hdf5_index_handle.file.flush()
+                        self.hdf5_index_data_handles[key] = -1
+
+                    self.hdf5_index_data_handles[key] += 1
+
+                    HDF5_serializers.create_numpy_structured_array_in_HDF5(hdf5_index_handle[key],
+                                                                           str(self.hdf5_index_data_handles[key]),
+                                                                           value)
+
+                    self.hdf5_handle.file.flush()
+                else:
+                    raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
 @debugging_tools.log_call(logger)
