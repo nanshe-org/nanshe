@@ -236,3 +236,41 @@ def class_decorate_all_methods(*decorators):
             return(super(MetaAllMethodsDecorator, meta).__new__(meta, name, bases, dct))
 
     return(metaclass(MetaAllMethodsDecorator))
+
+
+def class_decorate_methods(**method_decorators):
+    """
+        Returns a decorator that decorates a class such that specified methods are decorated by the decorators provided.
+
+        Args:
+            **method_decorators(tuple):     method names with a single decorator or a list of decorators.
+
+        Returns:
+            (decorator):                    a decorator for the class.
+
+    """
+
+    class MetaMethodsDecorator(type):
+        """
+            Metaclass, which decorates some methods based on the keys given. Uses the decorator(s) provided for each
+            method to decorator in order.
+        """
+
+        def __new__(meta, name, bases, dct):
+            for _k, _v in dct.items():
+                if isinstance(_v, types.FunctionType):
+                    _dl = method_decorators.get(_k)
+                    if (_dl is not None):
+                        try:
+                            iter(_dl)
+                        except TypeError:
+                            _dl = [_dl]
+
+                        for _d in _dl:
+                           _v = _d(_v)
+
+                dct[_k] = _v
+
+            return(super(MetaMethodsDecorator, meta).__new__(meta, name, bases, dct))
+
+    return(metaclass(MetaMethodsDecorator))
