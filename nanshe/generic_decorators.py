@@ -178,3 +178,28 @@ def metaclasses(*metas):
         return(new_cls)
 
     return(metaclasses_wrapper)
+
+
+def class_static_variables(**kwargs):
+    """
+        Returns a decorator that decorates a class such that it has the given static variables set.
+
+        Args:
+            **kwargs(tuple):     keyword args will be set to the value provided.
+
+        Returns:
+            (decorator):         a decorator for the class.
+
+    """
+
+    class MetaStaticVariables(type):
+        """
+            Metaclass, which adds static variable with the given value to a class.
+        """
+
+        def __new__(meta, name, bases, dct):
+            dct.update(kwargs)
+
+            return(super(MetaStaticVariables, meta).__new__(meta, name, bases, dct))
+
+    return(metaclass(MetaStaticVariables))
