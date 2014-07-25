@@ -89,7 +89,7 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
     data_object = file_handle[internalPath]
     data_ref = data_object.value
 
-    if isinstance(data_ref, numpy.ndarray):
+    if isinstance(data_ref, (numpy.number, numpy.ndarray,)):
         data = data_object.value
     elif isinstance(data_ref, h5py.Reference):
         if ("filename" in data_object.attrs) and (data_object.attrs["filename"] != file_handle.filename):
