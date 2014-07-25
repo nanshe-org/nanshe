@@ -87,8 +87,6 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
     data = None
 
     data_object = file_handle[internalPath]
-    # data_file_handle may be different than file_handle if data_object is an ExternalLink.
-    data_file_handle = data_object.file
     data_ref = data_object.value
 
     if isinstance(data_ref, numpy.ndarray):
@@ -102,13 +100,9 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
                     data = external_file_handle[data_ref].value
         else:
             if isinstance(data_ref, h5py.RegionReference):
-                    data = data_file_handle[data_ref][data_ref]
+                data = file_handle[data_ref][data_ref]
             else:
-                data = data_file_handle[data_ref].value
-
-    # If data_object was an ExternalLink, then this is another file and it must be closed.
-    if data_file_handle != file_handle:
-        data_file_handle.close()
+                data = file_handle[data_ref].value
 
     if close_file_handle:
         file_handle.close()
