@@ -91,3 +91,53 @@ def static_variables(**kwargs):
         return(callable)
 
     return(static_variables_tie)
+
+
+def metaclass(meta):
+    """
+        Returns a decorator that decorates a class such that the given metaclass is applied.
+
+        Note:
+            Decorator will add the __metaclass__ attribute so the last metaclass applied is known.
+            Also, decorator will add the __wrapped__ attribute so that the unwrapped class can be retrieved.
+
+        Args:
+            meta(metaclass):     metaclass to apply to a given class.
+
+        Returns:
+            (decorator):         a decorator for the class.
+
+    """
+
+    def metaclass_wrapper(cls):
+        """
+            Returns a decorated class such that the given metaclass is applied.
+
+            Note:
+                Adds the __metaclass__ attribute so the last metaclass used is known.
+                Also, adds the __wrapped__ attribute so that the unwrapped class can be retrieved.
+
+            Args:
+                cls(class):          class to decorate.
+
+            Returns:
+                (class):             the decorated class.
+
+        """
+
+        __name = str(cls.__name__)
+        __bases = tuple(cls.__bases__)
+        __dict = dict(cls.__dict__)
+
+        __dict.pop("__dict__", None)
+        __dict.pop("__weakref__", None)
+
+        for each_slot in __dict.get("__slots__", tuple()):
+            __dict.pop(each_slot, None)
+
+        __dict["__metaclass__"] = meta
+        __dict["__wrapped__"] = cls
+
+        return(meta(__name, __bases, __dict))
+
+    return(metaclass_wrapper)
