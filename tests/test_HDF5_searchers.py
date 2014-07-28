@@ -82,6 +82,14 @@ class TestHDF5Searchers(object):
         for _1, _2 in itertools.izip(TestHDF5Searchers.get_matching_grouped_paths_gen(), TestHDF5Searchers.match_path_groups_gen(all_matched)):
             assert(_1 == _2)
 
+    def test_get_matching_grouped_paths(self):
+        all_matched = nanshe.HDF5_searchers.get_matching_grouped_paths(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
+
+        assert(len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
+
+        for _1, _2 in itertools.izip(TestHDF5Searchers.get_matching_grouped_paths_gen(), all_matched):
+            assert(_1 == _2)
+
     def teardown(self):
         self.temp_hdf5_file.close()
 
