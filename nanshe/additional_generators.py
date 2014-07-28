@@ -646,11 +646,37 @@ def reformat_slices(slices, lengths = None):
 
         Returns:
             (slice):                     a tuple of slices with all default values filled if possible.
+
+        Examples:
+
+            >>> reformat_slices(slice(None))
+            (slice(0, None, 1),)
+
+            >>> reformat_slices((slice(None),))
+            (slice(0, None, 1),)
+
+            >>> reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)))
+            (slice(0, None, 1), slice(3, None, 1), slice(0, 5, 1), slice(0, None, 2))
+
+            >>> reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))
+            (slice(0, 10, 1), slice(3, 13, 1), slice(0, 5, 1), slice(0, 20, 2))
     """
+
+    try:
+        len(slices)
+    except TypeError:
+        slices = (slices,)
 
     new_lengths = lengths
     if new_lengths is None:
         new_lengths = [None] * len(slices)
+
+    try:
+        len(new_lengths)
+    except TypeError:
+        new_lengths = (new_lengths,)
+
+    assert(len(slices) == len(new_lengths))
 
     new_slices = list(slices)
     for i, each_length in enumerate(new_lengths):
@@ -685,9 +711,9 @@ def len_slice(a_slice, a_length = None):
             (slice):               a new slice with as many values filled in as possible.
 
         Examples:
-            >>> len_slice(slice(None)) #doctest: +ELLIPSIS +IGNORE_EXCEPTION_DETAIL
+            >>> len_slice(slice(None)) #doctest: +IGNORE_EXCEPTION_DETAIL
             Traceback (most recent call last):
-            UnknownSliceLengthException: ...
+            UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).
 
             >>> len_slice(slice(None), 10)
             10
@@ -746,6 +772,14 @@ def len_slices(slices, lengths = None):
 
         Returns:
             (slice):                     a tuple of slices with all default values filled if possible.
+
+        Examples:
+            >>> len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2))) #doctest: +IGNORE_EXCEPTION_DETAIL
+            Traceback (most recent call last):
+            UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).
+
+            >>> len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))
+            (10, 10, 5, 10)
     """
 
     new_slices = reformat_slices(slices, lengths)
