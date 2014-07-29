@@ -846,6 +846,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     return(local_maxima_props)
 
 
+@debugging_tools.log_class(logger)
 class ExtendedRegionProps(object):
     """
         Using the results of extended_region_local_maxima_properties with given intensity and label images, the
@@ -859,7 +860,6 @@ class ExtendedRegionProps(object):
             Adding local maxima is not allowed for and wouldn't make sense given its dependency on the intensity image.
     """
 
-    @debugging_tools.log_call(logger)
     def __init__(self, new_intensity_image,
                  new_label_image,
                  array_debug_recorder = HDF5_recorder.EmptyArrayRecorder(),
@@ -944,7 +944,6 @@ class ExtendedRegionProps(object):
         logger.debug("Refinined properties for local maxima.")
 
 
-    @debugging_tools.log_call(logger)
     def get_local_max_index_array(self):
         """
             Gets a numpy style index array from the local maxima present.
@@ -956,7 +955,6 @@ class ExtendedRegionProps(object):
         return(tuple(self.props["local_max"].T))
 
 
-    @debugging_tools.log_call(logger)
     def get_local_max_mask(self):
         """
             Gets a bool numpy array that is True at the locations of the local maxima.
@@ -974,7 +972,6 @@ class ExtendedRegionProps(object):
         return(new_local_max_mask)
 
 
-    @debugging_tools.log_call(logger)
     def get_local_max_label_image(self):
         """
             Gets an int numpy array that contains the labels of the local maxima.
@@ -993,7 +990,6 @@ class ExtendedRegionProps(object):
         return(new_local_max_label_image)
 
 
-    @debugging_tools.log_call(logger)
     def remove_prop_mask(self, remove_prop_indices_mask):
         """
             Removes the local maxima by the mask over their indices (only False elements will be kept).
@@ -1034,7 +1030,6 @@ class ExtendedRegionProps(object):
             self.renumber_labels()
 
 
-    @debugging_tools.log_call(logger)
     def remove_prop_indices(self, *i):
         """
             Removes the local maxima of the indices listed (like remove_prop_mask except with indices).
@@ -1054,7 +1049,6 @@ class ExtendedRegionProps(object):
 
         self.remove_prop_mask(remove_prop_indices_mask)
 
-    @debugging_tools.log_call(logger)
     def renumber_labels(self):
         """
             An internal method to be called after a label is completely removed from the local maxima.

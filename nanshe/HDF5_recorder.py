@@ -19,31 +19,26 @@ import debugging_tools
 logger = debugging_tools.logging.getLogger(__name__)
 
 
+@debugging_tools.log_class(logger)
 class EmptyArrayRecorder(object):
-    @debugging_tools.log_call(logger)
     def __init__(self):
         pass
 
-    @debugging_tools.log_call(logger)
     def __nonzero__(self):
         return(False)
 
     # For forward compatibility with Python 3
     __bool__ = __nonzero__
 
-    @debugging_tools.log_call(logger)
     def get(self, key, default=None):
         return(default)
 
-    @debugging_tools.log_call(logger)
     def __contains__(self, key):
         return(False)
 
-    @debugging_tools.log_call(logger)
     def __getitem__(self, key):
         raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + ")"))
 
-    @debugging_tools.log_call(logger)
     def __call__(self, key, value):
         # Exception will be thrown if value is empty or if key already exists (as intended).
         if value.size:
@@ -52,20 +47,18 @@ class EmptyArrayRecorder(object):
             raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
+@debugging_tools.log_class(logger)
 class HDF5ArrayRecorder(object):
-    @debugging_tools.log_call(logger)
     def __init__(self, hdf5_handle, overwrite_dataset = False):
         self.hdf5_handle = hdf5_handle
         self.overwrite_dataset = overwrite_dataset
 
-    @debugging_tools.log_call(logger)
     def __nonzero__(self):
         return(True)
 
     # For forward compatibility with Python 3
     __bool__ = __nonzero__
 
-    @debugging_tools.log_call(logger)
     def get(self, key, default=None):
         value = default
 
@@ -76,18 +69,15 @@ class HDF5ArrayRecorder(object):
 
         return(value)
 
-    @debugging_tools.log_call(logger)
     def __contains__(self, key):
         return(key in self.hdf5_handle)
 
-    @debugging_tools.log_call(logger)
     def __getitem__(self, key):
         try:
             return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
         except:
             raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
 
-    @debugging_tools.log_call(logger)
     def __call__(self, key, value):
         # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
         # Exception will be thrown if value is empty or if key already exists (as intended).
