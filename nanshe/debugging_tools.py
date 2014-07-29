@@ -113,3 +113,32 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_excepti
 
     # The arguments passed to the decorator for easy access.
     return(log_call_decorator)
+
+
+def log_class(logger, to_log_call = True, to_print_args = False, to_print_exception = False):
+    """
+        Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
+        Intended to be used as a decorator that takes a few arguments.
+
+        Args:
+            logger      (Logger):          Used for logging entry, exit and possibly arguments.
+
+        Keyword Args:
+            to_log_call (bool):            Whether to log call or not. This overrides all other arguments. It will be
+                                           stored as a global variable on the methods, which can be changed at runtime.
+
+            to_print_args  (bool):         Whether to output the arguments and keyword arguments passed to the function.
+                                           This should not automatically be true as some arguments may not be printable
+                                           or may be expensive to print. Thus, it should be up to the developer to use
+                                           their own discretion. Further, we don't want to break their existing code. It
+                                           will be stored as a global variable on the methods, which can be changed at
+                                           runtime.
+
+            to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored
+                                           as a global variable on the methods, which can be changed at runtime.
+
+        Returns:
+            log_call_decorator (for wrapping)
+    """
+
+    return(generic_decorators.class_decorate_all_methods(log_call(logger, to_log_call, to_print_args, to_print_exception)))
