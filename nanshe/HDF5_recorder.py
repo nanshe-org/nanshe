@@ -420,3 +420,139 @@ def static_array_debug_recorder(callable):
     callable = static_subgrouping_array_recorders(array_debug_recorder = EmptyArrayRecorder())(callable)
 
     return(callable)
+
+
+@debugging_tools.log_call(logger)
+def class_static_subgrouping_array_recorders(*args, **kwargs):
+    """
+        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.
+
+        Args:
+            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).
+
+        Keyword Args:
+            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.
+
+        Returns:
+            (callable):                                 A decorator that adds the static variable, recorders, to the
+                                                        given function.
+    """
+
+    @debugging_tools.log_call(logger)
+    def class_static_subgrouping_array_recorders_tie(a_class):
+        """
+            Creates a decorator that adds a static variable recorders to the function it decorates.
+
+            Args:
+                a_class(class):     All variables to be named (set to EmptyArrayRecorder()).
+
+            Returns:
+                (class):             A function with the static variable, recorders, added.
+        """
+
+        class SubgroupingRecorders(object):
+            """
+                Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
+                a_class on assignment.
+            """
+            def __init__(self, *args, **kwargs):
+                """
+                    Contains ArrayRecorders that write to a subgroup of the same name as the a_class.
+
+                    Args:
+                        args(tuple of strs):                        All variables to be named (set to
+                                                                    EmptyArrayRecorder()).
+
+                    Keyword Args:
+                        kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
+                                                                    type ArrayRecorder.
+                """
+
+                for _k in args:
+                    object.__setattr__(self, _k, None)
+
+                for _k, _v in kwargs.items():
+                    object.__setattr__(self, _k, _v)
+
+            def __getattr__(self, _k):
+                if _k != "__dict__":
+                    return(self.__dict__[_k])
+
+            def __setattr__(self, _k, _v):
+                if _k != "__dict__":
+                    if _v is None:
+                        self.__dict__[_k] = EmptyArrayRecorder()
+                    else:
+                        _v[a_class.__name__] = None
+                        try:
+                            self.__dict__[_k] = _v[a_class.__name__]
+                        except KeyError:
+                            if isinstance(_v, EmptyArrayRecorder):
+                                self.__dict__[_k] = EmptyArrayRecorder()
+                            else:
+                                raise
+
+            def __delattr__(self, _k):
+                if _k != "__dict__":
+                    del self.__dict__[_k]
+
+        a_class = generic_decorators.class_static_variables(recorders = SubgroupingRecorders(*args, **kwargs))(a_class)
+
+        def class_static_subgrouping_array_recorders__init__decorator(callable):
+            @generic_decorators.wraps(callable)
+            def class_static_subgrouping_array_recorders__init__wrapper(self, *args, **kwargs):
+                # Force all recorders to ensure their output Group exists.
+                # All of them actually make the directory.
+                # However, HDF5EnumeratedArrayRecorder needs a clue as to
+                # when it should switch to a new one as it will keep different
+                # runs separate.
+
+                self.recorders = SubgroupingRecorders()
+                for _k in a_class.recorders.__dict__:
+                    self.recorders.__dict__[_k] = a_class.recorders.__dict__[_k]
+
+                return(callable(self, *args, **kwargs))
+
+            return(class_static_subgrouping_array_recorders__init__wrapper)
+
+        def class_static_subgrouping_array_recorders_decorator(callable):
+            callable = static_subgrouping_array_recorders()(callable)
+
+            @generic_decorators.wraps(callable)
+            def class_static_subgrouping_array_recorders_wrapper(self, *args, **kwargs):
+                # Force all recorders to ensure their output Group exists.
+                # All of them actually make the directory.
+                # However, HDF5EnumeratedArrayRecorder needs a clue as to
+                # when it should switch to a new one as it will keep different
+                # runs separate.
+                callable.recorders.__dict__ = dict()
+                for _k in self.recorders.__dict__:
+                    # setattr(callable.recorders, _k, self.recorders.__dict__[_k][callable.__name__)])
+                    setattr(callable.recorders, _k, getattr(self.recorders, _k))
+                    # callable.recorders.__dict__[_k]["."] = None
+
+                return(callable(self, *args, **kwargs))
+
+            return(class_static_subgrouping_array_recorders_wrapper)
+
+        # Wraps __init__ only
+        a_class = generic_decorators.class_decorate_methods(__init__ = class_static_subgrouping_array_recorders__init__decorator)(a_class)
+
+        # Wrap everything
+        a_class = generic_decorators.class_decorate_all_methods(class_static_subgrouping_array_recorders_decorator)(a_class)
+
+
+        # Must be done last.
+        # Precedes the constructor to ensure a new working directory is created.
+        class MetaSubgroupingRecorders(type):
+            def __call__(self, *args, **kwargs):
+                for _k in self.recorders.__dict__:
+                    self.recorders.__dict__[_k]["."] = None
+
+                return(super(MetaSubgroupingRecorders, self).__call__(*args, **kwargs))
+
+        a_class = generic_decorators.metaclass(MetaSubgroupingRecorders)(a_class)
+
+        return(a_class)
+
+    return(class_static_subgrouping_array_recorders_tie)
