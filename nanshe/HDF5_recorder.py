@@ -22,7 +22,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 @debugging_tools.log_class(logger)
 class EmptyArrayRecorder(object):
     def __init__(self):
-        pass
+        self.__recorders = set()
 
     def __nonzero__(self):
         return(False)
@@ -31,20 +31,33 @@ class EmptyArrayRecorder(object):
     __bool__ = __nonzero__
 
     def get(self, key, default=None):
-        return(default)
+        value = default
+
+        try:
+            value = self.__getitem__(key)
+        except KeyError:
+            pass
+
+        return(value)
 
     def __contains__(self, key):
-        return(False)
+        return(key in self.__recorders)
 
     def __getitem__(self, key):
-        raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + ")"))
-
-    def __call__(self, key, value):
-        # Exception will be thrown if value is empty or if key already exists (as intended).
-        if value.size:
-            pass
+        if key in self.__recorders:
+            return(EmptyArrayRecorder())
         else:
-            raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
+            raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + ")"))
+
+    def __setitem__(self, key, value):
+        # Exception will be thrown if value is empty or if key already exists (as intended).
+        if (value is None) or (value is h5py.Group):
+            self.__recorders.add(key)
+        else:
+            if value.size:
+                pass
+            else:
+                raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
 @debugging_tools.log_class(logger)
