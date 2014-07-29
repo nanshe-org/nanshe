@@ -141,3 +141,40 @@ def metaclass(meta):
         return(meta(__name, __bases, __dict))
 
     return(metaclass_wrapper)
+
+
+def metaclasses(*metas):
+    """
+        Returns a decorator that decorates a class such that the given metaclasses are applied.
+
+        Note:
+            Shorthand for repeated application of metaclass.
+
+        Args:
+            *metas(metaclasses):     metaclasses to apply to a given class.
+
+        Returns:
+            (decorator):             a decorator for the class.
+
+    """
+
+    def metaclasses_wrapper(cls):
+        """
+            Returns a decorated class such that the given metaclasses are applied.
+
+            Args:
+                cls(class):          class to decorate.
+
+            Returns:
+                (class):             the decorated class.
+
+        """
+
+        new_cls = cls
+
+        for each_meta in metas:
+            new_cls = metaclass(each_meta)(new_cls)
+
+        return(new_cls)
+
+    return(metaclasses_wrapper)
