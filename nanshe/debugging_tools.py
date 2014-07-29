@@ -10,10 +10,11 @@ import logging
 import traceback
 import functools
 import os
+import sys
 
 
 # Nothing fancy. Just the basic logging unless otherwise specified, in which case this does nothing.
-logging.basicConfig(level = logging.DEBUG)
+logging.basicConfig(level = logging.DEBUG, stream=sys.stderr)
 
 
 def log_call(logger, to_log_call = True, to_print_args = False, to_print_exception = False):
