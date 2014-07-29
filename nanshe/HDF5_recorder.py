@@ -11,6 +11,7 @@ import numpy
 import h5py
 
 import HDF5_serializers
+import generic_decorators
 
 # Need in order to have logging information no matter what.
 import debugging_tools
@@ -310,3 +311,93 @@ def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, ov
 
 
 @debugging_tools.log_call(logger)
+def static_subgrouping_array_recorders(*args, **kwargs):
+    """
+        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.
+
+        Args:
+            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).
+
+        Keyword Args:
+            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.
+
+        Returns:
+            (callable):                                 A decorator that adds the static variable, recorders, to the
+                                                        given function.
+    """
+
+    @debugging_tools.log_call(logger)
+    def static_subgrouping_array_recorders_tie(callable):
+        """
+            Creates a decorator that adds a static variable recorders to the function it decorates.
+
+            Args:
+                callable(callable):     All variables to be named (set to EmptyArrayRecorder()).
+
+            Returns:
+                (callable):             A function with the static variable, recorders, added.
+        """
+
+        class SubgroupingRecorders(object):
+            """
+                Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
+                callable on assignment.
+            """
+            def __init__(self, *args, **kwargs):
+                """
+                    Contains ArrayRecorders that write to a subgroup of the same name as the callable.
+
+                    Args:
+                        args(tuple of strs):                        All variables to be named (set to
+                                                                    EmptyArrayRecorder()).
+
+                    Keyword Args:
+                        kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
+                                                                    type ArrayRecorder.
+                """
+
+                for _k in args:
+                    object.__setattr__(self, _k, None)
+
+                for _k, _v in kwargs.items():
+                    object.__setattr__(self, _k, _v)
+
+            def __getattr__(self, _k):
+                if _k != "__dict__":
+                    return(self.__dict__[_k])
+
+            def __setattr__(self, _k, _v):
+                if _k != "__dict__":
+                    if _v is None:
+                        self.__dict__[_k] = EmptyArrayRecorder()
+                    else:
+                        _v[callable.__name__] = None
+                        try:
+                            self.__dict__[_k] = _v[callable.__name__]
+                        except KeyError:
+                            if isinstance(_v, EmptyArrayRecorder):
+                                self.__dict__[_k] = EmptyArrayRecorder()
+                            else:
+                                raise
+
+            def __delattr__(self, _k):
+                if _k != "__dict__":
+                    del self.__dict__[_k]
+
+        callable = generic_decorators.static_variables(recorders = SubgroupingRecorders(*args, **kwargs))(callable)
+
+        @generic_decorators.wraps(callable)
+        def static_subgrouping_array_recorders_wrapper(*args, **kwargs):
+            # Force all recorders to ensure their output Group exists.
+            # All of them actually make the directory.
+            # However, HDF5EnumeratedArrayRecorder needs a clue as to
+            # when it should switch to a new one as it will keep different
+            # runs separate.
+            for _k in callable.recorders.__dict__:
+                callable.recorders.__dict__[_k]["."] = None
+
+            return(callable(*args, **kwargs))
+
+        return(static_subgrouping_array_recorders_wrapper)
+
+    return(static_subgrouping_array_recorders_tie)
