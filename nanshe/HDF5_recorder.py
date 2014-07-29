@@ -128,22 +128,25 @@ class HDF5ArrayRecorder(object):
 
 
 @debugging_tools.log_call(logger)
-def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, overwrite_group = False, allow_overwrite_dataset = False):
+def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, overwrite_group = False, recorder_constructor = HDF5ArrayRecorder, **kwargs):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to a group in an HDF5 file.
         
         Args:
-            hdf5_handle:        The HDF5 file group to place the debug contents into.
+            hdf5_handle:            The HDF5 file group to place the debug contents into.
 
-            group_name:         The name of the group within hdf5_handle to save the contents to.
-                                (If set to the empty string, data will be saved to hdf5_handle directly)
+            group_name:             The name of the group within hdf5_handle to save the contents to.
+                                    (If set to the empty string, data will be saved to hdf5_handle directly)
 
-            enable:             Whether to generate a real logger or a fake one.
-            
-            debug:              Whether to actually write the debug contents (True by default).
-            
-            overwrite_group:    Whether to replace the debug group if it already exists.
+            enable:                 Whether to generate a real logger or a fake one.
+
+            overwrite_group:        Whether to overwrite the group where data is stored.
+
+            recorder_constructor:   Type of recorder to use if enable is True.
+
+            **kwargs:               Other arguments to pass through to the recorder_constructor (won't pass through if
+                                    enable is false).
 
         Returns:
             A function, which will take a given array name and value and write them out.
@@ -174,7 +177,7 @@ def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, ov
 
             hdf5_recording_handle = hdf5_handle[group_name]
 
-        return(HDF5ArrayRecorder(hdf5_recording_handle, overwrite_dataset = allow_overwrite_dataset))
+        return(recorder_constructor(hdf5_recording_handle, **kwargs))
     else:
         return(EmptyArrayRecorder())
 
