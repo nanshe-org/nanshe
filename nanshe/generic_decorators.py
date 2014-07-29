@@ -59,3 +59,35 @@ def wraps(wrapped,
     """
 
     return(functools.partial(update_wrapper, wrapped = wrapped, assigned = assigned, updated = updated))
+
+
+def static_variables(**kwargs):
+    """
+        Returns a decorator that decorates a callable such that it has the given static variables set.
+
+        Args:
+            *kwargs(tuple):     keyword args will be set to the value provided.
+
+        Returns:
+            (decorator):        a decorator for the callable.
+
+    """
+
+    def static_variables_tie(callable):
+        """
+            Decorates a function such that it has the given static variables set.
+
+            Args:
+                callable(callable):       the callable to decorate.
+
+            Returns:
+                (callable):               the callable returned.
+
+        """
+
+        for each_kwd, each_val in kwargs.items():
+            setattr(callable, each_kwd, each_val)
+
+        return(callable)
+
+    return(static_variables_tie)
