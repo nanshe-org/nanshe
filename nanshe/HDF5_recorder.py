@@ -62,9 +62,9 @@ class EmptyArrayRecorder(object):
 
 @debugging_tools.log_class(logger)
 class HDF5ArrayRecorder(object):
-    def __init__(self, hdf5_handle, overwrite_dataset = False):
+    def __init__(self, hdf5_handle, overwrite = False):
         self.hdf5_handle = hdf5_handle
-        self.overwrite_dataset = overwrite_dataset
+        self.overwrite = overwrite
 
     def __nonzero__(self):
         return(True)
@@ -87,21 +87,44 @@ class HDF5ArrayRecorder(object):
 
     def __getitem__(self, key):
         try:
-            return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
+            if isinstance(self.hdf5_handle[key], h5py.Group):
+                return(HDF5ArrayRecorder(self.hdf5_handle[key], overwrite = self.overwrite))
+            else:
+                return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
         except:
             raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
 
-    def __call__(self, key, value):
-        # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
-        # Exception will be thrown if value is empty or if key already exists (as intended).
-        if value.size:
-            HDF5_serializers.create_numpy_structured_array_in_HDF5(self.hdf5_handle,
-                                                                  key,
-                                                                  value,
-                                                                  overwrite = self.overwrite_dataset)
-            self.hdf5_handle.file.flush()
+    def __setitem__(self, key, value):
+        if (value is None) or (value is h5py.Group):
+            # Check to see if the output must go somewhere special.
+            if key:
+                # If so, check to see if it exists.
+                if key in self.hdf5_handle:
+                    # If it does and we want to overwrite it, do so.
+                    if self.overwrite:
+                        del self.hdf5_handle[key]
+
+                        self.hdf5_handle.create_group(key)
+
+                        self.hdf5_handle.file.flush()
+                else:
+                    # Create it if it doesn't, exist.
+                    self.hdf5_handle.create_group(key)
+
+                    self.hdf5_handle.file.flush()
         else:
-            raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
+            # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
+            # Exception will be thrown if value is empty or if key already exists (as intended).
+            if value.size:
+                HDF5_serializers.create_numpy_structured_array_in_HDF5(self.hdf5_handle,
+                                                                      key,
+                                                                      value,
+                                                                      overwrite = self.overwrite)
+                self.hdf5_handle.file.flush()
+
+                return()
+            else:
+                raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
 @debugging_tools.log_call(logger)
