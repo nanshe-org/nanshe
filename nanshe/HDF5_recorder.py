@@ -401,3 +401,22 @@ def static_subgrouping_array_recorders(*args, **kwargs):
         return(static_subgrouping_array_recorders_wrapper)
 
     return(static_subgrouping_array_recorders_tie)
+
+
+@debugging_tools.log_call(logger)
+def static_array_debug_recorder(callable):
+    """
+        Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the
+        function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on
+        assignment it automatically creates a subgroup with the same name as the function.
+
+        Args:
+            callable(callable):    All variables to be named (set to EmptyArrayRecorder()).
+
+        Returns:
+            (callable):            A decorator that adds the static variable array_debug_recorder to the given function.
+    """
+
+    callable = static_subgrouping_array_recorders(array_debug_recorder = EmptyArrayRecorder())(callable)
+
+    return(callable)
