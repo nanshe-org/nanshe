@@ -65,7 +65,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
     parameters_filename_details.extension = parameters_filename_details.extension.lower()
     parameters_filename_details.extension = parameters_filename_details.extension.lstrip(os.extsep)
     if ( parameters_filename_details.extension not in ["json"] ):
-        raise Exception("Parameter file with filename: \"" + parameters_filename + "\"" + " provided with an unknown file extension: \"" + parameters_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+        raise Exception("Parameter file with filename: \"" + parameters_filename + "\"" + " provided with an unknown file extension: \"" + parameters_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse the parameters from the json file.
     parameters = read_config.read_parameters(parameters_filename)
@@ -97,7 +97,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
     input_filename_details.extension = input_filename_details.extension.lower()
     input_filename_details.extension = input_filename_details.extension.lstrip(os.extsep)
     if ( input_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse output filename and validate that the name is acceptable
     output_filename_details = lazyflow.utility.pathHelpers.PathComponents(output_filename)
@@ -105,7 +105,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
     output_filename_details.extension = output_filename_details.extension.lower()
     output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
     if ( output_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Where the original images are.
     input_dataset_name = input_filename_details.internalPath
@@ -174,7 +174,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     input_filename_details.extension = input_filename_details.extension.lower()
     input_filename_details.extension = input_filename_details.extension.lstrip(os.extsep)
     if ( input_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse output filename and validate that the name is acceptable
     output_filename_details = lazyflow.utility.pathHelpers.PathComponents(output_filename)
@@ -182,7 +182,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     output_filename_details.extension = output_filename_details.extension.lower()
     output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
     if ( output_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Where the original images are.
     input_dataset_name = input_filename_details.internalPath
@@ -207,7 +207,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     input_filename_details.extension = input_filename_details.extension.lower()
     input_filename_details.extension = input_filename_details.extension.lstrip(os.extsep)
     if ( input_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse output filename and validate that the name is acceptable
     output_filename_details = lazyflow.utility.pathHelpers.PathComponents(output_filename)
@@ -215,7 +215,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     output_filename_details.extension = output_filename_details.extension.lower()
     output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
     if ( output_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through HDF5_importer first before proceeding.")
+        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Get the amount of the border to slice
     half_border_shape_array = None
