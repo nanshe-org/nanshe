@@ -5,9 +5,10 @@
 __author__="John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ ="$Jun 6, 2014 4:21:22PM$"
 
-__all__ = ["..", "test_additional_io", "test_HDF5_searchers", "random_dictionary_learning_data"]
+__all__ = ["..", "test_additional_io", "test_HDF5_searchers", "test_HDF5_serializers", "random_dictionary_learning_data"]
 
 
 import test_additional_io
 import test_HDF5_searchers
+import test_HDF5_serializers
 import random_dictionary_learning_data
