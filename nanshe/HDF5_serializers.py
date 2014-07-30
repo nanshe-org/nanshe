@@ -44,12 +44,21 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
         file_handle = h5py.File(file_handle, "a")
         close_file_handle = True
 
+    data_array = data
+    if not isinstance(data_array, numpy.ndarray):
+        try:
+            data_array = numpy.ndarray(data_array)
+        except:
+            if not data_array.dtype.names:
+                raise TypeError("The argument provided for data is type: \"" + repr(type(data)) + "\" is not convertible to type \"" + repr(numpy.ndarray) + "\".")
+
+
     try:
-        file_handle.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
+        file_handle.create_dataset(internalPath, shape = data_array.shape, dtype = data_array.dtype, data = data_array)
     except RuntimeError:
         if overwrite:
             del file_handle[internalPath]
-            file_handle.create_dataset(internalPath, shape = data.shape, dtype = data.dtype, data = data)
+            file_handle.create_dataset(internalPath, shape = data_array.shape, dtype = data_array.dtype, data = data_array)
         else:
             raise
 
