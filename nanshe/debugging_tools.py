@@ -98,7 +98,7 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_excepti
                     result = callable(*args, **kwargs)
 
                 # Log that we have exited the callable in question.
-                logger.debug("Exiting \"" + callable.__name__ + "\".")
+                logger.debug("Exiting callable: \"" + callable.__name__ + "\".")
             else:
                 # We don't return immediately. Why? We want to know if this succeeded or failed.
                 # So, we want the log message below to print after the function runs.
