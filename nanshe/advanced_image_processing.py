@@ -753,6 +753,48 @@ def get_one_neuron(shape, dtype):
 
         Returns:
             numpy.ndarray:                a numpy structured array with one neuron using type from get_neuron_dtype.
+
+        Examples:
+            >>> get_one_neuron((3,), numpy.float) #doctest: +NORMALIZE_WHITESPACE
+            array([ ([False, False, False],
+                     [False, False, False],
+                     [0.0, 0.0, 0.0],
+                     0.0,
+                     0.0,
+                     [0.0],
+                     [[0.0]],
+                     [0.0])],
+                   dtype=[('mask', '?', (3,)),
+                          ('contour', '?', (3,)),
+                          ('image', '<f8', (3,)),
+                          ('area', '<f8'),
+                          ('max_F', '<f8'),
+                          ('gaussian_mean', '<f8', (1,)),
+                          ('gaussian_cov', '<f8', (1, 1)),
+                          ('centroid', '<f8', (1,))])
+
+
+            >>> get_one_neuron((2, 3), numpy.float) #doctest: +NORMALIZE_WHITESPACE
+            array([ ([[False, False, False],
+                      [False, False, False]],
+                     [[False, False, False],
+                      [False, False, False]],
+                     [[0.0, 0.0, 0.0],
+                      [0.0, 0.0, 0.0]],
+                     0.0,
+                     0.0,
+                     [0.0, 0.0],
+                    [[0.0, 0.0],
+                     [0.0, 0.0]],
+                    [0.0, 0.0])],
+                   dtype=[('mask', '?', (2, 3)),
+                          ('contour', '?', (2, 3)),
+                          ('image', '<f8', (2, 3)),
+                          ('area', '<f8'),
+                          ('max_F', '<f8'),
+                          ('gaussian_mean', '<f8', (2,)),
+                          ('gaussian_cov', '<f8', (2, 2)),
+                          ('centroid', '<f8', (2,))])
     """
 
     neurons_dtype = get_neuron_dtype(shape=shape, dtype=dtype)
