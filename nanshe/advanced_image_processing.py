@@ -665,6 +665,28 @@ def get_neuron_dtype(shape, dtype):
 
         Returns:
             list:                         a list that can be converted to a numpy.dtype using numpy.ndtype's constructor.
+
+        Examples:
+            >>> get_neuron_dtype((3,), numpy.float64) #doctest: +NORMALIZE_WHITESPACE
+            [('mask', <type 'numpy.bool_'>, (3,)),
+             ('contour', <type 'numpy.bool_'>, (3,)),
+             ('image', <type 'numpy.float64'>, (3,)),
+             ('area', <type 'numpy.float64'>),
+             ('max_F', <type 'numpy.float64'>),
+             ('gaussian_mean', <type 'numpy.float64'>, (1,)),
+             ('gaussian_cov', <type 'numpy.float64'>, (1, 1)),
+             ('centroid', <type 'numpy.float64'>, (1,))]
+
+            >>> get_neuron_dtype((2, 3), numpy.float64) #doctest: +NORMALIZE_WHITESPACE
+            [('mask', <type 'numpy.bool_'>, (2, 3)),
+             ('contour', <type 'numpy.bool_'>, (2, 3)),
+             ('image', <type 'numpy.float64'>, (2, 3)),
+             ('area', <type 'numpy.float64'>),
+             ('max_F', <type 'numpy.float64'>),
+             ('gaussian_mean', <type 'numpy.float64'>, (2,)),
+             ('gaussian_cov', <type 'numpy.float64'>, (2, 2)),
+             ('centroid', <type 'numpy.float64'>, (2,))]
+
     """
 
     ndim = len(shape)
