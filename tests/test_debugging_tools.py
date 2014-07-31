@@ -4,6 +4,7 @@ __date__ ="$July 30, 2014 4:57:43PM$"
 
 import StringIO
 import logging
+import re
 
 import nanshe.debugging_tools
 
@@ -135,6 +136,122 @@ class TestDebuggingTools(object):
         print(result)
 
         assert(result == expected_result)
+
+
+    def test_log_class_1(self):
+        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__".\n""" + \
+            """DEBUG:debugging_tools:Exiting callable: "__init__".\n"""
+        expected_result_2 = """DEBUG:debugging_tools:Entering callable: "__call__".\n""" + \
+            """DEBUG:debugging_tools:Exiting callable: "__call__".\n"""
+
+        @nanshe.debugging_tools.log_class(self.logger)
+        class Test(object):
+            def __init__(self, a, b = 5):
+                self.a = a
+                self.b = b
+
+            def __call__(self):
+                return(self.a + self.b)
+
+        op = Test(0)
+
+        self.handler.flush()
+        result_1 = self.stream.getvalue()
+        self.stream.truncate(0)
+
+        print(result_1)
+
+        assert(result_1 == expected_result_1)
+
+        op()
+
+        self.handler.flush()
+        result_2 = self.stream.getvalue()
+        self.stream.truncate(0)
+
+        print(result_2)
+
+        assert(result_2 == expected_result_2)
+
+
+    def test_log_class_2(self):
+        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__".\n""" + \
+            """DEBUG:debugging_tools:Exiting callable: "__init__".\n"""
+
+        expected_result_2 = "DEBUG:debugging_tools:Entering callable: \"__call__\"\.\n" + \
+            "DEBUG:debugging_tools:Arguments: \"\(<debugging_tools\.Test object at 0x[0-9a-f]+>,\)\"\n" + \
+            "Keyword Arguments: \"\{\}\"\.\n" + \
+            "DEBUG:debugging_tools:Exiting callable: \"__call__\"\.\n"
+
+        @nanshe.debugging_tools.log_class(self.logger)
+        class Test(object):
+            def __init__(self, a, b = 5):
+                self.a = a
+                self.b = b
+
+            def __call__(self):
+                return(self.a + self.b)
+
+        op = Test(0)
+
+        self.handler.flush()
+        result_1 = self.stream.getvalue()
+        self.stream.truncate(0)
+
+        print(result_1)
+
+        assert(result_1 == expected_result_1)
+
+        Test.__call__.__dict__["to_print_args"] = True
+
+        op()
+
+        self.handler.flush()
+        result_2 = self.stream.getvalue()
+        self.stream.truncate(0)
+
+        print(result_2)
+
+        assert(re.match(expected_result_2, result_2).span() == (0, len(result_2)))
+
+
+    def test_log_class_2(self):
+        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__".\n""" + \
+            """DEBUG:debugging_tools:Exiting callable: "__init__".\n"""
+
+        expected_result_2 = """"""
+
+        @nanshe.debugging_tools.log_class(self.logger)
+        class Test(object):
+            def __init__(self, a, b = 5):
+                self.a = a
+                self.b = b
+
+            def __call__(self):
+                return(self.a + self.b)
+
+        op = Test(0)
+
+        self.handler.flush()
+        result_1 = self.stream.getvalue()
+        self.stream.truncate(0)
+
+        print(result_1)
+
+        assert(result_1 == expected_result_1)
+
+        Test.__call__.__dict__["to_log_call"] = False
+
+        op()
+
+        self.handler.flush()
+        result_2 = self.stream.getvalue()
+        self.stream.truncate(0)
+
+        print(result_2)
+
+        assert(result_2 == expected_result_2)
+
 
     def teardown(self):
         self.handler.close()
