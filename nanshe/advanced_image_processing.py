@@ -1492,6 +1492,40 @@ def wavelet_denoising(new_image,
 
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
+def extract_neurons(new_image, neuron_masks):
+    """
+        Extracts neurons from an image using a stack of masks.
+
+        Args:
+            new_image(numpy.ndarray):           spatial coordinates only (no time).
+
+            neuron_masks(numpy.ndarray):        first index of denotes which mask and all others are spatial indices.
+
+        Returns:
+            numpy.ndarray:                      a stack of neurons in the same order as the masks.
+    """
+
+    neurons = numpy.zeros(len(neuron_masks), dtype = get_neuron_dtype(shape=new_image.shape, dtype=new_image.dtype))
+
+    neurons["mask"] = neuron_masks
+    neurons["image"] = new_image * neurons["mask"]
+    neurons["area"] = neurons["mask"].reshape(neurons["mask"].shape[0], -1).sum(axis = 1)
+    neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(axis = 1)
+
+    for i in xrange(len(neurons)):
+        neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
+
+        neurons["contour"][i] = expanded_numpy.generate_contour(neurons["mask"][i])
+        neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
+        neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
+
+    neurons["centroid"] = neurons["gaussian_mean"]
+
+    return(neurons)
+
+
+@debugging_tools.log_call(logger)
+@HDF5_recorder.static_array_debug_recorder
 def fuse_neurons(neuron_1,
                  neuron_2,
                  fraction_mean_neuron_max_threshold,
