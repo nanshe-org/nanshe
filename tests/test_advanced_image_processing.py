@@ -66,3 +66,23 @@ class TestAdvancedImageProcessing(object):
         b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert((a == b).all())
+
+    def test_extract_f0(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        half_window_size = 400
+        bias = 100
+        step_size = 100
+
+        a = numpy.ones((100, 100, 100))
+
+        b = nanshe.advanced_image_processing.extract_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            half_window_size=half_window_size,
+            bias=bias,
+            step_size=step_size)
+
+        assert((b == 0).all())
