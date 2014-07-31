@@ -252,6 +252,17 @@ def normalize_data(new_data, **parameters):
 
         Returns:
             numpy.ndarray:                          data that has been normalized.
+
+        Examples:
+            >>> a = numpy.zeros((2,2,2,))
+            >>> a[1,1,1] = 1
+            >>> a[0,0,0] = 1
+            >>> normalize_data(a, **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+            array([[[ 0.8660254 , -0.28867513],
+                    [-0.28867513, -0.28867513]],
+            <BLANKLINE>
+                   [[-0.28867513, -0.28867513],
+                    [-0.28867513,  0.8660254 ]]])
     """
 
     # Remove the mean of each row vector
