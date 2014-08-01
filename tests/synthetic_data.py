@@ -178,3 +178,57 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                                                           mode = "nearest")
 
     return(images)
+
+
+def generate_random_bound_points(space, radii):
+    """
+        Generate a collection of random points that are the center of a  hypersphere contained within the space.
+
+        Note:
+            Uses the typical convention [0, space_i) for all space_i from space.
+            Applies the additional constraint [radius_i, space_i - radius_i).
+
+        Args:
+            space(tuple of ints):                The size of the space where the points will lie.
+
+            radii(list of numbers):              Additional radius for each point to remain away from the boundary.
+
+        Returns:
+            numpy.ndarray:                       An array with the random points each using a radius from radii to
+                                                 constrain itself. First index is which point. Second is which
+                                                 coordinate.
+
+        Examples:
+            >>> numpy.random.seed(0); generate_random_bound_points((100, 100), 5)
+            array([[49, 52]])
+
+            >>> numpy.random.seed(0); generate_random_bound_points((100, 100), (5, 5))
+            array([[49, 52],
+                   [69, 72]])
+    """
+
+    # Convert to arrays
+    space = numpy.array(space)
+    radii = numpy.array(radii)
+
+    # Add a singleton dimension if there is only one of each.
+    if radii.ndim == 0:
+        radii = radii[None]
+
+    # Validate the dimensions
+    assert(space.ndim == 1)
+    assert(radii.ndim == 1)
+
+    # Determine the space each centroid can be within
+    bound_space = numpy.zeros(radii.shape + space.shape + (2,), dtype = int)
+    bound_space[..., 0] = nanshe.expanded_numpy.expand_view(radii, space.shape)
+    bound_space[..., 1] = nanshe.expanded_numpy.expand_view(space, reps_before=radii.shape) - \
+                          nanshe.expanded_numpy.expand_view(radii, space.shape)
+
+    # Generate a random point for each radius.
+    points = numpy.zeros(radii.shape + space.shape, dtype = int)
+    for i in xrange(len(radii)):
+        for j in xrange(len(space)):
+            points[i][j] = numpy.random.randint(bound_space[i][j][0], bound_space[i][j][1])
+
+    return(points)
