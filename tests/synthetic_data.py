@@ -6,6 +6,10 @@ import itertools
 
 import numpy
 
+import scipy
+import scipy.ndimage
+import scipy.ndimage.filters
+
 import nanshe.expanded_numpy
 
 
@@ -83,3 +87,94 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary = False):
             hypersphere_mask[i] = (each_point_offset_dist < each_radius)
 
     return(hypersphere_mask)
+
+
+def generate_gaussian_images(space, means, std_devs, magnitudes):
+    """
+        Generate a stack of gaussians (first index indicates which image); where, each contains a gaussian
+        using a center and radius provided.
+
+        Note:
+            This uses a normalized gaussian filter to create the gaussians. So, the sum over any image in the stack will
+            be the magnitude given (with some small error).
+
+        Args:
+            space(tuple of ints):                The size of the mask.
+
+            means(list of tuples of numbers):    List of means with one per gaussian.
+
+            std_devs(list of numbers):           List of standard deviations with one per gaussian.
+
+            magnitudes(list of numbers):         List of magnitudes for each gaussian.
+
+        Returns:
+            numpy.ndarray:                       A stack of masks (first index indicates which mask) with a gaussian
+                                                 using a center and radius for each mask.
+
+        Examples:
+            >>> generate_gaussian_images((5, 5), (2, 2), 0.5, 1) #doctest: +NORMALIZE_WHITESPACE
+            array([[[ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08],
+                    [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],
+                    [ 2.07548550e-04, 8.37310610e-02, 6.18693507e-01, 8.37310610e-02, 2.07548550e-04],
+                    [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],
+                    [ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08]]])
+
+            >>> generate_gaussian_images((5, 5), (2, 2), 0.5, 1).sum()
+            1.0000000000000002
+
+            >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 1) #doctest: +NORMALIZE_WHITESPACE
+            array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],
+                    [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],
+                    [ 0.00000000e+00, 3.35012940e-04, 9.98659499e-01, 3.35012940e-04, 0.00000000e+00],
+                    [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],
+                    [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])
+
+            >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 1).sum()
+            1.0
+
+            >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 5) #doctest: +NORMALIZE_WHITESPACE
+            array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],
+                    [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],
+                    [ 0.00000000e+00, 1.67506470e-03, 4.99329749e+00, 1.67506470e-03, 0.00000000e+00],
+                    [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],
+                    [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])
+
+            >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 5).sum()
+            5.0000000000000009
+    """
+
+    # Convert to arrays
+    space = numpy.array(space)
+    means = numpy.array(means)
+    std_devs = numpy.array(std_devs)
+    magnitudes = numpy.array(magnitudes)
+
+    # Add a singleton dimension if there is only one of each.
+    if means.ndim == 1:
+        means = means[None]
+
+    if std_devs.ndim == 0:
+        std_devs = std_devs[None]
+
+    if magnitudes.ndim == 0:
+        magnitudes = magnitudes[None]
+
+    # Validate the dimensions
+    assert(space.ndim == 1)
+    assert(means.ndim == 2)
+    assert(std_devs.ndim == 1)
+    assert(magnitudes.ndim == 1)
+
+    # Validate the shapes
+    assert(space.shape == means.shape[1:])
+    assert(magnitudes.shape == means.shape[:1])
+
+    # Create a gaussian from a mean and a standard deviation.
+    images = numpy.zeros(magnitudes.shape + tuple(space.tolist()), dtype = float)
+    for i, (each_mean, each_std_dev, each_magnitude) in enumerate(itertools.izip(means, std_devs, magnitudes)):
+        images[i][tuple(each_mean)] = each_magnitude
+        images[i] = scipy.ndimage.filters.gaussian_filter(images[i],
+                                                          each_std_dev,
+                                                          mode = "nearest")
+
+    return(images)
