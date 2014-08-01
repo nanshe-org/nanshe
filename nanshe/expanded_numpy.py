@@ -641,6 +641,80 @@ def expand_enumerate(new_array, axis = 0, start = 0, step = 1):
     return(an_enumeration)
 
 
+def enumerate_masks(new_masks, axis = 0):
+    """
+        Takes a mask stack and replaces them by an enumerated stack. In other words, each mask is replaced by a
+        consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)).
+
+        Note:
+            The masks could be recreated by finding the values not equal to zero.
+
+        Args:
+            new_masks(numpy.ndarray):            masks to enumerate
+            axis(int):                           axis to enumerate along (0 by default).
+
+        Returns:
+            (numpy.ndarray):                     an enumerated stack.
+
+        Examples:
+            >>> enumerate_masks(numpy.ones((3,3,3), dtype=bool))
+            array([[[1, 1, 1],
+                    [1, 1, 1],
+                    [1, 1, 1]],
+            <BLANKLINE>
+                   [[2, 2, 2],
+                    [2, 2, 2],
+                    [2, 2, 2]],
+            <BLANKLINE>
+                   [[3, 3, 3],
+                    [3, 3, 3],
+                    [3, 3, 3]]])
+
+            >>> enumerate_masks(numpy.array([[[ True, False, False, False],
+            ...                               [False, False, False, False],
+            ...                               [False, False, False, False],
+            ...                               [False, False, False, False]],
+            ...
+            ...                              [[False, False, False, False],
+            ...                               [False,  True, False, False],
+            ...                               [False, False, False, False],
+            ...                               [False, False, False, False]],
+            ...
+            ...                              [[False, False, False, False],
+            ...                               [False, False, False, False],
+            ...                               [False, False,  True, False],
+            ...                               [False, False, False, False]],
+            ...
+            ...                              [[False, False, False, False],
+            ...                               [False, False, False, False],
+            ...                               [False, False, False, False],
+            ...                               [False, False, False,  True]]], dtype=bool))
+            array([[[1, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0]],
+            <BLANKLINE>
+                   [[0, 0, 0, 0],
+                    [0, 2, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0]],
+            <BLANKLINE>
+                   [[0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 3, 0],
+                    [0, 0, 0, 0]],
+            <BLANKLINE>
+                   [[0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 4]]])
+    """
+
+    new_enumerated_masks = new_masks * expand_enumerate(new_masks, axis=axis, start=1, step=1)
+
+    return(new_enumerated_masks)
+
+
 @debugging_tools.log_call(logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
