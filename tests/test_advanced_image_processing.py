@@ -8,6 +8,8 @@ import nanshe.expanded_numpy
 
 import nanshe.advanced_image_processing
 
+import synthetic_data
+
 
 class TestAdvancedImageProcessing(object):
     def test_remove_zeroed_lines_1(self):
@@ -86,6 +88,54 @@ class TestAdvancedImageProcessing(object):
             step_size=step_size)
 
         assert((b == 0).all())
+
+    def test_wavelet_denoising(self):
+        params = {
+            "remove_low_intensity_local_maxima" : {
+                "percentage_pixels_below_max" : 0
+            },
+            "wavelet_transform.wavelet_transform" : {
+                "scale" : 5
+            },
+            "accepted_region_shape_constraints" : {
+                "major_axis_length" : {
+                    "max" : 25.0,
+                    "min" : 0.0
+                }
+            },
+            "accepted_neuron_shape_constraints" : {
+                "eccentricity" : {
+                    "max" : 0.9,
+                    "min" : 0.0
+                },
+                "area" : {
+                    "max" : 600,
+                    "min" : 30
+                }
+            },
+            "denoising.estimate_noise" : {
+                "significance_threshhold" : 3.0
+            },
+            "denoising.significant_mask" : {
+                "noise_threshhold" : 3.0
+            },
+            "remove_too_close_local_maxima" : {
+                "min_local_max_distance" : 100.0
+            },
+            "use_watershed" : True
+        }
+
+        shape = numpy.array((500, 500))
+
+        neuron_centers = numpy.array([[177,  52], [127, 202], [343, 271]])
+        original_neuron_image = synthetic_data.generate_gaussian_images(shape, neuron_centers, (50.0/3.0,)*len(neuron_centers), (1.0/3.0,)*len(neuron_centers)).sum(axis = 0)
+        original_neurons_mask = (original_neuron_image >= 0.00014218114898827068)
+
+        neurons = nanshe.advanced_image_processing.wavelet_denoising(original_neuron_image, **params)
+
+        assert(len(neuron_centers) == len(neurons))
+        assert((original_neurons_mask == neurons["mask"].max(axis = 0)).all())
+        assert(((original_neurons_mask*original_neuron_image) == neurons["image"].max(axis = 0)).all())
 
     def test_extract_neurons(self):
         image = 5 * numpy.ones((100, 100))
