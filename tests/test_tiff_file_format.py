@@ -10,6 +10,7 @@ import shutil
 import tempfile
 
 import numpy
+import h5py
 
 import vigra
 import vigra.impex
@@ -69,6 +70,24 @@ class TestTiffFileFormat(object):
             assert(each_data.dtype == each_filedata.dtype)
 
             assert((each_data == each_filedata).all())
+
+    def test_convert_tiffs(self):
+        hdf5_filename = os.path.join(self.temp_dir, "test.h5")
+        hdf5_filepath = hdf5_filename + "/data"
+
+        nanshe.tiff_file_format.convert_tiffs(self.filedata.keys(), hdf5_filepath)
+
+        assert(os.path.exists(hdf5_filename))
+
+        data = None
+        with h5py.File(hdf5_filename, "r") as hdf5_handle:
+            data = hdf5_handle["data"].value
+
+        self_data_h5 = nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
+
+        assert((data == self_data_h5).all())
+
+        os.remove(hdf5_filename)
 
     def teardown(self):
         shutil.rmtree(self.temp_dir)
