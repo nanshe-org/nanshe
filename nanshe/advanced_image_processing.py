@@ -167,7 +167,7 @@ def extract_f0(new_data,
                                                                       temporal_smoothing_gaussian_filter)
 
     if (step_size > new_data_temporally_smoothed.shape[0]):
-        raise Exception("The step size provided, " + step_size + ", is larger than the number of frames in the data, " + new_data_temporally_smoothed.shape[0] + ".")
+        raise Exception("The step size provided, " + repr(step_size) + ", is larger than the number of frames in the data, " + repr(new_data_temporally_smoothed.shape[0]) + ".")
 
     which_quantile_len = None
     try:
