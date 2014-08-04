@@ -61,6 +61,15 @@ class TestTiffFileFormat(object):
             assert(each_shape_dtype["shape"] == each_filedata.shape)
             assert(each_shape_dtype["dtype"] == each_filedata.dtype.type)
 
+    def test_get_standard_tiff_array(self):
+        for each_filename, each_filedata in self.filedata.items():
+            each_data = nanshe.tiff_file_format.get_standard_tiff_array(each_filename)
+
+            assert(each_data.shape == each_filedata.shape)
+            assert(each_data.dtype == each_filedata.dtype)
+
+            assert((each_data == each_filedata).all())
+
     def teardown(self):
         shutil.rmtree(self.temp_dir)
 
