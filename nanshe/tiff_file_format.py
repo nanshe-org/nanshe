@@ -194,6 +194,8 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
 
             channel(int):                       which channel to select for the HDF5 (can only keep one).
 
+            z_index(int):                       which z value to take (the algorithm is not setup for 3D data yet)
+
             pages_to_channel(int):              if channels are not normally stored in the channel variable, but are
                                                 stored as pages, then this will split neighboring pages into separate
                                                 channels.
