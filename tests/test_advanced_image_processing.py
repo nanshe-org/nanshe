@@ -131,6 +131,20 @@ class TestAdvancedImageProcessing(object):
 
         assert((numpy.array(m.nonzero()) == p.T).all())
 
+    def test_generate_local_maxima_scikit_image(self):
+        p = numpy.array([[27, 51],
+                         [66, 85],
+                         [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+        magnitudes = numpy.array((1, 1, 1), dtype = float)
+
+        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        m = nanshe.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
+
+        assert((numpy.array(m.nonzero()) == p.T).all())
+
     def test_extended_region_local_maxima_properties_1(self):
         p = numpy.array([[27, 51],
                          [66, 85],
