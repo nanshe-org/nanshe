@@ -117,6 +117,35 @@ class TestAdvancedImageProcessing(object):
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
         assert( ((a - 100.0*b) < 0.1).all() )
 
+    def test_extended_region_local_maxima_properties(self):
+        p = numpy.array([[27, 51],
+                         [66, 85],
+                         [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+        magnitudes = numpy.array((1, 1, 1), dtype = float)
+
+        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        m = (g > 0.00065)
+        g *= m
+
+        e = nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
+                nanshe.expanded_numpy.enumerate_masks(m).max(axis = 0)
+        )
+
+        assert((numpy.bincount(e["label"])[1:]  == 1).all())
+
+        assert(len(e) == len(p))
+
+        assert((e["local_max"] == p).all())
+
+        assert((e["area"] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all())
+
+        assert((e["centroid"] == e["local_max"]).all())
+
+        assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
+
     def test_wavelet_denoising(self):
         params = {
             "remove_low_intensity_local_maxima" : {
