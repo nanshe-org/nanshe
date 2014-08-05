@@ -117,7 +117,7 @@ class TestAdvancedImageProcessing(object):
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
         assert( ((a - 100.0*b) < 0.1).all() )
 
-    def test_extended_region_local_maxima_properties(self):
+    def test_extended_region_local_maxima_properties_1(self):
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -143,6 +143,42 @@ class TestAdvancedImageProcessing(object):
         assert((e["area"] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all())
 
         assert((e["centroid"] == e["local_max"]).all())
+
+        assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
+
+    def test_extended_region_local_maxima_properties_2(self):
+        p = numpy.array([[27, 51],
+                         [32, 53],
+                         [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+        magnitudes = numpy.array((1, 1, 1), dtype = float)
+
+        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = numpy.array([g[0] + g[1], g[2]])
+        m = (g > 0.00065)
+        g *= m
+
+        e = nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
+                nanshe.expanded_numpy.enumerate_masks(m).max(axis = 0)
+        )
+
+        assert((numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all())
+
+        assert(len(e) == len(p))
+
+        assert((e["local_max"] == p).all())
+
+        assert((e["area"][[0, 2]] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all())
+
+        # Not exactly equal due to floating point round off error
+        assert(((e["centroid"][0] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all())
+
+        # Not exactly equal due to floating point round off error
+        assert(((e["centroid"][1] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all())
+
+        assert((e["centroid"][2] == e["local_max"][2]).all())
 
         assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
 
