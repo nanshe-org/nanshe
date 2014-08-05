@@ -70,6 +70,50 @@ class TestSpamsSandbox(object):
 
         assert(len(unmatched_g) == 0)
 
+    def test_call_multiprocessing_array_spams_trainDL(self):
+        d = spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g.astype(float),
+                                                                                 **{
+                                                                                        "gamma2" : 0,
+                                                                                        "gamma1" : 0,
+                                                                                         "numThreads" : -1,
+                                                                                         "K" : self.g.shape[1],
+                                                                                         "iter" : 10,
+                                                                                         "modeD" : 0,
+                                                                                         "posAlpha" : True,
+                                                                                         "clean" : True,
+                                                                                         "posD" : True,
+                                                                                         "batchsize" : 256,
+                                                                                         "lambda1" : 0.2,
+                                                                                         "lambda2" : 0,
+                                                                                         "mode" : 2
+                                                                                    }
+        )
+        d = (d != 0)
+
+        self.g = self.g.transpose()
+        d = d.transpose()
+
+        assert(self.g.shape == d.shape)
+
+        assert((self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+
+        unmatched_g = range(len(self.g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == self.g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print unmatched_g
+
+        assert(len(unmatched_g) == 0)
+
     def test_call_spams_trainDL(self):
         d = spams_sandbox.spams_sandbox.call_spams_trainDL(self.g.astype(float),
                                                            **{
