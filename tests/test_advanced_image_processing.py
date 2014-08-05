@@ -117,6 +117,58 @@ class TestAdvancedImageProcessing(object):
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
         assert( ((a - 100.0*b) < 0.1).all() )
 
+    def test_generate_dictionary(self):
+        p = numpy.array([[27, 51],
+                     [66, 85],
+                     [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = synthetic_data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.advanced_image_processing.generate_dictionary(g.astype(float),
+                                                                                    **{
+                                                                                        "spams.trainDL" : {
+                                                                                            "gamma2" : 0,
+                                                                                            "gamma1" : 0,
+                                                                                             "numThreads" : -1,
+                                                                                             "K" : len(g),
+                                                                                             "iter" : 10,
+                                                                                             "modeD" : 0,
+                                                                                             "posAlpha" : True,
+                                                                                             "clean" : True,
+                                                                                             "posD" : True,
+                                                                                             "batchsize" : 256,
+                                                                                             "lambda1" : 0.2,
+                                                                                             "lambda2" : 0,
+                                                                                             "mode" : 2
+                                                                                        }
+                                                                                    }
+        )
+        d = (d != 0)
+
+        assert(g.shape == d.shape)
+
+        assert((g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print unmatched_g
+
+        assert(len(unmatched_g) == 0)
+
     def test_generate_local_maxima_vigra(self):
         p = numpy.array([[27, 51],
                          [66, 85],
