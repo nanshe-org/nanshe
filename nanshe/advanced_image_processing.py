@@ -381,7 +381,7 @@ def generate_dictionary(new_data, **parameters):
 
 
 @debugging_tools.log_call(logger)
-def region_properties(new_label_image, *args, **kwargs):
+def region_properties_scikit_image(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label image.
         
@@ -400,19 +400,19 @@ def region_properties(new_label_image, *args, **kwargs):
         
         Examples:
             
-            >>> region_properties(numpy.zeros((2,2), dtype=int))
+            >>> region_properties_scikit_image(numpy.zeros((2,2), dtype=int))
             array([], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
             
-            >>> region_properties(numpy.ones((2,2), dtype=int))
+            >>> region_properties_scikit_image(numpy.ones((2,2), dtype=int))
             array([(1, 4.0, [0.5, 0.5])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
             
-            >>> region_properties(numpy.ones((3,3), dtype=int))
+            >>> region_properties_scikit_image(numpy.ones((3,3), dtype=int))
             array([(1, 9.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties(numpy.eye(3, dtype=int))
+            >>> region_properties_scikit_image(numpy.eye(3, dtype=int))
             array([(1, 3.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
     """
@@ -658,6 +658,44 @@ def region_properties(new_label_image, *args, **kwargs):
 
     return(new_label_image_props_with_arrays)
 
+@debugging_tools.log_call(logger)
+def region_properties(new_label_image, *args, **kwargs):
+    """
+        Grabs region properties from a label image.
+
+        Args:
+            new_label_image(numpy.ndarray):      label image used for generating properties.
+            args(list):                          additional position arguments to pass skimage.measure.regionprops.
+            **parameters(dict):                  additional keyword arguments to pass skimage.measure.regionprops.
+
+        Note:
+            Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won't be
+            returned.
+
+        Returns:
+            numpy.ndarray:                       a structured array of all the properties found for each label.
+
+
+        Examples:
+
+            >>> region_properties(numpy.zeros((2,2), dtype=int)) # doctest: +NORMALIZE_WHITESPACE
+            array([], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties(numpy.ones((2,2), dtype=int)) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 4.0, [0.5, 0.5])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties(numpy.ones((3,3), dtype=int)) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 9.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties(numpy.eye(3, dtype=int))
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+    """
+
+    return(region_properties_scikit_image(new_label_image, *args, **kwargs))
 
 @debugging_tools.log_call(logger)
 def get_neuron_dtype(shape, dtype):
