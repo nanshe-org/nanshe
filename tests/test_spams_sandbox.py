@@ -2,6 +2,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Aug 05, 2014 17:38:58 EDT$"
 
 
+import ctypes
 import multiprocessing
 
 import numpy
@@ -95,6 +96,55 @@ class TestSpamsSandbox(object):
                                                                                          "mode" : 2
                                                                                     }
         )
+        d = (d != 0)
+
+        self.g = self.g.transpose()
+        d = d.transpose()
+
+        assert(self.g.shape == d.shape)
+
+        assert((self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+
+        unmatched_g = range(len(self.g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == self.g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print unmatched_g
+
+        assert(len(unmatched_g) == 0)
+
+    def test_run_multiprocessing_array_spams_trainDL(self):
+        output_array_size = self.g.shape[0] * self.g.shape[1]
+        output_array = multiprocessing.Array(ctypes.c_double, output_array_size)
+
+        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(output_array,
+                                                                            self.g.astype(float),
+                                                                            **{
+                                                                                    "gamma2" : 0,
+                                                                                    "gamma1" : 0,
+                                                                                     "numThreads" : -1,
+                                                                                     "K" : self.g.shape[1],
+                                                                                     "iter" : 10,
+                                                                                     "modeD" : 0,
+                                                                                     "posAlpha" : True,
+                                                                                     "clean" : True,
+                                                                                     "posD" : True,
+                                                                                     "batchsize" : 256,
+                                                                                     "lambda1" : 0.2,
+                                                                                     "lambda2" : 0,
+                                                                                     "mode" : 2
+                                                                               }
+        )
+        d = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, self.g.shape[1])).copy()
         d = (d != 0)
 
         self.g = self.g.transpose()
