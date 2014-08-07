@@ -247,6 +247,47 @@ class TestAdvancedImageProcessing(object):
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
 
+    def test_preprocess_data_4(self):
+        ## Does NOT test accuracy.
+
+        config = {
+            "normalize_data" : {
+                "simple_image_processing.renormalized_images" : {
+                    "ord" : 2
+                }
+            },
+            "extract_f0" : {
+                "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                "which_quantile" : 0.5,
+                "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                "half_window_size" : 20,
+                "bias" : 100,
+                "step_size" : 10
+            },
+            "remove_zeroed_lines" : {
+                "erosion_shape" : [
+                    21,
+                    1
+                ],
+                "dilation_shape" : [
+                    1,
+                    3
+                ]
+            }
+        }
+
+        space = numpy.array([100, 100, 100])
+        radii = numpy.array([5, 6])
+        magnitudes = numpy.array([15, 16])
+        points = numpy.array([[20, 30, 24],
+                           [70, 59, 65]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        image_stack = images.max(axis = 0)
+
+        nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+
     def test_generate_dictionary(self):
         p = numpy.array([[27, 51],
                      [66, 85],
