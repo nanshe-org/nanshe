@@ -1192,7 +1192,7 @@ def get_one_neuron(shape, dtype):
 def generate_local_maxima_vigra(new_intensity_image):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
-        Uses vigra's vigra.analysis.extendedLocalMaxima.
+        Uses vigra's vigra.analysis.extendedLocalMaxima for 2D and vigra's vigra.analysis.extendedLocalMaxima3D for 3D.
         
         Args:
             new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are
@@ -1202,7 +1202,13 @@ def generate_local_maxima_vigra(new_intensity_image):
             numpy.ndarray:                          A mask of the local maxima.
     """
 
-    local_maxima_mask = vigra.analysis.extendedLocalMaxima(new_intensity_image.astype(numpy.float32)).astype(bool)
+    local_maxima_mask = None
+    if new_intensity_image.ndim == 2:
+        local_maxima_mask = vigra.analysis.extendedLocalMaxima(new_intensity_image.astype(numpy.float32)).astype(bool)
+    elif new_intensity_image.ndim == 3:
+        local_maxima_mask = vigra.analysis.extendedLocalMaxima3D(new_intensity_image.astype(numpy.float32)).astype(bool)
+    else:
+        assert(False)
 
     return(local_maxima_mask)
 
