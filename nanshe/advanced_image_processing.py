@@ -1038,7 +1038,7 @@ def region_properties(new_label_image, *args, **kwargs):
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
     """
 
-    return(region_properties_scikit_image(new_label_image, *args, **kwargs))
+    return(region_properties_vigra(new_label_image, *args, **kwargs))
 
 @debugging_tools.log_call(logger)
 def get_neuron_dtype(shape, dtype):
