@@ -411,6 +411,10 @@ def region_properties(new_label_image, *args, **kwargs):
             >>> region_properties(numpy.ones((3,3), dtype=int))
             array([(1, 9.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties(numpy.eye(3, dtype=int))
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
     """
 
     region_properties_type_dict = {
