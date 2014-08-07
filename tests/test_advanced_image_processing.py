@@ -121,7 +121,7 @@ class TestAdvancedImageProcessing(object):
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
         assert( ((a - 100.0*b) < 0.1).all() )
 
-    def test_preprocess_data(self):
+    def test_preprocess_data_1(self):
         ## Does NOT test accuracy.
 
         config = {
@@ -137,6 +137,46 @@ class TestAdvancedImageProcessing(object):
                 "half_window_size" : 20,
                 "bias" : 100,
                 "step_size" : 10
+            },
+            "remove_zeroed_lines" : {
+                "erosion_shape" : [
+                    21,
+                    1
+                ],
+                "dilation_shape" : [
+                    1,
+                    3
+                ]
+            },
+            "wavelet_transform" : {
+                "scale" : [
+                    3,
+                    4,
+                    4
+                ]
+            }
+        }
+
+        space = numpy.array([100, 100, 100])
+        radii = numpy.array([5, 6])
+        magnitudes = numpy.array([15, 16])
+        points = numpy.array([[20, 30, 24],
+                           [70, 59, 65]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        image_stack = images.max(axis = 0)
+
+        nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+
+    def test_preprocess_data_2(self):
+        ## Does NOT test accuracy.
+
+        config = {
+            "normalize_data" : {
+                "simple_image_processing.renormalized_images" : {
+                    "ord" : 2
+                }
             },
             "remove_zeroed_lines" : {
                 "erosion_shape" : [
