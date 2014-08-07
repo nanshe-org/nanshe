@@ -280,7 +280,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
 
-    def test_remove_low_intensity_local_maxima(self):
+    def test_remove_low_intensity_local_maxima_1(self):
         space = numpy.array((100, 100))
         radii = numpy.array((5, 10))
         magnitudes = numpy.array((1, 1), dtype = float)
@@ -298,6 +298,34 @@ class TestAdvancedImageProcessing(object):
         assert(len(points) == len(e.props))
 
         assert(0 == len(e2.props))
+
+    def test_remove_low_intensity_local_maxima_2(self):
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 10))
+        magnitudes = numpy.array((1, 1), dtype = float)
+        points = numpy.array([[23, 36],
+                           [58, 64]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
+
+        e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+
+        percentage_pixels_below_max = numpy.zeros((len(masks),), float)
+        for i in xrange(len(masks)):
+            pixels_below_max = (images.max(axis = 0)[masks[i].nonzero()] < images.max(axis = 0)[masks[i]].max()).sum()
+            pixels = masks[i].sum()
+
+            percentage_pixels_below_max[i] = float(pixels_below_max) / float(pixels)
+
+        percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
+
+        e2 = nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[0])
+
+        assert(len(points) == len(e.props))
+
+        assert(len(e.props) == len(e2.props))
 
     def test_remove_too_close_local_maxima_1(self):
         space = numpy.array((100, 100))
