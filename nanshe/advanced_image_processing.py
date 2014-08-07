@@ -659,6 +659,349 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
     return(new_label_image_props_with_arrays)
 
 @debugging_tools.log_call(logger)
+def region_properties_vigra(new_label_image, *args, **kwargs):
+    """
+        Grabs region properties from a label image.
+
+        Args:
+            new_label_image(numpy.ndarray):      label image used for generating properties.
+            args(list):                          additional position arguments to pass skimage.measure.regionprops.
+            **parameters(dict):                  additional keyword arguments to pass skimage.measure.regionprops.
+
+        Note:
+            Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won't be
+            returned.
+
+        Returns:
+            numpy.ndarray:                       a structured array of all the properties found for each label.
+
+
+        Examples:
+
+            >>> region_properties_vigra(numpy.zeros((2,2), dtype=int))
+            array([], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties_vigra(numpy.ones((2,2), dtype=int))
+            array([(1, 4.0, [0.5, 0.5])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties_vigra(numpy.ones((3,3), dtype=int))
+            array([(1, 9.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties_vigra(numpy.eye(3, dtype=int))
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+    """
+
+    region_properties_type_dict = {
+        "area": numpy.float64,
+        "centroid": numpy.float64,
+        "eccentricity": numpy.float64,
+        "label": numpy.int64,
+        "major_axis_length": numpy.float64,
+        "minor_axis_length": numpy.float64,
+    }
+
+    region_properties_shape_dict = {
+        "area": (),
+        "centroid": (new_label_image.ndim,),
+        "eccentricity": (),
+        "label": (),
+        "major_axis_length": (),
+        "minor_axis_length": (),
+    }
+
+    region_properties_ndim_dict = {
+        "area": 0,
+        "centroid": 1,
+        "eccentricity": 0,
+        "label": 0,
+        "major_axis_length": 0,
+        "minor_axis_length": 0,
+    }
+
+    # region_properties_type_dict = {
+    #     "area": numpy.float64,
+    #     "bbox": numpy.int64,
+    #     "centroid": numpy.float64,
+    #     "convex_area": numpy.int64,
+    #     "convex_image": numpy.bool_,
+    #     "coords": numpy.int64,
+    #     "eccentricity": numpy.float64,
+    #     "equivalent_diameter": numpy.float64,
+    #     "euler_number": numpy.int64,
+    #     "filled_area": numpy.int64,
+    #     "filled_image": numpy.bool_,
+    #     "image": numpy.bool_,
+    #     "inertia_tensor": numpy.float64,
+    #     "inertia_tensor_eigvals": numpy.float64,
+    #     "intensity_image": numpy.float64,
+    #     "label": numpy.int64,
+    #     "local_centroid": numpy.float64,
+    #     "major_axis_length": numpy.float64,
+    #     "max_intensity": numpy.float64,
+    #     "mean_intensity": numpy.float64,
+    #     "min_intensity": numpy.float64,
+    #     "minor_axis_length": numpy.float64,
+    #     "moments": numpy.float64,
+    #     "moments_central": numpy.float64,
+    #     "moments_hu": numpy.float64,
+    #     "moments_normalized": numpy.float64,
+    #     "orientation": numpy.float64,
+    #     "perimeter": numpy.float64,
+    #     "solidity": numpy.float64,
+    #     "weighted_centroid": numpy.float64,
+    #     "weighted_local_centroid": numpy.float64,
+    #     "weighted_moments": numpy.float64,
+    #     "weighted_moments_central": numpy.float64,
+    #     "weighted_moments_hu": numpy.float64,
+    #     "weighted_moments_normalized": numpy.float64
+    # }
+    #
+    # region_properties_shape_dict = {
+    #     "area": (),
+    #     "bbox": (4,),
+    #     "centroid": (new_label_image.ndim,),
+    #     "convex_area": (),
+    #     "convex_image": (-1, -1),
+    #     "coords": (-1, 2),
+    #     "eccentricity": (),
+    #     "equivalent_diameter": (),
+    #     "euler_number": (),
+    #     "filled_area": (),
+    #     "filled_image": (-1, -1),
+    #     "image": (-1, -1),
+    #     "inertia_tensor": (2, 2),
+    #     "inertia_tensor_eigvals": (2,),
+    #     "intensity_image": (-1, -1),
+    #     "label": (),
+    #     "local_centroid": (2,),
+    #     "major_axis_length": (),
+    #     "max_intensity": (),
+    #     "mean_intensity": (),
+    #     "min_intensity": (),
+    #     "minor_axis_length": (),
+    #     "moments": (4, 4),
+    #     "moments_central": (4, 4),
+    #     "moments_hu": (7,),
+    #     "moments_normalized": (4, 4),
+    #     "orientation": (),
+    #     "perimeter": (),
+    #     "solidity": (),
+    #     "weighted_centroid": (2,),
+    #     "weighted_local_centroid": (2,),
+    #     "weighted_moments": (4, 4),
+    #     "weighted_moments_central": (4, 4),
+    #     "weighted_moments_hu": (7,),
+    #     "weighted_moments_normalized": (4, 4)
+    # }
+    #
+    # region_properties_ndim_dict = {
+    #     "area": 0,
+    #     "bbox": 1,
+    #     "centroid": 1,
+    #     "convex_area": 0,
+    #     "convex_image": 2,
+    #     "coords": 2,
+    #     "eccentricity": 0,
+    #     "equivalent_diameter": 0,
+    #     "euler_number": 0,
+    #     "filled_area": 0,
+    #     "filled_image": 2,
+    #     "image": 2,
+    #     "inertia_tensor": 2,
+    #     "inertia_tensor_eigvals": 1,
+    #     "intensity_image": 2,
+    #     "label": 0,
+    #     "local_centroid": 1,
+    #     "major_axis_length": 0,
+    #     "max_intensity": 0,
+    #     "mean_intensity": 0,
+    #     "min_intensity": 0,
+    #     "minor_axis_length": 0,
+    #     "moments": 2,
+    #     "moments_central": 2,
+    #     "moments_hu": 1,
+    #     "moments_normalized": 2,
+    #     "orientation": 0,
+    #     "perimeter": 0,
+    #     "solidity": 0,
+    #     "weighted_centroid": 1,
+    #     "weighted_local_centroid": 1,
+    #     "weighted_moments": 2,
+    #     "weighted_moments_central": 2,
+    #     "weighted_moments_hu": 1,
+    #     "weighted_moments_normalized": 2
+    # }
+
+    array_properties = [_k for _k, _v in region_properties_ndim_dict.items() if _v > 0]
+    fixed_shape_properties = [_k for _k, _v in region_properties_shape_dict.items() if -1 not in _v]
+    varied_shape_properties = [_k for _k, _v in region_properties_shape_dict.items() if -1 in _v]
+
+    new_label_image_props = None
+    new_label_image_props_with_arrays = None
+    new_label_image_props_with_arrays_values = None
+    new_label_image_props_with_arrays_dtype = None
+
+    properties = None
+    if (len(args)) and (args[0]):
+        properties = args[0]
+        args = args[1:]
+    elif (len(kwargs)) and ("properties" in kwargs):
+        properties = kwargs["properties"]
+        del kwargs["properties"]
+    else:
+        properties = ["area", "centroid"]
+
+    if ( (properties == "all") or (properties == None) ):
+        properties = region_properties_type_dict.keys()
+
+    intensity_image = None
+    if (len(args)) and (args[0]):
+        intensity_image = args[0]
+        args = args[1:]
+    elif (len(kwargs)) and ("intensity_image" in kwargs):
+        intensity_image = kwargs["intensity_image"]
+        del kwargs["intensity_image"]
+    else:
+        pass
+
+    # Remove duplicates and make sure label is at the front.
+    properties = set(properties)
+    allowed_properties = set(region_properties_type_dict.keys())
+    disallowed_properties = properties.difference(allowed_properties)
+
+    if len(disallowed_properties):
+        disallowed_properties = sorted(disallowed_properties)
+        raise Exception("Recieved \"" + repr(
+            len(disallowed_properties)) + "\" properties that are not allowed, which are \"" + repr(
+            disallowed_properties) + "\".")
+
+    properties.discard("label")
+    properties = ["label"] + sorted(properties)
+
+
+    class VigraProperties(object):
+        def __init__(self, label_image, intensity_image = None):
+            self.label_image = label_image
+            self.intensity_image = intensity_image
+
+            if self.intensity_image is None:
+                self.intensity_image = self.label_image
+
+            self.props = vigra.analysis.extractRegionFeatures(self.intensity_image.astype(numpy.float32),
+                                                              self.label_image.astype(numpy.uint32),
+                                                              features = ["Count", "RegionCenter", "RegionRadii"])
+
+        def __len__(self):
+            return(len(self.props["Count"]) - 1)
+
+        def __getitem__(self, item):
+            result = None
+
+            if item == "label":
+                result = numpy.arange(0, len(self) + 1)
+            elif item == "area":
+                result = self.props["Count"].astype(numpy.float64)
+            elif item == "centroid":
+                result = self.props["RegionCenter"].astype(numpy.float64)
+            elif item == "eccentricity":
+                result = (1 - (self.props["RegionRadii"].min(axis = 1).astype(numpy.float64) / \
+                               self.props["RegionRadii"].max(axis = 1).astype(numpy.float64))**2)**.5
+            elif item == "major_axis_length":
+                result = 4 * self.props["RegionRadii"].max(axis = 1).astype(numpy.float64)
+            elif item == "minor_axis_length":
+                result = 4 * self.props["RegionRadii"].min(axis = 1).astype(numpy.float64)
+            else:
+                # Should have already checked and removed these.
+                assert(False)
+
+            result = result[1:]
+
+            return(result)
+
+        pass
+
+    if new_label_image.size:
+        # This gives a list of dictionaries. However, this is not very usable.
+        # So, we will convert this to a structured NumPy array.
+        # In future versions, the properties argument will be removed.
+        # It does not need to be passed to retain functionality of this function.
+        new_label_image_props = VigraProperties(new_label_image, intensity_image)
+
+        new_label_image_props_with_arrays = []
+        for i in xrange(len(new_label_image_props)):
+            new_label_image_props_with_arrays.append({})
+
+            for each_key in properties:
+                if each_key in array_properties:
+                    new_label_image_props_with_arrays[i][each_key] = numpy.array(new_label_image_props[each_key][i])
+                else:
+                    new_label_image_props_with_arrays[i][each_key] = new_label_image_props[each_key][i]
+
+        # Holds the values from props.
+        new_label_image_props_with_arrays_values = []
+
+        # Holds the types from props.
+        new_label_image_props_with_arrays_dtype = []
+
+        if len(new_label_image_props_with_arrays):
+            # Get types for all properties as a dictionary
+            for each_name in properties:
+                each_sample_value = new_label_image_props_with_arrays[0][each_name]
+                each_type = type(each_sample_value)
+                each_shape = tuple()
+
+                if isinstance(each_sample_value, numpy.ndarray) and (each_name in fixed_shape_properties):
+                    each_type = each_sample_value.dtype
+                    each_shape = each_sample_value.shape
+                else:
+                    each_type = numpy.dtype(each_type)
+
+                new_label_image_props_with_arrays_dtype.append((each_name, each_type, each_shape))
+
+            # Store the values to place in NumPy structured array in order.
+            new_label_image_props_with_arrays_values = []
+            for j in xrange(len(new_label_image_props_with_arrays)):
+                # Add all values in order of keys from the dictionary.
+                new_label_image_props_with_arrays_values.append([])
+                for each_new_label_image_props_with_arrays_dtype in new_label_image_props_with_arrays_dtype:
+
+                    each_name, each_type, each_shape = each_new_label_image_props_with_arrays_dtype
+
+                    if each_shape:
+                        new_label_image_props_with_arrays_values[j].append(
+                            new_label_image_props_with_arrays[j][each_name].tolist())
+                    else:
+                        new_label_image_props_with_arrays_values[j].append(
+                            new_label_image_props_with_arrays[j][each_name])
+
+                # NumPy will expect a tuple for each set of values.
+                new_label_image_props_with_arrays_values[j] = tuple(new_label_image_props_with_arrays_values[j])
+
+    if (not new_label_image.size) or (not len(new_label_image_props_with_arrays)):
+        new_label_image_props_with_arrays_dtype = []
+        for each_key in properties:
+            each_type = region_properties_type_dict[each_key]
+            each_shape = region_properties_shape_dict[each_key]
+
+            if each_key in varied_shape_properties:
+                each_type = numpy.object_
+                each_shape = tuple()
+
+            new_label_image_props_with_arrays_dtype.append((each_key, each_type, each_shape))
+
+    new_label_image_props_with_arrays_dtype = numpy.dtype(new_label_image_props_with_arrays_dtype)
+
+    # Replace the properties with the structured array.
+    new_label_image_props_with_arrays = numpy.array(new_label_image_props_with_arrays_values,
+                                                    dtype = new_label_image_props_with_arrays_dtype)
+
+    return(new_label_image_props_with_arrays)
+
+@debugging_tools.log_call(logger)
 def region_properties(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label image.
