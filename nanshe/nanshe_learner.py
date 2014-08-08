@@ -408,7 +408,21 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                 input_filename_block.append(each_block_file_handle.filename + "/" + "original_images")
                 output_filename_block.append(each_block_file_handle.filename + "/")
 
-    block_process_args_gen = itertools.izip(itertools.repeat(os.path.join(os.path.dirname(sys.argv[0]), "nanshe_learner.py")), itertools.repeat(intermediate_config), input_filename_block, output_filename_block)
+    # TODO: Refactor into a separate function somehow.
+    executable = None
+    if __name__ == "__main__":
+        import __main__
+        executable = __main__.__file__
+    else:
+        executable = __file__
+
+    executable = os.path.abspath(executable)
+    executable = os.path.splitext(executable)[0] + os.extsep + "py"
+
+    block_process_args_gen = itertools.izip(itertools.repeat(executable),
+                                            itertools.repeat(intermediate_config),
+                                            input_filename_block,
+                                            output_filename_block)
 
     # TODO: Refactor into a separate class (have it return futures somehow)
     # finished_processes = []
