@@ -6,6 +6,8 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 14, 2014 10:19:59PM$"
 
 
+import os
+
 import numpy
 import h5py
 
@@ -40,7 +42,7 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
 
     close_file_handle = False
 
-    if isinstance(file_handle, str):
+    if isinstance(file_handle, str) or isinstance(file_handle, unicode):
         file_handle = h5py.File(file_handle, "a")
         close_file_handle = True
 
@@ -89,19 +91,22 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
 
     close_file_handle = False
 
-    if isinstance(file_handle, str):
+    if isinstance(file_handle, str) or isinstance(file_handle, unicode):
         file_handle = h5py.File(file_handle, "r")
         close_file_handle = True
 
     data = None
 
     data_object = file_handle[internalPath]
+    data_file = data_object.file
     data_ref = data_object.value
+    # data_ref = data_object[()]
 
     if isinstance(data_ref, (numpy.number, numpy.ndarray,)):
         data = data_object.value
     elif isinstance(data_ref, h5py.Reference):
-        if ("filename" in data_object.attrs) and (data_object.attrs["filename"] != file_handle.filename):
+        if ("filename" in data_object.attrs) and \
+           (os.path.normpath(data_object.attrs["filename"]) != os.path.normpath(data_file.filename)):
             with h5py.File(data_object.attrs["filename"], "r") as external_file_handle:
                 if isinstance(data_ref, h5py.RegionReference):
                     data = external_file_handle[data_ref][data_ref]
@@ -109,9 +114,9 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
                     data = external_file_handle[data_ref].value
         else:
             if isinstance(data_ref, h5py.RegionReference):
-                data = file_handle[data_ref][data_ref]
+                data = data_file[data_ref][data_ref]
             else:
-                data = file_handle[data_ref].value
+                data = data_file[data_ref].value
 
     if close_file_handle:
         file_handle.close()
