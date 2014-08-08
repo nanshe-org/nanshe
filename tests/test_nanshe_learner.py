@@ -12,6 +12,7 @@ import h5py
 import numpy
 
 import nanshe.expanded_numpy
+import nanshe.HDF5_recorder
 
 import synthetic_data
 
@@ -465,6 +466,54 @@ class TestNansheLearner(object):
 
     def test_generate_neurons_blocks(self):
         nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks["generate_neurons_blocks"])
+
+        assert(os.path.exists(self.hdf5_output_filename))
+
+        with h5py.File(self.hdf5_output_filename, "r") as fid:
+            assert("neurons" in fid)
+
+            neurons = fid["neurons"].value
+
+        assert(len(self.points) == len(neurons))
+
+        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+
+        matched = dict()
+        unmatched_points = numpy.arange(len(self.points))
+        for i in xrange(len(neuron_max_points)):
+            new_unmatched_points = []
+            for j in unmatched_points:
+                if not (neuron_max_points[i] == self.points[j]).all():
+                    new_unmatched_points.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_points = new_unmatched_points
+
+        assert(len(unmatched_points) == 0)
+
+    def test_generate_neurons(self):
+        with h5py.File(self.hdf5_output_filename, "a") as output_file_handle:
+            output_group = output_file_handle["/"]
+
+            # Get a debug logger for the HDF5 file (if needed)
+            array_debug_recorder = nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+                group_name = "debug",
+                enable = self.config_a_block["debug"],
+                overwrite_group = False,
+                recorder_constructor = nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder
+            )
+
+            # Saves intermediate result to make resuming easier
+            resume_logger = nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+                recorder_constructor = nanshe.HDF5_recorder.HDF5ArrayRecorder,
+                overwrite = True
+            )
+
+            nanshe.nanshe_learner.generate_neurons.resume_logger = resume_logger
+            nanshe.nanshe_learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
+            nanshe.nanshe_learner.generate_neurons(self.image_stack, **self.config_a_block["generate_neurons"])
 
         assert(os.path.exists(self.hdf5_output_filename))
 
