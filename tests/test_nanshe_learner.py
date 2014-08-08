@@ -119,6 +119,139 @@ class TestNansheLearner(object):
             }
         }
 
+        self.config_blocks = {
+            "generate_neurons_blocks" : {
+                "num_processes" : 4,
+                "block_shape" : [10000, -1, -1],
+                "num_blocks" : [-1, 5, 5],
+                "half_border_shape" : [0, 5, 5],
+                "half_window_shape" : [50, 20, 20],
+
+                "debug" : True,
+
+                "generate_neurons" : {
+                    "__comment__run_stage" : "Where to run until either preprocessing, dictionary, or postprocessing. If resume, is true then it will delete the previous results at this stage. By default (all can be set explicitly to null string)runs all the way through.",
+
+                    "run_stage" : "all",
+
+                    "__comment__normalize_data" : "These are arguments that will be passed to normalize_data.",
+
+                    "preprocess_data" : {
+                        "remove_zeroed_lines" : {
+                            "erosion_shape" : [21, 1],
+                            "dilation_shape" : [1, 3]
+                        },
+
+                        "extract_f0" : {
+                            "bias" : 100,
+
+                            "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+
+                            "half_window_size" : 50,          "__comment__window_size" : "In number of frames",
+                            "step_size" : 100,                "__comment__step_size" : "In number of frames",
+                            "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
+
+                            "spatial_smoothing_gaussian_filter_stdev" : 5.0
+                        },
+
+                        "wavelet_transform" : {
+                            "scale" : [3, 4, 4]
+                        },
+
+                        "normalize_data" : {
+                            "simple_image_processing.renormalized_images": {
+                                "ord" : 2
+                            }
+                        }
+                    },
+
+
+                    "__comment__generate_dictionary" : "These are arguments that will be passed to generate_dictionary.",
+
+                    "generate_dictionary" : {
+                        "spams.trainDL" : {
+                            "K" : 10,
+                            "gamma2": 0,
+                            "gamma1": 0,
+                            "numThreads": -1,
+                            "batchsize": 256,
+                            "iter": 100,
+                            "lambda1": 0.2,
+                            "posD": True,
+                            "clean": True,
+                            "modeD": 0,
+                            "posAlpha": True,
+                            "mode": 2,
+                            "lambda2": 0
+                        }
+                    },
+
+
+                    "postprocess_data" : {
+
+                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_denoising.",
+
+                        "wavelet_denoising" : {
+
+                            "denoising.estimate_noise" : {
+                                "significance_threshhold" : 3.0
+                            },
+
+                            "denoising.significant_mask" : {
+                                "noise_threshhold" : 3.0
+                            },
+
+                            "wavelet_transform.wavelet_transform" : {
+                                "scale" : 4
+                            },
+
+                            "accepted_region_shape_constraints" : {
+                                "major_axis_length" : {
+                                    "min" : 0.0,
+                                    "max" : 25.0
+                                }
+                            },
+
+                            "remove_low_intensity_local_maxima" : {
+                                "percentage_pixels_below_max" : 0
+
+                            },
+
+                            "__comment__min_local_max_distance" : 6.0,
+                            "remove_too_close_local_maxima" : {
+                                "min_local_max_distance"  : 100.0
+                            },
+
+                            "use_watershed" : True,
+
+                            "__comment__accepted_neuron_shape_constraints_area_max" : 250,
+                            "accepted_neuron_shape_constraints" : {
+                                "area" : {
+                                    "min" : 30,
+                                    "max" : 600
+                                },
+
+                                "eccentricity" : {
+                                    "min" : 0.0,
+                                    "max" : 0.9
+                                }
+                            }
+                        },
+
+
+                        "merge_neuron_sets" : {
+                            "alignment_min_threshold" : 0.6,
+                            "overlap_min_threshold" : 0.6,
+
+                            "fuse_neurons" : {
+                                "fraction_mean_neuron_max_threshold" : 0.01
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         self.temp_dir = tempfile.mkdtemp()
         self.temp_dir = os.path.abspath(self.temp_dir)
 
@@ -128,6 +261,7 @@ class TestNansheLearner(object):
         self.hdf5_output_filepath = self.hdf5_output_filename + "/"
 
         self.config_a_block_filename = os.path.join(self.temp_dir, "config_a_block.json")
+        self.config_blocks_filename = os.path.join(self.temp_dir, "config_blocks.json")
 
         self.space = numpy.array([110, 110])
         self.radii = numpy.array([7, 6, 6, 6, 7, 6])
@@ -173,10 +307,46 @@ class TestNansheLearner(object):
         with open(self.config_a_block_filename, "w") as fid:
             json.dump(self.config_a_block, fid)
 
+        with open(self.config_blocks_filename, "w") as fid:
+            json.dump(self.config_blocks, fid)
+
     def test_main_1(self):
         executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_a_block_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
+
+        assert(0 == nanshe.nanshe_learner.main(*argv))
+
+        assert(os.path.exists(self.hdf5_output_filename))
+
+        with h5py.File(self.hdf5_output_filename, "r") as fid:
+            assert("neurons" in fid)
+
+            neurons = fid["neurons"].value
+
+        assert(len(self.points) == len(neurons))
+
+        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+
+        matched = dict()
+        unmatched_points = numpy.arange(len(self.points))
+        for i in xrange(len(neuron_max_points)):
+            new_unmatched_points = []
+            for j in unmatched_points:
+                if not (neuron_max_points[i] == self.points[j]).all():
+                    new_unmatched_points.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_points = new_unmatched_points
+
+        assert(len(unmatched_points) == 0)
+
+    def test_main_2(self):
+        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+
+        argv = (executable, self.config_blocks_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
         assert(0 == nanshe.nanshe_learner.main(*argv))
 
@@ -212,6 +382,12 @@ class TestNansheLearner(object):
         except OSError:
             pass
         self.config_a_block_filename = ""
+
+        try:
+            os.remove(self.config_blocks_filename)
+        except OSError:
+            pass
+        self.config_blocks_filename = ""
 
         try:
             os.remove(self.hdf5_input_filename)
