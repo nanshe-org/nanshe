@@ -460,6 +460,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     # finished_processes = None
 
     with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
+        output_group = output_file_handle[output_group_name]
+
         new_neurons_set = advanced_image_processing.get_empty_neuron(shape=tuple(original_images_shape_array[1:]), dtype=float)
 
         for i, i_str, (output_filename_block_i, sequential_block_i) in additional_generators.filled_stringify_enumerate(itertools.izip(output_filename_block, original_images_pared_slices.flat)):
@@ -490,6 +492,15 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                     neurons_block_i["contour"][windowed_slice_i] = neurons_block_i_accepted["contour"]
                     neurons_block_i["image"][windowed_slice_i] = neurons_block_i_accepted["image"]
 
+
+                    array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
+                        group_name = "debug",
+                        enable = debug,
+                        overwrite_group = False,
+                        recorder_constructor = HDF5_recorder.HDF5EnumeratedArrayRecorder
+                    )
+
+                    advanced_image_processing.merge_neuron_sets.recorders.array_debug_recorder = array_debug_recorder
                     new_neurons_set = advanced_image_processing.merge_neuron_sets(new_neurons_set, neurons_block_i,
                                                                                   **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"])
 
