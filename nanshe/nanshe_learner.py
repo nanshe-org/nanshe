@@ -380,7 +380,10 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             if input_filename_details.externalPath == output_filename_details.externalPath:
                 output_group["original_images"] = h5py.SoftLink(input_dataset_name)
             else:
-                output_group["original_images"] = h5py.ExternalLink(input_filename_details.externalPath, input_dataset_name)
+                # TODO: BROKEN! Do not use. Must fix. Appears to be an issue with reading from subprocesses in this case.
+                # output_group["original_images"] = h5py.ExternalLink(input_filename_details.externalPath, input_dataset_name)
+                with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
+                    output_group["original_images"] = HDF5_serializers.read_numpy_structured_array_from_HDF5(input_file_handle, input_dataset_name)
 
         if "blocks" not in output_group:
            output_group.create_group("blocks")
