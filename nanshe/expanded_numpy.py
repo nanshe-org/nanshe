@@ -595,47 +595,48 @@ def expand_enumerate(new_array, axis = 0, start = 0, step = 1):
             array([[0, 0, 0, 0, 0],
                    [1, 1, 1, 1, 1],
                    [2, 2, 2, 2, 2],
-                   [3, 3, 3, 3, 3]])
+                   [3, 3, 3, 3, 3]], dtype=uint64)
 
             >>> expand_enumerate(numpy.ones((4,5)), axis=0)
             array([[0, 0, 0, 0, 0],
                    [1, 1, 1, 1, 1],
                    [2, 2, 2, 2, 2],
-                   [3, 3, 3, 3, 3]])
+                   [3, 3, 3, 3, 3]], dtype=uint64)
 
             >>> expand_enumerate(numpy.ones((4,5)), axis=0, start=1)
             array([[1, 1, 1, 1, 1],
                    [2, 2, 2, 2, 2],
                    [3, 3, 3, 3, 3],
-                   [4, 4, 4, 4, 4]])
+                   [4, 4, 4, 4, 4]], dtype=uint64)
 
             >>> expand_enumerate(numpy.ones((4,5)), axis=0, start=1, step=2)
             array([[1, 1, 1, 1, 1],
                    [3, 3, 3, 3, 3],
                    [5, 5, 5, 5, 5],
-                   [7, 7, 7, 7, 7]])
+                   [7, 7, 7, 7, 7]], dtype=uint64)
 
             >>> expand_enumerate(numpy.ones((4,5)), axis=1)
             array([[0, 1, 2, 3, 4],
                    [0, 1, 2, 3, 4],
                    [0, 1, 2, 3, 4],
-                   [0, 1, 2, 3, 4]])
+                   [0, 1, 2, 3, 4]], dtype=uint64)
 
             >>> expand_enumerate(numpy.ones((4,5)), axis=1, start=1)
             array([[1, 2, 3, 4, 5],
                    [1, 2, 3, 4, 5],
                    [1, 2, 3, 4, 5],
-                   [1, 2, 3, 4, 5]])
+                   [1, 2, 3, 4, 5]], dtype=uint64)
 
             >>> expand_enumerate(numpy.ones((4,5)), axis=1, start=1, step=2)
             array([[1, 3, 5, 7, 9],
                    [1, 3, 5, 7, 9],
                    [1, 3, 5, 7, 9],
-                   [1, 3, 5, 7, 9]])
+                   [1, 3, 5, 7, 9]], dtype=uint64)
 
     """
 
     an_enumeration = expand_arange(start = start, stop = start + step * new_array.shape[axis], step = step,
+                                   dtype = numpy.uint64,
                                    reps_before = new_array.shape[:axis], reps_after = new_array.shape[(axis+1):])
 
     return(an_enumeration)
@@ -668,7 +669,7 @@ def enumerate_masks(new_masks, axis = 0):
             <BLANKLINE>
                    [[3, 3, 3],
                     [3, 3, 3],
-                    [3, 3, 3]]])
+                    [3, 3, 3]]], dtype=uint64)
 
             >>> enumerate_masks(numpy.array([[[ True, False, False, False],
             ...                               [False, False, False, False],
@@ -707,7 +708,7 @@ def enumerate_masks(new_masks, axis = 0):
                    [[0, 0, 0, 0],
                     [0, 0, 0, 0],
                     [0, 0, 0, 0],
-                    [0, 0, 0, 4]]])
+                    [0, 0, 0, 4]]], dtype=uint64)
     """
 
     new_enumerated_masks = new_masks * expand_enumerate(new_masks, axis=axis, start=1, step=1)
