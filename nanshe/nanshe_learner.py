@@ -380,15 +380,20 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             if input_filename_details.externalPath == output_filename_details.externalPath:
                 output_group["original_images"] = h5py.SoftLink(input_dataset_name)
             else:
-                # TODO: BROKEN! Do not use. Must fix. Appears to be an issue with reading from subprocesses in this case.
-                # output_group["original_images"] = h5py.ExternalLink(input_filename_details.externalPath, input_dataset_name)
-                with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
-                    output_group["original_images"] = HDF5_serializers.read_numpy_structured_array_from_HDF5(input_file_handle, input_dataset_name)
+                output_group["original_images"] = h5py.ExternalLink(input_filename_details.externalPath, "/" + input_dataset_name)
 
         if "blocks" not in output_group:
            output_group.create_group("blocks")
 
         output_group_blocks = output_group["blocks"]
+
+        input_file_handle = None
+        try:
+            # Must be opened in write mode to create a regionref.
+            input_file_handle = h5py.File(input_filename_details.externalPath, "a")
+        except IOError:
+            # File is already open
+            input_file_handle = output_file_handle
 
         for i, i_str, sequential_block_i in additional_generators.filled_stringify_enumerate(original_images_pared_slices.flat):
             # Ensure that the blocks are corrected to deal with trimming of the image stack
@@ -397,8 +402,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             slice_i = tuple([slice(_1, _2, 1) for _1, _2 in sequential_block_i_windowed])
 
             if i_str not in output_group_blocks:
-                output_group_blocks[i_str] = output_group["original_images"].regionref[slice_i]
-                output_group_blocks[i_str].attrs["filename"] = output_group["original_images"].file.filename
+                output_group_blocks[i_str] = input_file_handle[input_dataset_name].regionref[slice_i]
+                output_group_blocks[i_str].attrs["filename"] = input_file_handle.filename
 
             block_i = output_group_blocks[i_str]
 
@@ -410,6 +415,9 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
                 input_filename_block.append(each_block_file_handle.filename + "/" + "original_images")
                 output_filename_block.append(each_block_file_handle.filename + "/")
+
+        if input_file_handle != output_file_handle:
+            input_file_handle.close()
 
     # TODO: Refactor into a separate function somehow.
     executable = None
