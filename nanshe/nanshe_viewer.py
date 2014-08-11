@@ -42,7 +42,7 @@ from PyQt4.QtCore import pyqtSignal
 from PyQt4.QtCore import QObject
 
 from volumina.multimethods import multimethod
-from volumina.pixelpipeline.datasources import SourceABC, RequestABC
+from volumina.pixelpipeline.datasources import SourceABC, RequestABC, ArraySource, ArrayRequest
 from volumina.pixelpipeline.datasources import is_pure_slicing
 from volumina.layer import GrayscaleLayer, RGBALayer, ColortableLayer, ClickableColortableLayer, AlphaModulatedLayer
 from volumina.viewer import Viewer
@@ -700,6 +700,17 @@ class MaxProjectionConstantSource( QObject ):
         self._shape[self.axis] = 1
         self._shape = tuple(self._shape)
 
+        # Real hacky solution for caching.
+        slicing = ( slice(None), ) * len(self._shape)
+
+        self._constant_source_cached = self.constant_source.request(slicing).wait()
+        self._constant_source_cached = self._constant_source_cached.max(axis = self.axis)
+        self._constant_source_cached = expanded_numpy.add_singleton_axis_pos(self._constant_source_cached,
+                                                                             new_axis=self.axis)
+
+        self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
+        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
+
     @debugging_tools.log_call(logger)
     def numberOfChannels(self):
         return(self.dataset_shape[-1])
@@ -728,7 +739,10 @@ class MaxProjectionConstantSource( QObject ):
         constant_source_slicing[self.axis] = slice(None)
         constant_source_slicing = tuple(constant_source_slicing)
 
-        return(MaxProjectionConstantRequest(self.constant_source.request(constant_source_slicing), self.axis, slicing))
+        return(MaxProjectionConstantRequest(self._constant_source_cached_array_request,
+                                            self.axis,
+                                            slicing)
+        )
 
     @debugging_tools.log_call(logger)
     def setDirty( self, slicing):
