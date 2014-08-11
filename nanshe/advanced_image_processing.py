@@ -300,7 +300,11 @@ def preprocess_data(new_data, **parameters):
         new_data_maybe_lines_removed = remove_zeroed_lines(new_data,
                                                            **parameters["remove_zeroed_lines"])
         preprocess_data.recorders.array_debug_recorder["images_lines_removed"] = new_data_maybe_lines_removed
-        preprocess_data.recorders.array_debug_recorder["images_lines_removed_max"] = new_data_maybe_lines_removed.max(axis = 0)
+        preprocess_data.recorders.array_debug_recorder["images_lines_removed_max"] = expanded_numpy.add_singleton_op(
+            numpy.max,
+            new_data_maybe_lines_removed,
+            axis = 0
+        )
     else:
         new_data_maybe_lines_removed = new_data
 
@@ -310,7 +314,11 @@ def preprocess_data(new_data, **parameters):
         new_data_maybe_f0_result = extract_f0(new_data_maybe_lines_removed,
                                               **parameters["extract_f0"])
         preprocess_data.recorders.array_debug_recorder["images_f0"] = new_data_maybe_f0_result
-        preprocess_data.recorders.array_debug_recorder["images_f0_max"] = new_data_maybe_f0_result.max(axis = 0)
+        preprocess_data.recorders.array_debug_recorder["images_f0_max"] = expanded_numpy.add_singleton_op(
+            numpy.max,
+            new_data_maybe_f0_result,
+            axis = 0
+        )
     else:
         new_data_maybe_f0_result = new_data_maybe_lines_removed
 
@@ -320,7 +328,11 @@ def preprocess_data(new_data, **parameters):
         new_data_maybe_wavelet_result = wavelet_transform.wavelet_transform(new_data_maybe_f0_result,
                                                                             **parameters["wavelet_transform"])[-1]
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed"] = new_data_maybe_wavelet_result
-        preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = new_data_maybe_wavelet_result.max(axis = 0)
+        preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = expanded_numpy.add_singleton_op(
+            numpy.max,
+            new_data_maybe_wavelet_result,
+            axis = 0
+        )
     else:
         new_data_maybe_wavelet_result = new_data_maybe_f0_result
 
@@ -328,7 +340,11 @@ def preprocess_data(new_data, **parameters):
     new_data_normalized = normalize_data(new_data_maybe_wavelet_result,
                                          **parameters["normalize_data"])
     preprocess_data.recorders.array_debug_recorder["images_normalized"] = new_data_normalized
-    preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = new_data_normalized.max(axis = 0)
+    preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = expanded_numpy.add_singleton_op(
+            numpy.max,
+            new_data_normalized,
+            axis = 0
+        )
 
     return(new_data_normalized)
 
@@ -1411,8 +1427,8 @@ class ExtendedRegionProps(object):
 
             logger.warning(failed_label_msg)
 
-            ExtendedRegionProps.recorders.array_debug_recorder["intensity_image"] = self.intensity_image
-            ExtendedRegionProps.recorders.array_debug_recorder["label_image"] = self.label_image
+            ExtendedRegionProps.recorders.array_debug_recorder["intensity_image"] = self.intensity_image[None]
+            ExtendedRegionProps.recorders.array_debug_recorder["label_image"] = self.label_image[None]
 
             if self.props.size:
                 ExtendedRegionProps.recorders.array_debug_recorder["props"] = self.props
@@ -1719,7 +1735,7 @@ def wavelet_denoising(new_image,
                                                                         **parameters["wavelet_transform.wavelet_transform"])
 
     for i in xrange(len(new_wavelet_transformed_image)):
-        wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = new_wavelet_transformed_image[i]
+        wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = new_wavelet_transformed_image[i][None]
 
     # Contains a bool array with significant values True and noise False for all wavelet transforms.
     new_wavelet_transformed_image_significant_mask = denoising.significant_mask(new_wavelet_transformed_image,
@@ -1728,7 +1744,7 @@ def wavelet_denoising(new_image,
 
     for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
         wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image_significant_mask"] = \
-            new_wavelet_transformed_image_significant_mask[i]
+            new_wavelet_transformed_image_significant_mask[i][None]
 
     new_wavelet_image_mask = new_wavelet_transformed_image_significant_mask[-1].copy()
 
@@ -1736,7 +1752,7 @@ def wavelet_denoising(new_image,
     new_wavelet_image_denoised = new_wavelet_transformed_image[-1].copy()
     new_wavelet_image_denoised *= new_wavelet_image_mask
 
-    wavelet_denoising.recorders.array_debug_recorder["new_wavelet_image_denoised"] = new_wavelet_image_denoised
+    wavelet_denoising.recorders.array_debug_recorder["new_wavelet_image_denoised"] = new_wavelet_image_denoised[None]
 
     logger.debug("Noise removed.")
 
@@ -1827,21 +1843,21 @@ def wavelet_denoising(new_image,
         ExtendedRegionProps.recorders.array_debug_recorder = wavelet_denoising.recorders.array_debug_recorder
         local_maxima = ExtendedRegionProps(new_wavelet_image_denoised, new_wavelet_image_denoised_label_image)
 
-        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image
+        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = \
-            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)
+            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
 
         local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
 
-        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image
+        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = \
-            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)
+            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
 
         local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
 
-        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image
+        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = \
-            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)
+            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
 
         if local_maxima.props.size:
             if use_watershed:
@@ -1863,18 +1879,18 @@ def wavelet_denoising(new_image,
                                                                                        new_wavelet_image_denoised_maxima,
                                                                                        mask = (local_maxima.intensity_image > 0))
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = new_wavelet_image_denoised_segmentation
+                wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = new_wavelet_image_denoised_segmentation[None]
                 wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation_contours"] = \
-                    expanded_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation)
+                    expanded_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation)[None]
 
                 watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
                                                              new_wavelet_image_denoised_segmentation,
                                                              properties = ["centroid"] + accepted_neuron_shape_constraints.keys())
 
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
-                    watershed_local_maxima.label_image
+                    watershed_local_maxima.label_image[None]
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                    expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)
+                    expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
@@ -1887,9 +1903,9 @@ def wavelet_denoising(new_image,
                     watershed_local_maxima.props["label"], new_watershed_local_maxima_count_duplicate_labels)
                 watershed_local_maxima.remove_prop_mask(new_watershed_local_maxima_props_duplicates_mask)
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                                   expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)
+                                   expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
                 if watershed_local_maxima.props.size:
                     wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
@@ -1926,9 +1942,9 @@ def wavelet_denoising(new_image,
                 # Get labels outside of bounds and remove them
                 watershed_local_maxima.remove_prop_mask(not_within_bound)
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                                   expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)
+                                   expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
                 if watershed_local_maxima.props.size:
                     wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
@@ -2326,7 +2342,11 @@ def postprocess_data(new_dictionary, **parameters):
         unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(numpy.uint64).copy()
 
         unmerged_neuron_set_contours *= expanded_numpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
-        unmerged_neuron_set_contours = unmerged_neuron_set_contours.max(axis = 0)
+        unmerged_neuron_set_contours = expanded_numpy.add_singleton_op(
+            numpy.max,
+            unmerged_neuron_set_contours,
+            axis = 0
+        )
 
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
 
@@ -2336,7 +2356,11 @@ def postprocess_data(new_dictionary, **parameters):
         new_neurons_set_contours = new_neurons_set["contour"].astype(numpy.uint64).copy()
 
         new_neurons_set_contours *= expanded_numpy.expand_enumerate(new_neurons_set_contours, start = 1)
-        new_neurons_set_contours = new_neurons_set_contours.max(axis = 0)
+        new_neurons_set_contours = expanded_numpy.add_singleton_op(
+            numpy.max,
+            new_neurons_set_contours,
+            axis = 0
+        )
 
         postprocess_data.recorders.array_debug_recorder["new_neurons_set_contours"] = new_neurons_set_contours
 

@@ -605,10 +605,18 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 @generic_decorators.static_variables(resume_logger = HDF5_recorder.EmptyArrayRecorder())
 def generate_neurons(original_images, run_stage = "all", **parameters):
     if "original_images_max_projection" not in generate_neurons.recorders.array_debug_recorder:
-        generate_neurons.recorders.array_debug_recorder["original_images_max_projection"] = original_images.max(axis = 0)
+        generate_neurons.recorders.array_debug_recorder["original_images_max_projection"] = expanded_numpy.add_singleton_op(
+            numpy.max,
+            original_images,
+            axis = 0
+        )
 
     if "original_images_mean_projection" not in generate_neurons.recorders.array_debug_recorder:
-        generate_neurons.recorders.array_debug_recorder["original_images_mean_projection"] = original_images.mean(axis = 0)
+        generate_neurons.recorders.array_debug_recorder["original_images_mean_projection"] = expanded_numpy.add_singleton_op(
+            numpy.mean,
+            original_images,
+            axis = 0
+        )
 
     # Preprocess images
     new_preprocessed_images = generate_neurons.resume_logger.get("preprocessed_images", None)
@@ -619,7 +627,11 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
         generate_neurons.resume_logger["preprocessed_images"] = new_preprocessed_images
 
         if "preprocessed_images_max_projection" not in generate_neurons.recorders.array_debug_recorder:
-            generate_neurons.recorders.array_debug_recorder["preprocessed_images_max_projection"] = new_preprocessed_images.max(axis = 0)
+            generate_neurons.recorders.array_debug_recorder["preprocessed_images_max_projection"] = expanded_numpy.add_singleton_op(
+            numpy.max,
+            new_preprocessed_images,
+            axis = 0
+        )
 
     if run_stage == "preprocessing":
         return
@@ -633,7 +645,11 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
         generate_neurons.resume_logger["dictionary"] = new_dictionary
 
         if "dictionary_max_projection" not in generate_neurons.recorders.array_debug_recorder:
-            generate_neurons.recorders.array_debug_recorder["dictionary_max_projection"] = new_dictionary.max(axis = 0)
+            generate_neurons.recorders.array_debug_recorder["dictionary_max_projection"] = expanded_numpy.add_singleton_op(
+            numpy.max,
+            new_dictionary,
+            axis = 0
+        )
 
     if run_stage == "dictionary":
         return
