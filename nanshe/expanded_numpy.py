@@ -262,6 +262,41 @@ def add_singleton_axis_end(new_array):
 
 
 @debugging_tools.log_call(logger)
+def add_singleton_op(op, new_array, axis):
+    """
+        Performs an operation on the given array on the specified axis, which otherwise would have eliminated the axis
+        in question. This function will instead ensure that the given axis remains after the operation as a singleton.
+
+        Note:
+            The operation must be able to take only two arguments where the first is the array and the second is the
+            axis to apply the operation along.
+
+        Args:
+            op(callable):                 callable that takes a numpy.ndarray and an int in order.
+            new_array(numpy.ndarray):     array to perform operation on and add singleton axis too.
+            axis(int):                    the axis to apply the operation along and turn into a singleton.
+
+        Returns:
+            (numpy.ndarray):              the array with the operation performed.
+
+        Examples:
+            >>> add_singleton_op(numpy.max, numpy.ones((7,9,6)), 0).shape
+            (1, 9, 6)
+
+            >>> add_singleton_op(numpy.max, numpy.ones((7,9,6)), -1).shape
+            (7, 9, 1)
+
+            >>> add_singleton_op(numpy.min, numpy.ones((7,9,6)), 1).shape
+            (7, 1, 6)
+
+            >>> add_singleton_op(numpy.mean, numpy.ones((7,9,6)), 1).shape
+            (7, 1, 6)
+    """
+
+    return(add_singleton_axis_pos(op(new_array, axis), axis))
+
+
+@debugging_tools.log_call(logger)
 def contains(new_array, to_contain):
     """
         Gets a mask array that is true every time something from to_contain appears in new_array.
