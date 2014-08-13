@@ -1881,7 +1881,8 @@ def wavelet_denoising(new_image,
                                                                                        new_wavelet_image_denoised_maxima,
                                                                                        mask = (local_maxima.intensity_image > 0))
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = new_wavelet_image_denoised_segmentation[None]
+                wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = \
+                    new_wavelet_image_denoised_segmentation[None]
                 wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation_contours"] = \
                     expanded_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation)[None]
 
@@ -1905,7 +1906,8 @@ def wavelet_denoising(new_image,
                     watershed_local_maxima.props["label"], new_watershed_local_maxima_count_duplicate_labels)
                 watershed_local_maxima.remove_prop_mask(new_watershed_local_maxima_props_duplicates_mask)
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
+                    watershed_local_maxima.label_image[None]
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
                                    expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
@@ -1944,7 +1946,8 @@ def wavelet_denoising(new_image,
                 # Get labels outside of bounds and remove them
                 watershed_local_maxima.remove_prop_mask(not_within_bound)
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
+                    watershed_local_maxima.label_image[None]
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
                                    expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
