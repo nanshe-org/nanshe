@@ -141,6 +141,34 @@ class TestAdvancedImageProcessing(object):
 
         assert((b == 0).all())
 
+    def test_extract_f0_4(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        half_window_size = 400
+        bias = 100
+        step_size = 100
+
+        mean = 0.0
+        stdev = 1.0
+
+        a = numpy.random.normal(mean, stdev, (100, 100, 100, 100))
+
+        b = nanshe.advanced_image_processing.extract_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            half_window_size=half_window_size,
+            bias=bias,
+            step_size=step_size)
+
+        # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
+        # Hence, multiplication by 99 instead of 100.
+        assert( (99.0*b.std()) < a.std() )
+
+        # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
+        assert( ((a - 100.0*b) < 0.1).all() )
+
     def test_preprocess_data_1(self):
         ## Does NOT test accuracy.
 
