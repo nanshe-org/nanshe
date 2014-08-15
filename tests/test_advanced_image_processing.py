@@ -121,6 +121,26 @@ class TestAdvancedImageProcessing(object):
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
         assert( ((a - 100.0*b) < 0.1).all() )
 
+    def test_extract_f0_3(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        half_window_size = 400
+        bias = 100
+        step_size = 100
+
+        a = numpy.ones((100, 100, 100, 100))
+
+        b = nanshe.advanced_image_processing.extract_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            half_window_size=half_window_size,
+            bias=bias,
+            step_size=step_size)
+
+        assert((b == 0).all())
+
     def test_preprocess_data_1(self):
         ## Does NOT test accuracy.
 
