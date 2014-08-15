@@ -541,12 +541,26 @@ class TestAdvancedImageProcessing(object):
 
         assert(len(unmatched_g) == 0)
 
-    def test_generate_local_maxima_vigra(self):
+    def test_generate_local_maxima_vigra_1(self):
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
 
         space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+        magnitudes = numpy.array((1, 1, 1), dtype = float)
+
+        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        m = nanshe.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
+
+        assert((numpy.array(m.nonzero()) == p.T).all())
+
+    def test_generate_local_maxima_vigra_2(self):
+        p = numpy.array([[27, 51, 87],
+                         [66, 85, 55],
+                         [77, 45, 26]])
+
+        space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
