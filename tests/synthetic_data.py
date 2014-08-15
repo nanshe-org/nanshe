@@ -234,6 +234,13 @@ def generate_random_bound_points(space, radii):
             >>> numpy.random.seed(0); generate_random_bound_points((100, 100), (5, 5))
             array([[49, 52],
                    [69, 72]])
+
+            >>> numpy.random.seed(0); generate_random_bound_points((100, 100, 100), (5,))
+            array([[49, 52, 69]])
+
+            >>> numpy.random.seed(0); generate_random_bound_points((100, 100, 100), (5, 5))
+            array([[49, 52, 69],
+                   [72, 72, 14]])
     """
 
     # Convert to arrays
