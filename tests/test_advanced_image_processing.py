@@ -1065,6 +1065,110 @@ class TestAdvancedImageProcessing(object):
 
         assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
 
+    def test_remove_too_close_local_maxima_5(self):
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 5))
+        magnitudes = numpy.array((1, 1), dtype = float)
+        points = numpy.array([[63, 69, 26],
+                              [58, 64, 21]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        labels = masks.max(axis = 0).astype(int)
+
+        e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+
+        dist = scipy.spatial.distance.pdist(points).max()
+        i = 0
+        while (dist + i * numpy.finfo(type(dist)).eps) == dist:
+            i += 1
+        dist += i * numpy.finfo(type(dist)).eps
+
+        e2 = nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+
+        assert(len(points) == len(e.props))
+
+        assert(1 == len(e2.props))
+
+    def test_remove_too_close_local_maxima_6(self):
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 5))
+        magnitudes = numpy.array((1, 1), dtype = float)
+        points = numpy.array([[63, 69, 26],
+                              [58, 64, 21]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
+
+        e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+
+        dist = scipy.spatial.distance.pdist(points).max()
+        i = 0
+        while (dist + i * numpy.finfo(type(dist)).eps) == dist:
+            i += 1
+        dist += i * numpy.finfo(type(dist)).eps
+
+        e2 = nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+
+        assert(len(points) == len(e.props))
+
+        assert(len(points) == len(e2.props))
+
+    def test_remove_too_close_local_maxima_7(self):
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 5))
+        magnitudes = numpy.array((1, 1.01), dtype = float)
+        points = numpy.array([[63, 69, 26],
+                              [58, 64, 21]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        labels = masks.max(axis = 0).astype(int)
+
+        e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+
+        dist = scipy.spatial.distance.pdist(points).max()
+        i = 0
+        while (dist + i * numpy.finfo(type(dist)).eps) == dist:
+            i += 1
+        dist += i * numpy.finfo(type(dist)).eps
+
+        e2 = nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+
+        assert(len(points) == len(e.props))
+
+        assert(1 == len(e2.props))
+
+        assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
+
+    def test_remove_too_close_local_maxima_8(self):
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 5))
+        magnitudes = numpy.array((1.01, 1), dtype = float)
+        points = numpy.array([[63, 69, 26],
+                              [58, 64, 21]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        labels = masks.max(axis = 0).astype(int)
+
+        e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+
+        dist = scipy.spatial.distance.pdist(points).max()
+        i = 0
+        while (dist + i * numpy.finfo(type(dist)).eps) == dist:
+            i += 1
+        dist += i * numpy.finfo(type(dist)).eps
+
+        e2 = nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+
+        assert(len(points) == len(e.props))
+
+        assert(1 == len(e2.props))
+
+        assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
+
     def test_wavelet_denoising(self):
         params = {
             "remove_low_intensity_local_maxima" : {
