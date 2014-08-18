@@ -1379,7 +1379,7 @@ class TestAdvancedImageProcessing(object):
         assert( numpy.abs(neurons["image"].max(axis = 0) - neuron_images.max(axis = 0)).max() < 1.0e-6 )
         assert( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-6 )
 
-    def test_extract_neurons(self):
+    def test_extract_neurons_1(self):
         image = 5 * numpy.ones((100, 100))
 
         xy = numpy.indices(image.shape)
@@ -1390,6 +1390,49 @@ class TestAdvancedImageProcessing(object):
 
         circle_offsets = nanshe.expanded_numpy.expand_view(circle_centers, image.shape) - \
                          nanshe.expanded_numpy.expand_view(xy, reps_before=len(circle_centers))
+
+        circle_offsets_squared = circle_offsets**2
+
+        circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.expanded_numpy.expand_view(circle_radii, image.shape))
+        circle_images = circle_masks * image
+
+        circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
+        circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
+        for circle_mask_i in xrange(len(circle_masks)):
+            each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
+
+            circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
+            circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
+
+        neurons = nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+
+        assert(len(circle_masks) == len(neurons))
+
+        assert((circle_masks == neurons["mask"]).all())
+
+        assert((circle_images == neurons["image"]).all())
+
+        assert((numpy.apply_over_axes(numpy.sum, circle_masks, range(1, circle_masks.ndim)) == neurons["area"]).all())
+
+        assert((numpy.apply_over_axes(numpy.max, circle_images, range(1, circle_masks.ndim)) == neurons["max_F"]).all())
+
+        assert((circle_mask_mean == neurons["gaussian_mean"]).all())
+
+        assert((circle_mask_cov == neurons["gaussian_cov"]).all())
+
+        assert((neurons["centroid"] == neurons["gaussian_mean"]).all())
+
+    def test_extract_neurons_2(self):
+        image = 5 * numpy.ones((100, 100, 100))
+
+        xyz = numpy.indices(image.shape)
+
+        circle_centers = numpy.array([[25, 25, 25], [74, 74, 74]])
+
+        circle_radii = numpy.array([25, 25])
+
+        circle_offsets = nanshe.expanded_numpy.expand_view(circle_centers, image.shape) - \
+                         nanshe.expanded_numpy.expand_view(xyz, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
