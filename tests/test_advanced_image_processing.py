@@ -1465,7 +1465,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((neurons["centroid"] == neurons["gaussian_mean"]).all())
 
-    def test_fuse_neurons(self):
+    def test_fuse_neurons_1(self):
         fraction_mean_neuron_max_threshold = 0.01
 
         image = 5 * numpy.ones((100, 100))
@@ -1473,6 +1473,49 @@ class TestAdvancedImageProcessing(object):
         xy = numpy.indices(image.shape)
 
         circle_centers = numpy.array([[25, 25], [74, 74]])
+
+        circle_radii = numpy.array([25, 25])
+
+        circle_offsets = nanshe.expanded_numpy.expand_view(circle_centers, image.shape) - \
+                         nanshe.expanded_numpy.expand_view(xy, reps_before=len(circle_centers))
+
+        circle_offsets_squared = circle_offsets**2
+
+        circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.expanded_numpy.expand_view(circle_radii, image.shape))
+
+        circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
+        circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
+        for circle_mask_i in xrange(len(circle_masks)):
+            each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
+
+            circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
+            circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
+
+        neurons = nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+
+        fused_neurons = nanshe.advanced_image_processing.fuse_neurons(neurons[0], neurons[1],
+                                                                      fraction_mean_neuron_max_threshold)
+
+        assert((neurons["mask"].sum(axis = 0) == fused_neurons["mask"]).all())
+
+        assert((neurons["image"].mean(axis = 0) == fused_neurons["image"]).all())
+
+        assert(numpy.array(neurons["area"].sum()) == fused_neurons["area"])
+
+        assert(fused_neurons["image"].max() == fused_neurons["max_F"])
+
+        assert((neurons["gaussian_mean"].mean(axis = 0) == fused_neurons["gaussian_mean"]).all())
+
+        assert((fused_neurons["centroid"] == fused_neurons["gaussian_mean"]).all())
+
+    def test_fuse_neurons_2(self):
+        fraction_mean_neuron_max_threshold = 0.01
+
+        image = 5 * numpy.ones((100, 100, 100))
+
+        xy = numpy.indices(image.shape)
+
+        circle_centers = numpy.array([[25, 25, 25], [74, 74, 74]])
 
         circle_radii = numpy.array([25, 25])
 
