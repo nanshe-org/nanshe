@@ -8,6 +8,8 @@ import scipy
 import scipy.spatial
 import scipy.spatial.distance
 
+import scipy.stats
+
 import nanshe.expanded_numpy
 
 import nanshe.advanced_image_processing
@@ -1169,7 +1171,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
 
-    def test_wavelet_denoising(self):
+    def test_wavelet_denoising_1(self):
         params = {
             "remove_low_intensity_local_maxima" : {
                 "percentage_pixels_below_max" : 0
@@ -1216,6 +1218,86 @@ class TestAdvancedImageProcessing(object):
         assert(len(neuron_centers) == len(neurons))
         assert((original_neurons_mask == neurons["mask"].max(axis = 0)).all())
         assert(((original_neurons_mask*original_neuron_image) == neurons["image"].max(axis = 0)).all())
+
+    def test_wavelet_denoising_2(self):
+        params = {
+            "remove_low_intensity_local_maxima" : {
+                "percentage_pixels_below_max" : 0
+            },
+            "wavelet_transform.wavelet_transform" : {
+                "scale" : 5
+            },
+            "accepted_region_shape_constraints" : {
+                "major_axis_length" : {
+                    "max" : 150.0,
+                    "min" : 0.0
+                }
+            },
+            "accepted_neuron_shape_constraints" : {
+                "eccentricity" : {
+                    "max" : 0.9,
+                    "min" : 0.0
+                },
+                "area" : {
+                    "max" : 10000,
+                    "min" : 0
+                }
+            },
+            "denoising.estimate_noise" : {
+                "significance_threshhold" : 3.0
+            },
+            "denoising.significant_mask" : {
+                "noise_threshhold" : 3.0
+            },
+            "remove_too_close_local_maxima" : {
+                "min_local_max_distance" : 100.0
+            },
+            "use_watershed" : True
+        }
+
+        shape = numpy.array((500, 500))
+
+        neuron_centers = numpy.array([[127, 202], [177,  52], [343, 271]])
+        neuron_radii = numpy.array((50.0,)*len(neuron_centers))
+        neuron_magnitudes = numpy.array((1.0/3.0,)*len(neuron_centers))
+
+        neuron_spreads = neuron_radii / 3.0
+
+        neuron_images = synthetic_data.generate_gaussian_images(shape, neuron_centers, neuron_spreads, neuron_magnitudes)
+        neuron_masks = (neuron_images >= (neuron_magnitudes.max() * scipy.stats.norm.pdf(3 * neuron_spreads.max(), scale=neuron_spreads.max())**len(shape)))
+        neuron_images *= neuron_masks
+
+        neurons = nanshe.advanced_image_processing.wavelet_denoising(neuron_images.max(axis = 0), **params)
+
+        # Resort neuron image order based on most similar.
+        result_neurons_distance = scipy.spatial.distance.cdist(neuron_images.reshape(neurons.shape + (-1,)) , neurons["image"].reshape(neurons.shape + (-1,)))
+
+        neuron_centers_old = neuron_centers
+        neuron_radii_old = neuron_radii
+        neuron_magnitudes_old = neuron_magnitudes
+        neuron_images_old = neuron_images
+        neuron_masks_old = neuron_masks
+
+        neuron_centers = numpy.zeros(neuron_centers_old.shape, dtype = neuron_centers_old.dtype)
+        neuron_radii = numpy.zeros(neuron_radii_old.shape, dtype = neuron_radii_old.dtype)
+        neuron_magnitudes = numpy.zeros(neuron_magnitudes_old.shape, dtype = neuron_magnitudes_old.dtype)
+        neuron_images = numpy.zeros(neuron_images_old.shape, dtype = neuron_images_old.dtype)
+        neuron_masks = numpy.zeros(neuron_masks_old.shape, dtype = neuron_masks_old.dtype)
+        for i1, i2 in enumerate(result_neurons_distance.argmin(axis = 1)):
+            neuron_centers[i1] = neuron_centers_old[i2]
+            neuron_radii[i1] = neuron_radii_old[i2]
+            neuron_magnitudes[i1] = neuron_magnitudes_old[i2]
+            neuron_images[i1] = neuron_images_old[i2]
+            neuron_masks[i1] = neuron_masks_old[i2]
+        neuron_centers_old = None
+        neuron_radii_old = None
+        neuron_magnitudes_old = None
+        neuron_images_old = None
+        neuron_masks_old = None
+
+        assert(len(neuron_centers) == len(neurons))
+        assert( numpy.abs(neurons["image"].max(axis = 0) - neuron_images.max(axis = 0)).max() < 1.0e-4 )
+        assert( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-4 )
 
     def test_extract_neurons(self):
         image = 5 * numpy.ones((100, 100))
