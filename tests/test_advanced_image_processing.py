@@ -1695,7 +1695,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((neurons == merged_neurons).all())
 
-    def test_postprocess_data(self):
+    def test_postprocess_data_1(self):
         config = {
             "wavelet_denoising" : {
                 "remove_low_intensity_local_maxima" : {
@@ -1749,6 +1749,96 @@ class TestAdvancedImageProcessing(object):
                            [13, 12],
                            [72, 16],
                            [45, 32]])
+
+        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+
+        bases_indices = [[1,3,4], [0,2], [5]]
+
+        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:] , dtype=masks.dtype)
+        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:] , dtype=images.dtype)
+
+        for i, each_basis_indices in enumerate(bases_indices):
+            bases_masks[i] = masks[list(each_basis_indices)].max(axis = 0)
+            bases_images[i] = images[list(each_basis_indices)].max(axis = 0)
+
+        neurons = nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
+
+        assert(len(points) == len(neurons))
+
+        neuron_max_matches = nanshe.expanded_numpy.all_permutations_equal(neurons["max_F"], neurons["image"])
+        neuron_max_matches = neuron_max_matches.max(axis = 0).max(axis = 0)
+
+        neuron_points = numpy.array(neuron_max_matches.nonzero()).T.copy()
+
+        matched = dict()
+        unmatched_points = numpy.arange(len(points))
+        for i in xrange(len(neuron_points)):
+            new_unmatched_points = []
+            for j in unmatched_points:
+                if not (neuron_points[i] == points[j]).all():
+                    new_unmatched_points.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_points = new_unmatched_points
+
+        assert(len(unmatched_points) == 0)
+
+    def test_postprocess_data_2(self):
+        config = {
+            "wavelet_denoising" : {
+                "remove_low_intensity_local_maxima" : {
+                    "percentage_pixels_below_max" : 0
+                },
+                "wavelet_transform.wavelet_transform" : {
+                    "scale" : 4
+                },
+                "accepted_region_shape_constraints" : {
+                    "major_axis_length" : {
+                        "max" : 30.0,
+                        "min" : 0.0
+                    }
+                },
+                "accepted_neuron_shape_constraints" : {
+                    "eccentricity" : {
+                        "max" : 0.9,
+                        "min" : 0.0
+                    },
+                    "area" : {
+                        "max" : 6000.0,
+                        "min" : 1000.0
+                    }
+                },
+                "denoising.estimate_noise" : {
+                    "significance_threshhold" : 3.0
+                },
+                "denoising.significant_mask" : {
+                    "noise_threshhold" : 3.0
+                },
+                "remove_too_close_local_maxima" : {
+                    "min_local_max_distance" : 20.0
+                },
+                "use_watershed" : True
+            },
+            "merge_neuron_sets" : {
+                "alignment_min_threshold" : 0.6,
+                "fuse_neurons" : {
+                    "fraction_mean_neuron_max_threshold" : 0.01
+                },
+                "overlap_min_threshold" : 0.6
+            }
+        }
+
+        space = numpy.array([100, 100, 100])
+        radii = numpy.array([7, 6, 6, 6, 7, 6])
+        magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
+        points = numpy.array([[30, 24, 68],
+                           [59, 65, 47],
+                           [21, 65, 21],
+                           [13, 12, 21],
+                           [72, 16, 67],
+                           [45, 32, 27]])
 
         masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
         images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
