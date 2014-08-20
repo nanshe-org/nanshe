@@ -1861,6 +1861,8 @@ def wavelet_denoising(new_image,
 
         if local_maxima.props.size:
             if use_watershed:
+                logger.debug("Entering watershed segmentation.")
+
                 # ############### TODO: Revisit to make sure all of Ferran's algorithm is implemented and this is working properly.
 
                 # Perform the watershed segmentation.
@@ -1980,6 +1982,8 @@ def wavelet_denoising(new_image,
                         logger.debug("Extracted a neuron. Found " + str(len(neurons)) + " neuron.")
 
                     wavelet_denoising.recorders.array_debug_recorder["new_neuron_set"] = neurons
+
+                logger.debug("Exiting watershed segmentation.")
             else:
                 # ################### Some other kind of segmentation???
                 # Talked to Ferran and he said don't worry about implementing this for now.
