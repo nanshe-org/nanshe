@@ -162,7 +162,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
 
 
 @debugging_tools.log_call(logger)
-def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, debug = False, **parameters):
+def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, use_drmaa = False, debug = False, **parameters):
     #TODO: Move this function into a new module with its own command line interface.
     #TODO: Heavy refactoring required on this function.
 
@@ -445,41 +445,55 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                                             stdout_filename_block,
                                             stderr_filename_block)
 
-    # TODO: Refactor into a separate class (have it return futures somehow)
-    # finished_processes = []
-    running_processes = []
-    pool_tasks_empty = False
-    while (not pool_tasks_empty) or len(running_processes):
-        while (not pool_tasks_empty) and (len(running_processes) < num_processes):
-            try:
-                each_arg_pack = next(block_process_args_gen)
-                each_arg_pack, each_stdout_filename, each_stderr_filename = each_arg_pack[:-2], each_arg_pack[-2], each_arg_pack[-1]
+    if use_drmaa:
+        # Attempt to import drmaa.
+        # If it fails to import, either the user has no intent in using it or forgot to install it.
+        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+        try:
+            import drmaa
+        except ImportError:
+            # python-drmaa is not installed.
+            logger.error("Was not able to import drmaa. If this is meant to be run using the OpenGrid submission system, then drmaa needs to be installed via pip or easy_install.")
+            raise
+        except RuntimeError:
+            # The drmaa library was not specified, but python-drmaa is installed.
+            logger.error("Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+            raise
+    else:
+        # TODO: Refactor into a separate class (have it return futures somehow)
+        # finished_processes = []
+        running_processes = []
+        pool_tasks_empty = False
+        while (not pool_tasks_empty) or len(running_processes):
+            while (not pool_tasks_empty) and (len(running_processes) < num_processes):
+                try:
+                    each_arg_pack = next(block_process_args_gen)
+                    each_arg_pack, each_stdout_filename, each_stderr_filename = each_arg_pack[:-2], each_arg_pack[-2], each_arg_pack[-1]
+                    each_process = subprocess.Popen(each_arg_pack,
+                                                    stdout=open(each_stdout_filename, "w"),
+                                                    stderr=open(each_stderr_filename, "w"))
 
-                each_process = subprocess.Popen(each_arg_pack,
-                                                stdout=open(each_stdout_filename, "w"),
-                                                stderr=open(each_stderr_filename, "w"))
+                    running_processes.append((each_arg_pack, each_process,))
 
-                running_processes.append((each_arg_pack, each_process,))
+                    logger.info("Started new process ( \"" + " ".join(each_arg_pack) + "\" ).")
+                except StopIteration:
+                    pool_tasks_empty = True
 
-                logger.info("Started new process ( \"" + " ".join(each_arg_pack) + "\" ).")
-            except StopIteration:
-                pool_tasks_empty = True
+            while ((not pool_tasks_empty) and (len(running_processes) >= num_processes)) or (pool_tasks_empty and len(running_processes)):
+                time.sleep(1)
 
-        while ((not pool_tasks_empty) and (len(running_processes) >= num_processes)) or (pool_tasks_empty and len(running_processes)):
-            time.sleep(1)
+                i = 0
+                while i < len(running_processes):
+                    if running_processes[i][1].poll() is not None:
+                        logger.info("Finished process ( \"" + " ".join(running_processes[i][0]) + "\" ).")
 
-            i = 0
-            while i < len(running_processes):
-                if running_processes[i][1].poll() is not None:
-                    logger.info("Finished process ( \"" + " ".join(running_processes[i][0]) + "\" ).")
+                        # finished_processes.append(running_processes[i])
+                        del running_processes[i]
+                    else:
+                        time.sleep(1)
+                        i += 1
 
-                    # finished_processes.append(running_processes[i])
-                    del running_processes[i]
-                else:
-                    time.sleep(1)
-                    i += 1
-
-    # finished_processes = None
+        # finished_processes = None
 
     with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
         output_group = output_file_handle[output_group_name]
