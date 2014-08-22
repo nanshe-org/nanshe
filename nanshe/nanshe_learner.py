@@ -369,6 +369,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     # Construct an HDF5 file for each block
     input_filename_block = []
     output_filename_block = []
+    stdout_filename_block = []
+    stderr_filename_block = []
     with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
         # Create a new output directory if doesn't exists.
         if output_group_name not in output_file_handle:
@@ -396,6 +398,12 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             input_file_handle = output_file_handle
 
         for i, i_str, sequential_block_i in additional_generators.filled_stringify_enumerate(original_images_pared_slices.flat):
+            intermediate_basename_i = intermediate_output_dir + "/" + i_str
+
+            # Hold redirected stdout and stderr for each subprocess.
+            stdout_filename_block.append(intermediate_basename_i + os.extsep + "out")
+            stderr_filename_block.append(intermediate_basename_i + os.extsep + "err")
+
             # Ensure that the blocks are corrected to deal with trimming of the image stack
             # Must be done after the calculation of original_images_pared_slices["windowed_block_selection"]
             sequential_block_i_windowed = sequential_block_i["windowed_stack_selection"]
@@ -407,7 +415,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
             block_i = output_group_blocks[i_str]
 
-            with h5py.File(intermediate_output_dir + "/" + i_str + os.extsep + "h5", "a") as each_block_file_handle:
+            with h5py.File(intermediate_basename_i + os.extsep + "h5", "a") as each_block_file_handle:
                 # Create a soft link to the original images. But use the appropriate type of soft link depending on whether
                 # the input and output file are the same.
                 if "original_images" not in each_block_file_handle:
@@ -433,7 +441,9 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     block_process_args_gen = itertools.izip(itertools.repeat(executable),
                                             itertools.repeat(intermediate_config),
                                             input_filename_block,
-                                            output_filename_block)
+                                            output_filename_block,
+                                            stdout_filename_block,
+                                            stderr_filename_block)
 
     # TODO: Refactor into a separate class (have it return futures somehow)
     # finished_processes = []
@@ -443,7 +453,11 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
         while (not pool_tasks_empty) and (len(running_processes) < num_processes):
             try:
                 each_arg_pack = next(block_process_args_gen)
-                each_process = subprocess.Popen(each_arg_pack)
+                each_arg_pack, each_stdout_filename, each_stderr_filename = each_arg_pack[:-2], each_arg_pack[-2], each_arg_pack[-1]
+
+                each_process = subprocess.Popen(each_arg_pack,
+                                                stdout=open(each_stdout_filename, "w"),
+                                                stderr=open(each_stderr_filename, "w"))
 
                 running_processes.append((each_arg_pack, each_process,))
 
