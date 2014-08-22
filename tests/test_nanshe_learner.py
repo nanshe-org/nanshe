@@ -253,6 +253,153 @@ class TestNansheLearner(object):
             }
         }
 
+        self.config_blocks_drmaa = {
+            "generate_neurons_blocks" : {
+                "num_processes" : 4,
+                "block_shape" : [10000, -1, -1],
+                "num_blocks" : [-1, 5, 5],
+                "half_border_shape" : [0, 5, 5],
+                "half_window_shape" : [50, 20, 20],
+
+                "use_drmaa" : True,
+                "num_drmaa_cores" : 8,
+
+                "debug" : True,
+
+                "generate_neurons" : {
+                    "__comment__run_stage" : "Where to run until either preprocessing, dictionary, or postprocessing. If resume, is true then it will delete the previous results at this stage. By default (all can be set explicitly to null string)runs all the way through.",
+
+                    "run_stage" : "all",
+
+                    "__comment__normalize_data" : "These are arguments that will be passed to normalize_data.",
+
+                    "preprocess_data" : {
+                        "remove_zeroed_lines" : {
+                            "erosion_shape" : [21, 1],
+                            "dilation_shape" : [1, 3]
+                        },
+
+                        "extract_f0" : {
+                            "bias" : 100,
+
+                            "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+
+                            "half_window_size" : 50,          "__comment__window_size" : "In number of frames",
+                            "step_size" : 100,                "__comment__step_size" : "In number of frames",
+                            "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
+
+                            "spatial_smoothing_gaussian_filter_stdev" : 5.0
+                        },
+
+                        "wavelet_transform" : {
+                            "scale" : [3, 4, 4]
+                        },
+
+                        "normalize_data" : {
+                            "simple_image_processing.renormalized_images": {
+                                "ord" : 2
+                            }
+                        }
+                    },
+
+
+                    "__comment__generate_dictionary" : "These are arguments that will be passed to generate_dictionary.",
+
+                    "generate_dictionary" : {
+                        "spams.trainDL" : {
+                            "K" : 10,
+                            "gamma2": 0,
+                            "gamma1": 0,
+                            "numThreads": -1,
+                            "batchsize": 256,
+                            "iter": 100,
+                            "lambda1": 0.2,
+                            "posD": True,
+                            "clean": True,
+                            "modeD": 0,
+                            "posAlpha": True,
+                            "mode": 2,
+                            "lambda2": 0
+                        }
+                    },
+
+
+                    "postprocess_data" : {
+
+                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_denoising.",
+
+                        "wavelet_denoising" : {
+
+                            "denoising.estimate_noise" : {
+                                "significance_threshhold" : 3.0
+                            },
+
+                            "denoising.significant_mask" : {
+                                "noise_threshhold" : 3.0
+                            },
+
+                            "wavelet_transform.wavelet_transform" : {
+                                "scale" : 4
+                            },
+
+                            "accepted_region_shape_constraints" : {
+                                "major_axis_length" : {
+                                    "min" : 0.0,
+                                    "max" : 25.0
+                                }
+                            },
+
+                            "remove_low_intensity_local_maxima" : {
+                                "percentage_pixels_below_max" : 0
+
+                            },
+
+                            "__comment__min_local_max_distance" : 6.0,
+                            "remove_too_close_local_maxima" : {
+                                "min_local_max_distance"  : 100.0
+                            },
+
+                            "use_watershed" : True,
+
+                            "__comment__accepted_neuron_shape_constraints_area_max" : 250,
+                            "accepted_neuron_shape_constraints" : {
+                                "area" : {
+                                    "min" : 30,
+                                    "max" : 600
+                                },
+
+                                "eccentricity" : {
+                                    "min" : 0.0,
+                                    "max" : 0.9
+                                }
+                            }
+                        },
+
+
+                        "merge_neuron_sets" : {
+                            "alignment_min_threshold" : 0.6,
+                            "overlap_min_threshold" : 0.6,
+
+                            "fuse_neurons" : {
+                                "fraction_mean_neuron_max_threshold" : 0.01
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        has_drmaa = True
+        try:
+            import drmaa
+        except ImportError:
+            has_drmaa = False
+        except RuntimeError:
+            has_drmaa = False
+
+        if has_drmaa:
+            tempfile.tempdir = os.path.join(os.path.expanduser("~"), "tmp")
+
         self.temp_dir = tempfile.mkdtemp()
         self.temp_dir = os.path.abspath(self.temp_dir)
 
@@ -263,6 +410,7 @@ class TestNansheLearner(object):
 
         self.config_a_block_filename = os.path.join(self.temp_dir, "config_a_block.json")
         self.config_blocks_filename = os.path.join(self.temp_dir, "config_blocks.json")
+        self.config_blocks_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_drmaa.json")
 
         self.space = numpy.array([110, 110])
         self.radii = numpy.array([7, 6, 6, 6, 7, 6])
@@ -310,6 +458,9 @@ class TestNansheLearner(object):
 
         with open(self.config_blocks_filename, "w") as fid:
             json.dump(self.config_blocks, fid)
+
+        with open(self.config_blocks_drmaa_filename, "w") as fid:
+            json.dump(self.config_blocks_drmaa, fid)
 
     def test_main_1(self):
         executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
@@ -555,6 +706,12 @@ class TestNansheLearner(object):
         self.config_blocks_filename = ""
 
         try:
+            os.remove(self.config_blocks_drmaa_filename)
+        except OSError:
+            pass
+        self.config_blocks_drmaa_filename = ""
+
+        try:
             os.remove(self.hdf5_input_filename)
         except OSError:
             pass
@@ -568,3 +725,5 @@ class TestNansheLearner(object):
 
         shutil.rmtree(self.temp_dir)
         self.temp_dir = ""
+
+        tempfile.tempdir = None
