@@ -162,7 +162,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
 
 
 @debugging_tools.log_call(logger)
-def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, use_drmaa = False, debug = False, **parameters):
+def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, use_drmaa = False, num_drmaa_cores = 16, debug = False, **parameters):
     #TODO: Move this function into a new module with its own command line interface.
     #TODO: Heavy refactoring required on this function.
 
@@ -459,6 +459,27 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             # The drmaa library was not specified, but python-drmaa is installed.
             logger.error("Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
             raise
+
+        s=drmaa.Session()
+        s.initialize()
+
+        ready_processes = []
+        for each_arg_pack in block_process_args_gen:
+            ready_processes.append((each_arg_pack, s.createJobTemplate()))
+            ready_processes[-1][1].jobName = os.path.basename(os.path.splitext(cur_module_name)[0]) + "-" + \
+                                             os.path.basename(os.path.dirname(each_arg_pack[3].split(".h5")[0])) + "-" + \
+                                             os.path.basename(each_arg_pack[3].split(".h5")[0])
+            ready_processes[-1][1].remoteCommand = each_arg_pack[0]
+            ready_processes[-1][1].args = each_arg_pack[1:-2]
+            ready_processes[-1][1].jobEnvironment = os.environ
+            ready_processes[-1][1].inputPath = "localhost:" + os.devnull
+            ready_processes[-1][1].outputPath = "localhost:" + each_arg_pack[-2]
+            ready_processes[-1][1].errorPath = "localhost:" + each_arg_pack[-1]
+            ready_processes[-1][1].workingDirectory = os.getcwd()
+            ready_processes[-1][1].nativeSpecification = "-pe batch " + str(num_drmaa_cores)
+        ready_processes = iter(ready_processes)
+
+        s.exit()
     else:
         # TODO: Refactor into a separate class (have it return futures somehow)
         # finished_processes = []
