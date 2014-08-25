@@ -19,7 +19,12 @@ class TestSpamsSandbox(object):
                               [66, 85],
                               [77, 45]])
 
+        self.p3 = numpy.array([[27, 51, 37],
+                               [66, 85, 25],
+                               [77, 45, 73]])
+
         self.space = numpy.array((100, 100))
+        self.space3 = numpy.array((100, 100, 100))
         self.radii = numpy.array((5, 6, 7))
 
         self.g = synthetic_data.generate_hypersphere_masks(self.space, self.p, self.radii)
@@ -28,6 +33,13 @@ class TestSpamsSandbox(object):
         self.g = self.g.transpose()
         self.g = numpy.asmatrix(self.g)
         self.g = numpy.asfortranarray(self.g)
+
+        self.g3 = synthetic_data.generate_hypersphere_masks(self.space3, self.p3, self.radii)
+
+        self.g3 = self.g3.reshape((self.g3.shape[0], -1))
+        self.g3 = self.g3.transpose()
+        self.g3 = numpy.asmatrix(self.g3)
+        self.g3 = numpy.asfortranarray(self.g3)
 
     def test_run_multiprocessing_queue_spams_trainDL(self):
         out_queue = multiprocessing.Queue()
@@ -264,3 +276,6 @@ class TestSpamsSandbox(object):
         self.space = None
         self.radii = None
         self.g = None
+
+        self.p3 = None
+        self.g3 = None
