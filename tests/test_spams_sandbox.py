@@ -139,7 +139,7 @@ class TestSpamsSandbox(object):
 
         assert(len(unmatched_g3) == 0)
 
-    def test_call_multiprocessing_queue_spams_trainDL(self):
+    def test_call_multiprocessing_queue_spams_trainDL_1(self):
         d = spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g.astype(float),
                                                                                  **{
                                                                                         "gamma2" : 0,
@@ -182,6 +182,50 @@ class TestSpamsSandbox(object):
         print unmatched_g
 
         assert(len(unmatched_g) == 0)
+
+    def test_call_multiprocessing_queue_spams_trainDL_2(self):
+        d3 = spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g3.astype(float),
+                                                                                 **{
+                                                                                        "gamma2" : 0,
+                                                                                        "gamma1" : 0,
+                                                                                         "numThreads" : -1,
+                                                                                         "K" : self.g3.shape[1],
+                                                                                         "iter" : 10,
+                                                                                         "modeD" : 0,
+                                                                                         "posAlpha" : True,
+                                                                                         "clean" : True,
+                                                                                         "posD" : True,
+                                                                                         "batchsize" : 256,
+                                                                                         "lambda1" : 0.2,
+                                                                                         "lambda2" : 0,
+                                                                                         "mode" : 2
+                                                                                    }
+        )
+        d3 = (d3 != 0)
+
+        self.g3 = self.g3.transpose()
+        d3 = d3.transpose()
+
+        assert(self.g3.shape == d3.shape)
+
+        assert((self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all())
+
+        unmatched_g3 = range(len(self.g3))
+        matched = dict()
+
+        for i in xrange(len(d3)):
+            new_unmatched_g3 = []
+            for j in unmatched_g3:
+                if not (d3[i] == self.g3[j]).all():
+                    new_unmatched_g3.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g3 = new_unmatched_g3
+
+        print unmatched_g3
+
+        assert(len(unmatched_g3) == 0)
 
     def test_run_multiprocessing_array_spams_trainDL(self):
         output_array_size = self.g.shape[0] * self.g.shape[1]
