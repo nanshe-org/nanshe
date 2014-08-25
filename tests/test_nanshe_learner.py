@@ -121,6 +121,96 @@ class TestNansheLearner(object):
             }
         }
 
+        self.config_a_block_3D = {
+            "debug" : True,
+            "generate_neurons" : {
+                "postprocess_data" : {
+                    "wavelet_denoising" : {
+                        "remove_low_intensity_local_maxima" : {
+                            "percentage_pixels_below_max" : 0
+                        },
+                        "wavelet_transform.wavelet_transform" : {
+                            "scale" : 4
+                        },
+                        "accepted_region_shape_constraints" : {
+                            "major_axis_length" : {
+                                "max" : 25.0,
+                                "min" : 0.0
+                            }
+                        },
+                        "accepted_neuron_shape_constraints" : {
+                            "eccentricity" : {
+                                "max" : 0.9,
+                                "min" : 0.0
+                            },
+                            "area" : {
+                                "max" : 15000,
+                                "min" : 150
+                            }
+                        },
+                        "denoising.estimate_noise" : {
+                            "significance_threshhold" : 3.0
+                        },
+                        "denoising.significant_mask" : {
+                            "noise_threshhold" : 3.0
+                        },
+                        "remove_too_close_local_maxima" : {
+                            "min_local_max_distance" : 100.0
+                        },
+                        "use_watershed" : True
+                    },
+                    "merge_neuron_sets" : {
+                        "alignment_min_threshold" : 0.6,
+                        "fuse_neurons" : {
+                            "fraction_mean_neuron_max_threshold" : 0.01
+                        },
+                        "overlap_min_threshold" : 0.6
+                    }
+                },
+                "run_stage" : "all",
+                "preprocess_data" : {
+                    "normalize_data" : {
+                        "simple_image_processing.renormalized_images" : {
+                            "ord" : 2
+                        }
+                    },
+                    "extract_f0" : {
+                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                        "which_quantile" : 0.5,
+                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                        "half_window_size" : 400,
+                        "bias" : 100,
+                        "step_size" : 100
+                    },
+                    "wavelet_transform" : {
+                        "scale" : [
+                            3,
+                            4,
+                            4,
+                            4
+                        ]
+                    }
+                },
+                "generate_dictionary" : {
+                    "spams.trainDL" : {
+                        "gamma2" : 0,
+                        "gamma1" : 0,
+                        "numThreads" : -1,
+                        "K" : 10,
+                        "iter" : 100,
+                        "modeD" : 0,
+                        "posAlpha" : True,
+                        "clean" : True,
+                        "posD" : True,
+                        "batchsize" : 256,
+                        "lambda1" : 0.2,
+                        "lambda2" : 0,
+                        "mode" : 2
+                    }
+                }
+            }
+        }
+
         self.config_blocks = {
             "generate_neurons_blocks" : {
                 "num_processes" : 4,
@@ -406,10 +496,15 @@ class TestNansheLearner(object):
 
         self.hdf5_input_filename = os.path.join(self.temp_dir, "input.h5")
         self.hdf5_input_filepath = self.hdf5_input_filename + "/" + "images"
+        self.hdf5_input_3D_filename = os.path.join(self.temp_dir, "input_3D.h5")
+        self.hdf5_input_3D_filepath = self.hdf5_input_3D_filename + "/" + "images"
         self.hdf5_output_filename = os.path.join(self.temp_dir, "output.h5")
         self.hdf5_output_filepath = self.hdf5_output_filename + "/"
+        self.hdf5_output_3D_filename = os.path.join(self.temp_dir, "output_3D.h5")
+        self.hdf5_output_3D_filepath = self.hdf5_output_3D_filename + "/"
 
         self.config_a_block_filename = os.path.join(self.temp_dir, "config_a_block.json")
+        self.config_a_block_3D_filename = os.path.join(self.temp_dir, "config_a_block_3D.json")
         self.config_blocks_filename = os.path.join(self.temp_dir, "config_blocks.json")
         self.config_blocks_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_drmaa.json")
 
@@ -451,11 +546,52 @@ class TestNansheLearner(object):
         print self.image_stack[self.image_stack.nonzero()]
         print self.image_stack.shape
 
+        self.space3 = numpy.array([110, 110, 110])
+        self.radii3 = numpy.array([7, 6, 6, 6, 7, 6])
+        self.magnitudes3 = numpy.array([15, 16, 15, 17, 16, 16])
+        self.points3 = numpy.array([[30, 24, 18],
+                                   [59, 65, 35],
+                                   [21, 65, 67],
+                                   [14, 14, 23],
+                                   [72, 16, 82],
+                                   [45, 32, 67]])
+
+        self.masks3 = synthetic_data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
+        self.images3 = synthetic_data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
+
+        self.bases_masks3 = numpy.zeros((len(self.bases_indices),) + self.masks3.shape[1:] , dtype=self.masks3.dtype)
+        self.bases_images3 = numpy.zeros((len(self.bases_indices),) + self.images3.shape[1:] , dtype=self.images3.dtype)
+
+        for i, each_basis_indices in enumerate(self.bases_indices):
+            self.bases_masks3[i] = self.masks3[list(each_basis_indices)].max(axis = 0)
+            self.bases_images3[i] = self.images3[list(each_basis_indices)].max(axis = 0)
+
+        self.image_stack3 = None
+        ramp = numpy.concatenate([numpy.linspace(0, 1, self.linspace_length), numpy.linspace(1, 0, self.linspace_length)])
+
+        self.image_stack3 = numpy.zeros((self.bases_images3.shape[0] * len(ramp),) + self.bases_images3.shape[1:],
+                                       dtype = self.bases_images3.dtype)
+        for i in xrange(len(self.bases_images3)):
+            image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
+
+            self.image_stack3[image_stack_slice3] = nanshe.expanded_numpy.all_permutations_operation(operator.mul,
+                                                                                                   ramp,
+                                                                                                   self.bases_images3[i])
+
+        print self.image_stack3[self.image_stack3.nonzero()]
+        print self.image_stack3.shape
+
         with h5py.File(self.hdf5_input_filename, "w") as fid:
             fid["images"] = self.image_stack
 
+        with h5py.File(self.hdf5_input_3D_filename, "w") as fid:
+            fid["images"] = self.image_stack3
+
         with open(self.config_a_block_filename, "w") as fid:
             json.dump(self.config_a_block, fid)
+
+        with open(self.config_a_block_3D_filename, "w") as fid:
+            json.dump(self.config_a_block_3D, fid)
 
         with open(self.config_blocks_filename, "w") as fid:
             json.dump(self.config_blocks, fid)
@@ -828,6 +964,12 @@ class TestNansheLearner(object):
         self.config_a_block_filename = ""
 
         try:
+            os.remove(self.config_a_block_3D_filename)
+        except OSError:
+            pass
+        self.config_a_block_3D_filename = ""
+
+        try:
             os.remove(self.config_blocks_filename)
         except OSError:
             pass
@@ -840,16 +982,34 @@ class TestNansheLearner(object):
         self.config_blocks_drmaa_filename = ""
 
         try:
+            os.remove(self.config_blocks_3D_filename)
+        except OSError:
+            pass
+        self.config_blocks_3D_filename = ""
+
+        try:
             os.remove(self.hdf5_input_filename)
         except OSError:
             pass
         self.hdf5_input_filename = ""
 
         try:
+            os.remove(self.hdf5_input_3D_filename)
+        except OSError:
+            pass
+        self.hdf5_input_3D_filename = ""
+
+        try:
             os.remove(self.hdf5_output_filename)
         except OSError:
             pass
         self.hdf5_output_filename = ""
+
+        try:
+            os.remove(self.hdf5_output_3D_filename)
+        except OSError:
+            pass
+        self.hdf5_output_3D_filename = ""
 
         shutil.rmtree(self.temp_dir)
         self.temp_dir = ""
