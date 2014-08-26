@@ -988,6 +988,54 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    def test_main_6(self):
+        # Attempt to import drmaa.
+        # If it fails to import, either the user has no intent in using it or forgot to install it.
+        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+        try:
+            import drmaa
+        except ImportError:
+            # python-drmaa is not installed.
+            raise nose.SkipTest("Skipping test test_main_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
+        except RuntimeError:
+            # The drmaa library was not specified, but python-drmaa is installed.
+            raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+
+        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+
+        argv = (executable, self.config_blocks_3D_drmaa_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
+
+        assert(0 == nanshe.nanshe_learner.main(*argv))
+
+        assert(os.path.exists(self.hdf5_output_3D_filename))
+
+        shutil.copy(self.hdf5_output_3D_filename,
+                    os.path.join(os.getcwd(), os.path.basename(self.hdf5_output_3D_filename)))
+
+        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
+            assert("neurons" in fid)
+
+            neurons = fid["neurons"].value
+
+        assert(len(self.points3) == len(neurons))
+
+        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+
+        matched = dict()
+        unmatched_points = numpy.arange(len(self.points3))
+        for i in xrange(len(neuron_max_points)):
+            new_unmatched_points = []
+            for j in unmatched_points:
+                if not (neuron_max_points[i] == self.points3[j]).all():
+                    new_unmatched_points.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_points = new_unmatched_points
+
+        assert(len(unmatched_points) == 0)
+
     def test_generate_neurons_io_handler_1(self):
         nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_a_block_filename)
 
