@@ -344,6 +344,105 @@ class TestNansheLearner(object):
             }
         }
 
+        self.config_blocks_3D = {
+            "generate_neurons_blocks" : {
+                "num_processes" : 4,
+                "block_shape" : [10000, -1, -1, -1],
+                "num_blocks" : [-1, 2, 2, 2],
+                "half_border_shape" : [0, 5, 5, 5],
+                "half_window_shape" : [50, 20, 20, 20],
+
+                "debug" : True,
+
+                "generate_neurons" : {
+                    "postprocess_data" : {
+                        "wavelet_denoising" : {
+                            "remove_low_intensity_local_maxima" : {
+                                "percentage_pixels_below_max" : 0
+                            },
+                            "wavelet_transform.wavelet_transform" : {
+                                "scale" : 4
+                            },
+                            "accepted_region_shape_constraints" : {
+                                "major_axis_length" : {
+                                    "max" : 25.0,
+                                    "min" : 0.0
+                                }
+                            },
+                            "accepted_neuron_shape_constraints" : {
+                                "eccentricity" : {
+                                    "max" : 0.9,
+                                    "min" : 0.0
+                                },
+                                "area" : {
+                                    "max" : 15000,
+                                    "min" : 150
+                                }
+                            },
+                            "denoising.estimate_noise" : {
+                                "significance_threshhold" : 3.0
+                            },
+                            "denoising.significant_mask" : {
+                                "noise_threshhold" : 3.0
+                            },
+                            "remove_too_close_local_maxima" : {
+                                "min_local_max_distance" : 100.0
+                            },
+                            "use_watershed" : True
+                        },
+                        "merge_neuron_sets" : {
+                            "alignment_min_threshold" : 0.6,
+                            "fuse_neurons" : {
+                                "fraction_mean_neuron_max_threshold" : 0.01
+                            },
+                            "overlap_min_threshold" : 0.6
+                        }
+                    },
+                    "run_stage" : "all",
+                    "preprocess_data" : {
+                        "normalize_data" : {
+                            "simple_image_processing.renormalized_images" : {
+                                "ord" : 2
+                            }
+                        },
+                        "extract_f0" : {
+                            "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                            "which_quantile" : 0.5,
+                            "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                            "half_window_size" : 20,
+                            "bias" : 100,
+                            "step_size" : 100
+                        },
+                        "wavelet_transform" : {
+                            "scale" : [
+                                3,
+                                4,
+                                4,
+                                4
+                            ]
+                        }
+                    },
+                    "generate_dictionary" : {
+                        "spams.trainDL" : {
+                            "gamma2" : 0,
+                            "gamma1" : 0,
+                            "numThreads" : -1,
+                            "K" : 10,
+                            "iter" : 100,
+                            "modeD" : 0,
+                            "posAlpha" : True,
+                            "clean" : True,
+                            "posD" : True,
+                            "batchsize" : 256,
+                            "lambda1" : 0.2,
+                            "lambda2" : 0,
+                            "mode" : 2
+                        }
+                    }
+                }
+            }
+        }
+
         self.config_blocks_drmaa = {
             "generate_neurons_blocks" : {
                 "num_processes" : 4,
@@ -506,6 +605,7 @@ class TestNansheLearner(object):
         self.config_a_block_filename = os.path.join(self.temp_dir, "config_a_block.json")
         self.config_a_block_3D_filename = os.path.join(self.temp_dir, "config_a_block_3D.json")
         self.config_blocks_filename = os.path.join(self.temp_dir, "config_blocks.json")
+        self.config_blocks_3D_filename = os.path.join(self.temp_dir, "config_blocks_3D.json")
         self.config_blocks_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_drmaa.json")
 
         self.space = numpy.array([110, 110])
@@ -595,6 +695,9 @@ class TestNansheLearner(object):
 
         with open(self.config_blocks_filename, "w") as fid:
             json.dump(self.config_blocks, fid)
+
+        with open(self.config_blocks_3D_filename, "w") as fid:
+            json.dump(self.config_blocks_3D, fid)
 
         with open(self.config_blocks_drmaa_filename, "w") as fid:
             json.dump(self.config_blocks_drmaa, fid)
