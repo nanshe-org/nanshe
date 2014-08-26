@@ -546,15 +546,15 @@ class TestNansheLearner(object):
         print self.image_stack[self.image_stack.nonzero()]
         print self.image_stack.shape
 
-        self.space3 = numpy.array([110, 110, 110])
-        self.radii3 = numpy.array([7, 6, 6, 6, 7, 6])
-        self.magnitudes3 = numpy.array([15, 16, 15, 17, 16, 16])
-        self.points3 = numpy.array([[30, 24, 18],
-                                   [59, 65, 35],
-                                   [21, 65, 67],
-                                   [14, 14, 23],
-                                   [72, 16, 82],
-                                   [45, 32, 67]])
+        self.space3 = numpy.array([60, 60, 60])
+        self.radii3 = numpy.array([4, 3, 3, 3, 4, 3])
+        self.magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
+        self.points3 = numpy.array([[15, 16, 17],
+                                    [31, 32, 18],
+                                    [45, 32, 34],
+                                    [41, 41, 42],
+                                    [36, 15, 41],
+                                    [22, 16, 34]])
 
         self.masks3 = synthetic_data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
         self.images3 = synthetic_data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
