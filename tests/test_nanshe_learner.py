@@ -871,7 +871,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
-    def test_generate_neurons_a_block(self):
+    def test_generate_neurons_a_block_1(self):
         nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_a_block)
 
         assert(os.path.exists(self.hdf5_output_filename))
@@ -892,6 +892,35 @@ class TestNansheLearner(object):
             new_unmatched_points = []
             for j in unmatched_points:
                 if not (neuron_max_points[i] == self.points[j]).all():
+                    new_unmatched_points.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_points = new_unmatched_points
+
+        assert(len(unmatched_points) == 0)
+
+    def test_generate_neurons_a_block_2(self):
+        nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_a_block_3D)
+
+        assert(os.path.exists(self.hdf5_output_3D_filename))
+
+        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
+            assert("neurons" in fid)
+
+            neurons = fid["neurons"].value
+
+        assert(len(self.points3) == len(neurons))
+
+        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+
+        matched = dict()
+        unmatched_points = numpy.arange(len(self.points3))
+        for i in xrange(len(neuron_max_points)):
+            new_unmatched_points = []
+            for j in unmatched_points:
+                if not (neuron_max_points[i] == self.points3[j]).all():
                     new_unmatched_points.append(j)
                 else:
                     matched[i] = j
