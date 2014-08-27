@@ -477,43 +477,24 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             ready_processes[-1][1].errorPath = "localhost:" + each_arg_pack[-1]
             ready_processes[-1][1].workingDirectory = os.getcwd()
             ready_processes[-1][1].nativeSpecification = "-pe batch " + str(num_drmaa_cores)
-        ready_processes = iter(ready_processes)
 
 
-        # TODO: Refactor into a separate class (have it return futures somehow)
-        # finished_processes = []
         running_processes = []
-        pool_tasks_empty = False
-        while (not pool_tasks_empty) or len(running_processes):
-            while (not pool_tasks_empty) and (len(running_processes) < num_processes):
-                try:
-                    each_arg_pack, each_process_template = next(ready_processes)
-                    each_process_id = s.runJob(each_process_template)
+        for each_arg_pack, each_process_template in ready_processes:
+            each_process_id = s.runJob(each_process_template)
+            running_processes.append((each_arg_pack, each_process_id, each_process_template))
+            logger.info("Started new process ( \"" + " ".join(each_arg_pack) + "\" ).")
 
-                    running_processes.append((each_arg_pack, each_process_id, each_process_template))
+        # finished_processes = []
+        for each_arg_pack, each_process_id, each_process_template in running_processes:
+            each_process_status = s.wait(each_process_id)
 
-                    logger.info("Started new process ( \"" + " ".join(each_arg_pack) + "\" ).")
-                except StopIteration:
-                    pool_tasks_empty = True
+            if not each_process_status.hasExited:
+                raise RuntimeError("The process (\"" + " ".join(each_arg_pack) + "\") has exited prematurely.")
 
-            while ((not pool_tasks_empty) and (len(running_processes) >= num_processes)) or (pool_tasks_empty and len(running_processes)):
-                time.sleep(1)
-
-                i = 0
-                while i < len(running_processes):
-                    if s.jobStatus(running_processes[i][1]) in [drmaa.JobState.DONE, drmaa.JobState.FAILED]:
-                        logger.info("Finished process ( \"" + " ".join(running_processes[i][0]) + "\" ).")
-
-                        each_arg_pack, each_process_id, each_process_template = running_processes.pop(i)
-
-                        s.deleteJobTemplate(each_process_template)
-
-                        # finished_processes.append((each_arg_pack, each_process_id))
-                    else:
-                        time.sleep(1)
-                        i += 1
-
-        # finished_processes = None
+            logger.info("Finished process ( \"" + " ".join(each_arg_pack) + "\" ).")
+            s.deleteJobTemplate(each_process_template)
+            # finished_processes.append((each_arg_pack, each_process_id))
 
         s.exit()
     else:
