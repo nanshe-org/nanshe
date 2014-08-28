@@ -10,6 +10,7 @@ import logging
 import traceback
 import os
 import sys
+import time
 
 
 import generic_decorators
@@ -19,7 +20,7 @@ import generic_decorators
 logging.basicConfig(level = logging.DEBUG, stream=sys.stderr)
 
 
-def log_call(logger, to_log_call = True, to_print_args = False, to_print_exception = False):
+def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
     """
         Takes a given logger and uses it to log entering and leaving the decorated callable.
         Intended to be used as a decorator that takes a few arguments.
@@ -59,6 +60,7 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_excepti
         @generic_decorators.wraps(callable)
         @generic_decorators.static_variables(to_log_call = to_log_call,
                                              to_print_args = to_print_args,
+                                             to_print_time = to_print_time,
                                              to_print_exception = to_print_exception)
         def log_call_callable_wrapped(*args, **kwargs):
             """
@@ -88,17 +90,27 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_excepti
 
                 # We don't return immediately. Why? We want to know if this succeeded or failed.
                 # So, we want the log message below to print after the function runs.
+                diff_time = 0.0
                 if log_call_callable_wrapped.to_print_exception:
+                    start_time = time.time()
                     try:
                         result = callable(*args, **kwargs)
                     except:
                         logger.error(traceback.format_exc())
                         raise
+                    end_time = time.time()
+                    diff_time += (end_time - start_time)
                 else:
+                    start_time = time.time()
                     result = callable(*args, **kwargs)
+                    end_time = time.time()
+                    diff_time += (end_time - start_time)
 
                 # Log that we have exited the callable in question.
                 logger.debug("Exiting callable: \"" + callable.__name__ + "\".")
+
+                if log_call_callable_wrapped.to_print_time:
+                    logger.debug("Run time for callable: \"" + callable.__name__ + "\" is \"" + str(diff_time) + " s\".")
             else:
                 # We don't return immediately. Why? We want to know if this succeeded or failed.
                 # So, we want the log message below to print after the function runs.
