@@ -1578,6 +1578,66 @@ def quantile(data, probs, axis = None):
 
 
 @debugging_tools.log_call(logger)
+def symmetric_line_filter(size, ndims = 2, dim = -1):
+    """
+        Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
+        beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension
+        dim.
+
+        Args:
+            size(int):          the distance from the center of the filter to the nearest edge.
+
+            ndims(int):         the number of dimensions for the filter.
+
+            dim(int):           the dimension to put the line along.
+
+        Returns:
+            (numpy.ndarray):    a boolean array to use as the filter.
+
+        Examples:
+            >>> symmetric_line_filter(1)
+            array([[False, False, False],
+                   [ True,  True,  True],
+                   [False, False, False]], dtype=bool)
+
+            >>> symmetric_line_filter(1, ndims = 2, dim = -1)
+            array([[False, False, False],
+                   [ True,  True,  True],
+                   [False, False, False]], dtype=bool)
+
+            >>> symmetric_line_filter(1, ndims = 2, dim = 1)
+            array([[False, False, False],
+                   [ True,  True,  True],
+                   [False, False, False]], dtype=bool)
+
+            >>> symmetric_line_filter(1, ndims = 3)
+            array([[[False, False, False],
+                    [False, False, False],
+                    [False, False, False]],
+            <BLANKLINE>
+                   [[False, False, False],
+                    [ True,  True,  True],
+                    [False, False, False]],
+            <BLANKLINE>
+                   [[False, False, False],
+                    [False, False, False],
+                    [False, False, False]]], dtype=bool)
+    """
+
+    assert(size > 0)
+    assert(ndims > 0)
+    assert(-ndims <= dim < ndims)
+
+    line = numpy.zeros(ndims * ( 2*size+1, ), dtype = bool)
+
+    line_loc = ndims * [size]
+    line_loc[dim] = slice(None)
+    line[line_loc] = 1
+
+    return(line)
+
+
+@debugging_tools.log_call(logger)
 def tagging_reorder_array(new_array, from_axis_order = "tzyxc", to_axis_order = "tzyxc", to_copy = False):
     """
         Transforms one axis ordering to another giving a view of the array (unless otherwise specified).
