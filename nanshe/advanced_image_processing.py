@@ -2143,7 +2143,6 @@ def merge_neuron_sets(new_neuron_set_1,
     assert (new_neuron_set_1.dtype == new_neuron_set_2.dtype)
 
 
-    # TODO: Reverse if statement so it is not nots
     if len(new_neuron_set_1) and len(new_neuron_set_2):
         logger.debug("Have 2 sets of neurons to merge.")
 
