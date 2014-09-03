@@ -1571,14 +1571,6 @@ class TestAdvancedImageProcessing(object):
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.expanded_numpy.expand_view(circle_radii, image.shape))
 
-        circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
-        circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
-            each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
-
-            circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
-            circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
-
         neurons = nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
 
         merged_neurons = nanshe.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
@@ -1606,14 +1598,6 @@ class TestAdvancedImageProcessing(object):
         circle_offsets_squared = circle_offsets**2
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.expanded_numpy.expand_view(circle_radii, image.shape))
-
-        circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
-        circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
-            each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
-
-            circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
-            circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
 
         neurons = nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
 
@@ -1643,14 +1627,6 @@ class TestAdvancedImageProcessing(object):
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.expanded_numpy.expand_view(circle_radii, image.shape))
 
-        circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
-        circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
-            each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
-
-            circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
-            circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
-
         neurons = nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
 
         merged_neurons = nanshe.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
@@ -1678,14 +1654,6 @@ class TestAdvancedImageProcessing(object):
         circle_offsets_squared = circle_offsets**2
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.expanded_numpy.expand_view(circle_radii, image.shape))
-
-        circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
-        circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
-            each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
-
-            circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
-            circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
 
         neurons = nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
 
