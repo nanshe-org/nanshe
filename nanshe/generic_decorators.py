@@ -4,6 +4,7 @@ __date__ = "$Jul 23, 2014 16:24:36 EDT$"
 
 import functools
 import types
+import PyQt4.QtCore
 
 
 def update_wrapper(wrapper,
@@ -221,6 +222,41 @@ def class_decorate_all_methods(*decorators):
     class MetaAllMethodsDecorator(type):
         """
             Metaclass, which decorates all methods with the list of decorators in order.
+        """
+
+        def __new__(meta, name, bases, dct):
+            for _k, _v in dct.items():
+                # Are all of FunctionType at this point.
+                # Will be of MethodType at a later step.
+                if isinstance(_v, types.FunctionType):
+                    for each_decorator in decorators:
+                        _v = each_decorator(_v)
+
+                dct[_k] = _v
+
+            return(super(MetaAllMethodsDecorator, meta).__new__(meta, name, bases, dct))
+
+    return(metaclass(MetaAllMethodsDecorator))
+
+
+def qt_class_decorate_all_methods(*decorators):
+    """
+        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.
+
+        Args:
+            *decorators(tuple):     decorators to decorate all methods with.
+
+        Returns:
+            (decorator):            a decorator for the class.
+
+    """
+
+    class MetaAllMethodsDecorator(PyQt4.QtCore.pyqtWrapperType):
+        """
+            Metaclass, which decorates all methods with the list of decorators in order.
+
+            Inherits from PyQt4.QtCore.pyqtWrapperType based on this
+            ( http://www.gulon.co.uk/2012/12/28/pyqt4-qobjects-and-metaclasses/ ).
         """
 
         def __new__(meta, name, bases, dct):
