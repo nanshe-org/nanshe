@@ -777,6 +777,9 @@ def main(*argv):
 
             SyncedChannelLayers(*layer_sync_list)
 
+    # Required to avoid segfault on Mavericks.
+    # Don't change the value of app2.
+    app2 = app
     exit_code = app.exec_()
 
     # Close and clean up files
