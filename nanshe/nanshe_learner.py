@@ -648,6 +648,8 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
 
     if new_neurons.size == 0:
         logger.warning("No neurons were found in the data.")
+    else:
+        logger.info("Found ," + str(len(new_neurons)) + ", neurons were found in the data.")
 
 
 @debugging_tools.log_call(logger)
