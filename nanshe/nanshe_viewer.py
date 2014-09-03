@@ -59,7 +59,7 @@ class HDF5DatasetNotFoundException( Exception ):
     """
     pass
 
-@debugging_tools.log_class(logger)
+@debugging_tools.qt_log_class(logger)
 class HDF5DataSource( QObject ):
     """
         Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.
@@ -332,7 +332,7 @@ class HDF5DataRequest( object ):
 assert issubclass(HDF5DataRequest, RequestABC)
 
 
-@debugging_tools.log_class(logger)
+@debugging_tools.qt_log_class(logger)
 class HDF5Viewer(Viewer):
     """
         Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.
@@ -462,7 +462,7 @@ class HDF5NoFusedSourceException( Exception ):
 class HDF5UndefinedShapeDtypeException( Exception ):
     pass
 
-@debugging_tools.log_class(logger)
+@debugging_tools.qt_log_class(logger)
 class HDF5DataFusedSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
