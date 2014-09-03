@@ -14,6 +14,7 @@ import numpy
 import scipy
 import scipy.interpolate
 import scipy.ndimage
+import scipy.ndimage.filters
 import scipy.spatial
 import scipy.spatial.distance
 
@@ -129,7 +130,6 @@ def remove_zeroed_lines(new_data,
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
 def extract_f0(new_data,
-               step_size,
                half_window_size,
                which_quantile,
                temporal_smoothing_gaussian_filter_stdev,
@@ -166,8 +166,6 @@ def extract_f0(new_data,
                                                                       0,
                                                                       temporal_smoothing_gaussian_filter)
 
-    if (step_size > new_data_temporally_smoothed.shape[0]):
-        raise Exception("The step size provided, " + repr(step_size) + ", is larger than the number of frames in the data, " + repr(new_data_temporally_smoothed.shape[0]) + ".")
 
     which_quantile_len = None
     try:
@@ -180,44 +178,9 @@ def extract_f0(new_data,
     if (which_quantile_len > 1):
         raise Exception("Provided more than one quantile \"" + repr(which_quantile) + "\".")
 
-    window_centers = numpy.arange(0, new_data_temporally_smoothed.shape[0], step_size)
-
-    if window_centers[-1] != new_data_temporally_smoothed.shape[0]:
-        window_centers = numpy.append(window_centers, new_data_temporally_smoothed.shape[0])
-
-    def window_shape_iterator(window_centers = window_centers):
-        for each_window_center in window_centers:
-            each_window_lower = max(window_centers[0], each_window_center - half_window_size)
-            each_window_upper = min(window_centers[-1], each_window_center + half_window_size)
-
-            yield( (each_window_lower, each_window_center, each_window_upper) )
-
-    which_quantile = expanded_numpy.get_quantiles(which_quantile)
-
-    window_quantiles = numpy.zeros( (window_centers.shape[0],) + which_quantile.shape + new_data_temporally_smoothed.shape[1:] )
-    for i, (each_window_lower, each_window_center, each_window_upper) in enumerate(window_shape_iterator()):
-        new_data_temporally_smoothed_i = new_data_temporally_smoothed[each_window_lower:each_window_upper]
-
-        each_quantile = expanded_numpy.quantile(new_data_temporally_smoothed_i.reshape(new_data_temporally_smoothed_i.shape[0], -1), which_quantile, axis=0)
-        each_quantile = each_quantile.reshape(each_quantile.shape[0], *new_data_temporally_smoothed_i.shape[1:])
-
-        # Are there bad values in our result (shouldn't be if axis=None)
-        if each_quantile.mask.any():
-            msg = "Found erroneous regions in quantile calculation. Dropping in HDF5 logger."
-
-            logger.error(msg)
-            extract_f0.recorders.array_debug_recorder["each_quantile"] = each_quantile
-            raise Exception(msg)
-        else:
-            each_quantile = each_quantile.data
-
-        window_quantiles[i] = each_quantile
-
-    # Should only be one quantile. Drop the singleton dimension.
-    window_quantiles = window_quantiles[:, 0]
-
-    quantile_interpolator = scipy.interpolate.interp1d(window_centers, window_quantiles, axis=0)
-    new_data_quantiled = quantile_interpolator(numpy.arange(new_data_temporally_smoothed.shape[0]))
+    new_data_quantiled = scipy.ndimage.filters.percentile_filter(new_data_temporally_smoothed,
+                                                                 which_quantile * 100,
+                                                                 footprint=numpy.ones((2*half_window_size + 1,) + (new_data_temporally_smoothed.ndim - 1) * (1,), dtype=bool))
 
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
