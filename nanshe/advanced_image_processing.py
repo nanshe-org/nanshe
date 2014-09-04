@@ -302,12 +302,13 @@ def preprocess_data(new_data, **parameters):
     normalize_data.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
     new_data_normalized = normalize_data(new_data_maybe_wavelet_result,
                                          **parameters["normalize_data"])
+
     preprocess_data.recorders.array_debug_recorder["images_normalized"] = new_data_normalized
     preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = expanded_numpy.add_singleton_op(
             numpy.max,
             new_data_normalized,
             axis = 0
-        )
+    )
 
     return(new_data_normalized)
 
