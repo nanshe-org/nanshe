@@ -1827,8 +1827,6 @@ def wavelet_denoising(new_image,
             if use_watershed:
                 logger.debug("Entering watershed segmentation.")
 
-                # ############### TODO: Revisit to make sure all of Ferran's algorithm is implemented and this is working properly.
-
                 # Perform the watershed segmentation.
 
                 # First perform disc opening on the image. (Actually, we don't do this according to Ferran.)
