@@ -566,6 +566,12 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                     neurons_block_i["contour"][windowed_slice_i] = neurons_block_i_accepted["contour"]
                     neurons_block_i["image"][windowed_slice_i] = neurons_block_i_accepted["image"]
 
+                    # Copy other properties
+                    neurons_block_i["area"] = neurons_block_i_accepted["area"]
+                    neurons_block_i["max_F"] = neurons_block_i_accepted["max_F"]
+                    neurons_block_i["gaussian_mean"] = neurons_block_i_accepted["gaussian_mean"]
+                    neurons_block_i["gaussian_cov"] = neurons_block_i_accepted["gaussian_cov"]
+                    neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
 
                     array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
                         group_name = "debug",
