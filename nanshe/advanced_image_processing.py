@@ -2150,7 +2150,7 @@ def merge_neuron_sets(new_neuron_set_1,
 
         merge_neuron_sets.recorders.array_debug_recorder["new_neuron_set_all_j"] = new_neuron_set_all_j
 
-        # Get the maximum corresponding to the best matched paris from before
+        # Get the maximum corresponding to the best matched pairs from before
         new_neuron_set_angle_maxes = new_neuron_set_angle[(new_neuron_set_angle_all_optimal_i, new_neuron_set_all_j,)]
         new_neuron_set_masks_overlaid_1_maxes = new_neuron_set_masks_overlaid_1[
             (new_neuron_set_masks_overlaid_1_all_optimal_i, new_neuron_set_all_j,)]
