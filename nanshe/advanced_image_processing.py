@@ -1677,7 +1677,7 @@ def wavelet_denoising(new_image,
                                                         region_properties) under this should be a dictionary that
                                                         contains the keys min and/or max with a value for each.
 
-            **parameters(dict):                         passed directly to spams.trainDL.
+            **parameters(dict):                         additional parameters for various other function calls.
         
         Returns:
             numpy.ndarray:                              a structured array of candidate neurons.
