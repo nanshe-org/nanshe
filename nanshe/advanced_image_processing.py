@@ -1740,7 +1740,7 @@ def wavelet_denoising(new_image,
 
         logger.debug("Finding regions that fail to meet some shape constraints...")
 
-        not_within_bound = numpy.zeros(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
+        within_bound = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
 
         # Go through each property and make sure they are within the bounds
         for each_prop, each_prop_constraints in accepted_region_shape_constraints.items():
@@ -1762,17 +1762,16 @@ def wavelet_denoising(new_image,
 
             # See whether both or neither bound is satisfied.
             is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
-            is_not_within_bound = ~is_within_bound
 
             # Collect the unbounded ones
-            not_within_bound |= is_not_within_bound
+            within_bound &= is_within_bound
 
         logger.debug("Found regions that fail to meet some shape constraints.")
 
         logger.debug("Reducing wavelet transform on regions outside of constraints...")
 
         # Get labels of the unbounded ones
-        labels_not_within_bound = new_wavelet_image_denoised_labeled_props["label"][not_within_bound]
+        labels_not_within_bound = new_wavelet_image_denoised_labeled_props["label"][~within_bound]
 
         # Iterate over the unbounded ones to fix any errors.
         for each_labels_not_within_bound in labels_not_within_bound:
@@ -1879,7 +1878,7 @@ def wavelet_denoising(new_image,
                 if watershed_local_maxima.count.size:
                     wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
 
-                not_within_bound = numpy.zeros(watershed_local_maxima.props.shape, dtype = bool)
+                within_bound = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
 
                 # Go through each property and make sure they are within the bounds
                 for each_prop, each_prop_constraints in accepted_neuron_shape_constraints.items():
@@ -1901,13 +1900,12 @@ def wavelet_denoising(new_image,
 
                     # See whether both or neither bound is satisfied.
                     is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
-                    is_not_within_bound = ~is_within_bound
 
                     # Collect the unbounded ones
-                    not_within_bound |= is_not_within_bound
+                    within_bound &= is_within_bound
 
                 # Get labels outside of bounds and remove them
-                watershed_local_maxima.remove_prop_mask(not_within_bound)
+                watershed_local_maxima.remove_prop_mask(~within_bound)
 
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
                     watershed_local_maxima.label_image[None]
