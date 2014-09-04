@@ -2084,7 +2084,7 @@ def merge_neuron_sets(new_neuron_set_1,
 
             alignment_min_threshold(float):             The minimum required cosine of the angle between two neurons for
                                                         them to be treated as candidates for merging (uses the function
-                                                        expanded_numpy.dot_product_L2_normalized).
+                                                        expanded_numpy.dot_product_normalized with ord = 2).
 
             overlap_min_threshold(numpy.ndarray):       The minimum required dot product (divided by the L1 norm of one
                                                         of the neurons) for them to be treated as candidates for merging
@@ -2120,8 +2120,9 @@ def merge_neuron_sets(new_neuron_set_1,
         new_neuron_set_2_flattened_mask = new_neuron_set_2["mask"].reshape(new_neuron_set_2["mask"].shape[0], -1)
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = expanded_numpy.dot_product_L2_normalized(new_neuron_set_1_flattened,
-                                                                        new_neuron_set_2_flattened)
+        new_neuron_set_angle = expanded_numpy.dot_product_normalized(new_neuron_set_1_flattened,
+                                                                     new_neuron_set_2_flattened,
+                                                                     ord = 2)
 
         merge_neuron_sets.recorders.array_debug_recorder["new_neuron_set_angle"] = new_neuron_set_angle
 
