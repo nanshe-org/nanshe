@@ -1898,7 +1898,7 @@ def wavelet_denoising(new_image,
                     else:
                         is_upper_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
 
-                    # See whether both or neither bound is satisified.
+                    # See whether both or neither bound is satisfied.
                     is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
                     is_not_within_bound = ~is_within_bound
 
