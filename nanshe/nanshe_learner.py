@@ -540,6 +540,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
         for i, i_str, (output_filename_block_i, sequential_block_i) in additional_generators.filled_stringify_enumerate(itertools.izip(output_filename_block, original_images_pared_slices.flat)):
             windowed_slice_i = tuple([slice(_1, _2, 1) for _1, _2 in [(None, None)] + sequential_block_i["windowed_stack_selection"].tolist()[1:]])
+            window_trimmed_i = tuple([slice(_1, _2, 1) for _1, _2 in sequential_block_i["windowed_block_selection"].tolist()])
             output_filename_block_i = output_filename_block_i.rstrip("/")
 
             with h5py.File(output_filename_block_i, "r") as each_block_file_handle:
@@ -547,7 +548,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                     neurons_block_i_smaller = HDF5_serializers.read_numpy_structured_array_from_HDF5(each_block_file_handle, "/neurons")
 
                     neurons_block_i_windowed_count = numpy.squeeze(numpy.apply_over_axes(numpy.sum, neurons_block_i_smaller["mask"].astype(float), tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))))
-                    neurons_block_i_non_windowed_count = numpy.squeeze(numpy.apply_over_axes(numpy.sum, neurons_block_i_smaller["mask"].astype(float), tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))))
+                    neurons_block_i_non_windowed_count = numpy.squeeze(numpy.apply_over_axes(numpy.sum, neurons_block_i_smaller["mask"][window_trimmed_i].astype(float), tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))))
 
                     if neurons_block_i_windowed_count.shape == tuple():
                         neurons_block_i_windowed_count = numpy.array([neurons_block_i_windowed_count])
@@ -556,7 +557,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                         neurons_block_i_non_windowed_count = numpy.array([neurons_block_i_non_windowed_count])
 
                     # Find ones that are inside the margins by more than half
-                    neurons_block_i_acceptance = ((neurons_block_i_windowed_count / neurons_block_i_non_windowed_count) > 0.5)
+                    neurons_block_i_acceptance = ((neurons_block_i_non_windowed_count / neurons_block_i_windowed_count) > 0.5)
 
                     # Take a subset of our previous neurons that are within the margins by half
                     neurons_block_i_accepted = neurons_block_i_smaller[neurons_block_i_acceptance]
