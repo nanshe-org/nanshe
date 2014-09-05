@@ -1757,7 +1757,7 @@ class TestAdvancedImageProcessing(object):
         config = {
             "wavelet_denoising" : {
                 "remove_low_intensity_local_maxima" : {
-                    "percentage_pixels_below_max" : 0
+                    "percentage_pixels_below_max" : 0.0
                 },
                 "wavelet_transform.wavelet_transform" : {
                     "scale" : 4
