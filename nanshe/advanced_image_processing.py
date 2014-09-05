@@ -2278,6 +2278,7 @@ def postprocess_data(new_dictionary, **parameters):
     new_neurons_set = None
 
 
+    # TODO: Remove this as it is already accomplished using the HDF5EnumeratedArrayRecorder.
     # Puts each dictionary basis debug log into a separate group depending on which basis image it was a part of.
     def array_debug_recorder_enumerator(new_list):
         postprocess_data.recorders.array_debug_recorder["neuron_sets"] = None
