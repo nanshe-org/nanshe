@@ -450,7 +450,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 (class):             A function with the static variable, recorders, added.
         """
 
-        class SubgroupingRecorders(object):
+        class ClassSubgroupingRecorders(object):
             """
                 Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
                 a_class on assignment.
@@ -496,7 +496,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 if _k != "__dict__":
                     del self.__dict__[_k]
 
-        a_class = generic_decorators.class_static_variables(recorders = SubgroupingRecorders(*args, **kwargs))(a_class)
+        a_class = generic_decorators.class_static_variables(recorders = ClassSubgroupingRecorders(*args, **kwargs))(a_class)
 
         def class_static_subgrouping_array_recorders__init__decorator(callable):
             @generic_decorators.wraps(callable)
@@ -507,7 +507,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 # when it should switch to a new one as it will keep different
                 # runs separate.
 
-                self.recorders = SubgroupingRecorders()
+                self.recorders = ClassSubgroupingRecorders()
                 for _k in a_class.recorders.__dict__:
                     self.recorders.__dict__[_k] = a_class.recorders.__dict__[_k]
 
