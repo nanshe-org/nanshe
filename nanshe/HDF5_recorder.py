@@ -339,22 +339,22 @@ def static_subgrouping_array_recorders(*args, **kwargs):
         """
 
         class SubgroupingRecorders(object):
-            """
-                Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
-                callable on assignment.
-            """
+            # """
+            #     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
+            #     callable on assignment.
+            # """
             def __init__(self, *args, **kwargs):
-                """
-                    Contains ArrayRecorders that write to a subgroup of the same name as the callable.
-
-                    Args:
-                        args(tuple of strs):                        All variables to be named (set to
-                                                                    EmptyArrayRecorder()).
-
-                    Keyword Args:
-                        kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
-                                                                    type ArrayRecorder.
-                """
+                # """
+                #     Contains ArrayRecorders that write to a subgroup of the same name as the callable.
+                #
+                #     Args:
+                #         args(tuple of strs):                        All variables to be named (set to
+                #                                                     EmptyArrayRecorder()).
+                #
+                #     Keyword Args:
+                #         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
+                #                                                     type ArrayRecorder.
+                # """
 
                 for _k in args:
                     object.__setattr__(self, _k, None)
@@ -451,22 +451,22 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
         """
 
         class ClassSubgroupingRecorders(object):
-            """
-                Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
-                a_class on assignment.
-            """
+            # """
+            #     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
+            #     a_class on assignment.
+            # """
             def __init__(self, *args, **kwargs):
-                """
-                    Contains ArrayRecorders that write to a subgroup of the same name as the a_class.
-
-                    Args:
-                        args(tuple of strs):                        All variables to be named (set to
-                                                                    EmptyArrayRecorder()).
-
-                    Keyword Args:
-                        kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
-                                                                    type ArrayRecorder.
-                """
+                # """
+                #     Contains ArrayRecorders that write to a subgroup of the same name as the a_class.
+                #
+                #     Args:
+                #         args(tuple of strs):                        All variables to be named (set to
+                #                                                     EmptyArrayRecorder()).
+                #
+                #     Keyword Args:
+                #         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
+                #                                                     type ArrayRecorder.
+                # """
 
                 for _k in args:
                     object.__setattr__(self, _k, None)
