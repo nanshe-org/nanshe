@@ -717,7 +717,7 @@ class TestNansheLearner(object):
         self.points = numpy.array([[30, 24],
                                    [59, 65],
                                    [21, 65],
-                                   [14, 14],
+                                   [15, 15],
                                    [72, 16],
                                    [45, 32]])
 
