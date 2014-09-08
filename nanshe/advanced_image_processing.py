@@ -1699,7 +1699,8 @@ def wavelet_denoising(new_image,
                                                                         **parameters["wavelet_transform.wavelet_transform"])
 
     for i in xrange(len(new_wavelet_transformed_image)):
-        wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = new_wavelet_transformed_image[i][None]
+        wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = \
+            new_wavelet_transformed_image[i][None]
 
     # Contains a bool array with significant values True and noise False for all wavelet transforms.
     new_wavelet_transformed_image_significant_mask = denoising.significant_mask(new_wavelet_transformed_image,
