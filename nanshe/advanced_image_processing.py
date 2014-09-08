@@ -1923,7 +1923,7 @@ def wavelet_denoising(new_image,
 
                     # Get masks for all cells
                     neurons["mask"] = expanded_numpy.all_permutations_equal(watershed_local_maxima.props["label"],
-                                                                            new_wavelet_image_denoised_segmentation)
+                                                                            watershed_local_maxima.label_image)
 
                     neurons["image"] = new_image * neurons["mask"]
 
