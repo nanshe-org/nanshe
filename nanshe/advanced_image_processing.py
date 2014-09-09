@@ -2341,19 +2341,20 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         new_neuron_set_flattened_mask = new_neuron_set["mask"].reshape(new_neuron_set["mask"].shape[0], -1)
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = expanded_numpy.dot_product_normalized(new_neuron_set_flattened,
-                                                                     new_neuron_set_flattened,
-                                                                     ord = 2)
+        new_neuron_set_angle = expanded_numpy.pair_dot_product_normalized(new_neuron_set_flattened,
+                                                                          ord = 2)
         new_neuron_set_angle = numpy.triu(new_neuron_set_angle, k = 1)
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle"] = new_neuron_set_angle
 
         # Measure the distance between the two masks
         # (note distance relative to the total mask content of each mask individually)
-        new_neuron_set_masks_overlaid_1, new_neuron_set_masks_overlaid_2 = expanded_numpy.dot_product_partially_normalized(
-            new_neuron_set_flattened_mask, new_neuron_set_flattened_mask, ord = 1)
-        numpy.fill_diagonal(new_neuron_set_masks_overlaid_1, 0)
-        numpy.fill_diagonal(new_neuron_set_masks_overlaid_2, 0)
+        new_neuron_set_masks_overlaid = expanded_numpy.pair_dot_product_partially_normalized(
+            new_neuron_set_flattened_mask, ord = 1)
+        numpy.fill_diagonal(new_neuron_set_masks_overlaid, 0)
+
+        new_neuron_set_masks_overlaid_1 = new_neuron_set_masks_overlaid
+        new_neuron_set_masks_overlaid_2 = new_neuron_set_masks_overlaid.T
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1"] = new_neuron_set_masks_overlaid_1
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2"] = new_neuron_set_masks_overlaid_2
