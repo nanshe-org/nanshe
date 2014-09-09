@@ -1060,6 +1060,46 @@ def dot_product(new_vector_set_1, new_vector_set_2):
 
 
 @debugging_tools.log_call(logger)
+def pair_dot_product(new_vector_set):
+    """
+        Determines the dot product between the vectors in the set.
+
+        Args:
+            new_vector_set(numpy.ndarray):        set of vectors.
+
+        Returns:
+            (numpy.ndarray):                      an array with the distances between each pair of vectors.
+
+        Examples:
+            >>> (pair_dot_product(numpy.eye(2)) == numpy.eye(2)).all()
+            True
+
+            >>> (pair_dot_product(numpy.eye(10)) == numpy.eye(10)).all()
+            True
+
+            >>> pair_dot_product(numpy.array([[ 1,  0]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product(numpy.array([[ 1.,  0.]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product(numpy.array([[-1,  0]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product(numpy.array([[ 0,  1]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product(numpy.array([[ 1,  1]]))
+            array([[ 2.]])
+
+            >>> pair_dot_product(numpy.array([[ True,  False]]))
+            array([[ 1.]])
+    """
+
+    return(dot_product(new_vector_set, new_vector_set))
+
+
+@debugging_tools.log_call(logger)
 def norm(new_vector_set, ord = 2):
     """
         Determines the norm of a vector or a set of vectors.
