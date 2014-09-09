@@ -1389,6 +1389,64 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
 
 
 @debugging_tools.log_call(logger)
+def pair_dot_product_normalized(new_vector_set, ord = 2):
+    """
+        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
+
+        Args:
+            new_vector_set(numpy.ndarray):      set of vectors.
+            ord(optional):                        basically the same arguments as numpy.linalg.norm.
+
+        Returns:
+            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
+
+        Examples:
+            >>> (pair_dot_product_normalized(numpy.eye(2)) == numpy.eye(2)).all()
+            True
+
+            >>> (pair_dot_product_normalized(numpy.eye(10)) == numpy.eye(10)).all()
+            True
+
+            >>> pair_dot_product_normalized(numpy.array([[ 1,  0]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product_normalized(numpy.array([[ 1.,  0.]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product_normalized(numpy.array([[-1,  0]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product_normalized(numpy.array([[ 0,  1]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product_normalized(numpy.array([[ 1,  1]]))
+            array([[ 1.]])
+
+            >>> pair_dot_product_normalized(numpy.array([[ True,  False]]))
+            array([[ 1.]])
+    """
+
+    new_vector_set_float = new_vector_set.astype(float)
+
+    # Gets all of the norms
+    new_vector_set_norms = norm(new_vector_set_float, ord = ord)
+
+    if not new_vector_set_norms.shape:
+        new_vector_set_norms = numpy.array([new_vector_set_norms])
+
+    # Finds the product of each combination for normalization
+    norm_products = all_permutations_operation(operator.mul, new_vector_set_norms, new_vector_set_norms)
+
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(new_vector_set_float, new_vector_set_float.T)
+
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_dot_product_normalized = vector_pairs_dot_product / norm_products
+
+    return(vector_pairs_dot_product_normalized)
+
+
+@debugging_tools.log_call(logger)
 def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the L_2 norm of the two.
