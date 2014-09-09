@@ -1250,6 +1250,71 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
 
 
 @debugging_tools.log_call(logger)
+def pair_dot_product_partially_normalized(new_vector_set, ord = 2):
+    """
+        Determines the dot product between the two pairs of vectors from each set and creates a tuple
+        with the dot product divided by one norm or the other.
+
+        Args:
+            new_vector_set(numpy.ndarray):        set of vectors.
+            ord(optional):                        basically the same arguments as numpy.linalg.norm
+
+        Returns:
+            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
+
+        Examples:
+            >>> (pair_dot_product_partially_normalized(numpy.eye(2), 2) == numpy.eye(2)).all()
+            True
+
+            >>> (pair_dot_product_partially_normalized(numpy.eye(10), 2) == numpy.eye(10)).all()
+            True
+
+            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  0]]), 2)
+            array([[ 1.]])
+
+            >>> pair_dot_product_partially_normalized(numpy.array([[-1,  0]]), 2)
+            array([[ 1.]])
+
+            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]))
+            array([[ 1.41421356]])
+
+            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]), 2)
+            array([[ 1.41421356]])
+
+            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]), 1)
+            array([[ 1.]])
+
+            >>> pair_dot_product_partially_normalized(numpy.array([[ True,  False]]), 2)
+            array([[ 1.]])
+
+            >>> pair_dot_product_partially_normalized(numpy.array([[ True,  True]]), 1)
+            array([[ 1.]])
+
+            # >>> pair_dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE
+            # (array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],
+            #        [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),
+            #  array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],
+            #        [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
+    """
+
+    new_vector_set_float = new_vector_set.astype(float)
+
+    # Gets all of the norms
+    new_vector_set_norms = norm(new_vector_set_float, ord)
+
+    # Expand the norms to have a shape equivalent to vector_pairs_dot_product
+    new_vector_set_norms_expanded = expand_view(new_vector_set_norms, reps_after = new_vector_set_float.shape[0])
+
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(new_vector_set_float, new_vector_set_float.T)
+
+    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    vector_pairs_dot_product_normalized = vector_pairs_dot_product / new_vector_set_norms_expanded
+
+    return( (vector_pairs_dot_product_normalized) )
+
+
+@debugging_tools.log_call(logger)
 def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
