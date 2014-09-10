@@ -345,6 +345,40 @@ def contains(new_array, to_contain):
 
 
 @debugging_tools.log_call(logger)
+def index_array_to_bool_array(index_array, shape):
+    """
+        Creates a bool array mask that has each value from the index array as True.
+        All other values are False. Requires a shape be specified to create the
+        bool array.
+
+        Args:
+            index_array(numpy.ndarray of ints):     The index array with the indices to use
+            shape(tuple of ints):                   The shape to give the bool_array
+
+        Returns:
+            (numpy.ndarray):                        The bool array with selected indices as True rest are False.
+
+        Examples:
+            >>> index_array_to_bool_array((numpy.arange(5),), (5,))
+            array([ True,  True,  True,  True,  True], dtype=bool)
+
+            >>> index_array_to_bool_array((numpy.arange(1, 4),), (5,))
+            array([False,  True,  True,  True, False], dtype=bool)
+
+            >>> index_array_to_bool_array((numpy.arange(3), numpy.arange(3)), (3, 3,))
+            array([[ True, False, False],
+                   [False,  True, False],
+                   [False, False,  True]], dtype=bool)
+    """
+
+    bool_array = numpy.zeros(shape, dtype = bool)
+    bool_array[index_array] = True
+
+    return(bool_array)
+
+
+
+@debugging_tools.log_call(logger)
 def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
     """
         Behaves like NumPy tile except that it always returns a view and not a copy.
