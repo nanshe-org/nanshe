@@ -366,6 +366,14 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     with open(intermediate_config, "w") as fid:
         json.dump(dict(parameters.items() + {"debug" : debug}.items()), fid, indent = 4, separators = (",", " : "))
 
+    cmd = ["/usr/bin/openssl", "md5", input_filename_details.externalPath]
+    md5cmd = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    md5cmd.wait()
+
+    for each_line in md5cmd.stdout.readlines():
+        logger.info(" ".join(cmd) + ":" + each_line)
+
+
     # Construct an HDF5 file for each block
     input_filename_block = []
     output_filename_block = []
@@ -426,6 +434,13 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
         if input_file_handle != output_file_handle:
             input_file_handle.close()
+
+    md5cmd = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    md5cmd.wait()
+    for each_line in md5cmd.stdout.readlines():
+        logger.info(" ".join(cmd) + ":" + each_line)
+
+
 
     # TODO: Refactor into a separate function somehow.
     cur_module_name = None
