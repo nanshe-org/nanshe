@@ -2064,12 +2064,12 @@ def merge_neuron_sets(new_neuron_set_1,
                       overlap_min_threshold,
                       **parameters):
 
-    merge_neuron_sets_once.recorders.array_debug_recorder = merge_neuron_sets.recorders.array_debug_recorder
-    return(merge_neuron_sets_once(new_neuron_set_1,
-                                  new_neuron_set_2,
-                                  alignment_min_threshold,
-                                  overlap_min_threshold,
-                                  **parameters))
+    merge_neuron_sets_repeatedly.recorders.array_debug_recorder = merge_neuron_sets.recorders.array_debug_recorder
+    return(merge_neuron_sets_repeatedly(new_neuron_set_1,
+                                        new_neuron_set_2,
+                                        alignment_min_threshold,
+                                        overlap_min_threshold,
+                                        **parameters))
 
 
 @debugging_tools.log_call(logger)
