@@ -109,7 +109,7 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
            (os.path.normpath(data_object.attrs["filename"]) != os.path.normpath(data_file.filename)):
             with h5py.File(data_object.attrs["filename"], "r") as external_file_handle:
                 if isinstance(data_ref, h5py.RegionReference):
-                    data = external_file_handle[data_ref][data_ref]
+                    data = external_file_handle[data_object.attrs["dataset"]][eval(data_object.attrs["slice"])]
                 else:
                     data = external_file_handle[data_ref].value
         else:
