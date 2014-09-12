@@ -399,8 +399,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
         input_file_handle = None
         try:
-            # Must be opened in write mode to create a regionref.
-            input_file_handle = h5py.File(input_filename_details.externalPath, "a")
+            # Skipping using region refs.
+            input_file_handle = h5py.File(input_filename_details.externalPath, "r")
         except IOError:
             # File is already open
             input_file_handle = output_file_handle
