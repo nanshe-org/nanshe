@@ -103,7 +103,31 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
     # data_ref = data_object[()]
 
     if isinstance(data_ref, (numpy.number, numpy.ndarray,)):
-        data = data_object.value
+        if ("filename" in data_object.attrs):
+            # It's a pseudo-ref.
+            assert("dataset" in data_object.attrs)
+
+            new_dataset_name = data_object.attrs["dataset"]
+            with h5py.File(data_object.attrs["filename"], "r") as external_file_handle:
+                assert(isinstance(new_dataset_name, h5py.Dataset))
+
+                if ("field" in data_object.attrs) and ("slice" in data_object.attrs):
+                    new_field = data_object.attrs["field"]
+                    new_slicing = eval(data_object.attrs["slice"])
+
+                    data = external_file_handle[new_dataset_name][new_field][new_slicing]
+                elif ("field" in data_object.attrs):
+                    new_field = data_object.attrs["field"]
+
+                    data = external_file_handle[new_dataset_name][new_field]
+                elif ("slice" in data_object.attrs):
+                    new_slicing = eval(data_object.attrs["slice"])
+
+                    data = external_file_handle[new_dataset_name][new_slicing]
+                else:
+                    data = external_file_handle[new_dataset_name][()]
+        else:
+            data = data_object.value
     elif isinstance(data_ref, h5py.Reference):
         if ("filename" in data_object.attrs) and \
            (os.path.normpath(data_object.attrs["filename"]) != os.path.normpath(data_file.filename)):

@@ -418,7 +418,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             slice_i = tuple([slice(_1, _2, 1) for _1, _2 in sequential_block_i_windowed])
 
             if i_str not in output_group_blocks:
-                output_group_blocks[i_str] = input_file_handle[input_dataset_name].regionref[slice_i]
+                output_group_blocks[i_str] = []
                 output_group_blocks[i_str].attrs["filename"] = input_file_handle.filename
                 output_group_blocks[i_str].attrs["dataset"] = input_dataset_name
                 output_group_blocks[i_str].attrs["slice"] = str(slice_i)
