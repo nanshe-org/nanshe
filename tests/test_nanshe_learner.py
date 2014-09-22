@@ -79,7 +79,7 @@ class TestNansheLearner(object):
                         "spatial_smoothing_gaussian_filter_stdev" : 5.0,
                         "which_quantile" : 0.5,
                         "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                        "half_window_size" : 400,
+                        "half_window_size" : 1,
                         "bias" : 100,
                         "step_size" : 100
                     },
@@ -178,7 +178,7 @@ class TestNansheLearner(object):
                         "spatial_smoothing_gaussian_filter_stdev" : 5.0,
                         "which_quantile" : 0.5,
                         "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                        "half_window_size" : 400,
+                        "half_window_size" : 1,
                         "bias" : 100,
                         "step_size" : 100
                     },
@@ -239,7 +239,7 @@ class TestNansheLearner(object):
 
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
 
-                            "half_window_size" : 50,          "__comment__window_size" : "In number of frames",
+                            "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
                             "step_size" : 100,                "__comment__step_size" : "In number of frames",
                             "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
 
@@ -383,7 +383,7 @@ class TestNansheLearner(object):
                                 "significance_threshhold" : 3.0
                             },
                             "denoising.significant_mask" : {
-                                "noise_threshhold" : 3.0
+                                "noise_threshhold" : 2.0
                             },
                             "remove_too_close_local_maxima" : {
                                 "min_local_max_distance" : 100.0
@@ -409,7 +409,7 @@ class TestNansheLearner(object):
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0,
                             "which_quantile" : 0.5,
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                            "half_window_size" : 20,
+                            "half_window_size" : 1,
                             "bias" : 100,
                             "step_size" : 100
                         },
@@ -474,7 +474,7 @@ class TestNansheLearner(object):
 
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
 
-                            "half_window_size" : 50,          "__comment__window_size" : "In number of frames",
+                            "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
                             "step_size" : 100,                "__comment__step_size" : "In number of frames",
                             "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
 
@@ -621,7 +621,7 @@ class TestNansheLearner(object):
                                 "significance_threshhold" : 3.0
                             },
                             "denoising.significant_mask" : {
-                                "noise_threshhold" : 3.0
+                                "noise_threshhold" : 2.0
                             },
                             "remove_too_close_local_maxima" : {
                                 "min_local_max_distance" : 100.0
@@ -647,7 +647,7 @@ class TestNansheLearner(object):
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0,
                             "which_quantile" : 0.5,
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                            "half_window_size" : 20,
+                            "half_window_size" : 1,
                             "bias" : 100,
                             "step_size" : 100
                         },
@@ -712,12 +712,12 @@ class TestNansheLearner(object):
         self.config_blocks_3D_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_3D_drmaa.json")
 
         self.space = numpy.array([110, 110])
-        self.radii = numpy.array([7, 6, 6, 6, 7, 6])
+        self.radii = numpy.array([6, 6, 6, 6, 7, 6])
         self.magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
         self.points = numpy.array([[30, 24],
                                    [59, 65],
                                    [21, 65],
-                                   [15, 15],
+                                   [80, 78],
                                    [72, 16],
                                    [45, 32]])
 
@@ -753,7 +753,7 @@ class TestNansheLearner(object):
         self.radii3 = numpy.array([4, 3, 3, 3, 4, 3])
         self.magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
         self.points3 = numpy.array([[15, 16, 17],
-                                    [31, 32, 18],
+                                    [42, 21, 23],
                                     [45, 32, 34],
                                     [41, 41, 42],
                                     [36, 15, 41],
@@ -789,6 +789,12 @@ class TestNansheLearner(object):
 
         with h5py.File(self.hdf5_input_3D_filename, "w") as fid:
             fid["images"] = self.image_stack3
+
+        with h5py.File(self.hdf5_output_filename, "w") as fid:
+            pass
+
+        with h5py.File(self.hdf5_output_3D_filename, "w") as fid:
+            pass
 
         with open(self.config_a_block_filename, "w") as fid:
             json.dump(self.config_a_block, fid)
