@@ -39,6 +39,8 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
                                            will be stored as a global variable on the function, which can be changed at
                                            runtime.
 
+            to_print_time(bool):           Prints the time it took to run the wrapped callable.
+
             to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored
                                            as a global variable on the function, which can be changed at runtime.
         
@@ -127,7 +129,7 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
     return(log_call_decorator)
 
 
-def log_class(logger, to_log_call = True, to_print_args = False, to_print_exception = False):
+def log_class(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
     """
         Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
         Intended to be used as a decorator that takes a few arguments.
@@ -146,6 +148,8 @@ def log_class(logger, to_log_call = True, to_print_args = False, to_print_except
                                            will be stored as a global variable on the methods, which can be changed at
                                            runtime.
 
+            to_print_time(bool):           Prints the time it took to run the wrapped callable.
+
             to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored
                                            as a global variable on the methods, which can be changed at runtime.
 
@@ -153,10 +157,14 @@ def log_class(logger, to_log_call = True, to_print_args = False, to_print_except
             log_call_decorator (for wrapping)
     """
 
-    return(generic_decorators.class_decorate_all_methods(log_call(logger, to_log_call, to_print_args, to_print_exception)))
+    return(generic_decorators.class_decorate_all_methods(log_call(logger,
+                                                                  to_log_call = to_log_call,
+                                                                  to_print_args = to_print_args,
+                                                                  to_print_time = to_print_time,
+                                                                  to_print_exception = to_print_exception)))
 
 
-def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_exception = False):
+def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
     """
         Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
         Intended to be used as a decorator that takes a few arguments.
@@ -175,6 +183,8 @@ def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_exc
                                            will be stored as a global variable on the methods, which can be changed at
                                            runtime.
 
+            to_print_time(bool):           Prints the time it took to run the wrapped callable.
+
             to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored
                                            as a global variable on the methods, which can be changed at runtime.
 
@@ -182,4 +192,8 @@ def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_exc
             log_call_decorator (for wrapping)
     """
 
-    return(generic_decorators.qt_class_decorate_all_methods(log_call(logger, to_log_call, to_print_args, to_print_exception)))
+    return(generic_decorators.qt_class_decorate_all_methods(log_call(logger,
+                                                                     to_log_call = to_log_call,
+                                                                     to_print_args = to_print_args,
+                                                                     to_print_time = to_print_time,
+                                                                     to_print_exception = to_print_exception)))
