@@ -487,7 +487,7 @@ class TestAdvancedImageProcessing(object):
 
             unmatched_g = new_unmatched_g
 
-        print unmatched_g
+        print(unmatched_g)
 
         assert(len(unmatched_g) == 0)
 
@@ -539,7 +539,7 @@ class TestAdvancedImageProcessing(object):
 
             unmatched_g = new_unmatched_g
 
-        print unmatched_g
+        print(unmatched_g)
 
         assert(len(unmatched_g) == 0)
 
@@ -1807,7 +1807,7 @@ class TestAdvancedImageProcessing(object):
         images = synthetic_data.generate_gaussian_images(space, numpy.vstack([points, points]), numpy.hstack([radii, radii])/3.0, numpy.hstack([magnitudes, magnitudes])) * masks
 
 
-        print masks.shape
+        print(masks.shape)
 
         bases_indices = [[0], [1]]
 
