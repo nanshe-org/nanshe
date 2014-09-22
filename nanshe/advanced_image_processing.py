@@ -7,6 +7,9 @@ __date__ = "$Apr 30, 2014 5:23:37PM$"
 
 
 
+# Allows for type conversions for C/C++ functions.
+import ctypes
+
 # Generally useful and fast to import so done immediately.
 import numpy
 
@@ -178,9 +181,10 @@ def extract_f0(new_data,
     if (which_quantile_len > 1):
         raise Exception("Provided more than one quantile \"" + repr(which_quantile) + "\".")
 
-    new_data_quantiled = scipy.ndimage.filters.percentile_filter(new_data_temporally_smoothed,
-                                                                 which_quantile * 100,
-                                                                 footprint=numpy.ones((2*half_window_size + 1,) + (new_data_temporally_smoothed.ndim - 1) * (1,), dtype=bool))
+    new_data_quantiled = vigra.filters.lineRankOrderFilter(new_data_temporally_smoothed.astype(numpy.float32),
+                                                           ctypes.c_ulong(half_window_size).value,
+                                                           which_quantile,
+                                                           ctypes.c_uint(0).value)
 
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
