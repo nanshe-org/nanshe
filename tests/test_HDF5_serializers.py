@@ -12,7 +12,7 @@ import h5py
 import nanshe.HDF5_serializers
 
 
-class TestHDF5Searchers(object):
+class TestHDF5Serializers(object):
     def setup(self):
         self.temp_dir = tempfile.mkdtemp()
 
