@@ -19,7 +19,7 @@ import synthetic_data
 
 class TestAdvancedImageProcessing(object):
     def test_remove_zeroed_lines_1(self):
-        a = numpy.ones((1, 100, 100))
+        a = numpy.ones((1, 100, 101))
         p = 0.2
         erosion_shape = [ 21, 1 ]
         dilation_shape = [ 1, 3 ]
@@ -37,7 +37,7 @@ class TestAdvancedImageProcessing(object):
         assert((a == b).all())
 
     def test_remove_zeroed_lines_2(self):
-        a = numpy.ones((1, 100, 100))
+        a = numpy.ones((1, 100, 101))
         p = 0.2
         erosion_shape = [ 21, 1 ]
         dilation_shape = [ 1, 3 ]
@@ -56,7 +56,7 @@ class TestAdvancedImageProcessing(object):
 
 
     def test_remove_zeroed_lines_3(self):
-        a = numpy.ones((1, 100, 100))
+        a = numpy.ones((1, 100, 101))
         p = 0.2
         erosion_shape = [ 21, 1 ]
         dilation_shape = [ 1, 3 ]
@@ -79,11 +79,11 @@ class TestAdvancedImageProcessing(object):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
-        half_window_size = 400
+        half_window_size = 20
         bias = 100
         step_size = 100
 
-        a = numpy.ones((100, 100, 100))
+        a = numpy.ones((100, 101, 102))
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
@@ -99,14 +99,14 @@ class TestAdvancedImageProcessing(object):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
-        half_window_size = 400
+        half_window_size = 49
         bias = 100
         step_size = 100
 
         mean = 0.0
         stdev = 1.0
 
-        a = numpy.random.normal(mean, stdev, (100, 100, 100))
+        a = numpy.random.normal(mean, stdev, (100, 101, 102))
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
@@ -127,11 +127,11 @@ class TestAdvancedImageProcessing(object):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
-        half_window_size = 400
+        half_window_size = 20
         bias = 100
         step_size = 100
 
-        a = numpy.ones((100, 100, 100, 100))
+        a = numpy.ones((100, 101, 102, 103))
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
@@ -147,14 +147,14 @@ class TestAdvancedImageProcessing(object):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
-        half_window_size = 400
+        half_window_size = 49
         bias = 100
         step_size = 100
 
         mean = 0.0
         stdev = 1.0
 
-        a = numpy.random.normal(mean, stdev, (100, 100, 100, 100))
+        a = numpy.random.normal(mean, stdev, (100, 101, 102, 103))
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
@@ -1952,8 +1952,8 @@ class TestAdvancedImageProcessing(object):
                         "min" : 0.0
                     },
                     "area" : {
-                        "max" : 6000.0,
-                        "min" : 1000.0
+                        "max" : 70000.0,
+                        "min" : 10000.0
                     }
                 },
                 "denoising.estimate_noise" : {
