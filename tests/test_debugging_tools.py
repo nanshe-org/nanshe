@@ -26,8 +26,9 @@ class TestDebuggingTools(object):
 
 
     def test_log_call_1(self):
-        expected_result = """DEBUG:debugging_tools:Entering callable: "test".\n""" + \
-        """DEBUG:debugging_tools:Exiting callable: "test".\n"""
+        expected_result = """DEBUG:debugging_tools:Entering callable: "test"\.\n""" + \
+        """DEBUG:debugging_tools:Exiting callable: "test"\.\n""" + \
+        """DEBUG:debugging_tools:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         @nanshe.debugging_tools.log_call(self.logger)
         def test(a, b = 5):
@@ -40,12 +41,13 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(result == expected_result)
+        assert(re.match(expected_result, result).group() == result)
 
 
     def test_log_call_2(self):
-        expected_result = """DEBUG:debugging_tools:Entering callable: "test".\n""" + \
-        """DEBUG:debugging_tools:Exiting callable: "test".\n"""
+        expected_result = """DEBUG:debugging_tools:Entering callable: "test"\.\n""" + \
+        """DEBUG:debugging_tools:Exiting callable: "test"\.\n""" + \
+        """DEBUG:debugging_tools:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         @nanshe.debugging_tools.log_call(self.logger, to_log_call = True)
         def test(a, b = 5):
@@ -58,7 +60,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(result == expected_result)
+        assert(re.match(expected_result, result).group() == result)
 
 
     def test_log_call_3(self):
@@ -97,10 +99,11 @@ class TestDebuggingTools(object):
 
 
     def test_log_call_5(self):
-        expected_result = """DEBUG:debugging_tools:Entering callable: "test".\n""" + \
-        """DEBUG:debugging_tools:Arguments: "(0,)\"\n""" + \
-        """Keyword Arguments: "{}".\n""" + \
-        """DEBUG:debugging_tools:Exiting callable: "test".\n"""
+        expected_result = """DEBUG:debugging_tools:Entering callable: "test"\.\n""" + \
+        """DEBUG:debugging_tools:Arguments: "\(0,\)\"\n""" + \
+        """Keyword Arguments: "\{\}"\.\n""" + \
+        """DEBUG:debugging_tools:Exiting callable: "test"\.\n""" + \
+        """DEBUG:debugging_tools:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         @nanshe.debugging_tools.log_call(self.logger, to_print_args = True)
         def test(a, b = 5):
@@ -113,7 +116,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(result == expected_result)
+        assert(re.match(expected_result, result).group() == result)
 
 
     def test_log_call_6(self):
@@ -139,10 +142,13 @@ class TestDebuggingTools(object):
 
 
     def test_log_class_1(self):
-        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__".\n""" + \
-            """DEBUG:debugging_tools:Exiting callable: "__init__".\n"""
-        expected_result_2 = """DEBUG:debugging_tools:Entering callable: "__call__".\n""" + \
-            """DEBUG:debugging_tools:Exiting callable: "__call__".\n"""
+        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__"\.\n""" + \
+        """DEBUG:debugging_tools:Exiting callable: "__init__"\.\n""" + \
+        """DEBUG:debugging_tools:Run time for callable: "__init__" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
+
+        expected_result_2 = """DEBUG:debugging_tools:Entering callable: "__call__"\.\n""" + \
+        """DEBUG:debugging_tools:Exiting callable: "__call__"\.\n""" + \
+        """DEBUG:debugging_tools:Run time for callable: "__call__" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         @nanshe.debugging_tools.log_class(self.logger)
         class Test(object):
@@ -161,7 +167,7 @@ class TestDebuggingTools(object):
 
         print(result_1)
 
-        assert(result_1 == expected_result_1)
+        assert(re.match(expected_result_1, result_1).group() == result_1)
 
         op()
 
@@ -171,17 +177,19 @@ class TestDebuggingTools(object):
 
         print(result_2)
 
-        assert(result_2 == expected_result_2)
+        assert(re.match(expected_result_2, result_2).group() == result_2)
 
 
     def test_log_class_2(self):
-        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__".\n""" + \
-            """DEBUG:debugging_tools:Exiting callable: "__init__".\n"""
+        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__"\.\n""" + \
+        """DEBUG:debugging_tools:Exiting callable: "__init__"\.\n""" + \
+        """DEBUG:debugging_tools:Run time for callable: "__init__" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         expected_result_2 = "DEBUG:debugging_tools:Entering callable: \"__call__\"\.\n" + \
             "DEBUG:debugging_tools:Arguments: \"\(<debugging_tools\.Test object at 0x[0-9a-f]+>,\)\"\n" + \
             "Keyword Arguments: \"\{\}\"\.\n" + \
-            "DEBUG:debugging_tools:Exiting callable: \"__call__\"\.\n"
+            "DEBUG:debugging_tools:Exiting callable: \"__call__\"\.\n" + \
+            "DEBUG:debugging_tools:Run time for callable: \"__call__\" is \"[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s\"\.\n"
 
         @nanshe.debugging_tools.log_class(self.logger)
         class Test(object):
@@ -200,7 +208,7 @@ class TestDebuggingTools(object):
 
         print(result_1)
 
-        assert(result_1 == expected_result_1)
+        assert(re.match(expected_result_1, result_1).group() == result_1)
 
         Test.__call__.__dict__["to_print_args"] = True
 
@@ -212,12 +220,13 @@ class TestDebuggingTools(object):
 
         print(result_2)
 
-        assert(re.match(expected_result_2, result_2).span() == (0, len(result_2)))
+        assert(re.match(expected_result_2, result_2).group() == result_2)
 
 
     def test_log_class_2(self):
-        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__".\n""" + \
-            """DEBUG:debugging_tools:Exiting callable: "__init__".\n"""
+        expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__"\.\n""" + \
+        """DEBUG:debugging_tools:Exiting callable: "__init__"\.\n""" + \
+        """DEBUG:debugging_tools:Run time for callable: "__init__" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         expected_result_2 = """"""
 
@@ -238,7 +247,7 @@ class TestDebuggingTools(object):
 
         print(result_1)
 
-        assert(result_1 == expected_result_1)
+        assert(re.match(expected_result_1, result_1).group() == result_1)
 
         Test.__call__.__dict__["to_log_call"] = False
 
