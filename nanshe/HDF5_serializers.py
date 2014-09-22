@@ -102,7 +102,20 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
     data_ref = data_object.value
     # data_ref = data_object[()]
 
-    if isinstance(data_ref, (numpy.number, numpy.ndarray,)):
+    if isinstance(data_ref, h5py.Reference):
+        if ("filename" in data_object.attrs) and \
+           (os.path.normpath(data_object.attrs["filename"]) != os.path.normpath(data_file.filename)):
+            with h5py.File(data_object.attrs["filename"], "r") as external_file_handle:
+                if isinstance(data_ref, h5py.RegionReference):
+                    data = external_file_handle[data_ref][data_ref]
+                else:
+                    data = external_file_handle[data_ref].value
+        else:
+            if isinstance(data_ref, h5py.RegionReference):
+                data = data_file[data_ref][data_ref]
+            else:
+                data = data_file[data_ref].value
+    elif isinstance(data_ref, (numpy.number, numpy.ndarray,)):
         if ("filename" in data_object.attrs):
             # It's a pseudo-ref.
             assert("dataset" in data_object.attrs)
@@ -128,19 +141,6 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
                     data = external_file_handle[new_dataset_name][()]
         else:
             data = data_object.value
-    elif isinstance(data_ref, h5py.Reference):
-        if ("filename" in data_object.attrs) and \
-           (os.path.normpath(data_object.attrs["filename"]) != os.path.normpath(data_file.filename)):
-            with h5py.File(data_object.attrs["filename"], "r") as external_file_handle:
-                if isinstance(data_ref, h5py.RegionReference):
-                    data = external_file_handle[data_object.attrs["dataset"]][eval(data_object.attrs["slice"])]
-                else:
-                    data = external_file_handle[data_ref].value
-        else:
-            if isinstance(data_ref, h5py.RegionReference):
-                data = data_file[data_ref][data_ref]
-            else:
-                data = data_file[data_ref].value
 
     if close_file_handle:
         file_handle.close()
