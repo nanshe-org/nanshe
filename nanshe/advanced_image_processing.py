@@ -1241,7 +1241,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     """
         Generates local maxima along with other properties for each labeled region
         (therefore at least one entry per label).
-        Gets a label image if not provided by using the threshhold (if not provided is zero).
+        Gets a label image if not provided by using the threshold (if not provided is zero).
 
         Note:
             This is similar to region_properties. It differs in that it keeps track of all local maxima. So, it is no
@@ -1600,7 +1600,7 @@ def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max,
         # Get a ratio of the number of pixels below that max for that region
         each_region_image_wavelet_ratio_pixels = each_region_image_wavelet_num_pixels_below_max / each_region_image_wavelet_num_pixels
 
-        # If the ratio clears our threshhold, keep this label. Otherwise, eliminate it.
+        # If the ratio clears our threshold, keep this label. Otherwise, eliminate it.
         low_intensities__local_maxima_label_mask__to_remove[i] = (
             each_region_image_wavelet_ratio_pixels < percentage_pixels_below_max)
 
