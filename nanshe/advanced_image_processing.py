@@ -1661,7 +1661,6 @@ def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parame
 @HDF5_recorder.static_array_debug_recorder
 def wavelet_denoising(new_image,
                       accepted_region_shape_constraints,
-                      use_watershed,
                       accepted_neuron_shape_constraints,
                       **parameters):
     """
@@ -1673,9 +1672,6 @@ def wavelet_denoising(new_image,
             accepted_region_shape_constraints(dict):    a dictionary containing properties (that could be passed to
                                                         region_properties) under this should be a dictionary that
                                                         contains the keys min and/or max with a value for each.
-
-            use_watershed(bool):                        whether to use watershed for segmentation (currently, this is
-                                                        the only option).
 
             accepted_neuron_shape_constraints(dict):    a dictionary containing properties (that could be passed to
                                                         region_properties) under this should be a dictionary that
@@ -1828,135 +1824,129 @@ def wavelet_denoising(new_image,
             expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
 
         if local_maxima.props.size:
-            if use_watershed:
-                logger.debug("Entering watershed segmentation.")
+            logger.debug("Entering watershed segmentation.")
 
-                # Perform the watershed segmentation.
+            # Perform the watershed segmentation.
 
-                # First perform disc opening on the image. (Actually, we don't do this according to Ferran.)
-                # new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised.astype(numpy.float32), radius = 1)
+            # First perform disc opening on the image. (Actually, we don't do this according to Ferran.)
+            # new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised.astype(numpy.float32), radius = 1)
 
-                # We could look for seeds using local maxima.
-                # However, we already know what these should be as these are the local maxima we have found.
-                new_wavelet_image_denoised_maxima = local_maxima.get_local_max_label_image()
+            # We could look for seeds using local maxima.
+            # However, we already know what these should be as these are the local maxima we have found.
+            new_wavelet_image_denoised_maxima = local_maxima.get_local_max_label_image()
 
-                # Segment with watershed on minimum image
-                # Use seeds from local maxima as local minima
-                # Also, include mask
-                new_wavelet_image_denoised_segmentation = skimage.morphology.watershed(local_maxima.intensity_image,
-                                                                                       new_wavelet_image_denoised_maxima,
-                                                                                       mask = (local_maxima.intensity_image > 0))
+            # Segment with watershed on minimum image
+            # Use seeds from local maxima as local minima
+            # Also, include mask
+            new_wavelet_image_denoised_segmentation = skimage.morphology.watershed(local_maxima.intensity_image,
+                                                                                   new_wavelet_image_denoised_maxima,
+                                                                                   mask = (local_maxima.intensity_image > 0))
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = \
-                    new_wavelet_image_denoised_segmentation[None]
-                wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation_contours"] = \
-                    expanded_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation)[None]
+            wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = \
+                new_wavelet_image_denoised_segmentation[None]
+            wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation_contours"] = \
+                expanded_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation)[None]
 
-                watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
-                                                             new_wavelet_image_denoised_segmentation,
-                                                             properties = ["centroid"] + accepted_neuron_shape_constraints.keys())
+            watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
+                                                         new_wavelet_image_denoised_segmentation,
+                                                         properties = ["centroid"] + accepted_neuron_shape_constraints.keys())
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
-                    watershed_local_maxima.label_image[None]
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                    expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
+                watershed_local_maxima.label_image[None]
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
+                expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
+
+            # Remove duplicates
+            new_watershed_local_maxima_count_duplicates_mask = (watershed_local_maxima.count["count"] > 1)
+            new_watershed_local_maxima_count_duplicate_labels = watershed_local_maxima.count["label"][
+                new_watershed_local_maxima_count_duplicates_mask]
+            new_watershed_local_maxima_props_duplicates_mask = expanded_numpy.contains(
+                watershed_local_maxima.props["label"], new_watershed_local_maxima_count_duplicate_labels)
+            watershed_local_maxima.remove_prop_mask(new_watershed_local_maxima_props_duplicates_mask)
+
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
+                watershed_local_maxima.label_image[None]
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
+                expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+
+            if watershed_local_maxima.props.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
+            if watershed_local_maxima.count.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
 
-                # Remove duplicates
-                new_watershed_local_maxima_count_duplicates_mask = (watershed_local_maxima.count["count"] > 1)
-                new_watershed_local_maxima_count_duplicate_labels = watershed_local_maxima.count["label"][
-                    new_watershed_local_maxima_count_duplicates_mask]
-                new_watershed_local_maxima_props_duplicates_mask = expanded_numpy.contains(
-                    watershed_local_maxima.props["label"], new_watershed_local_maxima_count_duplicate_labels)
-                watershed_local_maxima.remove_prop_mask(new_watershed_local_maxima_props_duplicates_mask)
+            within_bound = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
-                    watershed_local_maxima.label_image[None]
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                    expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+            # Go through each property and make sure they are within the bounds
+            for each_prop, each_prop_constraints in accepted_neuron_shape_constraints.items():
+                # If there is a lower bound, checks to see which are above it.
+                is_lower_bounded_maybe = None
+                if "min" in each_prop_constraints:
+                    lower_bound = each_prop_constraints["min"]
+                    is_lower_bounded_maybe = (lower_bound <= watershed_local_maxima.props[each_prop])
+                else:
+                    is_lower_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
 
-                if watershed_local_maxima.props.size:
-                    wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
-                if watershed_local_maxima.count.size:
-                    wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
+                # If there is an upper bound, checks to see which are below it.
+                is_upper_bounded_maybe = None
+                if "max" in each_prop_constraints:
+                    upper_bound = each_prop_constraints["max"]
+                    is_upper_bounded_maybe = (watershed_local_maxima.props[each_prop] <= upper_bound)
+                else:
+                    is_upper_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
 
-                within_bound = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
+                # See whether both or neither bound is satisfied.
+                is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
 
-                # Go through each property and make sure they are within the bounds
-                for each_prop, each_prop_constraints in accepted_neuron_shape_constraints.items():
-                    # If there is a lower bound, checks to see which are above it.
-                    is_lower_bounded_maybe = None
-                    if "min" in each_prop_constraints:
-                        lower_bound = each_prop_constraints["min"]
-                        is_lower_bounded_maybe = (lower_bound <= watershed_local_maxima.props[each_prop])
-                    else:
-                        is_lower_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
+                # Collect the unbounded ones
+                within_bound &= is_within_bound
 
-                    # If there is an upper bound, checks to see which are below it.
-                    is_upper_bounded_maybe = None
-                    if "max" in each_prop_constraints:
-                        upper_bound = each_prop_constraints["max"]
-                        is_upper_bounded_maybe = (watershed_local_maxima.props[each_prop] <= upper_bound)
-                    else:
-                        is_upper_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
+            # Get labels outside of bounds and remove them
+            watershed_local_maxima.remove_prop_mask(~within_bound)
 
-                    # See whether both or neither bound is satisfied.
-                    is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
+                watershed_local_maxima.label_image[None]
+            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
+                               expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
-                    # Collect the unbounded ones
-                    within_bound &= is_within_bound
+            if watershed_local_maxima.props.size:
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
+            if watershed_local_maxima.count.size:
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
 
-                # Get labels outside of bounds and remove them
-                watershed_local_maxima.remove_prop_mask(~within_bound)
+            if watershed_local_maxima.props.size:
+                # Creates a NumPy structure array to store
+                neurons = numpy.zeros(len(watershed_local_maxima.props), dtype = neurons.dtype)
 
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
-                    watershed_local_maxima.label_image[None]
-                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                                   expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+                # Get masks for all cells
+                neurons["mask"] = expanded_numpy.all_permutations_equal(watershed_local_maxima.props["label"],
+                                                                        watershed_local_maxima.label_image)
 
-                if watershed_local_maxima.props.size:
-                    wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
-                if watershed_local_maxima.count.size:
-                    wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
+                neurons["image"] = new_image * neurons["mask"]
 
-                if watershed_local_maxima.props.size:
-                    # Creates a NumPy structure array to store
-                    neurons = numpy.zeros(len(watershed_local_maxima.props), dtype = neurons.dtype)
+                neurons["area"] = watershed_local_maxima.props["area"]
 
-                    # Get masks for all cells
-                    neurons["mask"] = expanded_numpy.all_permutations_equal(watershed_local_maxima.props["label"],
-                                                                            watershed_local_maxima.label_image)
+                neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(axis = 1)
 
-                    neurons["image"] = new_image * neurons["mask"]
+                for i in xrange(len(neurons)):
+                    neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
-                    neurons["area"] = watershed_local_maxima.props["area"]
+                    neurons["contour"][i] = expanded_numpy.generate_contour(neurons["mask"][i])
+                    neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
+                    neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
-                    neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(axis = 1)
+                neurons["centroid"] = watershed_local_maxima.props["centroid"]
 
-                    for i in xrange(len(neurons)):
-                        neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
+                if len(neurons) > 1:
+                    logger.debug("Extracted neurons. Found " + str(len(neurons)) + " neurons.")
+                else:
+                    logger.debug("Extracted a neuron. Found " + str(len(neurons)) + " neuron.")
 
-                        neurons["contour"][i] = expanded_numpy.generate_contour(neurons["mask"][i])
-                        neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
-                        neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
+                wavelet_denoising.recorders.array_debug_recorder["new_neuron_set"] = neurons
 
-                    neurons["centroid"] = watershed_local_maxima.props["centroid"]
-
-                    if len(neurons) > 1:
-                        logger.debug("Extracted neurons. Found " + str(len(neurons)) + " neurons.")
-                    else:
-                        logger.debug("Extracted a neuron. Found " + str(len(neurons)) + " neuron.")
-
-                    wavelet_denoising.recorders.array_debug_recorder["new_neuron_set"] = neurons
-
-                logger.debug("Exiting watershed segmentation.")
-            else:
-                # ################### Some other kind of segmentation???
-                # Talked to Ferran and he said don't worry about implementing this for now.
-                # Does not seem to give noticeably better results.
-                raise Exception("No other form of segmentation is implemented.")
+            logger.debug("Exiting watershed segmentation.")
         else:
             logger.debug("No local maxima left that are acceptable neurons.")
     else:
