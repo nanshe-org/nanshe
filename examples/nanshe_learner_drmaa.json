@@ -1,12 +1,12 @@
 {
     "generate_neurons_blocks" : {
         
-        "__comment__use_drmaa" : "Whether to use DRMAA for job submission, false by default."
+        "__comment__use_drmaa" : "Whether to use DRMAA for job submission, false by default.",
         
         "use_drmaa" : true,
         
         
-        "__comment__num_drmaa_cores" : "Number of cores per job."
+        "__comment__num_drmaa_cores" : "Number of cores per job.",
         
         "num_drmaa_cores" : 8,
         
