@@ -65,8 +65,8 @@ logger = debugging_tools.logging.getLogger(__name__)
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
 def remove_zeroed_lines(new_data,
-                        erosion_shape,
                         dilation_shape,
+                        erosion_shape,
                         **parameters):
     """
         Due to registration errors, there will sometimes be lines that are zero.
@@ -74,8 +74,8 @@ def remove_zeroed_lines(new_data,
 
         Args:
             new_data(numpy.ndarray):            data to remove lines from (first axis is time).
-            erosion_shape(numpy.ndarray):       shape of the erosion element (will be filled with 1).
             dilation_shape(numpy.ndarray):      shape of the dilation element (will be filled with 1).
+            erosion_shape(numpy.ndarray):       shape of the erosion element (will be filled with 1).
             **parameters(dict):                 essentially unused (catches unneeded arguments).
 
         Returns:
@@ -85,8 +85,8 @@ def remove_zeroed_lines(new_data,
     result = numpy.zeros(new_data.shape)
 
     # Get an outline of the region around the parts of the image that contain zeros
-    erosion_structure = numpy.ones(tuple(erosion_shape))
     dilation_structure = numpy.ones(tuple(dilation_shape))
+    erosion_structure = numpy.ones(tuple(erosion_shape))
 
     points = numpy.array(numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij"))
 
