@@ -1,0 +1,205 @@
+{
+    "__comment__debug" : "Whether to include debug information. False by default.",
+    
+    "debug" : true,
+    
+    
+    "generate_neurons" : {
+        
+        "__comment__run_stage" : "Where to run until either preprocessing, dictionary, or postprocessing. If resume, is true then it will delete the previous results at this stage. By default (all can be set explicitly to null string)runs all the way through.",
+        
+        "run_stage" : "",
+        
+        
+        "__comment__preprocess_data" : "Performs all processing before dictionary learning.",
+        
+        "preprocess_data" : {
+            
+            "__comment__remove_zeroed_lines" : "Optional. Interpolates over missing lines that could not be registered. This is done by finding an outline around all missing points to use for calculating the interpolation. This step only works on 2D data.",
+            
+            "remove_zeroed_lines" : {
+                "__comment__dilation_shape" : "Kernel shape for performing dilation. Axis order is [y, x].",
+                "__comment__erosion_shape" : "Kernel shape for performing erosion. Axis order is [y, x].",
+                
+                
+                "dilation_shape" : [1, 3],
+                "erosion_shape" : [21, 1]
+            },
+            
+            
+            "__comment__extract_f0" : "Optional. Estimates and removes f0 from the data using a percentile (rank order) filter.",
+            
+            "extract_f0" : {
+                
+                "__comment__bias" : "To avoid division by zero, this constant is added to the data. If unspecified, a bias will be found so that the smallest value is 1.",
+                
+                "bias" : 100,
+                
+                
+                "__comment__temporal_smoothing_gaussian_filter_stdev" : "What standard deviation to use for the smoothing gaussian applied along time.",
+                
+                "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+
+                
+                "__comment__half_window_size" : "How many frames to include in half of the window. All windows are odd. So, the total window size will be 2 * half_window_size + 1.",
+                
+                "half_window_size" : 400,
+                
+                
+                "__comment__which_quantile" : "The quantile to be used for filtering. Must be a single float from [0.0, 1.0]. If set to 0.5, this is a median filter.",
+                
+                "which_quantile" : 0.15,
+                
+                
+                "__comment__spatial_smoothing_gaussian_filter_stdev" : "What standard deviation to use for the smoothing gaussian applied along each spatial dimension, independently.",
+                
+                "spatial_smoothing_gaussian_filter_stdev" : 5.0
+            },
+            
+            
+            "__comment__wavelet_transform" : "Optional. Runs a wavelet transform on the data.",
+            
+            "wavelet_transform" : {
+                
+                "__comment__scale" : "This can be a single value, which is then applied on all axes or it can be an array. For the array, the axis order is [t, y, x] for 2D and [t, z, y, x] for 3D.",
+                
+                "scale" : [4, 4, 4]
+            },
+            
+            
+            "__comment__normalize_data" : "How to normalize data. L_2 norm recommended.",
+            
+            "normalize_data" : {
+                "simple_image_processing.renormalized_images": {
+                    "ord" : 2
+                }
+            }
+        },
+        
+        
+        "__comment__generate_dictionary" : "Arguments to be used by SPAMS dictionary learning algorithm.",
+        
+        "generate_dictionary" : {
+            
+            "__comment__generate_dictionary" : "Wrapper function that calls spams.trainDL. Comments borrowed from SPAMS documentation ( http://spams-devel.gforge.inria.fr/doc-python/html/doc_spams004.html#sec5 ). Only relevant parameters have comments included here.",
+            
+            "spams.trainDL" : {
+                
+                "__comment__spams.trainDL" : "spams.trainDL is an efficient implementation of the dictionary learning technique presented in 'Online Learning for Matrix Factorization and Sparse Coding' by Julien Mairal, Francis Bach, Jean Ponce and Guillermo Sapiro arXiv:0908.0050",
+                
+                "K" : 100,              "__comment__K" : "size of the dictionary",
+                "gamma2": 0,
+                "gamma1": 0,
+                "numThreads": 2,        "__comment__numThreads" : "number of threads to use",
+                "batchsize": 256,
+                "iter": 100,            "__comment__iter" : "number of iterations to run for",
+                "lambda1": 0.2,
+                "posD": true,
+                "clean": true,
+                "modeD": 0,
+                "posAlpha": true,
+                "mode": 2,
+                "lambda2": 0
+            }
+        },
+        
+        
+        "postprocess_data" : {
+            
+            "__comment__wavelet_denoising" : "Performs segmentation on each basis image to extract neurons.",
+            
+            "wavelet_denoising" : {
+                
+                "__comment__denoising.estimate_noise" : "Estimates the upper bound on the noise by finding the standard deviation on a subset of the data. The subset is determined by finding the standard deviation ( std_all ) for all of the data and determining what is within that std_all*significance_threshold. It is recommended that significance_threshold is left at 3.0.",
+                
+                "denoising.estimate_noise" : {
+                    "significance_threshold" : 3.0
+                },
+                
+                
+                "__comment__wavelet_transform.wavelet_transform" : "Performed on the basis image.",
+                
+                "wavelet_transform.wavelet_transform" : {
+                    "__comment__scale" : "Scalars are applied to all dimensions. It is recommended that this be symmetric.",
+                    
+                    "scale" : 4
+                },
+                
+                
+                "__comment__denoising.significant_mask" : "Using the noise estimate from denoising.estimate_noise and the wavelet transformed image from wavelet_transform.wavelet_transform, anything within the noise range from before scaled up by the noise_threshold. Typical values are 2.0-4.0.",
+                
+                "denoising.significant_mask" : {
+                    "noise_threshold" : 4.0
+                },
+                
+                
+                "__comment__accepted_region_shape_constraints" : "Set of region constraints to determine if the wavelet transform is too high for that region. If so, the next lowest transform replaces it.",
+                
+                "accepted_region_shape_constraints" : {
+                    "major_axis_length" : {
+                        "min" : 0.0,
+                        "max" : 25.0
+                    }
+                },
+                
+                
+                "__comment__remove_low_intensity_local_maxima" : "Removes regions that don't have enough pixels below their max.",
+                
+                "remove_low_intensity_local_maxima" : {
+                    
+                    "__comment__percentage_pixels_below_max" : "Ratio of pixels below their max to number of pixels in the region. This sets the upper bound.",
+                    
+                    "percentage_pixels_below_max" : 0.8
+                },
+                
+                
+                "__comment__remove_too_close_local_maxima" : "Removes regions that are too close to each other. Keeps the one with the highest intensity. No other tie breakers.",
+                
+                "remove_too_close_local_maxima" : {
+                    "__comment__min_local_max_distance" : "Constraint on how close they can be.",
+                    
+                    "min_local_max_distance"  : 20.0
+                },
+                
+                
+                "__comment__accepted_neuron_shape_constraints" : "Constraints required for a region to be extracted and used as a neuron.",
+                
+                "accepted_neuron_shape_constraints" : {
+                    "area" : {
+                        "min" : 45,
+                        "max" : 600
+                    },
+                    
+                    "eccentricity" : {
+                        "min" : 0.0,
+                        "max" : 0.9
+                    }
+                }
+            },
+            
+            
+            "__comment__merge_neuron_sets" : "Merges sets of neurons that may be duplicated in the dictionary (i.e. if one neuron is active with two different sets of neurons, it may show up in two frams).",
+            
+            "merge_neuron_sets" : {
+                "__comment__alignment_min_threshold" : "If the images associated with two neurons, are arranged as vectors. It would be possible to find the cosine of the angle between them. Then, this represents the lower bound for them to merge.",
+                
+                "alignment_min_threshold" : 0.6,
+                
+                
+                "__comment__overlap_min_threshold" : "If the masks associated with two neurons, are arranged as vectors. It would be possible to find the L_1 norm between them. This could then be turned into a ratio by dividing by the area of either neuron. Then, this represents the lower bound for them to merge.",
+                
+                "overlap_min_threshold" : 0.6,
+                
+                
+                "__comment__fuse_neurons" : "Fuses two neurons into one.",
+                
+                "fuse_neurons" : {
+                    "__comment__fraction_mean_neuron_max_threshold" : "When determining the mask of the fused neuron, it must not include any values less that max of the fused image times this threshold.",
+                    
+                    "fraction_mean_neuron_max_threshold" : 0.01
+                }
+            }
+        }
+    }
+
+}
