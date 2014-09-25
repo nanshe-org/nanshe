@@ -98,29 +98,50 @@ def remove_zeroed_lines(new_data,
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
 
-        zero_mask_i_eroded = skimage.morphology.binary_erosion(zero_mask_i, erosion_structure).astype(bool)
-        zero_mask_i_dilated = skimage.morphology.binary_dilation(zero_mask_i_eroded, dilation_structure).astype(bool)
-        zero_mask_i_outline = zero_mask_i_dilated - zero_mask_i_eroded
+        zero_mask_i = skimage.morphology.binary_erosion(zero_mask_i, erosion_structure).astype(bool)
 
-        zero_masks_eroded[i] = zero_mask_i_eroded
-        zero_masks_dilated[i] = zero_mask_i_dilated
-        zero_masks_outline[i] = zero_mask_i_outline
+        zero_masks_eroded[i] = zero_mask_i
 
-        # Get the points that correspond to those
-        zero_mask_i_points = numpy.array(zero_mask_i.nonzero()).transpose().copy()
-        zero_mask_i_outline_points = numpy.array(zero_mask_i_outline.nonzero()).transpose().copy()
+        zero_mask_i_labeled, zero_mask_i_num_labels = scipy.ndimage.label(zero_mask_i)
 
-        new_data_i_zero_mask_interpolation = numpy.zeros(new_data_i.shape)
-        if zero_mask_i_outline.any():
-            new_data_i_zero_mask_interpolation = scipy.interpolate.griddata(zero_mask_i_outline_points,
-                                                                            new_data_i[zero_mask_i_outline],
-                                                                            zero_mask_i_points,
-                                                                            method = "linear")
+        for j in xrange(1, zero_mask_i_num_labels + 1):
+            zero_mask_i_labeled_j = (zero_mask_i_labeled == j)
 
-            # Only need to check for nan in our case.
-            new_data_i_zero_mask_interpolation[numpy.isnan(new_data_i_zero_mask_interpolation)] = 0
+            zero_mask_i_labeled_j_dilated = skimage.morphology.binary_dilation(zero_mask_i_labeled_j, dilation_structure).astype(bool)
 
-            result[i][tuple(zero_mask_i_points.T)] = new_data_i_zero_mask_interpolation
+            zero_mask_i_labeled_j_outline = zero_mask_i_labeled_j_dilated - zero_mask_i_labeled_j
+
+            zero_masks_dilated[i] = numpy.where(zero_mask_i_labeled_j_dilated, zero_mask_i_labeled_j_dilated, zero_masks_dilated[i])
+            zero_masks_outline[i] = numpy.where(zero_mask_i_labeled_j_outline, zero_mask_i_labeled_j_outline, zero_masks_outline[i])
+
+            if zero_mask_i_labeled_j_outline.any():
+                # Get the points that correspond to those
+                zero_mask_i_labeled_j_points = numpy.array(zero_mask_i_labeled_j.nonzero()).transpose().copy()
+                zero_mask_i_labeled_j_outline_points = numpy.array(zero_mask_i_labeled_j_outline.nonzero()).transpose().copy()
+
+                new_data_i_zero_mask_interpolation = numpy.zeros(new_data_i.shape)
+
+                try:
+                    new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)] = scipy.interpolate.griddata(zero_mask_i_labeled_j_outline_points,
+                                                                                                                          new_data_i[zero_mask_i_labeled_j_outline],
+                                                                                                                          zero_mask_i_labeled_j_points,
+                                                                                                                          method = "linear")
+
+                    # Only need to check for nan in our case.
+                    new_data_i_zero_mask_interpolation[numpy.isnan(new_data_i_zero_mask_interpolation)] = 0
+
+                    result[i][tuple(zero_mask_i_labeled_j_points.T)] = new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)]
+                except RuntimeError:
+                    zero_mask_i_labeled_j_points_arange = numpy.arange(len(zero_mask_i_labeled_j_points))
+                    zero_mask_i_labeled_j_outline_points_arange = numpy.arange(len(zero_mask_i_labeled_j_outline_points))
+
+                    index_product = numpy.array([numpy.tile(zero_mask_i_labeled_j_points_arange, len(zero_mask_i_labeled_j_outline_points_arange)),
+                                                 numpy.repeat(zero_mask_i_labeled_j_outline_points_arange, len(zero_mask_i_labeled_j_points_arange))])
+
+
+                    new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points[(index_product[0],)].T)] = new_data_i[tuple(zero_mask_i_labeled_j_outline_points[(index_product[1],)].T)]
+
+                    result[i][tuple(zero_mask_i_labeled_j_points.T)] = new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)]
 
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_eroded"] = zero_masks_eroded
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_dilated"] = zero_masks_dilated

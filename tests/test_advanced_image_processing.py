@@ -75,6 +75,42 @@ class TestAdvancedImageProcessing(object):
 
         assert((a == b).all())
 
+    def test_remove_zeroed_lines_4(self):
+        a = numpy.ones((1, 100, 101))
+        p = 0.2
+        erosion_shape = [ 21, 1 ]
+        dilation_shape = [ 1, 3 ]
+
+        r = numpy.array([[0, 0, 0], [a.shape[1], 0, 4]]).T.copy()
+
+        print(r)
+
+        ar = a.copy()
+        for each_r in r:
+            nanshe.expanded_numpy.index_axis_at_pos(nanshe.expanded_numpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
+
+        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
+
+        assert((a == b).all())
+
+    def test_remove_zeroed_lines_5(self):
+        a = numpy.ones((1, 100, 101))
+        p = 0.2
+        erosion_shape = [ 21, 1 ]
+        dilation_shape = [ 1, 3 ]
+
+        r = numpy.array([[0, 0, 0, 0], [a.shape[1], a.shape[1]-1, 0, 1]]).T.copy()
+
+        print(r)
+
+        ar = a.copy()
+        for each_r in r:
+            nanshe.expanded_numpy.index_axis_at_pos(nanshe.expanded_numpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
+
+        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
+
+        assert((a == b).all())
+
     def test_extract_f0_1(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         which_quantile = 0.5
