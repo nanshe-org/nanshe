@@ -88,13 +88,13 @@ def remove_zeroed_lines(new_data,
     erosion_structure = numpy.ones(tuple(erosion_shape))
     dilation_structure = numpy.ones(tuple(dilation_shape))
 
-    points = numpy.array(numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij"))
-
     zero_masks_eroded = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
 
     for i in xrange(new_data.shape[0]):
+        result[i] = new_data[i]
+
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
 
@@ -107,21 +107,20 @@ def remove_zeroed_lines(new_data,
         zero_masks_outline[i] = zero_mask_i_outline
 
         # Get the points that correspond to those
-        zero_mask_i_outline_points = numpy.array(zero_mask_i_outline.nonzero()).transpose()
+        zero_mask_i_points = numpy.array(zero_mask_i.nonzero()).transpose().copy()
+        zero_mask_i_outline_points = numpy.array(zero_mask_i_outline.nonzero()).transpose().copy()
 
         new_data_i_zero_mask_interpolation = numpy.zeros(new_data_i.shape)
         if zero_mask_i_outline.any():
             new_data_i_zero_mask_interpolation = scipy.interpolate.griddata(zero_mask_i_outline_points,
                                                                             new_data_i[zero_mask_i_outline],
-                                                                            tuple(points),
+                                                                            zero_mask_i_points,
                                                                             method = "linear")
 
             # Only need to check for nan in our case.
-            new_data_i_zero_mask_interpolation = numpy.where(numpy.isnan(new_data_i_zero_mask_interpolation),
-                                                             0,
-                                                             new_data_i_zero_mask_interpolation)
+            new_data_i_zero_mask_interpolation[numpy.isnan(new_data_i_zero_mask_interpolation)] = 0
 
-        result[i] = numpy.where(zero_mask_i, new_data_i_zero_mask_interpolation, new_data_i)
+            result[i][tuple(zero_mask_i_points.T)] = new_data_i_zero_mask_interpolation
 
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_eroded"] = zero_masks_eroded
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_dilated"] = zero_masks_dilated
