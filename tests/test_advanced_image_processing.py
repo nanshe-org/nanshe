@@ -32,7 +32,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.expanded_numpy.index_axis_at_pos(nanshe.expanded_numpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
+        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert((a == b).all())
 
@@ -50,7 +50,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.expanded_numpy.index_axis_at_pos(nanshe.expanded_numpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
+        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert((a == b).all())
 
@@ -71,7 +71,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.expanded_numpy.index_axis_at_pos(nanshe.expanded_numpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
+        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert((a == b).all())
 

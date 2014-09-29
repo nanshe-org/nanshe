@@ -65,8 +65,8 @@ logger = debugging_tools.logging.getLogger(__name__)
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
 def remove_zeroed_lines(new_data,
-                        dilation_shape,
                         erosion_shape,
+                        dilation_shape,
                         **parameters):
     """
         Due to registration errors, there will sometimes be lines that are zero.
@@ -74,8 +74,8 @@ def remove_zeroed_lines(new_data,
 
         Args:
             new_data(numpy.ndarray):            data to remove lines from (first axis is time).
-            dilation_shape(numpy.ndarray):      shape of the dilation element (will be filled with 1).
             erosion_shape(numpy.ndarray):       shape of the erosion element (will be filled with 1).
+            dilation_shape(numpy.ndarray):      shape of the dilation element (will be filled with 1).
             **parameters(dict):                 essentially unused (catches unneeded arguments).
 
         Returns:
@@ -85,13 +85,13 @@ def remove_zeroed_lines(new_data,
     result = numpy.zeros(new_data.shape)
 
     # Get an outline of the region around the parts of the image that contain zeros
-    dilation_structure = numpy.ones(tuple(dilation_shape))
     erosion_structure = numpy.ones(tuple(erosion_shape))
+    dilation_structure = numpy.ones(tuple(dilation_shape))
 
     points = numpy.array(numpy.meshgrid(*[numpy.arange(_) for _ in new_data.shape[1:]], indexing="ij"))
 
-    zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_eroded = numpy.zeros(new_data.shape, dtype=bool)
+    zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
 
     for i in xrange(new_data.shape[0]):
@@ -102,8 +102,8 @@ def remove_zeroed_lines(new_data,
         zero_mask_i_dilated = skimage.morphology.binary_dilation(zero_mask_i_eroded, dilation_structure).astype(bool)
         zero_mask_i_outline = zero_mask_i_dilated - zero_mask_i_eroded
 
-        zero_masks_dilated[i] = zero_mask_i_dilated
         zero_masks_eroded[i] = zero_mask_i_eroded
+        zero_masks_dilated[i] = zero_mask_i_dilated
         zero_masks_outline[i] = zero_mask_i_outline
 
         # Get the points that correspond to those
@@ -123,8 +123,8 @@ def remove_zeroed_lines(new_data,
 
         result[i] = numpy.where(zero_mask_i, new_data_i_zero_mask_interpolation, new_data_i)
 
-    remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_dilated"] = zero_masks_dilated
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_eroded"] = zero_masks_eroded
+    remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_dilated"] = zero_masks_dilated
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_outline"] = zero_masks_outline
 
     return(result)

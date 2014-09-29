@@ -53,9 +53,8 @@
                     "__comment__dilation_shape" : "Kernel shape for performing dilation. Axis order is [y, x].",
                     "__comment__erosion_shape" : "Kernel shape for performing erosion. Axis order is [y, x].",
                     
-                    
-                    "dilation_shape" : [1, 3],
-                    "erosion_shape" : [21, 1]
+                    "erosion_shape" : [21, 1],
+                    "dilation_shape" : [1, 3]
                 },
                 
                 
