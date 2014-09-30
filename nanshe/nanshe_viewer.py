@@ -32,6 +32,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 import os
 import collections
 import itertools
+import re
 import threading
 
 import h5py
@@ -116,7 +117,20 @@ class HDF5DataSource( QObject ):
         self.file_handle = file_handle
 
         self.file_path = self.file_handle.filename
-        self.dataset_path = "/" + internal_path.strip("/")
+
+        internal_path = "/" + internal_path.strip("/")
+
+        # Extract the name specified for a compound type if needed.
+        name_regex = "(\\[\s*\".+\"\s*\\]|\\[\s*\'.+\'\s*\\])"
+        dataset_slicing_dict = list(re.finditer("(?P<all>" + "(?P<name>"  + name_regex  + ")?" + ")" + "$", internal_path))[0].groupdict()
+
+        self.dataset_path = internal_path.rstrip(dataset_slicing_dict.pop("all"))
+
+        # Convert all None's to "" and strip all spaces from strings
+        dataset_slicing_dict = dict([(_k, "".join(_v.split())) if _v is not None else (_k, "") for _k, _v in dataset_slicing_dict.items()])
+
+        # Strip name from braces and quotes
+        self.dataset_member_name = dataset_slicing_dict["name"].rstrip("[").lstrip("]").strip("\"").strip("\'")
 
         self.full_path = self.file_path + self.dataset_path
 
@@ -127,15 +141,34 @@ class HDF5DataSource( QObject ):
         # Fill in the shape and or dtype information if it doesn't already exist.
         if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
             dataset = self.file_handle[self.dataset_path]
-            #print dataset.name
-            self.dataset_shape = dataset.shape
-            self.dataset_dtype = dataset.dtype.type
+            if self.dataset_member_name:
+                self.dataset_shape = dataset.dtype[self.dataset_member_name].shape
+
+                # If the member has a shape than subdtype must be used if not type can be used.
+                if dataset.dtype[self.dataset_member_name].subdtype is None:
+                    self.dataset_dtype = dataset.dtype[self.dataset_member_name].type
+                else:
+                    self.dataset_dtype = dataset.dtype[self.dataset_member_name].subdtype[0].type
+            else:
+                self.dataset_shape = dataset.shape
+                self.dataset_dtype = dataset.dtype.type
         elif (self.dataset_shape is None):
             dataset = self.file_handle[self.dataset_path]
-            self.dataset_shape = dataset.shape
+            if self.dataset_member_name:
+                self.dataset_shape = dataset.dtype[self.dataset_member_name].shape
+            else:
+                self.dataset_shape = dataset.shape
         elif (self.dataset_dtype is None):
             dataset = self.file_handle[self.dataset_path]
-            self.dataset_dtype = dataset.dtype.type
+            if self.dataset_member_name:
+
+                # If the member has a shape than subdtype must be used if not type can be used.
+                if dataset.dtype[self.dataset_member_name].subdtype is None:
+                    self.dataset_dtype = dataset.dtype[self.dataset_member_name].type
+                else:
+                    self.dataset_dtype = dataset.dtype[self.dataset_member_name].subdtype[0].type
+            else:
+                self.dataset_dtype = dataset.dtype.type
 
         # Using the shape information, determine how to reshape the axes to present the data as we wish.
         if len(self.dataset_shape) == 1:
@@ -190,7 +223,7 @@ class HDF5DataSource( QObject ):
 
         slicing = additional_generators.reformat_slices(slicing, self.dataset_shape)
 
-        return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing))
+        return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing, self.dataset_member_name))
 
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
@@ -237,7 +270,7 @@ class HDF5DataRequest( object ):
     #TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
     #TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.
 
-    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, throw_on_not_found = False ):
+    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, dataset_member_name = "", throw_on_not_found = False ):
         """
             Constructs an HDF5DataRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -248,6 +281,7 @@ class HDF5DataRequest( object ):
                 axis_order(tuple of ints):                  A tuple representing how to reshape the array before returning a request.
                 dataset_dtype(numpy.dtype or type):         The type of the underlying dataset.
                 slicing(tuple of ints):                     The slicing to extract from the HDF5 file.
+                dataset_member_name(str):                   Name of member to retrieve from compound type.
                 throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.
         """
 
@@ -257,6 +291,7 @@ class HDF5DataRequest( object ):
         self.dataset_path = dataset_path
         self.axis_order = axis_order
         self.dataset_dtype = dataset_dtype
+        self.dataset_member_name = dataset_member_name
         self.throw_on_not_found = throw_on_not_found
 
         self._result = None
@@ -288,7 +323,16 @@ class HDF5DataRequest( object ):
             try:
                 dataset = self.file_handle[self.dataset_path]
 
-                a_result = dataset[self.actual_slicing]
+                a_result = None
+                if self.dataset_member_name:
+                    # Copy out the bare minimum data.
+                    # h5py does not allowing further index on the type within the compound type.
+                    a_result = dataset[ self.actual_slicing[:len(dataset)] + (self.dataset_member_name,) ]
+                    # Apply the remaining slicing to the data read.
+                    a_result = a_result[ len(dataset) * (slice(None),) + self.actual_slicing[len(dataset):] ]
+                else:
+                    a_result = dataset[self.actual_slicing]
+
                 a_result = numpy.array(a_result)
 
                 # Get the axis order without the singleton axes
