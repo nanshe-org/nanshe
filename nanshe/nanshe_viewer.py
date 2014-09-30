@@ -846,6 +846,193 @@ class MaxProjectionConstantRequest( object ):
 assert issubclass(MaxProjectionConstantRequest, RequestABC)
 
 
+class MeanProjectionConstantSource( QObject ):
+    """
+        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a mean projection.
+
+        Note:
+            This was not designed to know about dirtiness or any sort of changing data.
+
+        Attributes:
+            constant_source(a constant SourceABC):      Source to take the mean projection of.
+            axis(int):                                  The axis to take compute the mean along.
+            _shape(tuple of ints):                      The shape of the source.
+
+    """
+
+    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+
+    isDirty = pyqtSignal( object )
+    numberOfChannelsChanged = pyqtSignal(int) # Never emitted
+
+    @debugging_tools.log_call(logger)
+    def __init__( self, constant_source, axis = -1):
+        """
+            Constructs an MeanProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
+            can be specified.
+
+            Args:
+                constant_source(a constant SourceABC):      Source to take the mean projection of.
+                axis(int):                                  The axis to take compute the mean along.
+        """
+        #TODO: Get rid of shape and dtype as arguments.
+
+        super(MeanProjectionConstantSource, self).__init__()
+
+        self.constant_source = constant_source
+        self.axis = axis
+        self._shape = self.constant_source.shape()
+
+        self._shape = list(self._shape)
+        self._shape[self.axis] = 1
+        self._shape = tuple(self._shape)
+
+        # Real hacky solution for caching.
+        slicing = ( slice(None), ) * len(self._shape)
+
+        self._constant_source_cached = self.constant_source.request(slicing).wait()
+        self._constant_source_cached = self._constant_source_cached.mean(axis = self.axis)
+        self._constant_source_cached = expanded_numpy.add_singleton_axis_pos(self._constant_source_cached,
+                                                                             new_axis=self.axis)
+
+        self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
+        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
+
+    @debugging_tools.log_call(logger)
+    def numberOfChannels(self):
+        return(self.dataset_shape[-1])
+
+    @debugging_tools.log_call(logger)
+    def clean_up(self):
+        # Close file
+        self.constant_source = None
+        self.axis = None
+
+    @debugging_tools.log_call(logger)
+    def dtype(self):
+        return(self.constant_source.dtype())
+
+    @debugging_tools.log_call(logger)
+    def shape(self):
+        return(self._shape)
+
+    @debugging_tools.log_call(logger)
+    def request( self, slicing ):
+        if not is_pure_slicing(slicing):
+            raise Exception('MeanProjectionConstantSource: slicing is not pure')
+
+        # Drop the slicing for the axis where the projection is being applied.
+        constant_source_slicing = list(slicing)
+        constant_source_slicing[self.axis] = slice(None)
+        constant_source_slicing = tuple(constant_source_slicing)
+
+        return(MeanProjectionConstantRequest(self._constant_source_cached_array_request,
+                                            self.axis,
+                                            slicing)
+        )
+
+    @debugging_tools.log_call(logger)
+    def setDirty( self, slicing):
+        if not is_pure_slicing(slicing):
+            raise Exception('dirty region: slicing is not pure')
+        self.isDirty.emit( slicing )
+
+    @debugging_tools.log_call(logger)
+    def __eq__( self, other ):
+        if other is None:
+            return False
+
+        return(self.full_path == other.full_path)
+
+    @debugging_tools.log_call(logger)
+    def __ne__( self, other ):
+        if other is None:
+            return True
+
+        return(self.full_path != other.full_path)
+
+assert issubclass(MeanProjectionConstantSource, SourceABC)
+
+
+class MeanProjectionConstantRequest( object ):
+    """
+        Created by an MeanProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+
+        Note:
+            This was not designed to know about dirtiness or any sort of changing data.
+
+        Attributes:
+            constant_request(a constant RequestABC):         The request to take the mean projection of.
+            axis(int):                                       The axis to take the mean projection along.
+            slicing(tuple of slices):                        Slicing to be returned.
+
+    """
+
+    @debugging_tools.log_call(logger)
+    def __init__( self, constant_request, axis, slicing ):
+        """
+            Constructs an MeanProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
+            suppressed if the source is not found.
+
+            Args:
+                constant_request(a constant RequestABC):         The request to take the mean projection of.
+                axis(int):                                       The axis to take the mean projection along.
+                slicing(tuple of slices):                        Slicing to be returned.
+        """
+
+        # TODO: Look at adding assertion check on slices.
+
+        self.constant_request = constant_request
+        self.axis = axis
+        self.slicing = slicing
+
+        self._result = None
+
+    @debugging_tools.log_call(logger)
+    def wait( self ):
+        if self._result is None:
+            # Get the result of the request needed
+            self._result = self.constant_request.wait()
+
+            # Perform mean
+            self._result = numpy.mean(self._result, axis=self.axis)
+
+            # Add singleton axis where mean was performed
+            self._result = expanded_numpy.add_singleton_axis_pos(self._result, new_axis=self.axis)
+
+            # Take the slice the viewer wanted
+            self._result = self._result[self.slicing]
+
+            logger.debug("Found the result.")
+
+        return self._result
+
+    @debugging_tools.log_call(logger)
+    def getResult(self):
+        return self._result
+
+    @debugging_tools.log_call(logger)
+    def cancel( self ):
+        pass
+
+    @debugging_tools.log_call(logger)
+    def submit( self ):
+        pass
+
+    # callback( result = result, **kwargs )
+    @debugging_tools.log_call(logger)
+    def notify( self, callback, **kwargs ):
+        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+        t.start()
+
+    @debugging_tools.log_call(logger)
+    def _doNotify( self, callback, kwargs ):
+        result = self.wait()
+        callback(result, **kwargs)
+
+assert issubclass(MeanProjectionConstantRequest, RequestABC)
+
+
 
 @debugging_tools.log_call(logger)
 def main(*argv):
@@ -965,6 +1152,8 @@ def main(*argv):
                 if (each_source is not None) and (each_layer_source_operation_name):
                     if (each_layer_source_operation_name == "max"):
                         each_source = MaxProjectionConstantSource(each_source)
+                    elif (each_layer_source_operation_name == "mean"):
+                        each_source = MeanProjectionConstantSource(each_source)
                     else:
                         raise Exception("Unknown operation to perform on source \"" + repr(each_layer_source_operation_name) + "\".")
 
