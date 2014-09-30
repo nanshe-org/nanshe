@@ -122,7 +122,12 @@ class HDF5DataSource( QObject ):
 
         # Extract the name specified for a compound type if needed.
         name_regex = "(\\[\s*\".+\"\s*\\]|\\[\s*\'.+\'\s*\\])"
-        dataset_slicing_dict = list(re.finditer("(?P<all>" + "(?P<name>"  + name_regex  + ")?" + ")" + "$", internal_path))[0].groupdict()
+        # slice_regex = "(\\[((\\d+\\:?\\:?)|(\\:?\\:?\\d+)|(\\:?\\d+\\:?)|(\\d+\\:\\d+(\\:)?)|(\\d+\\:(\\d+)?\\:\\d+))\\])"
+        # slicings_regex = "(\\[\s*(((\\d+\\:?\\:?)|(\\:?\\:?\\d+)|(\\:?\\d+\\:?)|(\\d+\\:\\d+(\\:)?)|(\\d+\\:(\\d+)?\\:\\d+))(\\,\s*((\\d+\\:?\\:?)|(\\:?\\:?\\d+)|(\\:?\\d+\\:?)|(\\d+\\:\\d+(\\:)?)|(\\d+\\:(\\d+)?\\:\\d+)))*)\s*\\])"
+        dataset_slicing_dict = list(re.finditer(
+            "(?P<all>" + "(?P<name>"  + name_regex  + ")?" +
+                         # "(?P<slice>" + slicings_regex + ")?" +
+            ")" + "$", internal_path))[0].groupdict()
 
         self.dataset_path = internal_path.rstrip(dataset_slicing_dict.pop("all"))
 
@@ -131,6 +136,8 @@ class HDF5DataSource( QObject ):
 
         # Strip name from braces and quotes
         self.dataset_member_name = dataset_slicing_dict["name"].rstrip("[").lstrip("]").strip("\"").strip("\'")
+        # Strip braces and convert each comma separated value into an appropriate slicing.
+        # self.dataset_member_slicing = tuple([slice(*[int(__) if __ != "" else None for __ in _.split(":")]) for _ in dataset_slicing_dict["slice"].lstrip("[").rstrip("]").split(",")])
 
         self.full_path = self.file_path + self.dataset_path
 
