@@ -502,6 +502,9 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             running_processes.append((each_arg_pack, each_process_id, each_process_template))
             logger.info("Started new process ( \"" + " ".join(each_arg_pack) + "\" ).")
 
+        start_queue_time = time.time()
+        logger.info("Waiting for queued jobs to complete.")
+
         # finished_processes = []
         for each_arg_pack, each_process_id, each_process_template in running_processes:
             each_process_status = s.wait(each_process_id)
@@ -514,6 +517,11 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             # finished_processes.append((each_arg_pack, each_process_id))
 
         s.exit()
+
+        end_queue_time = time.time()
+        diff_queue_time = end_queue_time - start_queue_time
+
+        logger.info("Run time for queued jobs to complete is \"" + str(diff_queue_time) + " s\".")
     else:
         # TODO: Refactor into a separate class (have it return futures somehow)
         # finished_processes = []
