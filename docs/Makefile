@@ -49,6 +49,9 @@ help:
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
 clean:
+	mv index.rst index.rst.saved
+	rm -f *.rst
+	mv index.rst.saved index.rst
 	rm -rf $(BUILDDIR)/*
 
 rst:

@@ -45,6 +45,9 @@ if "%1" == "help" (
 )
 
 if "%1" == "clean" (
+	move index.rst index.rst.saved
+	del /q /s *.rst
+        move index.rst.saved index.rst
 	for /d %%i in (%BUILDDIR%\*) do rmdir /q /s %%i
 	del /q /s %BUILDDIR%\*
 	goto end
