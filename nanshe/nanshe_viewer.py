@@ -32,6 +32,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 import os
 import collections
 import itertools
+import re
 import threading
 
 import h5py
@@ -80,7 +81,7 @@ class HDF5DataSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    def __init__( self, file_handle, internal_path, shape = None, dtype = None):
+    def __init__( self, file_handle, internal_path, record_name = "", shape = None, dtype = None):
         """
             Constructs an HDF5DataSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -88,6 +89,7 @@ class HDF5DataSource( QObject ):
             Args:
                 file_handle(h5py.File or str):          A file handle for the HDF5 file..
                 internal_path(str):                     path to the dataset inside of the HDF5 file.
+                record_name(str):                       which record to extract from the HDF5 file.
                 shape(tuple of ints):                   shape of underlying dataset if not specified defaults to that of the dataset.
                 dtype(numpy.dtype or type):             type of underlying dataset if not specified defaults to that of the dataset.
         """
@@ -116,7 +118,13 @@ class HDF5DataSource( QObject ):
         self.file_handle = file_handle
 
         self.file_path = self.file_handle.filename
-        self.dataset_path = "/" + internal_path.strip("/")
+
+        internal_path = "/" + internal_path.strip("/")
+
+        self.dataset_path = internal_path
+
+        # Strip name from braces and quotes
+        self.record_name = record_name
 
         self.full_path = self.file_path + self.dataset_path
 
@@ -127,15 +135,35 @@ class HDF5DataSource( QObject ):
         # Fill in the shape and or dtype information if it doesn't already exist.
         if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
             dataset = self.file_handle[self.dataset_path]
-            #print dataset.name
-            self.dataset_shape = dataset.shape
-            self.dataset_dtype = dataset.dtype.type
+
+            if self.record_name:
+                self.dataset_shape = dataset.shape + dataset.dtype[self.record_name].shape
+
+                # If the member has a shape than subdtype must be used if not type can be used.
+                if dataset.dtype[self.record_name].subdtype is None:
+                    self.dataset_dtype = dataset.dtype[self.record_name].type
+                else:
+                    self.dataset_dtype = dataset.dtype[self.record_name].subdtype[0].type
+            else:
+                self.dataset_shape = dataset.shape
+                self.dataset_dtype = dataset.dtype.type
         elif (self.dataset_shape is None):
             dataset = self.file_handle[self.dataset_path]
-            self.dataset_shape = dataset.shape
+            if self.record_name:
+                self.dataset_shape = dataset.shape + dataset.dtype[self.record_name].shape
+            else:
+                self.dataset_shape = dataset.shape
         elif (self.dataset_dtype is None):
             dataset = self.file_handle[self.dataset_path]
-            self.dataset_dtype = dataset.dtype.type
+            if self.record_name:
+
+                # If the member has a shape than subdtype must be used if not type can be used.
+                if dataset.dtype[self.record_name].subdtype is None:
+                    self.dataset_dtype = dataset.dtype[self.record_name].type
+                else:
+                    self.dataset_dtype = dataset.dtype[self.record_name].subdtype[0].type
+            else:
+                self.dataset_dtype = dataset.dtype.type
 
         # Using the shape information, determine how to reshape the axes to present the data as we wish.
         if len(self.dataset_shape) == 1:
@@ -156,7 +184,7 @@ class HDF5DataSource( QObject ):
             # self.axis_order = [0, 1, 2, 3, 4]
             self.axis_order = [0, 3, 2, 1, 4]
         else:
-            raise Exception("Unacceptable shape provided for display. Found shape to be \"" + self.dataset_shape + "\".")
+            raise Exception("Unacceptable shape provided for display. Found shape to be \"" + str(self.dataset_shape) + "\".")
 
         # Construct the shape to be singleton if the axis order is irrelevant or the appropriate shape for the reordered axis.
         self.dataset_shape = tuple([1 if _ == -1 else self.dataset_shape[_] for _ in self.axis_order])
@@ -190,7 +218,7 @@ class HDF5DataSource( QObject ):
 
         slicing = additional_generators.reformat_slices(slicing, self.dataset_shape)
 
-        return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing))
+        return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing, self.record_name))
 
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
@@ -237,7 +265,7 @@ class HDF5DataRequest( object ):
     #TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
     #TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.
 
-    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, throw_on_not_found = False ):
+    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, record_name = "", throw_on_not_found = False ):
         """
             Constructs an HDF5DataRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -248,6 +276,7 @@ class HDF5DataRequest( object ):
                 axis_order(tuple of ints):                  A tuple representing how to reshape the array before returning a request.
                 dataset_dtype(numpy.dtype or type):         The type of the underlying dataset.
                 slicing(tuple of ints):                     The slicing to extract from the HDF5 file.
+                record_name(str):                           Name of member to retrieve from compound type.
                 throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.
         """
 
@@ -257,6 +286,7 @@ class HDF5DataRequest( object ):
         self.dataset_path = dataset_path
         self.axis_order = axis_order
         self.dataset_dtype = dataset_dtype
+        self.record_name = record_name
         self.throw_on_not_found = throw_on_not_found
 
         self._result = None
@@ -288,7 +318,16 @@ class HDF5DataRequest( object ):
             try:
                 dataset = self.file_handle[self.dataset_path]
 
-                a_result = dataset[self.actual_slicing]
+                a_result = None
+                if self.record_name:
+                    # Copy out the bare minimum data.
+                    # h5py does not allowing further index on the type within the compound type.
+                    a_result = dataset[ self.actual_slicing[:len(dataset.shape)] + (self.record_name,) ]
+                    # Apply the remaining slicing to the data read.
+                    a_result = a_result[ len(dataset.shape) * (slice(None),) + self.actual_slicing[len(dataset.shape):] ]
+                else:
+                    a_result = dataset[self.actual_slicing]
+
                 a_result = numpy.array(a_result)
 
                 # Get the axis order without the singleton axes
@@ -1325,7 +1364,11 @@ def main(*argv):
 
                     # Try to make the source. If it fails, we take no source.
                     try:
-                        each_file_source = HDF5DataSource(each_file, each_layer_source_location)
+                        if len(each_layer_source_operation_names) and ((each_layer_source_operation_names[-1].startswith("[\"") and each_layer_source_operation_names[-1].endswith("\"]")) or \
+                            (each_layer_source_operation_names[-1].startswith("['") and each_layer_source_operation_names[-1].endswith("']"))):
+                            each_file_source = HDF5DataSource(each_file, each_layer_source_location, each_layer_source_operation_names.pop(-1)[2:-2])
+                        else:
+                            each_file_source = HDF5DataSource(each_file, each_layer_source_location)
                     except HDF5DatasetNotFoundException:
                         each_file_source = None
 
