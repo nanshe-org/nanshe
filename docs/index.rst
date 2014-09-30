@@ -9,9 +9,9 @@ Welcome to nanshe's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 4
+   :glob:
 
-   nanshe
+   *
 
 
 Indices and tables
