@@ -785,6 +785,68 @@ def enumerate_masks(new_masks, axis = 0):
     return(new_enumerated_masks)
 
 
+def enumerate_masks_max(new_masks, axis = 0):
+    """
+        Takes a mask stack and replaces them by the max of an enumerated stack. In other words, each mask is replaced by
+        a consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)). Afterwards,
+        the max is taken along the given axis. However, a singleton dimension is left on the original axis.
+
+        Note:
+            The masks could be recreated by finding the values not equal to zero.
+
+        Args:
+            new_masks(numpy.ndarray):            masks to enumerate
+            axis(int):                           axis to enumerate along (0 by default).
+
+        Returns:
+            (numpy.ndarray):                     an enumerated stack.
+
+        Examples:
+            >>> enumerate_masks_max(numpy.ones((3,3,3), dtype=bool))
+            array([[[3, 3, 3],
+                    [3, 3, 3],
+                    [3, 3, 3]]], dtype=uint64)
+
+            >>> enumerate_masks_max(numpy.array([[[ True, False, False, False],
+            ...                                   [False, False, False, False],
+            ...                                   [False, False, False, False],
+            ...                                   [False, False, False, False]],
+            ...
+            ...                                  [[False, False, False, False],
+            ...                                   [False,  True, False, False],
+            ...                                   [False, False, False, False],
+            ...                                   [False, False, False, False]],
+            ...
+            ...                                  [[False, False, False, False],
+            ...                                   [False, False, False, False],
+            ...                                   [False, False,  True, False],
+            ...                                   [False, False, False, False]],
+            ...
+            ...                                  [[False, False, False, False],
+            ...                                   [False, False, False, False],
+            ...                                   [False, False, False, False],
+            ...                                   [False, False, False,  True]]], dtype=bool))
+            array([[[1, 0, 0, 0],
+                    [0, 2, 0, 0],
+                    [0, 0, 3, 0],
+                    [0, 0, 0, 4]]], dtype=uint64)
+    """
+
+    if axis < 0:
+        axis += new_masks.ndim
+
+    assert(0 <= axis < new_masks.ndim)
+
+    new_enumerated_masks_max = numpy.zeros(new_masks.shape[:axis] + (1,) + new_masks.shape[axis+1:], dtype=numpy.uint64)
+
+    for i in xrange(new_masks.shape[axis]):
+        numpy.maximum(new_enumerated_masks_max,
+                      (i+1) * add_singleton_axis_pos(index_axis_at_pos(new_masks, axis, i), axis),
+                      out=new_enumerated_masks_max)
+
+    return(new_enumerated_masks_max)
+
+
 @debugging_tools.log_call(logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
