@@ -704,9 +704,7 @@ class EnumeratedProjectionConstantSource( QObject ):
         slicing = ( slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
-        self._constant_source_cached = expanded_numpy.enumerate_masks(self._constant_source_cached).max(axis = self.axis)
-        self._constant_source_cached = expanded_numpy.add_singleton_axis_pos(self._constant_source_cached,
-                                                                             new_axis=self.axis)
+        self._constant_source_cached = expanded_numpy.enumerate_masks_max(self._constant_source_cached, axis = self.axis)
 
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
