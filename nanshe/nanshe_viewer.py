@@ -1051,6 +1051,157 @@ class ContourProjectionConstantRequest( object ):
 
 assert issubclass(ContourProjectionConstantRequest, RequestABC)
 
+class FloatProjectionConstantSource( QObject ):
+    """
+        Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+
+        Note:
+            This was not designed to know about dirtiness or any sort of changing data.
+
+        Attributes:
+            constant_request(a constant RequestABC):         The request to take the max projection of.
+            axis(int):                                       The axis to take the max projection along.
+            slicing(tuple of slices):                        Slicing to be returned.
+
+    """
+
+    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+
+    isDirty = pyqtSignal( object )
+    numberOfChannelsChanged = pyqtSignal(int) # Never emitted
+
+    @debugging_tools.log_call(logger)
+    def __init__( self, constant_source):
+        """
+            Constructs an FloatProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
+            can be specific
+
+            Args:
+                constant_source(a constant SourceABC):      Source to make float.
+        """
+        #TODO: Get rid of shape and dtype as arguments.
+
+        super(FloatProjectionConstantSource, self).__init__()
+
+        self.constant_source = constant_source
+        self._shape = self.constant_source.shape()
+
+    @debugging_tools.log_call(logger)
+    def numberOfChannels(self):
+        return(self.dataset_shape[-1])
+
+    @debugging_tools.log_call(logger)
+    def clean_up(self):
+        # Close file
+        self.constant_source = None
+        self.axis = None
+
+    @debugging_tools.log_call(logger)
+    def dtype(self):
+        return(numpy.float64)
+
+    @debugging_tools.log_call(logger)
+    def shape(self):
+        return(self._shape)
+
+    @debugging_tools.log_call(logger)
+    def request( self, slicing ):
+        if not is_pure_slicing(slicing):
+            raise Exception('FloatProjectionConstantSource: slicing is not pure')
+
+        return(FloatProjectionConstantRequest(self.constant_source.request(slicing)))
+
+    @debugging_tools.log_call(logger)
+    def setDirty( self, slicing):
+        if not is_pure_slicing(slicing):
+            raise Exception('dirty region: slicing is not pure')
+        self.isDirty.emit( slicing )
+
+    @debugging_tools.log_call(logger)
+    def __eq__( self, other ):
+        if other is None:
+            return False
+
+        return(self.full_path == other.full_path)
+
+    @debugging_tools.log_call(logger)
+    def __ne__( self, other ):
+        if other is None:
+            return True
+
+        return(self.full_path != other.full_path)
+
+assert issubclass(FloatProjectionConstantSource, SourceABC)
+
+
+class FloatProjectionConstantRequest( object ):
+    """
+        Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+
+        Note:
+            This was not designed to know about dirtiness or any sort of changing data.
+
+        Attributes:
+            constant_request(a constant RequestABC):         The request to take the max projection of.
+            axis(int):                                       The axis to take the max projection along.
+            slicing(tuple of slices):                        Slicing to be returned.
+
+    """
+
+    @debugging_tools.log_call(logger)
+    def __init__( self, constant_request ):
+        """
+            Constructs an FloatProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
+            suppressed if the source is not found.
+
+            Args:
+                constant_request(a constant RequestABC):         The request to take the max projection of.
+                axis(int):                                       The axis to take the max projection along.
+                slicing(tuple of slices):                        Slicing to be returned.
+        """
+
+        self.constant_request = constant_request
+
+        self._result = None
+
+    @debugging_tools.log_call(logger)
+    def wait( self ):
+        if self._result is None:
+            # Get the result of the request needed
+            self._result = self.constant_request.wait()
+
+            # Convert to float
+            self._result = self._result.astype(numpy.float)
+
+            logger.debug("Found the result.")
+
+        return self._result
+
+    @debugging_tools.log_call(logger)
+    def getResult(self):
+        return self._result
+
+    @debugging_tools.log_call(logger)
+    def cancel( self ):
+        pass
+
+    @debugging_tools.log_call(logger)
+    def submit( self ):
+        pass
+
+    # callback( result = result, **kwargs )
+    @debugging_tools.log_call(logger)
+    def notify( self, callback, **kwargs ):
+        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+        t.start()
+
+    @debugging_tools.log_call(logger)
+    def _doNotify( self, callback, kwargs ):
+        result = self.wait()
+        callback(result, **kwargs)
+
+assert issubclass(FloatProjectionConstantRequest, RequestABC)
+
 
 class MaxProjectionConstantSource( QObject ):
     """
@@ -1563,6 +1714,8 @@ def main(*argv):
                             each_source = EnumeratedProjectionConstantSource(each_source)
                         elif (a_layer_source_operation_name == "contour"):
                             each_source = ContourProjectionConstantSource(each_source)
+                        elif (a_layer_source_operation_name == "float"):
+                            each_source = FloatProjectionConstantSource(each_source)
                         else:
                             raise Exception("Unknown operation to perform on source \"" + repr(a_layer_source_operation_name) + "\".")
 
