@@ -1259,15 +1259,23 @@ def main(*argv):
     # If the key is a null string, no operation is performed.
     for i in xrange(len(parsed_args.parameters)):
         for (each_layer_name, each_layer_source_location_dict) in parsed_args.parameters[i].items():
-            if isinstance(each_layer_source_location_dict, dict):
-                assert(len(each_layer_source_location_dict) == 1)
-                each_layer_source_location_dict = dict([(_k, _v) if isinstance(_v, list) else (_k, [ _v ])  for _k, _v in each_layer_source_location_dict.items()])
-            elif isinstance(each_layer_source_location_dict, list):
-                each_layer_source_location_dict = {"" : each_layer_source_location_dict}
-            elif isinstance(each_layer_source_location_dict, str):
-                each_layer_source_location_dict = {"" : [each_layer_source_location_dict]}
+            each_layer_source_operation_names = []
+            each_layer_source_location_list = []
 
-            parsed_args.parameters[i][each_layer_name] = each_layer_source_location_dict
+            each_layer_source_location_dict_inner = each_layer_source_location_dict
+            while isinstance(each_layer_source_location_dict_inner, dict):
+                assert(len(each_layer_source_location_dict_inner) == 1)
+                each_layer_source_operation_names.extend(each_layer_source_location_dict_inner.keys())
+                each_layer_source_location_dict_inner = each_layer_source_location_dict_inner.values()[0]
+
+            if isinstance(each_layer_source_location_dict_inner, str):
+                each_layer_source_location_dict_inner = [each_layer_source_location_dict_inner]
+
+            assert(isinstance(each_layer_source_location_dict_inner, list))
+
+            each_layer_source_location_list = each_layer_source_location_dict_inner
+
+            parsed_args.parameters[i][each_layer_name] = [each_layer_source_operation_names, each_layer_source_location_list]
 
     # Find all possible matches and whether they exist or not
     parsed_args.parameters_expanded = list()
@@ -1279,19 +1287,18 @@ def main(*argv):
         for (each_layer_name, each_layer_source_location_dict) in each_layer_names_locations_group.items():
 
             # Fetch out the operation that we will use.
-            [(each_layer_source_operation_name, each_layer_source_location_list)] = each_layer_source_location_dict.items()
+            [each_layer_source_operation_names, each_layer_source_location_list] = each_layer_source_location_dict
 
             # Ensure the order of files is preserved (probably not an issue if they were sorted) and each is unique.
             # This way we know they get fused in the right sequential order if necessary.
-            parsed_args.parameters_expanded[-1][each_layer_name] = collections.OrderedDict()
-            parsed_args.parameters_expanded[-1][each_layer_name][each_layer_source_operation_name] = collections.OrderedDict()
+            parsed_args.parameters_expanded[-1][each_layer_name] = [each_layer_source_operation_names, collections.OrderedDict()]
             for each_layer_source_location in each_layer_source_location_list:
 
                 # TODO: See if we can't move this loop out. (Could change this parsed_args.parameters_expanded to an collections.OrderedDict and store none for values (ordered set).)
                 for each_file in parsed_args.file_handles:
                     new_matches = HDF5_searchers.get_matching_grouped_paths(each_file, each_layer_source_location)
                     new_matches_ldict = itertools.izip(new_matches, itertools.repeat(None))
-                    parsed_args.parameters_expanded[-1][each_layer_name][each_layer_source_operation_name].update(new_matches_ldict)
+                    parsed_args.parameters_expanded[-1][each_layer_name][-1].update(new_matches_ldict)
 
 
     layer_names_locations_groups = parsed_args.parameters_expanded
@@ -1306,7 +1313,7 @@ def main(*argv):
             layer_sync_list = []
 
             for (each_layer_name, each_layer_source_location_dict) in reversed(each_layer_names_locations_group.items()):
-                [(each_layer_source_operation_name, each_layer_source_location_list)] = each_layer_source_location_dict.items()
+                [each_layer_source_operation_names, each_layer_source_location_list] = each_layer_source_location_dict
 
                 each_source = []
 
@@ -1334,15 +1341,16 @@ def main(*argv):
                 else:
                     each_source = None
 
-                if (each_source is not None) and (each_layer_source_operation_name):
-                    if (each_layer_source_operation_name == "max"):
-                        each_source = MaxProjectionConstantSource(each_source)
-                    elif (each_layer_source_operation_name == "mean"):
-                        each_source = MeanProjectionConstantSource(each_source)
-                    elif (each_layer_source_operation_name == "enumerate"):
-                        each_source = EnumeratedProjectionConstantSource(each_source)
-                    else:
-                        raise Exception("Unknown operation to perform on source \"" + repr(each_layer_source_operation_name) + "\".")
+                for a_layer_source_operation_name in reversed(each_layer_source_operation_names):
+                    if (each_source is not None) and (a_layer_source_operation_name):
+                        if (a_layer_source_operation_name == "max"):
+                            each_source = MaxProjectionConstantSource(each_source)
+                        elif (a_layer_source_operation_name == "mean"):
+                            each_source = MeanProjectionConstantSource(each_source)
+                        elif (a_layer_source_operation_name == "enumerate"):
+                            each_source = EnumeratedProjectionConstantSource(each_source)
+                        else:
+                            raise Exception("Unknown operation to perform on source \"" + repr(a_layer_source_operation_name) + "\".")
 
                 if each_source is not None:
                     each_layer = None
