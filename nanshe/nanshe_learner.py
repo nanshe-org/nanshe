@@ -614,7 +614,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                     new_neurons_set = advanced_image_processing.merge_neuron_sets(new_neurons_set, neurons_block_i,
                                                                                   **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"])
 
-        HDF5_serializers.create_numpy_structured_array_in_HDF5(output_file_handle, "neurons", new_neurons_set, overwrite = True)
+        HDF5_serializers.create_numpy_structured_array_in_HDF5(output_group, "neurons", new_neurons_set, overwrite = True)
 
     logger.info("Finished merge over all blocks.")
     end_time = time.time()
