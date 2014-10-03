@@ -80,6 +80,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     p = multiprocessing.Process(target = run_multiprocessing_queue_spams_trainDL, args = (out_queue,) + args, kwargs = kwargs)
     p.start()
     result = out_queue.get()
+    result = result.copy()
     p.join()
 
     if p.exitcode != 0:
