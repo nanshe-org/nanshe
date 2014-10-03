@@ -241,6 +241,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
 
     imPrev = im0.copy()
     imCur = im0.copy()
+    imDiff = imPrev - imCur
     for i in xrange(1, scale.max() + 1):
 
         h_ker = binomial_1D_vigra_kernel(i)
@@ -249,7 +250,8 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
             if i <= scale[d]:
                 vigra.filters.convolveOneDimension(imCur, d, h_ker, out=imCur)
 
-        W[i - 1] = imPrev - imCur
+        imDiff[:] = imPrev - imCur
+        W[i - 1] = imDiff
 
         if include_intermediates:
             imOut[i] = imCur
