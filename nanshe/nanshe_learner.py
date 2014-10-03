@@ -600,6 +600,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                     neurons_block_i["max_F"] = neurons_block_i_accepted["max_F"]
                     neurons_block_i["gaussian_mean"] = neurons_block_i_accepted["gaussian_mean"]
                     neurons_block_i["gaussian_cov"] = neurons_block_i_accepted["gaussian_cov"]
+                    #TODO: Correct centroid to larger block position.
                     neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
 
                     array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
