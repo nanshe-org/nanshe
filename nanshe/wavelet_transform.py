@@ -185,7 +185,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
-def wavelet_transform(im0, scale = 5, include_intermediates = False):
+def wavelet_transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
         
@@ -193,6 +193,8 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
             im0(numpy.ndarray):                                  the original image.
             scale(int):                                          the scale of wavelet transform to apply.
             include_intermediates(bool):                         whether to return intermediates or not (default False).
+            include_lower_scales(bool):                          whether to include lower scales or not (default False)
+                                                                 (ignored if include_intermediates is True).
         
         Returns:
             k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
@@ -201,7 +203,8 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
         Examples:
             >>> wavelet_transform(numpy.eye(3).astype(numpy.float32),
             ...     scale = 1,
-            ...     include_intermediates = True) # doctest: +NORMALIZE_WHITESPACE
+            ...     include_intermediates = True,
+            ...     include_lower_scales = True) # doctest: +NORMALIZE_WHITESPACE
             (array([[[ 0.59375, -0.375  , -0.34375],
                      [-0.375  ,  0.625  , -0.375  ],
                      [-0.34375, -0.375  ,  0.59375]]]),
@@ -237,6 +240,8 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
         W = numpy.zeros((scale.max(),) + im0.shape)
         imOut = numpy.zeros((scale.max() + 1,) + im0.shape)
         imOut[0] = im0
+    elif include_lower_scales:
+        W = numpy.zeros((scale.max(),) + im0.shape)
 
     imPrev = im0.copy()
     imCur = im0.copy()
@@ -254,10 +259,14 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
         if include_intermediates:
             W[i - 1] = imDiff
             imOut[i] = imCur
+        elif include_lower_scales:
+            W[i - 1] = imDiff
 
         imPrev[:] = imCur
 
     if include_intermediates:
         return((W, imOut))
+    elif include_lower_scales:
+        return(W)
     else:
         return(imDiff)
