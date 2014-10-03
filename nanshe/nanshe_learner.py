@@ -616,6 +616,19 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
         HDF5_serializers.create_numpy_structured_array_in_HDF5(output_group, "neurons", new_neurons_set, overwrite = True)
 
+        if "parameters" not in output_group["neurons"].attrs:
+            output_group["neurons"].attrs["parameters"] = repr(dict(list(parameters.items()) + \
+                                                                    [ ("block_shape", block_shape),
+                                                                      ("num_blocks", num_blocks),
+                                                                      ("half_window_shape", half_window_shape),
+                                                                      ("half_border_shape", half_border_shape),
+                                                                      ("use_drmaa", use_drmaa),
+                                                                      ("num_drmaa_cores", num_drmaa_cores),
+                                                                      ("debug", debug)
+                                                                    ]
+                                                              )
+            )
+
     logger.info("Finished merge over all blocks.")
     end_time = time.time()
 
