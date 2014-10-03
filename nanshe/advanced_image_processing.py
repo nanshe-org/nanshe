@@ -2490,11 +2490,9 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
             new_neuron_set_kept[j] = False
 
-        new_neuron_set = new_neuron_set[new_neuron_set_kept]
+        new_neuron_set = new_neuron_set[new_neuron_set_kept].copy()
 
         logger.debug("Fused \"" + repr(len(new_neuron_set_all_j_fuse)) + "\" neurons to the existing set.")
-
-    new_neuron_set = new_neuron_set.copy()
 
     if new_neuron_set.size:
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_merged_neurons_set"] = new_neuron_set
@@ -2551,7 +2549,7 @@ def postprocess_data(new_dictionary, **parameters):
     if unmerged_neuron_set.size:
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
 
-        unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(numpy.uint64).copy()
+        unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(numpy.uint64)
 
         unmerged_neuron_set_contours *= expanded_numpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
         unmerged_neuron_set_contours = expanded_numpy.add_singleton_op(
@@ -2565,7 +2563,7 @@ def postprocess_data(new_dictionary, **parameters):
     if new_neurons_set.size:
         postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
 
-        new_neurons_set_contours = new_neurons_set["contour"].astype(numpy.uint64).copy()
+        new_neurons_set_contours = new_neurons_set["contour"].astype(numpy.uint64)
 
         new_neurons_set_contours *= expanded_numpy.expand_enumerate(new_neurons_set_contours, start = 1)
         new_neurons_set_contours = expanded_numpy.add_singleton_op(
