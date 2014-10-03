@@ -232,10 +232,13 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
     except TypeError:
         scale = numpy.repeat([scale], im0.ndim)
 
-    imOut = numpy.zeros((scale.max() + 1,) + im0.shape)
+
     W = numpy.zeros((scale.max(),) + im0.shape)
 
-    imOut[0] = im0
+    if include_intermediates:
+        imOut = numpy.zeros((scale.max() + 1,) + im0.shape)
+        imOut[0] = im0
+
     imPrev = im0.copy()
     imCur = im0.copy()
     for i in xrange(1, scale.max() + 1):
@@ -247,7 +250,10 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
                 vigra.filters.convolveOneDimension(imCur, d, h_ker, out=imCur)
 
         W[i - 1] = imPrev - imCur
-        imOut[i] = imCur
+
+        if include_intermediates:
+            imOut[i] = imCur
+
         imPrev[:] = imCur
 
     if include_intermediates:
