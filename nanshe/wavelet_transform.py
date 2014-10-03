@@ -190,9 +190,9 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
         
         Args:
-            im0(numpy.ndarray):                                         the original image.
-            scale(int):                                                 the scale of wavelet transform to apply.
-            include_intermediates                                       whether to return intermediates or not (default False)
+            im0(numpy.ndarray):                                  the original image.
+            scale(int):                                          the scale of wavelet transform to apply.
+            include_intermediates(bool):                         whether to return intermediates or not (default False).
         
         Returns:
             k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
