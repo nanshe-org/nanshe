@@ -158,7 +158,10 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
         # Save the configuration parameters in the attributes as a string.
         if "parameters" not in output_group.attrs:
             # Write the configuration parameters in the attributes as a string.
-            output_group.attrs["parameters"] = repr(parameters)
+            output_group.attrs["parameters"] = repr(dict(list(parameters.items()) + \
+                                                         [("debug", debug)]
+                                                        )
+            )
 
 
 @debugging_tools.log_call(logger)
