@@ -244,11 +244,11 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False):
 
         for d in xrange(len(scale)):
             if i <= scale[d]:
-                imCur = vigra.filters.convolveOneDimension(imCur, d, h_ker)
+                vigra.filters.convolveOneDimension(imCur, d, h_ker, out=imCur)
 
         W[i - 1] = imPrev - imCur
         imOut[i] = imCur
-        imPrev = imCur
+        imPrev[:] = imCur
 
     if include_intermediates:
         return((W, imOut))
