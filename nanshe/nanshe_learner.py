@@ -587,35 +587,36 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                     if neurons_block_i_non_windowed_count.shape == tuple():
                         neurons_block_i_non_windowed_count = numpy.array([neurons_block_i_non_windowed_count])
 
-                    # Find ones that are inside the margins by more than half
-                    neurons_block_i_acceptance = ((neurons_block_i_non_windowed_count / neurons_block_i_windowed_count) > 0.5)
+                    if len(neurons_block_i_non_windowed_count):
+                        # Find ones that are inside the margins by more than half
+                        neurons_block_i_acceptance = ((neurons_block_i_non_windowed_count / neurons_block_i_windowed_count) > 0.5)
 
-                    # Take a subset of our previous neurons that are within the margins by half
-                    neurons_block_i_accepted = neurons_block_i_smaller[neurons_block_i_acceptance]
+                        # Take a subset of our previous neurons that are within the margins by half
+                        neurons_block_i_accepted = neurons_block_i_smaller[neurons_block_i_acceptance]
 
-                    neurons_block_i = numpy.zeros(neurons_block_i_accepted.shape, dtype=new_neurons_set.dtype)
-                    neurons_block_i["mask"][windowed_slice_i] = neurons_block_i_accepted["mask"]
-                    neurons_block_i["contour"][windowed_slice_i] = neurons_block_i_accepted["contour"]
-                    neurons_block_i["image"][windowed_slice_i] = neurons_block_i_accepted["image"]
+                        neurons_block_i = numpy.zeros(neurons_block_i_accepted.shape, dtype=new_neurons_set.dtype)
+                        neurons_block_i["mask"][windowed_slice_i] = neurons_block_i_accepted["mask"]
+                        neurons_block_i["contour"][windowed_slice_i] = neurons_block_i_accepted["contour"]
+                        neurons_block_i["image"][windowed_slice_i] = neurons_block_i_accepted["image"]
 
-                    # Copy other properties
-                    neurons_block_i["area"] = neurons_block_i_accepted["area"]
-                    neurons_block_i["max_F"] = neurons_block_i_accepted["max_F"]
-                    neurons_block_i["gaussian_mean"] = neurons_block_i_accepted["gaussian_mean"]
-                    neurons_block_i["gaussian_cov"] = neurons_block_i_accepted["gaussian_cov"]
-                    #TODO: Correct centroid to larger block position.
-                    neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
+                        # Copy other properties
+                        neurons_block_i["area"] = neurons_block_i_accepted["area"]
+                        neurons_block_i["max_F"] = neurons_block_i_accepted["max_F"]
+                        neurons_block_i["gaussian_mean"] = neurons_block_i_accepted["gaussian_mean"]
+                        neurons_block_i["gaussian_cov"] = neurons_block_i_accepted["gaussian_cov"]
+                        #TODO: Correct centroid to larger block position.
+                        neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
 
-                    array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
-                        group_name = "debug",
-                        enable = debug,
-                        overwrite_group = False,
-                        recorder_constructor = HDF5_recorder.HDF5EnumeratedArrayRecorder
-                    )
+                        array_debug_recorder = HDF5_recorder.generate_HDF5_array_recorder(output_group,
+                            group_name = "debug",
+                            enable = debug,
+                            overwrite_group = False,
+                            recorder_constructor = HDF5_recorder.HDF5EnumeratedArrayRecorder
+                        )
 
-                    advanced_image_processing.merge_neuron_sets.recorders.array_debug_recorder = array_debug_recorder
-                    new_neurons_set = advanced_image_processing.merge_neuron_sets(new_neurons_set, neurons_block_i,
-                                                                                  **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"])
+                        advanced_image_processing.merge_neuron_sets.recorders.array_debug_recorder = array_debug_recorder
+                        new_neurons_set = advanced_image_processing.merge_neuron_sets(new_neurons_set, neurons_block_i,
+                                                                                      **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"])
 
         HDF5_serializers.create_numpy_structured_array_in_HDF5(output_group, "neurons", new_neurons_set, overwrite = True)
 
