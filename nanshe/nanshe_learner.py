@@ -579,10 +579,11 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                     neurons_block_i_smaller = HDF5_serializers.read_numpy_structured_array_from_HDF5(each_block_file_handle, "/neurons")
 
                     neurons_block_i_windowed_count = numpy.squeeze(numpy.apply_over_axes(numpy.sum, neurons_block_i_smaller["mask"].astype(float), tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))))
-                    neurons_block_i_non_windowed_count = numpy.squeeze(numpy.apply_over_axes(numpy.sum, neurons_block_i_smaller["mask"][window_trimmed_i].astype(float), tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))))
 
                     if neurons_block_i_windowed_count.shape == tuple():
                         neurons_block_i_windowed_count = numpy.array([neurons_block_i_windowed_count])
+
+                    neurons_block_i_non_windowed_count = numpy.squeeze(numpy.apply_over_axes(numpy.sum, neurons_block_i_smaller["mask"][window_trimmed_i].astype(float), tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))))
 
                     if neurons_block_i_non_windowed_count.shape == tuple():
                         neurons_block_i_non_windowed_count = numpy.array([neurons_block_i_non_windowed_count])
