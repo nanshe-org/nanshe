@@ -12,6 +12,7 @@ import os
 import sys
 import time
 
+import psutil
 
 import generic_decorators
 
@@ -197,3 +198,22 @@ def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_tim
                                                                      to_print_args = to_print_args,
                                                                      to_print_time = to_print_time,
                                                                      to_print_exception = to_print_exception)))
+
+
+@generic_decorators.static_variables(to_run = True)
+def memory_profiler(logger, interval = 1, level=logging.INFO):
+    """
+        Runs forever get information about memory usage and dumping it to the logger provided at the given interval.
+
+        Args:
+            logger (Logger):               Used for logging memory profiling information.
+
+        Keyword Args:
+            interval (int or float):       Number of seconds to wait before issuing more profile information.
+    """
+
+    current_process = psutil.Process(os.getpid())
+
+    while memory_profiler.to_run:
+        logger.log(level, "Memory info = " + repr(current_process.get_ext_memory_info()))
+        time.sleep(interval)
