@@ -185,9 +185,11 @@ def extract_f0(new_data,
     # TODO: Check what border treatment to use
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_temporally_smoothed = vigra.filters.convolveOneDimension(new_data_biased.astype(numpy.float32),
-                                                                      0,
-                                                                      temporal_smoothing_gaussian_filter)
+    new_data_temporally_smoothed = new_data_biased.astype(numpy.float32)
+    vigra.filters.convolveOneDimension(new_data_temporally_smoothed,
+                                       0,
+                                       temporal_smoothing_gaussian_filter,
+                                       out=new_data_temporally_smoothed)
 
 
     which_quantile_len = None
@@ -216,9 +218,10 @@ def extract_f0(new_data,
 
     new_data_spatially_smoothed = new_data_quantiled.astype(numpy.float32)
     for d in xrange(1, new_data_quantiled.ndim):
-        new_data_spatially_smoothed = vigra.filters.convolveOneDimension(new_data_spatially_smoothed,
-                                                                         d,
-                                                                         spatial_smoothing_gaussian_filter)
+        vigra.filters.convolveOneDimension(new_data_spatially_smoothed,
+                                           d,
+                                           spatial_smoothing_gaussian_filter,
+                                           out=new_data_spatially_smoothed)
 
     extract_f0.recorders.array_debug_recorder["new_data_spatially_smoothed"] = new_data_spatially_smoothed
 
