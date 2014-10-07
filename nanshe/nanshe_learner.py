@@ -727,6 +727,11 @@ def main(*argv):
 
     # Only necessary if running main (normally if calling command line). No point in importing otherwise.
     import argparse
+    import threading
+
+    memory_profiler_thread = threading.Thread(target=debugging_tools.memory_profiler, args=(logger,))
+    memory_profiler_thread.daemon = True
+    memory_profiler_thread.start()
 
     argv = list(argv)
 
