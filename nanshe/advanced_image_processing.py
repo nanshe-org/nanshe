@@ -85,8 +85,8 @@ def remove_zeroed_lines(new_data,
     result = numpy.zeros(new_data.shape)
 
     # Get an outline of the region around the parts of the image that contain zeros
-    erosion_structure = numpy.ones(tuple(erosion_shape))
-    dilation_structure = numpy.ones(tuple(dilation_shape))
+    erosion_structure = numpy.ones(tuple(erosion_shape), dtype=bool)
+    dilation_structure = numpy.ones(tuple(dilation_shape), dtype=bool)
 
     zero_masks_eroded = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
