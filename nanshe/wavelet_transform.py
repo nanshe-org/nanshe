@@ -59,9 +59,9 @@ def binomial_coefficients(n):
         n = 0
 
     # Get enough repeats of n to get each coefficent
-    ns = numpy.repeat(n, n + 1).astype(int)
+    ns = numpy.repeat(n, n + 1)
     # Get all relevant k's
-    ks = numpy.arange(n + 1).astype(int)
+    ks = numpy.arange(n + 1)
 
     # Get all the coefficents in order
     cs = scipy.misc.comb(ns, ks)
