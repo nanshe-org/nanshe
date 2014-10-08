@@ -185,11 +185,11 @@ def extract_f0(new_data,
     # TODO: Check what border treatment to use
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_temporally_smoothed = new_data_biased.astype(numpy.float32)
-    vigra.filters.convolveOneDimension(new_data_temporally_smoothed,
+    new_data_f0_estimation = new_data_biased.astype(numpy.float32)
+    vigra.filters.convolveOneDimension(new_data_f0_estimation,
                                        0,
                                        temporal_smoothing_gaussian_filter,
-                                       out=new_data_temporally_smoothed)
+                                       out=new_data_f0_estimation)
 
 
     which_quantile_len = None
@@ -203,11 +203,10 @@ def extract_f0(new_data,
     if (which_quantile_len > 1):
         raise Exception("Provided more than one quantile \"" + repr(which_quantile) + "\".")
 
-    new_data_quantiled = new_data_temporally_smoothed.astype(numpy.float32)
-    new_data_quantiled[:] = vigra.filters.lineRankOrderFilter(new_data_quantiled,
-                                                              ctypes.c_ulong(half_window_size).value,
-                                                              which_quantile,
-                                                              ctypes.c_uint(0).value)
+    new_data_f0_estimation[:] = vigra.filters.lineRankOrderFilter(new_data_f0_estimation,
+                                                                  ctypes.c_ulong(half_window_size).value,
+                                                                  which_quantile,
+                                                                  ctypes.c_uint(0).value)
 
     # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
@@ -217,16 +216,15 @@ def extract_f0(new_data,
     # TODO: Check what border treatment to use
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_spatially_smoothed = new_data_quantiled.astype(numpy.float32)
-    for d in xrange(1, new_data_spatially_smoothed.ndim):
-        vigra.filters.convolveOneDimension(new_data_spatially_smoothed,
+    for d in xrange(1, new_data_f0_estimation.ndim):
+        vigra.filters.convolveOneDimension(new_data_f0_estimation,
                                            d,
                                            spatial_smoothing_gaussian_filter,
-                                           out=new_data_spatially_smoothed)
+                                           out=new_data_f0_estimation)
 
-    extract_f0.recorders.array_debug_recorder["new_data_spatially_smoothed"] = new_data_spatially_smoothed
+    extract_f0.recorders.array_debug_recorder["new_data_f0_estimation"] = new_data_f0_estimation
 
-    new_data_baselined = (new_data_biased - new_data_spatially_smoothed) / new_data_spatially_smoothed
+    new_data_baselined = (new_data_biased - new_data_f0_estimation) / new_data_f0_estimation
 
     return(new_data_baselined)
 
