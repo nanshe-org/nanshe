@@ -237,11 +237,11 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
 
 
     if include_intermediates:
-        W = numpy.zeros((scale.max(),) + im0.shape)
-        imOut = numpy.zeros((scale.max() + 1,) + im0.shape)
+        W = numpy.zeros((scale.max(),) + im0.shape, dtype = im0.dtype)
+        imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype = im0.dtype)
         imOut[0] = im0
     elif include_lower_scales:
-        W = numpy.zeros((scale.max(),) + im0.shape)
+        W = numpy.zeros((scale.max(),) + im0.shape, dtype = im0.dtype)
 
     imPrev = im0.copy()
     imCur = im0.copy()
