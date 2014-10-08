@@ -284,7 +284,6 @@ def preprocess_data(new_data, **parameters):
             dict:                               the dictionary found.
     """
 
-    # TODO: Add preprocessing step wavelet transform, F_0, remove lines, etc.
 
     # Remove lines
     new_data_maybe_lines_removed = None
