@@ -123,9 +123,9 @@ def remove_zeroed_lines(new_data,
 
                 try:
                     new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)] = scipy.interpolate.griddata(zero_mask_i_labeled_j_outline_points,
-                                                                                                                          new_data_i[zero_mask_i_labeled_j_outline],
-                                                                                                                          zero_mask_i_labeled_j_points,
-                                                                                                                          method = "linear")
+                                                                                                                           new_data_i[zero_mask_i_labeled_j_outline],
+                                                                                                                           zero_mask_i_labeled_j_points,
+                                                                                                                           method = "linear")
 
                     # Only need to check for nan in our case.
                     new_data_i_zero_mask_interpolation[numpy.isnan(new_data_i_zero_mask_interpolation)] = 0
