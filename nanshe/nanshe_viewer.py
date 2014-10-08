@@ -1721,15 +1721,15 @@ def main(*argv):
 
                 if each_source is not None:
                     each_layer = None
-                    if issubclass(each_source.dtype(), numpy.integer):
+                    each_source_dtype = numpy.dtype(each_source.dtype()).type
+                    if issubclass(each_source_dtype, numpy.integer):
                         each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
-                    elif issubclass(each_source.dtype(), numpy.floating):
+                    elif issubclass(each_source_dtype, numpy.floating):
                         each_layer = viewer.addGrayscaleHDF5Source(each_source, each_source.shape(), each_layer_name)
-                    elif issubclass(each_source.dtype(), numpy.bool_) or issubclass(each_source.dtype(), numpy.bool):
+                    elif issubclass(each_source_dtype, numpy.bool_):
                         each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
 
                     each_layer.visible = False
-
 
                     layer_sync_list.append(each_layer)
 
