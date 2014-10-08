@@ -58,6 +58,14 @@ def zeroed_mean_images(input_array, output_array = None):
                 ...
             AssertionError
 
+            >>> a = numpy.array([[1.,2.],[3.,4.]])
+            >>> zeroed_mean_images(a, output_array=a)
+            array([[-0.5,  0.5],
+                   [-0.5,  0.5]])
+            >>> a
+            array([[-0.5,  0.5],
+                   [-0.5,  0.5]])
+
             >>> zeroed_mean_images(numpy.array([[1,2],[3,4]]).astype(numpy.float32))
             array([[-0.5,  0.5],
                    [-0.5,  0.5]], dtype=float32)
