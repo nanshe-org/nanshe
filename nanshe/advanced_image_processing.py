@@ -354,12 +354,6 @@ def generate_dictionary(new_data, **parameters):
 
     import spams_sandbox
 
-    # It takes a loooong time to load spams.
-    # So, we shouldn't do this until we are sure that we are ready to generate the dictionary
-    # (i.e. the user supplied a bad config file, /images does not exist, etc.).
-    # Note it caches the import so subsequent calls should not make it any slower.
-    import spams
-
     # Maybe should copy data so as not to change the original.
     # new_data_processed = new_data.copy()
     new_data_processed = new_data
