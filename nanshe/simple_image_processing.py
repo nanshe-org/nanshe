@@ -72,21 +72,26 @@ def zeroed_mean_images(input_array, output_array = None):
     assert(issubclass(input_array.dtype.type, numpy.floating))
 
     if output_array is None:
-        output_array = numpy.zeros(input_array.shape, dtype = input_array.dtype)
+        output_array = input_array.copy()
+    elif id(input_array) != id(output_array):
+        assert(issubclass(output_array.dtype.type, numpy.floating))
 
+        assert(input_array.shape == output_array.shape)
+
+        output_array[:] = input_array
 
     # start with means having the same contents as the given images
-    means = input_array
+    means = output_array
 
     # take the mean while we haven't gotten one mean for each image.
     while means.ndim > 1:
         means = means.mean(axis = 1)
 
     # reshape means until it has the right number of dimensions to broadcast.
-    means = means.reshape(means.shape + (input_array.ndim - means.ndim)*(1,))
+    means = means.reshape(means.shape + (output_array.ndim - means.ndim)*(1,))
 
     # broadcast and subtract the means so that the mean of all values in result[i] is zero
-    output_array[:] = input_array - means
+    output_array[:] -= means
 
     return(output_array)
 
