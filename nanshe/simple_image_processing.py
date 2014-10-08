@@ -33,39 +33,46 @@ def zeroed_mean_images(input_array, output_array = None):
         
         
         Examples:
-            >>> zeroed_mean_images(numpy.array([[0,0],[0,0]]))
+            >>> zeroed_mean_images(numpy.array([[0.,0.],[0.,0.]]))
             array([[ 0.,  0.],
                    [ 0.,  0.]])
-                   
-            >>> zeroed_mean_images(numpy.array([[6,0],[0,0]]))
+
+            >>> zeroed_mean_images(numpy.array([[6.,0.],[0.,0.]]))
             array([[ 3., -3.],
                    [ 0.,  0.]])
-                   
-            >>> zeroed_mean_images(numpy.array([[0,0],[0,4]]))
+
+            >>> zeroed_mean_images(numpy.array([[0.,0.],[0.,4.]]))
             array([[ 0.,  0.],
                    [-2.,  2.]])
-                   
-            >>> zeroed_mean_images(numpy.array([[6,0],[0,4]]))
+
+            >>> zeroed_mean_images(numpy.array([[6.,0],[0.,4.]]))
             array([[ 3., -3.],
                    [-2.,  2.]])
-                   
-            >>> zeroed_mean_images(numpy.array([[1,2],[3,4]]))
+
+            >>> zeroed_mean_images(numpy.array([[1.,2.],[3.,4.]]))
             array([[-0.5,  0.5],
                    [-0.5,  0.5]])
-                   
-            >>> zeroed_mean_images(numpy.array([[1,2],[3,4]]))
+
+            >>> zeroed_mean_images(numpy.array([[1,2],[3,4]])) #doctest: +ELLIPSIS
+            Traceback (most recent call last):
+                ...
+            AssertionError
+
+            >>> zeroed_mean_images(numpy.array([[1,2],[3,4]]).astype(numpy.float32))
             array([[-0.5,  0.5],
-                   [-0.5,  0.5]])
-                   
+                   [-0.5,  0.5]], dtype=float32)
+
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a != zeroed_mean_images(a))
             True
-                   
+
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == zeroed_mean_images(a, output_array = a))
             True
     """
 
+    assert(issubclass(input_array.dtype.type, numpy.floating))
+
     if output_array is None:
-        output_array = numpy.zeros(input_array.shape, dtype = float)
+        output_array = numpy.zeros(input_array.shape, dtype = input_array.dtype)
 
 
     # start with means having the same contents as the given images
