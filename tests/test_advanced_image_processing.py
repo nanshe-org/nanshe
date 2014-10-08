@@ -20,7 +20,6 @@ import synthetic_data
 class TestAdvancedImageProcessing(object):
     def test_remove_zeroed_lines_1(self):
         a = numpy.ones((1, 100, 101))
-        p = 0.2
         erosion_shape = [ 21, 1 ]
         dilation_shape = [ 1, 3 ]
 
@@ -38,7 +37,6 @@ class TestAdvancedImageProcessing(object):
 
     def test_remove_zeroed_lines_2(self):
         a = numpy.ones((1, 100, 101))
-        p = 0.2
         erosion_shape = [ 21, 1 ]
         dilation_shape = [ 1, 3 ]
 
@@ -77,7 +75,6 @@ class TestAdvancedImageProcessing(object):
 
     def test_remove_zeroed_lines_4(self):
         a = numpy.ones((1, 100, 101))
-        p = 0.2
         erosion_shape = [ 21, 1 ]
         dilation_shape = [ 1, 3 ]
 
@@ -95,7 +92,6 @@ class TestAdvancedImageProcessing(object):
 
     def test_remove_zeroed_lines_5(self):
         a = numpy.ones((1, 100, 101))
-        p = 0.2
         erosion_shape = [ 21, 1 ]
         dilation_shape = [ 1, 3 ]
 
