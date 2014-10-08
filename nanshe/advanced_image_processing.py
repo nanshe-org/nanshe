@@ -253,12 +253,17 @@ def normalize_data(new_data, **parameters):
                     [-0.28867513,  0.8660254 ]]])
     """
 
+    # Copy to enable use of in-place operations.
+    new_data_renormalized = new_data.copy()
+
     # Remove the mean of each row vector
-    new_data_mean_zeroed = simple_image_processing.zeroed_mean_images(new_data)
+    simple_image_processing.zeroed_mean_images(new_data_renormalized,
+                                               output_array = new_data_renormalized)
 
     # Renormalize each row vector using some specified normalization
-    new_data_renormalized = simple_image_processing.renormalized_images(new_data_mean_zeroed,
-                                                                        **parameters["simple_image_processing.renormalized_images"])
+    simple_image_processing.renormalized_images(new_data_renormalized,
+                                                output_array = new_data_renormalized,
+                                                **parameters["simple_image_processing.renormalized_images"])
 
     return(new_data_renormalized)
 
