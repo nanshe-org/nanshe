@@ -83,8 +83,7 @@ def zeroed_mean_images(input_array, output_array = None):
         means = means.mean(axis = 1)
 
     # reshape means until it has the right number of dimensions to broadcast.
-    while means.ndim < input_array.ndim:
-        means = means.reshape(means.shape + (1,))
+    means = means.reshape(means.shape + (input_array.ndim - means.ndim)*(1,))
 
     # broadcast and subtract the means so that the mean of all values in result[i] is zero
     output_array[:] = input_array - means
