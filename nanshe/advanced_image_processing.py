@@ -178,11 +178,10 @@ def extract_f0(new_data,
     else:
         new_data_biased = new_data + bias
 
-    # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
                                                                       5)
-    # TODO: Check what border treatment to use
+
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
     new_data_f0_estimation = new_data_biased.astype(numpy.float32)
@@ -208,12 +207,10 @@ def extract_f0(new_data,
                                                                   which_quantile,
                                                                   ctypes.c_uint(0).value)
 
-    # TODO: Check to see if norm is acceptable as 1.0 or if it must be 0.0.
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
                                                                      1.0,
                                                                      5)
 
-    # TODO: Check what border treatment to use
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
     for d in xrange(1, new_data_f0_estimation.ndim):
