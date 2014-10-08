@@ -107,6 +107,23 @@ class TestAdvancedImageProcessing(object):
 
         assert((a == b).all())
 
+    def test_remove_zeroed_lines_6(self):
+        a = numpy.repeat(numpy.arange(100)[None].T, 101, axis = 1)[None].astype(float)
+        erosion_shape = [ 21, 1 ]
+        dilation_shape = [ 1, 3 ]
+
+        r = numpy.array([[0, 0, 0], [1, 3, 4]]).T.copy()
+
+        print(r)
+
+        ar = a.copy()
+        for each_r in r:
+            nanshe.expanded_numpy.index_axis_at_pos(nanshe.expanded_numpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
+
+        b = nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
+
+        assert(numpy.allclose(a, b, rtol=0, atol=1e-13))
+
     def test_extract_f0_1(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         which_quantile = 0.5
