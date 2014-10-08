@@ -140,7 +140,7 @@ def renormalized_images(input_array, ord = 2, output_array = None):
     # divide each image by this norm. (required for spams.trainDL)
     for i in xrange(output_array.shape[0]):
         output_array_i = output_array[i]
-        output_array_i_norm = numpy.linalg.norm(output_array[i].ravel(), ord = ord)
+        output_array_i_norm = numpy.linalg.norm(output_array_i.ravel(), ord = ord)
 
         if output_array_i_norm != 0:
             output_array_i /= output_array_i_norm
