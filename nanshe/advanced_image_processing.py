@@ -354,9 +354,8 @@ def generate_dictionary(new_data, **parameters):
 
     import spams_sandbox
 
-    # Maybe should copy data so as not to change the original.
-    # new_data_processed = new_data.copy()
-    new_data_processed = new_data
+    # Requires double array. Copies input data as well.
+    new_data_processed = new_data.astype(float)
 
     # Reshape data into a matrix (each image is now a column vector)
     new_data_processed = numpy.reshape(new_data_processed, (new_data_processed.shape[0], -1))
@@ -375,6 +374,7 @@ def generate_dictionary(new_data, **parameters):
     # The rest will be the shape of an image (same as input shape).
     new_dictionary = new_dictionary.transpose()
     new_dictionary = numpy.asarray(new_dictionary).reshape((parameters["spams.trainDL"]["K"],) + new_data.shape[1:])
+    new_dictionary = new_dictionary.astype(new_data.dtype.type)
 
     return(new_dictionary)
 
