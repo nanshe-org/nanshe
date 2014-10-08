@@ -119,29 +119,38 @@ def renormalized_images(input_array, ord = 2, output_array = None):
         
         
         Examples:
-            >>> renormalized_images(numpy.array([[0,1],[1,0]]))
+            >>> renormalized_images(numpy.array([[0.,1.],[1.,0.]]))
             array([[ 0.,  1.],
                    [ 1.,  0.]])
-                   
+
+            >>> renormalized_images(numpy.array([[0,1],[1,0]])) #doctest: +ELLIPSIS
+            Traceback (most recent call last):
+                ...
+            AssertionError
+
+            >>> renormalized_images(numpy.array([[0,1],[1,0]], dtype=numpy.float32))
+            array([[ 0.,  1.],
+                   [ 1.,  0.]], dtype=float32)
+
             >>> renormalized_images(numpy.array([[0.,2.],[1.,0.]]))
             array([[ 0.,  1.],
                    [ 1.,  0.]])
-                   
+
             >>> renormalized_images(numpy.array([[2.,2.],[1.,0.]]))
             array([[ 0.70710678,  0.70710678],
                    [ 1.        ,  0.        ]])
-                   
+
             >>> renormalized_images(numpy.array([[1.,2.],[3.,4.]]))
             array([[ 0.4472136 ,  0.89442719],
                    [ 0.6       ,  0.8       ]])
-                   
+
             >>> renormalized_images(numpy.array([[1.,2.],[3.,4.]]), ord = 1)
             array([[ 0.33333333,  0.66666667],
                    [ 0.42857143,  0.57142857]])
-                   
+
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a != renormalized_images(a))
             True
-                   
+
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == renormalized_images(a, output_array = a))
             True
 
@@ -150,8 +159,16 @@ def renormalized_images(input_array, ord = 2, output_array = None):
                    [ 0.,  0.,  0.]])
     """
 
+    assert(issubclass(input_array.dtype.type, numpy.floating))
+
     if output_array is None:
-        output_array = input_array.astype(float)
+        output_array = input_array.copy()
+    elif id(input_array) != id(output_array):
+        assert(issubclass(output_array.dtype.type, numpy.floating))
+
+        assert(input_array.shape == output_array.shape)
+
+        output_array[:] = input_array
 
     # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword.
     # So, we must use a for loop.
