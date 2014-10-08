@@ -195,6 +195,8 @@ def call_spams_trainDL(*args, **kwargs):
             For legacy.
     """
 
+    # It is not needed outside of calling spams.trainDL.
+    # Also, it takes a long time to load this module.
     import spams
 
     result = spams.trainDL(*args, **kwargs)
