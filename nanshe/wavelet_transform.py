@@ -126,7 +126,7 @@ def binomial_1D_array_kernel(i, n = 4):
     cs = list(binomial_coefficients(n))
 
     # Get the right number of zeros to fill in
-    zs = list(numpy.zeros(2 ** (i - 1) - 1).astype(int))
+    zs = list(numpy.zeros(2 ** (i - 1) - 1, dtype = int))
 
     # Create the contents of the 1D kernel before normalization
     r = []
