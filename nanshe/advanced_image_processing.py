@@ -172,11 +172,13 @@ def extract_f0(new_data,
             numpy.ndarray:                              a new array with a new baseline.
     """
 
+    new_data_biased = new_data.astype(numpy.float32)
+
     # Add the bias param
     if bias is None:
-        new_data_biased = new_data - new_data.min() + 1
+        new_data_biased[:] -= new_data.min() - 1
     else:
-        new_data_biased = new_data + bias
+        new_data_biased[:] += bias
 
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
@@ -184,7 +186,7 @@ def extract_f0(new_data,
 
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_f0_estimation = new_data_biased.astype(numpy.float32)
+    new_data_f0_estimation = new_data_biased.copy()
     vigra.filters.convolveOneDimension(new_data_f0_estimation,
                                        0,
                                        temporal_smoothing_gaussian_filter,
