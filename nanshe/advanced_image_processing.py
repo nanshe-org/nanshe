@@ -98,7 +98,7 @@ def remove_zeroed_lines(new_data,
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
 
-        zero_mask_i = skimage.morphology.binary_erosion(zero_mask_i, erosion_structure).astype(bool)
+        zero_mask_i[:] = skimage.morphology.binary_erosion(zero_mask_i, erosion_structure).astype(bool)
 
         zero_masks_eroded[i] = zero_mask_i
 
