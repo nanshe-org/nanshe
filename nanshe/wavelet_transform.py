@@ -214,6 +214,22 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                     [[ 0.40625,  0.375  ,  0.34375],
                      [ 0.375  ,  0.375  ,  0.375  ],
                      [ 0.34375,  0.375  ,  0.40625]]], dtype=float32))
+
+            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32),
+            ...     scale = 1,
+            ...     include_intermediates = False,
+            ...     include_lower_scales = True)
+            array([[[ 0.59375, -0.375  , -0.34375],
+                    [-0.375  ,  0.625  , -0.375  ],
+                    [-0.34375, -0.375  ,  0.59375]]], dtype=float32)
+
+            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32),
+            ...     scale = 1,
+            ...     include_intermediates = False,
+            ...     include_lower_scales = False)
+            array([[ 0.59375, -0.375  , -0.34375],
+                   [-0.375  ,  0.625  , -0.375  ],
+                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)
     """
 
     im0 = im0.astype(numpy.float32)
