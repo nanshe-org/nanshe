@@ -257,17 +257,30 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
         scale = numpy.repeat([scale], im0.ndim)
 
 
+    imPrev = None
+    imCur = None
     if include_intermediates:
         W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
         imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype = numpy.float32)
         imOut[0] = im0
-    elif include_lower_scales:
-        W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
 
-    imPrev = numpy.empty_like(im0)
-    imCur = im0.astype(numpy.float32)
+        imCur = imOut[0]
+        imPrev = imCur
+    else:
+        if include_lower_scales:
+            W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
+
+        imPrev = numpy.empty_like(im0)
+        imCur = im0.astype(numpy.float32)
+
+
     for i in xrange(1, scale.max() + 1):
-        imPrev[:] = imCur
+        if include_intermediates:
+            imPrev = imCur
+            imOut[i] = imOut[i - 1]
+            imCur = imOut[i]
+        else:
+            imPrev[:] = imCur
 
         h_ker = binomial_1D_vigra_kernel(i)
 
@@ -275,10 +288,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
             if i <= scale[d]:
                 vigra.filters.convolveOneDimension(imCur, d, h_ker, out=imCur)
 
-        if include_intermediates:
-            W[i - 1] = imPrev - imCur
-            imOut[i] = imCur
-        elif include_lower_scales:
+        if include_intermediates or include_lower_scales:
             W[i - 1] = imPrev - imCur
 
     if include_intermediates:
