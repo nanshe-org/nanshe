@@ -5,6 +5,9 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 1, 2014 2:24:55PM$"
 
+
+import warnings
+
 import numpy
 import scipy
 import scipy.misc
@@ -231,6 +234,10 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                    [-0.375  ,  0.625  , -0.375  ],
                    [-0.34375, -0.375  ,  0.59375]], dtype=float32)
     """
+
+    if not issubclass(im0.dtype.type, numpy.float32):
+        warnings.warn("Provided im0 with type \"" + repr(im0.dtype.type) + "\". " +
+                      "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
     im0 = im0.astype(numpy.float32)
 
