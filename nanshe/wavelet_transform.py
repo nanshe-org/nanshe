@@ -281,4 +281,6 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
     elif include_lower_scales:
         return(W)
     else:
-        return(imPrev - imCur)
+        # Same as returning imPrev - imCur. Except, it avoids generating another array to hold the result.
+        imPrev -= imCur
+        return(imPrev)
