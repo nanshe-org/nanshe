@@ -204,10 +204,11 @@ def extract_f0(new_data,
     if (which_quantile_len > 1):
         raise Exception("Provided more than one quantile \"" + repr(which_quantile) + "\".")
 
-    new_data_f0_estimation[:] = vigra.filters.lineRankOrderFilter(new_data_f0_estimation,
-                                                                  ctypes.c_ulong(half_window_size).value,
-                                                                  which_quantile,
-                                                                  ctypes.c_uint(0).value)
+    vigra.filters.lineRankOrderFilter(new_data_f0_estimation,
+                                      ctypes.c_ulong(half_window_size).value,
+                                      which_quantile,
+                                      ctypes.c_uint(0).value,
+                                      out = new_data_f0_estimation)
 
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
                                                                      1.0,
