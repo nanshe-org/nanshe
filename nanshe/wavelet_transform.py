@@ -239,8 +239,6 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
         warnings.warn("Provided im0 with type \"" + repr(im0.dtype.type) + "\". " +
                       "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
-    im0 = im0.astype(numpy.float32)
-
     # Make sure that we have scale as a list.
     # If it is not a list, then make a singleton list.
     try:
@@ -260,14 +258,14 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
 
 
     if include_intermediates:
-        W = numpy.zeros((scale.max(),) + im0.shape, dtype = im0.dtype)
-        imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype = im0.dtype)
+        W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
+        imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype = numpy.float32)
         imOut[0] = im0
     elif include_lower_scales:
-        W = numpy.zeros((scale.max(),) + im0.shape, dtype = im0.dtype)
+        W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
 
     imPrev = numpy.empty_like(im0)
-    imCur = im0.copy()
+    imCur = im0.astype(numpy.float32)
     for i in xrange(1, scale.max() + 1):
         imPrev[:] = imCur
 
