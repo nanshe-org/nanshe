@@ -223,7 +223,9 @@ def extract_f0(new_data,
 
     extract_f0.recorders.array_debug_recorder["new_data_f0_estimation"] = new_data_f0_estimation
 
-    new_data_baselined = (new_data_biased - new_data_f0_estimation) / new_data_f0_estimation
+    new_data_baselined = new_data_biased
+    new_data_baselined -= new_data_f0_estimation
+    new_data_baselined /= new_data_f0_estimation
 
     return(new_data_baselined)
 
