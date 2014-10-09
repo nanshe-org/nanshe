@@ -188,7 +188,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
-def wavelet_transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False):
+def wavelet_transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
         
@@ -198,6 +198,9 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
             include_intermediates(bool):                         whether to return intermediates or not (default False).
             include_lower_scales(bool):                          whether to include lower scales or not (default False)
                                                                  (ignored if include_intermediates is True).
+            out(numpy.ndarray):                                  holds final result (cannot use unless
+                                                                 include_intermediates is False or an AssertionError
+                                                                 will be raised.)
         
         Returns:
             k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
@@ -233,6 +236,34 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
             array([[ 0.59375, -0.375  , -0.34375],
                    [-0.375  ,  0.625  , -0.375  ],
                    [-0.34375, -0.375  ,  0.59375]], dtype=float32)
+
+            >>> out = numpy.zeros((3, 3), dtype = numpy.float32)
+            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            ...     scale = 1,
+            ...     include_intermediates = False,
+            ...     include_lower_scales = False,
+            ...     out = out)
+            array([[ 0.59375, -0.375  , -0.34375],
+                   [-0.375  ,  0.625  , -0.375  ],
+                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)
+            >>> out
+            array([[ 0.59375, -0.375  , -0.34375],
+                   [-0.375  ,  0.625  , -0.375  ],
+                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)
+
+            >>> out = numpy.eye(3, dtype = numpy.float32)
+            >>> wavelet_transform(out,
+            ...     scale = 1,
+            ...     include_intermediates = False,
+            ...     include_lower_scales = False,
+            ...     out = out)
+            array([[ 0.59375, -0.375  , -0.34375],
+                   [-0.375  ,  0.625  , -0.375  ],
+                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)
+            >>> out
+            array([[ 0.59375, -0.375  , -0.34375],
+                   [-0.375  ,  0.625  , -0.375  ],
+                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)
     """
 
     if not issubclass(im0.dtype.type, numpy.float32):
@@ -260,6 +291,8 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
     imPrev = None
     imCur = None
     if include_intermediates:
+        assert(out is None)
+
         W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
         imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype = numpy.float32)
         imOut[0] = im0
@@ -268,9 +301,34 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
         imPrev = imCur
     else:
         if include_lower_scales:
-            W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
+            if out is None:
+                W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
+                out = W
+            else:
+                pass
 
-        imPrev = numpy.empty_like(im0)
+                assert( out.shape == ((scale.max(),) + im0.shape) )
+
+                if not issubclass(out.dtype.type, numpy.float32):
+                    warnings.warn("Provided out with type \"" + repr(out.dtype.type) + "\". " +
+                                  "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+
+                W = out
+
+            imPrev = numpy.empty_like(im0)
+        else:
+            if out is not None:
+                assert( out.shape == im0.shape )
+
+                if not issubclass(out.dtype.type, numpy.float32):
+                    warnings.warn("Provided out with type \"" + repr(out.dtype.type) + "\". " +
+                                  "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+
+                imPrev = out
+            else:
+                imPrev = numpy.empty_like(im0)
+                out = imPrev
+
         imCur = im0.astype(numpy.float32)
 
 
@@ -297,5 +355,5 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
         return(W)
     else:
         # Same as returning imPrev - imCur. Except, it avoids generating another array to hold the result.
-        imPrev -= imCur
-        return(imPrev)
+        out -= imCur
+        return(out)
