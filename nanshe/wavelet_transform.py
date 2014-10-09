@@ -204,7 +204,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
         
         
         Examples:
-            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32),
+            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = True,
             ...     include_lower_scales = True) # doctest: +NORMALIZE_WHITESPACE
@@ -218,7 +218,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                      [ 0.375  ,  0.375  ,  0.375  ],
                      [ 0.34375,  0.375  ,  0.40625]]], dtype=float32))
 
-            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32),
+            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = True)
@@ -226,7 +226,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                     [-0.375  ,  0.625  , -0.375  ],
                     [-0.34375, -0.375  ,  0.59375]]], dtype=float32)
 
-            >>> wavelet_transform(numpy.eye(3).astype(numpy.float32),
+            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = False)
