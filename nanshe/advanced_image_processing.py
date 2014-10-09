@@ -10,6 +10,8 @@ __date__ = "$Apr 30, 2014 5:23:37PM$"
 # Allows for type conversions for C/C++ functions.
 import ctypes
 
+import warnings
+
 # Generally useful and fast to import so done immediately.
 import numpy
 
@@ -171,6 +173,10 @@ def extract_f0(new_data,
         Returns:
             numpy.ndarray:                              a new array with a new baseline.
     """
+
+    if not issubclass(new_data.dtype.type, numpy.float32):
+        warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
+                      "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
     new_data_biased = new_data.astype(numpy.float32)
 
