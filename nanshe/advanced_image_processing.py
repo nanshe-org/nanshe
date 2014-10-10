@@ -325,20 +325,24 @@ def normalize_data(new_data, out = None, **parameters):
 
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
-def preprocess_data(new_data, **parameters):
+def preprocess_data(new_data, out = None, **parameters):
     """
         Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and
         wavelet_transform).
         
         Args:
             new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).
+            out(numpy.ndarray):                 where the final result will be stored.
             **parameters(dict):                 additional parameters for each step of preprocessing.
         
         Returns:
             dict:                               the dictionary found.
     """
 
-    out = new_data.astype(numpy.float32)
+    if out is None:
+        out = new_data.astype(numpy.float32)
+    elif id(new_data) != id(out):
+        out[:] = new_data
 
     # Remove lines
     new_data_maybe_lines_removed = out
