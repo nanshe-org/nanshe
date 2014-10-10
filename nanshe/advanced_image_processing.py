@@ -254,7 +254,7 @@ def extract_f0(new_data,
 
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
-def normalize_data(new_data, **parameters):
+def normalize_data(new_data, out = None, **parameters):
     """
         Removes the mean from each image and normalizes each image as if they were vectors.
 
@@ -275,21 +275,49 @@ def normalize_data(new_data, **parameters):
             <BLANKLINE>
                    [[-0.28867513, -0.28867513],
                     [-0.28867513,  0.8660254 ]]])
+            >>> b = numpy.zeros_like(a)
+            >>> normalize_data(a, out=b, **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+            array([[[ 0.8660254 , -0.28867513],
+                    [-0.28867513, -0.28867513]],
+            <BLANKLINE>
+                   [[-0.28867513, -0.28867513],
+                    [-0.28867513,  0.8660254 ]]])
+            >>> b
+            array([[[ 0.8660254 , -0.28867513],
+                    [-0.28867513, -0.28867513]],
+            <BLANKLINE>
+                   [[-0.28867513, -0.28867513],
+                    [-0.28867513,  0.8660254 ]]])
+            >>> normalize_data(a, out=a, **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+            array([[[ 0.8660254 , -0.28867513],
+                    [-0.28867513, -0.28867513]],
+            <BLANKLINE>
+                   [[-0.28867513, -0.28867513],
+                    [-0.28867513,  0.8660254 ]]])
+            >>> a
+            array([[[ 0.8660254 , -0.28867513],
+                    [-0.28867513, -0.28867513]],
+            <BLANKLINE>
+                   [[-0.28867513, -0.28867513],
+                    [-0.28867513,  0.8660254 ]]])
     """
 
-    # Copy to enable use of in-place operations.
-    new_data_renormalized = new_data.copy()
+    # Make a copy of new_data or copy its contents if both arrays are not the same.
+    if out is None:
+        out = new_data.copy()
+    elif id(new_data) != id(out):
+        out[:] = new_data
 
     # Remove the mean of each row vector
-    simple_image_processing.zeroed_mean_images(new_data_renormalized,
-                                               output_array = new_data_renormalized)
+    simple_image_processing.zeroed_mean_images(out,
+                                               output_array = out)
 
     # Renormalize each row vector using some specified normalization
-    simple_image_processing.renormalized_images(new_data_renormalized,
-                                                output_array = new_data_renormalized,
+    simple_image_processing.renormalized_images(out,
+                                                output_array = out,
                                                 **parameters["simple_image_processing.renormalized_images"])
 
-    return(new_data_renormalized)
+    return(out)
 
 
 @debugging_tools.log_call(logger)
