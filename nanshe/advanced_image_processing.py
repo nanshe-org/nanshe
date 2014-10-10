@@ -332,7 +332,6 @@ def preprocess_data(new_data, **parameters):
         
         Args:
             new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).
-            bias(float):                        how much to shift the result by (note normalize_data will zero mean).
             **parameters(dict):                 additional parameters for each step of preprocessing.
         
         Returns:
