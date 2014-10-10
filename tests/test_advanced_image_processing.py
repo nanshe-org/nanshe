@@ -164,6 +164,28 @@ class TestAdvancedImageProcessing(object):
 
         assert((b == 0).all())
 
+    def test_extract_f0_1b(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        half_window_size = 20
+        bias = 100
+        step_size = 100
+
+        a = numpy.ones((100, 101, 102))
+
+        b = a.copy()
+        nanshe.advanced_image_processing.extract_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            half_window_size=half_window_size,
+            bias=bias,
+            step_size=step_size,
+            out=b)
+
+        assert((b == 0).all())
+
     def test_extract_f0_2(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         which_quantile = 0.5
