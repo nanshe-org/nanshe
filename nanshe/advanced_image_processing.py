@@ -84,8 +84,7 @@ def remove_zeroed_lines(new_data,
             numpy.ndarray:                      a new array with the zeroed lines interpolated away.
     """
 
-    out = numpy.zeros(new_data.shape, dtype=new_data.dtype)
-    out[:] = new_data
+    out = new_data.copy()
 
     # Get an outline of the region around the parts of the image that contain zeros
     erosion_structure = numpy.ones(tuple(erosion_shape), dtype=bool)
