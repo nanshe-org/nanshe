@@ -338,11 +338,12 @@ def preprocess_data(new_data, **parameters):
             dict:                               the dictionary found.
     """
 
+    out = new_data.astype(numpy.float32)
 
     # Remove lines
     new_data_maybe_lines_removed = None
     if "remove_zeroed_lines" in parameters:
-        new_data_maybe_lines_removed = new_data.astype(numpy.float32)
+        new_data_maybe_lines_removed = out
         remove_zeroed_lines.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         remove_zeroed_lines(new_data_maybe_lines_removed,
                             out = new_data_maybe_lines_removed,
@@ -354,11 +355,11 @@ def preprocess_data(new_data, **parameters):
             axis = 0
         )
     else:
-        new_data_maybe_lines_removed = new_data
+        new_data_maybe_lines_removed = out
 
     new_data_maybe_f0_result = None
     if "extract_f0" in parameters:
-        new_data_maybe_f0_result = new_data_maybe_lines_removed.astype(numpy.float32)
+        new_data_maybe_f0_result = new_data_maybe_lines_removed
         extract_f0.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         extract_f0(new_data_maybe_f0_result,
                    out = new_data_maybe_f0_result,
@@ -374,7 +375,7 @@ def preprocess_data(new_data, **parameters):
 
     new_data_maybe_wavelet_result = None
     if "wavelet_transform" in parameters:
-        new_data_maybe_wavelet_result = new_data_maybe_f0_result.astype(numpy.float32)
+        new_data_maybe_wavelet_result = new_data_maybe_f0_result
         wavelet_transform.wavelet_transform.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         wavelet_transform.wavelet_transform(new_data_maybe_wavelet_result,
                                             out = new_data_maybe_wavelet_result,
@@ -388,7 +389,7 @@ def preprocess_data(new_data, **parameters):
     else:
         new_data_maybe_wavelet_result = new_data_maybe_f0_result
 
-    new_data_normalized = new_data_maybe_wavelet_result.astype(numpy.float32)
+    new_data_normalized = new_data_maybe_wavelet_result
     normalize_data.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
     normalize_data(new_data_normalized,
                    out = new_data_normalized,
@@ -401,7 +402,7 @@ def preprocess_data(new_data, **parameters):
             axis = 0
     )
 
-    return(new_data_normalized)
+    return(out)
 
 
 @debugging_tools.log_call(logger)
