@@ -664,8 +664,10 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
     # Preprocess images
     new_preprocessed_images = generate_neurons.resume_logger.get("preprocessed_images", None)
     if (new_preprocessed_images is None) or (run_stage == "preprocessing") or (run_stage == "all"):
+        new_preprocessed_images = original_images.copy()
         advanced_image_processing.preprocess_data.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
-        new_preprocessed_images = advanced_image_processing.preprocess_data(original_images,
+        new_preprocessed_images = advanced_image_processing.preprocess_data(new_preprocessed_images,
+                                                                            out = new_preprocessed_images,
                                                                             **parameters["preprocess_data"])
         generate_neurons.resume_logger["preprocessed_images"] = new_preprocessed_images
 
