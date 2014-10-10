@@ -118,6 +118,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
     original_images = None
     with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
         original_images = HDF5_serializers.read_numpy_structured_array_from_HDF5(input_file_handle, input_dataset_name)
+        original_images = original_images.astype(numpy.float32)
 
     # Write out the output.
     with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
