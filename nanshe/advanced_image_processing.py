@@ -69,6 +69,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 def remove_zeroed_lines(new_data,
                         erosion_shape,
                         dilation_shape,
+                        out = None,
                         **parameters):
     """
         Due to registration errors, there will sometimes be lines that are zero.
@@ -78,13 +79,17 @@ def remove_zeroed_lines(new_data,
             new_data(numpy.ndarray):            data to remove lines from (first axis is time).
             erosion_shape(numpy.ndarray):       shape of the erosion element (will be filled with 1).
             dilation_shape(numpy.ndarray):      shape of the dilation element (will be filled with 1).
+            out(numpy.ndarray):                 where the final results will be stored.
             **parameters(dict):                 essentially unused (catches unneeded arguments).
 
         Returns:
             numpy.ndarray:                      a new array with the zeroed lines interpolated away.
     """
 
-    out = new_data.copy()
+    if out is None:
+        out = new_data.copy()
+    elif id(new_data) != id(out):
+        out[:] = new_data
 
     # Get an outline of the region around the parts of the image that contain zeros
     erosion_structure = numpy.ones(tuple(erosion_shape), dtype=bool)
