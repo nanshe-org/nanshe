@@ -341,9 +341,8 @@ def preprocess_data(new_data, **parameters):
     out = new_data.astype(numpy.float32)
 
     # Remove lines
-    new_data_maybe_lines_removed = None
+    new_data_maybe_lines_removed = out
     if "remove_zeroed_lines" in parameters:
-        new_data_maybe_lines_removed = out
         remove_zeroed_lines.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         remove_zeroed_lines(new_data_maybe_lines_removed,
                             out = new_data_maybe_lines_removed,
@@ -354,12 +353,9 @@ def preprocess_data(new_data, **parameters):
             new_data_maybe_lines_removed,
             axis = 0
         )
-    else:
-        new_data_maybe_lines_removed = out
 
-    new_data_maybe_f0_result = None
+    new_data_maybe_f0_result = new_data_maybe_lines_removed
     if "extract_f0" in parameters:
-        new_data_maybe_f0_result = new_data_maybe_lines_removed
         extract_f0.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         extract_f0(new_data_maybe_f0_result,
                    out = new_data_maybe_f0_result,
@@ -370,12 +366,9 @@ def preprocess_data(new_data, **parameters):
             new_data_maybe_f0_result,
             axis = 0
         )
-    else:
-        new_data_maybe_f0_result = new_data_maybe_lines_removed
 
-    new_data_maybe_wavelet_result = None
+    new_data_maybe_wavelet_result = new_data_maybe_f0_result
     if "wavelet_transform" in parameters:
-        new_data_maybe_wavelet_result = new_data_maybe_f0_result
         wavelet_transform.wavelet_transform.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         wavelet_transform.wavelet_transform(new_data_maybe_wavelet_result,
                                             out = new_data_maybe_wavelet_result,
@@ -386,8 +379,6 @@ def preprocess_data(new_data, **parameters):
             new_data_maybe_wavelet_result,
             axis = 0
         )
-    else:
-        new_data_maybe_wavelet_result = new_data_maybe_f0_result
 
     new_data_normalized = new_data_maybe_wavelet_result
     normalize_data.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
