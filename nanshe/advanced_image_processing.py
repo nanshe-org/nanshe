@@ -95,8 +95,6 @@ def remove_zeroed_lines(new_data,
     zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
 
     for i in xrange(new_data.shape[0]):
-        out[i] = new_data[i]
-
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
 
