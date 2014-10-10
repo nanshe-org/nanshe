@@ -160,6 +160,7 @@ def extract_f0(new_data,
                temporal_smoothing_gaussian_filter_stdev,
                spatial_smoothing_gaussian_filter_stdev,
                bias = None,
+               out = None,
                **parameters):
     """
         Attempts to find a new baseline for the given data.
@@ -168,6 +169,7 @@ def extract_f0(new_data,
             new_data(numpy.ndarray):                    array of data for finding new baseline (first axis is time).
             temporal_smoothing_gaussian_filter_stdev:   stdev for gaussian filter to convolve over time.
             spatial_smoothing_gaussian_filter_stdev:    stdev for gaussian filter to convolve over all other dimensions.
+            out(numpy.ndarray):                         where the final result will be stored.
             **parameters(dict):                         essentially unused (catches unneeded arguments).
 
         Returns:
@@ -178,7 +180,21 @@ def extract_f0(new_data,
         warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
                       "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
-    new_data_biased = new_data.astype(numpy.float32)
+    new_data_biased = None
+    if out is None:
+        out = new_data.astype(numpy.float32)
+        new_data_biased = out
+    else:
+        assert(out.shape == new_data.shape)
+
+        if (not issubclass(out.dtype.type, numpy.float32)):
+            warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
+                          "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+
+        if id(new_data) != id(out):
+            out[:] = new_data
+
+        new_data_biased = out
 
     # Add the bias param
     if bias is None:
@@ -192,7 +208,7 @@ def extract_f0(new_data,
 
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_f0_estimation = new_data_biased.copy()
+    new_data_f0_estimation = new_data_biased.astype(numpy.float32)
     vigra.filters.convolveOneDimension(new_data_f0_estimation,
                                        0,
                                        temporal_smoothing_gaussian_filter,
@@ -230,11 +246,10 @@ def extract_f0(new_data,
 
     extract_f0.recorders.array_debug_recorder["new_data_f0_estimation"] = new_data_f0_estimation
 
-    new_data_baselined = new_data_biased
-    new_data_baselined -= new_data_f0_estimation
-    new_data_baselined /= new_data_f0_estimation
+    out -= new_data_f0_estimation
+    out /= new_data_f0_estimation
 
-    return(new_data_baselined)
+    return(out)
 
 
 @debugging_tools.log_call(logger)
