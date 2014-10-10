@@ -84,7 +84,7 @@ def remove_zeroed_lines(new_data,
             numpy.ndarray:                      a new array with the zeroed lines interpolated away.
     """
 
-    result = numpy.zeros(new_data.shape, dtype=new_data.dtype)
+    out = numpy.zeros(new_data.shape, dtype=new_data.dtype)
 
     # Get an outline of the region around the parts of the image that contain zeros
     erosion_structure = numpy.ones(tuple(erosion_shape), dtype=bool)
@@ -95,7 +95,7 @@ def remove_zeroed_lines(new_data,
     zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
 
     for i in xrange(new_data.shape[0]):
-        result[i] = new_data[i]
+        out[i] = new_data[i]
 
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
@@ -132,7 +132,7 @@ def remove_zeroed_lines(new_data,
                     # Only need to check for nan in our case.
                     new_data_i_zero_mask_interpolation[numpy.isnan(new_data_i_zero_mask_interpolation)] = 0
 
-                    result[i][tuple(zero_mask_i_labeled_j_points.T)] = new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)]
+                    out[i][tuple(zero_mask_i_labeled_j_points.T)] = new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)]
                 except RuntimeError:
                     zero_mask_i_labeled_j_points_arange = numpy.arange(len(zero_mask_i_labeled_j_points))
                     zero_mask_i_labeled_j_outline_points_arange = numpy.arange(len(zero_mask_i_labeled_j_outline_points))
@@ -143,13 +143,13 @@ def remove_zeroed_lines(new_data,
 
                     new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points[(index_product[0],)].T)] = new_data_i[tuple(zero_mask_i_labeled_j_outline_points[(index_product[1],)].T)]
 
-                    result[i][tuple(zero_mask_i_labeled_j_points.T)] = new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)]
+                    out[i][tuple(zero_mask_i_labeled_j_points.T)] = new_data_i_zero_mask_interpolation[tuple(zero_mask_i_labeled_j_points.T)]
 
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_eroded"] = zero_masks_eroded
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_dilated"] = zero_masks_dilated
     remove_zeroed_lines.recorders.array_debug_recorder["zero_masks_outline"] = zero_masks_outline
 
-    return(result)
+    return(out)
 
 
 @debugging_tools.log_call(logger)
