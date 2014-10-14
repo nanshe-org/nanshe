@@ -105,7 +105,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
     output_filename_details.extension = output_filename_details.extension.lower()
     output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
     if ( output_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
+        raise Exception("Output file with filename: \"" + output_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Where the original images are.
     input_dataset_name = input_filename_details.internalPath
@@ -186,7 +186,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     output_filename_details.extension = output_filename_details.extension.lower()
     output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
     if ( output_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
+        raise Exception("Output file with filename: \"" + output_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Where the original images are.
     input_dataset_name = input_filename_details.internalPath
