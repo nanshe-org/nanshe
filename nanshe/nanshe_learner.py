@@ -203,24 +203,6 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
         original_images_shape_array = numpy.array(input_file_handle[input_dataset_name].shape)
 
-    # Extract and validate file extensions.
-
-    # Parse input filename and validate that the name is acceptable
-    input_filename_details = lazyflow.utility.pathHelpers.PathComponents(input_filename)
-    # Clean up the extension so it fits the standard.
-    input_filename_details.extension = input_filename_details.extension.lower()
-    input_filename_details.extension = input_filename_details.extension.lstrip(os.extsep)
-    if ( input_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
-
-    # Parse output filename and validate that the name is acceptable
-    output_filename_details = lazyflow.utility.pathHelpers.PathComponents(output_filename)
-    # Clean up the extension so it fits the standard.
-    output_filename_details.extension = output_filename_details.extension.lower()
-    output_filename_details.extension = output_filename_details.extension.lstrip(os.extsep)
-    if ( output_filename_details.extension not in ["h5", "hdf5", "he5"] ):
-        raise Exception("Output file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
-
     # Get the amount of the border to slice
     half_border_shape_array = None
     if half_border_shape is None:
