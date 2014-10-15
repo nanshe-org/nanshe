@@ -169,14 +169,14 @@ def extract_f0(new_data,
         Attempts to find a new baseline for the given data.
 
         Args:
-            new_data(numpy.ndarray):                    array of data for finding new baseline (first axis is time).
-            temporal_smoothing_gaussian_filter_stdev:   stdev for gaussian filter to convolve over time.
-            spatial_smoothing_gaussian_filter_stdev:    stdev for gaussian filter to convolve over all other dimensions.
-            out(numpy.ndarray):                         where the final result will be stored.
-            **parameters(dict):                         essentially unused (catches unneeded arguments).
+            new_data(numpy.ndarray):                          array of data for finding baseline (first axis is time).
+            temporal_smoothing_gaussian_filter_stdev(float):  stdev for gaussian filter to convolve over time.
+            spatial_smoothing_gaussian_filter_stdev(float):   stdev for gaussian filter to convolve spatial dimensions.
+            out(numpy.ndarray):                               where the final result will be stored.
+            **parameters(dict):                               essentially unused (catches unneeded arguments).
 
         Returns:
-            numpy.ndarray:                              a new array with a new baseline.
+            numpy.ndarray:                                    a new array with a new baseline.
     """
 
     if not issubclass(new_data.dtype.type, numpy.float32):
