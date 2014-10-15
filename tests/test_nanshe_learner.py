@@ -80,8 +80,7 @@ class TestNansheLearner(object):
                         "which_quantile" : 0.5,
                         "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                         "half_window_size" : 1,
-                        "bias" : 100,
-                        "step_size" : 100
+                        "bias" : 100
                     },
                     "remove_zeroed_lines" : {
                         "erosion_shape" : [
@@ -179,8 +178,7 @@ class TestNansheLearner(object):
                         "which_quantile" : 0.5,
                         "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                         "half_window_size" : 1,
-                        "bias" : 100,
-                        "step_size" : 100
+                        "bias" : 100
                     },
                     "wavelet_transform" : {
                         "scale" : [
@@ -240,7 +238,6 @@ class TestNansheLearner(object):
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
 
                             "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
-                            "step_size" : 100,                "__comment__step_size" : "In number of frames",
                             "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
 
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0
@@ -410,8 +407,7 @@ class TestNansheLearner(object):
                             "which_quantile" : 0.5,
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                             "half_window_size" : 1,
-                            "bias" : 100,
-                            "step_size" : 100
+                            "bias" : 100
                         },
                         "wavelet_transform" : {
                             "scale" : [
@@ -475,7 +471,6 @@ class TestNansheLearner(object):
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
 
                             "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
-                            "step_size" : 100,                "__comment__step_size" : "In number of frames",
                             "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
 
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0
@@ -648,8 +643,7 @@ class TestNansheLearner(object):
                             "which_quantile" : 0.5,
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                             "half_window_size" : 1,
-                            "bias" : 100,
-                            "step_size" : 100
+                            "bias" : 100
                         },
                         "wavelet_transform" : {
                             "scale" : [
