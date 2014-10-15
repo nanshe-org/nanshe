@@ -14,7 +14,7 @@ import nanshe.expanded_numpy
 
 import nanshe.advanced_image_processing
 
-import synthetic_data
+import synthetic_data.synthetic_data
 
 
 class TestAdvancedImageProcessing(object):
@@ -349,8 +349,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[20, 30, 24],
                            [70, 59, 65]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
@@ -389,8 +389,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[20, 30, 24],
                            [70, 59, 65]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
@@ -426,8 +426,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[20, 30, 24],
                            [70, 59, 65]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
@@ -466,8 +466,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[20, 30, 24],
                            [70, 59, 65]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
@@ -504,8 +504,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[20, 30, 24, 85],
                               [70, 59, 65, 17]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
@@ -535,8 +535,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[20, 30, 24, 85],
                               [70, 59, 65, 17]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
@@ -565,8 +565,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[20, 30, 24, 85],
                               [70, 59, 65, 17]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
         nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
@@ -579,7 +579,7 @@ class TestAdvancedImageProcessing(object):
         space = numpy.array((100, 100))
         radii = numpy.array((5, 6, 7))
 
-        g = synthetic_data.generate_hypersphere_masks(space, p, radii)
+        g = synthetic_data.synthetic_data.generate_hypersphere_masks(space, p, radii)
 
         d = nanshe.advanced_image_processing.generate_dictionary(g.astype(float),
                                                                                     **{
@@ -631,7 +631,7 @@ class TestAdvancedImageProcessing(object):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 6, 7))
 
-        g = synthetic_data.generate_hypersphere_masks(space, p, radii)
+        g = synthetic_data.synthetic_data.generate_hypersphere_masks(space, p, radii)
 
         d = nanshe.advanced_image_processing.generate_dictionary(g.astype(float),
                                                                                     **{
@@ -684,7 +684,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
 
         assert((numpy.array(m.nonzero()) == p.T).all())
@@ -698,7 +698,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
 
         assert((numpy.array(m.nonzero()) == p.T).all())
@@ -712,7 +712,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
 
     def test_generate_local_maxima_scikit_image_2(self):
@@ -724,7 +724,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
 
         assert((numpy.array(m.nonzero()) == p.T).all())
@@ -738,7 +738,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
 
         assert((numpy.array(m.nonzero()) == p.T).all())
@@ -752,7 +752,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
 
         assert((numpy.array(m.nonzero()) == p.T).all())
@@ -766,7 +766,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -795,7 +795,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
@@ -831,7 +831,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -860,7 +860,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
@@ -894,8 +894,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36],
                            [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -913,8 +913,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36],
                            [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -941,8 +941,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36],
                            [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -969,8 +969,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36],
                            [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -998,8 +998,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1017,8 +1017,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1045,8 +1045,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1073,8 +1073,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1102,8 +1102,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1127,8 +1127,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1152,8 +1152,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1179,8 +1179,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1206,8 +1206,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1231,8 +1231,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.expanded_numpy.enumerate_masks(masks).max(axis = 0)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1256,8 +1256,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1283,8 +1283,8 @@ class TestAdvancedImageProcessing(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
         e = nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
@@ -1342,7 +1342,7 @@ class TestAdvancedImageProcessing(object):
         shape = numpy.array((500, 500))
 
         neuron_centers = numpy.array([[177,  52], [127, 202], [343, 271]])
-        original_neuron_image = synthetic_data.generate_gaussian_images(shape, neuron_centers, (50.0/3.0,)*len(neuron_centers), (1.0/3.0,)*len(neuron_centers)).sum(axis = 0)
+        original_neuron_image = synthetic_data.synthetic_data.generate_gaussian_images(shape, neuron_centers, (50.0/3.0,)*len(neuron_centers), (1.0/3.0,)*len(neuron_centers)).sum(axis = 0)
         original_neurons_mask = (original_neuron_image >= 0.00014218114898827068)
 
         neurons = nanshe.advanced_image_processing.wavelet_denoising(original_neuron_image, **params)
@@ -1395,7 +1395,7 @@ class TestAdvancedImageProcessing(object):
 
         neuron_spreads = neuron_radii / 3.0
 
-        neuron_images = synthetic_data.generate_gaussian_images(shape, neuron_centers, neuron_spreads, neuron_magnitudes)
+        neuron_images = synthetic_data.synthetic_data.generate_gaussian_images(shape, neuron_centers, neuron_spreads, neuron_magnitudes)
         neuron_masks = (neuron_images >= (neuron_magnitudes.max() * scipy.stats.norm.pdf(3 * neuron_spreads.max(), scale=neuron_spreads.max())**len(shape)))
         neuron_images *= neuron_masks
 
@@ -1475,7 +1475,7 @@ class TestAdvancedImageProcessing(object):
 
         neuron_spreads = neuron_radii / 3.0
 
-        neuron_images = synthetic_data.generate_gaussian_images(shape, neuron_centers, neuron_spreads, neuron_magnitudes)
+        neuron_images = synthetic_data.synthetic_data.generate_gaussian_images(shape, neuron_centers, neuron_spreads, neuron_magnitudes)
         neuron_masks = (neuron_images >= (neuron_magnitudes.max() * scipy.stats.norm.pdf(3 * neuron_spreads.max(), scale=neuron_spreads.max())**len(shape)))
         neuron_images *= neuron_masks
 
@@ -1850,8 +1850,8 @@ class TestAdvancedImageProcessing(object):
                            [72, 16],
                            [45, 32]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
 
         bases_indices = [[1,3,4], [0,2], [5]]
 
@@ -1935,8 +1935,8 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array([15])
         points = numpy.array([[25, 25]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, numpy.vstack([points, points]), numpy.hstack([radii, radii]))
-        images = synthetic_data.generate_gaussian_images(space, numpy.vstack([points, points]), numpy.hstack([radii, radii])/3.0, numpy.hstack([magnitudes, magnitudes])) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, numpy.vstack([points, points]), numpy.hstack([radii, radii]))
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, numpy.vstack([points, points]), numpy.hstack([radii, radii])/3.0, numpy.hstack([magnitudes, magnitudes])) * masks
 
 
         print(masks.shape)
@@ -2028,8 +2028,8 @@ class TestAdvancedImageProcessing(object):
                            [72, 16, 67],
                            [45, 32, 27]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, points, radii)
-        images = synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, points, radii)
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
 
         bases_indices = [[1,3,4], [0,2], [5]]
 
@@ -2113,8 +2113,8 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array([15])
         points = numpy.array([[25, 25, 25]])
 
-        masks = synthetic_data.generate_hypersphere_masks(space, numpy.vstack([points, points]), numpy.hstack([radii, radii]))
-        images = synthetic_data.generate_gaussian_images(space, numpy.vstack([points, points]), numpy.hstack([radii, radii])/3.0, numpy.hstack([magnitudes, magnitudes])) * masks
+        masks = synthetic_data.synthetic_data.generate_hypersphere_masks(space, numpy.vstack([points, points]), numpy.hstack([radii, radii]))
+        images = synthetic_data.synthetic_data.generate_gaussian_images(space, numpy.vstack([points, points]), numpy.hstack([radii, radii])/3.0, numpy.hstack([magnitudes, magnitudes])) * masks
 
         bases_indices = [[0], [1]]
 

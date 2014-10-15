@@ -10,7 +10,7 @@ import numpy
 import spams_sandbox
 import spams_sandbox.spams_sandbox
 
-import synthetic_data
+import synthetic_data.synthetic_data
 
 
 class TestSpamsSandbox(object):
@@ -27,14 +27,14 @@ class TestSpamsSandbox(object):
         self.space3 = numpy.array((100, 100, 100))
         self.radii = numpy.array((5, 6, 7))
 
-        self.g = synthetic_data.generate_hypersphere_masks(self.space, self.p, self.radii)
+        self.g = synthetic_data.synthetic_data.generate_hypersphere_masks(self.space, self.p, self.radii)
 
         self.g = self.g.reshape((self.g.shape[0], -1))
         self.g = self.g.transpose()
         self.g = numpy.asmatrix(self.g)
         self.g = numpy.asfortranarray(self.g)
 
-        self.g3 = synthetic_data.generate_hypersphere_masks(self.space3, self.p3, self.radii)
+        self.g3 = synthetic_data.synthetic_data.generate_hypersphere_masks(self.space3, self.p3, self.radii)
 
         self.g3 = self.g3.reshape((self.g3.shape[0], -1))
         self.g3 = self.g3.transpose()

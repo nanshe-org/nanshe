@@ -10,7 +10,7 @@ import nanshe.expanded_numpy
 
 import nanshe.advanced_image_processing
 
-import synthetic_data
+import synthetic_data.synthetic_data
 
 
 class TestAdvancedImageProcessing(object):
@@ -23,7 +23,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -64,7 +64,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
@@ -110,7 +110,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -155,7 +155,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -207,7 +207,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -263,7 +263,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 
@@ -304,7 +304,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
@@ -350,7 +350,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 
@@ -395,7 +395,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 
@@ -447,7 +447,7 @@ class TestAdvancedImageProcessing(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 
