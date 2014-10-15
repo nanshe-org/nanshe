@@ -170,8 +170,11 @@ def extract_f0(new_data,
 
         Args:
             new_data(numpy.ndarray):                          array of data for finding baseline (first axis is time).
+            half_window_size(int):                            the rank filter window size is 2*half_window_size+1.
+            which_quantile(float):                            while quantile to return from the rank filter.
             temporal_smoothing_gaussian_filter_stdev(float):  stdev for gaussian filter to convolve over time.
             spatial_smoothing_gaussian_filter_stdev(float):   stdev for gaussian filter to convolve spatial dimensions.
+            bias(float):                                      value to be added to dataset to avoid nan.
             out(numpy.ndarray):                               where the final result will be stored.
             **parameters(dict):                               essentially unused (catches unneeded arguments).
 
