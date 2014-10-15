@@ -186,7 +186,6 @@ class TestAdvancedImageProcessing(object):
         temporal_smoothing_gaussian_filter_stdev = 5.0
         half_window_size = 20
         bias = 100
-        step_size = 100
 
         a = numpy.ones((100, 101, 102))
 
@@ -195,8 +194,7 @@ class TestAdvancedImageProcessing(object):
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             half_window_size=half_window_size,
-            bias=bias,
-            step_size=step_size)
+            bias=bias)
 
         assert((b == 0).all())
 
@@ -206,7 +204,6 @@ class TestAdvancedImageProcessing(object):
         temporal_smoothing_gaussian_filter_stdev = 5.0
         half_window_size = 20
         bias = 100
-        step_size = 100
 
         a = numpy.ones((100, 101, 102))
 
@@ -217,7 +214,6 @@ class TestAdvancedImageProcessing(object):
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             half_window_size=half_window_size,
             bias=bias,
-            step_size=step_size,
             out=b)
 
         assert((b == 0).all())
@@ -228,7 +224,6 @@ class TestAdvancedImageProcessing(object):
         temporal_smoothing_gaussian_filter_stdev = 5.0
         half_window_size = 20
         bias = 100
-        step_size = 100
 
         a = numpy.ones((100, 101, 102))
 
@@ -239,7 +234,6 @@ class TestAdvancedImageProcessing(object):
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             half_window_size=half_window_size,
             bias=bias,
-            step_size=step_size,
             out=b)
 
         assert((b == 0).all())
@@ -250,7 +244,6 @@ class TestAdvancedImageProcessing(object):
         temporal_smoothing_gaussian_filter_stdev = 5.0
         half_window_size = 49
         bias = 100
-        step_size = 100
 
         mean = 0.0
         stdev = 1.0
@@ -262,8 +255,7 @@ class TestAdvancedImageProcessing(object):
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             half_window_size=half_window_size,
-            bias=bias,
-            step_size=step_size)
+            bias=bias)
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
@@ -278,7 +270,6 @@ class TestAdvancedImageProcessing(object):
         temporal_smoothing_gaussian_filter_stdev = 5.0
         half_window_size = 20
         bias = 100
-        step_size = 100
 
         a = numpy.ones((100, 101, 102, 103))
 
@@ -287,8 +278,7 @@ class TestAdvancedImageProcessing(object):
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             half_window_size=half_window_size,
-            bias=bias,
-            step_size=step_size)
+            bias=bias)
 
         assert((b == 0).all())
 
@@ -298,7 +288,6 @@ class TestAdvancedImageProcessing(object):
         temporal_smoothing_gaussian_filter_stdev = 5.0
         half_window_size = 49
         bias = 100
-        step_size = 100
 
         mean = 0.0
         stdev = 1.0
@@ -310,8 +299,7 @@ class TestAdvancedImageProcessing(object):
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             half_window_size=half_window_size,
-            bias=bias,
-            step_size=step_size)
+            bias=bias)
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
@@ -334,8 +322,7 @@ class TestAdvancedImageProcessing(object):
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                 "half_window_size" : 20,
-                "bias" : 100,
-                "step_size" : 10
+                "bias" : 100
             },
             "remove_zeroed_lines" : {
                 "erosion_shape" : [
@@ -422,8 +409,7 @@ class TestAdvancedImageProcessing(object):
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                 "half_window_size" : 20,
-                "bias" : 100,
-                "step_size" : 10
+                "bias" : 100
             },
             "wavelet_transform" : {
                 "scale" : [
@@ -460,8 +446,7 @@ class TestAdvancedImageProcessing(object):
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                 "half_window_size" : 20,
-                "bias" : 100,
-                "step_size" : 10
+                "bias" : 100
             },
             "remove_zeroed_lines" : {
                 "erosion_shape" : [
@@ -501,8 +486,7 @@ class TestAdvancedImageProcessing(object):
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                 "half_window_size" : 20,
-                "bias" : 100,
-                "step_size" : 10
+                "bias" : 100
             },
             "wavelet_transform" : {
                 "scale" : [
@@ -571,8 +555,7 @@ class TestAdvancedImageProcessing(object):
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                 "half_window_size" : 20,
-                "bias" : 100,
-                "step_size" : 10
+                "bias" : 100
             }
         }
 
