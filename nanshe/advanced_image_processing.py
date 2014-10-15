@@ -378,6 +378,8 @@ def preprocess_data(new_data, out = None, **parameters):
     if "wavelet_transform" in parameters:
         wavelet_transform.wavelet_transform.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         wavelet_transform.wavelet_transform(new_data_maybe_wavelet_result,
+                                            include_intermediates = False,
+                                            include_lower_scales = False,
                                             out = new_data_maybe_wavelet_result,
                                             **parameters["wavelet_transform"])
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed"] = new_data_maybe_wavelet_result
@@ -1776,6 +1778,7 @@ def wavelet_denoising(new_image,
 
     # Dictionary with wavelet transform applied. Wavelet transform is the first index.
     new_wavelet_transformed_image = wavelet_transform.wavelet_transform(new_image,
+                                                                        include_intermediates = False,
                                                                         include_lower_scales = True,
                                                                         **parameters["wavelet_transform.wavelet_transform"])
 
