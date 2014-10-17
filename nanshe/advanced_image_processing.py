@@ -49,6 +49,7 @@ import debugging_tools
 import expanded_numpy
 
 # Short function to process image data.
+import binary_image_processing
 import simple_image_processing
 
 # To remove noise from the basis images
@@ -103,7 +104,7 @@ def remove_zeroed_lines(new_data,
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
 
-        zero_mask_i[:] = skimage.morphology.binary_erosion(zero_mask_i, erosion_structure).astype(bool)
+        zero_mask_i[:] = binary_image_processing.binary_erosion(zero_mask_i, erosion_structure)
 
         zero_masks_eroded[i] = zero_mask_i
 
@@ -112,7 +113,7 @@ def remove_zeroed_lines(new_data,
         for j in xrange(1, zero_mask_i_num_labels + 1):
             zero_mask_i_labeled_j = (zero_mask_i_labeled == j)
 
-            zero_mask_i_labeled_j_dilated = skimage.morphology.binary_dilation(zero_mask_i_labeled_j, dilation_structure).astype(bool)
+            zero_mask_i_labeled_j_dilated = binary_image_processing.binary_dilation(zero_mask_i_labeled_j, dilation_structure).astype(bool)
 
             zero_mask_i_labeled_j_outline = zero_mask_i_labeled_j_dilated - zero_mask_i_labeled_j
 
