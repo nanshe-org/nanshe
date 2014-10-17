@@ -586,6 +586,9 @@ def reformat_slice(a_slice, a_length = None):
             >>> reformat_slice(slice(2, None, None), 10)
             slice(2, 10, 1)
 
+            >>> reformat_slice(slice(2, -1, None), 10)
+            slice(2, 9, 1)
+
             >>> range(10)[reformat_slice(slice(None))] == range(10)[:]
             True
 
@@ -615,12 +618,25 @@ def reformat_slice(a_slice, a_length = None):
 
             >>> range(10)[reformat_slice(slice(2, None, 3), 10)] == range(10)[2::3]
             True
+
+            >>> range(10)[reformat_slice(slice(2, -6, 3), 10)] == range(10)[2:-6:3]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, -1), 10)] == range(10)[2:-1]
+            True
     """
     assert a_slice != None, "err"
 
     new_slice_stop = a_slice.stop
-    if (new_slice_stop is None) or ((a_length is not None) and (new_slice_stop > a_length)):
-        new_slice_stop = a_length
+    if a_length is not None:
+        if (new_slice_stop is None):
+            new_slice_stop = a_length
+        elif (new_slice_stop >= a_length):
+            new_slice_stop = a_length
+        elif (new_slice_stop <= -a_length):
+            new_slice_stop = 0
+        elif (new_slice_stop < 0):
+            new_slice_stop += a_length
 
     new_slice_start = a_slice.start
     if new_slice_start is None:
