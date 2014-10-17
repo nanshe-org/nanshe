@@ -6,8 +6,9 @@ __date__ = "$Oct 16, 2014 23:21:43 EDT$"
 # Generally useful and fast to import so done immediately.
 import numpy
 
-import skimage
-import skimage.morphology
+import scipy
+import scipy.ndimage
+import scipy.ndimage.filters
 
 # Need in order to have logging information no matter what.
 import debugging_tools
@@ -70,7 +71,7 @@ def binary_dilation(input_array, footprint, out=None):
     elif id(input_array) != id(out):
         assert(issubclass(out.dtype.type, (bool, numpy.bool_)))
 
-    skimage.morphology.binary_dilation(input_array, footprint, out=out)
+    scipy.ndimage.filters.maximum_filter(input_array, footprint=footprint, output=out)
 
     return(out)
 
@@ -128,6 +129,6 @@ def binary_erosion(input_array, footprint, out = None):
     elif id(input_array) != id(out):
         assert(issubclass(out.dtype.type, (bool, numpy.bool_)))
 
-    skimage.morphology.binary_erosion(input_array, footprint, out=out)
+    scipy.ndimage.filters.minimum_filter(input_array, footprint=footprint, output=out)
 
     return(out)
