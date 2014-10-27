@@ -163,6 +163,8 @@ def extract_f0(new_data,
                which_quantile,
                temporal_smoothing_gaussian_filter_stdev,
                spatial_smoothing_gaussian_filter_stdev,
+               temporal_smoothing_gaussian_filter_window_size = 5.0,
+               spatial_smoothing_gaussian_filter_window_size = 5.0,
                bias = None,
                out = None,
                **parameters):
@@ -170,14 +172,18 @@ def extract_f0(new_data,
         Attempts to find a new baseline for the given data.
 
         Args:
-            new_data(numpy.ndarray):                          array of data for finding baseline (first axis is time).
-            half_window_size(int):                            the rank filter window size is 2*half_window_size+1.
-            which_quantile(float):                            while quantile to return from the rank filter.
-            temporal_smoothing_gaussian_filter_stdev(float):  stdev for gaussian filter to convolve over time.
-            spatial_smoothing_gaussian_filter_stdev(float):   stdev for gaussian filter to convolve spatial dimensions.
-            bias(float):                                      value to be added to dataset to avoid nan.
-            out(numpy.ndarray):                               where the final result will be stored.
-            **parameters(dict):                               essentially unused (catches unneeded arguments).
+            new_data(numpy.ndarray):                                array of data for finding baseline (first axis is time).
+            half_window_size(int):                                  the rank filter window size is 2*half_window_size+1.
+            which_quantile(float):                                  while quantile to return from the rank filter.
+            temporal_smoothing_gaussian_filter_stdev(float):        stdev for gaussian filter to convolve over time.
+            spatial_smoothing_gaussian_filter_stdev(float):         stdev for gaussian filter to convolve over space.
+            temporal_smoothing_gaussian_filter_window_size(float):  window for gaussian filter to convolve over time.
+                                                                    (Measured in standard deviations)
+            spatial_smoothing_gaussian_filter_window_size(float):   window for gaussian filter to convolve over space.
+                                                                    (Measured in standard deviations)
+            bias(float):                                            value to be added to dataset to avoid nan.
+            out(numpy.ndarray):                                     where the final result will be stored.
+            **parameters(dict):                                     essentially unused (catches unneeded arguments).
 
         Returns:
             numpy.ndarray:                                    a new array with a new baseline.
@@ -211,7 +217,7 @@ def extract_f0(new_data,
 
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
-                                                                      5)
+                                                                      temporal_smoothing_gaussian_filter_window_size)
 
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
@@ -241,7 +247,7 @@ def extract_f0(new_data,
 
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
                                                                      1.0,
-                                                                     5)
+                                                                     spatial_smoothing_gaussian_filter_window_size)
 
     spatial_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
