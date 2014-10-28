@@ -264,6 +264,20 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
             array([[ 0.59375, -0.375  , -0.34375],
                    [-0.375  ,  0.625  , -0.375  ],
                    [-0.34375, -0.375  ,  0.59375]], dtype=float32)
+
+            >>> out = numpy.eye(3, dtype = numpy.uint8)
+            >>> wavelet_transform(out,
+            ...     scale = 1,
+            ...     include_intermediates = False,
+            ...     include_lower_scales = False,
+            ...     out = out)
+            array([[ 0.59375, -0.375  , -0.34375],
+                   [-0.375  ,  0.625  , -0.375  ],
+                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)
+            >>> out
+            array([[1, 0, 0],
+                   [0, 1, 0],
+                   [0, 0, 1]], dtype=uint8)
     """
 
     if not issubclass(im0.dtype.type, numpy.float32):
