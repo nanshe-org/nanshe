@@ -270,6 +270,8 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
         warnings.warn("Provided im0 with type \"" + repr(im0.dtype.type) + "\". " +
                       "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
+        im0 = im0.astype(numpy.float32)
+
     # Make sure that we have scale as a list.
     # If it is not a list, then make a singleton list.
     try:
@@ -323,6 +325,8 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                 if not issubclass(out.dtype.type, numpy.float32):
                     warnings.warn("Provided out with type \"" + repr(out.dtype.type) + "\". " +
                                   "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+
+                    out = im0.astype(numpy.float32)
 
                 imPrev = out
             else:
