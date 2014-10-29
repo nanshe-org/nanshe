@@ -431,6 +431,19 @@ def generate_dictionary(new_data, **parameters):
     # Requires double array. Copies input data as well.
     new_data_processed = new_data.astype(float)
 
+    # Want to support NumPy types in parameters. However, SPAMS expects normal C types. So, we convert them in advance.
+    # This was needed for the Ilastik based GUI.
+    for _k, _v in parameters["spams.trainDL"].items():
+        _v = numpy.array(_v)[()] # Convert to NumPy type
+        if isinstance(_v, numpy.integer):
+            _v = int(_v)
+        elif isinstance(_v, numpy.floating):
+            _v = float(_v)
+        elif isinstance(_v, numpy.bool_):
+            _v = bool(_v)
+
+        parameters["spams.trainDL"][_k] = _v
+
     # Reshape data into a matrix (each image is now a column vector)
     new_data_processed = numpy.reshape(new_data_processed, (new_data_processed.shape[0], -1))
     new_data_processed = numpy.asmatrix(new_data_processed)
