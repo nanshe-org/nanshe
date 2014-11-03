@@ -15,11 +15,11 @@
         
         "preprocess_data" : {
             
-            "__comment__remove_zeroed_lines" : "Optional. Interpolates over missing lines that could not be registered. This is done by finding an outline around all missing points to use for calculating the interpolation. This step only works on 2D data.",
+            "__comment__remove_zeroed_lines" : "Optional. Interpolates over missing lines that could not be registered. This is done by finding an outline around all missing points to use for calculating the interpolation.",
             
             "remove_zeroed_lines" : {
-                "__comment__dilation_shape" : "Kernel shape for performing dilation. Axis order is [y, x].",
-                "__comment__erosion_shape" : "Kernel shape for performing erosion. Axis order is [y, x].",
+                "__comment__dilation_shape" : "Kernel shape for performing dilation. Axis order is [y, x] or [z, y, x].",
+                "__comment__erosion_shape" : "Kernel shape for performing erosion. Axis order is [y, x] or [z, y, x].",
                 
                 "erosion_shape" : [21, 1],
                 "dilation_shape" : [1, 3]
