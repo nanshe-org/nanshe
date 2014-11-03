@@ -167,6 +167,8 @@
                     "__comment__accepted_region_shape_constraints" : "Set of region constraints to determine if the wavelet transform is too high for that region. If so, the next lowest transform replaces it.",
                     
                     "accepted_region_shape_constraints" : {
+                        "__comment__major_axis_length" : "Acceptable range or single bound for the major axis length.",
+
                         "major_axis_length" : {
                             "min" : 0.0,
                             "max" : 25.0
