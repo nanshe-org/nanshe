@@ -249,7 +249,7 @@ def xrange_with_skip(start, stop = None, step = None, to_skip = None):
 
     for each in full:
         if each != next_to_skip:
-            yield (each)
+            yield(each)
         else:
             next_to_skip = next(to_skip, None)
 
