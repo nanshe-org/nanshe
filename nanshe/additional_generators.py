@@ -238,6 +238,64 @@ def iter_with_skip_indices(a_iter, to_skip = None):
 
 
 @debugging_tools.log_call(logger)
+def iter_with_skip_values(a_iter, to_skip = None):
+    """
+        Behaves as a normal iterator except allows for skipping arbitrary values, as well.
+        These values to be skipped should be specified by their indices using some iterable.
+
+        Args:
+            a_iter(iter):          an iterator that will skip some values
+            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).
+
+        Returns:
+            (generator object):    a generator that skips some values with indices in to_skip.
+
+        Examples:
+            >>> iter_with_skip_values(10) #doctest: +ELLIPSIS
+            <generator object iter_with_skip_values at 0x...>
+
+            >>> list(iter_with_skip_values(xrange(10)))
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_values(xrange(10)))
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_values(xrange(1, 10)))
+            [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_values(xrange(0, 10, 2)))
+            [0, 2, 4, 6, 8]
+
+            >>> list(iter_with_skip_values(xrange(1, 10, 2)))
+            [1, 3, 5, 7, 9]
+
+            >>> list(iter_with_skip_values(xrange(10), to_skip = 2))
+            [0, 1, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_values(xrange(1, 10), to_skip = 2))
+            [1, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_values(xrange(0, 10, 2), to_skip = [2,6]))
+            [0, 4, 8]
+
+    """
+
+    full = iter(a_iter)
+
+    if to_skip is None:
+        to_skip = []
+    else:
+        try:
+            to_skip = sorted(set(to_skip))
+        except TypeError:
+            to_skip = [to_skip]
+
+    for each in full:
+        if each not in to_skip:
+            yield(each)
+
+
+@debugging_tools.log_call(logger)
 def xrange_with_skip(start, stop = None, step = None, to_skip = None):
     """
         Behaves as xrange does except allows for skipping arbitrary values as well.
