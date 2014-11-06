@@ -178,6 +178,66 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
 
 
 @debugging_tools.log_call(logger)
+def iter_with_skip_indices(a_iter, to_skip = None):
+    """
+        Behaves as a normal iterator except allows for skipping arbitrary values, as well.
+        These values to be skipped should be specified by their indices using some iterable.
+
+        Args:
+            a_iter(iter):          an iterator that will skip some values
+            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).
+
+        Returns:
+            (generator object):    a generator that skips some values with indices in to_skip.
+
+        Examples:
+            >>> iter_with_skip_indices(xrange(10)) #doctest: +ELLIPSIS
+            <generator object iter_with_skip_indices at 0x...>
+
+            >>> list(iter_with_skip_indices(xrange(10)))
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_indices(xrange(10), to_skip = 2))
+            [0, 1, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_indices(xrange(1, 10), to_skip = 2))
+            [1, 2, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_indices(xrange(10), to_skip = [2, 7]))
+            [0, 1, 3, 4, 5, 6, 8, 9]
+
+            >>> list(iter_with_skip_indices(xrange(10), to_skip = [0]))
+            [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_indices(xrange(1, 10), to_skip = [0]))
+            [2, 3, 4, 5, 6, 7, 8, 9]
+
+            >>> list(iter_with_skip_indices(xrange(10), to_skip = [9]))
+            [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+    """
+
+    full = iter(a_iter)
+    full_enum = enumerate(full)
+
+    if to_skip is None:
+        to_skip = iter([])
+    else:
+        try:
+            to_skip = iter(sorted(set(to_skip)))
+        except TypeError:
+            to_skip = iter([to_skip])
+
+    next_to_skip = next(to_skip, None)
+
+    for i, each in full_enum:
+        if i != next_to_skip:
+            yield(each)
+        else:
+            next_to_skip = next(to_skip, None)
+
+
+@debugging_tools.log_call(logger)
 def xrange_with_skip(start, stop = None, step = None, to_skip = None):
     """
         Behaves as xrange does except allows for skipping arbitrary values as well.
