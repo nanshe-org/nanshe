@@ -107,10 +107,9 @@
             
             "generate_dictionary" : {
                 
+                "__comment__spams.trainDL" : "spams.trainDL is an efficient implementation of the dictionary learning technique presented in 'Online Learning for Matrix Factorization and Sparse Coding' by Julien Mairal, Francis Bach, Jean Ponce and Guillermo Sapiro arXiv:0908.0050",
+                
                 "spams.trainDL" : {
-                    
-                    "__comment__spams.trainDL" : "spams.trainDL is an efficient implementation of the dictionary learning technique presented in 'Online Learning for Matrix Factorization and Sparse Coding' by Julien Mairal, Francis Bach, Jean Ponce and Guillermo Sapiro arXiv:0908.0050",
-                    
                     "K" : 100,              "__comment__K" : "size of the dictionary",
                     "gamma2": 0,
                     "gamma1": 0,
