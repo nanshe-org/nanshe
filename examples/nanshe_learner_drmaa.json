@@ -94,6 +94,11 @@
                     "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                     
                     
+                    "__comment__temporal_smoothing_gaussian_filter_window_size" : "Size of the window to use for the smoothing gaussian applied along time. Measured in standard deviations.",
+                    
+                    "temporal_smoothing_gaussian_filter_window_size" : 5.0,
+                    
+                    
                     "__comment__half_window_size" : "How many frames to include in half of the window. All windows are odd. So, the total window size will be 2 * half_window_size + 1.",
                     
                     "half_window_size" : 400,
@@ -106,7 +111,12 @@
                     
                     "__comment__spatial_smoothing_gaussian_filter_stdev" : "What standard deviation to use for the smoothing gaussian applied along each spatial dimension, independently.",
                     
-                    "spatial_smoothing_gaussian_filter_stdev" : 5.0
+                    "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                    
+                    
+                    "__comment__spatial_smoothing_gaussian_filter_window_size" : "Size of the window to use for the smoothing gaussian applied along each spatial dimension, independently. Measured in standard deviations.",
+                    
+                    "spatial_smoothing_gaussian_filter_window_size" : 5.0
                 },
                 
                 
