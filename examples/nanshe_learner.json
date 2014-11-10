@@ -62,7 +62,7 @@
                 
                 "__comment__scale" : "This can be a single value, which is then applied on all axes or it can be an array. For the array, the axis order is [t, y, x] for 2D and [t, z, y, x] for 3D.",
                 
-                "scale" : [4, 4, 4]
+                "scale" : 4
             },
             
             
