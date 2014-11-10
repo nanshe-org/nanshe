@@ -11,22 +11,22 @@
         "num_drmaa_cores" : 1,
         
         
-        "__comment__block_shape"          : "The shape of the blocks. -1 represents an unspecified length, which must be specified in num_blocks.",
+        "__comment__block_shape" : "The shape of the blocks. -1 represents an unspecified length, which must be specified in num_blocks.",
         
         "block_shape" : [10000, -1, -1],
         
         
-        "__comment__num_blocks"           : "The number of the blocks per dimension. -1 represents an unspecified length, which must be specified in block_shape.",
+        "__comment__num_blocks" : "The number of the blocks per dimension. -1 represents an unspecified length, which must be specified in block_shape.",
         
         "num_blocks" : [-1, 8, 8],
         
         
-        "__comment__half_border_shape"    : "The shape of the border to remove. Trims on both sides of each axis.",
+        "__comment__half_border_shape" : "The shape of the border to remove. Trims on both sides of each axis.",
         
         "half_border_shape" : [0, 16, 16],
         
         
-        "__comment__half_window_shape"    : "The shape of the overlap in each direction. The time portion must be bigger or equal to the half_window_size.",
+        "__comment__half_window_shape" : "The shape of the overlap in each direction. The time portion must be bigger or equal to the half_window_size.",
         
         "half_window_shape" : [400, 20, 20],
         
@@ -101,7 +101,7 @@
                 "__comment__normalize_data" : "How to normalize data. L_2 norm recommended.",
                 
                 "normalize_data" : {
-                    "simple_image_processing.renormalized_images": {
+                    "simple_image_processing.renormalized_images" : {
                         "ord" : 2
                     }
                 }
@@ -115,19 +115,19 @@
                 "__comment__spams.trainDL" : "spams.trainDL is an efficient implementation of the dictionary learning technique presented in 'Online Learning for Matrix Factorization and Sparse Coding' by Julien Mairal, Francis Bach, Jean Ponce and Guillermo Sapiro arXiv:0908.0050",
                 
                 "spams.trainDL" : {
-                    "K" : 100,              "__comment__K" : "size of the dictionary",
-                    "gamma1": 0,
-                    "gamma2": 0,
-                    "numThreads": 1,        "__comment__numThreads" : "number of threads to use",
-                    "batchsize": 256,
-                    "iter": 100,            "__comment__iter" : "number of iterations to run for",
-                    "lambda1": 0.2,
-                    "lambda2": 0,
-                    "posAlpha": true,
-                    "posD": true,
-                    "clean": true,
-                    "mode": 2,
-                    "modeD": 0
+                    "K" : 100,               "__comment__K" : "size of the dictionary",
+                    "gamma1" : 0,
+                    "gamma2" : 0,
+                    "numThreads" : 1,        "__comment__numThreads" : "number of threads to use",
+                    "batchsize" : 256,
+                    "iter" : 100,            "__comment__iter" : "number of iterations to run for",
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "posAlpha" : true,
+                    "posD" : true,
+                    "clean" : true,
+                    "mode" : 2,
+                    "modeD" : 0
                 }
             },
             
@@ -188,7 +188,7 @@
                     "remove_too_close_local_maxima" : {
                         "__comment__min_local_max_distance" : "Constraint on how close they can be.",
                         
-                        "min_local_max_distance"  : 20.0
+                        "min_local_max_distance" : 20.0
                     },
                     
                     
