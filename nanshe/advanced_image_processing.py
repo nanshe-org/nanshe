@@ -162,9 +162,9 @@ def extract_f0(new_data,
                half_window_size,
                which_quantile,
                temporal_smoothing_gaussian_filter_stdev,
+               temporal_smoothing_gaussian_filter_window_size,
                spatial_smoothing_gaussian_filter_stdev,
-               temporal_smoothing_gaussian_filter_window_size = 5.0,
-               spatial_smoothing_gaussian_filter_window_size = 5.0,
+               spatial_smoothing_gaussian_filter_window_size,
                bias = None,
                out = None,
                **parameters):
@@ -176,9 +176,9 @@ def extract_f0(new_data,
             half_window_size(int):                                  the rank filter window size is 2*half_window_size+1.
             which_quantile(float):                                  while quantile to return from the rank filter.
             temporal_smoothing_gaussian_filter_stdev(float):        stdev for gaussian filter to convolve over time.
-            spatial_smoothing_gaussian_filter_stdev(float):         stdev for gaussian filter to convolve over space.
             temporal_smoothing_gaussian_filter_window_size(float):  window for gaussian filter to convolve over time.
                                                                     (Measured in standard deviations)
+            spatial_smoothing_gaussian_filter_stdev(float):         stdev for gaussian filter to convolve over space.
             spatial_smoothing_gaussian_filter_window_size(float):   window for gaussian filter to convolve over space.
                                                                     (Measured in standard deviations)
             bias(float):                                            value to be added to dataset to avoid nan.
