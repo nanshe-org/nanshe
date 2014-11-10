@@ -792,21 +792,27 @@ class TestNansheLearner(object):
 
         with open(self.config_a_block_filename, "w") as fid:
             json.dump(self.config_a_block, fid)
+            fid.write("\n")
 
         with open(self.config_a_block_3D_filename, "w") as fid:
             json.dump(self.config_a_block_3D, fid)
+            fid.write("\n")
 
         with open(self.config_blocks_filename, "w") as fid:
             json.dump(self.config_blocks, fid)
+            fid.write("\n")
 
         with open(self.config_blocks_3D_filename, "w") as fid:
             json.dump(self.config_blocks_3D, fid)
+            fid.write("\n")
 
         with open(self.config_blocks_drmaa_filename, "w") as fid:
             json.dump(self.config_blocks_drmaa, fid)
+            fid.write("\n")
 
         with open(self.config_blocks_3D_drmaa_filename, "w") as fid:
             json.dump(self.config_blocks_3D_drmaa, fid)
+            fid.write("\n")
 
     def test_main_1(self):
         executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
