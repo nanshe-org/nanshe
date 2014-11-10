@@ -126,8 +126,8 @@
                     "posAlpha": true,
                     "posD": true,
                     "clean": true,
-                    "modeD": 0,
-                    "mode": 2
+                    "mode": 2,
+                    "modeD": 0
                 }
             },
             
