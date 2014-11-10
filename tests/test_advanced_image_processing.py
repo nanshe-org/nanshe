@@ -591,8 +591,8 @@ class TestAdvancedImageProcessing(object):
 
     def test_generate_dictionary_1(self):
         p = numpy.array([[27, 51],
-                     [66, 85],
-                     [77, 45]])
+                         [66, 85],
+                         [77, 45]])
 
         space = numpy.array((100, 100))
         radii = numpy.array((5, 6, 7))
