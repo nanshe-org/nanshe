@@ -200,8 +200,10 @@ class TestAdvancedImageProcessing(object):
 
     def test_extract_f0_1(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
         half_window_size = 20
         bias = 100
 
@@ -209,8 +211,10 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias)
 
@@ -218,8 +222,10 @@ class TestAdvancedImageProcessing(object):
 
     def test_extract_f0_1b(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
         half_window_size = 20
         bias = 100
 
@@ -228,8 +234,10 @@ class TestAdvancedImageProcessing(object):
         b = a.copy()
         nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias,
             out=b)
@@ -238,8 +246,10 @@ class TestAdvancedImageProcessing(object):
 
     def test_extract_f0_1c(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
         half_window_size = 20
         bias = 100
 
@@ -248,8 +258,10 @@ class TestAdvancedImageProcessing(object):
         b = a.copy()
         nanshe.advanced_image_processing.extract_f0(b,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias,
             out=b)
@@ -258,8 +270,10 @@ class TestAdvancedImageProcessing(object):
 
     def test_extract_f0_2(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
         half_window_size = 49
         bias = 100
 
@@ -270,8 +284,10 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias)
 
@@ -284,8 +300,10 @@ class TestAdvancedImageProcessing(object):
 
     def test_extract_f0_3(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
         half_window_size = 20
         bias = 100
 
@@ -293,8 +311,10 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias)
 
@@ -302,8 +322,10 @@ class TestAdvancedImageProcessing(object):
 
     def test_extract_f0_4(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
         which_quantile = 0.5
         temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
         half_window_size = 49
         bias = 100
 
@@ -314,8 +336,10 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias)
 
@@ -337,8 +361,10 @@ class TestAdvancedImageProcessing(object):
             },
             "extract_f0" : {
                 "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                 "half_window_size" : 20,
                 "bias" : 100
             },
@@ -424,8 +450,10 @@ class TestAdvancedImageProcessing(object):
             },
             "extract_f0" : {
                 "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                 "half_window_size" : 20,
                 "bias" : 100
             },
@@ -461,8 +489,10 @@ class TestAdvancedImageProcessing(object):
             },
             "extract_f0" : {
                 "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                 "half_window_size" : 20,
                 "bias" : 100
             },
@@ -501,8 +531,10 @@ class TestAdvancedImageProcessing(object):
             },
             "extract_f0" : {
                 "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                 "half_window_size" : 20,
                 "bias" : 100
             },
@@ -570,8 +602,10 @@ class TestAdvancedImageProcessing(object):
             },
             "extract_f0" : {
                 "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                 "which_quantile" : 0.5,
                 "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                 "half_window_size" : 20,
                 "bias" : 100
             }
