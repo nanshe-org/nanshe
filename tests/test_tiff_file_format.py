@@ -106,6 +106,7 @@ class TestTiffFileFormat(object):
 
         with open(config_filename, "w") as fid:
             json.dump(params, fid)
+            fid.write("\n")
 
         main_args = ["./nanshe_converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
 
