@@ -77,8 +77,10 @@ class TestNansheLearner(object):
                     },
                     "extract_f0" : {
                         "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                         "which_quantile" : 0.5,
                         "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                         "half_window_size" : 1,
                         "bias" : 100
                     },
@@ -175,8 +177,10 @@ class TestNansheLearner(object):
                     },
                     "extract_f0" : {
                         "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                         "which_quantile" : 0.5,
                         "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                         "half_window_size" : 1,
                         "bias" : 100
                     },
@@ -236,11 +240,13 @@ class TestNansheLearner(object):
                             "bias" : 100,
 
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
 
                             "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
                             "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
 
-                            "spatial_smoothing_gaussian_filter_stdev" : 5.0
+                            "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                            "spatial_smoothing_gaussian_filter_window_size" : 5.0
                         },
 
                         "wavelet_transform" : {
@@ -404,8 +410,10 @@ class TestNansheLearner(object):
                         },
                         "extract_f0" : {
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                            "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                             "which_quantile" : 0.5,
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                             "half_window_size" : 1,
                             "bias" : 100
                         },
@@ -469,11 +477,13 @@ class TestNansheLearner(object):
                             "bias" : 100,
 
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
 
                             "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
                             "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
 
-                            "spatial_smoothing_gaussian_filter_stdev" : 5.0
+                            "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                            "spatial_smoothing_gaussian_filter_window_size" : 5.0
                         },
 
                         "wavelet_transform" : {
@@ -640,8 +650,10 @@ class TestNansheLearner(object):
                         },
                         "extract_f0" : {
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                            "spatial_smoothing_gaussian_filter_window_size" : 5.0,
                             "which_quantile" : 0.5,
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
                             "half_window_size" : 1,
                             "bias" : 100
                         },
