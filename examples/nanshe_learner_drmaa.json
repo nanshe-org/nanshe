@@ -108,11 +108,9 @@
             },
             
             
-            "__comment__generate_dictionary" : "Arguments to be used by SPAMS dictionary learning algorithm.",
+            "__comment__generate_dictionary" : "Wrapper function that calls spams.trainDL. Comments borrowed from SPAMS documentation ( http://spams-devel.gforge.inria.fr/doc-python/html/doc_spams004.html#sec5 ). Only relevant parameters have comments included here.",
             
             "generate_dictionary" : {
-                
-                "__comment__generate_dictionary" : "Wrapper function that calls spams.trainDL. Comments borrowed from SPAMS documentation ( http://spams-devel.gforge.inria.fr/doc-python/html/doc_spams004.html#sec5 ). Only relevant parameters have comments included here.",
                 
                 "spams.trainDL" : {
                     
