@@ -341,6 +341,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     # Overwrite the config file always
     with open(intermediate_config, "w") as fid:
         json.dump(dict(parameters.items() + {"debug" : debug}.items()), fid, indent = 4, separators = (",", " : "))
+        fid.write("\n")
 
     # Construct an HDF5 file for each block
     input_filename_block = []
