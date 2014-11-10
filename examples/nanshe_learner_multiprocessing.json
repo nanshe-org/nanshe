@@ -118,10 +118,10 @@
                     "iter": 100,            "__comment__iter" : "number of iterations to run for",
                     "lambda1": 0.2,
                     "lambda2": 0,
+                    "posAlpha": true,
                     "posD": true,
                     "clean": true,
                     "modeD": 0,
-                    "posAlpha": true,
                     "mode": 2
                 }
             },
