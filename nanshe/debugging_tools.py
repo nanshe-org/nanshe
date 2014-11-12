@@ -215,5 +215,5 @@ def memory_profiler(logger, interval = 1, level=logging.INFO):
     current_process = psutil.Process(os.getpid())
 
     while memory_profiler.to_run:
-        logger.log(level, "Memory info = " + repr(current_process.get_ext_memory_info()))
+        logger.log(level, "Memory info = " + repr(current_process.memory_info_ex()))
         time.sleep(interval)
