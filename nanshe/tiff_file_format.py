@@ -252,7 +252,8 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
         new_hdf5_group = new_hdf5_file[new_hdf5_groupname]
         new_hdf5_dataset = new_hdf5_group.create_dataset(new_hdf5_dataset_name,
                                                          new_hdf5_dataset_shape,
-                                                         new_hdf5_dataset_dtype)
+                                                         new_hdf5_dataset_dtype,
+                                                         chunks=True)
 
         new_hdf5_dataset_axis_pos = 0
         for each_new_tiff_filename in new_tiff_filenames:
