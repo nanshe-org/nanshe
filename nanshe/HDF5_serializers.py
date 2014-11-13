@@ -59,14 +59,16 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
         file_handle.create_dataset(internalPath,
                                    shape = data_array.shape,
                                    dtype = data_array.dtype,
-                                   data = data_array)
+                                   data = data_array,
+                                   chunks = bool(data_array.ndim))
     except RuntimeError:
         if overwrite:
             del file_handle[internalPath]
             file_handle.create_dataset(internalPath,
                                        shape = data_array.shape,
                                        dtype = data_array.dtype,
-                                       data = data_array)
+                                       data = data_array,
+                                       chunks = True)
         else:
             raise
 
