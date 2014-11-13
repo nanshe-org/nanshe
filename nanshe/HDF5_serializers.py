@@ -56,11 +56,17 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
 
 
     try:
-        file_handle.create_dataset(internalPath, shape = data_array.shape, dtype = data_array.dtype, data = data_array)
+        file_handle.create_dataset(internalPath,
+                                   shape = data_array.shape,
+                                   dtype = data_array.dtype,
+                                   data = data_array)
     except RuntimeError:
         if overwrite:
             del file_handle[internalPath]
-            file_handle.create_dataset(internalPath, shape = data_array.shape, dtype = data_array.dtype, data = data_array)
+            file_handle.create_dataset(internalPath,
+                                       shape = data_array.shape,
+                                       dtype = data_array.dtype,
+                                       data = data_array)
         else:
             raise
 
