@@ -147,8 +147,8 @@ def remove_zeroed_lines(new_data,
                         reps_after=len(zero_mask_i_labeled_j_points_arange)
                     ).ravel()
 
-                    index_product = numpy.array([zero_mask_i_labeled_j_points_arange_tile,
-                                                 zero_mask_i_labeled_j_outline_points_arange_repeat])
+                    index_product = numpy.vstack([zero_mask_i_labeled_j_points_arange_tile,
+                                                  zero_mask_i_labeled_j_outline_points_arange_repeat])
 
 
                     out[i][tuple(zero_mask_i_labeled_j_points[(index_product[0],)].T)] = new_data_i[tuple(zero_mask_i_labeled_j_outline_points[(index_product[1],)].T)]
