@@ -178,6 +178,47 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
 
 
 @debugging_tools.log_call(logger)
+def repeat_generator(a_iter, n = 1):
+    """
+        Repeats each value on an iterator given n-times before proceeding to the next value.
+
+        Args:
+            a_iter(iter):          an iterator that will have its values repeated contiguously
+            n(int):                number of times to repeat each value
+
+        Returns:
+            (generator object):    a generator that contiguously repeats value from the given iterator.
+
+        Examples:
+            >>> repeat_generator(xrange(5)) #doctest: +ELLIPSIS
+            <generator object repeat_generator at 0x...>
+
+            >>> list(repeat_generator(xrange(0)))
+            []
+
+            >>> list(repeat_generator(xrange(5), 0))
+            []
+
+            >>> list(repeat_generator(xrange(5), 1))
+            [0, 1, 2, 3, 4]
+
+            >>> list(repeat_generator(xrange(5), 2))
+            [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
+
+            >>> list(repeat_generator(xrange(5), 3))
+            [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
+
+    """
+
+    assert(n > 0, "n must be positive, but got n = " + repr(n))
+    assert((n % 1) == 0, "n must be an integer, but got n = " + repr(n))
+
+    for each_value in a_iter:
+        for i in xrange(n):
+            yield(each_value)
+
+
+@debugging_tools.log_call(logger)
 def iter_with_skip_indices(a_iter, to_skip = None):
     """
         Behaves as a normal iterator except allows for skipping arbitrary values, as well.
