@@ -137,15 +137,15 @@ def remove_zeroed_lines(new_data,
                     zero_mask_i_labeled_j_points_arange = numpy.arange(len(zero_mask_i_labeled_j_points))
                     zero_mask_i_labeled_j_outline_points_arange = numpy.arange(len(zero_mask_i_labeled_j_outline_points))
 
-                    zero_mask_i_labeled_j_points_arange_tile = numpy.tile(
+                    zero_mask_i_labeled_j_points_arange_tile = expanded_numpy.expand_view(
                         zero_mask_i_labeled_j_points_arange,
-                        len(zero_mask_i_labeled_j_outline_points_arange)
-                    )
+                        reps_before=len(zero_mask_i_labeled_j_outline_points_arange)
+                    ).ravel()
 
-                    zero_mask_i_labeled_j_outline_points_arange_repeat = numpy.repeat(
+                    zero_mask_i_labeled_j_outline_points_arange_repeat = expanded_numpy.expand_view(
                         zero_mask_i_labeled_j_outline_points_arange,
-                        len(zero_mask_i_labeled_j_points_arange)
-                    )
+                        reps_after=len(zero_mask_i_labeled_j_points_arange)
+                    ).ravel()
 
                     index_product = numpy.array([zero_mask_i_labeled_j_points_arange_tile,
                                                  zero_mask_i_labeled_j_outline_points_arange_repeat])
