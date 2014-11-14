@@ -219,6 +219,48 @@ def repeat_generator(a_iter, n = 1):
 
 
 @debugging_tools.log_call(logger)
+def cycle_generator(a_iter, n = 1):
+    """
+        Cycles through an iterator n-times.
+
+        Args:
+            a_iter(iter):          an iterator that will be repeated
+            n(int):                number of times to repeat the iterator
+
+        Returns:
+            (generator object):    a generator that repeats the given iterator a certain number of times.
+
+        Examples:
+            >>> cycle_generator(xrange(5)) #doctest: +ELLIPSIS
+            <generator object cycle_generator at 0x...>
+
+            >>> list(cycle_generator(xrange(0)))
+            []
+
+            >>> list(cycle_generator(xrange(5), 0))
+            []
+
+            >>> list(cycle_generator(xrange(5), 1))
+            [0, 1, 2, 3, 4]
+
+            >>> list(cycle_generator(xrange(5), 2))
+            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
+
+            >>> list(cycle_generator(xrange(5), 3))
+            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
+
+    """
+
+    assert(n > 0, "n must be positive, but got n = " + repr(n))
+    assert((n % 1) == 0, "n must be an integer, but got n = " + repr(n))
+
+    a_iter = itertools.chain(*itertools.tee(a_iter, n))
+
+    for each_value in a_iter:
+        yield(each_value)
+
+
+@debugging_tools.log_call(logger)
 def iter_with_skip_indices(a_iter, to_skip = None):
     """
         Behaves as a normal iterator except allows for skipping arbitrary values, as well.
