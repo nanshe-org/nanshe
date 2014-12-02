@@ -6,6 +6,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 20, 2014 9:46:45 AM$"
 
 
+import functools
 import operator
 
 import numpy
@@ -344,6 +345,43 @@ def contains(new_array, to_contain):
                    [False,  True]], dtype=bool)
     """
     return(numpy.in1d(new_array, to_contain).reshape(new_array.shape))
+
+
+@debugging_tools.log_call(logger)
+def array_to_matrix(a):
+    """
+        Flattens an array so that the row is the only original shape kept.
+
+        Args:
+            a(numpy.ndarray):                The array to flatten partially
+
+        Returns:
+            (numpy.ndarray):                 The matrix version of the array after flattening.
+
+        Examples:
+            >>> array_to_matrix(numpy.eye(3))
+            array([[ 1.,  0.,  0.],
+                   [ 0.,  1.,  0.],
+                   [ 0.,  0.,  1.]])
+
+            >>> array_to_matrix(numpy.arange(24).reshape(4, 3, 2))
+            array([[ 0,  1,  2,  3,  4,  5],
+                   [ 6,  7,  8,  9, 10, 11],
+                   [12, 13, 14, 15, 16, 17],
+                   [18, 19, 20, 21, 22, 23]])
+
+            >>> array_to_matrix(numpy.arange(24).reshape(4, 6))
+            array([[ 0,  1,  2,  3,  4,  5],
+                   [ 6,  7,  8,  9, 10, 11],
+                   [12, 13, 14, 15, 16, 17],
+                   [18, 19, 20, 21, 22, 23]])
+
+            >>> array_to_matrix(numpy.zeros((0, 4, 3, 2)))
+            array([], shape=(0, 24), dtype=float64)
+
+    """
+
+    return(a.reshape(a.shape[0], functools.reduce(operator.mul, a.shape[1:])))
 
 
 @debugging_tools.log_call(logger)
