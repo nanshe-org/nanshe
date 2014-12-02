@@ -5,9 +5,11 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 20, 2014 9:46:45 AM$"
 
+
+import operator
+
 import numpy
 import scipy
-import operator
 
 import scipy.spatial
 import scipy.ndimage
