@@ -449,7 +449,7 @@ def generate_dictionary(new_data, **parameters):
         parameters["spams.trainDL"][_k] = _v
 
     # Reshape data into a matrix (each image is now a column vector)
-    new_data_processed = new_data_processed.reshape(new_data_processed.shape[0], -1)
+    new_data_processed = expanded_numpy.array_to_matrix(new_data_processed)
     new_data_processed = numpy.asmatrix(new_data_processed)
     new_data_processed = new_data_processed.transpose()
 
@@ -2036,7 +2036,7 @@ def wavelet_denoising(new_image,
 
                 neurons["area"] = watershed_local_maxima.props["area"]
 
-                neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(axis = 1)
+                neurons["max_F"] = expanded_numpy.array_to_matrix(neurons["image"]).max(axis = 1)
 
                 for i in xrange(len(neurons)):
                     neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
@@ -2083,8 +2083,8 @@ def extract_neurons(new_image, neuron_masks):
 
     neurons["mask"] = neuron_masks
     neurons["image"] = new_image * neurons["mask"]
-    neurons["area"] = neurons["mask"].reshape(neurons["mask"].shape[0], -1).sum(axis = 1)
-    neurons["max_F"] = neurons["image"].reshape((neurons["image"].shape[0], -1)).max(axis = 1)
+    neurons["area"] = expanded_numpy.array_to_matrix(neurons["mask"]).sum(axis = 1)
+    neurons["max_F"] = expanded_numpy.array_to_matrix(neurons["image"]).max(axis = 1)
 
     for i in xrange(len(neurons)):
         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
@@ -2227,13 +2227,11 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         new_neuron_set = new_neuron_set_1.copy()
 
-        new_neuron_set_1_flattened = new_neuron_set_1["image"].reshape(
-            new_neuron_set_1["image"].shape[0], -1)
-        new_neuron_set_2_flattened = new_neuron_set_2["image"].reshape(
-            new_neuron_set_2["image"].shape[0], -1)
+        new_neuron_set_1_flattened = expanded_numpy.array_to_matrix(new_neuron_set_1["image"])
+        new_neuron_set_2_flattened = expanded_numpy.array_to_matrix(new_neuron_set_2["image"])
 
-        new_neuron_set_1_flattened_mask = new_neuron_set_1["mask"].reshape(new_neuron_set_1["mask"].shape[0], -1)
-        new_neuron_set_2_flattened_mask = new_neuron_set_2["mask"].reshape(new_neuron_set_2["mask"].shape[0], -1)
+        new_neuron_set_1_flattened_mask = expanded_numpy.array_to_matrix(new_neuron_set_1["mask"])
+        new_neuron_set_2_flattened_mask = expanded_numpy.array_to_matrix(new_neuron_set_2["mask"])
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
         new_neuron_set_angle = expanded_numpy.dot_product_normalized(new_neuron_set_1_flattened,
@@ -2438,9 +2436,9 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
     while (new_neuron_set.size != 1) and (original_new_neuron_set_size != new_neuron_set.size):
         original_new_neuron_set_size = new_neuron_set.size
 
-        new_neuron_set_flattened_image = new_neuron_set["image"].reshape(new_neuron_set["image"].shape[0], -1)
+        new_neuron_set_flattened_image = expanded_numpy.array_to_matrix(new_neuron_set["image"])
 
-        new_neuron_set_flattened_mask = new_neuron_set["mask"].reshape(new_neuron_set["mask"].shape[0], -1)
+        new_neuron_set_flattened_mask = expanded_numpy.array_to_matrix(new_neuron_set["mask"])
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
         new_neuron_set_angle = expanded_numpy.pair_dot_product_normalized(new_neuron_set_flattened_image,
