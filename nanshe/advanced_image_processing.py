@@ -449,7 +449,7 @@ def generate_dictionary(new_data, **parameters):
         parameters["spams.trainDL"][_k] = _v
 
     # Reshape data into a matrix (each image is now a column vector)
-    new_data_processed = numpy.reshape(new_data_processed, (new_data_processed.shape[0], -1))
+    new_data_processed = new_data_processed.reshape(new_data_processed.shape[0], -1)
     new_data_processed = numpy.asmatrix(new_data_processed)
     new_data_processed = new_data_processed.transpose()
 
