@@ -2438,12 +2438,12 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
     while (new_neuron_set.size != 1) and (original_new_neuron_set_size != new_neuron_set.size):
         original_new_neuron_set_size = new_neuron_set.size
 
-        new_neuron_set_flattened = new_neuron_set["image"].reshape(new_neuron_set["image"].shape[0], -1)
+        new_neuron_set_flattened_image = new_neuron_set["image"].reshape(new_neuron_set["image"].shape[0], -1)
 
         new_neuron_set_flattened_mask = new_neuron_set["mask"].reshape(new_neuron_set["mask"].shape[0], -1)
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = expanded_numpy.pair_dot_product_normalized(new_neuron_set_flattened,
+        new_neuron_set_angle = expanded_numpy.pair_dot_product_normalized(new_neuron_set_flattened_image,
                                                                           ord = 2)
         new_neuron_set_angle = numpy.triu(new_neuron_set_angle, k = 1)
 
