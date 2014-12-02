@@ -1290,6 +1290,12 @@ def norm(new_vector_set, ord = 2):
             
             >>> norm(numpy.array([ 0,  1,  2]))
             array(2.23606797749979)
+
+            >>> norm(numpy.zeros((0, 2,)))
+            array([], shape=(0, 2), dtype=float64)
+
+            >>> norm(numpy.zeros((2, 0,)))
+            array([], shape=(2, 0), dtype=float64)
     """
 
     # Needs to have at least one vector
@@ -1307,7 +1313,9 @@ def norm(new_vector_set, ord = 2):
 
     # Return a scalar NumPy array in the case of a single vector
     # Always return type float as the result.
-    if new_vector_set.ndim == 1:
+    if 0 in new_vector_set.shape:
+        result = new_vector_set_float
+    elif new_vector_set.ndim == 1:
         result = numpy.array(wrapped_norm(new_vector_set_float)).astype(float)
     else:
         result = numpy.apply_along_axis(wrapped_norm, 1, new_vector_set_float).astype(float)
