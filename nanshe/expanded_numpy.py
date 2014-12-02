@@ -1292,6 +1292,9 @@ def norm(new_vector_set, ord = 2):
             array(2.23606797749979)
     """
 
+    # Needs to have at least one vector
+    assert(new_vector_set.ndim >= 1)
+
     new_vector_set_float = new_vector_set.astype(float)
 
     # Wrap the order parameter so as to avoid passing through numpy.apply_along_axis
