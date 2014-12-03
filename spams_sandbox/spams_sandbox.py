@@ -49,7 +49,7 @@ def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
 #@nanshe.advanced_debugging.log_call(logger)
 def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     """
-        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
+        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
 
         It is necessary to run SPAMS in a separate process as segmentation faults
         have been discovered in later parts of the Python code dependent on whether
@@ -92,7 +92,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
 #@nanshe.advanced_debugging.log_call(logger)
 def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
     """
-        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
+        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
 
         It is necessary to run SPAMS in a separate process as segmentation faults
         have been discovered in later parts of the Python code dependent on whether
@@ -133,7 +133,7 @@ def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
 #@nanshe.advanced_debugging.log_call(logger)
 def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     """
-        Designed to start spams.trainDL in a seperate process and handle the result in an unnoticeably different way.
+        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
 
         It is necessary to run SPAMS in a separate process as segmentation faults
         have been discovered in later parts of the Python code dependent on whether
