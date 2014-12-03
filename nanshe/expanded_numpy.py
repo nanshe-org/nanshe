@@ -1246,7 +1246,7 @@ def norm(new_vector_set, ord = 2):
                                                   (though some are redundant here).
         
         Returns:
-            (numpy.ndarray):                      an array with .
+            (numpy.ndarray):                      an array with the norms of all vectors in the set.
         
         Examples:
             >>> norm(numpy.array([ 1,  0]), 2).ndim
