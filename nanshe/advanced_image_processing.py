@@ -432,8 +432,19 @@ def generate_dictionary(new_data, **parameters):
 
     import spams_sandbox
 
-    # Requires double array. Copies input data as well.
-    new_data_processed = new_data.astype(float)
+    # Needs to be floating point.
+    # However, it need not be double precision as there is single precision function signature.
+    float_dtype = None
+    float_ctype = None
+    if not issubclass(new_data.dtype.type, numpy.floating):
+        float_dtype = numpy.dtype(numpy.float32)
+        float_ctype = ctypes.c_float
+    elif new_data.dtype.itemsize > numpy.dtype(numpy.float32).itemsize:
+        float_dtype = numpy.dtype(numpy.float64)
+        float_ctype = ctypes.c_double
+    else:
+        float_dtype = numpy.dtype(numpy.float32)
+        float_ctype = ctypes.c_float
 
     # Want to support NumPy types in parameters. However, SPAMS expects normal C types. So, we convert them in advance.
     # This was needed for the Ilastik based GUI.
@@ -442,11 +453,14 @@ def generate_dictionary(new_data, **parameters):
         if isinstance(_v, numpy.integer):
             _v = int(_v)
         elif isinstance(_v, numpy.floating):
-            _v = float(_v)
+            _v = float_ctype(_v).value
         elif isinstance(_v, numpy.bool_):
             _v = bool(_v)
 
         parameters["spams.trainDL"][_k] = _v
+
+    # Requires floating point type.
+    new_data_processed = new_data.astype(float_dtype, copy=False)
 
     # Reshape data into a matrix (each image is now a column vector)
     new_data_processed = expanded_numpy.array_to_matrix(new_data_processed)
