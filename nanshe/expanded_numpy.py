@@ -6,6 +6,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 20, 2014 9:46:45 AM$"
 
 
+import ctypes
 import functools
 import operator
 
@@ -26,6 +27,38 @@ import debugging_tools
 
 # Get the logger
 logger = debugging_tools.logging.getLogger(__name__)
+
+
+@debugging_tools.log_call(logger)
+def to_ctype(a_type):
+    """
+        Takes a numpy.dtype or any type that can be converted to a numpy.dtype and returns its equivalent ctype.
+
+        Args:
+            a_type(type):      the type to find an equivalent ctype to.
+
+        Returns:
+            (ctype):           the ctype equivalent to the dtype provided.
+
+        Examples:
+            >>> to_ctype(float)
+            <class 'ctypes.c_double'>
+
+            >>> to_ctype(numpy.float64)
+            <class 'ctypes.c_double'>
+
+            >>> to_ctype(numpy.float32)
+            <class 'ctypes.c_float'>
+
+            >>> to_ctype(numpy.dtype(numpy.float32))
+            <class 'ctypes.c_float'>
+
+            >>> to_ctype(int)
+            <class 'ctypes.c_long'>
+    """
+
+    return(type(numpy.ctypeslib.as_ctypes(numpy.array(0, dtype=a_type))))
+
 
 
 @debugging_tools.log_call(logger)
