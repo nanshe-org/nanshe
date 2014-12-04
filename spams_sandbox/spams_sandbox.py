@@ -145,7 +145,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
 
 
         Args:
-            X(numpy.matrix)                         a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).
+            X(numpy.matrix):                        a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).
             *args(list):                            a list of position arguments to pass to spams.trainDL.
             **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
 
