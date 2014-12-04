@@ -104,6 +104,7 @@ def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
 
 
         Args:
+            output_array(multiprocessing.Array):    shared memory array to store results in.
             *args(list):                            a list of position arguments to pass to spams.trainDL.
             *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
 
