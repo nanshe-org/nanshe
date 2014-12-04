@@ -126,7 +126,6 @@ def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
 
     # Create a numpy.ndarray that uses the shared buffer.
     result = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, kwargs["K"]))
-    result = numpy.asmatrix(result)
 
     result[:] = spams.trainDL(*args, **kwargs)
 
