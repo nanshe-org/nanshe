@@ -228,10 +228,10 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g3) == 0)
 
     def test_run_multiprocessing_array_spams_trainDL_1(self):
-        output_array_size = self.g.shape[0] * self.g.shape[1]
-        output_array = multiprocessing.Array(ctypes.c_double, output_array_size)
+        result_array_size = self.g.shape[0] * self.g.shape[1]
+        result_array = multiprocessing.Array(ctypes.c_double, result_array_size)
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(output_array,
+        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array,
                                                                             self.g.astype(float),
                                                                             **{
                                                                                     "gamma2" : 0,
@@ -249,7 +249,7 @@ class TestSpamsSandbox(object):
                                                                                      "mode" : 2
                                                                                }
         )
-        d = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, self.g.shape[1])).copy()
+        d = numpy.frombuffer(result_array.get_obj(), dtype = ctypes.c_double).reshape((-1, self.g.shape[1])).copy()
         d = (d != 0)
 
         self.g = self.g.transpose()
@@ -277,10 +277,10 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g) == 0)
 
     def test_run_multiprocessing_array_spams_trainDL_2(self):
-        output_array_size = self.g3.shape[0] * self.g3.shape[1]
-        output_array = multiprocessing.Array(ctypes.c_double, output_array_size)
+        result_array_size = self.g3.shape[0] * self.g3.shape[1]
+        result_array = multiprocessing.Array(ctypes.c_double, result_array_size)
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(output_array,
+        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array,
                                                                             self.g3.astype(float),
                                                                             **{
                                                                                     "gamma2" : 0,
@@ -298,7 +298,7 @@ class TestSpamsSandbox(object):
                                                                                      "mode" : 2
                                                                                }
         )
-        d3 = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, self.g3.shape[1])).copy()
+        d3 = numpy.frombuffer(result_array.get_obj(), dtype = ctypes.c_double).reshape((-1, self.g3.shape[1])).copy()
         d3 = (d3 != 0)
 
         self.g3 = self.g3.transpose()
