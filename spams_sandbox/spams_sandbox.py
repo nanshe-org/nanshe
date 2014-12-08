@@ -90,7 +90,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
 
 
 #@nanshe.advanced_debugging.log_call(logger)
-def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X, *args, **kwargs):
+def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_array_type, X_array, *args, **kwargs):
     """
         Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
 
@@ -106,7 +106,8 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X, 
         Args:
             result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with properties needed by result_array.
             result_array(multiprocessing.RawArray):         shared memory array to store results in.
-            X(numpy.ndarray):                               currently uses numpy ndarray as input.
+            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with properties needed by X_array.
+            X_array(numpy.ndarray):                         currently uses numpy ndarray as input.
             *args(list):                                    a list of position arguments to pass to spams.trainDL.
             *kwargs(dict):                                  a dictionary of keyword arguments to pass to spams.trainDL.
 
@@ -124,6 +125,19 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X, 
     # Also, it is not needed outside of calling this function.
     import spams
 
+
+    # Construct X from shared array.
+    X_dtype = X_array_type._dtype_
+    X_shape = X_array_type._shape_
+    X_flags = numpy.core.multiarray.flagsobj(X_array_type._flags_)
+
+    X = numpy.frombuffer(X_array, dtype = X_dtype).reshape(X_shape)
+    X.setflags(X_flags)
+
+    if "F_CONTIGUOUS" in X_array_type.__name__:
+        X = numpy.asfortranarray(X)
+    elif "C_CONTIGUOUS" in X_array_type.__name__:
+        X = numpy.ascontiguousarray(X)
 
     # Construct the result to use the shared buffer.
     result_dtype = result_array_type._dtype_
@@ -176,6 +190,21 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     import numpy
 
 
+    # Types for X_array
+    X_array_type = numpy.ctypeslib.ndpointer(dtype=X.dtype, ndim=X.ndim, shape=X.shape, flags=X.flags)
+    X_array_ctype = type(numpy.ctypeslib.as_ctypes(X_array_type._dtype_.type(0)[()]))
+
+    # Create a shared array to contain X
+    X_array = multiprocessing.Array(X_array_ctype,
+                                    X.size,
+                                    lock=False)
+
+    # Copy over the contents of X.
+    X_array_numpy = numpy.frombuffer(X_array, dtype=X_array_type._dtype_).reshape(X_array_type._shape_)
+    X_array_numpy[:] = X
+    X_array_numpy = None
+
+
     # Types for result_array
     result_array_type = numpy.ctypeslib.ndpointer(dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], kwargs["K"]))
     result_array_ctype = type(numpy.ctypeslib.as_ctypes(result_array_type._dtype_.type(0)[()]))
@@ -186,7 +215,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
                                          lock=False)
 
 
-    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array_type, result_array, X,) + args, kwargs = kwargs)
+    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array_type, result_array, X_array_type, X_array,) + args, kwargs = kwargs)
     p.start()
     p.join()
 
