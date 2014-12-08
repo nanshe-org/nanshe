@@ -90,7 +90,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
 
 
 #@nanshe.advanced_debugging.log_call(logger)
-def run_multiprocessing_array_spams_trainDL(result_array, X, *args, **kwargs):
+def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X, *args, **kwargs):
     """
         Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
 
@@ -104,10 +104,11 @@ def run_multiprocessing_array_spams_trainDL(result_array, X, *args, **kwargs):
 
 
         Args:
-            result_array(multiprocessing.RawArray):     shared memory array to store results in.
-            X(numpy.ndarray):                           currently uses numpy ndarray as input.
-            *args(list):                                a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                              a dictionary of keyword arguments to pass to spams.trainDL.
+            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with properties needed by result_array.
+            result_array(multiprocessing.RawArray):         shared memory array to store results in.
+            X(numpy.ndarray):                               currently uses numpy ndarray as input.
+            *args(list):                                    a list of position arguments to pass to spams.trainDL.
+            *kwargs(dict):                                  a dictionary of keyword arguments to pass to spams.trainDL.
 
         Note:
             This is somewhat faster than using multiprocessing.Queue.
@@ -124,8 +125,18 @@ def run_multiprocessing_array_spams_trainDL(result_array, X, *args, **kwargs):
     import spams
 
 
-    # Create a numpy.ndarray that uses the shared buffer.
-    result = numpy.frombuffer(result_array, dtype = X.dtype).reshape((-1, kwargs["K"]))
+    # Construct the result to use the shared buffer.
+    result_dtype = result_array_type._dtype_
+    result_shape = result_array_type._shape_
+    result_flags = numpy.core.multiarray.flagsobj(result_array_type._flags_)
+
+    result = numpy.frombuffer(result_array, dtype = result_dtype).reshape(result_shape)
+    result.setflags(result_flags)
+
+    if "F_CONTIGUOUS" in result_array_type.__name__:
+        result = numpy.asfortranarray(result)
+    elif "C_CONTIGUOUS" in result_array_type.__name__:
+        result = numpy.ascontiguousarray(result)
 
 
     result[:] = spams.trainDL(X, *args, **kwargs)
@@ -165,15 +176,17 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     import numpy
 
 
-    result_array_size = X.shape[0] * kwargs["K"]
-    result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.array(0, dtype=X.dtype)))
+    # Types for result_array
+    result_array_type = numpy.ctypeslib.ndpointer(dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], kwargs["K"]))
+    result_array_ctype = type(numpy.ctypeslib.as_ctypes(result_array_type._dtype_.type(0)[()]))
 
+    # Create a shared array to contain the result
     result_array = multiprocessing.Array(result_array_ctype,
-                                         result_array_size,
+                                         numpy.product(result_array_type._shape_),
                                          lock=False)
 
 
-    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array, X,) + args, kwargs = kwargs)
+    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array_type, result_array, X,) + args, kwargs = kwargs)
     p.start()
     p.join()
 
@@ -181,7 +194,8 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
         raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
 
 
-    result = numpy.frombuffer(result_array, dtype = result_array_ctype).reshape((-1, kwargs["K"]))
+    # Reconstruct the result from the output array
+    result = numpy.frombuffer(result_array, dtype = result_array_type._dtype_).reshape(result_array_type._shape_)
     result = result.copy()
 
     return(result)
