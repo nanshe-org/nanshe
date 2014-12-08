@@ -123,8 +123,10 @@ def run_multiprocessing_array_spams_trainDL(result_array, X, *args, **kwargs):
     # Also, it is not needed outside of calling this function.
     import spams
 
+
     # Create a numpy.ndarray that uses the shared buffer.
     result = numpy.frombuffer(result_array.get_obj(), dtype = X.dtype).reshape((-1, kwargs["K"]))
+
 
     result[:] = spams.trainDL(X, *args, **kwargs)
 
@@ -162,11 +164,13 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     # Just to make sure this exists in the new process. Shouldn't be necessary.
     import numpy
 
+
     result_array_size = X.shape[0] * kwargs["K"]
     result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.array(0, dtype=X.dtype)))
 
     result_array = multiprocessing.Array(result_array_ctype,
                                          result_array_size)
+
 
     p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array, X,) + args, kwargs = kwargs)
     p.start()
@@ -174,6 +178,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
 
     if p.exitcode != 0:
         raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
+
 
     result = numpy.frombuffer(result_array.get_obj(), dtype = result_array_ctype).reshape((-1, kwargs["K"]))
     result = result.copy()
