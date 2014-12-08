@@ -228,11 +228,24 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g3) == 0)
 
     def test_run_multiprocessing_array_spams_trainDL_1(self):
-        result_array_size = self.g.shape[0] * self.g.shape[1]
-        result_array = multiprocessing.Array(ctypes.c_double, result_array_size, lock=False)
+        float_type = numpy.float64
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array,
-                                                                            self.g.astype(float),
+        g_array_type = numpy.ctypeslib.ndpointer(dtype=float_type, ndim=self.g.ndim, shape=self.g.shape, flags=self.g.flags)
+        g_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(g_array_type._dtype_.type).type(0)[()]))
+        g_array = multiprocessing.Array(g_array_ctype, numpy.product(g_array_type._shape_), lock=False)
+
+        g_numpy_array = numpy.frombuffer(g_array, dtype=g_array_type._dtype_).reshape(g_array_type._shape_)
+        g_numpy_array[:] = self.g
+        g_numpy_array = None
+
+        result_array_type = numpy.ctypeslib.ndpointer(dtype=float_type, ndim=2, shape=(self.g.shape[0], self.g.shape[1]))
+        result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(result_array_type._dtype_.type).type(0)[()]))
+        result_array = multiprocessing.Array(result_array_ctype, numpy.product(result_array_type._shape_), lock=False)
+
+        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
+                                                                            result_array,
+                                                                            g_array_type,
+                                                                            g_array,
                                                                             **{
                                                                                     "gamma2" : 0,
                                                                                     "gamma1" : 0,
@@ -249,7 +262,7 @@ class TestSpamsSandbox(object):
                                                                                      "mode" : 2
                                                                                }
         )
-        d = numpy.frombuffer(result_array, dtype = ctypes.c_double).reshape((-1, self.g.shape[1])).copy()
+        d = numpy.frombuffer(result_array, dtype = float_type).reshape(result_array_type._shape_).copy()
         d = (d != 0)
 
         self.g = self.g.transpose()
@@ -277,11 +290,24 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g) == 0)
 
     def test_run_multiprocessing_array_spams_trainDL_2(self):
-        result_array_size = self.g3.shape[0] * self.g3.shape[1]
-        result_array = multiprocessing.Array(ctypes.c_double, result_array_size, lock=False)
+        float_type = numpy.float64
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array,
-                                                                            self.g3.astype(float),
+        g3_array_type = numpy.ctypeslib.ndpointer(dtype=float_type, ndim=self.g3.ndim, shape=self.g3.shape, flags=self.g3.flags)
+        g3_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(g3_array_type._dtype_.type).type(0)[()]))
+        g3_array = multiprocessing.Array(g3_array_ctype, numpy.product(g3_array_type._shape_), lock=False)
+
+        g3_numpy_array = numpy.frombuffer(g3_array, dtype=g3_array_type._dtype_).reshape(g3_array_type._shape_)
+        g3_numpy_array[:] = self.g3
+        g3_numpy_array = None
+
+        result_array_type = numpy.ctypeslib.ndpointer(dtype=float_type, ndim=2, shape=(self.g3.shape[0], self.g3.shape[1]))
+        result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(result_array_type._dtype_.type).type(0)[()]))
+        result_array = multiprocessing.Array(result_array_ctype, numpy.product(result_array_type._shape_), lock=False)
+
+        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
+                                                                            result_array,
+                                                                            g3_array_type,
+                                                                            g3_array,
                                                                             **{
                                                                                     "gamma2" : 0,
                                                                                     "gamma1" : 0,
@@ -298,7 +324,7 @@ class TestSpamsSandbox(object):
                                                                                      "mode" : 2
                                                                                }
         )
-        d3 = numpy.frombuffer(result_array, dtype = ctypes.c_double).reshape((-1, self.g3.shape[1])).copy()
+        d3 = numpy.frombuffer(result_array, dtype = float_type).reshape(result_array_type._shape_).copy()
         d3 = (d3 != 0)
 
         self.g3 = self.g3.transpose()
