@@ -104,10 +104,10 @@ def run_multiprocessing_array_spams_trainDL(result_array, X, *args, **kwargs):
 
 
         Args:
-            result_array(multiprocessing.Array):    shared memory array to store results in.
-            X(numpy.ndarray):                       currently uses numpy ndarray as input.
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
+            result_array(multiprocessing.RawArray):     shared memory array to store results in.
+            X(numpy.ndarray):                           currently uses numpy ndarray as input.
+            *args(list):                                a list of position arguments to pass to spams.trainDL.
+            *kwargs(dict):                              a dictionary of keyword arguments to pass to spams.trainDL.
 
         Note:
             This is somewhat faster than using multiprocessing.Queue.
@@ -125,7 +125,7 @@ def run_multiprocessing_array_spams_trainDL(result_array, X, *args, **kwargs):
 
 
     # Create a numpy.ndarray that uses the shared buffer.
-    result = numpy.frombuffer(result_array.get_obj(), dtype = X.dtype).reshape((-1, kwargs["K"]))
+    result = numpy.frombuffer(result_array, dtype = X.dtype).reshape((-1, kwargs["K"]))
 
 
     result[:] = spams.trainDL(X, *args, **kwargs)
@@ -169,7 +169,8 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.array(0, dtype=X.dtype)))
 
     result_array = multiprocessing.Array(result_array_ctype,
-                                         result_array_size)
+                                         result_array_size,
+                                         lock=False)
 
 
     p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array, X,) + args, kwargs = kwargs)
@@ -180,7 +181,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
         raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
 
 
-    result = numpy.frombuffer(result_array.get_obj(), dtype = result_array_ctype).reshape((-1, kwargs["K"]))
+    result = numpy.frombuffer(result_array, dtype = result_array_ctype).reshape((-1, kwargs["K"]))
     result = result.copy()
 
     return(result)
