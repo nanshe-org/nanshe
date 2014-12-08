@@ -90,7 +90,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
 
 
 #@nanshe.advanced_debugging.log_call(logger)
-def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
+def run_multiprocessing_array_spams_trainDL(result_array, *args, **kwargs):
     """
         Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
 
@@ -104,7 +104,7 @@ def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
 
 
         Args:
-            output_array(multiprocessing.Array):    shared memory array to store results in.
+            result_array(multiprocessing.Array):    shared memory array to store results in.
             *args(list):                            a list of position arguments to pass to spams.trainDL.
             *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
 
@@ -125,7 +125,7 @@ def run_multiprocessing_array_spams_trainDL(output_array, *args, **kwargs):
     import spams
 
     # Create a numpy.ndarray that uses the shared buffer.
-    result = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, kwargs["K"]))
+    result = numpy.frombuffer(result_array.get_obj(), dtype = ctypes.c_double).reshape((-1, kwargs["K"]))
 
     result[:] = spams.trainDL(*args, **kwargs)
 
@@ -165,17 +165,17 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     # Just to make sure this exists in the new process. Shouldn't be necessary.
     import numpy
 
-    output_array_size = X.shape[0] * kwargs["K"]
-    output_array = multiprocessing.Array(ctypes.c_double, output_array_size)
+    result_array_size = X.shape[0] * kwargs["K"]
+    result_array = multiprocessing.Array(ctypes.c_double, result_array_size)
 
-    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (output_array, X,) + args, kwargs = kwargs)
+    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array, X,) + args, kwargs = kwargs)
     p.start()
     p.join()
 
     if p.exitcode != 0:
         raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
 
-    result = numpy.frombuffer(output_array.get_obj(), dtype = ctypes.c_double).reshape((-1, kwargs["K"]))
+    result = numpy.frombuffer(result_array.get_obj(), dtype = ctypes.c_double).reshape((-1, kwargs["K"]))
     result = result.copy()
 
     return(result)
