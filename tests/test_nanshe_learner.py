@@ -106,7 +106,7 @@ class TestNansheLearner(object):
                     "spams.trainDL" : {
                         "gamma2" : 0,
                         "gamma1" : 0,
-                        "numThreads" : -1,
+                        "numThreads" : 1,
                         "K" : 10,
                         "iter" : 100,
                         "modeD" : 0,
@@ -197,7 +197,7 @@ class TestNansheLearner(object):
                     "spams.trainDL" : {
                         "gamma2" : 0,
                         "gamma1" : 0,
-                        "numThreads" : -1,
+                        "numThreads" : 1,
                         "K" : 10,
                         "iter" : 100,
                         "modeD" : 0,
@@ -268,7 +268,7 @@ class TestNansheLearner(object):
                             "K" : 10,
                             "gamma2": 0,
                             "gamma1": 0,
-                            "numThreads": -1,
+                            "numThreads": 1,
                             "batchsize": 256,
                             "iter": 100,
                             "lambda1": 0.2,
@@ -430,7 +430,7 @@ class TestNansheLearner(object):
                         "spams.trainDL" : {
                             "gamma2" : 0,
                             "gamma1" : 0,
-                            "numThreads" : -1,
+                            "numThreads" : 1,
                             "K" : 10,
                             "iter" : 100,
                             "modeD" : 0,
@@ -505,7 +505,7 @@ class TestNansheLearner(object):
                             "K" : 10,
                             "gamma2": 0,
                             "gamma1": 0,
-                            "numThreads": -1,
+                            "numThreads": 1,
                             "batchsize": 256,
                             "iter": 100,
                             "lambda1": 0.2,
@@ -670,7 +670,7 @@ class TestNansheLearner(object):
                         "spams.trainDL" : {
                             "gamma2" : 0,
                             "gamma1" : 0,
-                            "numThreads" : -1,
+                            "numThreads" : 1,
                             "K" : 10,
                             "iter" : 100,
                             "modeD" : 0,
