@@ -43,6 +43,9 @@ import vigra
 import vigra.filters
 import vigra.analysis
 
+# Contains an optimized linear rank order filter.
+import rank_filter
+
 # Need in order to have logging information no matter what.
 import debugging_tools
 
@@ -243,11 +246,11 @@ def extract_f0(new_data,
     if (which_quantile_len > 1):
         raise Exception("Provided more than one quantile \"" + repr(which_quantile) + "\".")
 
-    vigra.filters.lineRankOrderFilter(new_data_f0_estimation,
-                                      ctypes.c_ulong(half_window_size).value,
-                                      which_quantile,
-                                      ctypes.c_uint(0).value,
-                                      out = new_data_f0_estimation)
+    rank_filter.lineRankOrderFilter(new_data_f0_estimation,
+                                    ctypes.c_ulong(half_window_size).value,
+                                    which_quantile,
+                                    ctypes.c_uint(0).value,
+                                    out = new_data_f0_estimation)
 
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
                                                                      1.0,
