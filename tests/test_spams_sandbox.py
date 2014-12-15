@@ -49,7 +49,7 @@ class TestSpamsSandbox(object):
                                                                             **{
                                                                                     "gamma2" : 0,
                                                                                     "gamma1" : 0,
-                                                                                     "numThreads" : -1,
+                                                                                     "numThreads" : 1,
                                                                                      "K" : self.g.shape[1],
                                                                                      "iter" : 10,
                                                                                      "modeD" : 0,
@@ -98,7 +98,7 @@ class TestSpamsSandbox(object):
                                                                             **{
                                                                                     "gamma2" : 0,
                                                                                     "gamma1" : 0,
-                                                                                     "numThreads" : -1,
+                                                                                     "numThreads" : 1,
                                                                                      "K" : self.g3.shape[1],
                                                                                      "iter" : 10,
                                                                                      "modeD" : 0,
@@ -144,7 +144,7 @@ class TestSpamsSandbox(object):
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
-                                                                                         "numThreads" : -1,
+                                                                                         "numThreads" : 1,
                                                                                          "K" : self.g.shape[1],
                                                                                          "iter" : 10,
                                                                                          "modeD" : 0,
@@ -188,7 +188,7 @@ class TestSpamsSandbox(object):
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
-                                                                                         "numThreads" : -1,
+                                                                                         "numThreads" : 1,
                                                                                          "K" : self.g3.shape[1],
                                                                                          "iter" : 10,
                                                                                          "modeD" : 0,
@@ -249,7 +249,7 @@ class TestSpamsSandbox(object):
                                                                             **{
                                                                                     "gamma2" : 0,
                                                                                     "gamma1" : 0,
-                                                                                     "numThreads" : -1,
+                                                                                     "numThreads" : 1,
                                                                                      "K" : self.g.shape[1],
                                                                                      "iter" : 10,
                                                                                      "modeD" : 0,
@@ -311,7 +311,7 @@ class TestSpamsSandbox(object):
                                                                             **{
                                                                                     "gamma2" : 0,
                                                                                     "gamma1" : 0,
-                                                                                     "numThreads" : -1,
+                                                                                     "numThreads" : 1,
                                                                                      "K" : self.g3.shape[1],
                                                                                      "iter" : 10,
                                                                                      "modeD" : 0,
@@ -356,7 +356,7 @@ class TestSpamsSandbox(object):
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
-                                                                                         "numThreads" : -1,
+                                                                                         "numThreads" : 1,
                                                                                          "K" : self.g.shape[1],
                                                                                          "iter" : 10,
                                                                                          "modeD" : 0,
@@ -400,7 +400,7 @@ class TestSpamsSandbox(object):
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
-                                                                                         "numThreads" : -1,
+                                                                                         "numThreads" : 1,
                                                                                          "K" : self.g3.shape[1],
                                                                                          "iter" : 10,
                                                                                          "modeD" : 0,
@@ -444,7 +444,7 @@ class TestSpamsSandbox(object):
                                                            **{
                                                                 "gamma2" : 0,
                                                                 "gamma1" : 0,
-                                                                "numThreads" : -1,
+                                                                "numThreads" : 1,
                                                                 "K" : self.g.shape[1],
                                                                 "iter" : 10,
                                                                 "modeD" : 0,
@@ -488,7 +488,7 @@ class TestSpamsSandbox(object):
                                                            **{
                                                                 "gamma2" : 0,
                                                                 "gamma1" : 0,
-                                                                "numThreads" : -1,
+                                                                "numThreads" : 1,
                                                                 "K" : self.g3.shape[1],
                                                                 "iter" : 10,
                                                                 "modeD" : 0,
