@@ -638,7 +638,7 @@ class TestAdvancedImageProcessing(object):
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
                                                                                             "gamma1" : 0,
-                                                                                             "numThreads" : -1,
+                                                                                             "numThreads" : 1,
                                                                                              "K" : len(g),
                                                                                              "iter" : 10,
                                                                                              "modeD" : 0,
@@ -690,7 +690,7 @@ class TestAdvancedImageProcessing(object):
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
                                                                                             "gamma1" : 0,
-                                                                                             "numThreads" : -1,
+                                                                                             "numThreads" : 1,
                                                                                              "K" : len(g),
                                                                                              "iter" : 10,
                                                                                              "modeD" : 0,
@@ -742,7 +742,7 @@ class TestAdvancedImageProcessing(object):
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
                                                                                             "gamma1" : 0,
-                                                                                             "numThreads" : -1,
+                                                                                             "numThreads" : 1,
                                                                                              "K" : len(g),
                                                                                              "iter" : 10,
                                                                                              "modeD" : 0,
@@ -794,7 +794,7 @@ class TestAdvancedImageProcessing(object):
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
                                                                                             "gamma1" : 0,
-                                                                                             "numThreads" : -1,
+                                                                                             "numThreads" : 1,
                                                                                              "K" : len(g),
                                                                                              "iter" : 10,
                                                                                              "modeD" : 0,
