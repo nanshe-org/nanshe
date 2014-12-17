@@ -456,7 +456,7 @@ class TestNansheLearner(object):
                 "half_window_shape" : [50, 20, 20],
 
                 "use_drmaa" : True,
-                "num_drmaa_cores" : 8,
+                "num_drmaa_cores" : 1,
 
                 "debug" : True,
 
@@ -593,7 +593,7 @@ class TestNansheLearner(object):
                 "half_window_shape" : [50, 20, 20, 20],
 
                 "use_drmaa" : True,
-                "num_drmaa_cores" : 8,
+                "num_drmaa_cores" : 1,
 
                 "debug" : True,
 
