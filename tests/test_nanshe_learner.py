@@ -973,9 +973,6 @@ class TestNansheLearner(object):
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
-        shutil.copy(self.hdf5_output_3D_filename,
-                    os.path.join(os.getcwd(), os.path.basename(self.hdf5_output_3D_filename)))
-
         with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
             assert("neurons" in fid)
 
@@ -1020,9 +1017,6 @@ class TestNansheLearner(object):
         assert(0 == nanshe.nanshe_learner.main(*argv))
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
-
-        shutil.copy(self.hdf5_output_3D_filename,
-                    os.path.join(os.getcwd(), os.path.basename(self.hdf5_output_3D_filename)))
 
         with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
             assert("neurons" in fid)
