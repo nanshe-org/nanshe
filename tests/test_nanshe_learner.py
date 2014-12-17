@@ -752,9 +752,6 @@ class TestNansheLearner(object):
                                                                                                    ramp,
                                                                                                    self.bases_images[i])
 
-        print self.image_stack[self.image_stack.nonzero()]
-        print self.image_stack.shape
-
         self.space3 = numpy.array([60, 60, 60])
         self.radii3 = numpy.array([4, 3, 3, 3, 4, 3])
         self.magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
@@ -786,9 +783,6 @@ class TestNansheLearner(object):
             self.image_stack3[image_stack_slice3] = nanshe.expanded_numpy.all_permutations_operation(operator.mul,
                                                                                                    ramp,
                                                                                                    self.bases_images3[i])
-
-        print self.image_stack3[self.image_stack3.nonzero()]
-        print self.image_stack3.shape
 
         with h5py.File(self.hdf5_input_filename, "w") as fid:
             fid["images"] = self.image_stack
