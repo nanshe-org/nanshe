@@ -52,6 +52,14 @@ nanshe.advanced_image_processing module
     :undoc-members:
     :show-inheritance:
 
+nanshe.binary_image_processing module
+-------------------------------------
+
+.. automodule:: nanshe.binary_image_processing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 nanshe.debugging_tools module
 -----------------------------
 
