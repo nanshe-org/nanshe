@@ -6,4 +6,5 @@
 
    nanshe
    spams_sandbox
+   synthetic_data
    tests
