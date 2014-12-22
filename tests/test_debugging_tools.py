@@ -6,7 +6,7 @@ import StringIO
 import logging
 import re
 
-import nanshe.debugging_tools
+import nanshe.nanshe.debugging_tools
 
 class TestDebuggingTools(object):
     def setup(self):
@@ -30,7 +30,7 @@ class TestDebuggingTools(object):
         """DEBUG:debugging_tools:Exiting callable: "test"\.\n""" + \
         """DEBUG:debugging_tools:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
-        @nanshe.debugging_tools.log_call(self.logger)
+        @nanshe.nanshe.debugging_tools.log_call(self.logger)
         def test(a, b = 5):
             return(a + b)
 
@@ -49,7 +49,7 @@ class TestDebuggingTools(object):
         """DEBUG:debugging_tools:Exiting callable: "test"\.\n""" + \
         """DEBUG:debugging_tools:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
-        @nanshe.debugging_tools.log_call(self.logger, to_log_call = True)
+        @nanshe.nanshe.debugging_tools.log_call(self.logger, to_log_call = True)
         def test(a, b = 5):
             return(a + b)
 
@@ -66,7 +66,7 @@ class TestDebuggingTools(object):
     def test_log_call_3(self):
         expected_result = """"""
 
-        @nanshe.debugging_tools.log_call(self.logger, to_log_call = False)
+        @nanshe.nanshe.debugging_tools.log_call(self.logger, to_log_call = False)
         def test(a, b = 5):
             return(a + b)
 
@@ -83,7 +83,7 @@ class TestDebuggingTools(object):
     def test_log_call_4(self):
         expected_result = """"""
 
-        @nanshe.debugging_tools.log_call(self.logger, to_log_call = True)
+        @nanshe.nanshe.debugging_tools.log_call(self.logger, to_log_call = True)
         def test(a, b = 5):
             return(a + b)
 
@@ -105,7 +105,7 @@ class TestDebuggingTools(object):
         """DEBUG:debugging_tools:Exiting callable: "test"\.\n""" + \
         """DEBUG:debugging_tools:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
-        @nanshe.debugging_tools.log_call(self.logger, to_print_args = True)
+        @nanshe.nanshe.debugging_tools.log_call(self.logger, to_print_args = True)
         def test(a, b = 5):
             return(a + b)
 
@@ -124,7 +124,7 @@ class TestDebuggingTools(object):
         """DEBUG:debugging_tools:Arguments: "('c',)\"\n""" + \
         """Keyword Arguments: "{}".\n"""
 
-        @nanshe.debugging_tools.log_call(self.logger, to_print_args = True)
+        @nanshe.nanshe.debugging_tools.log_call(self.logger, to_print_args = True)
         def test(a, b = 5):
             return(a + b)
 
@@ -150,7 +150,7 @@ class TestDebuggingTools(object):
         """DEBUG:debugging_tools:Exiting callable: "__call__"\.\n""" + \
         """DEBUG:debugging_tools:Run time for callable: "__call__" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
-        @nanshe.debugging_tools.log_class(self.logger)
+        @nanshe.nanshe.debugging_tools.log_class(self.logger)
         class Test(object):
             def __init__(self, a, b = 5):
                 self.a = a
@@ -191,7 +191,7 @@ class TestDebuggingTools(object):
             "DEBUG:debugging_tools:Exiting callable: \"__call__\"\.\n" + \
             "DEBUG:debugging_tools:Run time for callable: \"__call__\" is \"[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s\"\.\n"
 
-        @nanshe.debugging_tools.log_class(self.logger)
+        @nanshe.nanshe.debugging_tools.log_class(self.logger)
         class Test(object):
             def __init__(self, a, b = 5):
                 self.a = a
@@ -230,7 +230,7 @@ class TestDebuggingTools(object):
 
         expected_result_2 = """"""
 
-        @nanshe.debugging_tools.log_class(self.logger)
+        @nanshe.nanshe.debugging_tools.log_class(self.logger)
         class Test(object):
             def __init__(self, a, b = 5):
                 self.a = a

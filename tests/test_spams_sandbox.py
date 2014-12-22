@@ -7,10 +7,9 @@ import multiprocessing
 
 import numpy
 
-import spams_sandbox
-import spams_sandbox.spams_sandbox
+import nanshe.spams_sandbox.spams_sandbox
 
-import synthetic_data.synthetic_data
+import nanshe.synthetic_data.synthetic_data
 
 
 class TestSpamsSandbox(object):
@@ -27,14 +26,14 @@ class TestSpamsSandbox(object):
         self.space3 = numpy.array((100, 100, 100))
         self.radii = numpy.array((5, 6, 7))
 
-        self.g = synthetic_data.synthetic_data.generate_hypersphere_masks(self.space, self.p, self.radii)
+        self.g = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(self.space, self.p, self.radii)
 
         self.g = self.g.reshape((self.g.shape[0], -1))
         self.g = self.g.transpose()
         self.g = numpy.asmatrix(self.g)
         self.g = numpy.asfortranarray(self.g)
 
-        self.g3 = synthetic_data.synthetic_data.generate_hypersphere_masks(self.space3, self.p3, self.radii)
+        self.g3 = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(self.space3, self.p3, self.radii)
 
         self.g3 = self.g3.reshape((self.g3.shape[0], -1))
         self.g3 = self.g3.transpose()
@@ -44,7 +43,7 @@ class TestSpamsSandbox(object):
     def test_run_multiprocessing_queue_spams_trainDL_1(self):
         out_queue = multiprocessing.Queue()
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL(out_queue,
+        nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL(out_queue,
                                                                             self.g.astype(float),
                                                                             **{
                                                                                     "gamma2" : 0,
@@ -93,7 +92,7 @@ class TestSpamsSandbox(object):
     def test_run_multiprocessing_queue_spams_trainDL_2(self):
         out_queue = multiprocessing.Queue()
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL(out_queue,
+        nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL(out_queue,
                                                                             self.g3.astype(float),
                                                                             **{
                                                                                     "gamma2" : 0,
@@ -140,7 +139,7 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_queue_spams_trainDL_1(self):
-        d = spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g.astype(float),
+        d = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g.astype(float),
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
@@ -184,7 +183,7 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g) == 0)
 
     def test_call_multiprocessing_queue_spams_trainDL_2(self):
-        d3 = spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g3.astype(float),
+        d3 = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g3.astype(float),
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
@@ -242,7 +241,7 @@ class TestSpamsSandbox(object):
         result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(result_array_type._dtype_.type).type(0)[()]))
         result_array = multiprocessing.Array(result_array_ctype, numpy.product(result_array_type._shape_), lock=False)
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
+        nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
                                                                             result_array,
                                                                             g_array_type,
                                                                             g_array,
@@ -304,7 +303,7 @@ class TestSpamsSandbox(object):
         result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(result_array_type._dtype_.type).type(0)[()]))
         result_array = multiprocessing.Array(result_array_ctype, numpy.product(result_array_type._shape_), lock=False)
 
-        spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
+        nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
                                                                             result_array,
                                                                             g3_array_type,
                                                                             g3_array,
@@ -352,7 +351,7 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_array_spams_trainDL_1(self):
-        d = spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g.astype(float),
+        d = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g.astype(float),
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
@@ -396,7 +395,7 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g) == 0)
 
     def test_call_multiprocessing_array_spams_trainDL_2(self):
-        d3 = spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g3.astype(float),
+        d3 = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g3.astype(float),
                                                                                  **{
                                                                                         "gamma2" : 0,
                                                                                         "gamma1" : 0,
@@ -440,7 +439,7 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g3) == 0)
 
     def test_call_spams_trainDL_1(self):
-        d = spams_sandbox.spams_sandbox.call_spams_trainDL(self.g.astype(float),
+        d = nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL(self.g.astype(float),
                                                            **{
                                                                 "gamma2" : 0,
                                                                 "gamma1" : 0,
@@ -484,7 +483,7 @@ class TestSpamsSandbox(object):
         assert(len(unmatched_g) == 0)
 
     def test_call_spams_trainDL_2(self):
-        d3 = spams_sandbox.spams_sandbox.call_spams_trainDL(self.g3.astype(float),
+        d3 = nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL(self.g3.astype(float),
                                                            **{
                                                                 "gamma2" : 0,
                                                                 "gamma1" : 0,

@@ -12,12 +12,12 @@ import h5py
 import nose
 import numpy
 
-import nanshe.expanded_numpy
-import nanshe.HDF5_recorder
+import nanshe.nanshe.expanded_numpy
+import nanshe.nanshe.HDF5_recorder
 
-import synthetic_data.synthetic_data
+import nanshe.synthetic_data.synthetic_data
 
-import nanshe.nanshe_learner
+import nanshe.nanshe.nanshe_learner
 
 
 class TestNansheLearner(object):
@@ -730,8 +730,8 @@ class TestNansheLearner(object):
         self.bases_indices = [[1, 3, 4], [0, 2], [5]]
         self.linspace_length = 25
 
-        self.masks = synthetic_data.synthetic_data.generate_hypersphere_masks(self.space, self.points, self.radii)
-        self.images = synthetic_data.synthetic_data.generate_gaussian_images(self.space, self.points, self.radii/3.0, self.magnitudes) * self.masks
+        self.masks = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(self.space, self.points, self.radii)
+        self.images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(self.space, self.points, self.radii/3.0, self.magnitudes) * self.masks
 
         self.bases_masks = numpy.zeros((len(self.bases_indices),) + self.masks.shape[1:] , dtype=self.masks.dtype)
         self.bases_images = numpy.zeros((len(self.bases_indices),) + self.images.shape[1:] , dtype=self.images.dtype)
@@ -748,7 +748,7 @@ class TestNansheLearner(object):
         for i in xrange(len(self.bases_images)):
             image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack[image_stack_slice] = nanshe.expanded_numpy.all_permutations_operation(operator.mul,
+            self.image_stack[image_stack_slice] = nanshe.nanshe.expanded_numpy.all_permutations_operation(operator.mul,
                                                                                                    ramp,
                                                                                                    self.bases_images[i])
 
@@ -762,8 +762,8 @@ class TestNansheLearner(object):
                                     [36, 15, 41],
                                     [22, 16, 34]])
 
-        self.masks3 = synthetic_data.synthetic_data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
-        self.images3 = synthetic_data.synthetic_data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
+        self.masks3 = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
+        self.images3 = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
 
         self.bases_masks3 = numpy.zeros((len(self.bases_indices),) + self.masks3.shape[1:] , dtype=self.masks3.dtype)
         self.bases_images3 = numpy.zeros((len(self.bases_indices),) + self.images3.shape[1:] , dtype=self.images3.dtype)
@@ -780,7 +780,7 @@ class TestNansheLearner(object):
         for i in xrange(len(self.bases_images3)):
             image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack3[image_stack_slice3] = nanshe.expanded_numpy.all_permutations_operation(operator.mul,
+            self.image_stack3[image_stack_slice3] = nanshe.nanshe.expanded_numpy.all_permutations_operation(operator.mul,
                                                                                                    ramp,
                                                                                                    self.bases_images3[i])
 
@@ -821,11 +821,11 @@ class TestNansheLearner(object):
             fid.write("\n")
 
     def test_main_1(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_a_block_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
-        assert(0 == nanshe.nanshe_learner.main(*argv))
+        assert(0 == nanshe.nanshe.nanshe_learner.main(*argv))
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -836,7 +836,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -854,11 +854,11 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_main_2(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
-        assert(0 == nanshe.nanshe_learner.main(*argv))
+        assert(0 == nanshe.nanshe.nanshe_learner.main(*argv))
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -869,7 +869,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -899,11 +899,11 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
-        assert(0 == nanshe.nanshe_learner.main(*argv))
+        assert(0 == nanshe.nanshe.nanshe_learner.main(*argv))
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -914,7 +914,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -932,11 +932,11 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_main_4(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_a_block_3D_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
 
-        assert(0 == nanshe.nanshe_learner.main(*argv))
+        assert(0 == nanshe.nanshe.nanshe_learner.main(*argv))
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -947,7 +947,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -965,11 +965,11 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_main_5(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_3D_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
 
-        assert(0 == nanshe.nanshe_learner.main(*argv))
+        assert(0 == nanshe.nanshe.nanshe_learner.main(*argv))
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -980,7 +980,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1010,11 +1010,11 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_3D_drmaa_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
 
-        assert(0 == nanshe.nanshe_learner.main(*argv))
+        assert(0 == nanshe.nanshe.nanshe_learner.main(*argv))
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1025,7 +1025,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1043,7 +1043,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_io_handler_1(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_a_block_filename)
+        nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_a_block_filename)
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -1054,7 +1054,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1072,7 +1072,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_io_handler_2(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_filename)
+        nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_filename)
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -1083,7 +1083,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1113,7 +1113,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_generate_neurons_io_handler_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_drmaa_filename)
+        nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_drmaa_filename)
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -1124,7 +1124,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1142,7 +1142,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_io_handler_4(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_a_block_3D_filename)
+        nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_a_block_3D_filename)
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1153,7 +1153,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1171,7 +1171,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_io_handler_5(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_filename)
+        nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_filename)
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1182,7 +1182,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1212,7 +1212,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_drmaa_filename)
+        nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_drmaa_filename)
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1223,7 +1223,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1241,7 +1241,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_a_block_1(self):
-        nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_a_block)
+        nanshe.nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_a_block)
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -1252,7 +1252,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1270,7 +1270,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_a_block_2(self):
-        nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_a_block_3D)
+        nanshe.nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_a_block_3D)
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1281,7 +1281,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1299,7 +1299,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_blocks_1(self):
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks["generate_neurons_blocks"])
+        nanshe.nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks["generate_neurons_blocks"])
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -1310,7 +1310,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1340,7 +1340,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks_drmaa["generate_neurons_blocks"])
+        nanshe.nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks_drmaa["generate_neurons_blocks"])
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -1351,7 +1351,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1369,7 +1369,7 @@ class TestNansheLearner(object):
         assert(len(unmatched_points) == 0)
 
     def test_generate_neurons_blocks_3(self):
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D["generate_neurons_blocks"])
+        nanshe.nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D["generate_neurons_blocks"])
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1380,7 +1380,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1410,7 +1410,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D_drmaa["generate_neurons_blocks"])
+        nanshe.nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D_drmaa["generate_neurons_blocks"])
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1421,7 +1421,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1443,22 +1443,22 @@ class TestNansheLearner(object):
             output_group = output_file_handle["/"]
 
             # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+            array_debug_recorder = nanshe.nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
                 group_name = "debug",
                 enable = self.config_a_block["debug"],
                 overwrite_group = False,
-                recorder_constructor = nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder
+                recorder_constructor = nanshe.nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder
             )
 
             # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
-                recorder_constructor = nanshe.HDF5_recorder.HDF5ArrayRecorder,
+            resume_logger = nanshe.nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+                recorder_constructor = nanshe.nanshe.HDF5_recorder.HDF5ArrayRecorder,
                 overwrite = True
             )
 
-            nanshe.nanshe_learner.generate_neurons.resume_logger = resume_logger
-            nanshe.nanshe_learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.nanshe_learner.generate_neurons(self.image_stack, **self.config_a_block["generate_neurons"])
+            nanshe.nanshe.nanshe_learner.generate_neurons.resume_logger = resume_logger
+            nanshe.nanshe.nanshe_learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
+            nanshe.nanshe.nanshe_learner.generate_neurons(self.image_stack, **self.config_a_block["generate_neurons"])
 
         assert(os.path.exists(self.hdf5_output_filename))
 
@@ -1469,7 +1469,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1491,22 +1491,22 @@ class TestNansheLearner(object):
             output_group = output_file_handle["/"]
 
             # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+            array_debug_recorder = nanshe.nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
                 group_name = "debug",
                 enable = self.config_a_block["debug"],
                 overwrite_group = False,
-                recorder_constructor = nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder
+                recorder_constructor = nanshe.nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder
             )
 
             # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
-                recorder_constructor = nanshe.HDF5_recorder.HDF5ArrayRecorder,
+            resume_logger = nanshe.nanshe.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+                recorder_constructor = nanshe.nanshe.HDF5_recorder.HDF5ArrayRecorder,
                 overwrite = True
             )
 
-            nanshe.nanshe_learner.generate_neurons.resume_logger = resume_logger
-            nanshe.nanshe_learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.nanshe_learner.generate_neurons(self.image_stack3, **self.config_a_block_3D["generate_neurons"])
+            nanshe.nanshe.nanshe_learner.generate_neurons.resume_logger = resume_logger
+            nanshe.nanshe.nanshe_learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
+            nanshe.nanshe.nanshe_learner.generate_neurons(self.image_stack3, **self.config_a_block_3D["generate_neurons"])
 
         assert(os.path.exists(self.hdf5_output_3D_filename))
 
@@ -1517,7 +1517,7 @@ class TestNansheLearner(object):
 
         assert(len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()

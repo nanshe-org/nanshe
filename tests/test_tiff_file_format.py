@@ -16,11 +16,11 @@ import h5py
 import vigra
 import vigra.impex
 
-import nanshe.additional_generators
-import nanshe.expanded_numpy
+import nanshe.nanshe.additional_generators
+import nanshe.nanshe.expanded_numpy
 
-import nanshe.tiff_file_format
-import nanshe.nanshe_converter
+import nanshe.nanshe.tiff_file_format
+import nanshe.nanshe.nanshe_converter
 
 
 class TestTiffFileFormat(object):
@@ -32,9 +32,9 @@ class TestTiffFileFormat(object):
         self.data = numpy.random.random_integers(0, 255, (1000, 1, 102, 101, 1)).astype(numpy.uint8)
 
         self.temp_dir = tempfile.mkdtemp()
-        for i, i_str, (a_b, a_e) in nanshe.additional_generators.filled_stringify_enumerate(
+        for i, i_str, (a_b, a_e) in nanshe.nanshe.additional_generators.filled_stringify_enumerate(
                                         itertools.izip(
-                                                *nanshe.additional_generators.lagged_generators(
+                                                *nanshe.nanshe.additional_generators.lagged_generators(
                                                     xrange(0, self.data.shape[0] + 100 - 1, 100)
                                                 )
                                         )
@@ -44,21 +44,21 @@ class TestTiffFileFormat(object):
 
             self.filedata[each_filename] = each_data
 
-            vigra.impex.writeVolume(nanshe.expanded_numpy.tagging_reorder_array(each_data, to_axis_order="czyxt")[0, 0],
+            vigra.impex.writeVolume(nanshe.nanshe.expanded_numpy.tagging_reorder_array(each_data, to_axis_order="czyxt")[0, 0],
                                     os.path.join(self.temp_dir, "test_tiff_" + str(i) + ".tif"), "")
 
     def test_get_multipage_tiff_shape_dtype(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_shape_dtype = nanshe.tiff_file_format.get_multipage_tiff_shape_dtype(each_filename)
+            each_shape_dtype = nanshe.nanshe.tiff_file_format.get_multipage_tiff_shape_dtype(each_filename)
 
-            each_filedata = nanshe.expanded_numpy.tagging_reorder_array(each_filedata, to_axis_order="zyxtc")[0]
+            each_filedata = nanshe.nanshe.expanded_numpy.tagging_reorder_array(each_filedata, to_axis_order="zyxtc")[0]
 
             assert(each_shape_dtype["shape"] == each_filedata.shape)
             assert(each_shape_dtype["dtype"] == each_filedata.dtype.type)
 
     def test_get_multipage_tiff_shape_dtype_transformed(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_shape_dtype = nanshe.tiff_file_format.get_multipage_tiff_shape_dtype_transformed(each_filename,
+            each_shape_dtype = nanshe.nanshe.tiff_file_format.get_multipage_tiff_shape_dtype_transformed(each_filename,
                                                                                                   axis_order = "tzyxc")
 
             assert(each_shape_dtype["shape"] == each_filedata.shape)
@@ -66,7 +66,7 @@ class TestTiffFileFormat(object):
 
     def test_get_standard_tiff_array(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_data = nanshe.tiff_file_format.get_standard_tiff_array(each_filename)
+            each_data = nanshe.nanshe.tiff_file_format.get_standard_tiff_array(each_filename)
 
             assert(each_data.shape == each_filedata.shape)
             assert(each_data.dtype == each_filedata.dtype)
@@ -77,7 +77,7 @@ class TestTiffFileFormat(object):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
         hdf5_filepath = hdf5_filename + "/data"
 
-        nanshe.tiff_file_format.convert_tiffs(self.filedata.keys(), hdf5_filepath)
+        nanshe.nanshe.tiff_file_format.convert_tiffs(self.filedata.keys(), hdf5_filepath)
 
         assert(os.path.exists(hdf5_filename))
 
@@ -85,7 +85,7 @@ class TestTiffFileFormat(object):
         with h5py.File(hdf5_filename, "r") as hdf5_handle:
             data = hdf5_handle["data"].value
 
-        self_data_h5 = nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
+        self_data_h5 = nanshe.nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
 
         assert((data == self_data_h5).all())
 
@@ -110,7 +110,7 @@ class TestTiffFileFormat(object):
 
         main_args = ["./nanshe_converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
 
-        assert(nanshe.nanshe_converter.main(*main_args) == 0)
+        assert(nanshe.nanshe.nanshe_converter.main(*main_args) == 0)
 
         assert(os.path.exists(hdf5_filename))
 
@@ -118,7 +118,7 @@ class TestTiffFileFormat(object):
         with h5py.File(hdf5_filename, "r") as hdf5_handle:
             data = hdf5_handle["data"].value
 
-        self_data_h5 = nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
+        self_data_h5 = nanshe.nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
 
         assert((data == self_data_h5).all())
 
