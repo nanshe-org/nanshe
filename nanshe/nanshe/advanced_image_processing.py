@@ -279,6 +279,7 @@ def extract_f0(new_data,
                spatial_smoothing_gaussian_filter_window_size,
                bias = None,
                out = None,
+               return_f0 = False,
                **parameters):
     """
         Attempts to find an estimate for dF/F.
@@ -295,10 +296,11 @@ def extract_f0(new_data,
                                                                     (Measured in standard deviations)
             bias(float):                                            value to be added to dataset to avoid nan.
             out(numpy.ndarray):                                     where the final result will be stored.
+            return_f0(bool):                                        whether to return F_0 also, F_0 will be returned first.
             **parameters(dict):                                     essentially unused (catches unneeded arguments).
 
         Returns:
-            numpy.ndarray:                                          dF/F.
+            numpy.ndarray:                                          dF/F or if return_f0 is True a tuple (F_0, dF/F).
     """
 
     if not issubclass(new_data.dtype.type, numpy.float32):
@@ -344,7 +346,10 @@ def extract_f0(new_data,
 
     extract_f0.recorders.array_debug_recorder["new_data_df_over_f"] = new_data_df_over_f
 
-    return(new_data_df_over_f)
+    if (return_f0):
+        return(new_data_f0_estimation, new_data_df_over_f)
+    else:
+        return(new_data_df_over_f)
 
 
 @debugging_tools.log_call(logger)
