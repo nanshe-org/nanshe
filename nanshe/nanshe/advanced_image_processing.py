@@ -433,7 +433,7 @@ def generate_dictionary(new_data, **parameters):
             dict:                               the dictionary found.
     """
 
-    import spams_sandbox
+    import nanshe.spams_sandbox
 
     # Needs to be floating point.
     # However, it need not be double precision as there is single precision function signature.
@@ -475,8 +475,8 @@ def generate_dictionary(new_data, **parameters):
 
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
-    new_dictionary = spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(new_data_processed,
-                                                                                          **parameters["spams.trainDL"])
+    new_dictionary = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(new_data_processed,
+                                                                                                 **parameters["spams.trainDL"])
 
     # Fix dictionary so that the first index will be the particular image.
     # The rest will be the shape of an image (same as input shape).
