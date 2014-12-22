@@ -10,7 +10,7 @@ import scipy
 import scipy.ndimage
 import scipy.ndimage.filters
 
-import nanshe.expanded_numpy
+import nanshe.nanshe.expanded_numpy
 
 
 def generate_hypersphere_masks(space, centers, radii, include_boundary = False):
@@ -88,7 +88,7 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary = False):
     for i, (each_center, each_radius) in enumerate(itertools.izip(centers, radii)):
         space_index = numpy.indices(space)
 
-        each_point_offset = (space_index - nanshe.expanded_numpy.expand_view(each_center, tuple(space.tolist())))
+        each_point_offset = (space_index - nanshe.nanshe.expanded_numpy.expand_view(each_center, tuple(space.tolist())))
 
         each_point_offset_sqd_sum = (each_point_offset**2).sum(axis = 0)
 
@@ -257,9 +257,9 @@ def generate_random_bound_points(space, radii):
 
     # Determine the space each centroid can be within
     bound_space = numpy.zeros(radii.shape + space.shape + (2,), dtype = int)
-    bound_space[..., 0] = nanshe.expanded_numpy.expand_view(radii, space.shape)
-    bound_space[..., 1] = nanshe.expanded_numpy.expand_view(space, reps_before=radii.shape) - \
-                          nanshe.expanded_numpy.expand_view(radii, space.shape)
+    bound_space[..., 0] = nanshe.nanshe.expanded_numpy.expand_view(radii, space.shape)
+    bound_space[..., 1] = nanshe.nanshe.expanded_numpy.expand_view(space, reps_before=radii.shape) - \
+                          nanshe.nanshe.expanded_numpy.expand_view(radii, space.shape)
 
     # Generate a random point for each radius.
     points = numpy.zeros(radii.shape + space.shape, dtype = int)
