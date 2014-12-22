@@ -165,18 +165,17 @@ def remove_zeroed_lines(new_data,
 
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
-def extract_f0(new_data,
-               half_window_size,
-               which_quantile,
-               temporal_smoothing_gaussian_filter_stdev,
-               temporal_smoothing_gaussian_filter_window_size,
-               spatial_smoothing_gaussian_filter_stdev,
-               spatial_smoothing_gaussian_filter_window_size,
-               bias = None,
-               out = None,
-               **parameters):
+def estimate_f0(new_data,
+                half_window_size,
+                which_quantile,
+                temporal_smoothing_gaussian_filter_stdev,
+                temporal_smoothing_gaussian_filter_window_size,
+                spatial_smoothing_gaussian_filter_stdev,
+                spatial_smoothing_gaussian_filter_window_size,
+                out = None,
+                **parameters):
     """
-        Attempts to find a new baseline for the given data.
+        Estimates F_0 using a rank order filter with some smoothing..
 
         Args:
             new_data(numpy.ndarray):                                array of data for finding baseline (first axis is time).
@@ -188,22 +187,21 @@ def extract_f0(new_data,
             spatial_smoothing_gaussian_filter_stdev(float):         stdev for gaussian filter to convolve over space.
             spatial_smoothing_gaussian_filter_window_size(float):   window for gaussian filter to convolve over space.
                                                                     (Measured in standard deviations)
-            bias(float):                                            value to be added to dataset to avoid nan.
             out(numpy.ndarray):                                     where the final result will be stored.
             **parameters(dict):                                     essentially unused (catches unneeded arguments).
 
         Returns:
-            numpy.ndarray:                                    a new array with a new baseline.
+            numpy.ndarray:                                          the F_0 estimate.
     """
 
     if not issubclass(new_data.dtype.type, numpy.float32):
         warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
                       "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
-    new_data_df_over_f = None
+    new_data_f0_estimation = None
     if out is None:
         out = new_data.astype(numpy.float32)
-        new_data_df_over_f = out
+        new_data_f0_estimation = out
     else:
         assert(out.shape == new_data.shape)
 
@@ -214,13 +212,7 @@ def extract_f0(new_data,
         if id(new_data) != id(out):
             out[:] = new_data
 
-        new_data_df_over_f = out
-
-    # Add the bias param
-    if bias is None:
-        new_data_df_over_f[:] -= new_data.min() - 1
-    else:
-        new_data_df_over_f[:] += bias
+        new_data_f0_estimation = out
 
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
@@ -228,7 +220,6 @@ def extract_f0(new_data,
 
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_f0_estimation = new_data_df_over_f.astype(numpy.float32)
     vigra.filters.convolveOneDimension(new_data_f0_estimation,
                                        0,
                                        temporal_smoothing_gaussian_filter,
@@ -264,7 +255,81 @@ def extract_f0(new_data,
                                            spatial_smoothing_gaussian_filter,
                                            out=new_data_f0_estimation)
 
-    extract_f0.recorders.array_debug_recorder["new_data_f0_estimation"] = new_data_f0_estimation
+    estimate_f0.recorders.array_debug_recorder["new_data_f0_estimation"] = new_data_f0_estimation
+
+    return(new_data_f0_estimation)
+
+
+@debugging_tools.log_call(logger)
+@HDF5_recorder.static_array_debug_recorder
+def extract_f0(new_data,
+               half_window_size,
+               which_quantile,
+               temporal_smoothing_gaussian_filter_stdev,
+               temporal_smoothing_gaussian_filter_window_size,
+               spatial_smoothing_gaussian_filter_stdev,
+               spatial_smoothing_gaussian_filter_window_size,
+               bias = None,
+               out = None,
+               **parameters):
+    """
+        Attempts to find an estimate for dF/F.
+
+        Args:
+            new_data(numpy.ndarray):                                array of data for finding baseline (first axis is time).
+            half_window_size(int):                                  the rank filter window size is 2*half_window_size+1.
+            which_quantile(float):                                  while quantile to return from the rank filter.
+            temporal_smoothing_gaussian_filter_stdev(float):        stdev for gaussian filter to convolve over time.
+            temporal_smoothing_gaussian_filter_window_size(float):  window for gaussian filter to convolve over time.
+                                                                    (Measured in standard deviations)
+            spatial_smoothing_gaussian_filter_stdev(float):         stdev for gaussian filter to convolve over space.
+            spatial_smoothing_gaussian_filter_window_size(float):   window for gaussian filter to convolve over space.
+                                                                    (Measured in standard deviations)
+            bias(float):                                            value to be added to dataset to avoid nan.
+            out(numpy.ndarray):                                     where the final result will be stored.
+            **parameters(dict):                                     essentially unused (catches unneeded arguments).
+
+        Returns:
+            numpy.ndarray:                                          dF/F.
+    """
+
+    if not issubclass(new_data.dtype.type, numpy.float32):
+        warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
+                      "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+
+    new_data_df_over_f = None
+    if out is None:
+        out = new_data.astype(numpy.float32)
+        new_data_df_over_f = out
+    else:
+        assert(out.shape == new_data.shape)
+
+        if (not issubclass(out.dtype.type, numpy.float32)):
+            warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
+                          "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+
+        if id(new_data) != id(out):
+            out[:] = new_data
+
+        new_data_df_over_f = out
+
+    # Add the bias param
+    if bias is None:
+        new_data_df_over_f[:] -= new_data.min() - 1
+    else:
+        new_data_df_over_f[:] += bias
+
+    new_data_f0_estimation = new_data_df_over_f.astype(numpy.float32)
+
+    estimate_f0(new_data_f0_estimation,
+                half_window_size,
+                which_quantile,
+                temporal_smoothing_gaussian_filter_stdev,
+                temporal_smoothing_gaussian_filter_window_size,
+                spatial_smoothing_gaussian_filter_stdev,
+                spatial_smoothing_gaussian_filter_window_size,
+                out=new_data_f0_estimation,
+                **parameters)
 
     new_data_df_over_f -= new_data_f0_estimation
     new_data_df_over_f /= new_data_f0_estimation
