@@ -200,10 +200,10 @@ def extract_f0(new_data,
         warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
                       "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
-    new_data_biased = None
+    new_data_df_over_f = None
     if out is None:
         out = new_data.astype(numpy.float32)
-        new_data_biased = out
+        new_data_df_over_f = out
     else:
         assert(out.shape == new_data.shape)
 
@@ -214,13 +214,13 @@ def extract_f0(new_data,
         if id(new_data) != id(out):
             out[:] = new_data
 
-        new_data_biased = out
+        new_data_df_over_f = out
 
     # Add the bias param
     if bias is None:
-        new_data_biased[:] -= new_data.min() - 1
+        new_data_df_over_f[:] -= new_data.min() - 1
     else:
-        new_data_biased[:] += bias
+        new_data_df_over_f[:] += bias
 
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
@@ -228,7 +228,7 @@ def extract_f0(new_data,
 
     temporal_smoothing_gaussian_filter.setBorderTreatment(vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT)
 
-    new_data_f0_estimation = new_data_biased.astype(numpy.float32)
+    new_data_f0_estimation = new_data_df_over_f.astype(numpy.float32)
     vigra.filters.convolveOneDimension(new_data_f0_estimation,
                                        0,
                                        temporal_smoothing_gaussian_filter,
