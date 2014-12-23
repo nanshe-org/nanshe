@@ -198,6 +198,140 @@ class TestAdvancedImageProcessing(object):
 
         assert((a == b).all())
 
+    def test_estimate_f0_1(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
+        half_window_size = 20
+
+        a = numpy.ones((100, 101, 102))
+
+        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
+            half_window_size=half_window_size)
+
+        assert((b == a).all())
+
+    def test_estimate_f0_1b(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
+        half_window_size = 20
+
+        a = numpy.ones((100, 101, 102))
+
+        b = a.copy()
+        nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
+            half_window_size=half_window_size,
+            out=b)
+
+        assert((b == a).all())
+
+    def test_estimate_f0_1c(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
+        half_window_size = 20
+
+        a = numpy.ones((100, 101, 102))
+
+        b = a.copy()
+        nanshe.nanshe.advanced_image_processing.estimate_f0(b,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
+            half_window_size=half_window_size,
+            out=b)
+
+        assert((b == a).all())
+
+    def test_estimate_f0_2(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
+        half_window_size = 49
+
+        mean = 0.0
+        stdev = 1.0
+
+        a = numpy.random.normal(mean, stdev, (100, 101, 102))
+
+        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
+            half_window_size=half_window_size)
+
+        # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
+        # Hence, multiplication by 99 instead of 100.
+        assert( (99.0*b.std()) < a.std() )
+
+    def test_estimate_f0_3(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
+        half_window_size = 20
+
+        a = numpy.ones((100, 101, 102, 103))
+
+        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
+            half_window_size=half_window_size)
+
+        assert((b == a).all())
+
+    def test_estimate_f0_4(self):
+        spatial_smoothing_gaussian_filter_stdev = 5.0
+        spatial_smoothing_gaussian_filter_window_size = 5.0
+        which_quantile = 0.5
+        temporal_smoothing_gaussian_filter_stdev = 5.0
+        temporal_smoothing_gaussian_filter_window_size = 5.0
+        half_window_size = 49
+
+        mean = 0.0
+        stdev = 1.0
+
+        a = numpy.random.normal(mean, stdev, (100, 101, 102, 103))
+
+        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+            spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
+            spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
+            which_quantile=which_quantile,
+            temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
+            temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
+            half_window_size=half_window_size)
+
+        # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
+        # Hence, multiplication by 99 instead of 100.
+        assert( (99.0*b.std()) < a.std() )
+
     def test_extract_f0_1(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         spatial_smoothing_gaussian_filter_window_size = 5.0
