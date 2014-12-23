@@ -198,6 +198,7 @@ def estimate_f0(new_data,
         warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
                       "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
+    converted_out = False
     new_data_f0_estimation = None
     if out is None:
         out = new_data.astype(numpy.float32)
@@ -205,14 +206,18 @@ def estimate_f0(new_data,
     else:
         assert(out.shape == new_data.shape)
 
+        if id(new_data) != id(out):
+            out[:] = new_data
+
         if (not issubclass(out.dtype.type, numpy.float32)):
             warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
                           "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
 
-        if id(new_data) != id(out):
-            out[:] = new_data
+            converted_out = True
+            new_data_f0_estimation = out.astype(numpy.float32)
+        else:
+            new_data_f0_estimation = out
 
-        new_data_f0_estimation = out
 
     temporal_smoothing_gaussian_filter = vigra.filters.gaussianKernel(temporal_smoothing_gaussian_filter_stdev,
                                                                       1.0,
@@ -257,7 +262,10 @@ def estimate_f0(new_data,
 
     estimate_f0.recorders.array_debug_recorder["new_data_f0_estimation"] = new_data_f0_estimation
 
-    return(new_data_f0_estimation)
+    if converted_out:
+        out[:] = new_data_f0_estimation
+
+    return(out)
 
 
 @debugging_tools.log_call(logger)
