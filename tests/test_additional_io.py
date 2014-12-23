@@ -43,4 +43,3 @@ class TestAdditionalIO(object):
         shutil.rmtree(self.temp_dir)
 
         self.temp_dir = ""
-
