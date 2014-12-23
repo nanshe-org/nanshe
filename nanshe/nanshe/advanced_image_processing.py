@@ -269,6 +269,8 @@ def extract_f0(new_data,
     new_data_df_over_f -= new_data_f0_estimation
     new_data_df_over_f /= new_data_f0_estimation
 
+    extract_f0.recorders.array_debug_recorder["new_data_df_over_f"] = new_data_df_over_f
+
     return(new_data_df_over_f)
 
 
