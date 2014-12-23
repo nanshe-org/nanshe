@@ -107,4 +107,3 @@ class TestHDF5Searchers(object):
         shutil.rmtree(self.temp_dir)
 
         self.temp_dir = ""
-
