@@ -270,12 +270,3 @@ class DictionaryLearningRandomDataGenerator(object):
             
         
         return(results)
-        
-        
-        
-
-
-
-
-
-
