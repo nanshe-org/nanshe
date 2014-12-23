@@ -266,10 +266,10 @@ def extract_f0(new_data,
 
     extract_f0.recorders.array_debug_recorder["new_data_f0_estimation"] = new_data_f0_estimation
 
-    out -= new_data_f0_estimation
-    out /= new_data_f0_estimation
+    new_data_df_over_f -= new_data_f0_estimation
+    new_data_df_over_f /= new_data_f0_estimation
 
-    return(out)
+    return(new_data_df_over_f)
 
 
 @debugging_tools.log_call(logger)
