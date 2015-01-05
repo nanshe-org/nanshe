@@ -2685,6 +2685,41 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
+def expand_rois(new_data, roi_masks, **parameters):
+    # Find time traces: spatial mean of activity for each ROI
+    # Normalize time traces: subtract mean from each time trace and normalize each relative to L_2
+    # Compute correlation: Multiply the time traces for each ROI by the raw data to get an array with the dimensions of
+    #                      the number of ROIs plus the dimensions of the raw data
+
+    # Compute the area of each ROI in order to properly compute the average activity of each ROI.
+    roi_areas = roi_masks.sum(axis=tuple(xrange(1, roi_masks.ndim)))
+
+    # Add fake dimensions so that both arrays have dimensions number of ROIs and then tyx or tzyx.
+    new_data_expanded = expanded_numpy.expand_view(new_data, reps_before=len(roi_masks))
+    roi_masks_expanded = expanded_numpy.expand_view(roi_masks, reps_before=len(new_data)).swapaxes(0, 1)
+
+    # Added time afterwards for dividing time traces.
+    roi_areas_expanded = expanded_numpy.expand_view(roi_areas, reps_after=len(new_data))
+
+    # Compute the time traces such that they are the average activity inside the ROI
+    time_traces = new_data_expanded * roi_masks_expanded
+    time_traces = time_traces.sum(axis=tuple(xrange(2, new_data_expanded.ndim)))
+    time_traces /= roi_areas_expanded
+
+    # Normalize the time traces
+    simple_image_processing.renormalized_images(time_traces, ord=2, output_array=time_traces)
+
+    # Expand to allow for computation of the correlation map
+    time_traces_expanded = expanded_numpy.expand_view(time_traces, new_data_expanded.shape[2:])
+
+    # Compute the correlation map
+    correlation_map = time_traces_expanded * new_data_expanded
+
+    return(correlation_map)
+
+
+@debugging_tools.log_call(logger)
+@HDF5_recorder.static_array_debug_recorder
 def postprocess_data(new_dictionary, **parameters):
     """
         Generates neurons from the dictionary.
