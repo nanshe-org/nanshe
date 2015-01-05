@@ -2707,13 +2707,13 @@ def expand_rois(new_data, roi_masks, **parameters):
     time_traces /= roi_areas_expanded
 
     # Normalize the time traces
-    simple_image_processing.renormalized_images(time_traces, ord=2, output_array=time_traces)
+    normalized_time_traces = simple_image_processing.renormalized_images(time_traces, ord=2)
 
     # Expand to allow for computation of the correlation map
-    time_traces_expanded = expanded_numpy.expand_view(time_traces, new_data_expanded.shape[2:])
+    normalized_time_traces_expanded = expanded_numpy.expand_view(normalized_time_traces, new_data_expanded.shape[2:])
 
     # Compute the correlation map
-    correlation_map = time_traces_expanded * new_data_expanded
+    correlation_map = normalized_time_traces_expanded * new_data_expanded
 
     return(correlation_map)
 
