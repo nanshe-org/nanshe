@@ -2475,10 +2475,10 @@ def merge_neuron_sets_once(new_neuron_set_1,
 @debugging_tools.log_call(logger)
 @HDF5_recorder.static_array_debug_recorder
 def merge_neuron_sets_repeatedly(new_neuron_set_1,
-                      new_neuron_set_2,
-                      alignment_min_threshold,
-                      overlap_min_threshold,
-                      **parameters):
+                                 new_neuron_set_2,
+                                 alignment_min_threshold,
+                                 overlap_min_threshold,
+                                 **parameters):
     """
         Merges the two sets of neurons into one. Appends neurons that cannot be merged with the existing set.
 
