@@ -2717,7 +2717,8 @@ def expand_rois(new_data, roi_masks, **parameters):
     time_traces /= roi_areas_expanded
 
     # Normalize the time traces
-    normalized_time_traces = simple_image_processing.renormalized_images(time_traces, ord=2)
+    normalized_time_traces = normalize_data(time_traces,
+                                            **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
 
     # Convert to matrix.
     new_data_normalized_matrix = expanded_numpy.array_to_matrix(new_data_normalized)
