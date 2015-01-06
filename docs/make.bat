@@ -22,6 +22,7 @@ if "%1" == "" goto help
 if "%1" == "help" (
 	:help
 	echo.Please use `make ^<target^>` where ^<target^> is one of
+	echo.  clean      to delete the build directory and all RST files except index.rst
 	echo.  rst        to build the RST files from the source directory
 	echo.  html       to make standalone HTML files
 	echo.  dirhtml    to make HTML files named index.html in directories
