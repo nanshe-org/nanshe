@@ -83,7 +83,7 @@ if errorlevel 9009 (
 )
 
 if "%1" == "rst" (
-        %SPHINXAPIDOC% -f -o . ..
+        %SPHINXAPIDOC% -f -o . .. ../tests
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The RST pages are in in the current directory.
