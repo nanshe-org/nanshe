@@ -2694,9 +2694,9 @@ def expand_rois(new_data, roi_masks, **parameters):
     # Need normalized data to compute the correlation map.
     new_data_normalized = new_data.copy()
 
-    # Find norms for each frame
-    new_data_norms = (new_data_normalized**2).sum(axis=tuple(xrange(1, new_data_normalized.ndim)))
-    new_data_norms = expanded_numpy.expand_view(new_data_norms, reps_after=new_data_normalized.shape[1:])
+    # Find norms for each pixel
+    new_data_norms = (new_data_normalized**2).sum(axis=0)
+    new_data_norms = expanded_numpy.expand_view(new_data_norms, reps_before=len(new_data_normalized))
 
     # Normalize the data
     new_data_normalized /= new_data_norms
