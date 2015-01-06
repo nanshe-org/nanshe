@@ -2719,7 +2719,7 @@ def expand_rois(new_data, roi_masks, **parameters):
     # Normalize the time traces
     normalized_time_traces = simple_image_processing.renormalized_images(time_traces, ord=2)
 
-    # Convert to matrices.
+    # Convert to matrix.
     new_data_normalized_matrix = expanded_numpy.array_to_matrix(new_data_normalized)
 
     # Compute the correlation map
