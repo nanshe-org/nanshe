@@ -2691,15 +2691,9 @@ def expand_rois(new_data, roi_masks, **parameters):
     # Compute correlation: Multiply the time traces for each ROI by the raw data to get an array with the dimensions of
     #                      the number of ROIs plus the dimensions of the raw data
 
-    # Need normalized data to compute the correlation map.
-    new_data_normalized = new_data.copy()
-
-    # Find norms for each pixel
-    new_data_norms = (new_data_normalized**2).sum(axis=0)
-    new_data_norms = expanded_numpy.expand_view(new_data_norms, reps_before=len(new_data_normalized))
-
     # Normalize the data
-    new_data_normalized /= new_data_norms
+    new_data_normalized = normalize_data(new_data,
+                                         **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
 
     # Compute the area of each ROI in order to properly compute the average activity of each ROI.
     roi_areas = roi_masks.sum(axis=tuple(xrange(1, roi_masks.ndim)))
