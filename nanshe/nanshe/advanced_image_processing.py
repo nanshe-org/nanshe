@@ -339,12 +339,9 @@ def extract_f0(new_data,
                 out=new_data_f0_estimation,
                 **parameters)
 
-    # Add the bias to both after (order shouldn't matter).
-    new_data_df_over_f[:] += bias
-    new_data_f0_estimation[:] += bias
-
+    # Compute dF/F. Add a bias to denominator to ensure there is no division by zero.
     new_data_df_over_f -= new_data_f0_estimation
-    new_data_df_over_f /= new_data_f0_estimation
+    new_data_df_over_f /= (new_data_f0_estimation + bias)
 
     extract_f0.recorders.array_debug_recorder["new_data_df_over_f"] = new_data_df_over_f
 
