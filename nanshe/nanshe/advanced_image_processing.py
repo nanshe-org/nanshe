@@ -327,9 +327,6 @@ def extract_f0(new_data,
     if bias is None:
         bias = 1 - new_data.min()
 
-    # Then add it to the output
-    new_data_df_over_f[:] += bias
-
     new_data_f0_estimation = new_data_df_over_f.astype(numpy.float32)
 
     estimate_f0(new_data_f0_estimation,
@@ -341,6 +338,10 @@ def extract_f0(new_data,
                 spatial_smoothing_gaussian_filter_window_size,
                 out=new_data_f0_estimation,
                 **parameters)
+
+    # Add the bias to both after (order shouldn't matter).
+    new_data_df_over_f[:] += bias
+    new_data_f0_estimation[:] += bias
 
     new_data_df_over_f -= new_data_f0_estimation
     new_data_df_over_f /= new_data_f0_estimation
