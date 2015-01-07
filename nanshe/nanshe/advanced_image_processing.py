@@ -323,11 +323,12 @@ def extract_f0(new_data,
 
         new_data_df_over_f = out
 
-    # Add the bias param
+    # Find the bias parameter if not provided
     if bias is None:
-        new_data_df_over_f[:] -= new_data.min() - 1
-    else:
-        new_data_df_over_f[:] += bias
+        bias = 1 - new_data.min()
+
+    # Then add it to the output
+    new_data_df_over_f[:] += bias
 
     new_data_f0_estimation = new_data_df_over_f.astype(numpy.float32)
 
