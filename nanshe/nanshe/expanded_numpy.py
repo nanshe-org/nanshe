@@ -1586,6 +1586,81 @@ def masks_union(a, b):
 
 
 @debugging_tools.log_call(logger)
+def masks_overlap_normalized(a, b):
+    """
+        The area of intersection of the masks divided by the area of their union.
+
+        Args:
+            a(numpy.ndarray):      first mask.
+            b(numpy.ndarray):      second mask.
+
+        Returns:
+            out(numpy.ndarray):    ratio of the areas of the masks' intersection and union.
+
+        Examples:
+            >>> masks_overlap_normalized(numpy.eye(2).astype(bool),
+            ...                          numpy.ones((2,2), dtype=bool))
+            array([[ 0.5,  0.5],
+                   [ 0.5,  0.5]])
+
+            >>> masks_overlap_normalized(numpy.eye(2).astype(bool),
+            ...                          numpy.ones((2,), dtype=bool))
+            array([[ 0.5],
+                   [ 0.5]])
+
+            >>> masks_overlap_normalized(numpy.ones((2,), dtype=bool),
+            ...                          numpy.eye(2).astype(bool))
+            array([[ 0.5,  0.5]])
+
+            >>> masks_overlap_normalized(numpy.ones((2,), dtype=bool),
+            ...                          numpy.ones((2,), dtype=bool))
+            array([[ 1.]])
+
+            >>> masks_overlap_normalized(numpy.eye(2).astype(bool),
+            ...                          numpy.zeros((2,2), dtype=bool))
+            array([[ 0.,  0.],
+                   [ 0.,  0.]])
+
+            >>> masks_overlap_normalized(numpy.zeros((2,2), dtype=bool),
+            ...                          numpy.zeros((2,2), dtype=bool))
+            array([[ 0.,  0.],
+                   [ 0.,  0.]])
+
+            >>> (numpy.arange(6).reshape(2,3) % 2).astype(bool)
+            array([[False,  True, False],
+                   [ True, False,  True]], dtype=bool)
+
+            >>> numpy.arange(6).reshape(2,3) == 4
+            array([[False, False, False],
+                   [False,  True, False]], dtype=bool)
+
+            >>> masks_overlap_normalized((numpy.arange(6).reshape(2,3) % 2).astype(bool),
+            ...                          (numpy.arange(6).reshape(2,3) == 4))
+            array([[ 0.,  1.],
+                   [ 0.,  0.]])
+    """
+
+    assert(issubclass(a.dtype.type, numpy.bool_))
+    assert(issubclass(b.dtype.type, numpy.bool_))
+
+    if a.ndim == 1:
+        a = a[None]
+
+    if b.ndim == 1:
+        b = b[None]
+
+    assert(a.ndim == b.ndim == 2)
+    assert(a.shape[1] == b.shape[1])
+
+    out = masks_intersection(a, b).astype(float)
+    out /= masks_union(a, b)
+
+    out[numpy.isnan(out)] = 0
+
+    return(out)
+
+
+@debugging_tools.log_call(logger)
 def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
