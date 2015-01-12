@@ -1510,6 +1510,76 @@ def masks_intersection(a, b):
 
 
 @debugging_tools.log_call(logger)
+def masks_union(a, b):
+    """
+        A mask that contains point contained in either mask.
+
+        Args:
+            a(numpy.ndarray):      first mask.
+            b(numpy.ndarray):      second mask.
+
+        Returns:
+            out(numpy.ndarray):    a mask that is True where either mask is.
+
+        Examples:
+            >>> masks_union(numpy.eye(2).astype(bool),
+            ...             numpy.ones((2,2), dtype=bool))
+            array([[2, 2],
+                   [2, 2]], dtype=uint64)
+
+            >>> masks_union(numpy.eye(2).astype(bool),
+            ...                    numpy.ones((2,), dtype=bool))
+            array([[2],
+                   [2]], dtype=uint64)
+
+            >>> masks_union(numpy.ones((2,), dtype=bool),
+            ...                    numpy.eye(2).astype(bool))
+            array([[2, 2]], dtype=uint64)
+
+            >>> masks_union(numpy.ones((2,), dtype=bool),
+            ...                    numpy.ones((2,), dtype=bool))
+            array([[2]], dtype=uint64)
+
+            >>> masks_union(numpy.eye(2).astype(bool),
+            ...             numpy.zeros((2,2), dtype=bool))
+            array([[1, 1],
+                   [1, 1]], dtype=uint64)
+
+            >>> (numpy.arange(6).reshape(2,3) % 2).astype(bool)
+            array([[False,  True, False],
+                   [ True, False,  True]], dtype=bool)
+
+            >>> numpy.arange(6).reshape(2,3) == 4
+            array([[False, False, False],
+                   [False,  True, False]], dtype=bool)
+
+            >>> masks_union((numpy.arange(6).reshape(2,3) % 2).astype(bool),
+            ...             (numpy.arange(6).reshape(2,3) == 4))
+            array([[1, 1],
+                   [2, 3]], dtype=uint64)
+    """
+
+    assert(issubclass(a.dtype.type, numpy.bool_))
+    assert(issubclass(b.dtype.type, numpy.bool_))
+
+    if a.ndim == 1:
+        a = a[None]
+
+    if b.ndim == 1:
+        b = b[None]
+
+    assert(a.ndim == b.ndim == 2)
+    assert(a.shape[1] == b.shape[1])
+
+    out = numpy.empty((len(a), len(b)), dtype=numpy.uint64)
+
+    for i, j in itertools.product(xrange(out.shape[0]), xrange(out.shape[1])):
+        out[i, j] = (a[i] | b[j]).sum()
+
+    return(out)
+
+
+@debugging_tools.log_call(logger)
 def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
