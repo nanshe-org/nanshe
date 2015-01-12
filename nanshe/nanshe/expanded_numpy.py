@@ -8,6 +8,7 @@ __date__ = "$May 20, 2014 9:46:45 AM$"
 
 import ctypes
 import functools
+import itertools
 import operator
 
 import numpy
@@ -1354,6 +1355,88 @@ def norm(new_vector_set, ord = 2):
         result = numpy.apply_along_axis(wrapped_norm, 1, new_vector_set_float).astype(float)
 
     return(result)
+
+
+@debugging_tools.log_call(logger)
+def matrix_reduced_op(a, b, op):
+    """
+        Sort of like numpy.dot. However, it will use the first axis with both arrays.
+        This means they may not need to be matrices. However, they must have the same number of dimensions. Generally,
+        though not explicitly required, the operator will likely expect every dimension other than the first to be the
+        same shape.
+
+        Args:
+            a(numpy.ndarray):      first array.
+            b(numpy.ndarray):      second array.
+            op(callable):          an operator that will take a[i] and b[j] as arguments and return a scalar.
+
+        Returns:
+            out(numpy.ndarray):    an array (matrix) with the shape (len(a), len(b)) with each element out[i, j] the
+                                   result of op(a[i], b[j]).
+
+        Examples:
+            >>> matrix_reduced_op(numpy.arange(6).reshape(2,3), numpy.arange(0,12,2).reshape(2,3), op=numpy.dot)
+            array([[ 10,  28],
+                   [ 28, 100]])
+
+            >>> numpy.dot(numpy.arange(6).reshape(2,3), numpy.arange(0,12,2).reshape(2,3).T)
+            array([[ 10,  28],
+                   [ 28, 100]])
+
+            >>> matrix_reduced_op(numpy.arange(8).reshape(2,4), numpy.arange(0,16,2).reshape(2,4), op=numpy.dot)
+            array([[ 28,  76],
+                   [ 76, 252]])
+
+            >>> numpy.dot(numpy.arange(8).reshape(2,4), numpy.arange(0,16,2).reshape(2,4).T)
+            array([[ 28,  76],
+                   [ 76, 252]])
+
+            >>> matrix_reduced_op(numpy.eye(2).astype(bool),
+            ...                   numpy.ones((2,2), dtype=bool),
+            ...                   op=lambda _a, _b: (_a & _b).sum())
+            array([[ True,  True],
+                   [ True,  True]], dtype=bool)
+
+            >>> matrix_reduced_op(numpy.eye(2).astype(bool),
+            ...                   numpy.ones((2,), dtype=bool),
+            ...                   op=lambda _a, _b: (_a & _b).sum())
+            array([[ True],
+                   [ True]], dtype=bool)
+
+            >>> matrix_reduced_op(numpy.ones((2,), dtype=bool),
+            ...                   numpy.eye(2).astype(bool),
+            ...                   op=lambda _a, _b: (_a & _b).sum())
+            array([[ True,  True]], dtype=bool)
+
+            >>> matrix_reduced_op(numpy.ones((2,), dtype=bool),
+            ...                    numpy.ones((2,), dtype=bool),
+            ...                    op=lambda _a, _b: (_a & _b).sum())
+            array([[ True]], dtype=bool)
+
+            >>> matrix_reduced_op(numpy.eye(2).astype(bool),
+            ...                   numpy.zeros((2,2), dtype=bool),
+            ...                   op=lambda _a, _b: (_a & _b).sum())
+            array([[False, False],
+                   [False, False]], dtype=bool)
+
+            >>> matrix_reduced_op(numpy.eye(2).astype(bool),
+            ...                   numpy.zeros((2,2), dtype=bool),
+            ...                   op=lambda _a, _b: (_a | _b).sum())
+            array([[ True,  True],
+                   [ True,  True]], dtype=bool)
+    """
+
+    assert(a.ndim == b.ndim)
+
+    for i in xrange(1, a.ndim):
+        assert(a.shape[i] == b.shape[i])
+
+    out = numpy.empty((len(a), len(b)), dtype=numpy.promote_types(a.dtype, b.dtype))
+
+    for i, j in itertools.product(xrange(out.shape[0]), xrange(out.shape[1])):
+        out[i, j] = op(a[i], b[j])
+
+    return(out)
 
 
 @debugging_tools.log_call(logger)
