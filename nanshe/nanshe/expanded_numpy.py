@@ -1426,6 +1426,12 @@ def matrix_reduced_op(a, b, op):
                    [ True,  True]], dtype=bool)
     """
 
+    if a.ndim == 1:
+        a = a[None]
+
+    if b.ndim == 1:
+        b = b[None]
+
     assert(a.ndim == b.ndim)
 
     for i in xrange(1, a.ndim):
