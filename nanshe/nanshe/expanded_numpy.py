@@ -1358,6 +1358,77 @@ def norm(new_vector_set, ord = 2):
 
 
 @debugging_tools.log_call(logger)
+def unique_mapping(mapping, out=None):
+    """
+        Take a binary mapping between two sets and excludes portions of the mapping that are not one-to-one.
+
+        Args:
+            mapping(numpy.ndarray):      bool array mapping between to sets.
+            out(numpy.ndarray):          where to store the results.
+
+        Returns:
+            out(numpy.ndarray):          the results returned.
+
+        Examples:
+            >>> unique_mapping(numpy.zeros((2,2), dtype=bool))
+            array([[False, False],
+                   [False, False]], dtype=bool)
+
+            >>> unique_mapping(numpy.ones((2,2), dtype=bool))
+            array([[False, False],
+                   [False, False]], dtype=bool)
+
+            >>> unique_mapping(numpy.eye(2, dtype=bool))
+            array([[ True, False],
+                   [False,  True]], dtype=bool)
+
+            >>> unique_mapping(
+            ...     numpy.array([[ True,  True],
+            ...                  [ True, False]], dtype=bool)
+            ... )
+            array([[False, False],
+                   [False, False]], dtype=bool)
+
+            >>> unique_mapping(
+            ...     numpy.array([[ True, False],
+            ...                  [False, False]], dtype=bool)
+            ... )
+            array([[ True, False],
+                   [False, False]], dtype=bool)
+
+            >>> a = numpy.ones((2,2), dtype=bool); a
+            array([[ True,  True],
+                   [ True,  True]], dtype=bool)
+
+            >>> unique_mapping(a, out=a)
+            array([[False, False],
+                   [False, False]], dtype=bool)
+
+            >>> a
+            array([[False, False],
+                   [False, False]], dtype=bool)
+    """
+
+    assert(issubclass(mapping.dtype.type, numpy.bool_))
+    assert(mapping.ndim == 2)
+
+    if out is None:
+        out = mapping.copy()
+    elif id(mapping) != id(out):
+        out[:] = mapping
+
+    injective_into = list()
+    for i in xrange(mapping.ndim):
+        injective_into_i = (add_singleton_op(numpy.sum, mapping, i) == 1)
+        injective_into.append(injective_into_i)
+
+    for i in xrange(mapping.ndim):
+        out *= injective_into[i]
+
+    return(out)
+
+
+@debugging_tools.log_call(logger)
 def matrix_reduced_op(a, b, op):
     """
         Sort of like numpy.dot. However, it will use the first axis with both arrays.
