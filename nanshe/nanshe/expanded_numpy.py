@@ -1429,6 +1429,52 @@ def unique_mapping(mapping, out=None):
 
 
 @debugging_tools.log_call(logger)
+def compute_mapping_matches(mapping):
+    """
+        Given a mapping this function computes number of matches and mismatches found.
+
+        In the array returned, first value is the number of true positives (or matches) and then mismatches along each
+        dimension of the mapping in order.
+
+        If axis 0 is the ground truth, then the second and third values are the number of false negatives (or misses)
+        and false positives (or false alarm)
+
+        Args:
+            mapping(numpy.ndarray):                           a 2D bool array mapping intersections between 2 groups.
+
+        Returns:
+            out(numpy.ndarray):                               Counts of the number of matches and mismatches.
+
+        Examples:
+            >>> compute_mapping_matches(numpy.arange(6).reshape(2,3) < 0)
+            array([0, 2, 3], dtype=uint64)
+
+            >>> compute_mapping_matches(numpy.arange(6).reshape(2,3) <= 0)
+            array([1, 1, 2], dtype=uint64)
+
+            >>> compute_mapping_matches((numpy.arange(6).reshape(2,3) % 2) == 1)
+            array([1, 1, 2], dtype=uint64)
+
+            >>> compute_mapping_matches(numpy.eye(2, dtype=bool))
+            array([2, 0, 0], dtype=uint64)
+
+            >>> compute_mapping_matches(numpy.fliplr(numpy.eye(2, dtype=bool)))
+            array([2, 0, 0], dtype=uint64)
+    """
+
+    assert(issubclass(mapping.dtype.type, numpy.bool_))
+    assert(mapping.ndim == 2)
+
+    stats = numpy.zeros((3,), dtype=numpy.uint64)
+
+    stats[:] = unique_mapping(mapping).sum()
+    mapping_shape = numpy.array(mapping.shape, dtype=numpy.uint64)
+    stats[1:] = mapping_shape - stats[1:]
+
+    return(stats)
+
+
+@debugging_tools.log_call(logger)
 def matrix_reduced_op(a, b, op):
     """
         Sort of like numpy.dot. However, it will use the first axis with both arrays.
