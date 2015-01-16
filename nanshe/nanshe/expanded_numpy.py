@@ -1358,6 +1358,72 @@ def norm(new_vector_set, ord = 2):
 
 
 @debugging_tools.log_call(logger)
+def threshold_array(an_array, threshold, include_below=True, is_closed=True):
+    """
+        Given a threshold, this function compares the given array to it to see which entries match.
+
+        Args:
+            an_array(numpy.ndarray):                          an array to threshold.
+            threshold(int or float or numpy.ndarray):         something to compare to.
+            include_below(bool):                              whether values below the threshold count or ones above it.
+            is_closed(bool):                                  whether to include values equal to the threshold
+
+        Returns:
+            out(numpy.ndarray):                               a mask of entries reflecting the threshold.
+
+        Examples:
+            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=True)
+            array([[ True, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=True)
+            array([[ True,  True,  True],
+                   [ True,  True,  True]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=False)
+            array([[False,  True,  True],
+                   [ True,  True,  True]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3), 5, include_below=True, is_closed=True)
+            array([[ True,  True,  True],
+                   [ True,  True,  True]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3), 6, include_below=True, is_closed=False)
+            array([[ True,  True,  True],
+                   [ True,  True,  True]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3), 2*numpy.ones((2,3)), include_below=True, is_closed=True)
+            array([[ True,  True,  True],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3) % 2, 1, include_below=False, is_closed=True)
+            array([[False,  True, False],
+                   [ True, False,  True]], dtype=bool)
+
+            >>> threshold_array(numpy.arange(6).reshape(2,3) % 2, 1, include_below=True, is_closed=False)
+            array([[ True, False,  True],
+                   [False,  True, False]], dtype=bool)
+    """
+
+    accepted = numpy.zeros(an_array.shape, dtype=bool)
+
+    if include_below and is_closed:
+        accepted[:] = (an_array <= threshold)
+    elif not include_below and is_closed:
+        accepted[:] = (an_array >= threshold)
+    elif include_below and not is_closed:
+        accepted[:] = (an_array < threshold)
+    else:
+        accepted[:] = (an_array > threshold)
+
+    return(accepted)
+
+
+@debugging_tools.log_call(logger)
 def unique_mapping(mapping, out=None):
     """
         Take a binary mapping between two sets and excludes portions of the mapping that are not one-to-one.
