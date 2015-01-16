@@ -1495,6 +1495,65 @@ def unique_mapping(mapping, out=None):
 
 
 @debugging_tools.log_call(logger)
+def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
+    """
+        Given a threshold, this function finds which entries uniquely match given the threshold.
+
+        Args:
+            a_metric(numpy.ndarray):                          an array to threshold.
+            threshold(int or float or numpy.ndarray):         something to compare to.
+            include_below(bool):                              whether values below the threshold count or ones above it.
+            is_closed(bool):                                  whether to include values equal to the threshold
+
+        Returns:
+            out(numpy.ndarray):                               a mapping of unique matches.
+
+        Examples:
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=True)
+            array([[ True, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=True)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=False)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), 5, include_below=True, is_closed=True)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), 6, include_below=True, is_closed=False)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), 2*numpy.ones((2,3)), include_below=True, is_closed=True)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3), numpy.arange(0, 12, 2).reshape(2,3), include_below=True, is_closed=True)
+            array([[False, False, False],
+                   [False, False, False]], dtype=bool)
+
+            >>> threshold_metric(numpy.arange(6).reshape(2,3) % 2, 1, include_below=True, is_closed=False)
+            array([[False, False, False],
+                   [False,  True, False]], dtype=bool)
+    """
+
+    assert(a_metric.ndim == 2)
+
+    accepted = unique_mapping(threshold_array(a_metric, threshold, include_below=include_below, is_closed=is_closed))
+
+    return(accepted)
+
+
+@debugging_tools.log_call(logger)
 def compute_mapping_matches(mapping):
     """
         Given a mapping this function computes number of matches and mismatches found.
