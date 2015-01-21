@@ -1600,6 +1600,54 @@ def compute_mapping_matches(mapping):
 
 
 @debugging_tools.log_call(logger)
+def compute_mapping_relevance(mapping):
+    """
+        Given a mapping this function computes the recall and precision.
+
+        If axis 0 is the ground truth, then the returned values are the recall and precision in order.
+        If axis 1 is the ground truth, then they are flipped.
+
+        Args:
+            mapping(numpy.ndarray):                       a 2D bool array mapping intersections between 2 groups.
+
+        Returns:
+            relevance(tuple of floats):                   relevance - a combination of recall and precision
+                                                              recall    -   the ratio of relevant predicted positives
+                                                                            out of all relevant positives.
+                                                              precision -   the ratio of relevant predicted positives
+                                                                            out of all predicted positives.
+
+        Examples:
+            >>> compute_mapping_relevance(numpy.arange(6).reshape(2,3) < 0)
+            array([ 0.,  0.])
+
+            >>> compute_mapping_relevance(numpy.arange(6).reshape(2,3) <= 0)
+            array([ 0.5       ,  0.33333333])
+
+            >>> compute_mapping_relevance((numpy.arange(6).reshape(2,3) % 2) == 1)
+            array([ 0.5       ,  0.33333333])
+
+            >>> compute_mapping_relevance(numpy.eye(2, dtype=bool))
+            array([ 1.,  1.])
+
+            >>> compute_mapping_relevance(numpy.fliplr(numpy.eye(2, dtype=bool)))
+            array([ 1.,  1.])
+    """
+
+    assert(issubclass(mapping.dtype.type, numpy.bool_))
+    assert(mapping.ndim == 2)
+
+    matches = compute_mapping_matches(mapping)
+    mapping_shape = numpy.array(mapping.shape)
+
+    relevance = numpy.zeros((2,), dtype=float)
+    relevance[:] = matches[0]
+    relevance /= mapping_shape
+
+    return(relevance)
+
+
+@debugging_tools.log_call(logger)
 def matrix_reduced_op(a, b, op):
     """
         Sort of like numpy.dot. However, it will use the first axis with both arrays.
