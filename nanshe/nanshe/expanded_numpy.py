@@ -334,6 +334,75 @@ def add_singleton_op(op, new_array, axis):
 
 
 @debugging_tools.log_call(logger)
+def roll(new_array, shift, out=None):
+    """
+        Like numpy.roll, but generalizes to include a roll for each axis of new_array.
+
+        Note:
+            Right shift occurs with a positive and left occurs with a negative.
+            Allows in-place rolls on the whole. Unfortunately, numpy.roll does not provide an in-place operation.
+
+        Args:
+            new_array(numpy.ndarray):     array to roll axes of.
+            shift(container of ints):     some sort of container (list, tuple, array) of ints specifying how much to
+                                          roll each axis.
+            out(numpy.ndarray):           array to store the results in.
+
+        Returns:
+            out(numpy.ndarray):           result of the roll.
+
+        Examples:
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.ones((2,), dtype=int))
+            array([[9, 5, 6, 7, 8],
+                   [4, 0, 1, 2, 3]])
+
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.arange(2))
+            array([[4, 0, 1, 2, 3],
+                   [9, 5, 6, 7, 8]])
+
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.arange(1, 3))
+            array([[8, 9, 5, 6, 7],
+                   [3, 4, 0, 1, 2]])
+
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([-1, -1]))
+            array([[6, 7, 8, 9, 5],
+                   [1, 2, 3, 4, 0]])
+
+            >>> a = numpy.arange(10).reshape(2,5); b = a.copy(); roll(a, numpy.arange(1, 3), b)
+            array([[8, 9, 5, 6, 7],
+                   [3, 4, 0, 1, 2]])
+            >>> a
+            array([[0, 1, 2, 3, 4],
+                   [5, 6, 7, 8, 9]])
+            >>> b
+            array([[8, 9, 5, 6, 7],
+                   [3, 4, 0, 1, 2]])
+
+            >>> a = numpy.arange(10).reshape(2,5); a
+            array([[0, 1, 2, 3, 4],
+                   [5, 6, 7, 8, 9]])
+            >>> roll(a, numpy.arange(1, 3), a)
+            array([[8, 9, 5, 6, 7],
+                   [3, 4, 0, 1, 2]])
+            >>> a
+            array([[8, 9, 5, 6, 7],
+                   [3, 4, 0, 1, 2]])
+    """
+
+    assert(len(shift) == new_array.ndim)
+
+    if out is None:
+        out = new_array.copy()
+    elif id(out) != id(new_array):
+        out[:] = new_array
+
+    for i in xrange(len(shift)):
+        out[:] = numpy.roll(out, shift[i], i)
+
+    return(out)
+
+
+@debugging_tools.log_call(logger)
 def contains(new_array, to_contain):
     """
         Gets a mask array that is true every time something from to_contain appears in new_array.
