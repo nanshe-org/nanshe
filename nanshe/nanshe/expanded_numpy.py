@@ -22,6 +22,7 @@ import scipy.stats.mstats
 
 import vigra
 
+
 # Need in order to have logging information no matter what.
 import debugging_tools
 
