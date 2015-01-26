@@ -490,6 +490,7 @@ def max_abs(new_array, axis=None):
     """
 
     result_indices = None
+
     if axis is None:
         result_indices = numpy.unravel_index(numpy.argmax(numpy.abs(new_array)), new_array.shape)
     else:
