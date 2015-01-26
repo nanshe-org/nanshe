@@ -451,6 +451,69 @@ def contains(new_array, to_contain):
 
 
 @debugging_tools.log_call(logger)
+def max_abs(new_array, axis=None):
+    """
+        Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
+
+        Args:
+            new_array(numpy.ndarray):            array to find the max (subject to the absolute value).
+            axis(int):                           desired matches to find.
+
+        Returns:
+            (numpy.ndarray):                     an array or value that is the largest (subject to the absolute value).
+
+        Examples:
+            >>> max_abs(numpy.arange(10))
+            9
+
+            >>> max_abs(numpy.arange(10).reshape(2,5))
+            9
+
+            >>> max_abs(numpy.arange(10).reshape(2,5), axis=0)
+            array([5, 6, 7, 8, 9])
+
+            >>> max_abs(numpy.arange(10).reshape(2,5), axis=1)
+            array([4, 9])
+
+            >>> max_abs(numpy.arange(10).reshape(2,5), axis=-1)
+            array([4, 9])
+
+            >>> max_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
+            (1+3j)
+
+            >>> max_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=0)
+            array([ 1.+0.j,  1.+1.j,  1.+3.j])
+
+            >>> max_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
+            array([ 2.+1.j,  1.+3.j])
+    """
+
+    result_indices = None
+    if axis is None:
+        result_indices = numpy.unravel_index(numpy.argmax(numpy.abs(new_array)), new_array.shape)
+    else:
+        # Correct axis to within [0, new_array.ndim)
+        axis %= new_array.ndim
+
+        # Get indices with `axis` as a singleton (the index array must get a shape with the same dims as new_array)
+        result_indices = numpy.indices(new_array.shape[:axis] + (1,) + new_array.shape[axis+1:])
+        # Strip the singleton axis (first dim is index order)
+        result_indices = index_axis_at_pos(result_indices, axis+1, 0)
+
+        # Get the indices that correspond to argmax for the given axis.
+        result_indices[axis] = numpy.argmax(numpy.abs(new_array), axis=axis)
+
+        # Make into index array.
+        result_indices = tuple(result_indices)
+
+
+    # Slice out relevant results
+    result = new_array[result_indices]
+
+    return(result)
+
+
+@debugging_tools.log_call(logger)
 def array_to_matrix(a):
     """
         Flattens an array so that the row is the only original shape kept.
