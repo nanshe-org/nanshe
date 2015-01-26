@@ -23,6 +23,8 @@ import scipy.stats.mstats
 import vigra
 
 
+import additional_generators
+
 # Need in order to have logging information no matter what.
 import debugging_tools
 
@@ -487,30 +489,57 @@ def max_abs(new_array, axis=None):
 
             >>> max_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
             array([ 2.+1.j,  1.+3.j])
+
+            >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
+            array([11, 23])
+
+            >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
+            array([15, 19, 23])
+
+            >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
+            array([15, 19, 23])
     """
 
     result_indices = None
 
-    if axis is None:
-        result_indices = numpy.unravel_index(numpy.argmax(numpy.abs(new_array)), new_array.shape)
+    # Convert axis into a tuple of ints in the range [0, new_array.ndim).
+    axes = axis
+    if axes is None:
+        axes = range(new_array.ndim)
     else:
+        try:
+            axes = list(axes)
+        except TypeError:
+            axes = [axes]
+
         # Correct axis to within [0, new_array.ndim)
-        axis %= new_array.ndim
+        for i in xrange(len(axes)):
+            axes[i] %= new_array.ndim
 
-        # Get indices with `axis` as a singleton (the index array must get a shape with the same dims as new_array)
-        result_indices = numpy.indices(new_array.shape[:axis] + (1,) + new_array.shape[axis+1:])
-        # Strip the singleton axis (first dim is index order)
-        result_indices = index_axis_at_pos(result_indices, axis+1, 0)
+    axes = tuple(axes)
 
-        # Get the indices that correspond to argmax for the given axis.
-        result_indices[axis] = numpy.argmax(numpy.abs(new_array), axis=axis)
+    # Reshape array to ensure all axes to be operated on are at the end in one axis.
+    new_array_refolded = new_array.transpose(
+        tuple(additional_generators.xrange_with_skip(new_array.ndim, to_skip=axes)) + axes
+    )
+    new_array_refolded = new_array_refolded.reshape(
+        new_array_refolded.shape[:new_array_refolded.ndim-len(axes)] + (-1,)
+    )
 
-        # Make into index array.
-        result_indices = tuple(result_indices)
+    # Add singleton dimensions at the end where the axes to be operated on now is.
+    result_shape = new_array_refolded.shape[:-1] + (1,)
 
+    # Get indices for the result and strip off the singleton axis (last dim).
+    result_indices = numpy.indices(result_shape)[..., 0]
+
+    # Get the indices that correspond to argmax for the given axis.
+    result_indices[-1] = numpy.argmax(numpy.abs(new_array_refolded), axis=-1)
+
+    # Make into index array.
+    result_indices = tuple(result_indices)
 
     # Slice out relevant results
-    result = new_array[result_indices]
+    result = new_array_refolded[result_indices]
 
     return(result)
 
