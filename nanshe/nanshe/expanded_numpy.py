@@ -305,7 +305,7 @@ def add_singleton_axis_end(new_array):
 
 
 @debugging_tools.log_call(logger)
-def squish(new_array, axis=None):
+def squish(new_array, axis=None, keepdims=False):
     """
         Moves the given axes to the last dimensions of the array and then squishes them into one dimension.
 
@@ -316,6 +316,8 @@ def squish(new_array, axis=None):
         Args:
             new_array(numpy.ndarray):           array to find the max (subject to the absolute value).
             axis(int or collection of ints):    desired matches to find.
+            keepdims(bool):                     ensure the number of dimensions is the same by inserting singleton
+                                                dimensions at all the axes squished (excepting the last one).
 
         Returns:
             (numpy.ndarray):                    an array with one dimension at the end containing all the given axes.
@@ -393,6 +395,24 @@ def squish(new_array, axis=None):
                    [ 3, 15,  7, 19, 11, 23]])
             >>> b.base is a
             False
+
+            >>> b = squish(a, axis=(0, 2)); b
+            array([[ 0,  1,  2,  3, 12, 13, 14, 15],
+                   [ 4,  5,  6,  7, 16, 17, 18, 19],
+                   [ 8,  9, 10, 11, 20, 21, 22, 23]])
+            >>> b.base is a
+            False
+
+            >>> b = squish(a, axis=(0, 2), keepdims=True); b
+            array([[[ 0,  1,  2,  3, 12, 13, 14, 15],
+                    [ 4,  5,  6,  7, 16, 17, 18, 19],
+                    [ 8,  9, 10, 11, 20, 21, 22, 23]]])
+
+            >>> b = squish(a, axis=(1, 0), keepdims=True); b
+            array([[[[ 0, 12,  4, 16,  8, 20],
+                     [ 1, 13,  5, 17,  9, 21],
+                     [ 2, 14,  6, 18, 10, 22],
+                     [ 3, 15,  7, 19, 11, 23]]]])
     """
 
     # Convert the axes into a standard format that we can work with.
@@ -422,6 +442,21 @@ def squish(new_array, axis=None):
     if len(axes) > 1:
         result_shape = result.shape[:result.ndim-len(axes)] + (-1,)
         result = result.reshape(result_shape)
+
+        # Add back singleton dimensions as needed.
+        # Only happens when more than one dimension is squished.
+        if keepdims:
+            sorted_axes = sorted(axes)
+
+            # The last dimension if found as we still have that one.
+            try:
+                sorted_axes.remove(new_array.ndim - 1)
+            except ValueError:
+                pass
+
+            # Add in singleton dimensions
+            for i in sorted_axes:
+                result = add_singleton_axis_pos(result, axis=i)
 
     return(result)
 
