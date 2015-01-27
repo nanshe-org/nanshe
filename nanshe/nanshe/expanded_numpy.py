@@ -623,6 +623,12 @@ def min_abs(new_array, axis=None, allow_nan=True):
 
             >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
             array([0, 4, 8])
+
+            >>> min_abs(numpy.array([numpy.nan, -2, 3]))
+            nan
+
+            >>> min_abs(numpy.array([numpy.nan, -2, 3]), allow_nan=False)
+            -2.0
     """
 
     # Squish array to ensure all axes to be operated on are at the end in one axis.
@@ -695,6 +701,12 @@ def max_abs(new_array, axis=None, allow_nan=True):
 
             >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
             array([15, 19, 23])
+
+            >>> max_abs(numpy.array([numpy.nan, -2, 3]))
+            nan
+
+            >>> max_abs(numpy.array([numpy.nan, -2, 3]), allow_nan=False)
+            3.0
     """
 
     # Squish array to ensure all axes to be operated on are at the end in one axis.
