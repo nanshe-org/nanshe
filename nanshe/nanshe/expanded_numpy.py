@@ -622,8 +622,6 @@ def max_abs(new_array, axis=None):
             array([15, 19, 23])
     """
 
-    result_indices = None
-
     # Convert axis into a tuple of ints in the range [0, new_array.ndim).
     axes = axis
     if axes is None:
