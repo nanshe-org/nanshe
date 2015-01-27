@@ -20,6 +20,8 @@ import scipy.ndimage.morphology
 import scipy.stats
 import scipy.stats.mstats
 
+import bottleneck
+
 import vigra
 
 
@@ -576,13 +578,14 @@ def contains(new_array, to_contain):
 
 
 @debugging_tools.log_call(logger)
-def max_abs(new_array, axis=None):
+def max_abs(new_array, axis=None, allow_nan=True):
     """
         Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
 
         Args:
             new_array(numpy.ndarray):            array to find the max (subject to the absolute value).
             axis(int):                           desired matches to find.
+            allow_nan(bool):                     whether to allow nan in the result or to skip it.
 
         Returns:
             (numpy.ndarray):                     an array or value that is the largest (subject to the absolute value).
@@ -632,7 +635,10 @@ def max_abs(new_array, axis=None):
     result_indices = numpy.indices(result_shape)[..., 0]
 
     # Get the indices that correspond to argmax for the given axis.
-    result_indices[-1] = numpy.argmax(numpy.abs(new_array_refolded), axis=-1)
+    if allow_nan:
+        result_indices[-1] = numpy.argmax(numpy.abs(new_array_refolded), axis=-1)
+    else:
+        result_indices[-1] = bottleneck.nanargmax(numpy.abs(new_array_refolded), axis=-1)
 
     # Make into index array.
     result_indices = tuple(result_indices)
