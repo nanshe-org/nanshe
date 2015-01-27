@@ -578,6 +578,78 @@ def contains(new_array, to_contain):
 
 
 @debugging_tools.log_call(logger)
+def min_abs(new_array, axis=None, allow_nan=True):
+    """
+        Takes the min of the given array subject to the absolute value (magnitude for complex numbers).
+
+        Args:
+            new_array(numpy.ndarray):            array to find the min (subject to the absolute value).
+            axis(int):                           desired matches to find.
+            allow_nan(bool):                     whether to allow nan in the result or to skip it.
+
+        Returns:
+            (numpy.ndarray):                     an array or value that is the largest (subject to the absolute value).
+
+        Examples:
+            >>> min_abs(numpy.arange(10))
+            0
+
+            >>> min_abs(numpy.arange(10).reshape(2,5))
+            0
+
+            >>> min_abs(numpy.arange(10).reshape(2,5), axis=0)
+            array([0, 1, 2, 3, 4])
+
+            >>> min_abs(numpy.arange(10).reshape(2,5), axis=1)
+            array([0, 5])
+
+            >>> min_abs(numpy.arange(10).reshape(2,5), axis=-1)
+            array([0, 5])
+
+            >>> min_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
+            0j
+
+            >>> min_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=0)
+            array([ 0.+0.j,  0.+1.j,  2.+1.j])
+
+            >>> min_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
+            array([ 1.+0.j,  0.+0.j])
+
+            >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
+            array([ 0, 12])
+
+            >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
+            array([0, 4, 8])
+
+            >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
+            array([0, 4, 8])
+    """
+
+    # Squish array to ensure all axes to be operated on are at the end in one axis.
+    new_array_refolded = squish(new_array, axis=axis)
+
+    # Add singleton dimensions at the end where the axes to be operated on now is.
+    result_shape = new_array_refolded.shape[:-1] + (1,)
+
+    # Get indices for the result and strip off the singleton axis (last dim).
+    result_indices = numpy.indices(result_shape)[..., 0]
+
+    # Get the indices that correspond to argmin for the given axis.
+    if allow_nan:
+        result_indices[-1] = numpy.argmin(numpy.abs(new_array_refolded), axis=-1)
+    else:
+        result_indices[-1] = bottleneck.nanargmin(numpy.abs(new_array_refolded), axis=-1)
+
+    # Make into index array.
+    result_indices = tuple(result_indices)
+
+    # Slice out relevant results
+    result = new_array_refolded[result_indices]
+
+    return(result)
+
+
+@debugging_tools.log_call(logger)
 def max_abs(new_array, axis=None, allow_nan=True):
     """
         Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
