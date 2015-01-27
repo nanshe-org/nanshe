@@ -122,128 +122,6 @@ def renumber_label_image(new_array):
 
 
 @debugging_tools.log_call(logger)
-def squish(new_array, axis=None):
-    """
-        Moves the given axes to the last dimensions of the array and then squishes them into one dimension.
-
-        Note:
-            Returns a view if possible. However, if the axes provided are not consecutive integers when placed in the
-            range [0, new_array.ndim), due to reshaping, the returned array will be a copy.
-
-        Args:
-            new_array(numpy.ndarray):           array to find the max (subject to the absolute value).
-            axis(int or collection of ints):    desired matches to find.
-
-        Returns:
-            (numpy.ndarray):                    an array with one dimension at the end containing all the given axes.
-
-        Examples:
-            >>> a = numpy.arange(24).reshape(2,3,4).copy(); a
-            array([[[ 0,  1,  2,  3],
-                    [ 4,  5,  6,  7],
-                    [ 8,  9, 10, 11]],
-            <BLANKLINE>
-                   [[12, 13, 14, 15],
-                    [16, 17, 18, 19],
-                    [20, 21, 22, 23]]])
-            >>> print(a.base)
-            None
-
-            >>> b = squish(a); b
-            array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
-                   17, 18, 19, 20, 21, 22, 23])
-            >>> b.base is a
-            True
-
-            >>> b = squish(a, axis=0); b
-            array([[[ 0, 12],
-                    [ 1, 13],
-                    [ 2, 14],
-                    [ 3, 15]],
-            <BLANKLINE>
-                   [[ 4, 16],
-                    [ 5, 17],
-                    [ 6, 18],
-                    [ 7, 19]],
-            <BLANKLINE>
-                   [[ 8, 20],
-                    [ 9, 21],
-                    [10, 22],
-                    [11, 23]]])
-            >>> b.base is a
-            True
-
-            >>> b = squish(a, axis=2); b
-            array([[[ 0,  1,  2,  3],
-                    [ 4,  5,  6,  7],
-                    [ 8,  9, 10, 11]],
-            <BLANKLINE>
-                   [[12, 13, 14, 15],
-                    [16, 17, 18, 19],
-                    [20, 21, 22, 23]]])
-            >>> b.base is a
-            True
-
-            >>> b = squish(a, axis=-1); b
-            array([[[ 0,  1,  2,  3],
-                    [ 4,  5,  6,  7],
-                    [ 8,  9, 10, 11]],
-            <BLANKLINE>
-                   [[12, 13, 14, 15],
-                    [16, 17, 18, 19],
-                    [20, 21, 22, 23]]])
-            >>> b.base is a
-            True
-
-            >>> b = squish(a, axis=(0,1)); b
-            array([[ 0,  4,  8, 12, 16, 20],
-                   [ 1,  5,  9, 13, 17, 21],
-                   [ 2,  6, 10, 14, 18, 22],
-                   [ 3,  7, 11, 15, 19, 23]])
-            >>> b.base is a
-            True
-
-            >>> b = squish(a, axis=(1, 0)); b
-            array([[ 0, 12,  4, 16,  8, 20],
-                   [ 1, 13,  5, 17,  9, 21],
-                   [ 2, 14,  6, 18, 10, 22],
-                   [ 3, 15,  7, 19, 11, 23]])
-            >>> b.base is a
-            False
-    """
-
-    # Convert the axes into a standard format that we can work with.
-    axes = axis
-    if axes is None:
-        axes = range(new_array.ndim)
-    else:
-        # If axes is some kind of iterable, convert it to a list.
-        # If not assume, it is a single value.
-        try:
-            axes = list(axes)
-        except TypeError:
-            axes = [axes]
-
-        # Correct axes to be within the range [0, new_array.ndim).
-        for i in xrange(len(axes)):
-            axes[i] %= new_array.ndim
-
-    axes = tuple(axes)
-
-    # Put all axes not part of the group in front and stuff the rest at the back.
-    axis_order = tuple(additional_generators.xrange_with_skip(new_array.ndim, to_skip=axes)) + axes
-    result = new_array.transpose(axis_order)
-
-    # Squash the axes at the end into one dimension.
-    # If the axes aren't consecutive, this will force a copy.
-    if len(axes) > 1:
-        result_shape = result.shape[:result.ndim-len(axes)] + (-1,)
-        result = result.reshape(result_shape)
-
-    return(result)
-
-
-@debugging_tools.log_call(logger)
 def index_axis_at_pos(new_array, axis, pos):
     """
         Indexes an arbitrary axis to the given position, which may be an index, a slice, or any other NumPy allowed
@@ -424,6 +302,128 @@ def add_singleton_axis_end(new_array):
 
     # return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )
     return( add_singleton_axis_pos(new_array, new_array.ndim) )
+
+
+@debugging_tools.log_call(logger)
+def squish(new_array, axis=None):
+    """
+        Moves the given axes to the last dimensions of the array and then squishes them into one dimension.
+
+        Note:
+            Returns a view if possible. However, if the axes provided are not consecutive integers when placed in the
+            range [0, new_array.ndim), due to reshaping, the returned array will be a copy.
+
+        Args:
+            new_array(numpy.ndarray):           array to find the max (subject to the absolute value).
+            axis(int or collection of ints):    desired matches to find.
+
+        Returns:
+            (numpy.ndarray):                    an array with one dimension at the end containing all the given axes.
+
+        Examples:
+            >>> a = numpy.arange(24).reshape(2,3,4).copy(); a
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> print(a.base)
+            None
+
+            >>> b = squish(a); b
+            array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
+                   17, 18, 19, 20, 21, 22, 23])
+            >>> b.base is a
+            True
+
+            >>> b = squish(a, axis=0); b
+            array([[[ 0, 12],
+                    [ 1, 13],
+                    [ 2, 14],
+                    [ 3, 15]],
+            <BLANKLINE>
+                   [[ 4, 16],
+                    [ 5, 17],
+                    [ 6, 18],
+                    [ 7, 19]],
+            <BLANKLINE>
+                   [[ 8, 20],
+                    [ 9, 21],
+                    [10, 22],
+                    [11, 23]]])
+            >>> b.base is a
+            True
+
+            >>> b = squish(a, axis=2); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            True
+
+            >>> b = squish(a, axis=-1); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            True
+
+            >>> b = squish(a, axis=(0,1)); b
+            array([[ 0,  4,  8, 12, 16, 20],
+                   [ 1,  5,  9, 13, 17, 21],
+                   [ 2,  6, 10, 14, 18, 22],
+                   [ 3,  7, 11, 15, 19, 23]])
+            >>> b.base is a
+            True
+
+            >>> b = squish(a, axis=(1, 0)); b
+            array([[ 0, 12,  4, 16,  8, 20],
+                   [ 1, 13,  5, 17,  9, 21],
+                   [ 2, 14,  6, 18, 10, 22],
+                   [ 3, 15,  7, 19, 11, 23]])
+            >>> b.base is a
+            False
+    """
+
+    # Convert the axes into a standard format that we can work with.
+    axes = axis
+    if axes is None:
+        axes = range(new_array.ndim)
+    else:
+        # If axes is some kind of iterable, convert it to a list.
+        # If not assume, it is a single value.
+        try:
+            axes = list(axes)
+        except TypeError:
+            axes = [axes]
+
+        # Correct axes to be within the range [0, new_array.ndim).
+        for i in xrange(len(axes)):
+            axes[i] %= new_array.ndim
+
+    axes = tuple(axes)
+
+    # Put all axes not part of the group in front and stuff the rest at the back.
+    axis_order = tuple(additional_generators.xrange_with_skip(new_array.ndim, to_skip=axes)) + axes
+    result = new_array.transpose(axis_order)
+
+    # Squash the axes at the end into one dimension.
+    # If the axes aren't consecutive, this will force a copy.
+    if len(axes) > 1:
+        result_shape = result.shape[:result.ndim-len(axes)] + (-1,)
+        result = result.reshape(result_shape)
+
+    return(result)
 
 
 @debugging_tools.log_call(logger)
