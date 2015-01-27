@@ -623,7 +623,7 @@ def min_abs(new_array, axis=None):
             axis(int):                           desired matches to find.
 
         Returns:
-            (numpy.ndarray):                     an array or value that is the largest (subject to the absolute value).
+            (numpy.ndarray):                     an array or value that is the smallest (subject to the absolute value).
 
         Examples:
             >>> min_abs(numpy.arange(10))
