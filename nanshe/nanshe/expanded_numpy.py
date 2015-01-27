@@ -322,15 +322,15 @@ def index_axis_at_pos(new_array, axis, pos):
 
 
 @debugging_tools.log_call(logger)
-def add_singleton_axis_pos(a_array, new_axis = 0):
+def add_singleton_axis_pos(a_array, axis = 0):
     """
         Adds a singleton axis to the given position.
-        Allows negative values for new_axis.
-        Also, automatically bounds new_axis in an acceptable regime if it is not already.
+        Allows negative values for axis.
+        Also, automatically bounds axis in an acceptable regime if it is not already.
         
         Args:
             a_array(numpy.ndarray):            array to add the singleton axis to.
-            new_axis(int):                     position for the axis to be in the final array (defaults to zero).
+            axis(int):                         position for the axis to be in the final array (defaults to zero).
         
         Returns:
             (numpy.ndarray):                   a numpy array with the singleton axis added (should be a view).
@@ -342,7 +342,7 @@ def add_singleton_axis_pos(a_array, new_axis = 0):
             >>> add_singleton_axis_pos(numpy.ones((7,9,6)), 0).shape
             (1, 7, 9, 6)
             
-            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = 0).shape
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), axis = 0).shape
             (1, 7, 9, 6)
             
             >>> add_singleton_axis_pos(numpy.ones((7,9,6)), 1).shape
@@ -362,12 +362,12 @@ def add_singleton_axis_pos(a_array, new_axis = 0):
             
     """
 
-    # Clean up new_axis to be within the allowable range.
-    new_axis %= (a_array.ndim + 1)
+    # Clean up axis to be within the allowable range.
+    axis %= (a_array.ndim + 1)
 
     # Constructing the current ordering of axis and the singleton dime
     new_array_shape = range(1, a_array.ndim + 1)
-    new_array_shape.insert(new_axis, 0)
+    new_array_shape.insert(axis, 0)
     new_array_shape = tuple(new_array_shape)
 
     # Adds singleton dimension at front.
