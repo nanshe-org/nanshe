@@ -356,6 +356,9 @@ def add_singleton_axis_pos(a_array, new_axis = 0):
             
             >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = -1).shape
             (7, 9, 6, 1)
+
+            >>> add_singleton_axis_pos(numpy.ones((7,9,6)), new_axis = -2).shape
+            (7, 9, 1, 6)
             
     """
 
