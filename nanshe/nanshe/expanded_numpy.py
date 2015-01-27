@@ -399,7 +399,7 @@ def add_singleton_axis_beginning(new_array):
     """
 
     # return( new_array[None] )
-    return( add_singleton_axis_pos(new_array, new_axis = 0) )
+    return( add_singleton_axis_pos(new_array, 0) )
 
 
 @debugging_tools.log_call(logger)
@@ -423,7 +423,7 @@ def add_singleton_axis_end(new_array):
     """
 
     # return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )
-    return( add_singleton_axis_pos(new_array, new_axis = new_array.ndim) )
+    return( add_singleton_axis_pos(new_array, new_array.ndim) )
 
 
 @debugging_tools.log_call(logger)
