@@ -885,7 +885,7 @@ def nanmax_abs(new_array, axis=None):
     # Get indices for the result and strip off the singleton axis (last dim).
     result_indices = numpy.indices(result_shape)[..., 0]
 
-    # Get the indices that correspond to argmax for the given axis.
+    # Get the indices that correspond to argmax (ignoring nan) for the given axis.
     result_indices[-1] = bottleneck.nanargmax(numpy.abs(new_array_refolded), axis=-1)
 
     # Make into index array.
