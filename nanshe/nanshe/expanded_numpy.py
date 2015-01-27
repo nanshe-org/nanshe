@@ -720,14 +720,13 @@ def nanmin_abs(new_array, axis=None):
 
 
 @debugging_tools.log_call(logger)
-def max_abs(new_array, axis=None, allow_nan=True):
+def max_abs(new_array, axis=None):
     """
         Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
 
         Args:
             new_array(numpy.ndarray):            array to find the max (subject to the absolute value).
             axis(int):                           desired matches to find.
-            allow_nan(bool):                     whether to allow nan in the result or to skip it.
 
         Returns:
             (numpy.ndarray):                     an array or value that is the largest (subject to the absolute value).
@@ -768,8 +767,76 @@ def max_abs(new_array, axis=None, allow_nan=True):
 
             >>> max_abs(numpy.array([numpy.nan, -2, 3]))
             nan
+    """
 
-            >>> max_abs(numpy.array([numpy.nan, -2, 3]), allow_nan=False)
+    # Squish array to ensure all axes to be operated on are at the end in one axis.
+    new_array_refolded = squish(new_array, axis=axis)
+
+    # Add singleton dimensions at the end where the axes to be operated on now is.
+    result_shape = new_array_refolded.shape[:-1] + (1,)
+
+    # Get indices for the result and strip off the singleton axis (last dim).
+    result_indices = numpy.indices(result_shape)[..., 0]
+
+    # Get the indices that correspond to argmax for the given axis.
+    result_indices[-1] = numpy.argmax(numpy.abs(new_array_refolded), axis=-1)
+
+    # Make into index array.
+    result_indices = tuple(result_indices)
+
+    # Slice out relevant results
+    result = new_array_refolded[result_indices]
+
+    return(result)
+
+
+@debugging_tools.log_call(logger)
+def nanmax_abs(new_array, axis=None):
+    """
+        Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
+
+        Args:
+            new_array(numpy.ndarray):            array to find the max (subject to the absolute value).
+            axis(int):                           desired matches to find.
+
+        Returns:
+            (numpy.ndarray):                     an array or value that is the largest (subject to the absolute value).
+
+        Examples:
+            >>> nanmax_abs(numpy.arange(10))
+            9
+
+            >>> nanmax_abs(numpy.arange(10).reshape(2,5))
+            9
+
+            >>> nanmax_abs(numpy.arange(10).reshape(2,5), axis=0)
+            array([5, 6, 7, 8, 9])
+
+            >>> nanmax_abs(numpy.arange(10).reshape(2,5), axis=1)
+            array([4, 9])
+
+            >>> nanmax_abs(numpy.arange(10).reshape(2,5), axis=-1)
+            array([4, 9])
+
+            >>> nanmax_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
+            (1+3j)
+
+            >>> nanmax_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=0)
+            array([ 1.+0.j,  1.+1.j,  1.+3.j])
+
+            >>> nanmax_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
+            array([ 2.+1.j,  1.+3.j])
+
+            >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
+            array([11, 23])
+
+            >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
+            array([15, 19, 23])
+
+            >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
+            array([15, 19, 23])
+
+            >>> nanmax_abs(numpy.array([numpy.nan, -2, 3]))
             3.0
     """
 
@@ -783,10 +850,7 @@ def max_abs(new_array, axis=None, allow_nan=True):
     result_indices = numpy.indices(result_shape)[..., 0]
 
     # Get the indices that correspond to argmax for the given axis.
-    if allow_nan:
-        result_indices[-1] = numpy.argmax(numpy.abs(new_array_refolded), axis=-1)
-    else:
-        result_indices[-1] = bottleneck.nanargmax(numpy.abs(new_array_refolded), axis=-1)
+    result_indices[-1] = bottleneck.nanargmax(numpy.abs(new_array_refolded), axis=-1)
 
     # Make into index array.
     result_indices = tuple(result_indices)
