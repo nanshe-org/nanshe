@@ -315,7 +315,7 @@ def squish(new_array, axis=None, keepdims=False):
 
         Args:
             new_array(numpy.ndarray):           array to find the max (subject to the absolute value).
-            axis(int or collection of ints):    desired matches to find.
+            axis(int or collection of ints):    desired axes to squish.
             keepdims(bool):                     ensure the number of dimensions is the same by inserting singleton
                                                 dimensions at all the axes squished (excepting the last one).
 
