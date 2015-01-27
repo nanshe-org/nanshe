@@ -774,10 +774,6 @@ def nanmin_abs(new_array, axis=None, keepdims=False):
     # Slice out relevant results
     result = new_array_refolded[result_indices]
 
-    # Add back last dimension as needed.
-    if keepdims:
-        result = result[..., None]
-
     return(result)
 
 
