@@ -458,6 +458,237 @@ def squish(new_array, axis=None, keepdims=False):
 
 
 @debugging_tools.log_call(logger)
+def unsquish(new_array, shape, axis=None):
+    """
+        Inverts the squish operation given the shape and the axis/axes to extract from the last dimension.
+
+        Args:
+            new_array(numpy.ndarray):           array to find the max (subject to the absolute value).
+            shape(collection of ints):          should be the shape of the result array (or the array before squishing).
+            axis(int or collection of ints):    desired axes to remove from the last axis.
+
+        Returns:
+            (numpy.ndarray):                    an array with the shape provided and the axes removed from the end.
+
+        Examples:
+            >>> a = numpy.arange(24).reshape(2,3,4).copy(); a
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> print(a.base)
+            None
+
+
+            >>> a.reshape(-1)
+            array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
+                   17, 18, 19, 20, 21, 22, 23])
+
+            >>> b = unsquish(a.reshape(-1), (2,3,4)); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            True
+
+
+            >>> a.transpose(1,2,0)
+            array([[[ 0, 12],
+                    [ 1, 13],
+                    [ 2, 14],
+                    [ 3, 15]],
+            <BLANKLINE>
+                   [[ 4, 16],
+                    [ 5, 17],
+                    [ 6, 18],
+                    [ 7, 19]],
+            <BLANKLINE>
+                   [[ 8, 20],
+                    [ 9, 21],
+                    [10, 22],
+                    [11, 23]]])
+
+            >>> b = unsquish(a.transpose(1,2,0), (2,3,4), axis=0); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            True
+
+
+            >>> b = unsquish(a, (2,3,4), axis=2); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            True
+
+
+            >>> b = unsquish(a, (2,3,4), axis=-1); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            True
+
+
+            >>> a.transpose(2,0,1).reshape(a.shape[2], -1)
+            array([[ 0,  4,  8, 12, 16, 20],
+                   [ 1,  5,  9, 13, 17, 21],
+                   [ 2,  6, 10, 14, 18, 22],
+                   [ 3,  7, 11, 15, 19, 23]])
+
+            >>> b = unsquish(a.transpose(2,0,1).reshape(a.shape[2], -1), (2,3,4), axis=(0,1)); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            True
+
+
+            >>> a.transpose(2, 1, 0).reshape(a.shape[2], -1)
+            array([[ 0, 12,  4, 16,  8, 20],
+                   [ 1, 13,  5, 17,  9, 21],
+                   [ 2, 14,  6, 18, 10, 22],
+                   [ 3, 15,  7, 19, 11, 23]])
+
+            >>> b = unsquish(a.transpose(2, 1, 0).reshape(a.shape[2], -1), (2,3,4), axis=(1,0)); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            False
+
+
+            >>> a.transpose(1, 0, 2).reshape(a.shape[1], -1)
+            array([[ 0,  1,  2,  3, 12, 13, 14, 15],
+                   [ 4,  5,  6,  7, 16, 17, 18, 19],
+                   [ 8,  9, 10, 11, 20, 21, 22, 23]])
+
+            >>> b = unsquish(a.transpose(1, 0, 2).reshape(a.shape[1], -1), (2,3,4), axis=(0,2)); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+            >>> b.base is a
+            False
+
+
+            >>> a.transpose(1, 0, 2).reshape(a.shape[1], -1)[None]
+            array([[[ 0,  1,  2,  3, 12, 13, 14, 15],
+                    [ 4,  5,  6,  7, 16, 17, 18, 19],
+                    [ 8,  9, 10, 11, 20, 21, 22, 23]]])
+
+            >>> b = unsquish(a.transpose(1, 0, 2).reshape(a.shape[1], -1)[None], (2,3,4), axis=(0,2)); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+
+
+            >>> a.transpose(2, 1, 0).reshape(a.shape[2], -1)[None, None]
+            array([[[[ 0, 12,  4, 16,  8, 20],
+                     [ 1, 13,  5, 17,  9, 21],
+                     [ 2, 14,  6, 18, 10, 22],
+                     [ 3, 15,  7, 19, 11, 23]]]])
+
+            >>> b = unsquish(a.transpose(2, 1, 0).reshape(a.shape[2], -1)[None, None], (2,3,4), axis=(1,0)); b
+            array([[[ 0,  1,  2,  3],
+                    [ 4,  5,  6,  7],
+                    [ 8,  9, 10, 11]],
+            <BLANKLINE>
+                   [[12, 13, 14, 15],
+                    [16, 17, 18, 19],
+                    [20, 21, 22, 23]]])
+    """
+
+    # Ensure shape is a tuple.
+    shape = tuple(shape)
+
+    # Convert the axes into a standard format that we can work with.
+    axes = axis
+    if axes is None:
+        axes = range(0, len(shape))
+    else:
+        # If axes is some kind of iterable, convert it to a list.
+        # If not assume, it is a single value.
+        try:
+            axes = list(axes)
+        except TypeError:
+            axes = [axes]
+
+        # Correct axes to be within the range [0, len(shape)).
+        for i in xrange(len(axes)):
+            axes[i] %= len(shape)
+
+    axes = tuple(axes)
+
+    result = new_array
+
+    # Reshape the array to get the original shape (wrong axis order).
+    # This will also eliminate singleton axes that weren't part of the original shape (i.e. squish keepdim=True).
+    shape_transposed = tuple()
+    # Get how the axis order was changed
+    old_axis_order_iter = itertools.chain(additional_generators.xrange_with_skip(len(shape), to_skip=axes), axes)
+
+    for i in old_axis_order_iter:
+        shape_transposed += shape[i:i+1]
+
+    result = result.reshape(shape_transposed)
+
+    # Find out how the axes will need to be transposed to return to the original order.
+    if axis is not None:
+        # Get how the axis order was changed
+        old_axis_order_iter = itertools.chain(additional_generators.xrange_with_skip(len(shape), to_skip=axes), axes)
+        # Get the current axis order (i.e. in order)
+        current_axis_order_iter = xrange(len(shape))
+
+        # Find how the old order relates to the new one
+        axis_order_map = dict(itertools.izip(old_axis_order_iter, current_axis_order_iter))
+
+        # Export how the new order will be changed (as the old axis order will be how to transform the axes).
+        axis_order = tuple(axis_order_map.itervalues())
+
+        # Put all axes not part of the group in front and stuff the rest at the back.
+        result = result.transpose(axis_order)
+
+    return(result)
+
+
+@debugging_tools.log_call(logger)
 def add_singleton_op(op, new_array, axis):
     """
         Performs an operation on the given array on the specified axis, which otherwise would have eliminated the axis
