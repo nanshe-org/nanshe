@@ -622,29 +622,8 @@ def max_abs(new_array, axis=None):
             array([15, 19, 23])
     """
 
-    # Convert axis into a tuple of ints in the range [0, new_array.ndim).
-    axes = axis
-    if axes is None:
-        axes = range(new_array.ndim)
-    else:
-        try:
-            axes = list(axes)
-        except TypeError:
-            axes = [axes]
-
-        # Correct axis to within [0, new_array.ndim)
-        for i in xrange(len(axes)):
-            axes[i] %= new_array.ndim
-
-    axes = tuple(axes)
-
-    # Reshape array to ensure all axes to be operated on are at the end in one axis.
-    new_array_refolded = new_array.transpose(
-        tuple(additional_generators.xrange_with_skip(new_array.ndim, to_skip=axes)) + axes
-    )
-    new_array_refolded = new_array_refolded.reshape(
-        new_array_refolded.shape[:new_array_refolded.ndim-len(axes)] + (-1,)
-    )
+    # Squish array to ensure all axes to be operated on are at the end in one axis.
+    new_array_refolded = squish(new_array, axis=axis)
 
     # Add singleton dimensions at the end where the axes to be operated on now is.
     result_shape = new_array_refolded.shape[:-1] + (1,)
