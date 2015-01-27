@@ -364,8 +364,6 @@ def add_singleton_axis_pos(a_array, new_axis = 0):
 
     # Clean up new_axis to be within the allowable range.
     new_axis %= (a_array.ndim + 1)
-    if new_axis < 0:
-        new_axis += a_array.ndim + 1
 
     # Constructing the current ordering of axis and the singleton dime
     new_array_shape = range(1, a_array.ndim + 1)
