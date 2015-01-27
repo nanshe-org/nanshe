@@ -700,13 +700,15 @@ def min_abs(new_array, axis=None, keepdims=False):
 
 
 @debugging_tools.log_call(logger)
-def nanmin_abs(new_array, axis=None):
+def nanmin_abs(new_array, axis=None, keepdims=False):
     """
         Takes the min of the given array subject to the absolute value (magnitude for complex numbers).
 
         Args:
             new_array(numpy.ndarray):            array to find the min (subject to the absolute value).
             axis(int):                           desired matches to find.
+            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton
+                                                 dimensions at all the axes squished (excepting the last one).
 
         Returns:
             (numpy.ndarray):                     an array or value that is the smallest (subject to the absolute value).
@@ -727,6 +729,10 @@ def nanmin_abs(new_array, axis=None):
             >>> nanmin_abs(numpy.arange(10).reshape(2,5), axis=-1)
             array([0, 5])
 
+            >>> nanmin_abs(numpy.arange(10).reshape(2,5), axis=-1, keepdims=True)
+            array([[0],
+                   [5]])
+
             >>> nanmin_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
             0j
 
@@ -742,6 +748,11 @@ def nanmin_abs(new_array, axis=None):
             >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
             array([0, 4, 8])
 
+            >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2), keepdims=True)
+            array([[[0],
+                    [4],
+                    [8]]])
+
             >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
             array([0, 4, 8])
 
@@ -750,7 +761,7 @@ def nanmin_abs(new_array, axis=None):
     """
 
     # Squish array to ensure all axes to be operated on are at the end in one axis.
-    new_array_refolded = squish(new_array, axis=axis)
+    new_array_refolded = squish(new_array, axis=axis, keepdims=keepdims)
 
     # Add singleton dimensions at the end where the axes to be operated on now is.
     result_shape = new_array_refolded.shape[:-1] + (1,)
@@ -766,6 +777,10 @@ def nanmin_abs(new_array, axis=None):
 
     # Slice out relevant results
     result = new_array_refolded[result_indices]
+
+    # Add back last dimension as needed.
+    if keepdims:
+        result = result[..., None]
 
     return(result)
 
