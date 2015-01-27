@@ -848,7 +848,7 @@ class EnumeratedProjectionConstantRequest( object ):
             self._result = numpy.max(self._result, axis=self.axis)
 
             # Add singleton axis where max was performed
-            self._result = expanded_numpy.add_singleton_axis_pos(self._result, new_axis=self.axis)
+            self._result = expanded_numpy.add_singleton_axis_pos(self._result, self.axis)
 
             # Take the slice the viewer wanted
             self._result = self._result[self.slicing]
@@ -1249,8 +1249,7 @@ class MaxProjectionConstantSource( QObject ):
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
         self._constant_source_cached = self._constant_source_cached.max(axis = self.axis)
-        self._constant_source_cached = expanded_numpy.add_singleton_axis_pos(self._constant_source_cached,
-                                                                             new_axis=self.axis)
+        self._constant_source_cached = expanded_numpy.add_singleton_axis_pos(self._constant_source_cached, self.axis)
 
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
@@ -1355,7 +1354,7 @@ class MaxProjectionConstantRequest( object ):
             self._result = numpy.max(self._result, axis=self.axis)
 
             # Add singleton axis where max was performed
-            self._result = expanded_numpy.add_singleton_axis_pos(self._result, new_axis=self.axis)
+            self._result = expanded_numpy.add_singleton_axis_pos(self._result, self.axis)
 
             # Take the slice the viewer wanted
             self._result = self._result[self.slicing]
@@ -1436,8 +1435,7 @@ class MeanProjectionConstantSource( QObject ):
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
         self._constant_source_cached = self._constant_source_cached.mean(axis = self.axis)
-        self._constant_source_cached = expanded_numpy.add_singleton_axis_pos(self._constant_source_cached,
-                                                                             new_axis=self.axis)
+        self._constant_source_cached = expanded_numpy.add_singleton_axis_pos(self._constant_source_cached, self.axis)
 
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
@@ -1542,7 +1540,7 @@ class MeanProjectionConstantRequest( object ):
             self._result = numpy.mean(self._result, axis=self.axis)
 
             # Add singleton axis where mean was performed
-            self._result = expanded_numpy.add_singleton_axis_pos(self._result, new_axis=self.axis)
+            self._result = expanded_numpy.add_singleton_axis_pos(self._result, self.axis)
 
             # Take the slice the viewer wanted
             self._result = self._result[self.slicing]
