@@ -725,7 +725,7 @@ def add_singleton_op(op, new_array, axis):
 
 
 @debugging_tools.log_call(logger)
-def roll(new_array, shift, out=None):
+def roll(new_array, shift, out=None, fill=None):
     """
         Like numpy.roll, but generalizes to include a roll for each axis of new_array. Also, is able to work inplace
         with minimal overhead unlike numpy.roll.
@@ -735,10 +735,12 @@ def roll(new_array, shift, out=None):
             Allows in-place rolls on the whole. Unfortunately, numpy.roll does not provide an in-place operation.
 
         Args:
-            new_array(numpy.ndarray):     array to roll axes of.
-            shift(container of ints):     some sort of container (list, tuple, array) of ints specifying how much to
-                                          roll each axis.
-            out(numpy.ndarray):           array to store the results in.
+            new_array(numpy.ndarray):               array to roll axes of.
+            shift(container of ints):               some sort of container (list, tuple, array) of ints specifying
+                                                    how much to roll each axis.
+            out(numpy.ndarray):                     array to store the results in.
+            fill(new_array.dtype.type or None):     whether to fill values that rolled over and if so with what.
+                                                    does not fill by default.
 
         Returns:
             out(numpy.ndarray):           result of the roll.
@@ -803,6 +805,14 @@ def roll(new_array, shift, out=None):
             >>> roll(numpy.arange(10).reshape(2,5), numpy.array([-1, -1]))
             array([[6, 7, 8, 9, 5],
                    [1, 2, 3, 4, 0]])
+
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([1, -1]), fill=-1)
+            array([[-1, -1, -1, -1, -1],
+                   [ 1,  2,  3,  4, -1]])
+
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([0, -1]), fill=-1)
+            array([[ 1,  2,  3,  4, -1],
+                   [ 6,  7,  8,  9, -1]])
 
             >>> a = numpy.arange(10).reshape(2,5); b = a.copy(); roll(a, numpy.arange(1, 3), b)
             array([[8, 9, 5, 6, 7],
@@ -870,6 +880,13 @@ def roll(new_array, shift, out=None):
                 next_last_value = index_axis_at_pos(out, i, slicing).copy()
                 index_axis_at_pos(out, i, slicing)[:] = last_value
                 last_value = next_last_value
+
+        # If fill is specified, fill the portion that rolled over.
+        if fill is not None:
+            if shift[i] > 0:
+                index_axis_at_pos(out, i, slice(shift[i]))[:] = fill
+            elif shift[i] < 0:
+                index_axis_at_pos(out, i, slice(shift[i], None))[:] = fill
 
     return(out)
 
