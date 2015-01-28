@@ -938,7 +938,7 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
 
 
 @debugging_tools.log_call(logger)
-def nanmin_abs(new_array, axis=None, keepdims=False):
+def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
         Takes the min of the given array subject to the absolute value (magnitude for complex numbers).
 
@@ -947,9 +947,12 @@ def nanmin_abs(new_array, axis=None, keepdims=False):
             axis(int):                           desired matches to find.
             keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton
                                                  dimensions at all the axes squished (excepting the last one).
+            return_indices(bool):                whether to return the indices of the mins in addition to the mins.
 
         Returns:
-            (numpy.ndarray):                     an array or value that is the smallest (subject to the absolute value).
+            (tuple of numpy.ndarray):            an array or value that is the smallest (subject to the absolute value)
+                                                 or if `return_indices` the indices corresponding to the smallest
+                                                 value(s), as well.
 
         Examples:
             >>> nanmin_abs(numpy.arange(10))
@@ -994,6 +997,9 @@ def nanmin_abs(new_array, axis=None, keepdims=False):
             >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
             array([0, 4, 8])
 
+            >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0), return_indices=True)
+            (array([0, 4, 8]), (array([0, 0, 0]), array([0, 1, 2]), array([0, 0, 0])))
+
             >>> nanmin_abs(numpy.array([numpy.nan, -2, 3]))
             -2.0
     """
@@ -1016,7 +1022,16 @@ def nanmin_abs(new_array, axis=None, keepdims=False):
     # Slice out relevant results
     result = new_array_refolded[result_indices]
 
-    return(result)
+    if not return_indices:
+        return(result)
+    else:
+        # Create a mask. This is required to remap the indices to the old array.
+        result_mask = numpy.zeros(new_array_refolded.shape, dtype=bool)
+        result_mask[result_indices] = True
+        result_mask = unsquish(result_mask, new_array.shape, axis)
+        result_indices = result_mask.nonzero()
+
+        return(result, result_indices)
 
 
 @debugging_tools.log_call(logger)
