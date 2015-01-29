@@ -728,12 +728,10 @@ def add_singleton_op(op, new_array, axis):
 @debugging_tools.log_call(logger)
 def roll(new_array, shift, out=None, to_mask=False):
     """
-        Like numpy.roll, but generalizes to include a roll for each axis of new_array. Also, is able to work inplace
-        with minimal overhead unlike numpy.roll.
+        Like numpy.roll, but generalizes to include a roll for each axis of new_array.
 
         Note:
             Right shift occurs with a positive and left occurs with a negative.
-            Allows in-place rolls on the whole. Unfortunately, numpy.roll does not provide an in-place operation.
 
         Args:
             new_array(numpy.ndarray):     array to roll axes of.
@@ -885,41 +883,8 @@ def roll(new_array, shift, out=None, to_mask=False):
 
             out.mask = numpy.ma.getmaskarray(out)
 
-    # Correct shifts to be in range.
-    # This also properly handles negatives.
-    # Rotation size is irrelevant to the algorithm.
-    shift_corrected = shift.copy()
-    shift_corrected %= numpy.array(out.shape)
-
-    for i in xrange(len(shift_corrected)):
-        # How many rotations must be completed to have visited all values.
-        # Think of each precession as tracing out a cycle that does not intersect with any other precession.
-        # Its our offset from 0.
-        precessions = fractions.gcd(out.shape[i], shift_corrected[i])
-        # How many cycles before we return to the same value (plus 1 as we want to return to where we started).
-        rotations = out.shape[i] / precessions + 1
-
-        # Need to keep one value saved for the swap. Start with the first value.
-        # Slicing required to have an array for copying into another array.
-        # Don't need to copy this value as it won't be overwritten until the end
-        # and it will already be copied before then.
-        last_value = index_axis_at_pos(out, i, slice(0, 1, 1))
-        for j in xrange(precessions):
-            for k in xrange(rotations):
-                begin = k*shift_corrected[i]+j
-                end = begin + 1
-
-                begin %= out.shape[i]
-                end %= out.shape[i]
-
-                if end == 0:
-                    end = None
-
-                slicing = slice(begin, end, 1)
-
-                next_last_value = index_axis_at_pos(out, i, slicing).copy()
-                index_axis_at_pos(out, i, slicing)[:] = last_value
-                last_value = next_last_value
+    for i in xrange(len(shift)):
+        out[:] = numpy.roll(out, shift[i], i)
 
         # If fill is specified, fill the portion that rolled over.
         if to_mask:
