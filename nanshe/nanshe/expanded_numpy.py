@@ -787,7 +787,10 @@ def roll(new_array, shift, out=None):
                    [3, 4, 0, 1, 2]])
     """
 
+    shift = numpy.array(shift)
+
     assert(len(shift) == new_array.ndim)
+    assert(issubclass(shift.dtype.type, numpy.integer))
 
     if out is None:
         out = new_array.copy()
