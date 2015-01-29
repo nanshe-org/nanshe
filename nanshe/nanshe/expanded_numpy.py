@@ -742,6 +742,42 @@ def roll(new_array, shift, out=None):
             out(numpy.ndarray):           result of the roll.
 
         Examples:
+            >>> roll(numpy.arange(20), numpy.array([0]))
+            array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
+                   17, 18, 19])
+
+            >>> roll(numpy.arange(20), numpy.array([1]))
+            array([19,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
+                   16, 17, 18])
+
+            >>> roll(numpy.arange(20), numpy.array([2]))
+            array([18, 19,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+                   15, 16, 17])
+
+            >>> roll(numpy.arange(20), numpy.array([3]))
+            array([17, 18, 19,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13,
+                   14, 15, 16])
+
+            >>> roll(numpy.arange(20), numpy.array([4]))
+            array([16, 17, 18, 19,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12,
+                   13, 14, 15])
+
+            >>> roll(numpy.arange(20), numpy.array([5]))
+            array([15, 16, 17, 18, 19,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,
+                   12, 13, 14])
+
+            >>> roll(numpy.arange(20), numpy.array([6]))
+            array([14, 15, 16, 17, 18, 19,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+                   11, 12, 13])
+
+            >>> roll(numpy.arange(20), numpy.array([8]))
+            array([12, 13, 14, 15, 16, 17, 18, 19,  0,  1,  2,  3,  4,  5,  6,  7,  8,
+                    9, 10, 11])
+
+            >>> roll(numpy.arange(20), numpy.array([-1]))
+            array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+                   18, 19,  0])
+
             >>> roll(numpy.arange(10).reshape(2,5), numpy.ones((2,), dtype=int))
             array([[9, 5, 6, 7, 8],
                    [4, 0, 1, 2, 3]])
