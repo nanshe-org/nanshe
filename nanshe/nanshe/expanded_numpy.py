@@ -754,6 +754,14 @@ def roll(new_array, shift, out=None):
             array([[8, 9, 5, 6, 7],
                    [3, 4, 0, 1, 2]])
 
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([2, 5]))
+            array([[0, 1, 2, 3, 4],
+                   [5, 6, 7, 8, 9]])
+
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([5, 3]))
+            array([[7, 8, 9, 5, 6],
+                   [2, 3, 4, 0, 1]])
+
             >>> roll(numpy.arange(10).reshape(2,5), numpy.array([-1, -1]))
             array([[6, 7, 8, 9, 5],
                    [1, 2, 3, 4, 0]])
