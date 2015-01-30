@@ -96,7 +96,7 @@ def dtfreg_fast_mean(frames2reg):
         # Adjust the registered frames using the translations found.
         # Fill rolled values with nan.
         for i in xrange(len(reg_frames)):
-            expanded_numpy.roll(frames2reg[i], this_spaceShift[i], out=reg_frames[i], to_mask=True)
+            reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_spaceShift[i], to_mask=True)
 
         SSE = ((this_spaceShift - spaceShift)**2).sum()
 
