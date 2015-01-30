@@ -884,15 +884,16 @@ def roll(new_array, shift, out=None, to_mask=False):
             out.mask = numpy.ma.getmaskarray(out)
 
     for i in xrange(len(shift)):
-        out[:] = numpy.roll(out, shift[i], i)
+        if (shift[i] != 0):
+            out[:] = numpy.roll(out, shift[i], i)
 
-        # If fill is specified, fill the portion that rolled over.
-        if to_mask and (shift[i] != 0):
-            slice_start = shift[i] if shift[i] < 0 else None
-            slice_end = shift[i] if shift[i] > 0 else None
-            shift_slice = slice(slice_start, slice_end)
+            # If fill is specified, fill the portion that rolled over.
+            if to_mask:
+                slice_start = shift[i] if shift[i] < 0 else None
+                slice_end = shift[i] if shift[i] > 0 else None
+                shift_slice = slice(slice_start, slice_end)
 
-            index_axis_at_pos(out.mask, i, shift_slice)[:] = True
+                index_axis_at_pos(out.mask, i, shift_slice)[:] = True
 
     return(out)
 
