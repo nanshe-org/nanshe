@@ -888,14 +888,8 @@ def roll(new_array, shift, out=None, to_mask=False):
 
         # If fill is specified, fill the portion that rolled over.
         if to_mask and (shift[i] != 0):
-            slice_start = None
-            slice_end = None
-
-            if shift[i] > 0:
-                slice_end = shift[i]
-            elif shift[i] < 0:
-                slice_start = shift[i]
-
+            slice_start = shift[i] if shift[i] < 0 else None
+            slice_end = shift[i] if shift[i] > 0 else None
             shift_slice = slice(slice_start, slice_end)
 
             index_axis_at_pos(out.mask, i, shift_slice)[:] = True
