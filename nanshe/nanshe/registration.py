@@ -80,6 +80,8 @@ def dtfreg_fast_mean(frames2reg):
     spaceShift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
 
     reg_frames = frames2reg.copy()
+    reg_frames = reg_frames.view(numpy.ma.MaskedArray)
+    reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
 
     frames2reg_fft = numpy.fft.fftn(frames2reg, axes=range(1, frames2reg.ndim))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
