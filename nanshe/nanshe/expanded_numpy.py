@@ -887,11 +887,16 @@ def roll(new_array, shift, out=None, to_mask=False):
         out[:] = numpy.roll(out, shift[i], i)
 
         # If fill is specified, fill the portion that rolled over.
-        if to_mask:
+        if to_mask and (shift[i] != 0):
+            slice_start = None
+            slice_end = None
+
             if shift[i] > 0:
-                index_axis_at_pos(out.mask, i, slice(shift[i]))[:] = True
+                slice_end = shift[i]
             elif shift[i] < 0:
-                index_axis_at_pos(out.mask, i, slice(shift[i], None))[:] = True
+                slice_start = shift[i]
+
+            index_axis_at_pos(out.mask, i, slice(slice_start, slice_end))[:] = True
 
     return(out)
 
