@@ -11,6 +11,7 @@ import fractions
 import functools
 import itertools
 import operator
+import warnings
 
 import numpy
 import scipy
@@ -725,7 +726,7 @@ def add_singleton_op(op, new_array, axis):
 
 
 @debugging_tools.log_call(logger)
-def roll(new_array, shift, out=None, fill=None):
+def roll(new_array, shift, out=None, to_mask=False):
     """
         Like numpy.roll, but generalizes to include a roll for each axis of new_array. Also, is able to work inplace
         with minimal overhead unlike numpy.roll.
@@ -735,12 +736,11 @@ def roll(new_array, shift, out=None, fill=None):
             Allows in-place rolls on the whole. Unfortunately, numpy.roll does not provide an in-place operation.
 
         Args:
-            new_array(numpy.ndarray):               array to roll axes of.
-            shift(container of ints):               some sort of container (list, tuple, array) of ints specifying
-                                                    how much to roll each axis.
-            out(numpy.ndarray):                     array to store the results in.
-            fill(new_array.dtype.type or None):     whether to fill values that rolled over and if so with what.
-                                                    does not fill by default.
+            new_array(numpy.ndarray):     array to roll axes of.
+            shift(container of ints):     some sort of container (list, tuple, array) of ints specifying how much to
+                                          roll each axis.
+            out(numpy.ndarray):           array to store the results in.
+            to_mask(bool):                Makes the result a masked array with the portion that rolled off masked.
 
         Returns:
             out(numpy.ndarray):           result of the roll.
@@ -806,13 +806,25 @@ def roll(new_array, shift, out=None, fill=None):
             array([[6, 7, 8, 9, 5],
                    [1, 2, 3, 4, 0]])
 
-            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([1, -1]), fill=-1)
-            array([[-1, -1, -1, -1, -1],
-                   [ 1,  2,  3,  4, -1]])
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([1, -1]), to_mask=True)
+            masked_array(data =
+             [[-- -- -- -- --]
+             [1 2 3 4 --]],
+                         mask =
+             [[ True  True  True  True  True]
+             [False False False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
 
-            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([0, -1]), fill=-1)
-            array([[ 1,  2,  3,  4, -1],
-                   [ 6,  7,  8,  9, -1]])
+            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([0, -1]), to_mask=True)
+            masked_array(data =
+             [[1 2 3 4 --]
+             [6 7 8 9 --]],
+                         mask =
+             [[False False False False  True]
+             [False False False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
 
             >>> a = numpy.arange(10).reshape(2,5); b = a.copy(); roll(a, numpy.arange(1, 3), b)
             array([[8, 9, 5, 6, 7],
@@ -842,8 +854,36 @@ def roll(new_array, shift, out=None, fill=None):
 
     if out is None:
         out = new_array.copy()
+
+        if to_mask:
+            out = out.view(numpy.ma.MaskedArray)
+            out.mask = numpy.ma.getmaskarray(out)
     elif id(out) != id(new_array):
         out[:] = new_array
+
+        if to_mask:
+            if not isinstance(out, numpy.ma.MaskedArray):
+                warnings.warn("Provided an array for `out` that is not a MaskedArray when requesting to mask the result. " +
+                              "A view of `out` will be used so all changes are propagated to `out`. " +
+                              "However, the mask will not be available. " +
+                              "To get the mask, either provide a MaskedArray as input or simply use the returned result.",
+                              RuntimeWarning)
+
+                out = out.view(numpy.ma.MaskedArray)
+
+            out.mask = numpy.ma.getmaskarray(out)
+    else:
+        if to_mask:
+            if not isinstance(out, numpy.ma.MaskedArray):
+                warnings.warn("Provided an array for `new_array`/`out` that is not a MaskedArray when requesting to mask " +
+                              "the result. A view of `new_array`/`out` will be used so all changes are propagated to " +
+                              "`new_array`/`out`. However, the mask will not be available. To get the mask, either " +
+                              "provide a MaskedArray as input or simply use the returned result.",
+                              RuntimeWarning)
+
+                out = out.view(numpy.ma.MaskedArray)
+
+            out.mask = numpy.ma.getmaskarray(out)
 
     # Correct shifts to be in range.
     # This also properly handles negatives.
@@ -882,11 +922,11 @@ def roll(new_array, shift, out=None, fill=None):
                 last_value = next_last_value
 
         # If fill is specified, fill the portion that rolled over.
-        if fill is not None:
+        if to_mask:
             if shift[i] > 0:
-                index_axis_at_pos(out, i, slice(shift[i]))[:] = fill
+                index_axis_at_pos(out.mask, i, slice(shift[i]))[:] = True
             elif shift[i] < 0:
-                index_axis_at_pos(out, i, slice(shift[i], None))[:] = fill
+                index_axis_at_pos(out.mask, i, slice(shift[i], None))[:] = True
 
     return(out)
 
