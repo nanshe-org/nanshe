@@ -896,7 +896,9 @@ def roll(new_array, shift, out=None, to_mask=False):
             elif shift[i] < 0:
                 slice_start = shift[i]
 
-            index_axis_at_pos(out.mask, i, slice(slice_start, slice_end))[:] = True
+            shift_slice = slice(slice_start, slice_end)
+
+            index_axis_at_pos(out.mask, i, shift_slice)[:] = True
 
     return(out)
 
