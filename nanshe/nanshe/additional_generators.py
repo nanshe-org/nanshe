@@ -809,6 +809,9 @@ def filled_stringify_enumerate(new_iter):
             >>> list(filled_stringify_enumerate(xrange(5)))
             [(0, '0', 0), (1, '1', 1), (2, '2', 2), (3, '3', 3), (4, '4', 4)]
 
+            >>> list(filled_stringify_enumerate(xrange(2, 5)))
+            [(0, '0', 2), (1, '1', 3), (2, '2', 4)]
+
             >>> list(filled_stringify_enumerate([5]))
             [(0, '0', 5)]
 
