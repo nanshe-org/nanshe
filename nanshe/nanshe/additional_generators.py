@@ -789,6 +789,58 @@ def filled_stringify_numbers(new_iter, include_numbers = False):
 
 
 @debugging_tools.log_call(logger)
+def filled_stringify_xrange(new_iter):
+    """
+        Takes each element yielded by new_iter and reverses it using reversed.
+
+        Args:
+            new_iter(iter):        a list or an iterator to use for enumeration over.
+
+        Returns:
+            (generator object):    an iterator over the reversed elements.
+
+        Examples:
+            >>> filled_stringify_xrange([5, 7]) #doctest: +ELLIPSIS
+            <generator object filled_stringify_xrange at 0x...>
+
+            >>> list(filled_stringify_xrange([]))
+            []
+
+            >>> list(filled_stringify_xrange(xrange(5)))
+            [(0, '0'), (1, '1'), (2, '2'), (3, '3'), (4, '4')]
+
+            >>> list(filled_stringify_xrange(xrange(2, 5)))
+            [(0, '0'), (1, '1'), (2, '2')]
+
+            >>> list(filled_stringify_xrange([5]))
+            [(0, '0')]
+
+            >>> list(filled_stringify_xrange([5, 7]))
+            [(0, '0'), (1, '1')]
+
+            >>> list(filled_stringify_xrange(iter([5, 7])))
+            [(0, '0'), (1, '1')]
+
+            >>> list(filled_stringify_xrange(range(11)))
+            [(0, '00'), (1, '01'), (2, '02'), (3, '03'), (4, '04'), (5, '05'), (6, '06'), (7, '07'), (8, '08'), (9, '09'), (10, '10')]
+
+    """
+
+    new_list = new_iter
+    new_list_index_gen = None
+    try:
+        new_list_index_gen = xrange(len(new_list))
+    except TypeError:
+        new_list = list(new_list)
+        new_list_index_gen = xrange(len(new_list))
+
+    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers = True)
+
+    for i, i_str in new_list_index_gen_stringified:
+        yield ( (i, i_str) )
+
+
+@debugging_tools.log_call(logger)
 def filled_stringify_enumerate(new_iter):
     """
         Takes each element yielded by new_iter and reverses it using reversed.
