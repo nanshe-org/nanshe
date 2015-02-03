@@ -55,6 +55,9 @@ import expanded_numpy
 import binary_image_processing
 import simple_image_processing
 
+# Algorithms to register the data.
+import registration
+
 # To remove noise from the basis images
 import denoising
 
