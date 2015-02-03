@@ -26,7 +26,7 @@ def register_mean_offsets(frames2reg, include_shift=False):
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
         computed. This is repeated until no further improvement can be made.
 
-        The code for translations can be found in dtfreg_fast_shifts.
+        The code for translations can be found in find_mean_offsets.
 
         Notes:
             Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.
@@ -133,7 +133,7 @@ def register_mean_offsets(frames2reg, include_shift=False):
     while SSE:
         template_fft[:] = numpy.conj(numpy.fft.fftn(reg_frames.mean(axis=0)))
 
-        this_spaceShift = dtfreg_fast_shifts(frames2reg_fft, template_fft)
+        this_spaceShift = find_mean_offsets(frames2reg_fft, template_fft)
 
         # Adjust the registered frames using the translations found.
         # Mask rolled values.
@@ -151,7 +151,7 @@ def register_mean_offsets(frames2reg, include_shift=False):
 
 
 @debugging_tools.log_call(logger)
-def dtfreg_fast_shifts(frames2reg_fft, template_fft):
+def find_mean_offsets(frames2reg_fft, template_fft):
     """
         Computes the convolution of the template with the frames by taking advantage of their FFTs for faster
         computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )
@@ -219,7 +219,7 @@ def dtfreg_fast_shifts(frames2reg_fft, template_fft):
                    [ 2.8-0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ],
                    [ 2.8+0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ]])
 
-            >>> dtfreg_fast_shifts(af, tf)
+            >>> find_mean_offsets(af, tf)
             array([[0, 0],
                    [0, 0],
                    [1, 0],
