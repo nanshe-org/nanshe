@@ -94,7 +94,7 @@ def dtfreg_fast_mean(frames2reg):
         this_spaceShift = dtfreg_fast_shifts(frames2reg_fft, template_fft)
 
         # Adjust the registered frames using the translations found.
-        # Fill rolled values with nan.
+        # Mask rolled values.
         for i in xrange(len(reg_frames)):
             reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_spaceShift[i], to_mask=True)
 
