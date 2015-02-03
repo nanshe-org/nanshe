@@ -61,11 +61,48 @@ def dtfreg_fast_mean(frames2reg):
                     [ 0.,  0.,  0.,  0.]]])
 
             >>> dtfreg_fast_mean(a)
-            array([[0, 0],
-                   [0, 0],
-                   [1, 0],
-                   [0, 0],
-                   [0, 0]])
+            masked_array(data =
+             [[[1.0 1.0 1.0 1.0]
+              [0.0 0.0 0.0 0.0]
+              [0.0 0.0 0.0 0.0]]
+            <BLANKLINE>
+             [[1.0 1.0 1.0 1.0]
+              [0.0 0.0 0.0 0.0]
+              [0.0 0.0 0.0 0.0]]
+            <BLANKLINE>
+             [[-- -- -- --]
+              [0.0 0.0 0.0 0.0]
+              [0.0 0.0 0.0 0.0]]
+            <BLANKLINE>
+             [[1.0 1.0 1.0 1.0]
+              [0.0 0.0 0.0 0.0]
+              [0.0 0.0 0.0 0.0]]
+            <BLANKLINE>
+             [[1.0 1.0 1.0 1.0]
+              [0.0 0.0 0.0 0.0]
+              [0.0 0.0 0.0 0.0]]],
+                         mask =
+             [[[False False False False]
+              [False False False False]
+              [False False False False]]
+            <BLANKLINE>
+             [[False False False False]
+              [False False False False]
+              [False False False False]]
+            <BLANKLINE>
+             [[ True  True  True  True]
+              [False False False False]
+              [False False False False]]
+            <BLANKLINE>
+             [[False False False False]
+              [False False False False]
+              [False False False False]]
+            <BLANKLINE>
+             [[False False False False]
+              [False False False False]
+              [False False False False]]],
+                   fill_value = 1e+20)
+            <BLANKLINE>
     """
 
     # Convert to a floating type if it isn't one.
@@ -102,7 +139,7 @@ def dtfreg_fast_mean(frames2reg):
 
         spaceShift[:] = this_spaceShift
 
-    return(spaceShift)
+    return(reg_frames)
 
 
 @debugging_tools.log_call(logger)
