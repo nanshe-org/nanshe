@@ -61,8 +61,8 @@ def dtfreg_fast_mean(frames2reg, include_shift=False):
                     [ 0.,  0.,  0.,  0.],
                     [ 0.,  0.,  0.,  0.]]])
 
-            >>> dtfreg_fast_mean(a)
-            masked_array(data =
+            >>> dtfreg_fast_mean(a, include_shift=True)
+            (masked_array(data =
              [[[1.0 1.0 1.0 1.0]
               [0.0 0.0 0.0 0.0]
               [0.0 0.0 0.0 0.0]]
@@ -103,7 +103,11 @@ def dtfreg_fast_mean(frames2reg, include_shift=False):
               [False False False False]
               [False False False False]]],
                    fill_value = 1e+20)
-            <BLANKLINE>
+            , array([[0, 0],
+                   [0, 0],
+                   [1, 0],
+                   [0, 0],
+                   [0, 0]]))
     """
 
     # Convert to a floating type if it isn't one.
