@@ -1875,6 +1875,92 @@ def enumerate_masks_max(new_masks, axis = 0):
 
 
 @debugging_tools.log_call(logger)
+def truncate_masked_frames(shifted_frames):
+    """
+        Takes frames that have been shifted and truncates out the portion, which is an intact rectangular shape.
+
+        Args:
+            shifted_frames(numpy.ma.masked_array):      Image stack to register (time is the first dimension uses
+                                                        C-order tyx or tzyx).
+
+        Returns:
+            (numpy.ndarray):                            an array containing a subsection of the stack that has no mask.
+
+        Examples:
+            >>> a = numpy.arange(60).reshape(3,5,4);
+            >>> a = numpy.ma.masked_array(a, mask=numpy.zeros(a.shape, dtype=bool), shrink=False)
+            >>> a[0, :1, :] = numpy.ma.masked; a[0, :, -1:] = numpy.ma.masked
+            >>> a[1, :2, :] = numpy.ma.masked; a[1, :, :0] = numpy.ma.masked
+            >>> a[2, :0, :] = numpy.ma.masked; a[2, :, :1] = numpy.ma.masked
+            >>> a
+            masked_array(data =
+             [[[-- -- -- --]
+              [4 5 6 --]
+              [8 9 10 --]
+              [12 13 14 --]
+              [16 17 18 --]]
+            <BLANKLINE>
+             [[-- -- -- --]
+              [-- -- -- --]
+              [28 29 30 31]
+              [32 33 34 35]
+              [36 37 38 39]]
+            <BLANKLINE>
+             [[-- 41 42 43]
+              [-- 45 46 47]
+              [-- 49 50 51]
+              [-- 53 54 55]
+              [-- 57 58 59]]],
+                         mask =
+             [[[ True  True  True  True]
+              [False False False  True]
+              [False False False  True]
+              [False False False  True]
+              [False False False  True]]
+            <BLANKLINE>
+             [[ True  True  True  True]
+              [ True  True  True  True]
+              [False False False False]
+              [False False False False]
+              [False False False False]]
+            <BLANKLINE>
+             [[ True False False False]
+              [ True False False False]
+              [ True False False False]
+              [ True False False False]
+              [ True False False False]]],
+                   fill_value = 999999)
+            <BLANKLINE>
+
+            >>> truncate_masked_frames(a)
+            array([[[ 9, 10],
+                    [13, 14],
+                    [17, 18]],
+            <BLANKLINE>
+                   [[29, 30],
+                    [33, 34],
+                    [37, 38]],
+            <BLANKLINE>
+                   [[49, 50],
+                    [53, 54],
+                    [57, 58]]])
+    """
+
+    # Find the mask to slice out the relevant data from all frames
+    shifted_frames_mask = ~shifted_frames.mask.max(axis=0)
+
+    # Find the shape
+    shifted_frames_mask_shape = tuple(shifted_frames_mask.sum(axis=_i).max() for _i in xrange(shifted_frames_mask.ndim))
+    shifted_frames_mask_shape = (len(shifted_frames),) + shifted_frames_mask_shape
+
+    # Slice out the relevant data from the frames
+    truncated_shifted_frames = shifted_frames[:, shifted_frames_mask].reshape(shifted_frames_mask_shape)
+    truncated_shifted_frames = truncated_shifted_frames.data
+
+    return(truncated_shifted_frames)
+
+
+@debugging_tools.log_call(logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
