@@ -89,7 +89,7 @@ def dtfreg_fast_mean(frames2reg):
     # Repeat shift calculation until there is no further adjustment.
     SSE = 1
     while SSE:
-        template_fft[:] = numpy.conj(numpy.fft.fftn(bottleneck.nanmean(reg_frames, axis=0)))
+        template_fft[:] = numpy.conj(numpy.fft.fftn(reg_frames.mean(axis=0)))
 
         this_spaceShift = dtfreg_fast_shifts(frames2reg_fft, template_fft)
 
@@ -167,7 +167,7 @@ def dtfreg_fast_shifts(frames2reg_fft, template_fft):
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]]])
 
-            >>> tf = numpy.conj(numpy.fft.fftn(bottleneck.nanmean(a, axis=0))); tf
+            >>> tf = numpy.conj(numpy.fft.fftn(a.mean(axis=0))); tf
             array([[ 4.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ],
                    [ 2.8-0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ],
                    [ 2.8+0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ]])
