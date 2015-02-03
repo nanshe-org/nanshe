@@ -165,6 +165,8 @@ def dtfreg_fast_shifts(frames2reg_fft, template_fft):
         Args:
             frames2reg(numpy.ndarray):           image stack to register (time is the first dimension uses C-order tyx
                                                  or tzyx).
+            template_fft(numpy.ndarray):         what to register the image stack against (single frame using C-order
+                                                 yx or zyx).
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
