@@ -20,7 +20,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def dtfreg_fast_mean(frames2reg):
+def dtfreg_fast_mean(frames2reg, include_shift=False):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -34,6 +34,7 @@ def dtfreg_fast_mean(frames2reg):
         Args:
             frames2reg(numpy.ndarray):           Image stack to register (time is the first dimension uses C-order tyx
                                                  or tzyx).
+            include_shift(bool):                 Whether to return the shifts used, as well.
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
@@ -139,7 +140,10 @@ def dtfreg_fast_mean(frames2reg):
 
         spaceShift[:] = this_spaceShift
 
-    return(reg_frames)
+    if include_shift:
+        return(reg_frames, spaceShift)
+    else:
+        return(reg_frames)
 
 
 @debugging_tools.log_call(logger)
