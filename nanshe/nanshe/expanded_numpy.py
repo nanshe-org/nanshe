@@ -1953,6 +1953,26 @@ def truncate_masked_frames(shifted_frames):
     shifted_frames_mask_shape = tuple(shifted_frames_mask.sum(axis=_i).max() for _i in xrange(shifted_frames_mask.ndim))
     shifted_frames_mask_shape = (len(shifted_frames),) + shifted_frames_mask_shape
 
+    # Assert that this is an acceptable mask
+    shifted_frames_mask_upper_offset = tuple(
+        (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(xrange(shifted_frames_mask.ndim))
+    )
+    shifted_frames_mask_lower_offset = tuple(
+        numpy.array(shifted_frames_mask.shape) - \
+        numpy.array(shifted_frames_mask_shape[1:]) - \
+        numpy.array(shifted_frames_mask_upper_offset)
+    )
+
+    shifted_frames_mask_reconstructed = numpy.pad(
+        numpy.ones(shifted_frames_mask_shape[1:], dtype=bool),
+        [(_d, _e) for _d, _e in itertools.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],
+        "constant"
+    )
+    assert(
+        (shifted_frames_mask_reconstructed == shifted_frames_mask).all(),
+        "The masked array provide has a mask that does not reduce to a square when max projected."
+    )
+
     # Slice out the relevant data from the frames
     truncated_shifted_frames = shifted_frames[:, shifted_frames_mask].reshape(shifted_frames_mask_shape)
     truncated_shifted_frames = truncated_shifted_frames.data
