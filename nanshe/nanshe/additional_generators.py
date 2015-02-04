@@ -1001,12 +1001,13 @@ def reformat_slice(a_slice, a_length = None):
         elif (new_slice_step > a_length):
             new_slice_step = a_length
 
-        if (new_slice_start <= -a_length):
-            new_slice_start = 0
-        elif (new_slice_start > a_length):
-            new_slice_start = a_length
-        elif (new_slice_start < 0):
-            new_slice_start += a_length
+        if new_slice_start is not None:
+            if (new_slice_start <= -a_length):
+                new_slice_start = 0
+            elif (new_slice_start > a_length):
+                new_slice_start = a_length
+            elif (new_slice_start < 0):
+                new_slice_start += a_length
 
         if (new_slice_stop is None):
             new_slice_stop = a_length
