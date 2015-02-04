@@ -964,6 +964,10 @@ def reformat_slice(a_slice, a_length = None):
     """
     assert a_slice != None, "err"
 
+    new_slice_start = a_slice.start
+    if new_slice_start is None:
+        new_slice_start = 0
+
     new_slice_stop = a_slice.stop
     if a_length is not None:
         if (new_slice_stop is None):
@@ -974,10 +978,6 @@ def reformat_slice(a_slice, a_length = None):
             new_slice_stop = 0
         elif (new_slice_stop < 0):
             new_slice_stop += a_length
-
-    new_slice_start = a_slice.start
-    if new_slice_start is None:
-        new_slice_start = 0
 
     new_slice_step = a_slice.step
     if new_slice_step is None:
