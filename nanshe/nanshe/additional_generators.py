@@ -982,15 +982,15 @@ def reformat_slice(a_slice, a_length = None):
 
     # Fill unknown values.
 
+    new_slice_step = a_slice.step
+    if new_slice_step is None:
+        new_slice_step = 1
+
     new_slice_start = a_slice.start
     if new_slice_start is None:
         new_slice_start = 0
 
     new_slice_stop = a_slice.stop
-
-    new_slice_step = a_slice.step
-    if new_slice_step is None:
-        new_slice_step = 1
 
 
     # Make adjustments for length
