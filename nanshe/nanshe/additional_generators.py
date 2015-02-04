@@ -961,6 +961,12 @@ def reformat_slice(a_slice, a_length = None):
 
             >>> range(10)[reformat_slice(slice(2, -1), 10)] == range(10)[2:-1]
             True
+
+            >>> range(10)[reformat_slice(slice(2, 20), 10)] == range(10)[2:20]
+            True
+
+            >>> range(10)[reformat_slice(slice(2, -20), 10)] == range(10)[2:-20]
+            True
     """
     assert a_slice != None, "err"
 
