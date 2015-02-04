@@ -989,7 +989,7 @@ def reformat_slice(a_slice, a_length = None):
     if a_length is not None:
         if (new_slice_stop is None):
             new_slice_stop = a_length
-        elif (new_slice_stop >= a_length):
+        elif (new_slice_stop > a_length):
             new_slice_stop = a_length
         elif (new_slice_stop <= -a_length):
             new_slice_stop = 0
