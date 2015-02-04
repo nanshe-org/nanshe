@@ -987,7 +987,7 @@ def reformat_slice(a_slice, a_length = None):
         new_slice_step = 1
 
     new_slice_start = a_slice.start
-    if new_slice_start is None:
+    if (new_slice_start is None) and (new_slice_step > 0):
         new_slice_start = 0
 
     new_slice_stop = a_slice.stop
