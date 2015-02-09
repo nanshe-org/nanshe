@@ -20,7 +20,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def register_mean_offsets(frames2reg, include_shift=False):
+def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -34,6 +34,8 @@ def register_mean_offsets(frames2reg, include_shift=False):
         Args:
             frames2reg(numpy.ndarray):           Image stack to register (time is the first dimension uses C-order tyx
                                                  or tzyx).
+            max_iters(int):                      Number of iterations to allow before forcing termination if stable
+                                                 point is not found yet. Set to -1 if no limit. (Default -1)
             include_shift(bool):                 Whether to return the shifts used, as well.
 
         Returns:
@@ -129,6 +131,7 @@ def register_mean_offsets(frames2reg, include_shift=False):
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
     # Repeat shift calculation until there is no further adjustment.
+    num_iters = 0
     SSE = 1
     while SSE:
         template_fft[:] = numpy.conj(numpy.fft.fftn(reg_frames.mean(axis=0)))
@@ -143,6 +146,11 @@ def register_mean_offsets(frames2reg, include_shift=False):
         SSE = ((this_spaceShift - spaceShift)**2).sum()
 
         spaceShift[:] = this_spaceShift
+
+        if max_iters != -1:
+            num_iters += 1
+            if num_iters >= max_iters:
+                break
 
     if include_shift:
         return(reg_frames, spaceShift)
