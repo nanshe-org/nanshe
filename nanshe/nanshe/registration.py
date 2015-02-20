@@ -112,15 +112,6 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
                    [0, 0]]))
     """
 
-    # Convert to a floating type if it isn't one.
-    if not issubclass(frames2reg.dtype.type, numpy.floating):
-        warnings.warn(
-            "Provided new_data with type \"" + repr(frames2reg.dtype.type) +
-            "\", which is not a floating type. Will be cast to type \"" + repr(numpy.float32) + "\"",
-            RuntimeWarning
-        )
-        frames2reg = frames2reg.astype(numpy.float32)
-
     spaceShift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
 
     reg_frames = frames2reg.copy()
