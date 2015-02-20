@@ -115,7 +115,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
                    [0, 0]]))
     """
 
-    spaceShift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
+    space_shift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
 
     reg_frames = frames2reg.copy()
     reg_frames = reg_frames.view(numpy.ma.MaskedArray)
@@ -126,20 +126,20 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
 
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
-    magnitude_delta_spaceShift = 1
-    while magnitude_delta_spaceShift:
+    magnitude_delta_space_shift = 1
+    while magnitude_delta_space_shift:
         template_fft[:] = numpy.conj(numpy.fft.fftn(template_callable(reg_frames, axis=0)))
 
-        this_spaceShift = find_offsets(frames2reg_fft, template_fft)
+        this_space_shift = find_offsets(frames2reg_fft, template_fft)
 
         # Adjust the registered frames using the translations found.
         # Mask rolled values.
         for i in xrange(len(reg_frames)):
-            reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_spaceShift[i], to_mask=True)
+            reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_space_shift[i], to_mask=True)
 
-        magnitude_delta_spaceShift = ((this_spaceShift - spaceShift)**2).sum()
+        magnitude_delta_space_shift = ((this_space_shift - space_shift)**2).sum()
 
-        spaceShift[:] = this_spaceShift
+        space_shift[:] = this_space_shift
 
         if max_iters != -1:
             num_iters += 1
@@ -147,7 +147,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
                 break
 
     if include_shift:
-        return(reg_frames, spaceShift)
+        return(reg_frames, space_shift)
     else:
         return(reg_frames)
 
