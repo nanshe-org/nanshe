@@ -20,7 +20,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
+def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_callable=numpy.mean):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -37,6 +37,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             max_iters(int):                      Number of iterations to allow before forcing termination if stable
                                                  point is not found yet. Set to -1 if no limit. (Default -1)
             include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
+            template_callable(callable):         Provide a way of changing the mechanism of template generation. (Default numpy.mean)
+                                                 The method provided must take an array as the first argument and axis as a second.
+                                                 Further, it must reduce the axis provided and leave all other axes intact.
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
@@ -63,7 +66,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
                     [ 0.,  0.,  0.,  0.],
                     [ 0.,  0.,  0.,  0.]]])
 
-            >>> register_mean_offsets(a, include_shift=True)
+            >>> register_offsets(a, include_shift=True)
             (masked_array(data =
              [[[1.0 1.0 1.0 1.0]
               [0.0 0.0 0.0 0.0]
@@ -125,7 +128,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     num_iters = 0
     SSE = 1
     while SSE:
-        template_fft[:] = numpy.conj(numpy.fft.fftn(numpy.mean(reg_frames, axis=0)))
+        template_fft[:] = numpy.conj(numpy.fft.fftn(template_callable(reg_frames, axis=0)))
 
         this_spaceShift = find_offsets(frames2reg_fft, template_fft)
 
