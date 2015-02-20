@@ -128,7 +128,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
     num_iters = 0
     magnitude_delta_space_shift = 1.0
     while (magnitude_delta_space_shift != 0):
-        template_fft[:] = numpy.fft.fftn(template_callable(reg_frames, axis=0)).conj()
+        template_fft[:] = numpy.fft.fftn(template_callable(reg_frames, axis=0))
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
 
@@ -216,10 +216,10 @@ def find_offsets(frames2reg_fft, template_fft):
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]]])
 
-            >>> tf = numpy.conj(numpy.fft.fftn(a.mean(axis=0))); tf
-            array([[ 4.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ],
-                   [ 2.8-0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ],
-                   [ 2.8+0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ]])
+            >>> tf = numpy.fft.fftn(a.mean(axis=0)); tf
+            array([[ 4.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],
+                   [ 2.8+0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],
+                   [ 2.8-0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ]])
 
             >>> find_offsets(af, tf)
             array([[0, 0],
@@ -230,7 +230,7 @@ def find_offsets(frames2reg_fft, template_fft):
     """
 
     # Compute the product of the two FFTs (i.e. the convolution of the regular versions).
-    frames2reg_template_conv_fft = frames2reg_fft * template_fft[None]
+    frames2reg_template_conv_fft = frames2reg_fft * template_fft.conj()[None]
 
     # Find the FFT inverse (over all spatial dimensions) to return to the convolution.
     frames2reg_template_conv = numpy.fft.ifftn(frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
