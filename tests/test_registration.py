@@ -3,3 +3,4 @@ __date__ = "$Feb 20, 2015 10:40:15 EST$"
 
 
 
+import nanshe.nanshe.registration
