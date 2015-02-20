@@ -125,7 +125,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     num_iters = 0
     SSE = 1
     while SSE:
-        template_fft[:] = numpy.conj(numpy.fft.fftn(reg_frames.mean(axis=0)))
+        template_fft[:] = numpy.conj(numpy.fft.fftn(numpy.mean(reg_frames, axis=0)))
 
         this_spaceShift = find_offsets(frames2reg_fft, template_fft)
 
