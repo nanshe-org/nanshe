@@ -127,7 +127,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     while SSE:
         template_fft[:] = numpy.conj(numpy.fft.fftn(reg_frames.mean(axis=0)))
 
-        this_spaceShift = find_mean_offsets(frames2reg_fft, template_fft)
+        this_spaceShift = find_offsets(frames2reg_fft, template_fft)
 
         # Adjust the registered frames using the translations found.
         # Mask rolled values.
@@ -150,7 +150,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
 
 @debugging_tools.log_call(logger)
-def find_mean_offsets(frames2reg_fft, template_fft):
+def find_offsets(frames2reg_fft, template_fft):
     """
         Computes the convolution of the template with the frames by taking advantage of their FFTs for faster
         computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )
@@ -218,7 +218,7 @@ def find_mean_offsets(frames2reg_fft, template_fft):
                    [ 2.8-0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ],
                    [ 2.8+0.69282032j,  0.0-0.j        ,  0.0-0.j        ,  0.0-0.j        ]])
 
-            >>> find_mean_offsets(af, tf)
+            >>> find_offsets(af, tf)
             array([[0, 0],
                    [0, 0],
                    [1, 0],
