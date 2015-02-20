@@ -126,8 +126,8 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
 
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
-    SSE = 1
-    while SSE:
+    magnitude_delta_spaceShift = 1
+    while magnitude_delta_spaceShift:
         template_fft[:] = numpy.conj(numpy.fft.fftn(template_callable(reg_frames, axis=0)))
 
         this_spaceShift = find_offsets(frames2reg_fft, template_fft)
@@ -137,7 +137,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
         for i in xrange(len(reg_frames)):
             reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_spaceShift[i], to_mask=True)
 
-        SSE = ((this_spaceShift - spaceShift)**2).sum()
+        magnitude_delta_spaceShift = ((this_spaceShift - spaceShift)**2).sum()
 
         spaceShift[:] = this_spaceShift
 
