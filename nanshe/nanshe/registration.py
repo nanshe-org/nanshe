@@ -36,7 +36,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
                                                  or tzyx).
             max_iters(int):                      Number of iterations to allow before forcing termination if stable
                                                  point is not found yet. Set to -1 if no limit. (Default -1)
-            include_shift(bool):                 Whether to return the shifts used, as well.
+            include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
