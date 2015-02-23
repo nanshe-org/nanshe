@@ -325,6 +325,10 @@ def find_offsets(frames2reg_fft, template_fft):
                    [0, 0]])
     """
 
+    # If there is only one frame, add a singleton axis to indicate this.
+    if frames2reg_fft.ndim == template_fft.ndim:
+        frames2reg_fft = frames2reg_fft[None]
+
     # Compute the product of the two FFTs (i.e. the convolution of the regular versions).
     frames2reg_template_conv_fft = frames2reg_fft * template_fft.conj()[None]
 
