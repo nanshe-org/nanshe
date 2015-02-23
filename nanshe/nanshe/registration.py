@@ -224,6 +224,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
     num_iters = 0
     magnitude_delta_space_shift = 1.0
     while (magnitude_delta_space_shift != 0):
+        magnitude_delta_space_shift = 0.0
         template_fft[:] = numpy.fft.fftn(template_callable(reg_frames, axis=0))
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
