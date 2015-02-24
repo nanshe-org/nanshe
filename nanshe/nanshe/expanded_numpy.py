@@ -824,6 +824,84 @@ def roll(new_array, shift, out=None, to_mask=False):
                    fill_value = 999999)
             <BLANKLINE>
 
+            >>> a = numpy.ma.arange(10).reshape(2,5).copy()
+            >>> roll(a, numpy.array([0, -1]), to_mask=True, out=a)
+            masked_array(data =
+             [[1 2 3 4 --]
+             [6 7 8 9 --]],
+                         mask =
+             [[False False False False  True]
+             [False False False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
+            >>> a
+            masked_array(data =
+             [[1 2 3 4 --]
+             [6 7 8 9 --]],
+                         mask =
+             [[False False False False  True]
+             [False False False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
+
+            >>> a = numpy.ma.arange(10).reshape(2,5).copy(); b = a[:, 1:-1]
+            >>> roll(b, numpy.array([0, -1]), to_mask=True, out=b)
+            masked_array(data =
+             [[2 3 --]
+             [7 8 --]],
+                         mask =
+             [[False False  True]
+             [False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
+            >>> b
+            masked_array(data =
+             [[2 3 --]
+             [7 8 --]],
+                         mask =
+             [[False False  True]
+             [False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
+            >>> a # this should work, but it doesn't. # doctest: +SKIP
+            masked_array(data =
+             [[0 2 3 -- 4]
+             [5 7 8 -- 9]],
+                         mask =
+             [[False False False  True False]
+             [False False False  True False]],
+                   fill_value = 999999)
+            <BLANKLINE>
+
+            >>> a = numpy.ma.arange(10).reshape(2,5).copy(); b = a[:, 1:-1]
+            >>> roll(b, numpy.array([0, -1]), to_mask=True, out=b)
+            masked_array(data =
+             [[2 3 --]
+             [7 8 --]],
+                         mask =
+             [[False False  True]
+             [False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
+            >>> b
+            masked_array(data =
+             [[2 3 --]
+             [7 8 --]],
+                         mask =
+             [[False False  True]
+             [False False  True]],
+                   fill_value = 999999)
+            <BLANKLINE>
+            >>> a.mask = numpy.ma.getmaskarray(a); a[:, 1:-1] = b; a
+            masked_array(data =
+             [[0 2 3 -- 4]
+             [5 7 8 -- 9]],
+                         mask =
+             [[False False False  True False]
+             [False False False  True False]],
+                   fill_value = 999999)
+            <BLANKLINE>
+
             >>> a = numpy.arange(10).reshape(2,5); b = a.copy(); roll(a, numpy.arange(1, 3), b)
             array([[8, 9, 5, 6, 7],
                    [3, 4, 0, 1, 2]])
