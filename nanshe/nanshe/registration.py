@@ -234,7 +234,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
         for i in xrange(len(reg_frames)):
             reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_space_shift[i], to_mask=True)
 
-        magnitude_delta_space_shift = ((this_space_shift - space_shift)**2).sum()
+        magnitude_delta_space_shift += ((this_space_shift - space_shift)**2).sum()
 
         space_shift[:] = this_space_shift
 
