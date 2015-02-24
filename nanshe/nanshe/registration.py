@@ -20,7 +20,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
+def register_offsets(frames2reg, max_iters=-1, include_shift=False):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -37,105 +37,6 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             max_iters(int):                      Number of iterations to allow before forcing termination if stable
                                                  point is not found yet. Set to -1 if no limit. (Default -1)
             include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
-
-        Returns:
-            (numpy.ndarray):                     an array containing the translations to apply to each frame.
-
-        Examples:
-            >>> a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1; a
-            array([[[ 1.,  1.,  1.,  1.],
-                    [ 0.,  0.,  0.,  0.],
-                    [ 0.,  0.,  0.,  0.]],
-            <BLANKLINE>
-                   [[ 1.,  1.,  1.,  1.],
-                    [ 0.,  0.,  0.,  0.],
-                    [ 0.,  0.,  0.,  0.]],
-            <BLANKLINE>
-                   [[ 0.,  0.,  0.,  0.],
-                    [ 0.,  0.,  0.,  0.],
-                    [ 1.,  1.,  1.,  1.]],
-            <BLANKLINE>
-                   [[ 1.,  1.,  1.,  1.],
-                    [ 0.,  0.,  0.,  0.],
-                    [ 0.,  0.,  0.,  0.]],
-            <BLANKLINE>
-                   [[ 1.,  1.,  1.,  1.],
-                    [ 0.,  0.,  0.,  0.],
-                    [ 0.,  0.,  0.,  0.]]])
-
-            >>> register_offsets(a, include_shift=True)
-            (masked_array(data =
-             [[[1.0 1.0 1.0 1.0]
-              [0.0 0.0 0.0 0.0]
-              [0.0 0.0 0.0 0.0]]
-            <BLANKLINE>
-             [[1.0 1.0 1.0 1.0]
-              [0.0 0.0 0.0 0.0]
-              [0.0 0.0 0.0 0.0]]
-            <BLANKLINE>
-             [[-- -- -- --]
-              [0.0 0.0 0.0 0.0]
-              [0.0 0.0 0.0 0.0]]
-            <BLANKLINE>
-             [[1.0 1.0 1.0 1.0]
-              [0.0 0.0 0.0 0.0]
-              [0.0 0.0 0.0 0.0]]
-            <BLANKLINE>
-             [[1.0 1.0 1.0 1.0]
-              [0.0 0.0 0.0 0.0]
-              [0.0 0.0 0.0 0.0]]],
-                         mask =
-             [[[False False False False]
-              [False False False False]
-              [False False False False]]
-            <BLANKLINE>
-             [[False False False False]
-              [False False False False]
-              [False False False False]]
-            <BLANKLINE>
-             [[ True  True  True  True]
-              [False False False False]
-              [False False False False]]
-            <BLANKLINE>
-             [[False False False False]
-              [False False False False]
-              [False False False False]]
-            <BLANKLINE>
-             [[False False False False]
-              [False False False False]
-              [False False False False]]],
-                   fill_value = 1e+20)
-            , array([[0, 0],
-                   [0, 0],
-                   [1, 0],
-                   [0, 0],
-                   [0, 0]]))
-    """
-
-    return(register_offsets(frames2reg, max_iters, include_shift, numpy.mean))
-
-
-@debugging_tools.log_call(logger)
-def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_callable=numpy.mean):
-    """
-        This algorithm registers the given image stack against its mean projection. This is done by computing
-        translations needed to put each frame in alignment. Then the translation is performed and new translations are
-        computed. This is repeated until no further improvement can be made.
-
-        The code for translations can be found in find_mean_offsets.
-
-        Notes:
-            Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.
-
-        Args:
-            frames2reg(numpy.ndarray):           Image stack to register (time is the first dimension uses C-order tyx
-                                                 or tzyx).
-            max_iters(int):                      Number of iterations to allow before forcing termination if stable
-                                                 point is not found yet. Set to -1 if no limit. (Default -1)
-            include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
-            template_callable(callable):         Provide a way of changing the mechanism of template generation. (Default numpy.mean)
-                                                 The method provided must take an array as the first argument and axis as a second.
-                                                 Further, it must reduce the axis provided and leave all other axes intact.
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
@@ -225,7 +126,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False, template_cal
     magnitude_delta_space_shift = 1.0
     while (magnitude_delta_space_shift != 0.0):
         magnitude_delta_space_shift = 0.0
-        template_fft[:] = numpy.fft.fftn(template_callable(reg_frames, axis=0))
+        template_fft[:] = numpy.fft.fftn(reg_frames.mean(axis=0))
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
 
