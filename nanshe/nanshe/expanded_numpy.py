@@ -863,25 +863,39 @@ def roll(new_array, shift, out=None, to_mask=False):
             if not isinstance(out, numpy.ma.MaskedArray):
                 warnings.warn("Provided an array for `out` that is not a MaskedArray when requesting to mask the result. " +
                               "A view of `out` will be used so all changes are propagated to `out`. " +
-                              "However, the mask will not be available. " +
+                              "However, the mask may not be available (i.e. if the array is a view). " +
                               "To get the mask, either provide a MaskedArray as input or simply use the returned result.",
                               RuntimeWarning)
 
                 out = out.view(numpy.ma.MaskedArray)
+                out.mask = numpy.ma.getmaskarray(out)
+            elif out.mask is numpy.ma.nomask:
+                warnings.warn("Provided an array for `out` that is a MaskedArray, but has a trivial mask (i.e. nomask). " +
+                              "A nontrivial mask will generated for `out` so that masking of `out` will work properly. " +
+                              "However, the mask will not be available through the array provided. To get the mask, either " +
+                              "provide a MaskedArray with a nontrivial mask as input or simply use the returned result.",
+                              RuntimeWarning)
 
-            out.mask = numpy.ma.getmaskarray(out)
+                out.mask = numpy.ma.getmaskarray(out)
     else:
         if to_mask:
             if not isinstance(out, numpy.ma.MaskedArray):
                 warnings.warn("Provided an array for `new_array`/`out` that is not a MaskedArray when requesting to mask " +
                               "the result. A view of `new_array`/`out` will be used so all changes are propagated to " +
-                              "`new_array`/`out`. However, the mask will not be available. To get the mask, either " +
-                              "provide a MaskedArray as input or simply use the returned result.",
+                              "`new_array`/`out`. However, the mask may not be available (i.e. if the array is a view). " +
+                              "To get the mask, either provide a MaskedArray as input or simply use the returned result.",
                               RuntimeWarning)
 
                 out = out.view(numpy.ma.MaskedArray)
+                out.mask = numpy.ma.getmaskarray(out)
+            elif out.mask is numpy.ma.nomask:
+                warnings.warn("Provided an array for `new_array`/`out` that is a MaskedArray, but has a trivial mask (i.e. nomask). " +
+                              "A nontrivial mask will generated for `new_array`/`out` so that masking of `new_array`/`out` will work properly. " +
+                              "However, the mask will not be available through the array provided. To get the mask, either " +
+                              "provide a MaskedArray with a nontrivial mask as input or simply use the returned result.",
+                              RuntimeWarning)
 
-            out.mask = numpy.ma.getmaskarray(out)
+                out.mask = numpy.ma.getmaskarray(out)
 
     for i in xrange(len(shift)):
         if (shift[i] != 0):
