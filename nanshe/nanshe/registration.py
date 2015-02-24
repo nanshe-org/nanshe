@@ -20,7 +20,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def register_offsets(frames2reg, max_iters=-1, include_shift=False):
+def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -63,7 +63,7 @@ def register_offsets(frames2reg, max_iters=-1, include_shift=False):
                     [ 0.,  0.,  0.,  0.],
                     [ 0.,  0.,  0.,  0.]]])
 
-            >>> register_offsets(a, include_shift=True)
+            >>> register_mean_offsets(a, include_shift=True)
             (masked_array(data =
              [[[1.0 1.0 1.0 1.0]
               [0.0 0.0 0.0 0.0]

@@ -8,7 +8,7 @@ import numpy
 import nanshe.nanshe.registration
 
 
-class TestRegisterOffsets(object):
+class TestRegisterMeanOffsets(object):
     def test1(self):
         a = numpy.zeros((20,10,11), dtype=int)
 
@@ -23,7 +23,7 @@ class TestRegisterOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
 
-        b2 = nanshe.nanshe.registration.register_offsets(a)
+        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
@@ -43,7 +43,7 @@ class TestRegisterOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
 
-        b2 = nanshe.nanshe.registration.register_offsets(a)
+        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
