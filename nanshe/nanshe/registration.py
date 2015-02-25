@@ -139,15 +139,15 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
         space_shift[:] = this_space_shift
 
-        # Adjust the registered frames using the translations found.
-        # Mask rolled values.
-        for i in xrange(len(reg_frames)):
-            reg_frames[i] = expanded_numpy.roll(frames2reg[i], space_shift[i], to_mask=True)
-
         if max_iters != -1:
             num_iters += 1
             if num_iters >= max_iters:
                 break
+
+    # Adjust the registered frames using the translations found.
+    # Mask rolled values.
+    for i in xrange(len(reg_frames)):
+        reg_frames[i] = expanded_numpy.roll(frames2reg[i], space_shift[i], to_mask=True)
 
     if include_shift:
         return(reg_frames, space_shift)
