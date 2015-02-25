@@ -1979,28 +1979,75 @@ def cartesian_product(arrays):
 
         Examples:
             >>> cartesian_product([numpy.arange(2), numpy.arange(3)])
-            array([[0, 0, 0, 1, 1, 1],
-                   [0, 1, 2, 0, 1, 2]])
+            array([[0, 0],
+                   [0, 1],
+                   [0, 2],
+                   [1, 0],
+                   [1, 1],
+                   [1, 2]])
 
             >>> cartesian_product([numpy.arange(2, dtype=float), numpy.arange(3)])
-            array([[ 0.,  0.,  0.,  1.,  1.,  1.],
-                   [ 0.,  1.,  2.,  0.,  1.,  2.]])
+            array([[ 0.,  0.],
+                   [ 0.,  1.],
+                   [ 0.,  2.],
+                   [ 1.,  0.],
+                   [ 1.,  1.],
+                   [ 1.,  2.]])
 
             >>> cartesian_product([numpy.arange(2), numpy.arange(3), numpy.arange(4)])
-            array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                    1, 1],
-                   [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2,
-                    2, 2],
-                   [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1,
-                    2, 3]])
+            array([[0, 0, 0],
+                   [0, 0, 1],
+                   [0, 0, 2],
+                   [0, 0, 3],
+                   [0, 1, 0],
+                   [0, 1, 1],
+                   [0, 1, 2],
+                   [0, 1, 3],
+                   [0, 2, 0],
+                   [0, 2, 1],
+                   [0, 2, 2],
+                   [0, 2, 3],
+                   [1, 0, 0],
+                   [1, 0, 1],
+                   [1, 0, 2],
+                   [1, 0, 3],
+                   [1, 1, 0],
+                   [1, 1, 1],
+                   [1, 1, 2],
+                   [1, 1, 3],
+                   [1, 2, 0],
+                   [1, 2, 1],
+                   [1, 2, 2],
+                   [1, 2, 3]])
 
             >>> cartesian_product(numpy.diag((1, 2, 3)))
-            array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0],
-                   [0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2,
-                    2, 2, 0, 0, 0],
-                   [0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0,
-                    0, 3, 0, 0, 3]])
+            array([[1, 0, 0],
+                   [1, 0, 0],
+                   [1, 0, 3],
+                   [1, 2, 0],
+                   [1, 2, 0],
+                   [1, 2, 3],
+                   [1, 0, 0],
+                   [1, 0, 0],
+                   [1, 0, 3],
+                   [0, 0, 0],
+                   [0, 0, 0],
+                   [0, 0, 3],
+                   [0, 2, 0],
+                   [0, 2, 0],
+                   [0, 2, 3],
+                   [0, 0, 0],
+                   [0, 0, 0],
+                   [0, 0, 3],
+                   [0, 0, 0],
+                   [0, 0, 0],
+                   [0, 0, 3],
+                   [0, 2, 0],
+                   [0, 2, 0],
+                   [0, 2, 3],
+                   [0, 0, 0],
+                   [0, 0, 0],
+                   [0, 0, 3]])
     """
 
     for i in xrange(len(arrays)):
@@ -2009,17 +2056,17 @@ def cartesian_product(arrays):
     array_shapes = tuple(len(arrays[i]) for i in xrange(len(arrays)))
 
     result_shape = [0, 0]
-    result_shape[0] = len(arrays)
-    result_shape[1] = numpy.product(array_shapes)
+    result_shape[0] = numpy.product(array_shapes)
+    result_shape[1] = len(arrays)
     result_shape = tuple(result_shape)
 
-    result_dtype = numpy.find_common_type([arrays[i].dtype for i in xrange(result_shape[0])], [])
+    result_dtype = numpy.find_common_type([arrays[i].dtype for i in xrange(result_shape[1])], [])
 
     result = numpy.empty(result_shape, dtype=result_dtype)
-    for i in xrange(result.shape[0]):
+    for i in xrange(result.shape[1]):
         repeated_array_i = expand_view(arrays[i], reps_before=array_shapes[:i], reps_after=array_shapes[i+1:])
         for j, repeated_array_i_j in enumerate(repeated_array_i.flat):
-            result[i, j] = repeated_array_i_j
+            result[j, i] = repeated_array_i_j
 
     return(result)
 
