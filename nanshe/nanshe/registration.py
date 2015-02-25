@@ -121,7 +121,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     frames2reg_shifted_fft = numpy.empty_like(frames2reg_fft)
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
-    template_fft_shape = numpy.asarray(template_fft.shape)
+    template_fft_shape_inverse = numpy.asarray(template_fft.shape, dtype=float)
+    numpy.reciprocal(template_fft_shape_inverse, out=template_fft_shape_inverse)
 
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
@@ -130,7 +131,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         squared_magnitude_delta_space_shift = 0.0
 
         for frames2reg_fft_index in itertools.product(*[xrange(_) for _ in frames2reg_fft.shape]):
-            frames2reg_shifted_fft[frames2reg_fft_index] = frames2reg_fft[frames2reg_fft_index] * numpy.exp(1j * -2*numpy.pi * numpy.dot(space_shift[frames2reg_fft_index[0]], numpy.asarray(frames2reg_fft_index[1:]) / template_fft_shape))
+            frames2reg_shifted_fft[frames2reg_fft_index] = frames2reg_fft[frames2reg_fft_index] * numpy.exp(1j * -2*numpy.pi * numpy.dot(space_shift[frames2reg_fft_index[0]], numpy.asarray(frames2reg_fft_index[1:]) * template_fft_shape_inverse))
         template_fft[:] = numpy.mean(frames2reg_shifted_fft, axis=0)
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
