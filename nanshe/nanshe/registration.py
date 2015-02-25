@@ -120,9 +120,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
-    magnitude_delta_space_shift = 1.0
-    while (magnitude_delta_space_shift != 0.0):
-        magnitude_delta_space_shift = 0.0
+    squared_magnitude_delta_space_shift = 1.0
+    while (squared_magnitude_delta_space_shift != 0.0):
+        squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = numpy.fft.fftn(reg_frames.mean(axis=0))
 
@@ -133,7 +133,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         for i in xrange(len(reg_frames)):
             reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_space_shift[i], to_mask=True)
 
-        magnitude_delta_space_shift += ((this_space_shift - space_shift)**2).sum()
+        squared_magnitude_delta_space_shift += ((this_space_shift - space_shift)**2).sum()
 
         space_shift[:] = this_space_shift
 
