@@ -127,6 +127,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     numpy.negative(negative_wave_vector, out=negative_wave_vector)
 
     template_fft_indices = expanded_numpy.cartesian_product([numpy.arange(_) for _ in template_fft.shape])
+
     unit_space_shift_fft = template_fft_indices * negative_wave_vector
 
     # Repeat shift calculation until there is no further adjustment.
