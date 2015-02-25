@@ -123,6 +123,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     magnitude_delta_space_shift = 1.0
     while (magnitude_delta_space_shift != 0.0):
         magnitude_delta_space_shift = 0.0
+
         template_fft[:] = numpy.fft.fftn(reg_frames.mean(axis=0))
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
