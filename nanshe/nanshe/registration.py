@@ -129,6 +129,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     template_fft_indices = expanded_numpy.cartesian_product([numpy.arange(_) for _ in template_fft.shape])
 
     unit_space_shift_fft = template_fft_indices * negative_wave_vector
+    unit_space_shift_fft = unit_space_shift_fft.T.copy()
+    unit_space_shift_fft = unit_space_shift_fft.reshape((template_fft.ndim,) + template_fft.shape)
 
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
@@ -136,7 +138,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     while (squared_magnitude_delta_space_shift != 0.0):
         squared_magnitude_delta_space_shift = 0.0
 
-        frames2reg_shifted_fft[...] = frames2reg_fft * numpy.exp(1j * numpy.tensordot(space_shift, unit_space_shift_fft, axes=[-1, -1])).reshape(frames2reg_fft.shape)
+        frames2reg_shifted_fft[...] = frames2reg_fft * numpy.exp(1j * numpy.tensordot(space_shift, unit_space_shift_fft, axes=[-1, 0]))
         template_fft[:] = numpy.mean(frames2reg_shifted_fft, axis=0)
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
