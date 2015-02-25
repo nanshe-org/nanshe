@@ -128,7 +128,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
 
-        squared_magnitude_delta_space_shift += ((this_space_shift - space_shift)**2).sum()
+        delta_space_shift = this_space_shift - space_shift
+        squared_magnitude_delta_space_shift += numpy.dot(delta_space_shift, delta_space_shift.T).sum()
 
         space_shift[:] = this_space_shift
 
