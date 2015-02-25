@@ -1967,6 +1967,64 @@ def enumerate_masks_max(new_masks, axis = 0):
 
 
 @debugging_tools.log_call(logger)
+def cartesian_product(arrays):
+    """
+        Takes the cartesian product between the elements in each array.
+
+        Args:
+            arrays(collections.Sequence of numpy.ndarrays):     A sequence of 1-D arrays or a 2-D array.
+
+        Returns:
+            (numpy.ndarray):                                    an array containing the result of the cartesian product of each array.
+
+        Examples:
+            >>> cartesian_product([numpy.arange(2), numpy.arange(3)])
+            array([[0, 0, 0, 1, 1, 1],
+                   [0, 1, 2, 0, 1, 2]])
+
+            >>> cartesian_product([numpy.arange(2, dtype=float), numpy.arange(3)])
+            array([[ 0.,  0.,  0.,  1.,  1.,  1.],
+                   [ 0.,  1.,  2.,  0.,  1.,  2.]])
+
+            >>> cartesian_product([numpy.arange(2), numpy.arange(3), numpy.arange(4)])
+            array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                    1, 1],
+                   [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2,
+                    2, 2],
+                   [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1,
+                    2, 3]])
+
+            >>> cartesian_product(numpy.diag((1, 2, 3)))
+            array([[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0],
+                   [0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2,
+                    2, 2, 0, 0, 0],
+                   [0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0,
+                    0, 3, 0, 0, 3]])
+    """
+
+    for i in xrange(len(arrays)):
+        assert arrays[i].ndim == 1, "Must provide only 1D arrays to this function or a single 2D array."
+
+    array_shapes = tuple(len(arrays[i]) for i in xrange(len(arrays)))
+
+    result_shape = [0, 0]
+    result_shape[0] = len(arrays)
+    result_shape[1] = numpy.product(array_shapes)
+    result_shape = tuple(result_shape)
+
+    result_dtype = numpy.find_common_type([arrays[i].dtype for i in xrange(result_shape[0])], [])
+
+    result = numpy.empty(result_shape, dtype=result_dtype)
+    for i in xrange(result.shape[0]):
+        repeated_array_i = expand_view(arrays[i], reps_before=array_shapes[:i], reps_after=array_shapes[i+1:])
+        for j, repeated_array_i_j in enumerate(repeated_array_i.flat):
+            result[i, j] = repeated_array_i_j
+
+    return(result)
+
+
+@debugging_tools.log_call(logger)
 def truncate_masked_frames(shifted_frames):
     """
         Takes frames that have been shifted and truncates out the portion, which is an intact rectangular shape.
