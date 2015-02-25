@@ -3,6 +3,8 @@ __date__ = "$Jan 28, 2015 11:25:47 EST$"
 
 
 
+import itertools
+
 import numpy
 
 import expanded_numpy
@@ -124,7 +126,11 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     while (squared_magnitude_delta_space_shift != 0.0):
         squared_magnitude_delta_space_shift = 0.0
 
-        template_fft[:] = numpy.fft.fftn(reg_frames.mean(axis=0))
+        template_fft[:] = 0
+        for i in xrange(len(frames2reg_fft)):
+            for template_fft_index in itertools.product(*[xrange(_) for _ in template_fft.shape]):
+                template_fft[template_fft_index] += frames2reg_fft[(i,) + template_fft_index] * numpy.exp(1j * -2*numpy.pi * ((space_shift[i] * numpy.asarray(template_fft_index) / numpy.asarray(template_fft.shape, dtype=float)).sum() % 1.0))
+        template_fft /= len(frames2reg_fft)
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
 
