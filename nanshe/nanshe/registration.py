@@ -135,7 +135,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         # Adjust the registered frames using the translations found.
         # Mask rolled values.
         for i in xrange(len(reg_frames)):
-            reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_space_shift[i], to_mask=True)
+            reg_frames[i] = expanded_numpy.roll(frames2reg[i], space_shift[i], to_mask=True)
 
         if max_iters != -1:
             num_iters += 1
