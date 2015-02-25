@@ -128,14 +128,14 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
 
+        squared_magnitude_delta_space_shift += ((this_space_shift - space_shift)**2).sum()
+
+        space_shift[:] = this_space_shift
+
         # Adjust the registered frames using the translations found.
         # Mask rolled values.
         for i in xrange(len(reg_frames)):
             reg_frames[i] = expanded_numpy.roll(frames2reg[i], this_space_shift[i], to_mask=True)
-
-        squared_magnitude_delta_space_shift += ((this_space_shift - space_shift)**2).sum()
-
-        space_shift[:] = this_space_shift
 
         if max_iters != -1:
             num_iters += 1
