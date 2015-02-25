@@ -3,8 +3,6 @@ __date__ = "$Jan 28, 2015 11:25:47 EST$"
 
 
 
-import itertools
-
 import numpy
 
 import expanded_numpy
