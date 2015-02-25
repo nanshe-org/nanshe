@@ -3,10 +3,7 @@ __date__ = "$Jan 28, 2015 11:25:47 EST$"
 
 
 
-import warnings
-
 import numpy
-import bottleneck
 
 import expanded_numpy
 
