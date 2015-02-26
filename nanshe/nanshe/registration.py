@@ -3,7 +3,15 @@ __date__ = "$Jan 28, 2015 11:25:47 EST$"
 
 
 
+import warnings
+
 import numpy
+
+try:
+    import pyfftw.interfaces.numpy_fft as fft
+except Exception as e:
+    warnings.warn(str(e) + ". Falling back to NumPy FFTPACK.", ImportWarning)
+    import numpy.fft as fft
 
 import expanded_numpy
 
@@ -115,7 +123,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     reg_frames = reg_frames.view(numpy.ma.MaskedArray)
     reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
 
-    frames2reg_fft = numpy.fft.fftn(frames2reg, axes=range(1, frames2reg.ndim))
+    frames2reg_fft = fft.fftn(frames2reg, axes=range(1, frames2reg.ndim))
     frames2reg_shifted_fft = numpy.empty_like(frames2reg_fft)
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
@@ -248,7 +256,7 @@ def find_offsets(frames2reg_fft, template_fft):
     frames2reg_template_conv_fft = frames2reg_fft * template_fft.conj()[None]
 
     # Find the FFT inverse (over all spatial dimensions) to return to the convolution.
-    frames2reg_template_conv = numpy.fft.ifftn(frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
+    frames2reg_template_conv = fft.ifftn(frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
 
     # Find where the convolution is maximal. Will have the most things in common between the template and frames.
     frames2reg_template_conv_max, frames2reg_template_conv_max_indices = expanded_numpy.max_abs(
