@@ -1488,7 +1488,7 @@ def index_array_to_bool_array(index_array, shape):
 def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
     """
         Behaves like NumPy tile except that it always returns a view and not a copy.
-        Though, it differs in that additional dimensions are added for repetion as
+        Though, it differs in that additional dimensions are added for repetition as
         opposed to repeating in the same one. Also, it allows repetitions to be
         specified before or after unlike tile. Though, will behave identical to
         tile if the keyword is not specified.
