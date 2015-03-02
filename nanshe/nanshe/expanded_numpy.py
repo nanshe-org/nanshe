@@ -175,7 +175,6 @@ def index_axis_at_pos(new_array, axis, pos):
     if axis < 0:
         axis += new_array.ndim
 
-
     # Ordering of the axes to generate
     axis_new_ordering = []
     # Place the chosen axis first (as all axes are positive semi-definite) and then 0 (if it is different from our axis)
