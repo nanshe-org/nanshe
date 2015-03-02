@@ -176,14 +176,18 @@ def index_axis_at_pos(new_array, axis, pos):
         axis += new_array.ndim
 
     # Swaps the first with the desired axis (returns a view)
-    new_array_swapped = numpy.rollaxis(new_array, axis)
+    new_array_swapped = new_array.swapaxes(0, axis)
     # Index to pos at the given axis
     new_subarray = new_array_swapped[pos]
 
     # Check to see if the chosen axis still exists (if pos were a slice)
     if new_subarray.ndim == new_array.ndim:
         # Transpose our selection to that ordering.
-        new_subarray = numpy.rollaxis(new_subarray, 0, axis + 1)
+        new_subarray = new_subarray.swapaxes(0, axis)
+    else:
+        new_subarray = new_subarray[None]
+        new_subarray = new_subarray.swapaxes(0, axis)
+        new_subarray = numpy.squeeze(new_subarray, axis)
 
     return( new_subarray )
 
