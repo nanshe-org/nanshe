@@ -170,8 +170,6 @@ def index_axis_at_pos(new_array, axis, pos):
 
     """
 
-    import additional_generators
-
     # Rescale axis inside the bounds
     axis %= (new_array.ndim)
     if axis < 0:
