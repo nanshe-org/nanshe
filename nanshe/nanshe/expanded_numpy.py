@@ -191,7 +191,7 @@ def index_axis_at_pos(new_array, axis, pos):
     if new_subarray.ndim == new_array.ndim:
         # If so, generate the old ordering.
         axis_old_ordering = range(1, axis + 1) + [0] + range(axis + 1, new_array.ndim)
-        # Transpose our selction to that ordering.
+        # Transpose our selection to that ordering.
         new_subarray = new_subarray.transpose(axis_old_ordering)
 
     return( new_subarray )
