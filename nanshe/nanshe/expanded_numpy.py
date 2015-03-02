@@ -194,7 +194,6 @@ def index_axis_at_pos(new_array, axis, pos):
         # Transpose our selction to that ordering.
         new_subarray = new_subarray.transpose(axis_old_ordering)
 
-
     return( new_subarray )
 
 
