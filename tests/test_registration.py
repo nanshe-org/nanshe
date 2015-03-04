@@ -9,6 +9,19 @@ import nanshe.nanshe.registration
 
 
 class TestRegisterMeanOffsets(object):
+    def test0(self):
+        a = numpy.zeros((20,10,11), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
     def test1(self):
         a = numpy.zeros((20,10,11), dtype=int)
 
@@ -51,6 +64,23 @@ class TestRegisterMeanOffsets(object):
 
 
 class TestFindOffsets(object):
+    def test0(self):
+        a = numpy.zeros((20,10,11), dtype=int)
+        a_off = numpy.zeros((len(a), a.ndim-1), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        am = a.mean(axis=0)
+
+        af = numpy.fft.fftn(a, axes=range(1, a.ndim))
+        amf = numpy.fft.fftn(am, axes=range(am.ndim))
+
+
+        a_off2 = nanshe.nanshe.registration.find_offsets(af, amf)
+
+        assert (a_off2.dtype == a_off.dtype)
+        assert (a_off2 == a_off).all()
+
     def test1(self):
         a = numpy.zeros((20,10,11), dtype=int)
         a_off = numpy.zeros((len(a), a.ndim-1), dtype=int)
