@@ -4,6 +4,8 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Feb 20, 2015 13:00:51 EST$"
 
 
+import itertools
+
 import h5py
 from lazyflow.utility import PathComponents
 
@@ -45,14 +47,14 @@ def main(*argv):
                         type = str,
                         help = "JSON file that provides configuration options for how to import TIFF(s)."
     )
-    parser.add_argument("input_file",
+    parser.add_argument("input_filenames",
                         metavar = "INPUT_FILE",
                         type = str,
                         nargs = "+",
                         help = "HDF5 file to import (this should include a path to where the internal dataset should be stored)."
     )
 
-    parser.add_argument("output_file",
+    parser.add_argument("output_filenames",
                         metavar = "OUTPUT_FILE",
                         type = str,
                         nargs = 1,
@@ -64,16 +66,23 @@ def main(*argv):
 
     # Go ahead and stuff in parameters with the other parsed_args
     parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
-    parsed_args.input_file_components = PathComponents(parsed_args.input_file)
-    parsed_args.output_file_components = PathComponents(parsed_args.output_file)
+
+    parsed_args.input_file_components = []
+    for each_input_filename in parsed_args.input_filenames:
+        parsed_args.input_file_components.append(PathComponents(each_input_filename))
+
+    parsed_args.output_file_components = []
+    for each_output_filename in parsed_args.output_filenames:
+        parsed_args.output_file_components.append(PathComponents(each_output_filename))
 
 
-    with h5py.File(parsed_args.input_file_components.filename, "r") as input_file:
-        with h5py.File(parsed_args.output_file_components.filename, "a") as output_file:
-            data = input_file[parsed_args.input_file_components.internalPath][...]
-            result = registration.register_mean_offsets(data, **parsed_args.parameters)
-            result = expanded_numpy.truncate_masked_frames(result)
-            output_file[parsed_args.output_file_components.internalPath] = result
+    for each_input_filename_components, each_output_filename_components in itertools.izip(parsed_args.input_file_components, parsed_args.output_file_components):
+        with h5py.File(each_input_filename_components.filename, "r") as input_file:
+            with h5py.File(each_output_filename_components.filename, "a") as output_file:
+                data = input_file[each_input_filename_components.internalPath][...]
+                result = registration.register_mean_offsets(data, **parsed_args.parameters)
+                result = expanded_numpy.truncate_masked_frames(result)
+                output_file[each_output_filename_components.internalPath] = result
 
     return(0)
 
