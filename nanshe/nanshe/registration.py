@@ -277,10 +277,11 @@ def find_offsets(frames2reg_fft, template_fft):
     frames2reg_fft_spatial_half_shape = numpy.trunc(frames2reg_fft_spatial_shape/2.0)
 
     # Remove global shifts.
-    frames2reg_template_conv_max_indices_offset = numpy.trunc(
-        frames2reg_template_conv_max_indices.mean(axis=0)
-    ).astype(int)
-    frames2reg_template_conv_max_indices -= frames2reg_template_conv_max_indices_offset[None]
+    if not frames2reg_fft_added_singleton:
+        frames2reg_template_conv_max_indices_offset = numpy.trunc(
+            frames2reg_template_conv_max_indices.mean(axis=0)
+        ).astype(int)
+        frames2reg_template_conv_max_indices -= frames2reg_template_conv_max_indices_offset[None]
 
     # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
     # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
