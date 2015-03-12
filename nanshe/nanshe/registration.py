@@ -145,9 +145,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
         template_fft[:] = 0
         for i in xrange(len(reg_frames)):
-            frames2reg_shifted_fft_i = numpy.exp(1j * numpy.tensordot(space_shift[i], unit_space_shift_fft, axes=[-1, 0]))
-            frames2reg_shifted_fft_i *= frames2reg_fft[i]
-            template_fft += frames2reg_shifted_fft_i
+            frames2reg_shifted_fft_i = numpy.exp(1j * numpy.tensordot(space_shift[i][None], unit_space_shift_fft, axes=[-1, 0]))
+            frames2reg_shifted_fft_i *= frames2reg_fft[i][None]
+            template_fft += numpy.sum(frames2reg_shifted_fft_i, axis=0)
         template_fft /= len(reg_frames)
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
