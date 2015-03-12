@@ -251,7 +251,8 @@ def find_offsets(frames2reg_fft, template_fft):
     """
 
     # If there is only one frame, add a singleton axis to indicate this.
-    if frames2reg_fft.ndim == template_fft.ndim:
+    frames2reg_fft_added_singleton = (frames2reg_fft.ndim == template_fft.ndim)
+    if frames2reg_fft_added_singleton:
         frames2reg_fft = frames2reg_fft[None]
 
     # Compute the product of the two FFTs (i.e. the convolution of the regular versions).
@@ -292,5 +293,9 @@ def find_offsets(frames2reg_fft, template_fft):
 
     # Shift will have to be in the opposite direction to bring everything to the center.
     numpy.negative(frames2reg_template_conv_max_indices, out=frames2reg_template_conv_max_indices)
+
+    # Drop singleton dimension (if present)
+    if frames2reg_fft_added_singleton:
+        frames2reg_template_conv_max_indices = frames2reg_template_conv_max_indices[0]
 
     return(frames2reg_template_conv_max_indices)
