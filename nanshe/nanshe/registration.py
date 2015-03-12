@@ -124,7 +124,6 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
 
     frames2reg_fft = fft.fftn(frames2reg, axes=range(1, frames2reg.ndim))
-    frames2reg_shifted_fft = numpy.empty_like(frames2reg_fft)
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float)
@@ -144,9 +143,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     while (squared_magnitude_delta_space_shift != 0.0):
         squared_magnitude_delta_space_shift = 0.0
 
-        numpy.exp(1j * numpy.tensordot(space_shift, unit_space_shift_fft, axes=[-1, 0]), out=frames2reg_shifted_fft)
-        frames2reg_shifted_fft *= frames2reg_fft
-        numpy.mean(frames2reg_shifted_fft, axis=0, out=template_fft)
+        template_fft[:] = 0
+        for i in xrange(len(reg_frames)):
+            frames2reg_shifted_fft_i = numpy.exp(1j * numpy.tensordot(space_shift[i], unit_space_shift_fft, axes=[-1, 0]))
+            frames2reg_shifted_fft_i *= frames2reg_fft[i]
+            template_fft += frames2reg_shifted_fft_i
+        template_fft /= len(reg_frames)
 
         this_space_shift = find_offsets(frames2reg_fft, template_fft)
 
