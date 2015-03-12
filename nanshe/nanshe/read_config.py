@@ -34,7 +34,7 @@ def read_parameters(config_filename, maintain_order = False):
     # Get the type of dictionary to use.
     json_dict = None
     if maintain_order:
-        # only relevant if reading parameter file and maintaing order.
+        # only relevant if reading parameter file and maintaining order.
         import collections
         json_dict = collections.OrderedDict
     else:
