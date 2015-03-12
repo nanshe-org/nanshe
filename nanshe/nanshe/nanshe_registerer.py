@@ -77,8 +77,8 @@ def main(*argv):
 
 
     for each_input_filename_components, each_output_filename_components in itertools.izip(parsed_args.input_file_components, parsed_args.output_file_components):
-        with h5py.File(each_input_filename_components.filename, "r") as input_file:
-            with h5py.File(each_output_filename_components.filename, "a") as output_file:
+        with h5py.File(each_input_filename_components.externalPath, "r") as input_file:
+            with h5py.File(each_output_filename_components.externalPath, "a") as output_file:
                 data = input_file[each_input_filename_components.internalPath][...]
                 result = registration.register_mean_offsets(data, **parsed_args.parameters)
                 result = expanded_numpy.truncate_masked_frames(result)
