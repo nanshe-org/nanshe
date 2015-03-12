@@ -2135,7 +2135,7 @@ def truncate_masked_frames(shifted_frames):
     """
 
     # Find the mask to slice out the relevant data from all frames
-    shifted_frames_mask = ~shifted_frames.mask.max(axis=0)
+    shifted_frames_mask = ~numpy.ma.getmaskarray(shifted_frames).max(axis=0)
 
     # Find the shape
     shifted_frames_mask_shape = tuple(shifted_frames_mask.sum(axis=_i).max() for _i in xrange(shifted_frames_mask.ndim))
