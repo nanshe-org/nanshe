@@ -2952,6 +2952,112 @@ def find_relative_offsets(points, out=None):
 
 
 @debugging_tools.log_call(logger)
+def find_shortest_wraparound(points, shape, out=None):
+    """
+        Compute the smallest values for the points given periodic boundary conditions.
+
+        Args:
+            points(numpy.ndarray):       a set of integer points (NxD) where N
+                                         is the number of points and D is the
+                                         dimensionality, in which they lay.
+
+            shape(numpy.ndarray):        the shape to use for wrapping (D).
+
+            out(numpy.ndarray):          another set of points relative to
+                                         their mean.
+
+        Returns:
+            out(numpy.ndarray):          the results returned.
+
+        Examples:
+            >>> find_shortest_wraparound(
+            ...     numpy.zeros((3, 2), dtype=int),
+            ...     (4, 8)
+            ... )
+            array([[0, 0],
+                   [0, 0],
+                   [0, 0]])
+
+            >>> find_shortest_wraparound(
+            ...     numpy.ones((3, 2), dtype=int),
+            ...     (4, 8)
+            ... )
+            array([[1, 1],
+                   [1, 1],
+                   [1, 1]])
+
+            >>> find_shortest_wraparound(
+            ...     4 * numpy.ones((3, 2), dtype=int),
+            ...     (4, 8)
+            ... )
+            array([[0, 4],
+                   [0, 4],
+                   [0, 4]])
+
+            >>> find_shortest_wraparound(
+            ...     8 * (numpy.arange(6).reshape(3, 2) % 2),
+            ...     (4, 8)
+            ... )
+            array([[0, 0],
+                   [0, 0],
+                   [0, 0]])
+
+            >>> find_shortest_wraparound(
+            ...     7 * (numpy.arange(6).reshape(3, 2) % 2),
+            ...     (4, 8)
+            ... )
+            array([[ 0, -1],
+                   [ 0, -1],
+                   [ 0, -1]])
+
+            >>> find_shortest_wraparound(
+            ...     -numpy.ones((3, 2), dtype=int),
+            ...     (4, 8)
+            ... )
+            array([[-1, -1],
+                   [-1, -1],
+                   [-1, -1]])
+
+            >>> find_shortest_wraparound(
+            ...     -4 * numpy.ones((3, 2), dtype=int),
+            ...     (4, 8)
+            ... )
+            array([[ 0, -4],
+                   [ 0, -4],
+                   [ 0, -4]])
+
+            >>> find_shortest_wraparound(
+            ...     -7 * (numpy.arange(6).reshape(3, 2) % 2),
+            ...     (4, 8)
+            ... )
+            array([[0, 1],
+                   [0, 1],
+                   [0, 1]])
+    """
+
+    if out is None:
+        out = points.copy()
+    elif id(points) != id(out):
+        out[:] = points
+
+    shape = numpy.array(shape)
+    half_shape = numpy.trunc(shape / 2.0).astype(int)
+
+    points_mask_above = (
+        out > half_shape[None]
+    )
+    if points_mask_above.any():
+        out -= points_mask_above * shape
+    points_mask_below = (
+        out < -half_shape[None]
+    )
+    if points_mask_below.any():
+        out += points_mask_below * shape
+
+    return(out)
+
+
+@debugging_tools.log_call(logger)
 def matrix_reduced_op(a, b, op):
     """
         Sort of like numpy.dot. However, it will use the first axis with both arrays.
