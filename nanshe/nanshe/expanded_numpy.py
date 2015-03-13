@@ -2895,6 +2895,63 @@ def compute_mapping_relevance(mapping):
 
 
 @debugging_tools.log_call(logger)
+def find_relative_offsets(points, out=None):
+    """
+        Given a series of points, find the relative points from the mean.
+
+        Args:
+            points(numpy.ndarray):       a set of integer points (NxD) where N
+                                         is the number of points and D is the
+                                         dimensionality, in which they lay.
+
+            out(numpy.ndarray):          another set of points relative to
+                                         their mean.
+
+        Returns:
+            out(numpy.ndarray):          the results returned.
+
+        Examples:
+            >>> find_relative_offsets(numpy.zeros((3,2), dtype=int))
+            array([[0, 0],
+                   [0, 0],
+                   [0, 0]])
+
+            >>> find_relative_offsets(numpy.ones((3,2), dtype=int))
+            array([[0, 0],
+                   [0, 0],
+                   [0, 0]])
+
+            >>> find_relative_offsets(numpy.arange(6).reshape(2,3).T % 2)
+            array([[ 0,  0],
+                   [ 1, -1],
+                   [ 0,  0]])
+
+            >>> a = numpy.arange(6).reshape(2,3).T % 2
+            >>> find_relative_offsets(a, out=a)
+            array([[ 0,  0],
+                   [ 1, -1],
+                   [ 0,  0]])
+            >>> a
+            array([[ 0,  0],
+                   [ 1, -1],
+                   [ 0,  0]])
+    """
+
+    if out is None:
+        out = points.copy()
+    elif id(points) != id(out):
+        out[:] = points
+
+    points_mean = numpy.round(
+        out.mean(axis=0)
+    ).astype(int)
+
+    out -= points_mean[None]
+
+    return(out)
+
+
+@debugging_tools.log_call(logger)
 def matrix_reduced_op(a, b, op):
     """
         Sort of like numpy.dot. However, it will use the first axis with both arrays.
