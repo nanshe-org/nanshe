@@ -278,7 +278,6 @@ def find_offsets(frames2reg_fft, template_fft):
 
     # Get the shape and half shape of the spatial components (YX or ZYX) for easy manipulation.
     frames2reg_fft_spatial_shape = numpy.array(frames2reg_fft.shape[1:])
-    frames2reg_fft_spatial_half_shape = numpy.trunc(frames2reg_fft_spatial_shape/2.0)
 
     # Remove global shifts.
     if not frames2reg_fft_added_singleton:
@@ -290,16 +289,11 @@ def find_offsets(frames2reg_fft, template_fft):
     # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
     # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
     # them bound by the half shape, but with either sign.
-    frames2reg_template_conv_max_indices_mask_above = (
-        frames2reg_template_conv_max_indices > frames2reg_fft_spatial_half_shape[None]
+    expanded_numpy.find_shortest_wraparound(
+        frames2reg_template_conv_max_indices,
+        frames2reg_fft_spatial_shape,
+        out=frames2reg_template_conv_max_indices
     )
-    if frames2reg_template_conv_max_indices_mask_above.any():
-        frames2reg_template_conv_max_indices -= frames2reg_template_conv_max_indices_mask_above*frames2reg_fft_spatial_shape
-    frames2reg_template_conv_max_indices_mask_below = (
-        frames2reg_template_conv_max_indices < -frames2reg_fft_spatial_half_shape[None]
-    )
-    if frames2reg_template_conv_max_indices_mask_below.any():
-        frames2reg_template_conv_max_indices += frames2reg_template_conv_max_indices_mask_below*frames2reg_fft_spatial_shape
 
     # Shift will have to be in the opposite direction to bring everything to the center.
     numpy.negative(frames2reg_template_conv_max_indices, out=frames2reg_template_conv_max_indices)
