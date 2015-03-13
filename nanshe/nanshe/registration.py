@@ -124,7 +124,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
 
     frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
-    frames2reg_fft[:] = fft.fftn(frames2reg, axes=range(1, frames2reg.ndim))
+    for i in xrange(len(frames2reg)):
+        frames2reg_fft[i] = fft.fftn(frames2reg[i], axes=range(frames2reg.ndim - 1))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float)
