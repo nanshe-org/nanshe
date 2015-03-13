@@ -150,12 +150,15 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             template_fft += numpy.sum(frames2reg_shifted_fft_i, axis=0)
         template_fft /= len(reg_frames)
 
-        this_space_shift = find_offsets(frames2reg_fft, template_fft)
+        for i in xrange(len(reg_frames)):
+            this_space_shift = find_offsets(frames2reg_fft[i], template_fft)
 
-        delta_space_shift = this_space_shift - space_shift
-        squared_magnitude_delta_space_shift += numpy.dot(delta_space_shift, delta_space_shift.T).sum()
+            delta_space_shift = this_space_shift - space_shift[i]
+            squared_magnitude_delta_space_shift += numpy.dot(
+                delta_space_shift, delta_space_shift.T
+            ).sum()
 
-        space_shift[:] = this_space_shift
+            space_shift[i] = this_space_shift
 
         if max_iters != -1:
             num_iters += 1
