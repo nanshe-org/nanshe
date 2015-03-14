@@ -277,9 +277,6 @@ def find_offsets(frames2reg_fft, template_fft):
     # Convert indices into an array for easy manipulation.
     frames2reg_template_conv_max_indices = numpy.array(frames2reg_template_conv_max_indices).T.copy()
 
-    # Get the shape and half shape of the spatial components (YX or ZYX) for easy manipulation.
-    frames2reg_fft_spatial_shape = numpy.array(frames2reg_fft.shape[1:])
-
     # Shift will have to be in the opposite direction to bring everything to the center.
     numpy.negative(frames2reg_template_conv_max_indices, out=frames2reg_template_conv_max_indices)
 
@@ -295,7 +292,7 @@ def find_offsets(frames2reg_fft, template_fft):
     # them bound by the half shape, but with either sign.
     expanded_numpy.find_shortest_wraparound(
         frames2reg_template_conv_max_indices,
-        frames2reg_fft_spatial_shape,
+        frames2reg_fft.shape[1:],
         out=frames2reg_template_conv_max_indices
     )
 
