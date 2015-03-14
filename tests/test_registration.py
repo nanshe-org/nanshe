@@ -152,7 +152,9 @@ class TestFindOffsets(object):
         a[10] = 0
         a[10, :-6, :-6] = 1
 
-        a_off[10] = 3
+        a_off[10] = a.shape[1:]
+        a_off[10] -= 3
+        numpy.negative(a_off, out=a_off)
 
         am = a.mean(axis=0)
 
@@ -174,7 +176,9 @@ class TestFindOffsets(object):
         a[10] = 0
         a[10, :-7, :-7] = 1
 
-        a_off[10] = 3
+        a_off[10] = a.shape[1:]
+        a_off[10] -= 3
+        numpy.negative(a_off, out=a_off)
 
         am = a.mean(axis=0)
 
@@ -215,7 +219,9 @@ class TestFindOffsets(object):
         a[10] = 0
         a[10, :-6, :-6, :-6] = 1
 
-        a_off[10] = 3
+        a_off[10] = a.shape[1:]
+        a_off[10] -= 3
+        numpy.negative(a_off, out=a_off)
 
         am = a.mean(axis=0)
 
@@ -238,7 +244,9 @@ class TestFindOffsets(object):
         a[10] = 0
         a[10, :-7, :-7, :-7] = 1
 
-        a_off[10] = 3
+        a_off[10] = a.shape[1:]
+        a_off[10] -= 3
+        numpy.negative(a_off, out=a_off)
 
         am = a.mean(axis=0)
 

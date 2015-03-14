@@ -152,15 +152,31 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             template_fft += numpy.sum(frames2reg_shifted_fft_i, axis=0)
         template_fft /= len(reg_frames)
 
+        this_space_shift = space_shift.copy()
         for i in xrange(len(reg_frames)):
-            this_space_shift = find_offsets(frames2reg_fft[i], template_fft)
+            this_space_shift[i] = find_offsets(frames2reg_fft[i], template_fft)
 
-            delta_space_shift = this_space_shift - space_shift[i]
-            squared_magnitude_delta_space_shift += numpy.dot(
-                delta_space_shift, delta_space_shift.T
-            ).sum()
+        # Remove global shifts.
+        expanded_numpy.find_relative_offsets(
+            this_space_shift,
+            out=this_space_shift
+        )
 
-            space_shift[i] = this_space_shift
+        # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
+        # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
+        # them bound by the half shape, but with either sign.
+        expanded_numpy.find_shortest_wraparound(
+            this_space_shift,
+            frames2reg_fft.shape[1:],
+            out=this_space_shift
+        )
+
+        delta_space_shift = this_space_shift - space_shift
+        squared_magnitude_delta_space_shift += numpy.dot(
+            delta_space_shift, delta_space_shift.T
+        ).sum()
+
+        space_shift = this_space_shift
 
         if max_iters != -1:
             num_iters += 1
@@ -248,11 +264,11 @@ def find_offsets(frames2reg_fft, template_fft):
                    [ 2.8-0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ]])
 
             >>> find_offsets(af, tf)
-            array([[0, 0],
-                   [0, 0],
-                   [1, 0],
-                   [0, 0],
-                   [0, 0]])
+            array([[ 0,  0],
+                   [ 0,  0],
+                   [-2,  0],
+                   [ 0,  0],
+                   [ 0,  0]])
     """
 
     # If there is only one frame, add a singleton axis to indicate this.
@@ -279,21 +295,5 @@ def find_offsets(frames2reg_fft, template_fft):
 
     # Shift will have to be in the opposite direction to bring everything to the center.
     numpy.negative(frames2reg_template_conv_max_indices, out=frames2reg_template_conv_max_indices)
-
-    # Remove global shifts.
-    if not frames2reg_fft_added_singleton:
-        expanded_numpy.find_relative_offsets(
-            frames2reg_template_conv_max_indices,
-            out=frames2reg_template_conv_max_indices
-        )
-
-    # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
-    # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
-    # them bound by the half shape, but with either sign.
-    expanded_numpy.find_shortest_wraparound(
-        frames2reg_template_conv_max_indices,
-        frames2reg_fft.shape[1:],
-        out=frames2reg_template_conv_max_indices
-    )
 
     return(frames2reg_template_conv_max_indices)
