@@ -280,6 +280,9 @@ def find_offsets(frames2reg_fft, template_fft):
     # Get the shape and half shape of the spatial components (YX or ZYX) for easy manipulation.
     frames2reg_fft_spatial_shape = numpy.array(frames2reg_fft.shape[1:])
 
+    # Shift will have to be in the opposite direction to bring everything to the center.
+    numpy.negative(frames2reg_template_conv_max_indices, out=frames2reg_template_conv_max_indices)
+
     # Remove global shifts.
     if not frames2reg_fft_added_singleton:
         expanded_numpy.find_relative_offsets(
@@ -295,8 +298,5 @@ def find_offsets(frames2reg_fft, template_fft):
         frames2reg_fft_spatial_shape,
         out=frames2reg_template_conv_max_indices
     )
-
-    # Shift will have to be in the opposite direction to bring everything to the center.
-    numpy.negative(frames2reg_template_conv_max_indices, out=frames2reg_template_conv_max_indices)
 
     return(frames2reg_template_conv_max_indices)
