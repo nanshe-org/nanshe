@@ -171,7 +171,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             out=this_space_shift
         )
 
-        delta_space_shift = this_space_shift - space_shift
+        delta_space_shift = this_space_shift.copy()
+        delta_space_shift -= space_shift
         squared_magnitude_delta_space_shift += numpy.dot(
             delta_space_shift, delta_space_shift.T
         ).sum()
