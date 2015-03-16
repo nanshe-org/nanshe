@@ -2,6 +2,10 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Aug 05, 2014 14:02:24 EDT$"
 
 
+import nose
+import nose.plugins
+import nose.plugins.attrib
+
 import itertools
 
 import numpy
@@ -254,6 +258,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
+    @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_6(self):
         p = numpy.array([[27, 51, 78],
                          [66, 85, 56],
@@ -295,6 +300,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
+    @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_7(self):
         p = numpy.array([[27, 51, 78],
                          [66, 85, 56],
@@ -341,6 +347,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
+    @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_8(self):
         p = numpy.array([[27, 51, 78],
                          [66, 85, 56],
@@ -386,6 +393,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
+    @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_9(self):
         p = numpy.array([[27, 51, 78],
                          [66, 85, 56],
@@ -438,6 +446,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
+    @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_10(self):
         p = numpy.array([[27, 51, 78],
                          [66, 85, 56],
