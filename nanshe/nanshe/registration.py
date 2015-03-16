@@ -160,11 +160,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         this_space_shift_mean = numpy.round(
             this_space_shift.mean(axis=0)
         ).astype(int)
-        expanded_numpy.find_relative_offsets(
-            this_space_shift,
-            this_space_shift_mean,
-            out=this_space_shift
-        )
+        for i in xrange(len(reg_frames)):
+            expanded_numpy.find_relative_offsets(
+                this_space_shift[i][None],
+                this_space_shift_mean,
+                out=this_space_shift[i][None]
+            )
 
         # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
