@@ -165,11 +165,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
         # them bound by the half shape, but with either sign.
-        expanded_numpy.find_shortest_wraparound(
-            this_space_shift,
-            frames2reg_fft.shape[1:],
-            out=this_space_shift
-        )
+        for i in xrange(len(reg_frames)):
+            expanded_numpy.find_shortest_wraparound(
+                this_space_shift[i][None],
+                frames2reg_fft.shape[1:],
+                out=this_space_shift[i][None]
+            )
 
         delta_space_shift = this_space_shift.copy()
         for i in xrange(len(reg_frames)):
