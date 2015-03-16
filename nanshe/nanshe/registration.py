@@ -199,8 +199,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
     reg_frames = frames2reg.copy()
     reg_frames = reg_frames.view(numpy.ma.MaskedArray)
     reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
-    for i in xrange(len(frames2reg)):
-        reg_frames[i] = expanded_numpy.roll(frames2reg[i], space_shift[i], to_mask=True)
+    for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for k in xrange(i, j):
+            reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k], to_mask=True)
 
     if include_shift:
         return(reg_frames, space_shift)
