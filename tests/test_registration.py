@@ -9,7 +9,7 @@ import nanshe.nanshe.registration
 
 
 class TestRegisterMeanOffsets(object):
-    def test0(self):
+    def test0a(self):
         a = numpy.zeros((20,10,11), dtype=int)
 
         a[:, 3:-3, 3:-3] = 1
@@ -22,7 +22,7 @@ class TestRegisterMeanOffsets(object):
         assert (b2.data == b.data).all()
         assert (b2.mask == b.mask).all()
 
-    def test1(self):
+    def test1a(self):
         a = numpy.zeros((20,10,11), dtype=int)
 
         a[:, 3:-3, 3:-3] = 1
@@ -42,7 +42,7 @@ class TestRegisterMeanOffsets(object):
         assert (b2.data == b.data).all()
         assert (b2.mask == b.mask).all()
 
-    def test2(self):
+    def test2a(self):
         a = numpy.zeros((20,11,12), dtype=int)
 
         a[:, 3:-4, 3:-4] = 1
@@ -54,6 +54,61 @@ class TestRegisterMeanOffsets(object):
 
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
+
+
+        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test0b(self):
+        a = numpy.zeros((20,10,11,12), dtype=int)
+
+        a[:, 3:-3, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test1b(self):
+        a = numpy.zeros((20,10,11,12), dtype=int)
+
+        a[:, 3:-3, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-6, :-6, :-6] = 1
+
+        b[10, :3, :, :] = numpy.ma.masked
+        b[10, :, :3, :] = numpy.ma.masked
+        b[10, :, :, :3] = numpy.ma.masked
+
+
+        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test2b(self):
+        a = numpy.zeros((20,11,12,13), dtype=int)
+
+        a[:, 3:-4, 3:-4, 3:-4] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-7, :-7, :-7] = 1
+
+        b[10, :3, :, :] = numpy.ma.masked
+        b[10, :, :3, :] = numpy.ma.masked
+        b[10, :, :, :3] = numpy.ma.masked
 
 
         b2 = nanshe.nanshe.registration.register_mean_offsets(a)
