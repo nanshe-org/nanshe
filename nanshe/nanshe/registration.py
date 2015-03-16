@@ -27,7 +27,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
+def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_frame_length=-1):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -44,6 +44,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             max_iters(int):                      Number of iterations to allow before forcing termination if stable
                                                  point is not found yet. Set to -1 if no limit. (Default -1)
             include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
+            block_frame_length(int):             Number of frames to work with at a time.
+                                                 By default all. (Default -1)
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
@@ -119,10 +121,13 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
                    [0, 0]]))
     """
 
+    if block_frame_length == -1:
+        block_frame_length = len(frames2reg)
+
     space_shift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
 
     frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
-    for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+    for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, frames2reg.ndim))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
@@ -144,21 +149,21 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = 0
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             frames2reg_shifted_fft_ij = numpy.exp(1j * numpy.tensordot(space_shift[i:j], unit_space_shift_fft, axes=[-1, 0]))
             frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
             template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
         template_fft /= len(frames2reg)
 
         this_space_shift = space_shift.copy()
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift[i:j] = find_offsets(frames2reg_fft[i:j], template_fft)
 
         # Remove global shifts.
         this_space_shift_mean = numpy.round(
             this_space_shift.mean(axis=0)
         ).astype(int)
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             expanded_numpy.find_relative_offsets(
                 this_space_shift[i:j],
                 this_space_shift_mean,
@@ -168,7 +173,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
         # them bound by the half shape, but with either sign.
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             expanded_numpy.find_shortest_wraparound(
                 this_space_shift[i:j],
                 frames2reg_fft.shape[1:],
@@ -176,7 +181,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             )
 
         delta_space_shift = this_space_shift.copy()
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             delta_space_shift[i:j] -= space_shift[i:j]
             squared_magnitude_delta_space_shift += numpy.dot(
                 delta_space_shift[i:j], delta_space_shift[i:j].T
