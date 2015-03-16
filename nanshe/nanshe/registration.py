@@ -157,8 +157,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             this_space_shift[i] = find_offsets(frames2reg_fft[i], template_fft)
 
         # Remove global shifts.
+        this_space_shift_mean = numpy.round(
+            this_space_shift.mean(axis=0)
+        ).astype(int)
         expanded_numpy.find_relative_offsets(
             this_space_shift,
+            this_space_shift_mean,
             out=this_space_shift
         )
 
