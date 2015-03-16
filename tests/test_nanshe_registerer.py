@@ -3,6 +3,10 @@ __date__ = "$Mar 12, 2015 09:40:16 EST$"
 
 
 
+import nose
+import nose.plugins
+import nose.plugins.attrib
+
 import json
 import os
 import shutil
@@ -151,6 +155,7 @@ class TestNansheRegisterer(object):
 
         assert (b2 == b).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test_main_0b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
 
@@ -182,6 +187,7 @@ class TestNansheRegisterer(object):
 
         assert (b2 == b).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test_main_1b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
 
@@ -221,6 +227,7 @@ class TestNansheRegisterer(object):
 
         assert (b2 == b).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test_main_2b(self):
         a = numpy.zeros((20,11,12,13), dtype=int)
 
