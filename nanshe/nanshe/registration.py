@@ -119,10 +119,6 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
     space_shift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
 
-    reg_frames = frames2reg.copy()
-    reg_frames = reg_frames.view(numpy.ma.MaskedArray)
-    reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
-
     frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
     for i in xrange(len(frames2reg)):
         frames2reg_fft[i] = fft.fftn(frames2reg[i], axes=range(frames2reg.ndim - 1))
@@ -193,6 +189,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
     # Adjust the registered frames using the translations found.
     # Mask rolled values.
+    reg_frames = frames2reg.copy()
+    reg_frames = reg_frames.view(numpy.ma.MaskedArray)
+    reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
     for i in xrange(len(frames2reg)):
         reg_frames[i] = expanded_numpy.roll(frames2reg[i], space_shift[i], to_mask=True)
 
