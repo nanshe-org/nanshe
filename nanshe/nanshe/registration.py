@@ -155,7 +155,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
             template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
         template_fft /= len(frames2reg)
 
-        this_space_shift = space_shift.copy()
+        this_space_shift = numpy.empty_like(space_shift)
         for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift[i:j] = find_offsets(frames2reg_fft[i:j], template_fft)
 
@@ -180,9 +180,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
                 out=this_space_shift[i:j]
             )
 
-        delta_space_shift = this_space_shift.copy()
+        delta_space_shift = numpy.empty_like(space_shift)
         for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            delta_space_shift[i:j] -= space_shift[i:j]
+            delta_space_shift[i:j] = this_space_shift[i:j] - space_shift[i:j]
             squared_magnitude_delta_space_shift += numpy.dot(
                 delta_space_shift[i:j], delta_space_shift[i:j].T
             ).sum()
@@ -196,8 +196,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
 
     # Adjust the registered frames using the translations found.
     # Mask rolled values.
-    reg_frames = frames2reg.copy()
-    reg_frames = reg_frames.view(numpy.ma.MaskedArray)
+    reg_frames = numpy.ma.empty_like(frames2reg)
     reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
     reg_frames.set_fill_value(reg_frames.dtype.type(0))
     for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
