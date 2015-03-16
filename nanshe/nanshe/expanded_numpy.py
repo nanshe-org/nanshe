@@ -2895,7 +2895,7 @@ def compute_mapping_relevance(mapping):
 
 
 @debugging_tools.log_call(logger)
-def find_relative_offsets(points, out=None):
+def find_relative_offsets(points, center=None, out=None):
     """
         Given a series of points, find the relative points from the mean.
 
@@ -2903,6 +2903,10 @@ def find_relative_offsets(points, out=None):
             points(numpy.ndarray):       a set of integer points (NxD) where N
                                          is the number of points and D is the
                                          dimensionality, in which they lay.
+
+            center(numpy.ndarray):       an integer point (D) where D is the
+                                         dimensionality, in which they lay.
+                                         Defaults to the mean of the points.
 
             out(numpy.ndarray):          another set of points relative to
                                          their mean.
@@ -2920,6 +2924,13 @@ def find_relative_offsets(points, out=None):
             array([[0, 0],
                    [0, 0],
                    [0, 0]])
+
+            >>> find_relative_offsets(
+            ...     numpy.ones((3,2), dtype=int), -numpy.ones((2,), dtype=int)
+            ... )
+            array([[2, 2],
+                   [2, 2],
+                   [2, 2]])
 
             >>> find_relative_offsets(numpy.arange(6).reshape(2,3).T % 2)
             array([[ 0,  0],
@@ -2942,11 +2953,12 @@ def find_relative_offsets(points, out=None):
     elif id(points) != id(out):
         out[:] = points
 
-    points_mean = numpy.round(
-        out.mean(axis=0)
-    ).astype(int)
+    if center is None:
+        center = numpy.round(
+            out.mean(axis=0)
+        ).astype(int)
 
-    out -= points_mean[None]
+    out -= center[None]
 
     return(out)
 
