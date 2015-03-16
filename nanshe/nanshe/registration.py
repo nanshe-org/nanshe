@@ -146,21 +146,21 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = 0
-        for i in xrange(len(reg_frames)):
+        for i in xrange(len(frames2reg)):
             frames2reg_shifted_fft_i = numpy.exp(1j * numpy.tensordot(space_shift[i][None], unit_space_shift_fft, axes=[-1, 0]))
             frames2reg_shifted_fft_i *= frames2reg_fft[i][None]
             template_fft += numpy.sum(frames2reg_shifted_fft_i, axis=0)
-        template_fft /= len(reg_frames)
+        template_fft /= len(frames2reg)
 
         this_space_shift = space_shift.copy()
-        for i in xrange(len(reg_frames)):
+        for i in xrange(len(frames2reg)):
             this_space_shift[i] = find_offsets(frames2reg_fft[i], template_fft)
 
         # Remove global shifts.
         this_space_shift_mean = numpy.round(
             this_space_shift.mean(axis=0)
         ).astype(int)
-        for i in xrange(len(reg_frames)):
+        for i in xrange(len(frames2reg)):
             expanded_numpy.find_relative_offsets(
                 this_space_shift[i][None],
                 this_space_shift_mean,
@@ -170,7 +170,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
         # them bound by the half shape, but with either sign.
-        for i in xrange(len(reg_frames)):
+        for i in xrange(len(frames2reg)):
             expanded_numpy.find_shortest_wraparound(
                 this_space_shift[i][None],
                 frames2reg_fft.shape[1:],
@@ -178,7 +178,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
             )
 
         delta_space_shift = this_space_shift.copy()
-        for i in xrange(len(reg_frames)):
+        for i in xrange(len(frames2reg)):
             delta_space_shift[i] -= space_shift[i]
             squared_magnitude_delta_space_shift += numpy.dot(
                 delta_space_shift[i], delta_space_shift[i].T
@@ -193,7 +193,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
 
     # Adjust the registered frames using the translations found.
     # Mask rolled values.
-    for i in xrange(len(reg_frames)):
+    for i in xrange(len(frames2reg)):
         reg_frames[i] = expanded_numpy.roll(frames2reg[i], space_shift[i], to_mask=True)
 
     if include_shift:
