@@ -206,10 +206,11 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
         for k in xrange(i, j):
             reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k], to_mask=True)
 
+    result = reg_frames
     if include_shift:
-        return(reg_frames, space_shift)
-    else:
-        return(reg_frames)
+        result = (reg_frames, space_shift)
+
+    return(result)
 
 
 @debugging_tools.log_call(logger)
