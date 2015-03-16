@@ -154,3 +154,158 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
         file_handle.close()
 
     return(data)
+
+
+class HDF5MaskedDataset(object):
+    """
+        Provides an abstraction of the masked array the HDF5 Group where the contents of a
+        masked array are serialized.
+
+        Note:
+                This behaves roughly like an `h5py.Dataset` and roughly like a
+                `numpy.ma.masked_array`. Internally, it uses an `h5py.Group` to
+                contain the components of the masked array and allow
+                interaction with them.
+    """
+
+    def __init__(self,
+                 group, shape=None, dtype=None, data=None, chunks=True,
+                 **kwargs
+            ):
+        assert isinstance(group, h5py.Group)
+
+        assert "compression" not in kwargs
+        assert "compression_opts" not in kwargs
+
+        self._group = group
+
+        if len(self._group):
+            assert len(self._group) == 3
+
+            assert data is None
+            assert shape is None
+            assert dtype is None
+
+            assert "data" in self._group
+            assert "mask" in self._group
+            assert "fill_value" in self._group
+
+            assert self._group["data"].shape == self._group["mask"].shape
+            assert self._group["data"].dtype == self._group["fill_value"].dtype
+            assert self._group["mask"].dtype == numpy.dtype(numpy.bool8)
+        else:
+            assert (data is not None) or \
+                   ((shape is not None) and (dtype is not None))
+
+            shape = tuple(shape)
+            dtype = numpy.dtype(dtype)
+
+            if data is not None:
+                if (shape is not None) and (dtype is not None):
+                    assert data.shape == shape
+                    assert data.dtype == dtype
+                else:
+                    shape = tuple(data.shape)
+                    dtype = numpy.dtype(data.dtype)
+
+            self._group.create_dataset(
+                "data",
+                shape=shape,
+                dtype=dtype,
+                chunks=chunks,
+                **kwargs
+            )
+            self._group.create_dataset(
+                "mask",
+                shape=shape,
+                dtype=numpy.bool8,
+                chunks=chunks,
+                compression="gzip",
+                compression_opts=2,
+                **kwargs
+            )
+            self._group.create_dataset(
+                "fill_value",
+                shape=tuple(),
+                dtype=dtype
+            )
+
+    @property
+    def data(self):
+        return(self._group["data"])
+
+    @data.setter
+    def data(self, value):
+        self._group["data"][...] = value
+
+    @property
+    def mask(self):
+        return(self._group["mask"])
+
+    @mask.setter
+    def mask(self, value):
+        self._group["mask"][...] = value
+
+    @property
+    def fill_value(self):
+        return(self._group["fill_value"])
+
+    @fill_value.setter
+    def fill_value(self, value):
+        self._group["fill_value"][...] = value
+
+    def __len__(self):
+        return(len(self._group["data"]))
+
+    @property
+    def dims(self):
+        return(self._group["data"].dims)
+
+    @property
+    def ndim(self):
+        return(len(self._group["data"].shape))
+
+    @property
+    def shape(self):
+        return(self._group["data"].shape)
+
+    @shape.setter
+    def shape(self, shape):
+        self.resize(shape)
+
+    @property
+    def size(self):
+        return(self._group["data"].size)
+
+    @property
+    def dtype(self):
+        return(self._group["data"].dtype)
+
+    def resize(self, size, axis=None):
+        self._group["data"].resize(size, axis)
+        self._group["mask"].resize(size, axis)
+
+    def __getitem__(self, args):
+        result = self._group["data"][args]
+        result = result.view(numpy.ma.masked_array)
+
+        result.mask = self._group["mask"][args]
+        result.fill_value = self._group["fill_value"][...]
+
+        return(result)
+
+    def __setitem__(self, args, value):
+        self._group["data"][args] = value
+        self._group["mask"][args] = numpy.ma.getmaskarray(value)
+
+        if isinstance(value, numpy.ma.masked_array):
+            self._group["fill_value"][...] = value.fill_value
+
+    def __array__(self, dtype=None):
+        result = self._group["data"].__array__(dtype=dtype)
+        result = result.view(numpy.ma.masked_array)
+
+        result.mask = self._group["mask"][...]
+        result.fill_value = self._group["fill_value"][...]
+
+        return(result)
