@@ -3,6 +3,10 @@ __date__ = "$Feb 20, 2015 10:40:15 EST$"
 
 
 
+import nose
+import nose.plugins
+import nose.plugins.attrib
+
 import numpy
 
 import nanshe.nanshe.registration
@@ -62,6 +66,7 @@ class TestRegisterMeanOffsets(object):
         assert (b2.data == b.data).all()
         assert (b2.mask == b.mask).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test0b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
 
@@ -75,6 +80,7 @@ class TestRegisterMeanOffsets(object):
         assert (b2.data == b.data).all()
         assert (b2.mask == b.mask).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test1b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
 
@@ -96,6 +102,7 @@ class TestRegisterMeanOffsets(object):
         assert (b2.data == b.data).all()
         assert (b2.mask == b.mask).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test2b(self):
         a = numpy.zeros((20,11,12,13), dtype=int)
 
@@ -180,6 +187,7 @@ class TestFindOffsets(object):
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test0b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
         a_off = numpy.zeros((len(a), a.ndim-1), dtype=int)
@@ -197,6 +205,7 @@ class TestFindOffsets(object):
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test1b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
         a_off = numpy.zeros((len(a), a.ndim-1), dtype=int)
@@ -219,6 +228,7 @@ class TestFindOffsets(object):
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
 
+    @nose.plugins.attrib.attr("3D")
     def test2b(self):
         a = numpy.zeros((20,11,12,13), dtype=int)
         a_off = numpy.zeros((len(a), a.ndim-1), dtype=int)
