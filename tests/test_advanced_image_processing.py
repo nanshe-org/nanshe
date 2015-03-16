@@ -2,6 +2,10 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jul 30, 2014 19:35:11 EDT$"
 
 
+import nose
+import nose.plugins
+import nose.plugins.attrib
+
 import numpy
 import scipy
 
@@ -180,6 +184,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((a == b).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_zeroed_lines_10(self):
         a = numpy.ones((1, 100, 101, 102))
         erosion_shape = [ 21, 1, 1 ]
@@ -287,6 +292,7 @@ class TestAdvancedImageProcessing(object):
         # Hence, multiplication by 99 instead of 100.
         assert( (99.0*b.std()) < a.std() )
 
+    @nose.plugins.attrib.attr("3D")
     def test_estimate_f0_3(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         spatial_smoothing_gaussian_filter_window_size = 5.0
@@ -307,6 +313,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((b == a).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_estimate_f0_4(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         spatial_smoothing_gaussian_filter_window_size = 5.0
@@ -432,6 +439,7 @@ class TestAdvancedImageProcessing(object):
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
         assert( ((a - 100.0*b) < 0.1).all() )
 
+    @nose.plugins.attrib.attr("3D")
     def test_extract_f0_3(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         spatial_smoothing_gaussian_filter_window_size = 5.0
@@ -454,6 +462,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((b == 0).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_extract_f0_4(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
         spatial_smoothing_gaussian_filter_window_size = 5.0
@@ -654,6 +663,7 @@ class TestAdvancedImageProcessing(object):
 
         nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
 
+    @nose.plugins.attrib.attr("3D")
     def test_preprocess_data_5(self):
         ## Does NOT test accuracy.
 
@@ -694,6 +704,7 @@ class TestAdvancedImageProcessing(object):
 
         nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
 
+    @nose.plugins.attrib.attr("3D")
     def test_preprocess_data_6(self):
         ## Does NOT test accuracy.
 
@@ -725,6 +736,7 @@ class TestAdvancedImageProcessing(object):
 
         nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
 
+    @nose.plugins.attrib.attr("3D")
     def test_preprocess_data_7(self):
         ## Does NOT test accuracy.
 
@@ -861,6 +873,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(len(unmatched_g) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_2(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
@@ -913,6 +926,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(len(unmatched_g) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_3(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
@@ -979,6 +993,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((numpy.array(m.nonzero()) == p.T).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_local_maxima_vigra_2(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
@@ -1005,6 +1020,7 @@ class TestAdvancedImageProcessing(object):
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_local_maxima_scikit_image_2(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
@@ -1033,6 +1049,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((numpy.array(m.nonzero()) == p.T).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_local_maxima_2(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
@@ -1112,6 +1129,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_extended_region_local_maxima_properties_3(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
@@ -1141,6 +1159,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_extended_region_local_maxima_properties_4(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
@@ -1281,6 +1300,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((len(e.props) - 2) == len(e2.props))
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_5(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 10))
@@ -1300,6 +1320,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(0 == len(e2.props))
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_6(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 10))
@@ -1328,6 +1349,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(len(e.props) == len(e2.props))
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_7(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 10))
@@ -1356,6 +1378,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((len(e.props) - 1) == len(e2.props))
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_8(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 10))
@@ -1489,6 +1512,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_5(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 5))
@@ -1514,6 +1538,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(1 == len(e2.props))
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_6(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 5))
@@ -1539,6 +1564,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(len(points) == len(e2.props))
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_7(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 5))
@@ -1566,6 +1592,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_8(self):
         space = numpy.array((100, 100, 100))
         radii = numpy.array((5, 5))
@@ -1721,6 +1748,7 @@ class TestAdvancedImageProcessing(object):
         assert( numpy.abs(neurons["image"].max(axis = 0) - neuron_images.max(axis = 0)).max() < 1.0e-4 )
         assert( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-4 )
 
+    @nose.plugins.attrib.attr("3D")
     def test_wavelet_denoising_3(self):
         params = {
             "remove_low_intensity_local_maxima" : {
@@ -1844,6 +1872,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((neurons["centroid"] == neurons["gaussian_mean"]).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_extract_neurons_2(self):
         image = 5 * numpy.ones((100, 100, 100))
 
@@ -1930,6 +1959,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((fused_neurons["centroid"] == fused_neurons["gaussian_mean"]).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_fuse_neurons_2(self):
         fraction_mean_neuron_max_threshold = 0.01
 
@@ -2029,6 +2059,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((neurons == merged_neurons).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_merge_neuron_sets_3(self):
         alignment_min_threshold = 0.6
         overlap_min_threshold = 0.6
@@ -2057,6 +2088,7 @@ class TestAdvancedImageProcessing(object):
 
         assert((neurons == merged_neurons).all())
 
+    @nose.plugins.attrib.attr("3D")
     def test_merge_neuron_sets_4(self):
         alignment_min_threshold = 0.6
         overlap_min_threshold = 0.6
@@ -2263,6 +2295,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_postprocess_data_3(self):
         config = {
             "wavelet_denoising" : {
@@ -2353,6 +2386,7 @@ class TestAdvancedImageProcessing(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_postprocess_data_4(self):
         config = {
             "wavelet_denoising" : {
