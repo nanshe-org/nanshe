@@ -207,3 +207,206 @@ class TestHDF5Serializers(object):
         shutil.rmtree(self.temp_dir)
 
         self.temp_dir = ""
+
+
+class TestHDF5MaskedDataset(object):
+    def setup(self):
+        self.temp_dir = tempfile.mkdtemp()
+
+        self.temp_hdf5_file = h5py.File(os.path.join(self.temp_dir, "test.h5"), "w")
+
+
+    def test_create(self):
+        shape = (2, 3)
+        dtype = numpy.dtype(float)
+        ndim = len(shape)
+        size = numpy.prod(shape)
+
+        a = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(
+            self.temp_hdf5_file, shape=shape, dtype=dtype
+        )
+
+        assert (a.ndim == ndim)
+        assert (len(a) == shape[0])
+        assert (a.shape == shape)
+        assert (a.size == size)
+        assert (a.dtype == dtype)
+
+        assert (a.data[...] == 0.0).all()
+        assert (a.mask[...] == False).all()
+        assert (a.fill_value[...] == 0).all()
+
+
+    def test_create_modify_1(self):
+        shape = (2, 3)
+        dtype = numpy.dtype(int)
+        ndim = len(shape)
+        size = numpy.prod(shape)
+
+        a = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(
+            self.temp_hdf5_file, shape=shape, dtype=dtype
+        )
+
+        assert (a.ndim == ndim)
+        assert (len(a) == shape[0])
+        assert (a.shape == shape)
+        assert (a.size == size)
+        assert (a.dtype == dtype)
+
+        assert (a.data[...] == 0).all()
+        assert (a.mask[...] == False).all()
+        assert (a.fill_value[...] == 0).all()
+
+        b = numpy.ma.arange(size).reshape(shape).astype(dtype)
+        b.mask = numpy.arange(size).reshape(shape[::-1]).T.copy() % 2
+        b.fill_value = b.dtype.type(1)
+
+        a.data[...] = b.data
+        a.mask[...] = b.mask
+        a.fill_value[...] = b.fill_value
+
+        assert (a.ndim == b.ndim)
+        assert (len(a) == len(b))
+        assert (a.shape == b.shape)
+        assert (a.size == b.size)
+        assert (a.dtype == b.dtype)
+
+        assert (a.data[...] == b.data).all()
+        assert (a.mask[...] == b.mask).all()
+        assert (a.fill_value[...] == b.fill_value).all()
+
+
+    def test_create_modify_2(self):
+        shape = (2, 3)
+        dtype = numpy.dtype(int)
+        ndim = len(shape)
+        size = numpy.prod(shape)
+
+        a = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(
+            self.temp_hdf5_file, shape=shape, dtype=dtype
+        )
+
+        assert (a.ndim == ndim)
+        assert (len(a) == shape[0])
+        assert (a.shape == shape)
+        assert (a.size == size)
+        assert (a.dtype == dtype)
+
+        assert (a.data[...] == 0).all()
+        assert (a.mask[...] == False).all()
+        assert (a.fill_value[...] == 0).all()
+
+        b = numpy.ma.arange(size).reshape(shape).astype(dtype)
+        b.mask = numpy.arange(size).reshape(shape[::-1]).T.copy() % 2
+        b.fill_value = b.dtype.type(1)
+
+        a.data = b.data
+        a.mask = b.mask
+        a.fill_value = b.fill_value
+
+        assert (a.ndim == b.ndim)
+        assert (len(a) == len(b))
+        assert (a.shape == b.shape)
+        assert (a.size == b.size)
+        assert (a.dtype == b.dtype)
+
+        assert (a.data[...] == b.data).all()
+        assert (a.mask[...] == b.mask).all()
+        assert (a.fill_value[...] == b.fill_value).all()
+
+
+    def test_create_modify_3(self):
+        shape = (2, 3)
+        dtype = numpy.dtype(int)
+        ndim = len(shape)
+        size = numpy.prod(shape)
+
+        a = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(
+            self.temp_hdf5_file, shape=shape, dtype=dtype
+        )
+
+        assert (a.ndim == ndim)
+        assert (len(a) == shape[0])
+        assert (a.shape == shape)
+        assert (a.size == size)
+        assert (a.dtype == dtype)
+
+        assert (a.data[...] == 0).all()
+        assert (a.mask[...] == False).all()
+        assert (a.fill_value[...] == 0).all()
+
+        b = numpy.ma.arange(size).reshape(shape).astype(dtype)
+        b.mask = numpy.arange(size).reshape(shape[::-1]).T.copy() % 2
+        b.fill_value = b.dtype.type(1)
+
+        a[...] = b
+
+        assert (a.ndim == b.ndim)
+        assert (len(a) == len(b))
+        assert (a.shape == b.shape)
+        assert (a.size == b.size)
+        assert (a.dtype == b.dtype)
+
+        assert (a.data[...] == b.data).all()
+        assert (a.mask[...] == b.mask).all()
+        assert (a.fill_value[...] == b.fill_value).all()
+
+
+    def test_read(self):
+        shape = (2, 3)
+        dtype = numpy.dtype(int)
+        ndim = len(shape)
+        size = numpy.prod(shape)
+
+        b = numpy.ma.arange(size).reshape(shape).astype(dtype)
+        b.mask = numpy.arange(size).reshape(shape[::-1]).T.copy() % 2
+        b.fill_value = b.dtype.type(1)
+
+        self.temp_hdf5_file.create_dataset(
+            "data",
+            data=b.data,
+            chunks=True
+        )
+        self.temp_hdf5_file.create_dataset(
+            "mask",
+            data=b.mask,
+            chunks=True,
+            compression="gzip",
+            compression_opts=2
+        )
+        self.temp_hdf5_file.create_dataset(
+            "fill_value",
+            data=b.fill_value
+        )
+
+        a = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(
+            self.temp_hdf5_file
+        )
+
+        assert (a.ndim == ndim)
+        assert (len(a) == shape[0])
+        assert (a.shape == shape)
+        assert (a.size == size)
+        assert (a.dtype == dtype)
+
+        a[...] = b
+
+        assert (a.ndim == b.ndim)
+        assert (len(a) == len(b))
+        assert (a.shape == b.shape)
+        assert (a.size == b.size)
+        assert (a.dtype == b.dtype)
+
+        assert (a.data[...] == b.data).all()
+        assert (a.mask[...] == b.mask).all()
+        assert (a.fill_value[...] == b.fill_value).all()
+
+
+    def teardown(self):
+        self.temp_hdf5_file.close()
+
+        self.temp_hdf5_file = None
+
+        shutil.rmtree(self.temp_dir)
+
+        self.temp_dir = ""
