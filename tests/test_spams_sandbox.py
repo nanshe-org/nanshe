@@ -2,6 +2,10 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Aug 05, 2014 17:38:58 EDT$"
 
 
+import nose
+import nose.plugins
+import nose.plugins.attrib
+
 import ctypes
 import multiprocessing
 
@@ -89,6 +93,7 @@ class TestSpamsSandbox(object):
 
         assert(len(unmatched_g) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_queue_spams_trainDL_2(self):
         out_queue = multiprocessing.Queue()
 
@@ -182,6 +187,7 @@ class TestSpamsSandbox(object):
 
         assert(len(unmatched_g) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_queue_spams_trainDL_2(self):
         d3 = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g3.astype(float),
                                                                                  **{
@@ -288,6 +294,7 @@ class TestSpamsSandbox(object):
 
         assert(len(unmatched_g) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_array_spams_trainDL_2(self):
         float_type = numpy.float64
 
@@ -394,6 +401,7 @@ class TestSpamsSandbox(object):
 
         assert(len(unmatched_g) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_array_spams_trainDL_2(self):
         d3 = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g3.astype(float),
                                                                                  **{
@@ -482,6 +490,7 @@ class TestSpamsSandbox(object):
 
         assert(len(unmatched_g) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_call_spams_trainDL_2(self):
         d3 = nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL(self.g3.astype(float),
                                                            **{
