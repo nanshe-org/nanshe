@@ -3,6 +3,8 @@ __date__ = "$Aug 08, 2014 08:08:39 EDT$"
 
 
 import nose
+import nose.plugins
+import nose.plugins.attrib
 
 import json
 import operator
@@ -932,6 +934,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_main_4(self):
         executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
@@ -965,6 +968,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_main_5(self):
         executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
@@ -998,6 +1002,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_main_6(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1142,6 +1147,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_io_handler_4(self):
         nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_a_block_3D_filename)
 
@@ -1171,6 +1177,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_io_handler_5(self):
         nanshe.nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_filename)
 
@@ -1200,6 +1207,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_io_handler_6(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1270,6 +1278,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_a_block_2(self):
         nanshe.nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_a_block_3D)
 
@@ -1369,6 +1378,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_blocks_3(self):
         nanshe.nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D["generate_neurons_blocks"])
 
@@ -1398,6 +1408,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_blocks_4(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1487,6 +1498,7 @@ class TestNansheLearner(object):
 
         assert(len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_2(self):
         with h5py.File(self.hdf5_output_3D_filename, "a") as output_file_handle:
             output_group = output_file_handle["/"]
