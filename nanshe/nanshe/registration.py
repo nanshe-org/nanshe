@@ -3,6 +3,7 @@ __date__ = "$Jan 28, 2015 11:25:47 EST$"
 
 
 
+import itertools
 import warnings
 
 import numpy
@@ -13,6 +14,7 @@ except Exception as e:
     warnings.warn(str(e) + ". Falling back to NumPy FFTPACK.", ImportWarning)
     import numpy.fft as fft
 
+import additional_generators
 import expanded_numpy
 
 # Need in order to have logging information no matter what.
@@ -120,8 +122,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
     space_shift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
 
     frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
-    for i in xrange(len(frames2reg)):
-        frames2reg_fft[i] = fft.fftn(frames2reg[i], axes=range(frames2reg.ndim - 1))
+    for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+        frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, frames2reg.ndim))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float)
@@ -142,42 +144,42 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False):
         squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = 0
-        for i in xrange(len(frames2reg)):
-            frames2reg_shifted_fft_i = numpy.exp(1j * numpy.tensordot(space_shift[i][None], unit_space_shift_fft, axes=[-1, 0]))
-            frames2reg_shifted_fft_i *= frames2reg_fft[i][None]
-            template_fft += numpy.sum(frames2reg_shifted_fft_i, axis=0)
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+            frames2reg_shifted_fft_ij = numpy.exp(1j * numpy.tensordot(space_shift[i:j], unit_space_shift_fft, axes=[-1, 0]))
+            frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
+            template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
         template_fft /= len(frames2reg)
 
         this_space_shift = space_shift.copy()
-        for i in xrange(len(frames2reg)):
-            this_space_shift[i] = find_offsets(frames2reg_fft[i], template_fft)
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+            this_space_shift[i:j] = find_offsets(frames2reg_fft[i:j], template_fft)
 
         # Remove global shifts.
         this_space_shift_mean = numpy.round(
             this_space_shift.mean(axis=0)
         ).astype(int)
-        for i in xrange(len(frames2reg)):
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
             expanded_numpy.find_relative_offsets(
-                this_space_shift[i][None],
+                this_space_shift[i:j],
                 this_space_shift_mean,
-                out=this_space_shift[i][None]
+                out=this_space_shift[i:j]
             )
 
         # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
         # them bound by the half shape, but with either sign.
-        for i in xrange(len(frames2reg)):
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
             expanded_numpy.find_shortest_wraparound(
-                this_space_shift[i][None],
+                this_space_shift[i:j],
                 frames2reg_fft.shape[1:],
-                out=this_space_shift[i][None]
+                out=this_space_shift[i:j]
             )
 
         delta_space_shift = this_space_shift.copy()
-        for i in xrange(len(frames2reg)):
-            delta_space_shift[i] -= space_shift[i]
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), 1), [len(frames2reg)])):
+            delta_space_shift[i:j] -= space_shift[i:j]
             squared_magnitude_delta_space_shift += numpy.dot(
-                delta_space_shift[i], delta_space_shift[i].T
+                delta_space_shift[i:j], delta_space_shift[i:j].T
             ).sum()
 
         space_shift = this_space_shift
