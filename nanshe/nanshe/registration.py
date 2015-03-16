@@ -4,8 +4,11 @@ __date__ = "$Jan 28, 2015 11:25:47 EST$"
 
 
 import itertools
+import os
+import tempfile
 import warnings
 
+import h5py
 import numpy
 
 try:
@@ -16,6 +19,7 @@ except Exception as e:
 
 import additional_generators
 import expanded_numpy
+import HDF5_serializers
 
 # Need in order to have logging information no matter what.
 import debugging_tools
@@ -124,9 +128,24 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
     if block_frame_length == -1:
         block_frame_length = len(frames2reg)
 
+    tempdir_name = ""
+    if block_frame_length != len(frames2reg):
+        tempdir_name = tempfile.mkdtemp()
+
     space_shift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
 
-    frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
+    temporaries_filename = ""
+    frames2reg_fft = None
+    if tempdir_name:
+        temporaries_filename = os.path.join(tempdir_name, "temporaries.h5")
+        temporaries_file = h5py.File(temporaries_filename, "w")
+
+        frames2reg_fft = temporaries_file.create_dataset(
+            "frames2reg_fft", shape=frames2reg.shape, dtype=complex
+        )
+    else:
+        frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
+
     for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, frames2reg.ndim))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
@@ -197,18 +216,53 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
             if num_iters >= max_iters:
                 break
 
+    if temporaries_filename:
+        frames2reg_fft = None
+        temporaries_file.close()
+        os.remove(temporaries_filename)
+        temporaries_filename = ""
+
     # Adjust the registered frames using the translations found.
     # Mask rolled values.
-    reg_frames = numpy.ma.empty_like(frames2reg)
-    reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
-    reg_frames.set_fill_value(reg_frames.dtype.type(0))
+    reg_frames = None
+    reg_frames_filename = ""
+    if tempdir_name:
+        reg_frames_filename = os.path.join(tempdir_name, "reg_frames.h5")
+        reg_frames_file = h5py.File(reg_frames_filename, "w")
+
+        reg_frames = reg_frames_file.create_group("reg_frames")
+        reg_frames = HDF5_serializers.HDF5MaskedDataset(
+            reg_frames, shape=frames2reg.shape, dtype=frames2reg.dtype
+        )
+    else:
+        reg_frames = numpy.ma.empty_like(frames2reg)
+        reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
+        reg_frames.set_fill_value(reg_frames.dtype.type(0))
+
     for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         for k in xrange(i, j):
             reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k], to_mask=True)
 
-    result = reg_frames
+    result = None
+    if reg_frames_filename:
+        result = reg_frames_filename
+    else:
+        result = reg_frames
+
     if include_shift:
-        result = (reg_frames, space_shift)
+        if reg_frames_filename:
+            reg_frames = None
+
+            reg_frames_file.create_dataset(
+                "space_shift",
+                data=space_shift,
+                chunks=True
+            )
+            reg_frames_file.close()
+
+            reg_frames_file = None
+        else:
+            result = (reg_frames, space_shift)
 
     return(result)
 
