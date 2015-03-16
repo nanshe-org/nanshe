@@ -142,6 +142,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
     unit_space_shift_fft = unit_space_shift_fft.T.copy()
     unit_space_shift_fft = unit_space_shift_fft.reshape((template_fft.ndim,) + template_fft.shape)
 
+    negative_wave_vector = None
+    template_fft_indices = None
+
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
     squared_magnitude_delta_space_shift = 1.0
