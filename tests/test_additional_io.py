@@ -27,10 +27,10 @@ class TestAdditionalIO(object):
         matched_filenames = nanshe.nanshe.additional_io.expand_pathname_list(self.temp_dir + "/*.tif")
         matched_filenames.sort(cmp = lambda a, b: 2*(a > b) - 1)
 
-        assert(len(matched_filenames) == len(self.temp_files))
+        assert (len(matched_filenames) == len(self.temp_files))
 
         for each_l, each_f in itertools.izip(matched_filenames, self.temp_files):
-            assert(each_l == each_f.name)
+            assert (each_l == each_f.name)
 
     def teardown(self):
         import shutil
