@@ -214,7 +214,7 @@ class HDF5DataSource( QObject ):
         if not is_pure_slicing(slicing):
             raise Exception('HDF5DataSource: slicing is not pure')
 
-        assert(len(slicing) == len(self.dataset_shape), "Expect a slicing for a txyzc array.")
+        assert (len(slicing) == len(self.dataset_shape)), "Expect a slicing for a txyzc array."
 
         slicing = additional_generators.reformat_slices(slicing, self.dataset_shape)
 
@@ -420,8 +420,8 @@ class HDF5Viewer(Viewer):
 
     def addRGBAHDF5Layer(self, a, name=None):
         # TODO: Avoid this array indexing as it is a filename.
-        assert(False)
-        assert a.shape[2] >= 3
+        assert False
+        assert (a.shape[2] >= 3)
         sources = [None, None, None,None]
         for i in range(3):
             sources[i], self.dataShape = createHDF5DataSource(a[...,i], True)
@@ -1621,14 +1621,14 @@ def main(*argv):
 
             each_layer_source_location_dict_inner = each_layer_source_location_dict
             while isinstance(each_layer_source_location_dict_inner, dict):
-                assert(len(each_layer_source_location_dict_inner) == 1)
+                assert (len(each_layer_source_location_dict_inner) == 1)
                 each_layer_source_operation_names.extend(each_layer_source_location_dict_inner.keys())
                 each_layer_source_location_dict_inner = each_layer_source_location_dict_inner.values()[0]
 
             if isinstance(each_layer_source_location_dict_inner, str):
                 each_layer_source_location_dict_inner = [each_layer_source_location_dict_inner]
 
-            assert(isinstance(each_layer_source_location_dict_inner, list))
+            assert isinstance(each_layer_source_location_dict_inner, list)
 
             each_layer_source_location_list = each_layer_source_location_dict_inner
 
