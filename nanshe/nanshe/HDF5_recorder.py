@@ -135,7 +135,7 @@ class HDF5EnumeratedArrayRecorder(object):
         self.hdf5_handle = hdf5_handle
 
         # Must be a logger if it already exists.
-        assert(self.hdf5_handle.attrs.get("is_logger", True))
+        assert self.hdf5_handle.attrs.get("is_logger", True)
 
         self.hdf5_handle.attrs["is_logger"] = True
         self.hdf5_handle.file.flush()
@@ -181,13 +181,13 @@ class HDF5EnumeratedArrayRecorder(object):
             root_i = self.hdf5_index_data_handles.get(".", -1)
             key_i = self.hdf5_index_data_handles.get(key, -1)
 
-            assert(root_i != -1)
-            assert(key_i != -1)
+            assert (root_i != -1)
+            assert (key_i != -1)
 
             root_i_str = str(root_i)
 
-            assert(isinstance(self.hdf5_handle[root_i_str], h5py.Group))
-            assert(isinstance(self.hdf5_handle[root_i_str][key], h5py.Group))
+            assert isinstance(self.hdf5_handle[root_i_str], h5py.Group)
+            assert isinstance(self.hdf5_handle[root_i_str][key], h5py.Group)
 
             key_handle = self.hdf5_handle[root_i_str][key]
             if key_i is None:
@@ -232,7 +232,7 @@ class HDF5EnumeratedArrayRecorder(object):
                 # Index into a NumPy structured array can return a void type even though it is a valid array, which can
                 # be stored. So, we must check.
                 try:
-                    assert(isinstance(value, numpy.ndarray))
+                    assert isinstance(value, numpy.ndarray)
                 except AssertionError:
                     if not value.dtype.names:
                         raise
