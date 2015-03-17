@@ -64,9 +64,9 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order = "
             (collections.OrderedDict):          an ordered dictionary with "shape" first and "dtype" (type) second.
     """
 
-    assert(pages_to_channel > 0)
-    assert(len(axis_order) == 5)
-    assert(all([_ in axis_order for _ in "zyxtc"]))
+    assert (pages_to_channel > 0)
+    assert (len(axis_order) == 5)
+    assert all([_ in axis_order for _ in "zyxtc"])
 
     new_tiff_file_shape, new_tiff_file_dtype = get_multipage_tiff_shape_dtype(new_tiff_filename).values()
 
@@ -118,7 +118,7 @@ def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_ch
             (numpy.ndarray):                    an array with the axis order specified.
     """
 
-    assert(pages_to_channel > 0)
+    assert (pages_to_channel > 0)
 
     # Get the shape and dtype information
     shape, dtype = get_multipage_tiff_shape_dtype(new_tiff_filename).values()
@@ -201,7 +201,7 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
                                                 channels.
     """
 
-    assert(pages_to_channel > 0)
+    assert (pages_to_channel > 0)
 
     # Get the axes that do not change
     static_axes = numpy.array(list(additional_generators.xrange_with_skip(3, to_skip = axis)))
