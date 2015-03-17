@@ -916,8 +916,8 @@ def roll(new_array, shift, out=None, to_mask=False):
 
     shift = numpy.array(shift)
 
-    assert(len(shift) == new_array.ndim)
-    assert(issubclass(shift.dtype.type, numpy.integer))
+    assert (len(shift) == new_array.ndim)
+    assert issubclass(shift.dtype.type, numpy.integer)
 
     if out is None:
         out = new_array.copy()
@@ -1945,7 +1945,7 @@ def enumerate_masks_max(new_masks, axis = 0):
     if axis < 0:
         axis += new_masks.ndim
 
-    assert(0 <= axis < new_masks.ndim)
+    assert (0 <= axis < new_masks.ndim)
 
     new_enumerated_masks_max = numpy.zeros(new_masks.shape[:axis] + (1,) + new_masks.shape[axis+1:], dtype=numpy.uint64)
 
@@ -2042,7 +2042,7 @@ def cartesian_product(arrays):
     """
 
     for i in xrange(len(arrays)):
-        assert arrays[i].ndim == 1, "Must provide only 1D arrays to this function or a single 2D array."
+        assert (arrays[i].ndim == 1), "Must provide only 1D arrays to this function or a single 2D array."
 
     array_shapes = tuple(len(arrays[i]) for i in xrange(len(arrays)))
 
@@ -2580,7 +2580,7 @@ def norm(new_vector_set, ord = 2):
     """
 
     # Needs to have at least one vector
-    assert(new_vector_set.ndim >= 1)
+    assert (new_vector_set.ndim >= 1)
 
     new_vector_set_float = new_vector_set.astype(float)
 
@@ -2722,8 +2722,8 @@ def unique_mapping(mapping, out=None):
                    [False, False]], dtype=bool)
     """
 
-    assert(issubclass(mapping.dtype.type, numpy.bool_))
-    assert(mapping.ndim == 2)
+    assert issubclass(mapping.dtype.type, numpy.bool_)
+    assert (mapping.ndim == 2)
 
     if out is None:
         out = mapping.copy()
@@ -2793,7 +2793,7 @@ def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
                    [False,  True, False]], dtype=bool)
     """
 
-    assert(a_metric.ndim == 2)
+    assert (a_metric.ndim == 2)
 
     accepted = unique_mapping(threshold_array(a_metric, threshold, include_below=include_below, is_closed=is_closed))
 
@@ -2834,8 +2834,8 @@ def compute_mapping_matches(mapping):
             array([2, 0, 0], dtype=uint64)
     """
 
-    assert(issubclass(mapping.dtype.type, numpy.bool_))
-    assert(mapping.ndim == 2)
+    assert issubclass(mapping.dtype.type, numpy.bool_)
+    assert (mapping.ndim == 2)
 
     stats = numpy.zeros((3,), dtype=numpy.uint64)
 
@@ -2881,8 +2881,8 @@ def compute_mapping_relevance(mapping):
             array([ 1.,  1.])
     """
 
-    assert(issubclass(mapping.dtype.type, numpy.bool_))
-    assert(mapping.ndim == 2)
+    assert issubclass(mapping.dtype.type, numpy.bool_)
+    assert (mapping.ndim == 2)
 
     matches = compute_mapping_matches(mapping)
     mapping_shape = numpy.array(mapping.shape)
@@ -2969,10 +2969,10 @@ def matrix_reduced_op(a, b, op):
     if b.ndim == 1:
         b = b[None]
 
-    assert(a.ndim == b.ndim)
+    assert (a.ndim == b.ndim)
 
     for i in xrange(1, a.ndim):
-        assert(a.shape[i] == b.shape[i])
+        assert (a.shape[i] == b.shape[i])
 
     out = numpy.empty((len(a), len(b)), dtype=numpy.promote_types(a.dtype, b.dtype))
 
@@ -3032,8 +3032,8 @@ def masks_intersection(a, b):
                    [0, 0]], dtype=uint64)
     """
 
-    assert(issubclass(a.dtype.type, numpy.bool_))
-    assert(issubclass(b.dtype.type, numpy.bool_))
+    assert issubclass(a.dtype.type, numpy.bool_)
+    assert issubclass(b.dtype.type, numpy.bool_)
 
     if a.ndim == 1:
         a = a[None]
@@ -3041,8 +3041,8 @@ def masks_intersection(a, b):
     if b.ndim == 1:
         b = b[None]
 
-    assert(a.ndim == b.ndim == 2)
-    assert(a.shape[1] == b.shape[1])
+    assert (a.ndim == b.ndim == 2)
+    assert (a.shape[1] == b.shape[1])
 
     out = numpy.empty((len(a), len(b)), dtype=numpy.uint64)
 
@@ -3102,8 +3102,8 @@ def masks_union(a, b):
                    [2, 3]], dtype=uint64)
     """
 
-    assert(issubclass(a.dtype.type, numpy.bool_))
-    assert(issubclass(b.dtype.type, numpy.bool_))
+    assert issubclass(a.dtype.type, numpy.bool_)
+    assert issubclass(b.dtype.type, numpy.bool_)
 
     if a.ndim == 1:
         a = a[None]
@@ -3111,8 +3111,8 @@ def masks_union(a, b):
     if b.ndim == 1:
         b = b[None]
 
-    assert(a.ndim == b.ndim == 2)
-    assert(a.shape[1] == b.shape[1])
+    assert (a.ndim == b.ndim == 2)
+    assert (a.shape[1] == b.shape[1])
 
     out = numpy.empty((len(a), len(b)), dtype=numpy.uint64)
 
@@ -3177,8 +3177,8 @@ def masks_overlap_normalized(a, b):
                    [ 0.,  0.]])
     """
 
-    assert(issubclass(a.dtype.type, numpy.bool_))
-    assert(issubclass(b.dtype.type, numpy.bool_))
+    assert issubclass(a.dtype.type, numpy.bool_)
+    assert issubclass(b.dtype.type, numpy.bool_)
 
     if a.ndim == 1:
         a = a[None]
@@ -3186,8 +3186,8 @@ def masks_overlap_normalized(a, b):
     if b.ndim == 1:
         b = b[None]
 
-    assert(a.ndim == b.ndim == 2)
-    assert(a.shape[1] == b.shape[1])
+    assert (a.ndim == b.ndim == 2)
+    assert (a.shape[1] == b.shape[1])
 
     out = masks_intersection(a, b).astype(float)
     out /= masks_union(a, b)
@@ -3868,9 +3868,9 @@ def symmetric_line_filter(size, ndims = 2, dim = -1):
                     [False, False, False]]], dtype=bool)
     """
 
-    assert(size > 0)
-    assert(ndims > 0)
-    assert(-ndims <= dim < ndims)
+    assert (size > 0)
+    assert (ndims > 0)
+    assert (-ndims <= dim < ndims)
 
     line = numpy.zeros(ndims * ( 2*size+1, ), dtype = bool)
 
