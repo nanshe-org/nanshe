@@ -210,8 +210,8 @@ def repeat_generator(a_iter, n = 1):
 
     """
 
-    assert(n >= 0, "n must be positive, but got n = " + repr(n))
-    assert((n % 1) == 0, "n must be an integer, but got n = " + repr(n))
+    assert (n >= 0), "n must be positive, but got n = " + repr(n)
+    assert ((n % 1) == 0), "n must be an integer, but got n = " + repr(n)
 
     for each_value in a_iter:
         for i in xrange(n):
@@ -251,8 +251,8 @@ def cycle_generator(a_iter, n = 1):
 
     """
 
-    assert(n >= 0, "n must be positive, but got n = " + repr(n))
-    assert((n % 1) == 0, "n must be an integer, but got n = " + repr(n))
+    assert (n >= 0), "n must be positive, but got n = " + repr(n)
+    assert ((n % 1) == 0), "n must be an integer, but got n = " + repr(n)
 
     a_iter = itertools.chain(*itertools.tee(a_iter, n))
 
@@ -649,7 +649,7 @@ def lagged_generators(new_iter, n = 2):
     """
 
     # Only a positive semi-definite number of generators can be created
-    assert(n >= 0)
+    assert (n >= 0)
 
     # Where they will be stored
     all_iters = tuple()
@@ -978,7 +978,7 @@ def reformat_slice(a_slice, a_length = None):
             True
     """
 
-    assert a_slice != None, "err"
+    assert (a_slice != None), "err"
 
     # Fill unknown values.
 
@@ -1088,7 +1088,7 @@ def reformat_slices(slices, lengths = None):
     except TypeError:
         new_lengths = (new_lengths,)
 
-    assert(len(slices) == len(new_lengths))
+    assert (len(slices) == len(new_lengths))
 
     new_slices = list(slices)
     for i, each_length in enumerate(new_lengths):
