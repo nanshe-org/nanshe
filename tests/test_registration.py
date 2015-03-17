@@ -7,8 +7,12 @@ import nose
 import nose.plugins
 import nose.plugins.attrib
 
+import os
+
+import h5py
 import numpy
 
+import nanshe.nanshe.HDF5_serializers
 import nanshe.nanshe.registration
 
 
@@ -61,6 +65,168 @@ class TestRegisterMeanOffsets(object):
 
 
         b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test3a(self):
+        a = numpy.zeros((20,10,11), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        fn = nanshe.nanshe.registration.register_mean_offsets(
+            a, block_frame_length = 10
+        )
+
+        b2 = None
+        with h5py.File(fn, "r") as f:
+            b2g = f["reg_frames"]
+            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2 = b2d[...]
+
+        os.remove(fn)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test4a(self):
+        a = numpy.zeros((20,10,11), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-6, :-6] = 1
+
+        b[10, :, :3] = numpy.ma.masked
+        b[10, :3, :] = numpy.ma.masked
+
+        fn = nanshe.nanshe.registration.register_mean_offsets(
+            a, block_frame_length = 10
+        )
+
+        b2 = None
+        with h5py.File(fn, "r") as f:
+            b2g = f["reg_frames"]
+            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2 = b2d[...]
+
+        os.remove(fn)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test5a(self):
+        a = numpy.zeros((20,11,12), dtype=int)
+
+        a[:, 3:-4, 3:-4] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-7, :-7] = 1
+
+        b[10, :, :3] = numpy.ma.masked
+        b[10, :3, :] = numpy.ma.masked
+
+        fn = nanshe.nanshe.registration.register_mean_offsets(
+            a, block_frame_length = 10
+        )
+
+        b2 = None
+        with h5py.File(fn, "r") as f:
+            b2g = f["reg_frames"]
+            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2 = b2d[...]
+
+        os.remove(fn)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test6a(self):
+        a = numpy.zeros((20,10,11), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        fn = nanshe.nanshe.registration.register_mean_offsets(
+            a, block_frame_length = 7
+        )
+
+        b2 = None
+        with h5py.File(fn, "r") as f:
+            b2g = f["reg_frames"]
+            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2 = b2d[...]
+
+        os.remove(fn)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test7a(self):
+        a = numpy.zeros((20,10,11), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-6, :-6] = 1
+
+        b[10, :, :3] = numpy.ma.masked
+        b[10, :3, :] = numpy.ma.masked
+
+        fn = nanshe.nanshe.registration.register_mean_offsets(
+            a, block_frame_length = 7
+        )
+
+        b2 = None
+        with h5py.File(fn, "r") as f:
+            b2g = f["reg_frames"]
+            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2 = b2d[...]
+
+        os.remove(fn)
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
+    def test8a(self):
+        a = numpy.zeros((20,11,12), dtype=int)
+
+        a[:, 3:-4, 3:-4] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-7, :-7] = 1
+
+        b[10, :, :3] = numpy.ma.masked
+        b[10, :3, :] = numpy.ma.masked
+
+        fn = nanshe.nanshe.registration.register_mean_offsets(
+            a, block_frame_length = 7
+        )
+
+        b2 = None
+        with h5py.File(fn, "r") as f:
+            b2g = f["reg_frames"]
+            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2 = b2d[...]
+
+        os.remove(fn)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
