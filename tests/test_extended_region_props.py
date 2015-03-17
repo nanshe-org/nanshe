@@ -57,8 +57,6 @@ class TestAdvancedImageProcessing(object):
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
 
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
-
     def test_ExtendedRegionProps_2(self):
         p = numpy.array([[27, 51],
                          [32, 53],
@@ -103,8 +101,6 @@ class TestAdvancedImageProcessing(object):
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.array([1, 1, 2])).all())
 
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
-
     def test_ExtendedRegionProps_3(self):
         p = numpy.array([[27, 51],
                          [66, 85],
@@ -147,8 +143,6 @@ class TestAdvancedImageProcessing(object):
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
-
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
     def test_ExtendedRegionProps_4(self):
         p = numpy.array([[27, 51],
@@ -199,8 +193,6 @@ class TestAdvancedImageProcessing(object):
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
-
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
     def test_ExtendedRegionProps_5(self):
         p = numpy.array([[27, 51],
@@ -256,8 +248,6 @@ class TestAdvancedImageProcessing(object):
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
 
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
-
     @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_6(self):
         p = numpy.array([[27, 51, 78],
@@ -297,8 +287,6 @@ class TestAdvancedImageProcessing(object):
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
-
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
     @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_7(self):
@@ -345,8 +333,6 @@ class TestAdvancedImageProcessing(object):
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.array([1, 1, 2])).all())
 
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
-
     @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_8(self):
         p = numpy.array([[27, 51, 78],
@@ -390,8 +376,6 @@ class TestAdvancedImageProcessing(object):
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
-
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
     @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_9(self):
@@ -443,8 +427,6 @@ class TestAdvancedImageProcessing(object):
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
-
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
     @nose.plugins.attrib.attr("3D")
     def test_ExtendedRegionProps_10(self):
@@ -500,5 +482,3 @@ class TestAdvancedImageProcessing(object):
         assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
 
         assert((e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all())
-
-        assert(all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))]))
