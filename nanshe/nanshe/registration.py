@@ -258,11 +258,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
                 data=space_shift,
                 chunks=True
             )
-            reg_frames_file.close()
-
-            reg_frames_file = None
         else:
             result = (reg_frames, space_shift)
+
+    if tempdir_name:
+        reg_frames_file.close()
+        reg_frames_file = None
 
     return(result)
 
