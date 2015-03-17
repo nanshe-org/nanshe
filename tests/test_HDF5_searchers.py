@@ -62,10 +62,10 @@ class TestHDF5Searchers(object):
     def test_get_matching_paths(self):
         all_matched = nanshe.nanshe.HDF5_searchers.get_matching_paths(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
 
-        assert(len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1) - 1))
+        assert (len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1) - 1))
 
         for _1, _2 in itertools.izip(TestHDF5Searchers.get_matching_paths_generator(), all_matched):
-            assert(_1 == _2)
+            assert (_1 == _2)
 
     def test_get_matching_paths_groups(self):
         all_matched = nanshe.nanshe.HDF5_searchers.get_matching_paths_groups(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
@@ -74,30 +74,30 @@ class TestHDF5Searchers(object):
         for each_group_match_list in all_matched:
             num_permutations *= len(each_group_match_list)
 
-        assert(num_permutations == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
+        assert (num_permutations == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
 
         for _1, _2 in itertools.izip(TestHDF5Searchers.get_matching_paths_groups_generator(), all_matched):
-            assert(_1 == _2)
+            assert (_1 == _2)
 
         for _1, _2 in itertools.izip(TestHDF5Searchers.get_matching_grouped_paths_gen(), TestHDF5Searchers.match_path_groups_gen(all_matched)):
-            assert(_1 == _2)
+            assert (_1 == _2)
 
     def test_get_matching_grouped_paths(self):
         all_matched = nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
 
-        assert(len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
+        assert (len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
 
         for _1, _2 in itertools.izip(TestHDF5Searchers.get_matching_grouped_paths_gen(), all_matched):
-            assert(_1 == _2)
+            assert (_1 == _2)
 
     def test_get_matching_grouped_paths_found(self):
         all_matched = nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths_found(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
 
-        assert(len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
+        assert (len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
 
         for _1, _2, _3 in itertools.izip(TestHDF5Searchers.get_matching_grouped_paths_gen(), all_matched.iterkeys(), all_matched.itervalues()):
-            assert(_1 == _2)
-            assert((_2 in self.temp_hdf5_file) == _3)
+            assert (_1 == _2)
+            assert ((_2 in self.temp_hdf5_file) == _3)
 
     def teardown(self):
         self.temp_hdf5_file.close()
