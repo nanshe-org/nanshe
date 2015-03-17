@@ -75,13 +75,13 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary = False):
         radii = radii[None]
 
     # Validate the dimensions
-    assert(space.ndim == 1)
-    assert(centers.ndim == 2)
-    assert(radii.ndim == 1)
+    assert (space.ndim == 1)
+    assert (centers.ndim == 2)
+    assert (radii.ndim == 1)
 
     # Validate the shapes
-    assert(space.shape == centers.shape[1:])
-    assert(radii.shape == centers.shape[:1])
+    assert (space.shape == centers.shape[1:])
+    assert (radii.shape == centers.shape[:1])
 
     # Create a hypersphere mask using a center and a radius.
     hypersphere_mask = numpy.zeros(radii.shape + tuple(space.tolist()), dtype = bool)
@@ -189,14 +189,14 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
         magnitudes = magnitudes[None]
 
     # Validate the dimensions
-    assert(space.ndim == 1)
-    assert(means.ndim == 2)
-    assert(std_devs.ndim == 1)
-    assert(magnitudes.ndim == 1)
+    assert (space.ndim == 1)
+    assert (means.ndim == 2)
+    assert (std_devs.ndim == 1)
+    assert (magnitudes.ndim == 1)
 
     # Validate the shapes
-    assert(space.shape == means.shape[1:])
-    assert(magnitudes.shape == means.shape[:1])
+    assert (space.shape == means.shape[1:])
+    assert (magnitudes.shape == means.shape[:1])
 
     # Create a gaussian from a mean and a standard deviation.
     images = numpy.zeros(magnitudes.shape + tuple(space.tolist()), dtype = float)
@@ -252,8 +252,8 @@ def generate_random_bound_points(space, radii):
         radii = radii[None]
 
     # Validate the dimensions
-    assert(space.ndim == 1)
-    assert(radii.ndim == 1)
+    assert (space.ndim == 1)
+    assert (radii.ndim == 1)
 
     # Determine the space each centroid can be within
     bound_space = numpy.zeros(radii.shape + space.shape + (2,), dtype = int)
