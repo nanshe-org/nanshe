@@ -198,23 +198,23 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     if half_border_shape is None:
         half_border_shape_array = numpy.zeros(len(original_images_shape_array), dtype=int)
     else:
-        assert(len(half_window_shape) == len(original_images_shape_array))
+        assert (len(half_window_shape) == len(original_images_shape_array))
 
         half_border_shape_array = numpy.array(half_border_shape)
 
         # Should be of type integer
-        assert(issubclass(half_border_shape_array.dtype.type, numpy.integer))
+        assert (issubclass(half_border_shape_array.dtype.type, numpy.integer))
 
         # Should not cut along temporal portion.
         # Maybe replace with a warning.
-        assert(half_border_shape[0] == 0)
+        assert (half_border_shape[0] == 0)
 
     # TODO: Refactor to expanded_numpy.
     # Cuts boundaries from original_images_shape
     original_images_pared_shape_array = original_images_shape_array - 2*half_border_shape_array
 
     # At least one of them must be specified. If not some mixture of both.
-    assert( (block_shape is not None) or (num_blocks is not None) )
+    assert ((block_shape is not None) or (num_blocks is not None))
 
     # Size of the block to use by pixels
     block_shape_array = None
@@ -224,12 +224,12 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
         block_shape_array_undefined = numpy.ones(original_images_pared_shape_array.shape, dtype=bool)
     else:
         # Should have the same number of values in each
-        assert(len(original_images_pared_shape_array) == len(block_shape))
+        assert (len(original_images_pared_shape_array) == len(block_shape))
 
         block_shape_array = numpy.array(block_shape, dtype=int)
 
         # Should be of type integer
-        assert(issubclass(block_shape_array.dtype.type, numpy.integer))
+        assert issubclass(block_shape_array.dtype.type, numpy.integer)
 
         block_shape_array_undefined = (block_shape_array == -1)
 
@@ -241,17 +241,17 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
         num_blocks_array_undefined = numpy.ones(original_images_pared_shape_array.shape, dtype=bool)
     else:
         # Should have the same number of values in each
-        assert(len(original_images_pared_shape_array) == len(num_blocks))
+        assert (len(original_images_pared_shape_array) == len(num_blocks))
 
         num_blocks_array = numpy.array(num_blocks, dtype=int)
 
         # Should be of type integer
-        assert(issubclass(num_blocks_array.dtype.type, numpy.integer))
+        assert issubclass(num_blocks_array.dtype.type, numpy.integer)
 
         num_blocks_array_undefined = (num_blocks_array == -1)
 
     # Want to ensure that both aren't defined.
-    assert(~(~block_shape_array_undefined & ~num_blocks_array_undefined).all())
+    assert ~(~block_shape_array_undefined & ~num_blocks_array_undefined).all()
 
     # If both are undefined, then the block should span that dimension
     missing_both = (block_shape_array_undefined & num_blocks_array_undefined)
@@ -264,7 +264,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     # Replace undefined values in block_shape_array
     missing_block_shape_array, block_shape_array_remainder = divmod(original_images_pared_shape_array[block_shape_array_undefined], num_blocks_array[block_shape_array_undefined])
     # Block shape must be well defined.
-    assert((block_shape_array_remainder == 0).all())
+    assert (block_shape_array_remainder == 0).all()
     missing_block_shape_array = missing_block_shape_array.astype(int)
     block_shape_array[block_shape_array_undefined] = missing_block_shape_array
 
@@ -278,16 +278,16 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     if half_window_shape is None:
         half_window_shape_array = block_shape_array / 2.0
     else:
-        assert(len(half_window_shape) == len(original_images_pared_shape_array))
+        assert (len(half_window_shape) == len(original_images_pared_shape_array))
 
         half_window_shape_array = numpy.array(half_window_shape)
 
-        assert(issubclass(half_window_shape_array.dtype.type, numpy.integer))
+        assert issubclass(half_window_shape_array.dtype.type, numpy.integer)
 
     # Want to make our window size is at least as large as the one used for the f0 calculation.
     if "extract_f0" in parameters["generate_neurons"]["preprocess_data"]:
-        # assert(parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] == half_window_shape_array[0])
-        assert(parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] <= half_window_shape_array[0])
+        # assert (parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] == half_window_shape_array[0])
+        assert (parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] <= half_window_shape_array[0])
 
     # Estimate bounds for each slice. Uses typical python [begin, end) for the indices.
     estimated_bounds = numpy.zeros( tuple(num_blocks_array) , dtype = (int, original_images_pared_shape_array.shape + (2,)) )
