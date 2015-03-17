@@ -72,9 +72,9 @@ class TestSpamsSandbox(object):
         self.g = self.g.transpose()
         d = d.transpose()
 
-        assert(self.g.shape == d.shape)
+        assert (self.g.shape == d.shape)
 
-        assert((self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -91,7 +91,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_queue_spams_trainDL_2(self):
@@ -122,9 +122,9 @@ class TestSpamsSandbox(object):
         self.g3 = self.g3.transpose()
         d3 = d3.transpose()
 
-        assert(self.g3.shape == d3.shape)
+        assert (self.g3.shape == d3.shape)
 
-        assert((self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all())
+        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -141,7 +141,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g3
 
-        assert(len(unmatched_g3) == 0)
+        assert (len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_queue_spams_trainDL_1(self):
         d = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g.astype(float),
@@ -166,9 +166,9 @@ class TestSpamsSandbox(object):
         self.g = self.g.transpose()
         d = d.transpose()
 
-        assert(self.g.shape == d.shape)
+        assert (self.g.shape == d.shape)
 
-        assert((self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -185,7 +185,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_queue_spams_trainDL_2(self):
@@ -211,9 +211,9 @@ class TestSpamsSandbox(object):
         self.g3 = self.g3.transpose()
         d3 = d3.transpose()
 
-        assert(self.g3.shape == d3.shape)
+        assert (self.g3.shape == d3.shape)
 
-        assert((self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all())
+        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -230,7 +230,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g3
 
-        assert(len(unmatched_g3) == 0)
+        assert (len(unmatched_g3) == 0)
 
     def test_run_multiprocessing_array_spams_trainDL_1(self):
         float_type = numpy.float64
@@ -273,9 +273,9 @@ class TestSpamsSandbox(object):
         self.g = self.g.transpose()
         d = d.transpose()
 
-        assert(self.g.shape == d.shape)
+        assert (self.g.shape == d.shape)
 
-        assert((self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -292,7 +292,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_array_spams_trainDL_2(self):
@@ -336,9 +336,9 @@ class TestSpamsSandbox(object):
         self.g3 = self.g3.transpose()
         d3 = d3.transpose()
 
-        assert(self.g3.shape == d3.shape)
+        assert (self.g3.shape == d3.shape)
 
-        assert((self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all())
+        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -355,7 +355,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g3
 
-        assert(len(unmatched_g3) == 0)
+        assert (len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_array_spams_trainDL_1(self):
         d = nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g.astype(float),
@@ -380,9 +380,9 @@ class TestSpamsSandbox(object):
         self.g = self.g.transpose()
         d = d.transpose()
 
-        assert(self.g.shape == d.shape)
+        assert (self.g.shape == d.shape)
 
-        assert((self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -399,7 +399,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_array_spams_trainDL_2(self):
@@ -425,9 +425,9 @@ class TestSpamsSandbox(object):
         self.g3 = self.g3.transpose()
         d3 = d3.transpose()
 
-        assert(self.g3.shape == d3.shape)
+        assert (self.g3.shape == d3.shape)
 
-        assert((self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all())
+        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -444,7 +444,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g3
 
-        assert(len(unmatched_g3) == 0)
+        assert (len(unmatched_g3) == 0)
 
     def test_call_spams_trainDL_1(self):
         d = nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL(self.g.astype(float),
@@ -469,9 +469,9 @@ class TestSpamsSandbox(object):
         self.g = self.g.transpose()
         d = d.transpose()
 
-        assert(self.g.shape == d.shape)
+        assert (self.g.shape == d.shape)
 
-        assert((self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -488,7 +488,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_call_spams_trainDL_2(self):
@@ -514,9 +514,9 @@ class TestSpamsSandbox(object):
         self.g3 = self.g3.transpose()
         d3 = d3.transpose()
 
-        assert(self.g3.shape == d3.shape)
+        assert (self.g3.shape == d3.shape)
 
-        assert((self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all())
+        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -533,7 +533,7 @@ class TestSpamsSandbox(object):
 
         print unmatched_g3
 
-        assert(len(unmatched_g3) == 0)
+        assert (len(unmatched_g3) == 0)
 
     def teardown(self):
         self.p = None
