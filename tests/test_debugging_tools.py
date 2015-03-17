@@ -41,7 +41,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(re.match(expected_result, result).group() == result)
+        assert (re.match(expected_result, result).group() == result)
 
 
     def test_log_call_2(self):
@@ -60,7 +60,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(re.match(expected_result, result).group() == result)
+        assert (re.match(expected_result, result).group() == result)
 
 
     def test_log_call_3(self):
@@ -77,7 +77,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(result == expected_result)
+        assert (result == expected_result)
 
 
     def test_log_call_4(self):
@@ -95,7 +95,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(result == expected_result)
+        assert (result == expected_result)
 
 
     def test_log_call_5(self):
@@ -116,7 +116,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(re.match(expected_result, result).group() == result)
+        assert (re.match(expected_result, result).group() == result)
 
 
     def test_log_call_6(self):
@@ -138,7 +138,7 @@ class TestDebuggingTools(object):
 
         print(result)
 
-        assert(result == expected_result)
+        assert (result == expected_result)
 
 
     def test_log_class_1(self):
@@ -167,7 +167,7 @@ class TestDebuggingTools(object):
 
         print(result_1)
 
-        assert(re.match(expected_result_1, result_1).group() == result_1)
+        assert (re.match(expected_result_1, result_1).group() == result_1)
 
         op()
 
@@ -177,7 +177,7 @@ class TestDebuggingTools(object):
 
         print(result_2)
 
-        assert(re.match(expected_result_2, result_2).group() == result_2)
+        assert (re.match(expected_result_2, result_2).group() == result_2)
 
 
     def test_log_class_2(self):
@@ -208,7 +208,7 @@ class TestDebuggingTools(object):
 
         print(result_1)
 
-        assert(re.match(expected_result_1, result_1).group() == result_1)
+        assert (re.match(expected_result_1, result_1).group() == result_1)
 
         Test.__call__.__dict__["to_print_args"] = True
 
@@ -220,7 +220,7 @@ class TestDebuggingTools(object):
 
         print(result_2)
 
-        assert(re.match(expected_result_2, result_2).group() == result_2)
+        assert (re.match(expected_result_2, result_2).group() == result_2)
 
 
     def test_log_class_2(self):
@@ -247,7 +247,7 @@ class TestDebuggingTools(object):
 
         print(result_1)
 
-        assert(re.match(expected_result_1, result_1).group() == result_1)
+        assert (re.match(expected_result_1, result_1).group() == result_1)
 
         Test.__call__.__dict__["to_log_call"] = False
 
@@ -259,7 +259,7 @@ class TestDebuggingTools(object):
 
         print(result_2)
 
-        assert(result_2 == expected_result_2)
+        assert (result_2 == expected_result_2)
 
 
     def teardown(self):
