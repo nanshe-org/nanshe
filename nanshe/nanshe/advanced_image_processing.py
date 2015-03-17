@@ -207,7 +207,7 @@ def estimate_f0(new_data,
         out = new_data.astype(numpy.float32)
         new_data_f0_estimation = out
     else:
-        assert(out.shape == new_data.shape)
+        assert (out.shape == new_data.shape)
 
         if id(new_data) != id(out):
             out[:] = new_data
@@ -315,7 +315,7 @@ def extract_f0(new_data,
         out = new_data.astype(numpy.float32)
         new_data_df_over_f = out
     else:
-        assert(out.shape == new_data.shape)
+        assert (out.shape == new_data.shape)
 
         if (not issubclass(out.dtype.type, numpy.float32)):
             warnings.warn("Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
@@ -1105,7 +1105,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
                 result = 4 * self.props["RegionRadii"].min(axis = 1).astype(numpy.float64)
             else:
                 # Should have already checked and removed these.
-                assert(False)
+                assert False
 
             result = result[1:]
 
@@ -1397,7 +1397,7 @@ def generate_local_maxima_vigra(new_intensity_image):
     elif new_intensity_image.ndim == 3:
         local_maxima_mask = vigra.analysis.extendedLocalMaxima3D(new_intensity_image.astype(numpy.float32)).astype(bool)
     else:
-        assert(False)
+        assert False
 
     return(local_maxima_mask)
 
