@@ -53,25 +53,25 @@ class TestTiffFileFormat(object):
 
             each_filedata = nanshe.nanshe.expanded_numpy.tagging_reorder_array(each_filedata, to_axis_order="zyxtc")[0]
 
-            assert(each_shape_dtype["shape"] == each_filedata.shape)
-            assert(each_shape_dtype["dtype"] == each_filedata.dtype.type)
+            assert (each_shape_dtype["shape"] == each_filedata.shape)
+            assert (each_shape_dtype["dtype"] == each_filedata.dtype.type)
 
     def test_get_multipage_tiff_shape_dtype_transformed(self):
         for each_filename, each_filedata in self.filedata.items():
             each_shape_dtype = nanshe.nanshe.tiff_file_format.get_multipage_tiff_shape_dtype_transformed(each_filename,
                                                                                                   axis_order = "tzyxc")
 
-            assert(each_shape_dtype["shape"] == each_filedata.shape)
-            assert(each_shape_dtype["dtype"] == each_filedata.dtype.type)
+            assert (each_shape_dtype["shape"] == each_filedata.shape)
+            assert (each_shape_dtype["dtype"] == each_filedata.dtype.type)
 
     def test_get_standard_tiff_array(self):
         for each_filename, each_filedata in self.filedata.items():
             each_data = nanshe.nanshe.tiff_file_format.get_standard_tiff_array(each_filename)
 
-            assert(each_data.shape == each_filedata.shape)
-            assert(each_data.dtype == each_filedata.dtype)
+            assert (each_data.shape == each_filedata.shape)
+            assert (each_data.dtype == each_filedata.dtype)
 
-            assert((each_data == each_filedata).all())
+            assert (each_data == each_filedata).all()
 
     def test_convert_tiffs(self):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
@@ -79,7 +79,7 @@ class TestTiffFileFormat(object):
 
         nanshe.nanshe.tiff_file_format.convert_tiffs(self.filedata.keys(), hdf5_filepath)
 
-        assert(os.path.exists(hdf5_filename))
+        assert os.path.exists(hdf5_filename)
 
         data = None
         with h5py.File(hdf5_filename, "r") as hdf5_handle:
@@ -87,7 +87,7 @@ class TestTiffFileFormat(object):
 
         self_data_h5 = nanshe.nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
 
-        assert((data == self_data_h5).all())
+        assert (data == self_data_h5).all()
 
         os.remove(hdf5_filename)
 
@@ -110,9 +110,9 @@ class TestTiffFileFormat(object):
 
         main_args = ["./nanshe_converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
 
-        assert(nanshe.nanshe.nanshe_converter.main(*main_args) == 0)
+        assert (nanshe.nanshe.nanshe_converter.main(*main_args) == 0)
 
-        assert(os.path.exists(hdf5_filename))
+        assert os.path.exists(hdf5_filename)
 
         data = None
         with h5py.File(hdf5_filename, "r") as hdf5_handle:
@@ -120,7 +120,7 @@ class TestTiffFileFormat(object):
 
         self_data_h5 = nanshe.nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
 
-        assert((data == self_data_h5).all())
+        assert (data == self_data_h5).all()
 
         os.remove(hdf5_filename)
 
