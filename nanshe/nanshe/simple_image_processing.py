@@ -77,14 +77,14 @@ def zeroed_mean_images(input_array, output_array = None):
             True
     """
 
-    assert(issubclass(input_array.dtype.type, numpy.floating))
+    assert issubclass(input_array.dtype.type, numpy.floating)
 
     if output_array is None:
         output_array = input_array.copy()
     elif id(input_array) != id(output_array):
-        assert(issubclass(output_array.dtype.type, numpy.floating))
+        assert issubclass(output_array.dtype.type, numpy.floating)
 
-        assert(input_array.shape == output_array.shape)
+        assert (input_array.shape == output_array.shape)
 
         output_array[:] = input_array
 
@@ -159,14 +159,14 @@ def renormalized_images(input_array, ord = 2, output_array = None):
                    [ 0.,  0.,  0.]])
     """
 
-    assert(issubclass(input_array.dtype.type, numpy.floating))
+    assert issubclass(input_array.dtype.type, numpy.floating)
 
     if output_array is None:
         output_array = input_array.copy()
     elif id(input_array) != id(output_array):
-        assert(issubclass(output_array.dtype.type, numpy.floating))
+        assert issubclass(output_array.dtype.type, numpy.floating)
 
-        assert(input_array.shape == output_array.shape)
+        assert (input_array.shape == output_array.shape)
 
         output_array[:] = input_array
 
