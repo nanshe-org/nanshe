@@ -244,14 +244,14 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
             reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k], to_mask=True)
 
     result = None
-    if reg_frames_filename:
+    if tempdir_name:
         reg_frames = None
         result = reg_frames_filename
     else:
         result = reg_frames
 
     if include_shift:
-        if reg_frames_filename:
+        if tempdir_name:
             reg_frames_file.create_dataset(
                 "space_shift",
                 data=space_shift,
