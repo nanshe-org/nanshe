@@ -307,7 +307,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
     imPrev = None
     imCur = None
     if include_intermediates:
-        assert(out is None)
+        assert (out is None)
 
         W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
         imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype = numpy.float32)
@@ -323,7 +323,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
             else:
                 pass
 
-                assert( out.shape == ((scale.max(),) + im0.shape) )
+                assert ( out.shape == ((scale.max(),) + im0.shape) )
 
                 if not issubclass(out.dtype.type, numpy.float32):
                     warnings.warn("Provided out with type \"" + repr(out.dtype.type) + "\". " +
@@ -334,7 +334,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
             imPrev = numpy.empty_like(im0)
         else:
             if out is not None:
-                assert( out.shape == im0.shape )
+                assert (out.shape == im0.shape)
 
                 if not issubclass(out.dtype.type, numpy.float32):
                     warnings.warn("Provided out with type \"" + repr(out.dtype.type) + "\". " +
