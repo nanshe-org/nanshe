@@ -648,8 +648,7 @@ def lagged_generators(new_iter, n = 2):
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
-    # Only a positive semi-definite number of generators can be created
-    assert (n >= 0)
+    assert (n >= 0), "Only a positive semi-definite number of generators can be created."
 
     # Where they will be stored
     all_iters = tuple()
