@@ -37,7 +37,7 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
     def test_remove_zeroed_lines_2(self):
         a = numpy.ones((1, 100, 101))
@@ -54,7 +54,7 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
 
     def test_remove_zeroed_lines_3(self):
@@ -75,7 +75,7 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
     def test_remove_zeroed_lines_4(self):
         a = numpy.ones((1, 100, 101))
@@ -92,7 +92,7 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
     def test_remove_zeroed_lines_5(self):
         a = numpy.ones((1, 100, 101))
@@ -109,7 +109,7 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
     def test_remove_zeroed_lines_6(self):
         a = numpy.repeat(numpy.arange(100)[None].T, 101, axis = 1)[None].astype(float)
@@ -126,7 +126,7 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
-        assert(numpy.allclose(a, b, rtol=0, atol=1e-13))
+        assert numpy.allclose(a, b, rtol=0, atol=1e-13)
 
     def test_remove_zeroed_lines_7(self):
         a = numpy.repeat(numpy.arange(100)[None], 101, axis = 0)[None].astype(float)
@@ -146,7 +146,7 @@ class TestAdvancedImageProcessing(object):
 
         b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
-        assert(numpy.allclose(a, b, rtol=0, atol=1e-13))
+        assert numpy.allclose(a, b, rtol=0, atol=1e-13)
 
     def test_remove_zeroed_lines_8(self):
         a = numpy.ones((1, 100, 101))
@@ -164,7 +164,7 @@ class TestAdvancedImageProcessing(object):
         b = numpy.zeros_like(a)
         nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
     def test_remove_zeroed_lines_9(self):
         a = numpy.ones((1, 100, 101))
@@ -182,7 +182,7 @@ class TestAdvancedImageProcessing(object):
         b = ar
         nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(b, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_zeroed_lines_10(self):
@@ -201,7 +201,7 @@ class TestAdvancedImageProcessing(object):
         b = ar
         nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(b, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
 
-        assert((a == b).all())
+        assert (a == b).all()
 
     def test_estimate_f0_1(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -221,7 +221,7 @@ class TestAdvancedImageProcessing(object):
             temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size)
 
-        assert((b == a).all())
+        assert (b == a).all()
 
     def test_estimate_f0_1b(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -243,7 +243,7 @@ class TestAdvancedImageProcessing(object):
             half_window_size=half_window_size,
             out=b)
 
-        assert((b == a).all())
+        assert (b == a).all()
 
     def test_estimate_f0_1c(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -265,7 +265,7 @@ class TestAdvancedImageProcessing(object):
             half_window_size=half_window_size,
             out=b)
 
-        assert((b == a).all())
+        assert (b == a).all()
 
     def test_estimate_f0_2(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -290,7 +290,7 @@ class TestAdvancedImageProcessing(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert( (99.0*b.std()) < a.std() )
+        assert ( (99.0*b.std()) < a.std() )
 
     @nose.plugins.attrib.attr("3D")
     def test_estimate_f0_3(self):
@@ -311,7 +311,7 @@ class TestAdvancedImageProcessing(object):
             temporal_smoothing_gaussian_filter_window_size = temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size)
 
-        assert((b == a).all())
+        assert (b == a).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_estimate_f0_4(self):
@@ -337,7 +337,7 @@ class TestAdvancedImageProcessing(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert( (99.0*b.std()) < a.std() )
+        assert ( (99.0*b.std()) < a.std() )
 
     def test_extract_f0_1(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -359,7 +359,7 @@ class TestAdvancedImageProcessing(object):
             half_window_size=half_window_size,
             bias=bias)
 
-        assert((b == 0).all())
+        assert (b == 0).all()
 
     def test_extract_f0_1b(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -383,7 +383,7 @@ class TestAdvancedImageProcessing(object):
             bias=bias,
             out=b)
 
-        assert((b == 0).all())
+        assert (b == 0).all()
 
     def test_extract_f0_1c(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -407,7 +407,7 @@ class TestAdvancedImageProcessing(object):
             bias=bias,
             out=b)
 
-        assert((b == 0).all())
+        assert (b == 0).all()
 
     def test_extract_f0_2(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -434,10 +434,10 @@ class TestAdvancedImageProcessing(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert( (99.0*b.std()) < a.std() )
+        assert ( (99.0*b.std()) < a.std() )
 
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
-        assert( ((a - 100.0*b) < 0.1).all() )
+        assert ( ((a - 100.0*b) < 0.1).all() )
 
     @nose.plugins.attrib.attr("3D")
     def test_extract_f0_3(self):
@@ -460,7 +460,7 @@ class TestAdvancedImageProcessing(object):
             half_window_size=half_window_size,
             bias=bias)
 
-        assert((b == 0).all())
+        assert (b == 0).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_extract_f0_4(self):
@@ -488,10 +488,10 @@ class TestAdvancedImageProcessing(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert( (99.0*b.std()) < a.std() )
+        assert ( (99.0*b.std()) < a.std() )
 
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
-        assert( ((a - 100.0*b) < 0.1).all() )
+        assert ( ((a - 100.0*b) < 0.1).all() )
 
     def test_preprocess_data_1(self):
         ## Does NOT test accuracy.
@@ -800,9 +800,9 @@ class TestAdvancedImageProcessing(object):
         )
         d = (d != 0)
 
-        assert(g.shape == d.shape)
+        assert (g.shape == d.shape)
 
-        assert((g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(g))
         matched = dict()
@@ -819,7 +819,7 @@ class TestAdvancedImageProcessing(object):
 
         print(unmatched_g)
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     def test_generate_dictionary_1(self):
         p = numpy.array([[27, 51],
@@ -852,9 +852,9 @@ class TestAdvancedImageProcessing(object):
         )
         d = (d != 0)
 
-        assert(g.shape == d.shape)
+        assert (g.shape == d.shape)
 
-        assert((g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(g))
         matched = dict()
@@ -871,7 +871,7 @@ class TestAdvancedImageProcessing(object):
 
         print(unmatched_g)
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_2(self):
@@ -905,9 +905,9 @@ class TestAdvancedImageProcessing(object):
         )
         d = (d != 0)
 
-        assert(g.shape == d.shape)
+        assert (g.shape == d.shape)
 
-        assert((g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(g))
         matched = dict()
@@ -924,7 +924,7 @@ class TestAdvancedImageProcessing(object):
 
         print(unmatched_g)
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_3(self):
@@ -958,9 +958,9 @@ class TestAdvancedImageProcessing(object):
         )
         d = (d != 0)
 
-        assert(g.shape == d.shape)
+        assert (g.shape == d.shape)
 
-        assert((g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all())
+        assert (g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
 
         unmatched_g = range(len(g))
         matched = dict()
@@ -977,7 +977,7 @@ class TestAdvancedImageProcessing(object):
 
         print(unmatched_g)
 
-        assert(len(unmatched_g) == 0)
+        assert (len(unmatched_g) == 0)
 
     def test_generate_local_maxima_vigra_1(self):
         p = numpy.array([[27, 51],
@@ -991,7 +991,7 @@ class TestAdvancedImageProcessing(object):
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
 
-        assert((numpy.array(m.nonzero()) == p.T).all())
+        assert (numpy.array(m.nonzero()) == p.T).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_local_maxima_vigra_2(self):
@@ -1006,7 +1006,7 @@ class TestAdvancedImageProcessing(object):
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
 
-        assert((numpy.array(m.nonzero()) == p.T).all())
+        assert (numpy.array(m.nonzero()) == p.T).all()
 
     def test_generate_local_maxima_scikit_image_1(self):
         p = numpy.array([[27, 51],
@@ -1033,7 +1033,7 @@ class TestAdvancedImageProcessing(object):
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
 
-        assert((numpy.array(m.nonzero()) == p.T).all())
+        assert (numpy.array(m.nonzero()) == p.T).all()
 
     def test_generate_local_maxima_1(self):
         p = numpy.array([[27, 51],
@@ -1047,7 +1047,7 @@ class TestAdvancedImageProcessing(object):
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.nanshe.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
 
-        assert((numpy.array(m.nonzero()) == p.T).all())
+        assert (numpy.array(m.nonzero()) == p.T).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_local_maxima_2(self):
@@ -1062,7 +1062,7 @@ class TestAdvancedImageProcessing(object):
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = nanshe.nanshe.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
 
-        assert((numpy.array(m.nonzero()) == p.T).all())
+        assert (numpy.array(m.nonzero()) == p.T).all()
 
     def test_extended_region_local_maxima_properties_1(self):
         p = numpy.array([[27, 51],
@@ -1081,17 +1081,17 @@ class TestAdvancedImageProcessing(object):
                 nanshe.nanshe.expanded_numpy.enumerate_masks(m).max(axis = 0)
         )
 
-        assert((numpy.bincount(e["label"])[1:]  == 1).all())
+        assert (numpy.bincount(e["label"])[1:]  == 1).all()
 
-        assert(len(e) == len(p))
+        assert (len(e) == len(p))
 
-        assert((e["local_max"] == p).all())
+        assert (e["local_max"] == p).all()
 
-        assert((e["area"] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all())
+        assert (e["area"] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all()
 
-        assert((e["centroid"] == e["local_max"]).all())
+        assert (e["centroid"] == e["local_max"]).all()
 
-        assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
+        assert (e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all()
 
     def test_extended_region_local_maxima_properties_2(self):
         p = numpy.array([[27, 51],
@@ -1111,23 +1111,23 @@ class TestAdvancedImageProcessing(object):
                 nanshe.nanshe.expanded_numpy.enumerate_masks(m).max(axis = 0)
         )
 
-        assert((numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all())
+        assert (numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all()
 
-        assert(len(e) == len(p))
+        assert (len(e) == len(p))
 
-        assert((e["local_max"] == p).all())
+        assert (e["local_max"] == p).all()
 
-        assert((e["area"][[0, 2]] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all())
-
-        # Not exactly equal due to floating point round off error
-        assert(((e["centroid"][0] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all())
+        assert (e["area"][[0, 2]] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all()
 
         # Not exactly equal due to floating point round off error
-        assert(((e["centroid"][1] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all())
+        assert ((e["centroid"][0] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all()
 
-        assert((e["centroid"][2] == e["local_max"][2]).all())
+        # Not exactly equal due to floating point round off error
+        assert ((e["centroid"][1] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all()
 
-        assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
+        assert (e["centroid"][2] == e["local_max"][2]).all()
+
+        assert (e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_extended_region_local_maxima_properties_3(self):
@@ -1147,17 +1147,17 @@ class TestAdvancedImageProcessing(object):
                 nanshe.nanshe.expanded_numpy.enumerate_masks(m).max(axis = 0)
         )
 
-        assert((numpy.bincount(e["label"])[1:]  == 1).all())
+        assert (numpy.bincount(e["label"])[1:]  == 1).all()
 
-        assert(len(e) == len(p))
+        assert (len(e) == len(p))
 
-        assert((e["local_max"] == p).all())
+        assert (e["local_max"] == p).all()
 
-        assert((e["area"] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all())
+        assert (e["area"] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all()
 
-        assert((e["centroid"] == e["local_max"]).all())
+        assert (e["centroid"] == e["local_max"]).all()
 
-        assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
+        assert (e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_extended_region_local_maxima_properties_4(self):
@@ -1178,23 +1178,23 @@ class TestAdvancedImageProcessing(object):
                 nanshe.nanshe.expanded_numpy.enumerate_masks(m).max(axis = 0)
         )
 
-        assert((numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all())
+        assert (numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all()
 
-        assert(len(e) == len(p))
+        assert (len(e) == len(p))
 
-        assert((e["local_max"] == p).all())
+        assert (e["local_max"] == p).all()
 
-        assert((e["area"][[0, 2]] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all())
-
-        # Not exactly equal due to floating point round off error
-        assert(((e["centroid"][0] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all())
+        assert (e["area"][[0, 2]] == numpy.apply_over_axes(numpy.sum, m, axes = range(1, m.ndim)).squeeze().astype(float)).all()
 
         # Not exactly equal due to floating point round off error
-        assert(((e["centroid"][1] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all())
+        assert ((e["centroid"][0] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all()
 
-        assert((e["centroid"][2] == e["local_max"][2]).all())
+        # Not exactly equal due to floating point round off error
+        assert ((e["centroid"][1] - numpy.array(m[0].nonzero()).mean(axis = 1)) < 1e-14).all()
 
-        assert((e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all())
+        assert (e["centroid"][2] == e["local_max"][2]).all()
+
+        assert (e["intensity"] == g.max(axis = 0)[tuple(p.T)]).all()
 
     def test_remove_low_intensity_local_maxima_1(self):
         space = numpy.array((100, 100))
@@ -1211,9 +1211,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, 1.0)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(0 == len(e2.props))
+        assert (0 == len(e2.props))
 
     def test_remove_low_intensity_local_maxima_2(self):
         space = numpy.array((100, 100))
@@ -1239,9 +1239,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[0])
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(len(e.props) == len(e2.props))
+        assert (len(e.props) == len(e2.props))
 
     def test_remove_low_intensity_local_maxima_3(self):
         space = numpy.array((100, 100))
@@ -1267,9 +1267,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1])
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert((len(e.props) - 1) == len(e2.props))
+        assert ((len(e.props) - 1) == len(e2.props))
 
     def test_remove_low_intensity_local_maxima_4(self):
         space = numpy.array((100, 100))
@@ -1296,9 +1296,9 @@ class TestAdvancedImageProcessing(object):
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
                                                                                    numpy.finfo(float).eps)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert((len(e.props) - 2) == len(e2.props))
+        assert ((len(e.props) - 2) == len(e2.props))
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_5(self):
@@ -1316,9 +1316,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, 1.0)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(0 == len(e2.props))
+        assert (0 == len(e2.props))
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_6(self):
@@ -1345,9 +1345,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[0])
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(len(e.props) == len(e2.props))
+        assert (len(e.props) == len(e2.props))
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_7(self):
@@ -1374,9 +1374,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1])
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert((len(e.props) - 1) == len(e2.props))
+        assert ((len(e.props) - 1) == len(e2.props))
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_low_intensity_local_maxima_8(self):
@@ -1404,9 +1404,9 @@ class TestAdvancedImageProcessing(object):
         e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
                                                                                    numpy.finfo(float).eps)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert((len(e.props) - 2) == len(e2.props))
+        assert ((len(e.props) - 2) == len(e2.props))
 
     def test_remove_too_close_local_maxima_1(self):
         space = numpy.array((100, 100))
@@ -1429,9 +1429,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(1 == len(e2.props))
+        assert (1 == len(e2.props))
 
     def test_remove_too_close_local_maxima_2(self):
         space = numpy.array((100, 100))
@@ -1454,9 +1454,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(len(points) == len(e2.props))
+        assert (len(points) == len(e2.props))
 
     def test_remove_too_close_local_maxima_3(self):
         space = numpy.array((100, 100))
@@ -1479,11 +1479,11 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(1 == len(e2.props))
+        assert (1 == len(e2.props))
 
-        assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
+        assert (points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all()
 
     def test_remove_too_close_local_maxima_4(self):
         space = numpy.array((100, 100))
@@ -1506,11 +1506,11 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(1 == len(e2.props))
+        assert (1 == len(e2.props))
 
-        assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
+        assert (points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_5(self):
@@ -1534,9 +1534,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(1 == len(e2.props))
+        assert (1 == len(e2.props))
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_6(self):
@@ -1560,9 +1560,9 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(len(points) == len(e2.props))
+        assert (len(points) == len(e2.props))
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_7(self):
@@ -1586,11 +1586,11 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(1 == len(e2.props))
+        assert (1 == len(e2.props))
 
-        assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
+        assert (points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_remove_too_close_local_maxima_8(self):
@@ -1614,11 +1614,11 @@ class TestAdvancedImageProcessing(object):
 
         e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
-        assert(len(points) == len(e.props))
+        assert (len(points) == len(e.props))
 
-        assert(1 == len(e2.props))
+        assert (1 == len(e2.props))
 
-        assert((points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all())
+        assert (points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all()
 
     def test_wavelet_denoising_1(self):
         params = {
@@ -1664,9 +1664,9 @@ class TestAdvancedImageProcessing(object):
 
         neurons = nanshe.nanshe.advanced_image_processing.wavelet_denoising(original_neuron_image, **params)
 
-        assert(len(neuron_centers) == len(neurons))
-        assert((original_neurons_mask == neurons["mask"].max(axis = 0)).all())
-        assert(((original_neurons_mask*original_neuron_image) == neurons["image"].max(axis = 0)).all())
+        assert (len(neuron_centers) == len(neurons))
+        assert (original_neurons_mask == neurons["mask"].max(axis = 0)).all()
+        assert ((original_neurons_mask*original_neuron_image) == neurons["image"].max(axis = 0)).all()
 
     def test_wavelet_denoising_2(self):
         params = {
@@ -1744,9 +1744,9 @@ class TestAdvancedImageProcessing(object):
         neuron_images_old = None
         neuron_masks_old = None
 
-        assert(len(neuron_centers) == len(neurons))
-        assert( numpy.abs(neurons["image"].max(axis = 0) - neuron_images.max(axis = 0)).max() < 1.0e-4 )
-        assert( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-4 )
+        assert (len(neuron_centers) == len(neurons))
+        assert ( numpy.abs(neurons["image"].max(axis = 0) - neuron_images.max(axis = 0)).max() < 1.0e-4 )
+        assert ( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-4 )
 
     @nose.plugins.attrib.attr("3D")
     def test_wavelet_denoising_3(self):
@@ -1825,9 +1825,9 @@ class TestAdvancedImageProcessing(object):
         neuron_images_old = None
         neuron_masks_old = None
 
-        assert(len(neuron_centers) == len(neurons))
-        assert( numpy.abs(neurons["image"].max(axis = 0) - neuron_images.max(axis = 0)).max() < 1.0e-6 )
-        assert( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-6 )
+        assert (len(neuron_centers) == len(neurons))
+        assert ( numpy.abs(neurons["image"].max(axis = 0) - neuron_images.max(axis = 0)).max() < 1.0e-6 )
+        assert ( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-6 )
 
     def test_extract_neurons_1(self):
         image = 5 * numpy.ones((100, 100))
@@ -1856,21 +1856,21 @@ class TestAdvancedImageProcessing(object):
 
         neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        assert(len(circle_masks) == len(neurons))
+        assert (len(circle_masks) == len(neurons))
 
-        assert((circle_masks == neurons["mask"]).all())
+        assert (circle_masks == neurons["mask"]).all()
 
-        assert((circle_images == neurons["image"]).all())
+        assert (circle_images == neurons["image"]).all()
 
-        assert((numpy.apply_over_axes(numpy.sum, circle_masks, range(1, circle_masks.ndim)) == neurons["area"]).all())
+        assert (numpy.apply_over_axes(numpy.sum, circle_masks, range(1, circle_masks.ndim)) == neurons["area"]).all()
 
-        assert((numpy.apply_over_axes(numpy.max, circle_images, range(1, circle_masks.ndim)) == neurons["max_F"]).all())
+        assert (numpy.apply_over_axes(numpy.max, circle_images, range(1, circle_masks.ndim)) == neurons["max_F"]).all()
 
-        assert((circle_mask_mean == neurons["gaussian_mean"]).all())
+        assert (circle_mask_mean == neurons["gaussian_mean"]).all()
 
-        assert((circle_mask_cov == neurons["gaussian_cov"]).all())
+        assert (circle_mask_cov == neurons["gaussian_cov"]).all()
 
-        assert((neurons["centroid"] == neurons["gaussian_mean"]).all())
+        assert (neurons["centroid"] == neurons["gaussian_mean"]).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_extract_neurons_2(self):
@@ -1900,21 +1900,21 @@ class TestAdvancedImageProcessing(object):
 
         neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        assert(len(circle_masks) == len(neurons))
+        assert (len(circle_masks) == len(neurons))
 
-        assert((circle_masks == neurons["mask"]).all())
+        assert (circle_masks == neurons["mask"]).all()
 
-        assert((circle_images == neurons["image"]).all())
+        assert (circle_images == neurons["image"]).all()
 
-        assert((numpy.apply_over_axes(numpy.sum, circle_masks, range(1, circle_masks.ndim)) == neurons["area"]).all())
+        assert (numpy.apply_over_axes(numpy.sum, circle_masks, range(1, circle_masks.ndim)) == neurons["area"]).all()
 
-        assert((numpy.apply_over_axes(numpy.max, circle_images, range(1, circle_masks.ndim)) == neurons["max_F"]).all())
+        assert (numpy.apply_over_axes(numpy.max, circle_images, range(1, circle_masks.ndim)) == neurons["max_F"]).all()
 
-        assert((circle_mask_mean == neurons["gaussian_mean"]).all())
+        assert (circle_mask_mean == neurons["gaussian_mean"]).all()
 
-        assert((circle_mask_cov == neurons["gaussian_cov"]).all())
+        assert (circle_mask_cov == neurons["gaussian_cov"]).all()
 
-        assert((neurons["centroid"] == neurons["gaussian_mean"]).all())
+        assert (neurons["centroid"] == neurons["gaussian_mean"]).all()
 
     def test_fuse_neurons_1(self):
         fraction_mean_neuron_max_threshold = 0.01
@@ -1947,17 +1947,17 @@ class TestAdvancedImageProcessing(object):
         fused_neurons = nanshe.nanshe.advanced_image_processing.fuse_neurons(neurons[0], neurons[1],
                                                                       fraction_mean_neuron_max_threshold)
 
-        assert((neurons["mask"].sum(axis = 0) == fused_neurons["mask"]).all())
+        assert (neurons["mask"].sum(axis = 0) == fused_neurons["mask"]).all()
 
-        assert((neurons["image"].mean(axis = 0) == fused_neurons["image"]).all())
+        assert (neurons["image"].mean(axis = 0) == fused_neurons["image"]).all()
 
-        assert(numpy.array(neurons["area"].sum()) == fused_neurons["area"])
+        assert (numpy.array(neurons["area"].sum()) == fused_neurons["area"])
 
-        assert(fused_neurons["image"].max() == fused_neurons["max_F"])
+        assert (fused_neurons["image"].max() == fused_neurons["max_F"])
 
-        assert((neurons["gaussian_mean"].mean(axis = 0) == fused_neurons["gaussian_mean"]).all())
+        assert (neurons["gaussian_mean"].mean(axis = 0) == fused_neurons["gaussian_mean"]).all()
 
-        assert((fused_neurons["centroid"] == fused_neurons["gaussian_mean"]).all())
+        assert (fused_neurons["centroid"] == fused_neurons["gaussian_mean"]).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_fuse_neurons_2(self):
@@ -1991,17 +1991,17 @@ class TestAdvancedImageProcessing(object):
         fused_neurons = nanshe.nanshe.advanced_image_processing.fuse_neurons(neurons[0], neurons[1],
                                                                       fraction_mean_neuron_max_threshold)
 
-        assert((neurons["mask"].sum(axis = 0) == fused_neurons["mask"]).all())
+        assert (neurons["mask"].sum(axis = 0) == fused_neurons["mask"]).all()
 
-        assert((neurons["image"].mean(axis = 0) == fused_neurons["image"]).all())
+        assert (neurons["image"].mean(axis = 0) == fused_neurons["image"]).all()
 
-        assert(numpy.array(neurons["area"].sum()) == fused_neurons["area"])
+        assert (numpy.array(neurons["area"].sum()) == fused_neurons["area"])
 
-        assert(fused_neurons["image"].max() == fused_neurons["max_F"])
+        assert (fused_neurons["image"].max() == fused_neurons["max_F"])
 
-        assert((neurons["gaussian_mean"].mean(axis = 0) == fused_neurons["gaussian_mean"]).all())
+        assert (neurons["gaussian_mean"].mean(axis = 0) == fused_neurons["gaussian_mean"]).all()
 
-        assert((fused_neurons["centroid"] == fused_neurons["gaussian_mean"]).all())
+        assert (fused_neurons["centroid"] == fused_neurons["gaussian_mean"]).all()
 
     def test_merge_neuron_sets_1(self):
         alignment_min_threshold = 0.6
@@ -2027,9 +2027,9 @@ class TestAdvancedImageProcessing(object):
 
         merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
-        assert(len(neurons) == len(circle_centers))
+        assert (len(neurons) == len(circle_centers))
 
-        assert((neurons == merged_neurons).all())
+        assert (neurons == merged_neurons).all()
 
     def test_merge_neuron_sets_2(self):
         alignment_min_threshold = 0.6
@@ -2055,9 +2055,9 @@ class TestAdvancedImageProcessing(object):
 
         merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons, neurons, alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
-        assert(len(neurons) == len(circle_centers))
+        assert (len(neurons) == len(circle_centers))
 
-        assert((neurons == merged_neurons).all())
+        assert (neurons == merged_neurons).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_merge_neuron_sets_3(self):
@@ -2084,9 +2084,9 @@ class TestAdvancedImageProcessing(object):
 
         merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
-        assert(len(neurons) == len(circle_centers))
+        assert (len(neurons) == len(circle_centers))
 
-        assert((neurons == merged_neurons).all())
+        assert (neurons == merged_neurons).all()
 
     @nose.plugins.attrib.attr("3D")
     def test_merge_neuron_sets_4(self):
@@ -2113,9 +2113,9 @@ class TestAdvancedImageProcessing(object):
 
         merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons, neurons, alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
-        assert(len(neurons) == len(circle_centers))
+        assert (len(neurons) == len(circle_centers))
 
-        assert((neurons == merged_neurons).all())
+        assert (neurons == merged_neurons).all()
 
     def test_postprocess_data_1(self):
         config = {
@@ -2186,7 +2186,7 @@ class TestAdvancedImageProcessing(object):
 
         neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
 
-        assert(len(points) == len(neurons))
+        assert (len(points) == len(neurons))
 
         neuron_max_matches = nanshe.nanshe.expanded_numpy.all_permutations_equal(neurons["max_F"], neurons["image"])
         neuron_max_matches = neuron_max_matches.max(axis = 0).max(axis = 0)
@@ -2205,7 +2205,7 @@ class TestAdvancedImageProcessing(object):
 
             unmatched_points = new_unmatched_points
 
-        assert(len(unmatched_points) == 0)
+        assert (len(unmatched_points) == 0)
 
     def test_postprocess_data_2(self):
         config = {
@@ -2274,7 +2274,7 @@ class TestAdvancedImageProcessing(object):
 
         neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
 
-        assert(len(points) == len(neurons))
+        assert (len(points) == len(neurons))
 
         neuron_max_matches = nanshe.nanshe.expanded_numpy.all_permutations_equal(neurons["max_F"], neurons["image"])
         neuron_max_matches = neuron_max_matches.max(axis = 0).max(axis = 0)
@@ -2293,7 +2293,7 @@ class TestAdvancedImageProcessing(object):
 
             unmatched_points = new_unmatched_points
 
-        assert(len(unmatched_points) == 0)
+        assert (len(unmatched_points) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_postprocess_data_3(self):
@@ -2365,7 +2365,7 @@ class TestAdvancedImageProcessing(object):
 
         neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
 
-        assert(len(points) == len(neurons))
+        assert (len(points) == len(neurons))
 
         neuron_max_matches = nanshe.nanshe.expanded_numpy.all_permutations_equal(neurons["max_F"], neurons["image"])
         neuron_max_matches = neuron_max_matches.max(axis = 0).max(axis = 0)
@@ -2384,7 +2384,7 @@ class TestAdvancedImageProcessing(object):
 
             unmatched_points = new_unmatched_points
 
-        assert(len(unmatched_points) == 0)
+        assert (len(unmatched_points) == 0)
 
     @nose.plugins.attrib.attr("3D")
     def test_postprocess_data_4(self):
@@ -2451,7 +2451,7 @@ class TestAdvancedImageProcessing(object):
 
         neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
 
-        assert(len(points) == len(neurons))
+        assert (len(points) == len(neurons))
 
         neuron_max_matches = nanshe.nanshe.expanded_numpy.all_permutations_equal(neurons["max_F"], neurons["image"])
         neuron_max_matches = neuron_max_matches.max(axis = 0).max(axis = 0)
@@ -2470,4 +2470,4 @@ class TestAdvancedImageProcessing(object):
 
             unmatched_points = new_unmatched_points
 
-        assert(len(unmatched_points) == 0)
+        assert (len(unmatched_points) == 0)
