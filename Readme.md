@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/jakirkham/nanshe.svg?branch=master)](https://travis-ci.org/jakirkham/nanshe)
+
+-----------------------------------------------------------------------------------------
+
 #Nanshe
 
 ##Motivation
