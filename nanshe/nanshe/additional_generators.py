@@ -210,7 +210,7 @@ def repeat_generator(a_iter, n = 1):
 
     """
 
-    assert(n > 0, "n must be positive, but got n = " + repr(n))
+    assert(n >= 0, "n must be positive, but got n = " + repr(n))
     assert((n % 1) == 0, "n must be an integer, but got n = " + repr(n))
 
     for each_value in a_iter:
@@ -251,7 +251,7 @@ def cycle_generator(a_iter, n = 1):
 
     """
 
-    assert(n > 0, "n must be positive, but got n = " + repr(n))
+    assert(n >= 0, "n must be positive, but got n = " + repr(n))
     assert((n % 1) == 0, "n must be an integer, but got n = " + repr(n))
 
     a_iter = itertools.chain(*itertools.tee(a_iter, n))
