@@ -977,8 +977,8 @@ def reformat_slice(a_slice, a_length = None):
             >>> range(10)[reformat_slice(slice(-5, -1), 10)] == range(10)[-5:-1]
             True
     """
-    assert a_slice != None, "err"
 
+    assert a_slice != None, "err"
 
     # Fill unknown values.
 
