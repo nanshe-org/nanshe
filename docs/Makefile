@@ -53,7 +53,7 @@ clean:
 	mv index.rst index.rst.saved
 	rm -f *.rst
 	mv index.rst.saved index.rst
-	rm -rf $(BUILDDIR)/*
+	rm -rf $(BUILDDIR)
 
 rst:
 	$(SPHINXAPIDOC) -f -T -o . .. ../tests
