@@ -225,12 +225,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
     # Adjust the registered frames using the translations found.
     # Mask rolled values.
     reg_frames = None
-    reg_frames_filename = ""
+    results_filename = ""
     if tempdir_name:
-        reg_frames_filename = os.path.join(tempdir_name, "reg_frames.h5")
-        reg_frames_file = h5py.File(reg_frames_filename, "w")
+        results_filename = os.path.join(tempdir_name, "results.h5")
+        results_file = h5py.File(results_filename, "w")
 
-        reg_frames = reg_frames_file.create_group("reg_frames")
+        reg_frames = results_file.create_group("reg_frames")
         reg_frames = HDF5_serializers.HDF5MaskedDataset(
             reg_frames, shape=frames2reg.shape, dtype=frames2reg.dtype
         )
@@ -246,13 +246,13 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
     result = None
     if tempdir_name:
         reg_frames = None
-        result = reg_frames_filename
+        result = results_filename
     else:
         result = reg_frames
 
     if include_shift:
         if tempdir_name:
-            reg_frames_file.create_dataset(
+            results_file.create_dataset(
                 "space_shift",
                 data=space_shift,
                 chunks=True
@@ -261,8 +261,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
             result = (reg_frames, space_shift)
 
     if tempdir_name:
-        reg_frames_file.close()
-        reg_frames_file = None
+        results_file.close()
+        results_file = None
 
     return(result)
 
