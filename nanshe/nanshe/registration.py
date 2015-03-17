@@ -245,14 +245,13 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
 
     result = None
     if reg_frames_filename:
+        reg_frames = None
         result = reg_frames_filename
     else:
         result = reg_frames
 
     if include_shift:
         if reg_frames_filename:
-            reg_frames = None
-
             reg_frames_file.create_dataset(
                 "space_shift",
                 data=space_shift,
