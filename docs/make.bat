@@ -51,7 +51,7 @@ if "%1" == "clean" (
 	del /q /s *.rst
         move index.rst.saved index.rst
 	for /d %%i in (%BUILDDIR%\*) do rmdir /q /s %%i
-	del /q /s %BUILDDIR%\*
+	del /q /s %BUILDDIR%
 	goto end
 )
 
