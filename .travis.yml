@@ -31,5 +31,37 @@ script:
    # - make html
    - python $BUILDEM_DIR/bin/sphinx-apidoc -f -T -o . .. ../tests
    - python $BUILDEM_DIR/bin/sphinx-build -b html -d _build/doctrees . _build/html
+   # Move back to source directory.
+   - cd ..
+after_success:
+   # Check to see if this is the right branch to build documentation from.
+   - if [ $TRAVIS_PULL_REQUEST != "false" ]; then exit 0 ; fi
+   - if [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
+   # Save documentation.
+   - mv docs/_build/html ../nanshe-git-docs
+   # Update credentials
+   - git config --global user.name "Travis CI"
+   - git config --global user.email "noreply@travis-ci.org"
+   # Get current pages. Unfortunately, `git fetch` does not work here.
+   - git remote set-url origin "https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
+   - git checkout --orphan gh-pages
+   - git pull origin gh-pages
+   - git branch -v
+   # Save important git files.
+   - mv .git ../nanshe-git-docs/
+   - mv .nojekyll ../nanshe-git-docs/
+   # Replace old documentation with new documentation.
+   - rm -rf * .*
+   - mv ../nanshe-git-docs/.nojekyll .
+   - mv ../nanshe-git-docs/.git .
+   - mv ../nanshe-git-docs/* .
+   - rm -rf ../nanshe-git-docs
+   # Commit changes and push. Reference commit used and tag if relevant.
+   - git add -A
+   - if [ -z $TRAVIS_TAG ]; then git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT})." --allow-empty ; else git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT}) and tag (${TRAVIS_TAG})." --allow-empty ; fi
+   - git push origin gh-pages
+env:
+   global:
+       secure: gCN4vEn/1pKi+N9+00E8Ju+ImKpizdoblkSFnBr8TCXRWY4/iKM4yNkX/YtYsNwzh0eCq+840CXRYlcodG9nilG23RmubKZ1Y+T2fuFoEQbzE5QmPB7+fl01dlLpDbDtN6L7VSOtfjOj8BQGkdR9VwBMomseWgY37yuTnErfxeU=
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 sudo: false
