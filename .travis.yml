@@ -25,5 +25,8 @@ install:
 script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
    - python $BUILDEM_DIR/bin/nosetests -a '!3D'
+   # Build documentation.
+   - cd docs
+   - make html
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 sudo: false
