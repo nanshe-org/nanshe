@@ -27,6 +27,9 @@ script:
    - python $BUILDEM_DIR/bin/nosetests -a '!3D'
    # Build documentation.
    - cd docs
-   - make html
+   # Unfortunately, this does not seem to work on TravisCI. This is because sphinx-apidoc cannot be found when in the Makefile. However, it is easily and correctly found right before the call. This may be related to a more general issue ( https://github.com/travis-ci/travis-ci/issues/3084 ). As a consequence, we will just copy code from the Makefile for now.
+   # - make html
+   - python $BUILDEM_DIR/bin/sphinx-apidoc -f -T -o . .. ../tests
+   - python $BUILDEM_DIR/bin/sphinx-build -b html -d _build/doctrees . _build/html
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 sudo: false
