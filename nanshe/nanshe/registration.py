@@ -133,6 +133,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
         tempdir_name = tempfile.mkdtemp()
 
     space_shift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
+    this_space_shift = numpy.empty_like(space_shift)
 
     temporaries_filename = ""
     frames2reg_fft = None
@@ -177,7 +178,6 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
             template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
         template_fft /= len(frames2reg)
 
-        this_space_shift = numpy.empty_like(space_shift)
         for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift[i:j] = find_offsets(frames2reg_fft[i:j], template_fft)
 
@@ -209,7 +209,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
                 delta_space_shift[i:j], delta_space_shift[i:j].T
             ).sum()
 
-        space_shift = this_space_shift
+        space_shift[...] = this_space_shift
 
         if max_iters != -1:
             num_iters += 1
