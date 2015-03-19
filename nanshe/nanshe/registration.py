@@ -145,7 +145,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
         )
         space_shift = temporaries_file.create_dataset(
             "space_shift",
-            shape=(len(frames2reg), frames2reg.ndim-1),
+            shape=(len(frames2reg), len(frames2reg.shape)-1),
             dtype=int
         )
         this_space_shift = temporaries_file.create_dataset(
@@ -156,12 +156,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
     else:
         frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
         space_shift = numpy.zeros(
-            (len(frames2reg), frames2reg.ndim-1), dtype=int
+            (len(frames2reg), len(frames2reg.shape)-1), dtype=int
         )
         this_space_shift = numpy.empty_like(space_shift)
 
     for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-        frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, frames2reg.ndim))
+        frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, len(frames2reg.shape)))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float)
