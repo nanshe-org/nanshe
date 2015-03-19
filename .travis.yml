@@ -20,8 +20,9 @@ install:
    - export BUILDEM_DIR=$(pwd)
    - echo "\$BUILDEM_DIR = ${BUILDEM_DIR}"
    - source $BUILDEM_DIR/bin/setenv_ilastik_gui.sh
-   # Install coverage to generate test coverage results.
+   # Install coverage and coveralls to generate and submit test coverage results for coveralls.io.
    - python $BUILDEM_DIR/bin/pip install coverage
+   - python $BUILDEM_DIR/bin/pip install python-coveralls
    # Won't recognize setup.cfg unless we are in the source directory.
    - cd src/nanshe-git
 script:
@@ -36,6 +37,8 @@ script:
    # Move back to source directory.
    - cd ..
 after_success:
+   # Submit results to coveralls.io.
+   - python $BUILDEM_DIR/bin/coveralls
    # Check to see if this is the right branch to build documentation from.
    - if [ $TRAVIS_PULL_REQUEST != "false" ]; then exit 0 ; fi
    - if [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
