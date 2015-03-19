@@ -132,11 +132,10 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
     if block_frame_length != len(frames2reg):
         tempdir_name = tempfile.mkdtemp()
 
-    space_shift = numpy.zeros((len(frames2reg), frames2reg.ndim-1), dtype=int)
-    this_space_shift = numpy.empty_like(space_shift)
-
     temporaries_filename = ""
     frames2reg_fft = None
+    space_shift = None
+    this_space_shift = None
     if tempdir_name:
         temporaries_filename = os.path.join(tempdir_name, "temporaries.h5")
         temporaries_file = h5py.File(temporaries_filename, "w")
@@ -144,8 +143,22 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
         frames2reg_fft = temporaries_file.create_dataset(
             "frames2reg_fft", shape=frames2reg.shape, dtype=complex
         )
+        space_shift = temporaries_file.create_dataset(
+            "space_shift",
+            shape=(len(frames2reg), frames2reg.ndim-1),
+            dtype=int
+        )
+        this_space_shift = temporaries_file.create_dataset(
+            "this_space_shift",
+            shape=space_shift.shape,
+            dtype=space_shift.dtype
+        )
     else:
         frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
+        space_shift = numpy.zeros(
+            (len(frames2reg), frames2reg.ndim-1), dtype=int
+        )
+        this_space_shift = numpy.empty_like(space_shift)
 
     for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, frames2reg.ndim))
@@ -182,24 +195,25 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
             this_space_shift[i:j] = find_offsets(frames2reg_fft[i:j], template_fft)
 
         # Remove global shifts.
+        this_space_shift_mean = numpy.zeros(this_space_shift.shape[1:], dtype=this_space_shift.dtype)
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+            this_space_shift_mean = this_space_shift[i:j].sum(axis=0)
         this_space_shift_mean = numpy.round(
-            this_space_shift.mean(axis=0)
+            this_space_shift_mean.astype(float) / len(this_space_shift)
         ).astype(int)
         for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            expanded_numpy.find_relative_offsets(
+            this_space_shift[i:j] = expanded_numpy.find_relative_offsets(
                 this_space_shift[i:j],
-                this_space_shift_mean,
-                out=this_space_shift[i:j]
+                this_space_shift_mean
             )
 
         # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
         # them bound by the half shape, but with either sign.
         for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            expanded_numpy.find_shortest_wraparound(
+            this_space_shift[i:j] = expanded_numpy.find_shortest_wraparound(
                 this_space_shift[i:j],
-                frames2reg_fft.shape[1:],
-                out=this_space_shift[i:j]
+                frames2reg_fft.shape[1:]
             )
 
         for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
@@ -208,7 +222,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
                 delta_space_shift_ij, delta_space_shift_ij.T
             ).sum()
 
-        space_shift[...] = this_space_shift
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+            space_shift[i:j] = this_space_shift[i:j]
 
         if max_iters != -1:
             num_iters += 1
@@ -239,23 +254,19 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
         results_filename = os.path.join(tempdir_name, "results.h5")
         results_file = h5py.File(results_filename, "w")
         temporaries_file.copy(reg_frames.group, results_file)
+        if include_shift:
+            temporaries_file.copy(space_shift, results_file)
         frames2reg_fft = None
         reg_frames = None
+        space_shift = None
+        this_space_shift = None
         temporaries_file.close()
         os.remove(temporaries_filename)
         temporaries_filename = ""
         result = results_filename
     else:
         result = reg_frames
-
-    if include_shift:
-        if tempdir_name:
-            results_file.create_dataset(
-                "space_shift",
-                data=space_shift,
-                chunks=True
-            )
-        else:
+        if include_shift:
             result = (reg_frames, space_shift)
 
     if tempdir_name:
