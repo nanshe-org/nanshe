@@ -202,11 +202,10 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
                 out=this_space_shift[i:j]
             )
 
-        delta_space_shift = numpy.empty_like(space_shift)
         for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            delta_space_shift[i:j] = this_space_shift[i:j] - space_shift[i:j]
+            delta_space_shift_ij = this_space_shift[i:j] - space_shift[i:j]
             squared_magnitude_delta_space_shift += numpy.dot(
-                delta_space_shift[i:j], delta_space_shift[i:j].T
+                delta_space_shift_ij, delta_space_shift_ij.T
             ).sum()
 
         space_shift[...] = this_space_shift
