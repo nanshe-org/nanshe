@@ -96,6 +96,39 @@ class TestHDF5Serializers(object):
         assert (data2 == self.temp_hdf5_file["data"].value).all()
 
 
+    def test_create_numpy_structured_array_in_HDF5_3(self):
+        data1 = numpy.random.random((10,)).tolist()
+        data2 = numpy.random.random((10,)).tolist()
+
+        while (numpy.asarray(data1) == numpy.asarray(data2)).all():
+            data2 = numpy.random.random((10,)).tolist()
+
+        nanshe.nanshe.HDF5_serializers.create_numpy_structured_array_in_HDF5(self.temp_hdf5_file, "data", data1)
+
+        assert ("data" in self.temp_hdf5_file)
+        assert (numpy.asarray(data1) == self.temp_hdf5_file["data"].value).all()
+
+        try:
+            nanshe.nanshe.HDF5_serializers.create_numpy_structured_array_in_HDF5(self.temp_hdf5_file, "data", data2)
+        except:
+            assert (True)
+        else:
+            assert (False)
+
+        assert ("data" in self.temp_hdf5_file)
+        assert (numpy.asarray(data1) == self.temp_hdf5_file["data"].value).all()
+
+        try:
+            nanshe.nanshe.HDF5_serializers.create_numpy_structured_array_in_HDF5(self.temp_hdf5_file, "data", data2, overwrite=True)
+        except:
+            assert (False)
+        else:
+            assert (True)
+
+        assert ("data" in self.temp_hdf5_file)
+        assert (numpy.asarray(data2) == self.temp_hdf5_file["data"].value).all()
+
+
     def test_read_numpy_structured_array_from_HDF5_1(self):
         data1 = numpy.random.random((10, 10))
 
