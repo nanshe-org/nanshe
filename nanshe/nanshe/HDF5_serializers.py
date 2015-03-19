@@ -230,6 +230,12 @@ class HDF5MaskedDataset(object):
                 dtype=dtype
             )
 
+            if data is not None:
+                self._group["data"][...] = data
+                self._group["mask"][...] = numpy.ma.getmaskarray(data)
+                if isinstance(data, numpy.ma.masked_array):
+                    self._group["fill_value"][...] = dtype.type(data.fill_value)
+
     @property
     def group(self):
         return(self._group)
