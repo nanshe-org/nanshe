@@ -49,7 +49,7 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
     data_array = data
     if not isinstance(data_array, numpy.ndarray):
         try:
-            data_array = numpy.ndarray(data_array)
+            data_array = numpy.array(data_array)
         except:
             if not data_array.dtype.names:
                 raise TypeError("The argument provided for data is type: \"" + repr(type(data)) + "\" is not convertible to type \"" + repr(numpy.ndarray) + "\".")
