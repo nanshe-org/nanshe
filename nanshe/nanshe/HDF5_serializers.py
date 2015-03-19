@@ -241,6 +241,10 @@ class HDF5MaskedDataset(object):
         return(self._group)
 
     @property
+    def name(self):
+        return(self._group.name)
+
+    @property
     def data(self):
         return(self._group["data"])
 
