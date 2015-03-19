@@ -20,8 +20,9 @@ install:
    - export BUILDEM_DIR=$(pwd)
    - echo "\$BUILDEM_DIR = ${BUILDEM_DIR}"
    - source $BUILDEM_DIR/bin/setenv_ilastik_gui.sh
-   # Install coverage and coveralls to generate and submit test coverage results for coveralls.io.
+   # Install coverage and coveralls to generate and submit test coverage results for coveralls.io. Also, install docstring-coverage to get information about documentation coverage.
    - python $BUILDEM_DIR/bin/pip install coverage
+   - python $BUILDEM_DIR/bin/pip install docstring-coverage
    - python $BUILDEM_DIR/bin/pip install python-coveralls
    # Won't recognize setup.cfg unless we are in the source directory.
    - cd src/nanshe-git
@@ -36,14 +37,17 @@ script:
    - python $BUILDEM_DIR/bin/sphinx-build -b html -d _build/doctrees . _build/html
    # Move back to source directory.
    - cd ..
+   # Get info on docstring coverage.
+   - python $BUILDEM_DIR/bin/docstring-coverage nanshe | tee .docstring-coverage
 after_success:
    # Submit results to coveralls.io.
    - python $BUILDEM_DIR/bin/coveralls
    # Check to see if this is the right branch to build documentation from.
    - if [ $TRAVIS_PULL_REQUEST != "false" ]; then exit 0 ; fi
    - if [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
-   # Save documentation.
+   # Save documentation and documentation coverage statistics.
    - mv docs/_build/html ../nanshe-git-docs
+   - mv .docstring-coverage ../nanshe-git-docs
    # Update credentials
    - git config --global user.name "Travis CI"
    - git config --global user.email "noreply@travis-ci.org"
@@ -59,6 +63,7 @@ after_success:
    - rm -rf * .*
    - mv ../nanshe-git-docs/.nojekyll .
    - mv ../nanshe-git-docs/.git .
+   - mv ../nanshe-git-docs/.docstring-coverage .
    - mv ../nanshe-git-docs/* .
    - rm -rf ../nanshe-git-docs
    # Commit changes and push. Reference commit used and tag if relevant.
