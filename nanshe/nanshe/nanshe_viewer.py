@@ -32,7 +32,6 @@ logger = debugging_tools.logging.getLogger(__name__)
 import os
 import collections
 import itertools
-import re
 import threading
 
 import h5py
