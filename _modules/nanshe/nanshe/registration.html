@@ -304,14 +304,14 @@
             <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">reg_frames_filename</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tempdir_name</span><span class="p">:</span>
         <span class="n">reg_frames</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">reg_frames_filename</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">reg_frames</span>
 
     <span class="k">if</span> <span class="n">include_shift</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">reg_frames_filename</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tempdir_name</span><span class="p">:</span>
             <span class="n">reg_frames_file</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
                 <span class="s">&quot;space_shift&quot;</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="n">space_shift</span><span class="p">,</span>
