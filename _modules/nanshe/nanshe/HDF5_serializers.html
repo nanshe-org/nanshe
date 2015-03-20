@@ -213,7 +213,162 @@
     <span class="k">if</span> <span class="n">close_file_handle</span><span class="p">:</span>
         <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+    <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="HDF5MaskedDataset"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset">[docs]</a><span class="k">class</span> <span class="nc">HDF5MaskedDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides an abstraction of the masked array the HDF5 Group where the contents of a</span>
+<span class="sd">        masked array are serialized.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">                This behaves roughly like an `h5py.Dataset` and roughly like a</span>
+<span class="sd">                `numpy.ma.masked_array`. Internally, it uses an `h5py.Group` to</span>
+<span class="sd">                contain the components of the masked array and allow</span>
+<span class="sd">                interaction with them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">group</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="s">&quot;compression&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span>
+        <span class="k">assert</span> <span class="s">&quot;compression_opts&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span> <span class="o">=</span> <span class="n">group</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+            <span class="k">assert</span> <span class="n">data</span> <span class="ow">is</span> <span class="bp">None</span>
+            <span class="k">assert</span> <span class="n">shape</span> <span class="ow">is</span> <span class="bp">None</span>
+            <span class="k">assert</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="bp">None</span>
+
+            <span class="k">assert</span> <span class="s">&quot;data&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span>
+            <span class="k">assert</span> <span class="s">&quot;mask&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span>
+            <span class="k">assert</span> <span class="s">&quot;fill_value&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span>
+
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;fill_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">bool8</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> \
+                   <span class="p">((</span><span class="n">shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">))</span>
+
+            <span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+                    <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">shape</span>
+                    <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">dtype</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                    <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
+                <span class="s">&quot;data&quot;</span><span class="p">,</span>
+                <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+                <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
+                <span class="s">&quot;mask&quot;</span><span class="p">,</span>
+                <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">bool8</span><span class="p">,</span>
+                <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">,</span>
+                <span class="n">compression</span><span class="o">=</span><span class="s">&quot;gzip&quot;</span><span class="p">,</span>
+                <span class="n">compression_opts</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
+                <span class="s">&quot;fill_value&quot;</span><span class="p">,</span>
+                <span class="n">shape</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span>
+            <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">])</span>
+
+    <span class="nd">@data.setter</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.data"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">])</span>
+
+    <span class="nd">@mask.setter</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.mask"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.mask">[docs]</a>    <span class="k">def</span> <span class="nf">mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fill_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;fill_value&quot;</span><span class="p">])</span>
+
+    <span class="nd">@fill_value.setter</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.fill_value"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.fill_value">[docs]</a>    <span class="k">def</span> <span class="nf">fill_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;fill_value&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</div>
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]))</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.dims"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.dims">[docs]</a>    <span class="k">def</span> <span class="nf">dims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.ndim"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.ndim">[docs]</a>    <span class="k">def</span> <span class="nf">ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="nd">@shape.setter</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.shape"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.shape">[docs]</a>    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.size"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.size">[docs]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.dtype"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.dtype">[docs]</a>    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HDF5MaskedDataset.resize"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.resize">[docs]</a>    <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">][</span><span class="n">args</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">)</span>
+
+        <span class="n">result</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="n">args</span><span class="p">]</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">fill_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;fill_value&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">][</span><span class="n">args</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="n">args</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;fill_value&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">fill_value</span>
+
+    <span class="k">def</span> <span class="nf">__array__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">__array__</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">)</span>
+
+        <span class="n">result</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">fill_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;fill_value&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

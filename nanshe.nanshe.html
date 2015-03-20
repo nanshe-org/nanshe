@@ -346,6 +346,66 @@ what the tree structure could and may contain.</p>
 </div>
 <div class="section" id="module-nanshe.nanshe.HDF5_serializers">
 <span id="nanshe-nanshe-hdf5-serializers-module"></span><h2>nanshe.nanshe.HDF5_serializers module<a class="headerlink" href="#module-nanshe.nanshe.HDF5_serializers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset">
+<em class="property">class </em><tt class="descclassname">nanshe.nanshe.HDF5_serializers.</tt><tt class="descname">HDF5MaskedDataset</tt><big>(</big><em>group</em>, <em>shape=None</em>, <em>dtype=None</em>, <em>data=None</em>, <em>chunks=True</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Provides an abstraction of the masked array the HDF5 Group where the contents of a
+masked array are serialized.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This behaves roughly like an <cite>h5py.Dataset</cite> and roughly like a
+<cite>numpy.ma.masked_array</cite>. Internally, it uses an <cite>h5py.Group</cite> to
+contain the components of the masked array and allow
+interaction with them.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.data">
+<tt class="descname">data</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.dims">
+<tt class="descname">dims</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.dims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.dtype">
+<tt class="descname">dtype</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.fill_value">
+<tt class="descname">fill_value</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.fill_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.fill_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.mask">
+<tt class="descname">mask</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.ndim">
+<tt class="descname">ndim</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.ndim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.ndim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.resize">
+<tt class="descname">resize</tt><big>(</big><em>size</em>, <em>axis=None</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.resize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.shape">
+<tt class="descname">shape</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.size">
+<tt class="descname">size</tt><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#HDF5MaskedDataset.size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="nanshe.nanshe.HDF5_serializers.create_numpy_structured_array_in_HDF5">
 <tt class="descclassname">nanshe.nanshe.HDF5_serializers.</tt><tt class="descname">create_numpy_structured_array_in_HDF5</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_serializers.html#create_numpy_structured_array_in_HDF5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_serializers.create_numpy_structured_array_in_HDF5" title="Permalink to this definition">¶</a></dt>
@@ -1615,7 +1675,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x2f3dd50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x2dcb390&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
