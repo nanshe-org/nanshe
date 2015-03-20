@@ -225,11 +225,12 @@
         <span class="c"># Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).</span>
         <span class="c"># Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make</span>
         <span class="c"># them bound by the half shape, but with either sign.</span>
-        <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">find_shortest_wraparound</span><span class="p">(</span>
-            <span class="n">this_space_shift</span><span class="p">,</span>
-            <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
-            <span class="n">out</span><span class="o">=</span><span class="n">this_space_shift</span>
-        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
+            <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">find_shortest_wraparound</span><span class="p">(</span>
+                <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">],</span>
+                <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                <span class="n">out</span><span class="o">=</span><span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
+            <span class="p">)</span>
 
         <span class="n">delta_space_shift</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
