@@ -8,7 +8,7 @@ import itertools
 import os
 
 import h5py
-from lazyflow.utility import PathComponents
+from pathHelpers import PathComponents
 
 import debugging_tools
 import read_config
