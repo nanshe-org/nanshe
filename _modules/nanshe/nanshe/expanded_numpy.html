@@ -2955,6 +2955,63 @@
 
 </div>
 <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="find_relative_offsets"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.expanded_numpy.find_relative_offsets">[docs]</a><span class="k">def</span> <span class="nf">find_relative_offsets</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a series of points, find the relative points from the mean.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            points(numpy.ndarray):       a set of integer points (NxD) where N</span>
+<span class="sd">                                         is the number of points and D is the</span>
+<span class="sd">                                         dimensionality, in which they lay.</span>
+
+<span class="sd">            out(numpy.ndarray):          another set of points relative to</span>
+<span class="sd">                                         their mean.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            out(numpy.ndarray):          the results returned.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; find_relative_offsets(numpy.zeros((3,2), dtype=int))</span>
+<span class="sd">            array([[0, 0],</span>
+<span class="sd">                   [0, 0],</span>
+<span class="sd">                   [0, 0]])</span>
+
+<span class="sd">            &gt;&gt;&gt; find_relative_offsets(numpy.ones((3,2), dtype=int))</span>
+<span class="sd">            array([[0, 0],</span>
+<span class="sd">                   [0, 0],</span>
+<span class="sd">                   [0, 0]])</span>
+
+<span class="sd">            &gt;&gt;&gt; find_relative_offsets(numpy.arange(6).reshape(2,3).T % 2)</span>
+<span class="sd">            array([[ 0,  0],</span>
+<span class="sd">                   [ 1, -1],</span>
+<span class="sd">                   [ 0,  0]])</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.arange(6).reshape(2,3).T % 2</span>
+<span class="sd">            &gt;&gt;&gt; find_relative_offsets(a, out=a)</span>
+<span class="sd">            array([[ 0,  0],</span>
+<span class="sd">                   [ 1, -1],</span>
+<span class="sd">                   [ 0,  0]])</span>
+<span class="sd">            &gt;&gt;&gt; a</span>
+<span class="sd">            array([[ 0,  0],</span>
+<span class="sd">                   [ 1, -1],</span>
+<span class="sd">                   [ 0,  0]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">out</span><span class="p">):</span>
+        <span class="n">out</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">points</span>
+
+    <span class="n">points_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">out</span> <span class="o">-=</span> <span class="n">points_mean</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
 <div class="viewcode-block" id="matrix_reduced_op"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.expanded_numpy.matrix_reduced_op">[docs]</a><span class="k">def</span> <span class="nf">matrix_reduced_op</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sort of like numpy.dot. However, it will use the first axis with both arrays.</span>

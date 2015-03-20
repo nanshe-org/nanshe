@@ -258,7 +258,7 @@ File nanshe/nanshe/wavelet_transform.py
 File nanshe/nanshe/expanded_numpy.py
  - No module dostring!
  - No docstring for norm.wrapped_norm!
- Needed: 55; Exist: 53; Missing: 2; Coverage: 96.4%
+ Needed: 56; Exist: 54; Missing: 2; Coverage: 96.4%
 
 File nanshe/nanshe/registration.py
  - No module dostring!
@@ -282,5 +282,5 @@ File nanshe/synthetic_data/synthetic_data.py
 
 
 Overall statistics for 27 files:
-Docstrings needed: 417; Docstrings exist: 217; Docstrings missing: 200
-Total docstring coverage: 52.0%;  Grade: not so bad
+Docstrings needed: 418; Docstrings exist: 218; Docstrings missing: 200
+Total docstring coverage: 52.2%;  Grade: not so bad
