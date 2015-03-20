@@ -11,7 +11,7 @@ import h5py
 
 import vigra
 import vigra.impex
-import lazyflow.utility.pathHelpers
+import pathHelpers
 
 import debugging_tools
 import additional_generators
@@ -239,7 +239,7 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
     new_hdf5_dataset_dtype = numpy.dtype(new_hdf5_dataset_dtype)
 
     # Get all the needed locations for the HDF5 file and dataset
-    new_hdf5_path_components = lazyflow.utility.pathHelpers.PathComponents(new_hdf5_pathname)
+    new_hdf5_path_components = pathHelpers.PathComponents(new_hdf5_pathname)
     new_hdf5_filename = new_hdf5_path_components.externalPath
     new_hdf5_groupname = new_hdf5_path_components.internalDirectory
     new_hdf5_dataset_name = new_hdf5_path_components.internalPath
