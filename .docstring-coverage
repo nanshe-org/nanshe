@@ -86,6 +86,11 @@ File nanshe/nanshe/denoising.py
  - No module dostring!
  Needed: 4; Exist: 3; Missing: 1; Coverage: 75.0%
 
+File nanshe/nanshe/expanded_numpy.py
+ - No module dostring!
+ - No docstring for norm.wrapped_norm!
+ Needed: 57; Exist: 55; Missing: 2; Coverage: 96.5%
+
 File nanshe/nanshe/generic_decorators.py
  - No module dostring!
  - No docstring for MetaStaticVariables.__new__!
@@ -128,11 +133,6 @@ File nanshe/nanshe/wavelet_transform.py
 File nanshe/nanshe/HDF5_serializers.py
  - No module dostring!
  Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
-
-File nanshe/nanshe/expanded_numpy.py
- - No module dostring!
- - No docstring for norm.wrapped_norm!
- Needed: 57; Exist: 55; Missing: 2; Coverage: 96.5%
 
 File nanshe/nanshe/nanshe_registerer.py
  - No module dostring!

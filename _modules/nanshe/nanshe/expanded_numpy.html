@@ -2955,7 +2955,7 @@
 
 </div>
 <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="find_relative_offsets"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.expanded_numpy.find_relative_offsets">[docs]</a><span class="k">def</span> <span class="nf">find_relative_offsets</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="find_relative_offsets"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.expanded_numpy.find_relative_offsets">[docs]</a><span class="k">def</span> <span class="nf">find_relative_offsets</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a series of points, find the relative points from the mean.</span>
 
@@ -2963,6 +2963,10 @@
 <span class="sd">            points(numpy.ndarray):       a set of integer points (NxD) where N</span>
 <span class="sd">                                         is the number of points and D is the</span>
 <span class="sd">                                         dimensionality, in which they lay.</span>
+
+<span class="sd">            center(numpy.ndarray):       an integer point (D) where D is the</span>
+<span class="sd">                                         dimensionality, in which they lay.</span>
+<span class="sd">                                         Defaults to the mean of the points.</span>
 
 <span class="sd">            out(numpy.ndarray):          another set of points relative to</span>
 <span class="sd">                                         their mean.</span>
@@ -2980,6 +2984,13 @@
 <span class="sd">            array([[0, 0],</span>
 <span class="sd">                   [0, 0],</span>
 <span class="sd">                   [0, 0]])</span>
+
+<span class="sd">            &gt;&gt;&gt; find_relative_offsets(</span>
+<span class="sd">            ...     numpy.ones((3,2), dtype=int), -numpy.ones((2,), dtype=int)</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[2, 2],</span>
+<span class="sd">                   [2, 2],</span>
+<span class="sd">                   [2, 2]])</span>
 
 <span class="sd">            &gt;&gt;&gt; find_relative_offsets(numpy.arange(6).reshape(2,3).T % 2)</span>
 <span class="sd">            array([[ 0,  0],</span>
@@ -3002,11 +3013,12 @@
     <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">out</span><span class="p">):</span>
         <span class="n">out</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">points</span>
 
-    <span class="n">points_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">center</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="n">out</span> <span class="o">-=</span> <span class="n">points_mean</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+    <span class="n">out</span> <span class="o">-=</span> <span class="n">center</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
