@@ -205,9 +205,9 @@
 
         <span class="n">template_fft</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
-            <span class="n">frames2reg_shifted_fft_i</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1j</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">unit_space_shift_fft</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
-            <span class="n">frames2reg_shifted_fft_i</span> <span class="o">*=</span> <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">template_fft</span> <span class="o">+=</span> <span class="n">frames2reg_shifted_fft_i</span>
+            <span class="n">frames2reg_shifted_fft_i</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1j</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">],</span> <span class="n">unit_space_shift_fft</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+            <span class="n">frames2reg_shifted_fft_i</span> <span class="o">*=</span> <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
+            <span class="n">template_fft</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">frames2reg_shifted_fft_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">template_fft</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
 
         <span class="n">this_space_shift</span> <span class="o">=</span> <span class="n">find_offsets</span><span class="p">(</span><span class="n">frames2reg_fft</span><span class="p">,</span> <span class="n">template_fft</span><span class="p">)</span>
@@ -337,10 +337,11 @@
     <span class="n">frames2reg_fft_spatial_half_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span><span class="n">frames2reg_fft_spatial_shape</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
 
     <span class="c"># Remove global shifts.</span>
-    <span class="n">frames2reg_template_conv_max_indices_offset</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span>
-        <span class="n">frames2reg_template_conv_max_indices</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">-=</span> <span class="n">frames2reg_template_conv_max_indices_offset</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">frames2reg_fft_added_singleton</span><span class="p">:</span>
+        <span class="n">frames2reg_template_conv_max_indices_offset</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span>
+            <span class="n">frames2reg_template_conv_max_indices</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">-=</span> <span class="n">frames2reg_template_conv_max_indices_offset</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
     <span class="c"># Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).</span>
     <span class="c"># Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make</span>
@@ -353,10 +354,6 @@
 
     <span class="c"># Shift will have to be in the opposite direction to bring everything to the center.</span>
     <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span>
-
-    <span class="c"># Drop singleton dimension (if present)</span>
-    <span class="k">if</span> <span class="n">frames2reg_fft_added_singleton</span><span class="p">:</span>
-        <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">=</span> <span class="n">frames2reg_template_conv_max_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span></div>
 </pre></div>
