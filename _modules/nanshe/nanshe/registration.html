@@ -337,6 +337,9 @@
     <span class="c"># Convert indices into an array for easy manipulation.</span>
     <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
+    <span class="c"># Get the shape and half shape of the spatial components (YX or ZYX) for easy manipulation.</span>
+    <span class="n">frames2reg_fft_spatial_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
     <span class="c"># Shift will have to be in the opposite direction to bring everything to the center.</span>
     <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span>
 
@@ -352,7 +355,7 @@
     <span class="c"># them bound by the half shape, but with either sign.</span>
     <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">find_shortest_wraparound</span><span class="p">(</span>
         <span class="n">frames2reg_template_conv_max_indices</span><span class="p">,</span>
-        <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+        <span class="n">frames2reg_fft_spatial_shape</span><span class="p">,</span>
         <span class="n">out</span><span class="o">=</span><span class="n">frames2reg_template_conv_max_indices</span>
     <span class="p">)</span>
 
