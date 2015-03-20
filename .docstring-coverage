@@ -133,6 +133,7 @@ File nanshe/nanshe/wavelet_transform.py
 File nanshe/nanshe/HDF5_serializers.py
  - No module dostring!
  - No docstring for HDF5MaskedDataset.__init__!
+ - No docstring for HDF5MaskedDataset.group!
  - No docstring for HDF5MaskedDataset.data!
  - No docstring for HDF5MaskedDataset.data!
  - No docstring for HDF5MaskedDataset.mask!
@@ -150,7 +151,7 @@ File nanshe/nanshe/HDF5_serializers.py
  - No docstring for HDF5MaskedDataset.__getitem__!
  - No docstring for HDF5MaskedDataset.__setitem__!
  - No docstring for HDF5MaskedDataset.__array__!
- Needed: 22; Exist: 3; Missing: 19; Coverage: 13.6%
+ Needed: 23; Exist: 3; Missing: 20; Coverage: 13.0%
 
 File nanshe/nanshe/nanshe_registerer.py
  - No module dostring!
@@ -300,5 +301,5 @@ File nanshe/synthetic_data/synthetic_data.py
 
 
 Overall statistics for 27 files:
-Docstrings needed: 438; Docstrings exist: 220; Docstrings missing: 218
-Total docstring coverage: 50.2%;  Grade: not so bad
+Docstrings needed: 439; Docstrings exist: 220; Docstrings missing: 219
+Total docstring coverage: 50.1%;  Grade: not so bad
