@@ -104,10 +104,6 @@ File nanshe/nanshe/nanshe_learner.py
  - No docstring for generate_neurons!
  Needed: 6; Exist: 3; Missing: 3; Coverage: 50.0%
 
-File nanshe/nanshe/nanshe_registerer.py
- - No module dostring!
- Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
-
 File nanshe/nanshe/nanshe_viewer.py
  - No module dostring!
  - No docstring for HDF5DataSource.numberOfChannels!
@@ -259,6 +255,10 @@ File nanshe/nanshe/expanded_numpy.py
  - No module dostring!
  - No docstring for norm.wrapped_norm!
  Needed: 57; Exist: 55; Missing: 2; Coverage: 96.5%
+
+File nanshe/nanshe/nanshe_registerer.py
+ - No module dostring!
+ Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
 
 File nanshe/nanshe/registration.py
  - No module dostring!
