@@ -337,10 +337,11 @@
     <span class="n">frames2reg_fft_spatial_half_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span><span class="n">frames2reg_fft_spatial_shape</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
 
     <span class="c"># Remove global shifts.</span>
-    <span class="n">frames2reg_template_conv_max_indices_offset</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span>
-        <span class="n">frames2reg_template_conv_max_indices</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">-=</span> <span class="n">frames2reg_template_conv_max_indices_offset</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">frames2reg_fft_added_singleton</span><span class="p">:</span>
+        <span class="n">frames2reg_template_conv_max_indices_offset</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span>
+            <span class="n">frames2reg_template_conv_max_indices</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">-=</span> <span class="n">frames2reg_template_conv_max_indices_offset</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
     <span class="c"># Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).</span>
     <span class="c"># Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make</span>
