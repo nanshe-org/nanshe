@@ -276,21 +276,11 @@
             <span class="k">if</span> <span class="n">num_iters</span> <span class="o">&gt;=</span> <span class="n">max_iters</span><span class="p">:</span>
                 <span class="k">break</span>
 
-    <span class="k">if</span> <span class="n">temporaries_filename</span><span class="p">:</span>
-        <span class="n">frames2reg_fft</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">temporaries_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temporaries_filename</span><span class="p">)</span>
-        <span class="n">temporaries_filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-
     <span class="c"># Adjust the registered frames using the translations found.</span>
     <span class="c"># Mask rolled values.</span>
     <span class="n">reg_frames</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">reg_frames_filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">tempdir_name</span><span class="p">:</span>
-        <span class="n">reg_frames_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir_name</span><span class="p">,</span> <span class="s">&quot;reg_frames.h5&quot;</span><span class="p">)</span>
-        <span class="n">reg_frames_file</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">reg_frames_filename</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
-
-        <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">reg_frames_file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">&quot;reg_frames&quot;</span><span class="p">)</span>
+        <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">temporaries_file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">&quot;reg_frames&quot;</span><span class="p">)</span>
         <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">HDF5_serializers</span><span class="o">.</span><span class="n">HDF5MaskedDataset</span><span class="p">(</span>
             <span class="n">reg_frames</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">dtype</span>
         <span class="p">)</span>
@@ -304,15 +294,24 @@
             <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">results_filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">tempdir_name</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">results_filename</span>
+        <span class="n">results_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir_name</span><span class="p">,</span> <span class="s">&quot;results.h5&quot;</span><span class="p">)</span>
+        <span class="n">results_file</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">results_filename</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">temporaries_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">results_file</span><span class="p">)</span>
+        <span class="n">frames2reg_fft</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">reg_frames</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">reg_frames_filename</span>
+        <span class="n">temporaries_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temporaries_filename</span><span class="p">)</span>
+        <span class="n">temporaries_filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">results_filename</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">reg_frames</span>
 
     <span class="k">if</span> <span class="n">include_shift</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">tempdir_name</span><span class="p">:</span>
-            <span class="n">reg_frames_file</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
+            <span class="n">results_file</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
                 <span class="s">&quot;space_shift&quot;</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="n">space_shift</span><span class="p">,</span>
                 <span class="n">chunks</span><span class="o">=</span><span class="bp">True</span>
@@ -321,8 +320,8 @@
             <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">reg_frames</span><span class="p">,</span> <span class="n">space_shift</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">tempdir_name</span><span class="p">:</span>
-        <span class="n">reg_frames_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">reg_frames_file</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">results_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">results_file</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
