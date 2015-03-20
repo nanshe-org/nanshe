@@ -290,6 +290,12 @@
                 <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span>
             <span class="p">)</span>
 
+            <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;fill_value&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">fill_value</span><span class="p">)</span>
+
     <span class="nd">@property</span>
 <div class="viewcode-block" id="HDF5MaskedDataset.group"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset.group">[docs]</a>    <span class="k">def</span> <span class="nf">group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">)</span>
