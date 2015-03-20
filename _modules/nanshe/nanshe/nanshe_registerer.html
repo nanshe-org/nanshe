@@ -1,0 +1,204 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.nanshe_registerer &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.nanshe_registerer</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Feb 20, 2015 13:00:51 EST$&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">from</span> <span class="nn">lazyflow.utility</span> <span class="kn">import</span> <span class="n">PathComponents</span>
+
+<span class="kn">import</span> <span class="nn">debugging_tools</span>
+<span class="kn">import</span> <span class="nn">read_config</span>
+
+<span class="kn">import</span> <span class="nn">expanded_numpy</span>
+<span class="kn">import</span> <span class="nn">registration</span>
+
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.nanshe_registerer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            argv(list):     arguments (includes command line call).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int:            exit code (0 if success)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Only necessary if running main (normally if calling command line). No point in importing otherwise.</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+
+    <span class="n">argv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="c"># Creates command line parser</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Parses input from the command line for a registration job.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span> <span class="o">=</span> <span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;JSON file that provides configuration options for how to import TIFF(s).&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;input_filenames&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span> <span class="o">=</span> <span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span> <span class="o">=</span> <span class="s">&quot;+&quot;</span><span class="p">,</span>
+                        <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;HDF5 file to import (this should include a path to where the internal dataset should be stored).&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;output_filenames&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span> <span class="o">=</span> <span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;HDF5 file to export (this should include a path to where the internal dataset should be stored).&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c"># Results of parsing arguments (ignore the first one as it is the command line call).</span>
+    <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="c"># Go ahead and stuff in parameters with the other parsed_args</span>
+    <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">read_config</span><span class="o">.</span><span class="n">read_parameters</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">)</span>
+
+    <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file_components</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">each_input_filename</span> <span class="ow">in</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_filenames</span><span class="p">:</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file_components</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">each_input_filename</span><span class="p">))</span>
+
+    <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file_components</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">each_output_filename</span> <span class="ow">in</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_filenames</span><span class="p">:</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file_components</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">each_output_filename</span><span class="p">))</span>
+
+
+    <span class="k">for</span> <span class="n">each_input_filename_components</span><span class="p">,</span> <span class="n">each_output_filename_components</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file_components</span><span class="p">,</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file_components</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">input_file</span><span class="p">[</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">internalPath</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">registration</span><span class="o">.</span><span class="n">register_mean_offsets</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">truncate_masked_frames</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                <span class="n">output_file</span><span class="p">[</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalPath</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c"># only necessary if running main (normally if calling command line). no point in importing otherwise.</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+
+    <span class="c"># call main if the script is loaded from command line. otherwise, user can import package without main being called.</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

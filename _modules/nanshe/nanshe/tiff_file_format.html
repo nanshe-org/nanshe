@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.tiff_file_format &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.tiff_file_format</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 26, 2014 11:40:54 EDT$&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+
+<span class="kn">import</span> <span class="nn">vigra</span>
+<span class="kn">import</span> <span class="nn">vigra.impex</span>
+<span class="kn">import</span> <span class="nn">lazyflow.utility.pathHelpers</span>
+
+<span class="kn">import</span> <span class="nn">debugging_tools</span>
+<span class="kn">import</span> <span class="nn">additional_generators</span>
+<span class="kn">import</span> <span class="nn">additional_io</span>
+<span class="kn">import</span> <span class="nn">expanded_numpy</span>
+
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="get_multipage_tiff_shape_dtype"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.tiff_file_format.get_multipage_tiff_shape_dtype">[docs]</a><span class="k">def</span> <span class="nf">get_multipage_tiff_shape_dtype</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the info about the shape (including page number as time) and dtype.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_tiff_filename(str):             the TIFF file to get info about</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (collections.OrderedDict):          an ordered dictionary with &quot;shape&quot; first and &quot;dtype&quot; (type) second.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">shape_dtype_result</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&quot;shape&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;dtype&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">)])</span>
+
+    <span class="n">new_tiff_file_info</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">ImageInfo</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span>
+    <span class="n">new_tiff_file_number_pages</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">numberImages</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span>
+
+    <span class="n">new_tiff_file_shape</span> <span class="o">=</span> <span class="n">new_tiff_file_info</span><span class="o">.</span><span class="n">getShape</span><span class="p">()</span>
+    <span class="n">shape_dtype_result</span><span class="p">[</span><span class="s">&quot;shape&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_tiff_file_shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">new_tiff_file_number_pages</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_tiff_file_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">shape_dtype_result</span><span class="p">[</span><span class="s">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_tiff_file_info</span><span class="o">.</span><span class="n">getDtype</span><span class="p">()</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">shape_dtype_result</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="get_multipage_tiff_shape_dtype_transformed"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.tiff_file_format.get_multipage_tiff_shape_dtype_transformed">[docs]</a><span class="k">def</span> <span class="nf">get_multipage_tiff_shape_dtype_transformed</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">,</span> <span class="n">axis_order</span> <span class="o">=</span> <span class="s">&quot;zyxtc&quot;</span><span class="p">,</span> <span class="n">pages_to_channel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the info about the shape and dtype after some transformations have been performed .</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_tiff_filename(str):             the TIFF file to get info about</span>
+<span class="sd">            axis_order(str):                    the desired axis order when reshaped</span>
+<span class="sd">            pages_to_channel(int):              number of channels to divide from the pages</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (collections.OrderedDict):          an ordered dictionary with &quot;shape&quot; first and &quot;dtype&quot; (type) second.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis_order</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">_</span> <span class="ow">in</span> <span class="n">axis_order</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="s">&quot;zyxtc&quot;</span><span class="p">])</span>
+
+    <span class="n">new_tiff_file_shape</span><span class="p">,</span> <span class="n">new_tiff_file_dtype</span> <span class="o">=</span> <span class="n">get_multipage_tiff_shape_dtype</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+    <span class="c"># Correct if the tiff is missing dims by adding singletons</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_tiff_file_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_tiff_file_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">new_tiff_file_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_tiff_file_shape</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid dimensionality for TIFF. Found shape to be </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_tiff_file_shape</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+
+    <span class="c"># Correct if some pages are for different channels</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">new_tiff_file_shape</span> <span class="o">=</span> <span class="n">new_tiff_file_shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">new_tiff_file_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">pages_to_channel</span><span class="p">,</span> <span class="n">pages_to_channel</span> <span class="o">*</span> <span class="n">new_tiff_file_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],)</span>
+
+    <span class="c"># Correct the axis order</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">axis_order</span> <span class="o">!=</span> <span class="s">&quot;zyxtc&quot;</span><span class="p">):</span>
+        <span class="n">vigra_ordering</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">additional_generators</span><span class="o">.</span><span class="n">reverse_each_element</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="s">&quot;zyxtc&quot;</span><span class="p">)))</span>
+
+        <span class="n">new_tiff_file_shape_transposed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">each_axis_label</span> <span class="ow">in</span> <span class="n">axis_order</span><span class="p">:</span>
+            <span class="n">new_tiff_file_shape_transposed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_tiff_file_shape</span><span class="p">[</span><span class="n">vigra_ordering</span><span class="p">[</span><span class="n">each_axis_label</span><span class="p">]])</span>
+
+        <span class="n">new_tiff_file_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_tiff_file_shape_transposed</span><span class="p">)</span>
+
+    <span class="n">shape_dtype_result</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&quot;shape&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;dtype&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">)])</span>
+
+    <span class="n">shape_dtype_result</span><span class="p">[</span><span class="s">&quot;shape&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_tiff_file_shape</span>
+    <span class="n">shape_dtype_result</span><span class="p">[</span><span class="s">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_tiff_file_dtype</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">shape_dtype_result</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="get_standard_tiff_array"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.tiff_file_format.get_standard_tiff_array">[docs]</a><span class="k">def</span> <span class="nf">get_standard_tiff_array</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">,</span> <span class="n">axis_order</span> <span class="o">=</span> <span class="s">&quot;tzyxc&quot;</span><span class="p">,</span> <span class="n">pages_to_channel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads a tiff file and returns a standard 5D array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_tiff_filename(str):             the TIFF file to read in</span>
+
+<span class="sd">            axis_order(int):                    how to order the axes (by default returns &quot;tzyxc&quot;).</span>
+
+<span class="sd">            pages_to_channel(int):              if channels are not normally stored in the channel variable, but are</span>
+<span class="sd">                                                stored as pages (or as a mixture), then this will split neighboring</span>
+<span class="sd">                                                pages into separate channels. (by default is 1 so changes nothing)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (numpy.ndarray):                    an array with the axis order specified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># Get the shape and dtype information</span>
+    <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">get_multipage_tiff_shape_dtype</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+    <span class="c"># Turn dtype into something that VIGRA&#39;s readImage or readVolume will take</span>
+    <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;DOUBLE&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;FLOAT&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint32</span><span class="p">):</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;UINT32&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">):</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;INT32&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint16</span><span class="p">):</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;UINT16&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int16</span><span class="p">):</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;INT16&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">):</span>
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="s">&quot;UINT8&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unacceptable dtype of &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c"># Our algorithm expect double precision</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">readVolume</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype_str</span><span class="p">)</span>
+        <span class="c"># Convert to normal array</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Our algorithm expect double precision</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">readImage</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype_str</span><span class="p">)</span>
+        <span class="c"># Convert to normal array</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+        <span class="c"># Need to add singleton time dimension before channel</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c"># Check to make sure the dimensions are ok</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="c"># Has no z. So, add this.</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">add_singleton_axis_beginning</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid dimensionality for TIFF. Found shape to be </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+
+    <span class="c"># Some people use pages to hold time and channel data. So, we need to restructure it.</span>
+    <span class="c"># However, if they are properly structuring their TIFF file, then they shouldn&#39;t incur a penalty.</span>
+    <span class="k">if</span> <span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">pages_to_channel</span><span class="p">,</span> <span class="n">pages_to_channel</span> <span class="o">*</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],))</span>
+
+    <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">tagging_reorder_array</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="p">,</span>
+                                                          <span class="n">from_axis_order</span> <span class="o">=</span> <span class="s">&quot;zyxtc&quot;</span><span class="p">,</span>
+                                                          <span class="n">to_axis_order</span> <span class="o">=</span> <span class="n">axis_order</span><span class="p">,</span>
+                                                          <span class="n">to_copy</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="convert_tiffs"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.tiff_file_format.convert_tiffs">[docs]</a><span class="k">def</span> <span class="nf">convert_tiffs</span><span class="p">(</span><span class="n">new_tiff_filenames</span><span class="p">,</span> <span class="n">new_hdf5_pathname</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">channel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pages_to_channel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a stack of tiffs to an HDF5 file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_tiff_filenames(list or str):    takes a str for a single file or a list of strs for filenames to combine</span>
+<span class="sd">                                                (allows regex).</span>
+
+<span class="sd">            new_hdf5_pathname(str):             the HDF5 file and location to store the dataset.</span>
+
+<span class="sd">            axis(int):                          which axis to concatenate along.</span>
+
+<span class="sd">            channel(int):                       which channel to select for the HDF5 (can only keep one).</span>
+
+<span class="sd">            z_index(int):                       which z value to take (the algorithm is not setup for 3D data yet)</span>
+
+<span class="sd">            pages_to_channel(int):              if channels are not normally stored in the channel variable, but are</span>
+<span class="sd">                                                stored as pages, then this will split neighboring pages into separate</span>
+<span class="sd">                                                channels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># Get the axes that do not change</span>
+    <span class="n">static_axes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">additional_generators</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="n">axis</span><span class="p">)))</span>
+
+    <span class="c"># if it is only a single str, make it a singleton list</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_tiff_filenames</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">new_tiff_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_tiff_filenames</span><span class="p">]</span>
+
+    <span class="c"># Expand any regex in path names</span>
+    <span class="n">new_tiff_filenames</span> <span class="o">=</span> <span class="n">additional_io</span><span class="o">.</span><span class="n">expand_pathname_list</span><span class="p">(</span><span class="o">*</span><span class="n">new_tiff_filenames</span><span class="p">)</span>
+
+    <span class="c"># Determine the shape and dtype to use for the dataset (so that everything will fit).</span>
+    <span class="n">new_hdf5_dataset_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="nb">bool</span>
+    <span class="k">for</span> <span class="n">each_new_tiff_filename</span> <span class="ow">in</span> <span class="n">new_tiff_filenames</span><span class="p">:</span>
+        <span class="n">each_new_tiff_file_shape</span><span class="p">,</span> <span class="n">each_new_tiff_file_dtype</span> <span class="o">=</span> <span class="n">get_multipage_tiff_shape_dtype_transformed</span><span class="p">(</span><span class="n">each_new_tiff_filename</span><span class="p">,</span>
+                                                                                                        <span class="n">axis_order</span> <span class="o">=</span> <span class="s">&quot;cztyx&quot;</span><span class="p">,</span>
+                                                                                                        <span class="n">pages_to_channel</span> <span class="o">=</span> <span class="n">pages_to_channel</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="n">each_new_tiff_file_shape</span> <span class="o">=</span> <span class="n">each_new_tiff_file_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+        <span class="c"># Find the increase on the merge axis. Find the largest shape for the rest.</span>
+        <span class="n">each_new_tiff_file_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">each_new_tiff_file_shape</span><span class="p">)</span>
+        <span class="n">new_hdf5_dataset_shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">+=</span> <span class="n">each_new_tiff_file_shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span>
+        <span class="n">new_hdf5_dataset_shape</span><span class="p">[</span><span class="n">static_axes</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_hdf5_dataset_shape</span><span class="p">[</span><span class="n">static_axes</span><span class="p">],</span> <span class="n">each_new_tiff_file_shape</span><span class="p">[</span><span class="n">static_axes</span><span class="p">]])</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c"># Finds the best type that everything can be cast to without loss of precision.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="n">each_new_tiff_file_dtype</span><span class="p">,</span> <span class="n">new_hdf5_dataset_dtype</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="n">new_hdf5_dataset_dtype</span><span class="p">,</span> <span class="n">each_new_tiff_file_dtype</span><span class="p">):</span>
+                <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="n">each_new_tiff_file_dtype</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Cannot find safe conversion between new_hdf5_dataset_dtype = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_hdf5_dataset_dtype</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; and each_new_tiff_file_dtype = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">each_new_tiff_file_dtype</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span><span class="p">)</span>
+
+    <span class="c"># Convert to standard forms</span>
+    <span class="n">new_hdf5_dataset_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_hdf5_dataset_shape</span><span class="p">)</span>
+    <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">new_hdf5_dataset_dtype</span><span class="p">)</span>
+
+    <span class="c"># Get all the needed locations for the HDF5 file and dataset</span>
+    <span class="n">new_hdf5_path_components</span> <span class="o">=</span> <span class="n">lazyflow</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">new_hdf5_pathname</span><span class="p">)</span>
+    <span class="n">new_hdf5_filename</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">externalPath</span>
+    <span class="n">new_hdf5_groupname</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">internalDirectory</span>
+    <span class="n">new_hdf5_dataset_name</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">internalPath</span>
+
+    <span class="c"># Dump all datasets to the file</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">new_hdf5_filename</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_hdf5_file</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">new_hdf5_groupname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_hdf5_file</span><span class="p">:</span>
+            <span class="n">new_hdf5_file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">new_hdf5_groupname</span><span class="p">)</span>
+
+        <span class="n">new_hdf5_group</span> <span class="o">=</span> <span class="n">new_hdf5_file</span><span class="p">[</span><span class="n">new_hdf5_groupname</span><span class="p">]</span>
+        <span class="n">new_hdf5_dataset</span> <span class="o">=</span> <span class="n">new_hdf5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">new_hdf5_dataset_name</span><span class="p">,</span>
+                                                         <span class="n">new_hdf5_dataset_shape</span><span class="p">,</span>
+                                                         <span class="n">new_hdf5_dataset_dtype</span><span class="p">,</span>
+                                                         <span class="n">chunks</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="n">new_hdf5_dataset_axis_pos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">each_new_tiff_filename</span> <span class="ow">in</span> <span class="n">new_tiff_filenames</span><span class="p">:</span>
+            <span class="c"># Read the data in the format specified.</span>
+            <span class="n">each_new_tiff_array</span> <span class="o">=</span> <span class="n">get_standard_tiff_array</span><span class="p">(</span><span class="n">each_new_tiff_filename</span><span class="p">,</span>
+                                                          <span class="n">axis_order</span> <span class="o">=</span> <span class="s">&quot;cztyx&quot;</span><span class="p">,</span>
+                                                          <span class="n">pages_to_channel</span> <span class="o">=</span> <span class="n">pages_to_channel</span><span class="p">)</span>
+
+            <span class="c"># Take channel and z selection</span>
+            <span class="c"># TODO: Could we drop the channel constraint by saving different channels to different arrays? Need to think about it.</span>
+            <span class="c"># TODO: Want to drop z constraint, but need to consult with Ferran about algorithms that work on 3D for the end.</span>
+            <span class="n">each_new_tiff_array</span> <span class="o">=</span> <span class="n">each_new_tiff_array</span><span class="p">[</span><span class="n">channel</span><span class="p">,</span> <span class="n">z_index</span><span class="p">]</span>
+
+            <span class="c"># Store into the current slice and go to the next one.</span>
+            <span class="n">new_hdf5_dataset_axis_pos_next</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_axis_pos</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">each_new_tiff_array</span><span class="p">)</span>
+            <span class="n">new_hdf5_dataset</span><span class="p">[</span> <span class="n">new_hdf5_dataset_axis_pos</span> <span class="p">:</span> <span class="n">new_hdf5_dataset_axis_pos_next</span> <span class="p">]</span> <span class="o">=</span> <span class="n">each_new_tiff_array</span>
+            <span class="n">new_hdf5_dataset_axis_pos</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_axis_pos_next</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

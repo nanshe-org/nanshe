@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.generic_decorators &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.generic_decorators</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jul 23, 2014 16:24:36 EDT$&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">PyQt4.QtCore</span>
+
+
+<div class="viewcode-block" id="update_wrapper"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.update_wrapper">[docs]</a><span class="k">def</span> <span class="nf">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span>
+                   <span class="n">wrapped</span><span class="p">,</span>
+                   <span class="n">assigned</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_ASSIGNMENTS</span><span class="p">,</span>
+                   <span class="n">updated</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_UPDATES</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extends functools.update_wrapper to ensure that it stores the wrapped function in the attribute __wrapped__.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wrapper(callable):      the replacement callable.</span>
+
+<span class="sd">            wrapped(callable):      the callable that is being wrapped.</span>
+
+<span class="sd">            assigned(tuple):        is a tuple naming the attributes assigned directly</span>
+<span class="sd">                                    from the wrapped function to the wrapper function (defaults to</span>
+<span class="sd">                                    functools.WRAPPER_ASSIGNMENTS)</span>
+
+<span class="sd">            updated(tuple):         is a tuple naming the attributes of the wrapper that</span>
+<span class="sd">                                    are updated with the corresponding attribute from the wrapped</span>
+<span class="sd">                                    function (defaults to functools.WRAPPER_UPDATES)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (callable):             the wrapped callable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">wrapper</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span> <span class="o">=</span> <span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span> <span class="o">=</span> <span class="n">updated</span><span class="p">)</span>
+
+    <span class="c"># Store the underlying callable. Automatic in Python 3.</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="s">&quot;__wrapped__&quot;</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="wraps"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.wraps">[docs]</a><span class="k">def</span> <span class="nf">wraps</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span>
+          <span class="n">assigned</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_ASSIGNMENTS</span><span class="p">,</span>
+          <span class="n">updated</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_UPDATES</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds on functools.wraps to ensure that it stores the wrapped function in the attribute __wrapped__.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wrapped(callable):      the callable that is being wrapped.</span>
+
+<span class="sd">            assigned(tuple):        is a tuple naming the attributes assigned directly</span>
+<span class="sd">                                    from the wrapped function to the wrapper function (defaults to</span>
+<span class="sd">                                    functools.WRAPPER_ASSIGNMENTS)</span>
+
+<span class="sd">            updated(tuple):         is a tuple naming the attributes of the wrapper that</span>
+<span class="sd">                                    are updated with the corresponding attribute from the wrapped</span>
+<span class="sd">                                    function (defaults to functools.WRAPPER_UPDATES)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (callable):             a decorator for callable, which will contain wrapped.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">update_wrapper</span><span class="p">,</span> <span class="n">wrapped</span> <span class="o">=</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span> <span class="o">=</span> <span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span> <span class="o">=</span> <span class="n">updated</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="static_variables"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.static_variables">[docs]</a><span class="k">def</span> <span class="nf">static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a decorator that decorates a callable such that it has the given static variables set.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *kwargs(tuple):     keyword args will be set to the value provided.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (decorator):        a decorator for the callable.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">static_variables_tie</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Decorates a function such that it has the given static variables set.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                callable(callable):       the callable to decorate.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (callable):               the callable returned.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">each_kwd</span><span class="p">,</span> <span class="n">each_val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="nb">callable</span><span class="p">,</span> <span class="n">each_kwd</span><span class="p">,</span> <span class="n">each_val</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">static_variables_tie</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="metaclass"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.metaclass">[docs]</a><span class="k">def</span> <span class="nf">metaclass</span><span class="p">(</span><span class="n">meta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a decorator that decorates a class such that the given metaclass is applied.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Decorator will add the __metaclass__ attribute so the last metaclass applied is known.</span>
+<span class="sd">            Also, decorator will add the __wrapped__ attribute so that the unwrapped class can be retrieved.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            meta(metaclass):     metaclass to apply to a given class.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (decorator):         a decorator for the class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metaclass_wrapper</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns a decorated class such that the given metaclass is applied.</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Adds the __metaclass__ attribute so the last metaclass used is known.</span>
+<span class="sd">                Also, adds the __wrapped__ attribute so that the unwrapped class can be retrieved.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                cls(class):          class to decorate.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (class):             the decorated class.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">__name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">__bases</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__bases__</span><span class="p">)</span>
+        <span class="n">__dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+        <span class="n">__dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;__dict__&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">__dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;__weakref__&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">each_slot</span> <span class="ow">in</span> <span class="n">__dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;__slots__&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">()):</span>
+            <span class="n">__dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">each_slot</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">__dict</span><span class="p">[</span><span class="s">&quot;__metaclass__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta</span>
+        <span class="n">__dict</span><span class="p">[</span><span class="s">&quot;__wrapped__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">meta</span><span class="p">(</span><span class="n">__name</span><span class="p">,</span> <span class="n">__bases</span><span class="p">,</span> <span class="n">__dict</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">metaclass_wrapper</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="metaclasses"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.metaclasses">[docs]</a><span class="k">def</span> <span class="nf">metaclasses</span><span class="p">(</span><span class="o">*</span><span class="n">metas</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a decorator that decorates a class such that the given metaclasses are applied.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Shorthand for repeated application of metaclass.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *metas(metaclasses):     metaclasses to apply to a given class.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (decorator):             a decorator for the class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metaclasses_wrapper</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns a decorated class such that the given metaclasses are applied.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                cls(class):          class to decorate.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (class):             the decorated class.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">new_cls</span> <span class="o">=</span> <span class="n">cls</span>
+
+        <span class="k">for</span> <span class="n">each_meta</span> <span class="ow">in</span> <span class="n">metas</span><span class="p">:</span>
+            <span class="n">new_cls</span> <span class="o">=</span> <span class="n">metaclass</span><span class="p">(</span><span class="n">each_meta</span><span class="p">)(</span><span class="n">new_cls</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">new_cls</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">metaclasses_wrapper</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="class_static_variables"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.class_static_variables">[docs]</a><span class="k">def</span> <span class="nf">class_static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a decorator that decorates a class such that it has the given static variables set.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs(tuple):     keyword args will be set to the value provided.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (decorator):         a decorator for the class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">MetaStaticVariables</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Metaclass, which adds static variable with the given value to a class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+            <span class="n">dct</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaStaticVariables</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaStaticVariables</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *decorators(tuple):     decorators to decorate all methods with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (decorator):            a decorator for the class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">MetaAllMethodsDecorator</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Metaclass, which decorates all methods with the list of decorators in order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="c"># Are all of FunctionType at this point.</span>
+                <span class="c"># Will be of MethodType at a later step.</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">each_decorator</span> <span class="ow">in</span> <span class="n">decorators</span><span class="p">:</span>
+                        <span class="n">_v</span> <span class="o">=</span> <span class="n">each_decorator</span><span class="p">(</span><span class="n">_v</span><span class="p">)</span>
+
+                <span class="n">dct</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="qt_class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.qt_class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">qt_class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *decorators(tuple):     decorators to decorate all methods with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (decorator):            a decorator for the class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">MetaAllMethodsDecorator</span><span class="p">(</span><span class="n">PyQt4</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtWrapperType</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Metaclass, which decorates all methods with the list of decorators in order.</span>
+
+<span class="sd">            Inherits from PyQt4.QtCore.pyqtWrapperType based on this</span>
+<span class="sd">            ( http://www.gulon.co.uk/2012/12/28/pyqt4-qobjects-and-metaclasses/ ).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="c"># Are all of FunctionType at this point.</span>
+                <span class="c"># Will be of MethodType at a later step.</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">each_decorator</span> <span class="ow">in</span> <span class="n">decorators</span><span class="p">:</span>
+                        <span class="n">_v</span> <span class="o">=</span> <span class="n">each_decorator</span><span class="p">(</span><span class="n">_v</span><span class="p">)</span>
+
+                <span class="n">dct</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="class_decorate_methods"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.class_decorate_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_methods</span><span class="p">(</span><span class="o">**</span><span class="n">method_decorators</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a decorator that decorates a class such that specified methods are decorated by the decorators provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **method_decorators(tuple):     method names with a single decorator or a list of decorators.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (decorator):                    a decorator for the class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">MetaMethodsDecorator</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Metaclass, which decorates some methods based on the keys given. Uses the decorator(s) provided for each</span>
+<span class="sd">            method to decorator in order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">):</span>
+                    <span class="n">_dl</span> <span class="o">=</span> <span class="n">method_decorators</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">_k</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">_dl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="nb">iter</span><span class="p">(</span><span class="n">_dl</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                            <span class="n">_dl</span> <span class="o">=</span> <span class="p">[</span><span class="n">_dl</span><span class="p">]</span>
+
+                        <span class="k">for</span> <span class="n">_d</span> <span class="ow">in</span> <span class="n">_dl</span><span class="p">:</span>
+                           <span class="n">_v</span> <span class="o">=</span> <span class="n">_d</span><span class="p">(</span><span class="n">_v</span><span class="p">)</span>
+
+                <span class="n">dct</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaMethodsDecorator</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

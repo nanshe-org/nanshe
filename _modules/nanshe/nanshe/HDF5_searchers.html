@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.HDF5_searchers &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.HDF5_searchers</h1><div class="highlight"><pre>
+<span class="c"># To change this license header, choose License Headers in Project Properties.</span>
+<span class="c"># To change this template file, choose Tools | Templates</span>
+<span class="c"># and open the template in the editor.</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 18, 2014 20:06:44 EDT$&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+
+
+<div class="viewcode-block" id="get_matching_paths"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_paths">[docs]</a><span class="k">def</span> <span class="nf">get_matching_paths</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
+<span class="sd">        Returns a list of matches for the given file handle.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_filehandle(h5py.File):        an HDF5 file.</span>
+<span class="sd">            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            TODO: Write doctests.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (list):                         a list of matching paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">current_pattern_group_matches</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)</span> <span class="ow">and</span> <span class="n">a_path_pattern</span><span class="p">):</span>
+        <span class="n">current_group</span> <span class="o">=</span> <span class="n">a_filehandle</span>
+
+        <span class="n">a_path_pattern</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+
+        <span class="n">to_split</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">to_split</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">current_path</span><span class="p">,</span> <span class="n">next_path</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="p">[:</span><span class="n">to_split</span><span class="p">],</span> <span class="n">a_path_pattern</span><span class="p">[</span><span class="mi">1</span> <span class="o">+</span> <span class="n">to_split</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_path</span><span class="p">,</span> <span class="n">next_path</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="p">,</span> <span class="s">&quot;&quot;</span>
+
+        <span class="n">current_pattern_group_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">current_path</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">each_group</span> <span class="ow">in</span> <span class="n">current_group</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_pattern_group_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">each_group</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">next_group</span> <span class="o">=</span> <span class="n">current_group</span><span class="p">[</span><span class="n">each_group</span><span class="p">]</span>
+
+                <span class="n">next_pattern_group_matches</span> <span class="o">=</span> <span class="n">get_matching_paths</span><span class="p">(</span><span class="n">next_group</span><span class="p">,</span> <span class="n">next_path</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">each_next_pattern_group_match</span> <span class="ow">in</span> <span class="n">next_pattern_group_matches</span><span class="p">:</span>
+                    <span class="n">current_pattern_group_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">each_group</span> <span class="o">+</span> <span class="n">each_next_pattern_group_match</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">current_pattern_group_matches</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_matching_paths_groups"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_paths_groups">[docs]</a><span class="k">def</span> <span class="nf">get_matching_paths_groups</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Looks for parts of the path pattern and tries to match them in order.</span>
+<span class="sd">        Returns a list of matches that can be combined to yield acceptable matches for the given file handle.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This works best when a tree structure is created systematically in HDF5. Then, this will recreate</span>
+<span class="sd">            what the tree structure could and may contain.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_filehandle(h5py.File):        an HDF5 file.</span>
+<span class="sd">            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            TODO: Write doctests.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (list):                         a list of matching paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_matching_paths_groups_recursive</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
+        <span class="n">current_pattern_group_matches</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)</span> <span class="ow">and</span> <span class="n">a_path_pattern</span><span class="p">):</span>
+            <span class="n">current_pattern_group_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">())</span>
+
+            <span class="n">current_group</span> <span class="o">=</span> <span class="n">a_filehandle</span>
+
+            <span class="n">a_path_pattern</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\b</span><span class="s">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+
+            <span class="n">to_split</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">to_split</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">current_path</span><span class="p">,</span> <span class="n">next_path</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="p">[:</span><span class="n">to_split</span><span class="p">],</span> <span class="n">a_path_pattern</span><span class="p">[</span><span class="mi">1</span> <span class="o">+</span> <span class="n">to_split</span><span class="p">:]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">current_path</span><span class="p">,</span> <span class="n">next_path</span> <span class="o">=</span> <span class="n">a_path_pattern</span><span class="p">,</span> <span class="s">&quot;&quot;</span>
+
+            <span class="n">current_pattern_group_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">current_path</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">each_group</span> <span class="ow">in</span> <span class="n">current_group</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_pattern_group_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">each_group</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">next_group</span> <span class="o">=</span> <span class="n">current_group</span><span class="p">[</span><span class="n">each_group</span><span class="p">]</span>
+
+                    <span class="n">next_pattern_group_matches</span> <span class="o">=</span> <span class="n">get_matching_paths_groups_recursive</span><span class="p">(</span><span class="n">next_group</span><span class="p">,</span> <span class="n">next_path</span><span class="p">)</span>
+
+                    <span class="n">current_pattern_group_matches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">each_group</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+                    <span class="k">while</span> <span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">next_pattern_group_matches</span><span class="p">):</span>
+                        <span class="n">current_pattern_group_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">())</span>
+
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">each_next_pattern_group_matches</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">next_pattern_group_matches</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">each_next_pattern_group_match</span> <span class="ow">in</span> <span class="n">each_next_pattern_group_matches</span><span class="p">:</span>
+                            <span class="n">current_pattern_group_matches</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">each_next_pattern_group_match</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_pattern_group_matches</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span>
+
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">get_matching_paths_groups_recursive</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">)</span>
+
+    <span class="n">new_groups</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)):</span>
+        <span class="n">new_groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">new_groups</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_matching_grouped_paths"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths">[docs]</a><span class="k">def</span> <span class="nf">get_matching_grouped_paths</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
+<span class="sd">        Returns a list of matches as keys and whether they are found in the HDF5 file or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_filehandle(h5py.File):        an HDF5 file.</span>
+<span class="sd">            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            TODO: Write doctests.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (list):                         an ordered dictionary with possible paths that fit the pattern and whether</span>
+<span class="sd">                                            they are found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">paths_found</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">each_path_components</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">get_matching_paths_groups</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">)):</span>
+        <span class="n">each_path</span> <span class="o">=</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">each_path_components</span><span class="p">])</span>
+
+        <span class="n">paths_found</span><span class="p">[</span><span class="n">each_path</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="n">paths_found</span> <span class="o">=</span> <span class="n">paths_found</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_matching_grouped_paths_found"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths_found">[docs]</a><span class="k">def</span> <span class="nf">get_matching_grouped_paths_found</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
+<span class="sd">        Returns a list of matches as keys and whether they are found in the HDF5 file or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_filehandle(h5py.File):        an HDF5 file.</span>
+<span class="sd">            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            TODO: Write doctests.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (collections.OrderedDict):      an ordered dictionary with possible paths that fit the pattern</span>
+<span class="sd">                                            and whether they are found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">paths_found</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">each_path_components</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">get_matching_paths_groups</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">)):</span>
+        <span class="n">each_path</span> <span class="o">=</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">each_path_components</span><span class="p">])</span>
+
+        <span class="n">paths_found</span><span class="p">[</span><span class="n">each_path</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">each_path</span> <span class="ow">in</span> <span class="n">a_filehandle</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

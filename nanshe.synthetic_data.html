@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.synthetic_data package &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="index.html" />
+    <link rel="prev" title="nanshe.spams_sandbox package" href="nanshe.spams_sandbox.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.spams_sandbox.html" title="nanshe.spams_sandbox package"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="nanshe-synthetic-data-package">
+<h1>nanshe.synthetic_data package<a class="headerlink" href="#nanshe-synthetic-data-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nanshe.synthetic_data.synthetic_data">
+<span id="nanshe-synthetic-data-synthetic-data-module"></span><h2>nanshe.synthetic_data.synthetic_data module<a class="headerlink" href="#module-nanshe.synthetic_data.synthetic_data" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nanshe.synthetic_data.synthetic_data.generate_gaussian_images">
+<tt class="descclassname">nanshe.synthetic_data.synthetic_data.</tt><tt class="descname">generate_gaussian_images</tt><big>(</big><em>space</em>, <em>means</em>, <em>std_devs</em>, <em>magnitudes</em><big>)</big><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_gaussian_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_gaussian_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a stack of gaussians (first index indicates which image); where, each contains a gaussian
+using a center and radius provided.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This uses a normalized gaussian filter to create the gaussians. So, the sum over any image in the stack will
+be the magnitude given (with some small error).</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the mask.</li>
+<li><strong>means</strong> (<em>list of tuples of numbers</em>) &#8211; List of means with one per gaussian.</li>
+<li><strong>std_devs</strong> (<em>list of numbers</em>) &#8211; List of standard deviations with one per gaussian.</li>
+<li><strong>magnitudes</strong> (<em>list of numbers</em>) &#8211; List of magnitudes for each gaussian.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">numpy.ndarray:                       A stack of masks (first index indicates which mask) with a gaussian
+using a center and radius for each mask.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+<span class="go">array([[[ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08],</span>
+<span class="go">        [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],</span>
+<span class="go">        [ 2.07548550e-04, 8.37310610e-02, 6.18693507e-01, 8.37310610e-02, 2.07548550e-04],</span>
+<span class="go">        [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],</span>
+<span class="go">        [ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08]]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="go">1.0000000000000002</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+<span class="go">array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 3.35012940e-04, 9.98659499e-01, 3.35012940e-04, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> 
+<span class="go">array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 1.67506470e-03, 4.99329749e+00, 1.67506470e-03, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],</span>
+<span class="go">        [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="go">5.0000000000000009</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="go">array([[[[  3.76754623e-09,   1.12308970e-05,   3.76754623e-09],</span>
+<span class="go">         [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
+<span class="go">         [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]],</span>
+
+<span class="go">        [[  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
+<span class="go">         [  3.34788322e-02,   9.97989922e+01,   3.34788322e-02],</span>
+<span class="go">         [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05]],</span>
+
+<span class="go">        [[  3.76754623e-09,   1.12308970e-05,   3.76754623e-09],</span>
+<span class="go">         [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
+<span class="go">         [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]]]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="go">100.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks">
+<tt class="descclassname">nanshe.synthetic_data.synthetic_data.</tt><tt class="descname">generate_hypersphere_masks</tt><big>(</big><em>space</em>, <em>centers</em>, <em>radii</em>, <em>include_boundary=False</em><big>)</big><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_hypersphere_masks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a stack of masks (first index indicates which mask); where, each contains a hypersphere constructed
+using a center and radius provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the mask.</li>
+<li><strong>centers</strong> (<em>list of tuples of numbers</em>) &#8211; List of centers with one per hypersphere.</li>
+<li><strong>radii</strong> (<em>list of numbers</em>) &#8211; List of radii with one per hypersphere.</li>
+<li><strong>include_boundary</strong> (<em>bool</em>) &#8211; Whether the mask should contain the boundary of the hypersphere or not.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">numpy.ndarray:                       A stack of masks (first index indicates which mask) with a filled
+hypersphere using a center and radius for each mask.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<span class="go">array([[[False,  True, False],</span>
+<span class="go">        [ True,  True,  True],</span>
+<span class="go">        [False,  True, False]]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<span class="go">array([[[[False, False, False],</span>
+<span class="go">         [False,  True, False],</span>
+<span class="go">         [False, False, False]],</span>
+
+<span class="go">        [[False,  True, False],</span>
+<span class="go">         [ True,  True,  True],</span>
+<span class="go">         [False,  True, False]],</span>
+
+<span class="go">        [[False, False, False],</span>
+<span class="go">         [False,  True, False],</span>
+<span class="go">         [False, False, False]]]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">array([[[False, False,  True,  True,  True,  True,  True, False, False],</span>
+<span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="go">        [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.synthetic_data.synthetic_data.generate_random_bound_points">
+<tt class="descclassname">nanshe.synthetic_data.synthetic_data.</tt><tt class="descname">generate_random_bound_points</tt><big>(</big><em>space</em>, <em>radii</em><big>)</big><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_random_bound_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_random_bound_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a collection of random points that are the center of a  hypersphere contained within the space.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Uses the typical convention [0, space_i) for all space_i from space.
+Applies the additional constraint [radius_i, space_i - radius_i).</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the space where the points will lie.</li>
+<li><strong>radii</strong> (<em>list of numbers</em>) &#8211; Additional radius for each point to remain away from the boundary.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">numpy.ndarray:                       An array with the random points each using a radius from radii to
+constrain itself. First index is which point. Second is which
+coordinate.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">array([[49, 52]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">array([[49, 52],</span>
+<span class="go">       [69, 72]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,))</span>
+<span class="go">array([[49, 52, 69]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">array([[49, 52, 69],</span>
+<span class="go">       [72, 72, 14]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-nanshe.synthetic_data"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.synthetic_data package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-nanshe.synthetic_data.synthetic_data">nanshe.synthetic_data.synthetic_data module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="nanshe.spams_sandbox.html"
+                          title="Previous page">&larr; nanshe.spams_sandbox package</a></p>
+  </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/nanshe.synthetic_data.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.spams_sandbox.html" title="nanshe.spams_sandbox package"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

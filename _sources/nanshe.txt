@@ -1,0 +1,19 @@
+nanshe package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    nanshe.nanshe
+    nanshe.spams_sandbox
+    nanshe.synthetic_data
+
+Module contents
+---------------
+
+.. automodule:: nanshe
+    :members:
+    :undoc-members:
+    :show-inheritance:

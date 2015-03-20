@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.wavelet_transform &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.wavelet_transform</h1><div class="highlight"><pre>
+<span class="c"># To change this license header, choose License Headers in Project Properties.</span>
+<span class="c"># To change this template file, choose Tools | Templates</span>
+<span class="c"># and open the template in the editor.</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$May 1, 2014 2:24:55PM$&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">scipy.misc</span>
+
+<span class="kn">import</span> <span class="nn">vigra</span>
+
+<span class="kn">import</span> <span class="nn">HDF5_recorder</span>
+
+
+<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="kn">import</span> <span class="nn">debugging_tools</span>
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="binomial_coefficients"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.wavelet_transform.binomial_coefficients">[docs]</a><span class="k">def</span> <span class="nf">binomial_coefficients</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a row in Pascal&#39;s triangle (binomial coefficients).</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            n(int):      which row of Pascal&#39;s triangle to return.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            cs(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(0)</span>
+<span class="sd">            array([1])</span>
+<span class="sd">                   </span>
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(1)</span>
+<span class="sd">            array([1, 1])</span>
+<span class="sd">                   </span>
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(2)</span>
+<span class="sd">            array([1, 2, 1])</span>
+<span class="sd">                   </span>
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(4)</span>
+<span class="sd">            array([1, 4, 6, 4, 1])</span>
+<span class="sd">                   </span>
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(4.0)</span>
+<span class="sd">            array([1, 4, 6, 4, 1])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Must be integer</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="c"># Below 0 is irrelevant. </span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c"># Get enough repeats of n to get each coefficent</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c"># Get all relevant k&#39;s</span>
+    <span class="n">ks</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Get all the coefficents in order</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="binomial_1D_array_kernel"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.wavelet_transform.binomial_1D_array_kernel">[docs]</a><span class="k">def</span> <span class="nf">binomial_1D_array_kernel</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a 1D numpy array used to make the kernel for the wavelet transform.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            i(int):      which scaling to use.</span>
+<span class="sd">            n(int):      which row of Pascal&#39;s triangle to return.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            r(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_array_kernel(0)</span>
+<span class="sd">            array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_array_kernel(0, 4)</span>
+<span class="sd">            array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_array_kernel(1, 4)</span>
+<span class="sd">            array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_array_kernel(2, 4)</span>
+<span class="sd">            array([ 0.0625,  0.    ,  0.25  ,  0.    ,  0.375 ,  0.    ,  0.25  ,</span>
+<span class="sd">                    0.    ,  0.0625])</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_array_kernel(3, 4)</span>
+<span class="sd">            array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,</span>
+<span class="sd">                    0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,</span>
+<span class="sd">                    0.    ,  0.    ,  0.0625])</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_array_kernel(4, 4)</span>
+<span class="sd">            array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,</span>
+<span class="sd">                    0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,</span>
+<span class="sd">                    0.    ,  0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.    ,</span>
+<span class="sd">                    0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,</span>
+<span class="sd">                    0.    ,  0.    ,  0.    ,  0.    ,  0.0625])</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_array_kernel(2, 1)</span>
+<span class="sd">            array([ 0.5,  0. ,  0.5])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Below 1 is irrelevant.</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c"># Below 0 is irrelevant. </span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c"># Get the binomial coefficients.</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+    <span class="c"># Get the right number of zeros to fill in</span>
+    <span class="n">zs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">))</span>
+
+    <span class="c"># Create the contents of the 1D kernel before normalization</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">zs</span><span class="p">)</span>
+
+        <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c"># Normalization on the L_1 norm.</span>
+    <span class="n">r</span> <span class="o">/=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">n</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="binomial_1D_vigra_kernel"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.wavelet_transform.binomial_1D_vigra_kernel">[docs]</a><span class="k">def</span> <span class="nf">binomial_1D_vigra_kernel</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">border_treatment</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">BorderTreatmentMode</span><span class="o">.</span><span class="n">BORDER_TREATMENT_REFLECT</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            i(int):                                                 which scaling to use.</span>
+<span class="sd">            n(int):                                                 which row of Pascal&#39;s triangle to return.</span>
+<span class="sd">            border_treatment(vigra.filters.BorderTreatmentMode):    determines how to deal with the borders.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            k(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; binomial_1D_vigra_kernel(1) # doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;vigra.filters.Kernel1D object at 0x...&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Generate the vector for the kernel</span>
+    <span class="n">h_kern</span> <span class="o">=</span> <span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="c"># Determine the kernel center</span>
+    <span class="n">h_kern_half_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">h_kern</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="c"># Default kernel</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">Kernel1D</span><span class="p">()</span>
+    <span class="c"># Center the kernel</span>
+    <span class="n">k</span><span class="o">.</span><span class="n">initExplicitly</span><span class="p">(</span><span class="o">-</span><span class="n">h_kern_half_width</span><span class="p">,</span> <span class="n">h_kern_half_width</span><span class="p">,</span> <span class="n">h_kern</span><span class="p">)</span>
+    <span class="c"># Set the border treatment mode.</span>
+    <span class="n">k</span><span class="o">.</span><span class="n">setBorderTreatment</span><span class="p">(</span><span class="n">border_treatment</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@HDF5_recorder.static_array_debug_recorder</span>
+<div class="viewcode-block" id="wavelet_transform"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.wavelet_transform.wavelet_transform">[docs]</a><span class="k">def</span> <span class="nf">wavelet_transform</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            im0(numpy.ndarray):                                  the original image.</span>
+<span class="sd">            scale(int):                                          the scale of wavelet transform to apply.</span>
+<span class="sd">            include_intermediates(bool):                         whether to return intermediates or not (default False).</span>
+<span class="sd">            include_lower_scales(bool):                          whether to include lower scales or not (default False)</span>
+<span class="sd">                                                                 (ignored if include_intermediates is True).</span>
+<span class="sd">            out(numpy.ndarray):                                  holds final result (cannot use unless</span>
+<span class="sd">                                                                 include_intermediates is False or an AssertionError</span>
+<span class="sd">                                                                 will be raised.)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            k(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; wavelet_transform(numpy.eye(3, dtype = numpy.float32),</span>
+<span class="sd">            ...     scale = 1,</span>
+<span class="sd">            ...     include_intermediates = True,</span>
+<span class="sd">            ...     include_lower_scales = True) # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            (array([[[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                     [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                     [-0.34375, -0.375  ,  0.59375]]], dtype=float32),</span>
+<span class="sd">             array([[[ 1.     ,  0.     ,  0.     ],</span>
+<span class="sd">                     [ 0.     ,  1.     ,  0.     ],</span>
+<span class="sd">                     [ 0.     ,  0.     ,  1.     ]],</span>
+<span class="sd">                    [[ 0.40625,  0.375  ,  0.34375],</span>
+<span class="sd">                     [ 0.375  ,  0.375  ,  0.375  ],</span>
+<span class="sd">                     [ 0.34375,  0.375  ,  0.40625]]], dtype=float32))</span>
+
+<span class="sd">            &gt;&gt;&gt; wavelet_transform(numpy.eye(3, dtype = numpy.float32),</span>
+<span class="sd">            ...     scale = 1,</span>
+<span class="sd">            ...     include_intermediates = False,</span>
+<span class="sd">            ...     include_lower_scales = True)</span>
+<span class="sd">            array([[[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                    [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                    [-0.34375, -0.375  ,  0.59375]]], dtype=float32)</span>
+
+<span class="sd">            &gt;&gt;&gt; wavelet_transform(numpy.eye(3, dtype = numpy.float32),</span>
+<span class="sd">            ...     scale = 1,</span>
+<span class="sd">            ...     include_intermediates = False,</span>
+<span class="sd">            ...     include_lower_scales = False)</span>
+<span class="sd">            array([[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                   [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
+
+<span class="sd">            &gt;&gt;&gt; out = numpy.zeros((3, 3), dtype = numpy.float32)</span>
+<span class="sd">            &gt;&gt;&gt; wavelet_transform(numpy.eye(3, dtype = numpy.float32),</span>
+<span class="sd">            ...     scale = 1,</span>
+<span class="sd">            ...     include_intermediates = False,</span>
+<span class="sd">            ...     include_lower_scales = False,</span>
+<span class="sd">            ...     out = out)</span>
+<span class="sd">            array([[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                   [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
+<span class="sd">            &gt;&gt;&gt; out</span>
+<span class="sd">            array([[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                   [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
+
+<span class="sd">            &gt;&gt;&gt; out = numpy.eye(3, dtype = numpy.float32)</span>
+<span class="sd">            &gt;&gt;&gt; wavelet_transform(out,</span>
+<span class="sd">            ...     scale = 1,</span>
+<span class="sd">            ...     include_intermediates = False,</span>
+<span class="sd">            ...     include_lower_scales = False,</span>
+<span class="sd">            ...     out = out)</span>
+<span class="sd">            array([[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                   [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
+<span class="sd">            &gt;&gt;&gt; out</span>
+<span class="sd">            array([[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                   [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
+
+<span class="sd">            &gt;&gt;&gt; out = numpy.eye(3, dtype = numpy.uint8)</span>
+<span class="sd">            &gt;&gt;&gt; wavelet_transform(out,</span>
+<span class="sd">            ...     scale = 1,</span>
+<span class="sd">            ...     include_intermediates = False,</span>
+<span class="sd">            ...     include_lower_scales = False,</span>
+<span class="sd">            ...     out = out)</span>
+<span class="sd">            array([[ 0.59375, -0.375  , -0.34375],</span>
+<span class="sd">                   [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="sd">                   [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
+<span class="sd">            &gt;&gt;&gt; out</span>
+<span class="sd">            array([[1, 0, 0],</span>
+<span class="sd">                   [0, 1, 0],</span>
+<span class="sd">                   [0, 0, 1]], dtype=uint8)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">im0</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Provided im0 with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">im0</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
+                      <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+
+        <span class="n">im0</span> <span class="o">=</span> <span class="n">im0</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c"># Make sure that we have scale as a list.</span>
+    <span class="c"># If it is not a list, then make a singleton list.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">scale</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s">&quot;Scale should only have 1 dimension. Instead, got scale.ndim = </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scale</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span> <span class="o">!=</span> <span class="n">im0</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s">&quot;Scale should have a value of each dimension of im0. Instead, got len(scale) = </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> and im0.ndim = </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">im0</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">scale</span><span class="p">],</span> <span class="n">im0</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+
+
+    <span class="n">imPrev</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">imCur</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">include_intermediates</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">W</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">scale</span><span class="o">.</span><span class="n">max</span><span class="p">(),)</span> <span class="o">+</span> <span class="n">im0</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">imOut</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">scale</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">im0</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">imOut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">im0</span>
+
+        <span class="n">imCur</span> <span class="o">=</span> <span class="n">imOut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">imPrev</span> <span class="o">=</span> <span class="n">imCur</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">include_lower_scales</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">W</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">scale</span><span class="o">.</span><span class="n">max</span><span class="p">(),)</span> <span class="o">+</span> <span class="n">im0</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">W</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+                <span class="k">assert</span> <span class="p">(</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">((</span><span class="n">scale</span><span class="o">.</span><span class="n">max</span><span class="p">(),)</span> <span class="o">+</span> <span class="n">im0</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Provided out with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
+                                  <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+
+                <span class="n">W</span> <span class="o">=</span> <span class="n">out</span>
+
+            <span class="n">imPrev</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">im0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">im0</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Provided out with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
+                                  <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+
+                    <span class="n">out</span> <span class="o">=</span> <span class="n">im0</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+                <span class="n">imPrev</span> <span class="o">=</span> <span class="n">out</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">imPrev</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">im0</span><span class="p">)</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">imPrev</span>
+
+        <span class="n">imCur</span> <span class="o">=</span> <span class="n">im0</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">include_intermediates</span><span class="p">:</span>
+            <span class="n">imPrev</span> <span class="o">=</span> <span class="n">imCur</span>
+            <span class="n">imOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">imOut</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">imCur</span> <span class="o">=</span> <span class="n">imOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">imPrev</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">imCur</span>
+
+        <span class="n">h_ker</span> <span class="o">=</span> <span class="n">binomial_1D_vigra_kernel</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">scale</span><span class="p">[</span><span class="n">d</span><span class="p">]:</span>
+                <span class="n">vigra</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">convolveOneDimension</span><span class="p">(</span><span class="n">imCur</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">h_ker</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">imCur</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">include_intermediates</span> <span class="ow">or</span> <span class="n">include_lower_scales</span><span class="p">:</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">imPrev</span> <span class="o">-</span> <span class="n">imCur</span>
+
+    <span class="k">if</span> <span class="n">include_intermediates</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">((</span><span class="n">W</span><span class="p">,</span> <span class="n">imOut</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">include_lower_scales</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Same as returning imPrev - imCur. Except, it avoids generating another array to hold the result.</span>
+        <span class="n">out</span> <span class="o">-=</span> <span class="n">imCur</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

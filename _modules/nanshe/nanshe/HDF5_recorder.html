@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.HDF5_recorder &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.HDF5_recorder</h1><div class="highlight"><pre>
+<span class="c"># To change this license header, choose License Headers in Project Properties.</span>
+<span class="c"># To change this template file, choose Tools | Templates</span>
+<span class="c"># and open the template in the editor.</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 4, 2014 11:10:55 AM$&quot;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+
+<span class="kn">import</span> <span class="nn">HDF5_serializers</span>
+<span class="kn">import</span> <span class="nn">generic_decorators</span>
+
+<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="kn">import</span> <span class="nn">debugging_tools</span>
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@debugging_tools.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="EmptyArrayRecorder"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.EmptyArrayRecorder">[docs]</a><span class="k">class</span> <span class="nc">EmptyArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__recorders</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="c"># For forward compatibility with Python 3</span>
+    <span class="n">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+
+<div class="viewcode-block" id="EmptyArrayRecorder.get"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.EmptyArrayRecorder.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">default</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__recorders</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__recorders</span><span class="p">:</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">EmptyArrayRecorder</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c"># Exception will be thrown if value is empty or if key already exists (as intended).</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__recorders</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="HDF5ArrayRecorder"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.HDF5ArrayRecorder">[docs]</a><span class="k">class</span> <span class="nc">HDF5ArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdf5_handle</span><span class="p">,</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span> <span class="o">=</span> <span class="n">hdf5_handle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="o">=</span> <span class="n">overwrite</span>
+
+    <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># For forward compatibility with Python 3</span>
+    <span class="n">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+
+<div class="viewcode-block" id="HDF5ArrayRecorder.get"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.HDF5ArrayRecorder.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">default</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">HDF5ArrayRecorder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">HDF5_serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; in &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
+            <span class="c"># Check to see if the output must go somewhere special.</span>
+            <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+                <span class="c"># If so, check to see if it exists.</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">:</span>
+                    <span class="c"># If it does and we want to overwrite it, do so.</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">:</span>
+                        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+                        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+                        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c"># Create it if it doesn&#39;t, exist.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.</span>
+            <span class="c"># Exception will be thrown if value is empty or if key already exists (as intended).</span>
+            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+                <span class="n">HDF5_serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">,</span>
+                                                                      <span class="n">key</span><span class="p">,</span>
+                                                                      <span class="n">value</span><span class="p">,</span>
+                                                                      <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+                <span class="k">return</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="HDF5EnumeratedArrayRecorder"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder">[docs]</a><span class="k">class</span> <span class="nc">HDF5EnumeratedArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdf5_handle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span> <span class="o">=</span> <span class="n">hdf5_handle</span>
+
+        <span class="c"># Must be a logger if it already exists.</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;is_logger&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;is_logger&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">each_index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">:</span>
+            <span class="n">each_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">each_index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">],</span> <span class="n">each_index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
+            <span class="k">for</span> <span class="n">each_key</span> <span class="ow">in</span> <span class="n">hdf5_index_handle</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;is_logger&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+                    <span class="k">for</span> <span class="n">each_index</span> <span class="ow">in</span> <span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">each_key</span><span class="p">]:</span>
+                        <span class="n">each_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">each_index</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">],</span> <span class="n">each_index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># For forward compatibility with Python 3</span>
+    <span class="n">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+
+<div class="viewcode-block" id="HDF5EnumeratedArrayRecorder.get"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">default</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">root_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">key_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">assert</span> <span class="p">(</span><span class="n">root_i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="p">(</span><span class="n">key_i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">root_i_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">root_i</span><span class="p">)</span>
+
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">root_i_str</span><span class="p">],</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">root_i_str</span><span class="p">][</span><span class="n">key</span><span class="p">],</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)</span>
+
+            <span class="n">key_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">root_i_str</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">key_i</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">HDF5EnumeratedArrayRecorder</span><span class="p">(</span><span class="n">key_handle</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">key_i_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key_i</span><span class="p">)</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">HDF5_serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">key_handle</span><span class="p">,</span> <span class="n">key_i_str</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; in &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s">&quot;.&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)</span> <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot store dataset in top level group ( &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ).&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+                <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
+                <span class="c"># Create a group if it doesn&#39;t already exist.</span>
+                <span class="n">hdf5_index_handle</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">hdf5_index_handle</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;is_logger&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">hdf5_index_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.</span>
+                <span class="c"># Exception will be thrown if value is empty or if key already exists (as intended).</span>
+
+                <span class="c"># Index into a NumPy structured array can return a void type even though it is a valid array, which can</span>
+                <span class="c"># be stored. So, we must check.</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+                        <span class="k">raise</span>
+                <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+                    <span class="c"># If so, check to see if it exists.</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">:</span>
+                        <span class="n">hdf5_index_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                        <span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;is_logger&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+                        <span class="n">hdf5_index_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                    <span class="n">HDF5_serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+                                                                           <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]),</span>
+                                                                           <span class="n">value</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="generate_HDF5_array_recorder"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.generate_HDF5_array_recorder">[docs]</a><span class="k">def</span> <span class="nf">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="n">group_name</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">enable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">overwrite_group</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">recorder_constructor</span> <span class="o">=</span> <span class="n">HDF5ArrayRecorder</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a function used for writing arrays (structured or otherwise)</span>
+<span class="sd">        to a group in an HDF5 file.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            hdf5_handle:            The HDF5 file group to place the debug contents into.</span>
+
+<span class="sd">            group_name:             The name of the group within hdf5_handle to save the contents to.</span>
+<span class="sd">                                    (If set to the empty string, data will be saved to hdf5_handle directly)</span>
+
+<span class="sd">            enable:                 Whether to generate a real logger or a fake one.</span>
+
+<span class="sd">            overwrite_group:        Whether to overwrite the group where data is stored.</span>
+
+<span class="sd">            recorder_constructor:   Type of recorder to use if enable is True.</span>
+
+<span class="sd">            **kwargs:               Other arguments to pass through to the recorder_constructor (won&#39;t pass through if</span>
+<span class="sd">                                    enable is false).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A function, which will take a given array name and value and write them out.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">hdf5_handle</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">enable</span><span class="p">):</span>
+        <span class="n">hdf5_recording_handle</span> <span class="o">=</span> <span class="n">hdf5_handle</span>
+
+        <span class="c"># Check to if the output must go somewhere special.</span>
+        <span class="k">if</span> <span class="n">group_name</span><span class="p">:</span>
+            <span class="c"># If so, check to see if it exists.</span>
+            <span class="k">if</span> <span class="n">group_name</span> <span class="ow">in</span> <span class="n">hdf5_handle</span><span class="p">:</span>
+                <span class="c"># If it does and we want to overwrite it, do so.</span>
+                <span class="k">if</span> <span class="n">overwrite_group</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">hdf5_handle</span><span class="p">[</span><span class="n">group_name</span><span class="p">]</span>
+
+                    <span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+
+                    <span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># Create it if it doesn&#39;t, exist.</span>
+                <span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+
+                <span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+            <span class="n">hdf5_recording_handle</span> <span class="o">=</span> <span class="n">hdf5_handle</span><span class="p">[</span><span class="n">group_name</span><span class="p">]</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">recorder_constructor</span><span class="p">(</span><span class="n">hdf5_recording_handle</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">EmptyArrayRecorder</span><span class="p">())</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.static_subgrouping_array_recorders">[docs]</a><span class="k">def</span> <span class="nf">static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (callable):                                 A decorator that adds the static variable, recorders, to the</span>
+<span class="sd">                                                        given function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">static_subgrouping_array_recorders_tie</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Creates a decorator that adds a static variable recorders to the function it decorates.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                callable(callable):     All variables to be named (set to EmptyArrayRecorder()).</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (callable):             A function with the static variable, recorders, added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">class</span> <span class="nc">SubgroupingRecorders</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="c"># &quot;&quot;&quot;</span>
+            <span class="c">#     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the</span>
+            <span class="c">#     callable on assignment.</span>
+            <span class="c"># &quot;&quot;&quot;</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="c"># &quot;&quot;&quot;</span>
+                <span class="c">#     Contains ArrayRecorders that write to a subgroup of the same name as the callable.</span>
+                <span class="c">#</span>
+                <span class="c">#     Args:</span>
+                <span class="c">#         args(tuple of strs):                        All variables to be named (set to</span>
+                <span class="c">#                                                     EmptyArrayRecorder()).</span>
+                <span class="c">#</span>
+                <span class="c">#     Keyword Args:</span>
+                <span class="c">#         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of</span>
+                <span class="c">#                                                     type ArrayRecorder.</span>
+                <span class="c"># &quot;&quot;&quot;</span>
+
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
+                    <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">])</span>
+
+            <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">_v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">_v</span><span class="p">[</span><span class="nb">callable</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span><span class="p">[</span><span class="nb">callable</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span>
+                        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">EmptyArrayRecorder</span><span class="p">):</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="k">raise</span>
+
+            <span class="k">def</span> <span class="nf">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
+
+        <span class="nb">callable</span> <span class="o">=</span> <span class="n">generic_decorators</span><span class="o">.</span><span class="n">static_variables</span><span class="p">(</span><span class="n">recorders</span> <span class="o">=</span> <span class="n">SubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))(</span><span class="nb">callable</span><span class="p">)</span>
+
+        <span class="nd">@generic_decorators.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">static_subgrouping_array_recorders_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="c"># Force all recorders to ensure their output Group exists.</span>
+            <span class="c"># All of them actually make the directory.</span>
+            <span class="c"># However, HDF5EnumeratedArrayRecorder needs a clue as to</span>
+            <span class="c"># when it should switch to a new one as it will keep different</span>
+            <span class="c"># runs separate.</span>
+            <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="nb">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
+                <span class="nb">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">][</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">static_subgrouping_array_recorders_wrapper</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">static_subgrouping_array_recorders_tie</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="static_array_debug_recorder"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.static_array_debug_recorder">[docs]</a><span class="k">def</span> <span class="nf">static_array_debug_recorder</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the</span>
+<span class="sd">        function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on</span>
+<span class="sd">        assignment it automatically creates a subgroup with the same name as the function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callable(callable):    All variables to be named (set to EmptyArrayRecorder()).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (callable):            A decorator that adds the static variable array_debug_recorder to the given function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">callable</span> <span class="o">=</span> <span class="n">static_subgrouping_array_recorders</span><span class="p">(</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">())(</span><span class="nb">callable</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="class_static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.class_static_subgrouping_array_recorders">[docs]</a><span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (callable):                                 A decorator that adds the static variable, recorders, to the</span>
+<span class="sd">                                                        given function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders_tie</span><span class="p">(</span><span class="n">a_class</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Creates a decorator that adds a static variable recorders to the function it decorates.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                a_class(class):     All variables to be named (set to EmptyArrayRecorder()).</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (class):             A function with the static variable, recorders, added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">class</span> <span class="nc">ClassSubgroupingRecorders</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="c"># &quot;&quot;&quot;</span>
+            <span class="c">#     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the</span>
+            <span class="c">#     a_class on assignment.</span>
+            <span class="c"># &quot;&quot;&quot;</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="c"># &quot;&quot;&quot;</span>
+                <span class="c">#     Contains ArrayRecorders that write to a subgroup of the same name as the a_class.</span>
+                <span class="c">#</span>
+                <span class="c">#     Args:</span>
+                <span class="c">#         args(tuple of strs):                        All variables to be named (set to</span>
+                <span class="c">#                                                     EmptyArrayRecorder()).</span>
+                <span class="c">#</span>
+                <span class="c">#     Keyword Args:</span>
+                <span class="c">#         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of</span>
+                <span class="c">#                                                     type ArrayRecorder.</span>
+                <span class="c"># &quot;&quot;&quot;</span>
+
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
+                    <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">])</span>
+
+            <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">_v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">_v</span><span class="p">[</span><span class="n">a_class</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span><span class="p">[</span><span class="n">a_class</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span>
+                        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">EmptyArrayRecorder</span><span class="p">):</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="k">raise</span>
+
+            <span class="k">def</span> <span class="nf">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
+
+        <span class="n">a_class</span> <span class="o">=</span> <span class="n">generic_decorators</span><span class="o">.</span><span class="n">class_static_variables</span><span class="p">(</span><span class="n">recorders</span> <span class="o">=</span> <span class="n">ClassSubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))(</span><span class="n">a_class</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders__init__decorator</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
+            <span class="nd">@generic_decorators.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders__init__wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="c"># Force all recorders to ensure their output Group exists.</span>
+                <span class="c"># All of them actually make the directory.</span>
+                <span class="c"># However, HDF5EnumeratedArrayRecorder needs a clue as to</span>
+                <span class="c"># when it should switch to a new one as it will keep different</span>
+                <span class="c"># runs separate.</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span> <span class="o">=</span> <span class="n">ClassSubgroupingRecorders</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">a_class</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_class</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
+
+                <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="n">class_static_subgrouping_array_recorders__init__wrapper</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders_decorator</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
+            <span class="nb">callable</span> <span class="o">=</span> <span class="n">static_subgrouping_array_recorders</span><span class="p">()(</span><span class="nb">callable</span><span class="p">)</span>
+
+            <span class="nd">@generic_decorators.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="c"># Force all recorders to ensure their output Group exists.</span>
+                <span class="c"># All of them actually make the directory.</span>
+                <span class="c"># However, HDF5EnumeratedArrayRecorder needs a clue as to</span>
+                <span class="c"># when it should switch to a new one as it will keep different</span>
+                <span class="c"># runs separate.</span>
+                <span class="nb">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
+                    <span class="c"># setattr(callable.recorders, _k, self.recorders.__dict__[_k][callable.__name__)])</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="nb">callable</span><span class="o">.</span><span class="n">recorders</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="p">,</span> <span class="n">_k</span><span class="p">))</span>
+                    <span class="c"># callable.recorders.__dict__[_k][&quot;.&quot;] = None</span>
+
+                <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="n">class_static_subgrouping_array_recorders_wrapper</span><span class="p">)</span>
+
+        <span class="c"># Wraps __init__ only</span>
+        <span class="n">a_class</span> <span class="o">=</span> <span class="n">generic_decorators</span><span class="o">.</span><span class="n">class_decorate_methods</span><span class="p">(</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">class_static_subgrouping_array_recorders__init__decorator</span><span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
+
+        <span class="c"># Wrap everything</span>
+        <span class="n">a_class</span> <span class="o">=</span> <span class="n">generic_decorators</span><span class="o">.</span><span class="n">class_decorate_all_methods</span><span class="p">(</span><span class="n">class_static_subgrouping_array_recorders_decorator</span><span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
+
+
+        <span class="c"># Must be done last.</span>
+        <span class="c"># Precedes the constructor to ensure a new working directory is created.</span>
+        <span class="k">class</span> <span class="nc">MetaSubgroupingRecorders</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">][</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+                <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaSubgroupingRecorders</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="n">a_class</span> <span class="o">=</span> <span class="n">generic_decorators</span><span class="o">.</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaSubgroupingRecorders</span><span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">a_class</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">class_static_subgrouping_array_recorders_tie</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="class_static_array_debug_recorder"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_recorder.class_static_array_debug_recorder">[docs]</a><span class="k">def</span> <span class="nf">class_static_array_debug_recorder</span><span class="p">(</span><span class="n">a_class</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the</span>
+<span class="sd">        function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on</span>
+<span class="sd">        assignment it automatically creates a subgroup with the same name as the function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_class(class):    All variables to be named (set to EmptyArrayRecorder()).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (class):            A decorator that adds the static variable array_debug_recorder to the given function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">a_class</span> <span class="o">=</span> <span class="n">class_static_subgrouping_array_recorders</span><span class="p">(</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">())(</span><span class="n">a_class</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">a_class</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

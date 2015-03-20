@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.simple_image_processing &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.simple_image_processing</h1><div class="highlight"><pre>
+<span class="c"># To change this license header, choose License Headers in Project Properties.</span>
+<span class="c"># To change this template file, choose Tools | Templates</span>
+<span class="c"># and open the template in the editor.</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 30, 2014 5:14:50PM$&quot;</span>
+
+
+
+<span class="c"># Generally useful and fast to import so done immediately.</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="kn">import</span> <span class="nn">debugging_tools</span>
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="zeroed_mean_images"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.simple_image_processing.zeroed_mean_images">[docs]</a><span class="k">def</span> <span class="nf">zeroed_mean_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_numpy_array(numpy.ndarray):     array images with time as the first index</span>
+<span class="sd">            output_array(numpy.ndarray):        provides a location to store the result (optional)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            result(numpy.ndarray):              The same array with each images mean removed.</span>
+<span class="sd">                                                Where means[i] = mean(new_numpy_array[i])</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[0.,0.],[0.,0.]]))</span>
+<span class="sd">            array([[ 0.,  0.],</span>
+<span class="sd">                   [ 0.,  0.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[6.,0.],[0.,0.]]))</span>
+<span class="sd">            array([[ 3., -3.],</span>
+<span class="sd">                   [ 0.,  0.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[0.,0.],[0.,4.]]))</span>
+<span class="sd">            array([[ 0.,  0.],</span>
+<span class="sd">                   [-2.,  2.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[6.,0],[0.,4.]]))</span>
+<span class="sd">            array([[ 3., -3.],</span>
+<span class="sd">                   [-2.,  2.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[1.,2.],[3.,4.]]))</span>
+<span class="sd">            array([[-0.5,  0.5],</span>
+<span class="sd">                   [-0.5,  0.5]])</span>
+
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[1,2],[3,4]])) #doctest: +ELLIPSIS</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">                ...</span>
+<span class="sd">            AssertionError</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]])</span>
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(a, output_array=a)</span>
+<span class="sd">            array([[-0.5,  0.5],</span>
+<span class="sd">                   [-0.5,  0.5]])</span>
+<span class="sd">            &gt;&gt;&gt; a</span>
+<span class="sd">            array([[-0.5,  0.5],</span>
+<span class="sd">                   [-0.5,  0.5]])</span>
+
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[1,2],[3,4]]).astype(numpy.float32))</span>
+<span class="sd">            array([[-0.5,  0.5],</span>
+<span class="sd">                   [-0.5,  0.5]], dtype=float32)</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a != zeroed_mean_images(a))</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == zeroed_mean_images(a, output_array = a))</span>
+<span class="sd">            True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">input_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_array</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">output_array</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">output_array</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="p">(</span><span class="n">input_array</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">output_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">output_array</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_array</span>
+
+    <span class="c"># start with means having the same contents as the given images</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="n">output_array</span>
+
+    <span class="c"># take the mean while we haven&#39;t gotten one mean for each image.</span>
+    <span class="k">while</span> <span class="n">means</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># reshape means until it has the right number of dimensions to broadcast.</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">means</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="n">means</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+
+    <span class="c"># broadcast and subtract the means so that the mean of all values in result[i] is zero</span>
+    <span class="n">output_array</span><span class="p">[:]</span> <span class="o">-=</span> <span class="n">means</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">output_array</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.simple_image_processing.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_numpy_array(numpy.ndarray):     array images with time as the first index</span>
+<span class="sd">            output_array(numpy.ndarray):        provides a location to store the result (optional)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            result(numpy.ndarray):              The same array with each images mean removed.</span>
+<span class="sd">                                                Where means[i] = mean(new_numpy_array[i])</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[0.,1.],[1.,0.]]))</span>
+<span class="sd">            array([[ 0.,  1.],</span>
+<span class="sd">                   [ 1.,  0.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[0,1],[1,0]])) #doctest: +ELLIPSIS</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">                ...</span>
+<span class="sd">            AssertionError</span>
+
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[0,1],[1,0]], dtype=numpy.float32))</span>
+<span class="sd">            array([[ 0.,  1.],</span>
+<span class="sd">                   [ 1.,  0.]], dtype=float32)</span>
+
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[0.,2.],[1.,0.]]))</span>
+<span class="sd">            array([[ 0.,  1.],</span>
+<span class="sd">                   [ 1.,  0.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[2.,2.],[1.,0.]]))</span>
+<span class="sd">            array([[ 0.70710678,  0.70710678],</span>
+<span class="sd">                   [ 1.        ,  0.        ]])</span>
+
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[1.,2.],[3.,4.]]))</span>
+<span class="sd">            array([[ 0.4472136 ,  0.89442719],</span>
+<span class="sd">                   [ 0.6       ,  0.8       ]])</span>
+
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[1.,2.],[3.,4.]]), ord = 1)</span>
+<span class="sd">            array([[ 0.33333333,  0.66666667],</span>
+<span class="sd">                   [ 0.42857143,  0.57142857]])</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a != renormalized_images(a))</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == renormalized_images(a, output_array = a))</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.zeros((2,3,)))</span>
+<span class="sd">            array([[ 0.,  0.,  0.],</span>
+<span class="sd">                   [ 0.,  0.,  0.]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">input_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_array</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">output_array</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">output_array</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="p">(</span><span class="n">input_array</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">output_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">output_array</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_array</span>
+
+    <span class="c"># Unfortunately our version of numpy&#39;s function numpy.linalg.norm does not support the axis keyword.</span>
+    <span class="c"># So, we must use a for loop.</span>
+    <span class="c"># take each image at each time turn the image into a vector and find the norm.</span>
+    <span class="c"># divide each image by this norm. (required for spams.trainDL)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">output_array_i</span> <span class="o">=</span> <span class="n">output_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">output_array_i_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">output_array_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">output_array_i_norm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">output_array_i</span> <span class="o">/=</span> <span class="n">output_array_i_norm</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">output_array</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

@@ -1,0 +1,1314 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.nanshe.additional_generators &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nanshe.nanshe.additional_generators</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="kn">import</span> <span class="nn">debugging_tools</span>
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="index_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.index_generator">[docs]</a><span class="k">def</span> <span class="nf">index_generator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            *sizes(int):            an argument list of ints for the max sizes in each index.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            chain_gen(generator):   a generator over every possible coordinated</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; index_generator(0) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;itertools.product object at 0x...&gt;</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(index_generator(0))</span>
+<span class="sd">            []</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(index_generator(0, 2))</span>
+<span class="sd">            []</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(index_generator(2, 0))</span>
+<span class="sd">            []</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(index_generator(2, 1))</span>
+<span class="sd">            [(0, 0), (1, 0)]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(index_generator(1, 2))</span>
+<span class="sd">            [(0, 0), (0, 1)]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(index_generator(3, 2))</span>
+<span class="sd">            [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Creates a list of xrange generator objects over each respective dimension of sizes</span>
+    <span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="nb">xrange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">]</span>
+
+    <span class="c"># Combines the generators to a single generator of indices that go throughout sizes</span>
+    <span class="n">chain_gen</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">gens</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="index_enumerator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.index_enumerator">[docs]</a><span class="k">def</span> <span class="nf">index_enumerator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size (i.e. like</span>
+<span class="sd">        index_generator). However, also included is an index corresponding to how many elements have been seen.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *sizes(int):            an argument list of ints for the max sizes in each index.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            chain_gen(generator):   a generator over every possible coordinated</span>
+
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; index_enumerator(0) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;enumerate object at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(index_enumerator(0))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(index_enumerator(0, 2))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(index_enumerator(2, 0))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(index_enumerator(2, 1))</span>
+<span class="sd">            [(0, (0, 0)), (1, (1, 0))]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(index_enumerator(1, 2))</span>
+<span class="sd">            [(0, (0, 0)), (1, (0, 1))]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(index_enumerator(3, 2))</span>
+<span class="sd">            [(0, (0, 0)), (1, (0, 1)), (2, (1, 0)), (3, (1, 1)), (4, (2, 0)), (5, (2, 1))]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Creates a list of xrange generator objects over each respective dimension of sizes</span>
+    <span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="nb">xrange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">]</span>
+
+    <span class="c"># Combines the generators to a single generator of indices that go throughout sizes</span>
+    <span class="n">chain_gen</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">gens</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="list_indices_to_index_array"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.list_indices_to_index_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_index_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a list of tuple indices to numpy index array.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            list_indices(list):    a list of indices corresponding to some array object</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            chain_gen(tuple):       a tuple containing a numpy array in for each index</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_index_array([])</span>
+<span class="sd">            ()</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_index_array([(1,2)])</span>
+<span class="sd">            (array([1]), array([2]))</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_index_array([(1, 2), (5, 7), (33, 2)])</span>
+<span class="sd">            (array([ 1,  5, 33]), array([2, 7, 2]))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Combines the indices so that one dimension is represented by each list.</span>
+    <span class="c"># Then converts this to a tuple numpy.ndarrays.</span>
+    <span class="k">return</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">list_indices</span><span class="p">))))</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="list_indices_to_numpy_bool_array"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.list_indices_to_numpy_bool_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_numpy_bool_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.</span>
+<span class="sd">        All indices in list_indices are set to True in the numpy.ndarray. The rest are False by default.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            list_indices(list):      a list of indices corresponding to some numpy.ndarray object</span>
+<span class="sd">            shape(tuple):            a tuple used to set the shape of the numpy.ndarray to return </span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            result(numpy.ndarray):   a numpy.ndarray with dtype bool (True for indices in list_indices and False otherwise).</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([], ())</span>
+<span class="sd">            array(False, dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([], (0))</span>
+<span class="sd">            array([], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([], (0,0))</span>
+<span class="sd">            array([], shape=(0, 0), dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([], shape=(1))</span>
+<span class="sd">            array([False], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([(0,0)], (1,1))</span>
+<span class="sd">            array([[ True]], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([(2,3), (0,0), (0,2), (1,1)], (3,4))</span>
+<span class="sd">            array([[ True, False,  True, False],</span>
+<span class="sd">                   [False,  True, False, False],</span>
+<span class="sd">                   [False, False, False,  True]], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Constructs the numpy.ndarray with False everywhere</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">)</span>
+
+    <span class="c"># Gets the index array</span>
+    <span class="c"># Done first to make sure that if list_indices is this [], or this (), or this [()]</span>
+    <span class="c"># will be converted to this ().</span>
+    <span class="n">index_array</span> <span class="o">=</span> <span class="n">list_indices_to_index_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">)</span>
+
+    <span class="c"># Sets the given indices to True</span>
+    <span class="k">if</span> <span class="n">index_array</span> <span class="o">!=</span> <span class="p">():</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">index_array</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="repeat_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.repeat_generator">[docs]</a><span class="k">def</span> <span class="nf">repeat_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Repeats each value on an iterator given n-times before proceeding to the next value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_iter(iter):          an iterator that will have its values repeated contiguously</span>
+<span class="sd">            n(int):                number of times to repeat each value</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    a generator that contiguously repeats value from the given iterator.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; repeat_generator(xrange(5)) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object repeat_generator at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(repeat_generator(xrange(0)))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(repeat_generator(xrange(5), 0))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(repeat_generator(xrange(5), 1))</span>
+<span class="sd">            [0, 1, 2, 3, 4]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(repeat_generator(xrange(5), 2))</span>
+<span class="sd">            [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(repeat_generator(xrange(5), 3))</span>
+<span class="sd">            [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;n must be positive, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">((</span><span class="n">n</span> <span class="o">%</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;n must be an integer, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">each_value</span> <span class="ow">in</span> <span class="n">a_iter</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="cycle_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.cycle_generator">[docs]</a><span class="k">def</span> <span class="nf">cycle_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cycles through an iterator n-times.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_iter(iter):          an iterator that will be repeated</span>
+<span class="sd">            n(int):                number of times to repeat the iterator</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    a generator that repeats the given iterator a certain number of times.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; cycle_generator(xrange(5)) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object cycle_generator at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(cycle_generator(xrange(0)))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(cycle_generator(xrange(5), 0))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(cycle_generator(xrange(5), 1))</span>
+<span class="sd">            [0, 1, 2, 3, 4]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(cycle_generator(xrange(5), 2))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(cycle_generator(xrange(5), 3))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;n must be positive, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">((</span><span class="n">n</span> <span class="o">%</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;n must be an integer, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="n">a_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">itertools</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">each_value</span> <span class="ow">in</span> <span class="n">a_iter</span><span class="p">:</span>
+        <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="iter_with_skip_indices"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.iter_with_skip_indices">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_indices</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary values, as well.</span>
+<span class="sd">        These values to be skipped should be specified by their indices using some iterable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_iter(iter):          an iterator that will skip some values</span>
+<span class="sd">            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    a generator that skips some values with indices in to_skip.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; iter_with_skip_indices(xrange(10)) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object iter_with_skip_indices at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(10)))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(10), to_skip = 2))</span>
+<span class="sd">            [0, 1, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(1, 10), to_skip = 2))</span>
+<span class="sd">            [1, 2, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(10), to_skip = [2, 7]))</span>
+<span class="sd">            [0, 1, 3, 4, 5, 6, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(10), to_skip = [0]))</span>
+<span class="sd">            [1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(1, 10), to_skip = [0]))</span>
+<span class="sd">            [2, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(10), to_skip = [9]))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">a_iter</span><span class="p">)</span>
+    <span class="n">full_enum</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">to_skip</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="n">to_skip</span><span class="p">])</span>
+
+    <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">full_enum</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">next_to_skip</span><span class="p">:</span>
+            <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="iter_with_skip_values"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.iter_with_skip_values">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_values</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary values, as well.</span>
+<span class="sd">        These values to be skipped should be specified by their indices using some iterable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_iter(iter):          an iterator that will skip some values</span>
+<span class="sd">            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    a generator that skips some values with indices in to_skip.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; iter_with_skip_values(10) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object iter_with_skip_values at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(10)))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(10)))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(1, 10)))</span>
+<span class="sd">            [1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(0, 10, 2)))</span>
+<span class="sd">            [0, 2, 4, 6, 8]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(1, 10, 2)))</span>
+<span class="sd">            [1, 3, 5, 7, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(10), to_skip = 2))</span>
+<span class="sd">            [0, 1, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(1, 10), to_skip = 2))</span>
+<span class="sd">            [1, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(0, 10, 2), to_skip = [2,6]))</span>
+<span class="sd">            [0, 4, 8]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">a_iter</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">to_skip</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">to_skip</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">to_skip</span> <span class="o">=</span> <span class="p">[</span><span class="n">to_skip</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">full</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">each</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">to_skip</span><span class="p">:</span>
+            <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="xrange_with_skip"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.xrange_with_skip">[docs]</a><span class="k">def</span> <span class="nf">xrange_with_skip</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Behaves as xrange does except allows for skipping arbitrary values as well.</span>
+<span class="sd">        These values to be skipped should be specified using some iterable.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            start(int):            start for xrange or if stop is not specified this will be stop.</span>
+<span class="sd">            stop(int):             stop for xrange.</span>
+<span class="sd">            stop(int):             step for xrange.</span>
+<span class="sd">            to_skip(iter):         some form of iterable or list of elements to skip (can be a single value as well).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    an xrange-like generator that skips some values.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; xrange_with_skip(10) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object xrange_with_skip at 0x...&gt;</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(10))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(0, 10))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(1, 10))</span>
+<span class="sd">            [1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(0, 10, 2))</span>
+<span class="sd">            [0, 2, 4, 6, 8]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(1, 10, 2))</span>
+<span class="sd">            [1, 3, 5, 7, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(10, to_skip = 2))</span>
+<span class="sd">            [0, 1, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(10, to_skip = [2, 7]))</span>
+<span class="sd">            [0, 1, 3, 4, 5, 6, 8, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(10, to_skip = [0]))</span>
+<span class="sd">            [1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(1, 10, to_skip = [0]))</span>
+<span class="sd">            [1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(10, to_skip = [9]))</span>
+<span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8]</span>
+<span class="sd">            </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">full</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">step</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">to_skip</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="n">to_skip</span><span class="p">])</span>
+
+    <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">full</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">each</span> <span class="o">!=</span> <span class="n">next_to_skip</span><span class="p">:</span>
+            <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="splitting_xrange"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.splitting_xrange">[docs]</a><span class="k">def</span> <span class="nf">splitting_xrange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Similar to xrange except that it recursively proceeds through the given range in such a way that values that</span>
+<span class="sd">        follow each other are preferably not only non-sequential, but fairly different. This does not always work with</span>
+<span class="sd">        small ranges, but works nicely with large ranges</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a(int):      the lower bound of the range</span>
+<span class="sd">            b(int):      the upper bound of the range</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            result(generator):   a generator that can be used to iterate through the sequence.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; splitting_xrange(0, 0) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object splitting_xrange at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 0))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(5, 5))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(5, 0))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 1))</span>
+<span class="sd">            [0]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 2))</span>
+<span class="sd">            [0, 1]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 3))</span>
+<span class="sd">            [0, 2, 1]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(10))</span>
+<span class="sd">            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 10))</span>
+<span class="sd">            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">:</span>
+            <span class="n">half_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+            <span class="n">mid_1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">half_diff</span><span class="p">))</span>
+            <span class="n">mid_2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">half_diff</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">mid_1</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">mid_2</span><span class="p">:</span>
+                <span class="k">yield</span><span class="p">(</span><span class="n">mid_2</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mid_1</span><span class="p">),</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">mid_2</span><span class="p">,</span> <span class="n">b</span><span class="p">)):</span>
+                    <span class="k">yield</span><span class="p">(</span><span class="n">_2</span><span class="p">)</span>
+                    <span class="k">yield</span><span class="p">(</span><span class="n">_1</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">mid_1</span> <span class="o">!=</span> <span class="n">mid_2</span><span class="p">:</span>
+                    <span class="k">yield</span><span class="p">(</span><span class="n">mid_1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">mid_1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">mid_1</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+                    <span class="k">yield</span><span class="p">(</span><span class="n">_2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">mid_2</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_1</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mid_2</span><span class="p">):</span>
+                    <span class="k">yield</span><span class="p">(</span><span class="n">_1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="k">yield</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="cumulative_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.cumulative_generator">[docs]</a><span class="k">def</span> <span class="nf">cumulative_generator</span><span class="p">(</span><span class="n">new_op</span><span class="p">,</span> <span class="n">new_iter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes each value from new_iter and applies new_op to it with the result</span>
+<span class="sd">        of previous values.</span>
+<span class="sd">        </span>
+<span class="sd">        For instance cumulative_generator(op.mul, xrange(1,5)) will return all</span>
+<span class="sd">        factorials up to and including the factorial of 4 (24).</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_op(callabel):      something that can be called on two values and return a result with a type that is a</span>
+<span class="sd">                                   permissible argument.</span>
+
+<span class="sd">            new_iter(iter):        an iterator or something that can be turned into an iterator.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    an iterator over the intermediate results.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import operator; cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object cumulative_generator at 0x...&gt;</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.add, xrange(1,5)))</span>
+<span class="sd">            [1, 3, 6, 10]</span>
+
+<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.add, xrange(5)))</span>
+<span class="sd">            [0, 1, 3, 6, 10]</span>
+
+<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.mul, xrange(5)))</span>
+<span class="sd">            [0, 0, 0, 0, 0]</span>
+
+<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.mul, xrange(1,5)))</span>
+<span class="sd">            [1, 2, 6, 24]</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">new_iter</span><span class="p">)</span>
+
+    <span class="n">cur</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">new_iter</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">new_iter</span><span class="p">:</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">new_op</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">each</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reverse_each_element"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.reverse_each_element">[docs]</a><span class="k">def</span> <span class="nf">reverse_each_element</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_iter(iter):        an iterator or something that can be turned into an iterator.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    an iterator over the reversed elements.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; reverse_each_element(zip(xrange(5, 11), xrange(5))) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object reverse_each_element at 0x...&gt;</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(reverse_each_element(zip(xrange(5, 11), xrange(5))))</span>
+<span class="sd">            [(0, 5), (1, 6), (2, 7), (3, 8), (4, 9)]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(reverse_each_element(iter([[5]])))</span>
+<span class="sd">            [[5]]</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; list(reverse_each_element(iter([[5,2,3], [1, 7, 9]])))</span>
+<span class="sd">            [[3, 2, 5], [9, 7, 1]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">new_iter</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">new_iter</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">(</span> <span class="nb">type</span><span class="p">(</span><span class="n">each</span><span class="p">)(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">each</span><span class="p">))</span> <span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="lagged_generators"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.lagged_generators">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a tuple of generators with each next generator one step ahead of the previous generator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_iter(iter):                 an iterator or something that can be turned into an iterator</span>
+<span class="sd">            n(int):                         number of generators to create as lagged</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (tuple of generator objects):   a tuple of iterators with each one step in front of the others.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; lagged_generators(xrange(5), 1) #doctest: +ELLIPSIS</span>
+<span class="sd">            (&lt;itertools.tee object at 0x...&gt;,)</span>
+
+<span class="sd">            &gt;&gt;&gt; zip(*lagged_generators(xrange(5), 1))</span>
+<span class="sd">            [(0,), (1,), (2,), (3,), (4,)]</span>
+
+<span class="sd">            &gt;&gt;&gt; zip(*lagged_generators(xrange(5), 2))</span>
+<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; zip(*lagged_generators(xrange(5)))</span>
+<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; zip(*lagged_generators(xrange(5), 3))</span>
+<span class="sd">            [(0, 1, 2), (1, 2, 3), (2, 3, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(itertools.izip_longest(*lagged_generators(xrange(5))))</span>
+<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(itertools.izip_longest(*lagged_generators(xrange(5), 3)))</span>
+<span class="sd">            [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;Only a positive semi-definite number of generators can be created.&quot;</span>
+
+    <span class="c"># Where they will be stored</span>
+    <span class="n">all_iters</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+
+    <span class="c"># If some positive definite number of generators is requested, then fill the list.</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c"># Convert to the same type</span>
+        <span class="n">next_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="c"># Duplicate the iterator</span>
+            <span class="n">prev_iter</span><span class="p">,</span> <span class="n">next_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">next_iter</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+            <span class="c"># Store the copy of the old one</span>
+            <span class="n">all_iters</span> <span class="o">+=</span> <span class="p">(</span><span class="n">prev_iter</span><span class="p">,)</span>
+
+            <span class="c"># Attempt to advance the next one</span>
+            <span class="c"># If it fails, create an empty iterator.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">next</span><span class="p">(</span><span class="n">next_iter</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="n">next_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">tee</span><span class="p">([],</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c"># Add the last one. If n == 1, the last one is the only one.</span>
+        <span class="n">all_iters</span> <span class="o">+=</span> <span class="p">(</span><span class="n">next_iter</span><span class="p">,)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">all_iters</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="lagged_generators_zipped"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.lagged_generators_zipped">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators_zipped</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">longest</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a tuple of generators with each next generator one step ahead of the previous generator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_iter(iter):                 an iterator or something that can be turned into an iterator</span>
+<span class="sd">            n(int):                         number of generators to create as lagged</span>
+<span class="sd">            longest(bool):                  whether to continue zipping along the longest generator</span>
+<span class="sd">            fillvalue:                      value to use to fill generators shorter than the longest.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            generator object:               a generator object that will return values from each iterator.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; lagged_generators_zipped(xrange(5), 1) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;itertools.izip object at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(xrange(5)))</span>
+<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(xrange(5), 1))</span>
+<span class="sd">            [(0,), (1,), (2,), (3,), (4,)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(xrange(5), 2))</span>
+<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(xrange(5), 3))</span>
+<span class="sd">            [(0, 1, 2), (1, 2, 3), (2, 3, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(xrange(5), longest=True))</span>
+<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(xrange(5), 3, True))</span>
+<span class="sd">            [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">all_iters</span> <span class="o">=</span> <span class="n">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="n">zipped_iters</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">longest</span><span class="p">:</span>
+        <span class="n">zipped_iters</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip_longest</span><span class="p">(</span><span class="o">*</span><span class="n">all_iters</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="n">fillvalue</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">zipped_iters</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">all_iters</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">zipped_iters</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="filled_stringify_numbers"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.filled_stringify_numbers">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">include_numbers</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Like enumerate except it also returns a string with the number from enumeration with left padding by zero.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_iter(iter):        a list or an iterator to use for enumeration over.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    an iterator over the reversed elements.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; filled_stringify_numbers([5, 7]) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object filled_stringify_numbers at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers([]))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers(xrange(5)))</span>
+<span class="sd">            [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers([5]))</span>
+<span class="sd">            [&#39;5&#39;]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers([5, 7]))</span>
+<span class="sd">            [&#39;5&#39;, &#39;7&#39;]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers([5, 7, 11]))</span>
+<span class="sd">            [&#39;05&#39;, &#39;07&#39;, &#39;11&#39;]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers([5, 7, 11], include_numbers = True))</span>
+<span class="sd">            [(5, &#39;05&#39;), (7, &#39;07&#39;), (11, &#39;11&#39;)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers(iter([5, 7, 11]), include_numbers = True))</span>
+<span class="sd">            [(5, &#39;05&#39;), (7, &#39;07&#39;), (11, &#39;11&#39;)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
+    <span class="n">new_list_len</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_list_max</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">new_list_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
+        <span class="n">new_list_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">new_list_len</span> <span class="k">else</span> <span class="bp">None</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">new_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
+        <span class="n">new_list_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
+        <span class="n">new_list_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">new_list_len</span> <span class="k">else</span> <span class="bp">None</span>
+
+    <span class="k">if</span> <span class="n">new_list_len</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">new_list_max</span><span class="p">:</span>
+            <span class="n">digits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">new_list_max</span><span class="p">)))</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">digits</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">include_numbers</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">new_list</span><span class="p">:</span>
+            <span class="k">yield</span><span class="p">(</span> <span class="p">(</span><span class="n">each</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">each</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">digits</span><span class="p">))</span> <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">new_list</span><span class="p">:</span>
+            <span class="k">yield</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">each</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="filled_stringify_xrange"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.filled_stringify_xrange">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_xrange</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_iter(iter):        a list or an iterator to use for enumeration over.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    an iterator over the reversed elements.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; filled_stringify_xrange([5, 7]) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object filled_stringify_xrange at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange([]))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange(xrange(5)))</span>
+<span class="sd">            [(0, &#39;0&#39;), (1, &#39;1&#39;), (2, &#39;2&#39;), (3, &#39;3&#39;), (4, &#39;4&#39;)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange(xrange(2, 5)))</span>
+<span class="sd">            [(0, &#39;0&#39;), (1, &#39;1&#39;), (2, &#39;2&#39;)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange([5]))</span>
+<span class="sd">            [(0, &#39;0&#39;)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange([5, 7]))</span>
+<span class="sd">            [(0, &#39;0&#39;), (1, &#39;1&#39;)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange(iter([5, 7])))</span>
+<span class="sd">            [(0, &#39;0&#39;), (1, &#39;1&#39;)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange(range(11)))</span>
+<span class="sd">            [(0, &#39;00&#39;), (1, &#39;01&#39;), (2, &#39;02&#39;), (3, &#39;03&#39;), (4, &#39;04&#39;), (5, &#39;05&#39;), (6, &#39;06&#39;), (7, &#39;07&#39;), (8, &#39;08&#39;), (9, &#39;09&#39;), (10, &#39;10&#39;)]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
+    <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">new_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
+        <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
+
+    <span class="n">new_list_index_gen_stringified</span> <span class="o">=</span> <span class="n">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_list_index_gen</span><span class="p">,</span> <span class="n">include_numbers</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">i_str</span> <span class="ow">in</span> <span class="n">new_list_index_gen_stringified</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">(</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">)</span> <span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="filled_stringify_enumerate"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.filled_stringify_enumerate">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_enumerate</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_iter(iter):        a list or an iterator to use for enumeration over.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (generator object):    an iterator over the reversed elements.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; filled_stringify_enumerate([5, 7]) #doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object filled_stringify_enumerate at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate([]))</span>
+<span class="sd">            []</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate(xrange(5)))</span>
+<span class="sd">            [(0, &#39;0&#39;, 0), (1, &#39;1&#39;, 1), (2, &#39;2&#39;, 2), (3, &#39;3&#39;, 3), (4, &#39;4&#39;, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate(xrange(2, 5)))</span>
+<span class="sd">            [(0, &#39;0&#39;, 2), (1, &#39;1&#39;, 3), (2, &#39;2&#39;, 4)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate([5]))</span>
+<span class="sd">            [(0, &#39;0&#39;, 5)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate([5, 7]))</span>
+<span class="sd">            [(0, &#39;0&#39;, 5), (1, &#39;1&#39;, 7)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate(iter([5, 7])))</span>
+<span class="sd">            [(0, &#39;0&#39;, 5), (1, &#39;1&#39;, 7)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate(range(11)))</span>
+<span class="sd">            [(0, &#39;00&#39;, 0), (1, &#39;01&#39;, 1), (2, &#39;02&#39;, 2), (3, &#39;03&#39;, 3), (4, &#39;04&#39;, 4), (5, &#39;05&#39;, 5), (6, &#39;06&#39;, 6), (7, &#39;07&#39;, 7), (8, &#39;08&#39;, 8), (9, &#39;09&#39;, 9), (10, &#39;10&#39;, 10)]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
+    <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">new_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
+        <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
+
+    <span class="n">new_list_index_gen_stringified</span> <span class="o">=</span> <span class="n">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_list_index_gen</span><span class="p">,</span> <span class="n">include_numbers</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">),</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">new_list_index_gen_stringified</span><span class="p">,</span> <span class="n">new_list</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="p">(</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="n">each</span><span class="p">)</span> <span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reformat_slice"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.reformat_slice">[docs]</a><span class="k">def</span> <span class="nf">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a slice and reformats it to fill in as many undefined values as possible.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_slice(slice):        a slice to reformat.</span>
+<span class="sd">            a_length(int):         a length to fill for stopping if not provided.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (slice):               a new slice with as many values filled in as possible.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(None))</span>
+<span class="sd">            slice(0, None, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(None), 10)</span>
+<span class="sd">            slice(0, 10, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None))</span>
+<span class="sd">            slice(2, None, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None), 10)</span>
+<span class="sd">            slice(2, 10, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None, None))</span>
+<span class="sd">            slice(2, None, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None, None), 10)</span>
+<span class="sd">            slice(2, 10, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, -1, None), 10)</span>
+<span class="sd">            slice(2, 9, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(None))] == range(10)[:]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None))] == range(10)[2:]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6))] == range(10)[2:6]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6, 3))] == range(10)[2:6:3]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None, 3))] == range(10)[2::3]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(None), 10)] == range(10)[:]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None), 10)] == range(10)[2:]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6), 10)] == range(10)[2:6]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6, 3), 10)] == range(10)[2:6:3]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None, 3), 10)] == range(10)[2::3]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, -6, 3), 10)] == range(10)[2:-6:3]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, -1), 10)] == range(10)[2:-1]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 20), 10)] == range(10)[2:20]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, -20), 10)] == range(10)[2:-20]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(20, -1), 10)] == range(10)[20:-1]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(-20, -1), 10)] == range(10)[-20:-1]</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(-5, -1), 10)] == range(10)[-5:-1]</span>
+<span class="sd">            True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">a_slice</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">),</span> <span class="s">&quot;err&quot;</span>
+
+    <span class="c"># Fill unknown values.</span>
+
+    <span class="n">new_slice_step</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">step</span>
+    <span class="k">if</span> <span class="n">new_slice_step</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">new_slice_step</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">start</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">new_slice_start</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">stop</span>
+
+
+    <span class="c"># Make adjustments for length</span>
+
+    <span class="k">if</span> <span class="n">a_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">):</span>
+            <span class="n">new_slice_step</span> <span class="o">=</span> <span class="o">-</span><span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">):</span>
+            <span class="n">new_slice_step</span> <span class="o">=</span> <span class="n">a_length</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">+=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">+=</span> <span class="n">a_length</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&gt;=</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
+
+
+    <span class="c"># Build new slice and return.</span>
+
+    <span class="n">new_slice</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">new_slice_start</span><span class="p">,</span> <span class="n">new_slice_stop</span><span class="p">,</span> <span class="n">new_slice_step</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reformat_slices"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.reformat_slices">[docs]</a><span class="k">def</span> <span class="nf">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slices(tuple(slice)):        a tuple of slices to reformat.</span>
+<span class="sd">            lengths(tuple(int)):         a tuple of lengths to fill.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (slice):                     a tuple of slices with all default values filled if possible.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slices(slice(None))</span>
+<span class="sd">            (slice(0, None, 1),)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slices((slice(None),))</span>
+<span class="sd">            (slice(0, None, 1),)</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)))</span>
+<span class="sd">            (slice(0, None, 1), slice(3, None, 1), slice(0, 5, 1), slice(0, None, 2))</span>
+
+<span class="sd">            &gt;&gt;&gt; reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))</span>
+<span class="sd">            (slice(0, 10, 1), slice(3, 13, 1), slice(0, 5, 1), slice(0, 20, 2))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">slices</span> <span class="o">=</span> <span class="p">(</span><span class="n">slices</span><span class="p">,)</span>
+
+    <span class="n">new_lengths</span> <span class="o">=</span> <span class="n">lengths</span>
+    <span class="k">if</span> <span class="n">new_lengths</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">new_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">new_lengths</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">new_lengths</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_lengths</span><span class="p">,)</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_lengths</span><span class="p">))</span>
+
+    <span class="n">new_slices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">each_length</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">new_lengths</span><span class="p">):</span>
+        <span class="n">new_slices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">reformat_slice</span><span class="p">(</span><span class="n">new_slices</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">each_length</span><span class="p">)</span>
+
+    <span class="n">new_slices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_slices</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">new_slices</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="UnknownSliceLengthException"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.UnknownSliceLengthException">[docs]</a><span class="k">class</span> <span class="nc">UnknownSliceLengthException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raised if a slice does not have a known length.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="len_slice"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.len_slice">[docs]</a><span class="k">def</span> <span class="nf">len_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines how many elements a slice will contain.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnknownSliceLengthException: Will raise an exception if a_slice.stop and a_length is None.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_slice(slice):        a slice to reformat.</span>
+<span class="sd">            a_length(int):         a length to fill for stopping if not provided.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (slice):               a new slice with as many values filled in as possible.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(None)) #doctest: +IGNORE_EXCEPTION_DETAIL</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(None), 10)</span>
+<span class="sd">            10</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(None), 10) == len(range(10)[:])</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None), 10)</span>
+<span class="sd">            8</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None), 10) == len(range(10)[2:])</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None, None), 10)</span>
+<span class="sd">            8</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None, None), 10) == len(range(10)[2:])</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6))</span>
+<span class="sd">            4</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6), 1000)</span>
+<span class="sd">            4</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6), 10) == len(range(10)[2:6])</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6, 3))</span>
+<span class="sd">            2</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6, 3), 10) == len(range(10)[2:6:3])</span>
+<span class="sd">            True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_slice</span> <span class="o">=</span> <span class="n">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnknownSliceLengthException</span><span class="p">(</span><span class="s">&quot;Cannot determine slice length without a defined end point. The reformatted slice was &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span><span class="p">)</span>
+
+    <span class="n">new_slice_diff</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_slice</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+
+    <span class="n">new_slice_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">new_slice_diff</span> <span class="o">/</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">step</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">new_slice_size</span><span class="p">)</span>
+
+</div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="len_slices"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.len_slices">[docs]</a><span class="k">def</span> <span class="nf">len_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slices(tuple(slice)):        a tuple of slices to reformat.</span>
+<span class="sd">            lengths(tuple(int)):         a tuple of lengths to fill.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (slice):                     a tuple of slices with all default values filled if possible.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2))) #doctest: +IGNORE_EXCEPTION_DETAIL</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
+
+<span class="sd">            &gt;&gt;&gt; len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))</span>
+<span class="sd">            (10, 10, 5, 10)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_slices</span> <span class="o">=</span> <span class="n">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+
+    <span class="n">lens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">each_slice</span> <span class="ow">in</span> <span class="n">new_slices</span><span class="p">:</span>
+        <span class="n">lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">len_slice</span><span class="p">(</span><span class="n">each_slice</span><span class="p">))</span>
+
+    <span class="n">lens</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">lens</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">lens</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>
