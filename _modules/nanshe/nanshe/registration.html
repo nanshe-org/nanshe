@@ -355,6 +355,11 @@
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">frames2reg_template_conv_max_indices_mask_above</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
         <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">-=</span> <span class="n">frames2reg_template_conv_max_indices_mask_above</span><span class="o">*</span><span class="n">frames2reg_fft_spatial_shape</span>
+    <span class="n">frames2reg_template_conv_max_indices_mask_below</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">frames2reg_fft_spatial_half_shape</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">frames2reg_template_conv_max_indices_mask_below</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">+=</span> <span class="n">frames2reg_template_conv_max_indices_mask_below</span><span class="o">*</span><span class="n">frames2reg_fft_spatial_shape</span>
 
     <span class="c"># Shift will have to be in the opposite direction to bring everything to the center.</span>
     <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span>
