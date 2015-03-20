@@ -202,9 +202,6 @@
     <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">unit_space_shift_fft</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">unit_space_shift_fft</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">template_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">,)</span> <span class="o">+</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-    <span class="n">negative_wave_vector</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">template_fft_indices</span> <span class="o">=</span> <span class="bp">None</span>
-
     <span class="c"># Repeat shift calculation until there is no further adjustment.</span>
     <span class="n">num_iters</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -266,11 +263,10 @@
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
             <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">reg_frames</span>
     <span class="k">if</span> <span class="n">include_shift</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">reg_frames</span><span class="p">,</span> <span class="n">space_shift</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">,</span> <span class="n">space_shift</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
 
 </div>
 <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
