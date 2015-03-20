@@ -50,10 +50,6 @@ File nanshe/nanshe/HDF5_searchers.py
  - No docstring for get_matching_paths_groups.get_matching_paths_groups_recursive!
  Needed: 6; Exist: 4; Missing: 2; Coverage: 66.7%
 
-File nanshe/nanshe/HDF5_serializers.py
- - No module dostring!
- Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
-
 File nanshe/nanshe/__init__.py
  - No module dostring!
  Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
@@ -259,6 +255,10 @@ File nanshe/nanshe/tiff_file_format.py
 File nanshe/nanshe/wavelet_transform.py
  - No module dostring!
  Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/nanshe/HDF5_serializers.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
 
 File nanshe/nanshe/registration.py
  - No module dostring!
