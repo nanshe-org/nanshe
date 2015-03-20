@@ -50,6 +50,30 @@ File nanshe/nanshe/HDF5_searchers.py
  - No docstring for get_matching_paths_groups.get_matching_paths_groups_recursive!
  Needed: 6; Exist: 4; Missing: 2; Coverage: 66.7%
 
+File nanshe/nanshe/HDF5_serializers.py
+ - No module dostring!
+ - No docstring for HDF5MaskedDataset.__init__!
+ - No docstring for HDF5MaskedDataset.group!
+ - No docstring for HDF5MaskedDataset.name!
+ - No docstring for HDF5MaskedDataset.data!
+ - No docstring for HDF5MaskedDataset.data!
+ - No docstring for HDF5MaskedDataset.mask!
+ - No docstring for HDF5MaskedDataset.mask!
+ - No docstring for HDF5MaskedDataset.fill_value!
+ - No docstring for HDF5MaskedDataset.fill_value!
+ - No docstring for HDF5MaskedDataset.__len__!
+ - No docstring for HDF5MaskedDataset.dims!
+ - No docstring for HDF5MaskedDataset.ndim!
+ - No docstring for HDF5MaskedDataset.shape!
+ - No docstring for HDF5MaskedDataset.shape!
+ - No docstring for HDF5MaskedDataset.size!
+ - No docstring for HDF5MaskedDataset.dtype!
+ - No docstring for HDF5MaskedDataset.resize!
+ - No docstring for HDF5MaskedDataset.__getitem__!
+ - No docstring for HDF5MaskedDataset.__setitem__!
+ - No docstring for HDF5MaskedDataset.__array__!
+ Needed: 24; Exist: 3; Missing: 21; Coverage: 12.5%
+
 File nanshe/nanshe/__init__.py
  - No module dostring!
  Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
@@ -129,29 +153,6 @@ File nanshe/nanshe/tiff_file_format.py
 File nanshe/nanshe/wavelet_transform.py
  - No module dostring!
  Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
-
-File nanshe/nanshe/HDF5_serializers.py
- - No module dostring!
- - No docstring for HDF5MaskedDataset.__init__!
- - No docstring for HDF5MaskedDataset.group!
- - No docstring for HDF5MaskedDataset.data!
- - No docstring for HDF5MaskedDataset.data!
- - No docstring for HDF5MaskedDataset.mask!
- - No docstring for HDF5MaskedDataset.mask!
- - No docstring for HDF5MaskedDataset.fill_value!
- - No docstring for HDF5MaskedDataset.fill_value!
- - No docstring for HDF5MaskedDataset.__len__!
- - No docstring for HDF5MaskedDataset.dims!
- - No docstring for HDF5MaskedDataset.ndim!
- - No docstring for HDF5MaskedDataset.shape!
- - No docstring for HDF5MaskedDataset.shape!
- - No docstring for HDF5MaskedDataset.size!
- - No docstring for HDF5MaskedDataset.dtype!
- - No docstring for HDF5MaskedDataset.resize!
- - No docstring for HDF5MaskedDataset.__getitem__!
- - No docstring for HDF5MaskedDataset.__setitem__!
- - No docstring for HDF5MaskedDataset.__array__!
- Needed: 23; Exist: 3; Missing: 20; Coverage: 13.0%
 
 File nanshe/nanshe/nanshe_registerer.py
  - No module dostring!
@@ -301,5 +302,5 @@ File nanshe/synthetic_data/synthetic_data.py
 
 
 Overall statistics for 27 files:
-Docstrings needed: 439; Docstrings exist: 220; Docstrings missing: 219
-Total docstring coverage: 50.1%;  Grade: not so bad
+Docstrings needed: 440; Docstrings exist: 220; Docstrings missing: 220
+Total docstring coverage: 50.0%;  Grade: not so bad
