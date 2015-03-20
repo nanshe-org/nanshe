@@ -5,6 +5,7 @@ __date__ = "$Feb 20, 2015 13:00:51 EST$"
 
 
 import itertools
+import os
 
 import h5py
 from lazyflow.utility import PathComponents
@@ -79,10 +80,18 @@ def main(*argv):
     for each_input_filename_components, each_output_filename_components in itertools.izip(parsed_args.input_file_components, parsed_args.output_file_components):
         with h5py.File(each_input_filename_components.externalPath, "r") as input_file:
             with h5py.File(each_output_filename_components.externalPath, "a") as output_file:
-                data = input_file[each_input_filename_components.internalPath][...]
-                result = registration.register_mean_offsets(data, **parsed_args.parameters)
-                result = expanded_numpy.truncate_masked_frames(result)
-                output_file[each_output_filename_components.internalPath] = result
+                data = input_file[each_input_filename_components.internalPath]
+                result_filename = registration.register_mean_offsets(
+                    data, to_truncate=True, **parsed_args.parameters
+                )
+                with h5py.File(result_filename, "r") as result_file:
+                    result_file.copy(
+                        "reg_frames",
+                        output_file[each_output_filename_components.internalDirectory],
+                        name=each_output_filename_components.internalDatasetName
+                    )
+                os.remove(result_filename)
+                os.removedirs(os.path.dirname(result_filename))
 
     return(0)
 
