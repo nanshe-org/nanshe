@@ -217,8 +217,12 @@
             <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_offsets</span><span class="p">(</span><span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">template_fft</span><span class="p">)</span>
 
         <span class="c"># Remove global shifts.</span>
+        <span class="n">this_space_shift_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+            <span class="n">this_space_shift</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
         <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">find_relative_offsets</span><span class="p">(</span>
             <span class="n">this_space_shift</span><span class="p">,</span>
+            <span class="n">this_space_shift_mean</span><span class="p">,</span>
             <span class="n">out</span><span class="o">=</span><span class="n">this_space_shift</span>
         <span class="p">)</span>
 
