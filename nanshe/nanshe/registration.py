@@ -31,7 +31,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False):
+def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False, to_truncate=False):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -50,6 +50,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
             block_frame_length(int):             Number of frames to work with at a time.
                                                  By default all. (Default -1)
             include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
+            to_truncate(bool):                   Whether to truncate the frames to remove all masked portions. (Default False)
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
@@ -231,22 +232,66 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
             if num_iters >= max_iters:
                 break
 
+    reg_frames_shape = frames2reg.shape
+    if to_truncate:
+        space_shift_max = numpy.zeros(
+            space_shift.shape[1:], dtype=space_shift.dtype
+        )
+        space_shift_min = numpy.zeros(
+            space_shift.shape[1:], dtype=space_shift.dtype
+        )
+        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+            numpy.maximum(
+                space_shift_max,
+                space_shift[i:j].max(axis=0),
+                out=space_shift_max
+            )
+            numpy.minimum(
+                space_shift_min,
+                space_shift[i:j].min(axis=0),
+                out=space_shift_min
+            )
+        reg_frames_shape = numpy.asarray(reg_frames_shape)
+        reg_frames_shape[1:] -= space_shift_max
+        reg_frames_shape[1:] += space_shift_min
+        reg_frames_shape = tuple(reg_frames_shape)
+
+        space_shift_max = tuple(space_shift_max)
+        space_shift_min = space_shift_min.astype(object)
+        space_shift_min[space_shift_min == 0] = None
+        space_shift_min = tuple(space_shift_min)
+        reg_frames_slice = tuple(slice(_1, _2) for _1, _2 in itertools.izip(space_shift_max, space_shift_min))
+
     # Adjust the registered frames using the translations found.
     # Mask rolled values.
     reg_frames = None
     if tempdir_name:
-        reg_frames = temporaries_file.create_group("reg_frames")
-        reg_frames = HDF5_serializers.HDF5MaskedDataset(
-            reg_frames, shape=frames2reg.shape, dtype=frames2reg.dtype
-        )
+        if to_truncate:
+            reg_frames = temporaries_file.create_dataset(
+                "reg_frames",
+                shape=reg_frames_shape,
+                dtype=frames2reg.dtype,
+                chunks=True
+            )
+        else:
+            reg_frames = temporaries_file.create_group("reg_frames")
+            reg_frames = HDF5_serializers.HDF5MaskedDataset(
+                reg_frames, shape=frames2reg.shape, dtype=frames2reg.dtype
+            )
     else:
-        reg_frames = numpy.ma.empty_like(frames2reg)
-        reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
-        reg_frames.set_fill_value(reg_frames.dtype.type(0))
+        if to_truncate:
+            reg_frames = numpy.empty(reg_frames_shape, dtype=frames2reg.dtype)
+        else:
+            reg_frames = numpy.ma.empty_like(frames2reg)
+            reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
+            reg_frames.set_fill_value(reg_frames.dtype.type(0))
 
     for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         for k in xrange(i, j):
-            reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k], to_mask=True)
+            if to_truncate:
+                reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k])[reg_frames_slice]
+            else:
+                reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k], to_mask=True)
 
     result = None
     results_filename = ""
@@ -254,7 +299,10 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         result = results_filename
         results_filename = os.path.join(tempdir_name, "results.h5")
         results_file = h5py.File(results_filename, "w")
-        temporaries_file.copy(reg_frames.group, results_file)
+        if to_truncate:
+            temporaries_file.copy(reg_frames.name, results_file)
+        else:
+            temporaries_file.copy(reg_frames.group, results_file)
         if include_shift:
             temporaries_file.copy(space_shift, results_file)
         frames2reg_fft = None
