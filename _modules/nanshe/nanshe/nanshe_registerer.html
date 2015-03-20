@@ -65,6 +65,7 @@
 
 
 <span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">h5py</span>
 <span class="kn">from</span> <span class="nn">lazyflow.utility</span> <span class="kn">import</span> <span class="n">PathComponents</span>
@@ -139,10 +140,18 @@
     <span class="k">for</span> <span class="n">each_input_filename_components</span><span class="p">,</span> <span class="n">each_output_filename_components</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file_components</span><span class="p">,</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file_components</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">input_file</span><span class="p">[</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">internalPath</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">registration</span><span class="o">.</span><span class="n">register_mean_offsets</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">truncate_masked_frames</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-                <span class="n">output_file</span><span class="p">[</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalPath</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">input_file</span><span class="p">[</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">internalPath</span><span class="p">]</span>
+                <span class="n">result_filename</span> <span class="o">=</span> <span class="n">registration</span><span class="o">.</span><span class="n">register_mean_offsets</span><span class="p">(</span>
+                    <span class="n">data</span><span class="p">,</span> <span class="n">to_truncate</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span>
+                <span class="p">)</span>
+                <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">result_filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">result_file</span><span class="p">:</span>
+                    <span class="n">result_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+                        <span class="s">&quot;reg_frames&quot;</span><span class="p">,</span>
+                        <span class="n">output_file</span><span class="p">[</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDirectory</span><span class="p">],</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span>
+                    <span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">result_filename</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">removedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">result_filename</span><span class="p">))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 

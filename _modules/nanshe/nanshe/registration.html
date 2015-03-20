@@ -91,7 +91,7 @@
 
 
 <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="register_mean_offsets"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.registration.register_mean_offsets">[docs]</a><span class="k">def</span> <span class="nf">register_mean_offsets</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_frame_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">include_shift</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="register_mean_offsets"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.registration.register_mean_offsets">[docs]</a><span class="k">def</span> <span class="nf">register_mean_offsets</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_frame_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">include_shift</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_truncate</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This algorithm registers the given image stack against its mean projection. This is done by computing</span>
 <span class="sd">        translations needed to put each frame in alignment. Then the translation is performed and new translations are</span>
@@ -110,6 +110,7 @@
 <span class="sd">            block_frame_length(int):             Number of frames to work with at a time.</span>
 <span class="sd">                                                 By default all. (Default -1)</span>
 <span class="sd">            include_shift(bool):                 Whether to return the shifts used, as well. (Default False)</span>
+<span class="sd">            to_truncate(bool):                   Whether to truncate the frames to remove all masked portions. (Default False)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (numpy.ndarray):                     an array containing the translations to apply to each frame.</span>
@@ -291,22 +292,66 @@
             <span class="k">if</span> <span class="n">num_iters</span> <span class="o">&gt;=</span> <span class="n">max_iters</span><span class="p">:</span>
                 <span class="k">break</span>
 
+    <span class="n">reg_frames_shape</span> <span class="o">=</span> <span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">to_truncate</span><span class="p">:</span>
+        <span class="n">space_shift_max</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">space_shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">space_shift</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="p">)</span>
+        <span class="n">space_shift_min</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">space_shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">space_shift</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">additional_generators</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
+                <span class="n">space_shift_max</span><span class="p">,</span>
+                <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="n">out</span><span class="o">=</span><span class="n">space_shift_max</span>
+            <span class="p">)</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span>
+                <span class="n">space_shift_min</span><span class="p">,</span>
+                <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="n">out</span><span class="o">=</span><span class="n">space_shift_min</span>
+            <span class="p">)</span>
+        <span class="n">reg_frames_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reg_frames_shape</span><span class="p">)</span>
+        <span class="n">reg_frames_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">space_shift_max</span>
+        <span class="n">reg_frames_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+=</span> <span class="n">space_shift_min</span>
+        <span class="n">reg_frames_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">reg_frames_shape</span><span class="p">)</span>
+
+        <span class="n">space_shift_max</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">space_shift_max</span><span class="p">)</span>
+        <span class="n">space_shift_min</span> <span class="o">=</span> <span class="n">space_shift_min</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+        <span class="n">space_shift_min</span><span class="p">[</span><span class="n">space_shift_min</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">space_shift_min</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">space_shift_min</span><span class="p">)</span>
+        <span class="n">reg_frames_slice</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">space_shift_max</span><span class="p">,</span> <span class="n">space_shift_min</span><span class="p">))</span>
+
     <span class="c"># Adjust the registered frames using the translations found.</span>
     <span class="c"># Mask rolled values.</span>
     <span class="n">reg_frames</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">if</span> <span class="n">tempdir_name</span><span class="p">:</span>
-        <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">temporaries_file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">&quot;reg_frames&quot;</span><span class="p">)</span>
-        <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">HDF5_serializers</span><span class="o">.</span><span class="n">HDF5MaskedDataset</span><span class="p">(</span>
-            <span class="n">reg_frames</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">dtype</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">to_truncate</span><span class="p">:</span>
+            <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">temporaries_file</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
+                <span class="s">&quot;reg_frames&quot;</span><span class="p">,</span>
+                <span class="n">shape</span><span class="o">=</span><span class="n">reg_frames_shape</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                <span class="n">chunks</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">temporaries_file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">&quot;reg_frames&quot;</span><span class="p">)</span>
+            <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">HDF5_serializers</span><span class="o">.</span><span class="n">HDF5MaskedDataset</span><span class="p">(</span>
+                <span class="n">reg_frames</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)</span>
-        <span class="n">reg_frames</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
-        <span class="n">reg_frames</span><span class="o">.</span><span class="n">set_fill_value</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">to_truncate</span><span class="p">:</span>
+            <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">reg_frames_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)</span>
+            <span class="n">reg_frames</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
+            <span class="n">reg_frames</span><span class="o">.</span><span class="n">set_fill_value</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">additional_generators</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
-            <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">to_truncate</span><span class="p">:</span>
+                <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">])[</span><span class="n">reg_frames_slice</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">results_filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
@@ -314,7 +359,10 @@
         <span class="n">result</span> <span class="o">=</span> <span class="n">results_filename</span>
         <span class="n">results_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir_name</span><span class="p">,</span> <span class="s">&quot;results.h5&quot;</span><span class="p">)</span>
         <span class="n">results_file</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">results_filename</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
-        <span class="n">temporaries_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">results_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">to_truncate</span><span class="p">:</span>
+            <span class="n">temporaries_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">results_file</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">temporaries_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">results_file</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">include_shift</span><span class="p">:</span>
             <span class="n">temporaries_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">space_shift</span><span class="p">,</span> <span class="n">results_file</span><span class="p">)</span>
         <span class="n">frames2reg_fft</span> <span class="o">=</span> <span class="bp">None</span>
