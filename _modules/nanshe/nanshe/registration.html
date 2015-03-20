@@ -179,10 +179,6 @@
 
     <span class="n">space_shift</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">frames2reg</span><span class="o">.</span><span class="n">ndim</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">frames2reg</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">reg_frames</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">)</span>
-    <span class="n">reg_frames</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
-
     <span class="n">frames2reg_fft</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)):</span>
         <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
@@ -206,21 +202,21 @@
         <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="n">template_fft</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)):</span>
             <span class="n">frames2reg_shifted_fft_i</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1j</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">],</span> <span class="n">unit_space_shift_fft</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
             <span class="n">frames2reg_shifted_fft_i</span> <span class="o">*=</span> <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
             <span class="n">template_fft</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">frames2reg_shifted_fft_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">template_fft</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
+        <span class="n">template_fft</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)</span>
 
         <span class="n">this_space_shift</span> <span class="o">=</span> <span class="n">space_shift</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)):</span>
             <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_offsets</span><span class="p">(</span><span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">template_fft</span><span class="p">)</span>
 
         <span class="c"># Remove global shifts.</span>
         <span class="n">this_space_shift_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
             <span class="n">this_space_shift</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)):</span>
             <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">find_relative_offsets</span><span class="p">(</span>
                 <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">],</span>
                 <span class="n">this_space_shift_mean</span><span class="p">,</span>
@@ -230,7 +226,7 @@
         <span class="c"># Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).</span>
         <span class="c"># Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make</span>
         <span class="c"># them bound by the half shape, but with either sign.</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)):</span>
             <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">find_shortest_wraparound</span><span class="p">(</span>
                 <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">],</span>
                 <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
@@ -238,7 +234,7 @@
             <span class="p">)</span>
 
         <span class="n">delta_space_shift</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)):</span>
             <span class="n">delta_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
                 <span class="n">delta_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">delta_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
@@ -253,7 +249,10 @@
 
     <span class="c"># Adjust the registered frames using the translations found.</span>
     <span class="c"># Mask rolled values.</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)):</span>
+    <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">frames2reg</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">reg_frames</span> <span class="o">=</span> <span class="n">reg_frames</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">)</span>
+    <span class="n">reg_frames</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)):</span>
         <span class="n">reg_frames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded_numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">include_shift</span><span class="p">:</span>
