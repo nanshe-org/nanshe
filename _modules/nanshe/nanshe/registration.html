@@ -311,7 +311,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># If there is only one frame, add a singleton axis to indicate this.</span>
-    <span class="k">if</span> <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+    <span class="n">frames2reg_fft_added_singleton</span> <span class="o">=</span> <span class="p">(</span><span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">frames2reg_fft_added_singleton</span><span class="p">:</span>
         <span class="n">frames2reg_fft</span> <span class="o">=</span> <span class="n">frames2reg_fft</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
     <span class="c"># Compute the product of the two FFTs (i.e. the convolution of the regular versions).</span>
@@ -352,6 +353,10 @@
 
     <span class="c"># Shift will have to be in the opposite direction to bring everything to the center.</span>
     <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span>
+
+    <span class="c"># Drop singleton dimension (if present)</span>
+    <span class="k">if</span> <span class="n">frames2reg_fft_added_singleton</span><span class="p">:</span>
+        <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">=</span> <span class="n">frames2reg_template_conv_max_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span></div>
 </pre></div>
