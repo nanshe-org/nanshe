@@ -1,0 +1,4 @@
+{
+    "max_iters" : -1,               "__comment__max_iters" :             "Number of iterations to do before stopping. -1 means no limit. Default is -1.",
+    "block_frame_length" : -1,      "__comment__block_frame_length" :    "Number frames to process in memory at a time. -1 means all of the frames. Default is -1."
+}
