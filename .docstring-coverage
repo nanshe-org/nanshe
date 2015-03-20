@@ -1,0 +1,286 @@
+
+File nanshe/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/nanshe/HDF5_recorder.py
+ - No module dostring!
+ - No docstring for EmptyArrayRecorder!
+ - No docstring for EmptyArrayRecorder.__init__!
+ - No docstring for EmptyArrayRecorder.__nonzero__!
+ - No docstring for EmptyArrayRecorder.get!
+ - No docstring for EmptyArrayRecorder.__contains__!
+ - No docstring for EmptyArrayRecorder.__getitem__!
+ - No docstring for EmptyArrayRecorder.__setitem__!
+ - No docstring for HDF5ArrayRecorder!
+ - No docstring for HDF5ArrayRecorder.__init__!
+ - No docstring for HDF5ArrayRecorder.__nonzero__!
+ - No docstring for HDF5ArrayRecorder.get!
+ - No docstring for HDF5ArrayRecorder.__contains__!
+ - No docstring for HDF5ArrayRecorder.__getitem__!
+ - No docstring for HDF5ArrayRecorder.__setitem__!
+ - No docstring for HDF5EnumeratedArrayRecorder!
+ - No docstring for HDF5EnumeratedArrayRecorder.__init__!
+ - No docstring for HDF5EnumeratedArrayRecorder.__nonzero__!
+ - No docstring for HDF5EnumeratedArrayRecorder.get!
+ - No docstring for HDF5EnumeratedArrayRecorder.__contains__!
+ - No docstring for HDF5EnumeratedArrayRecorder.__getitem__!
+ - No docstring for HDF5EnumeratedArrayRecorder.__setitem__!
+ - No docstring for static_subgrouping_array_recorders_tie.SubgroupingRecorders!
+ - No docstring for SubgroupingRecorders.__init__!
+ - No docstring for SubgroupingRecorders.__getattr__!
+ - No docstring for SubgroupingRecorders.__setattr__!
+ - No docstring for SubgroupingRecorders.__delattr__!
+ - No docstring for static_subgrouping_array_recorders_tie.static_subgrouping_array_recorders_wrapper!
+ - No docstring for class_static_subgrouping_array_recorders_tie.ClassSubgroupingRecorders!
+ - No docstring for ClassSubgroupingRecorders.__init__!
+ - No docstring for ClassSubgroupingRecorders.__getattr__!
+ - No docstring for ClassSubgroupingRecorders.__setattr__!
+ - No docstring for ClassSubgroupingRecorders.__delattr__!
+ - No docstring for class_static_subgrouping_array_recorders_tie.class_static_subgrouping_array_recorders__init__decorator!
+ - No docstring for class_static_subgrouping_array_recorders__init__decorator.class_static_subgrouping_array_recorders__init__wrapper!
+ - No docstring for class_static_subgrouping_array_recorders_tie.class_static_subgrouping_array_recorders_decorator!
+ - No docstring for class_static_subgrouping_array_recorders_decorator.class_static_subgrouping_array_recorders_wrapper!
+ - No docstring for class_static_subgrouping_array_recorders_tie.MetaSubgroupingRecorders!
+ - No docstring for MetaSubgroupingRecorders.__call__!
+ Needed: 46; Exist: 7; Missing: 39; Coverage: 15.2%
+
+File nanshe/nanshe/HDF5_searchers.py
+ - No module dostring!
+ - No docstring for get_matching_paths_groups.get_matching_paths_groups_recursive!
+ Needed: 6; Exist: 4; Missing: 2; Coverage: 66.7%
+
+File nanshe/nanshe/HDF5_serializers.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
+
+File nanshe/nanshe/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/nanshe/additional_generators.py
+ - No module dostring!
+ - No docstring for splitting_xrange.splitting_xrange_helper!
+ Needed: 24; Exist: 22; Missing: 2; Coverage: 91.7%
+
+File nanshe/nanshe/additional_io.py
+ - No module dostring!
+ Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
+
+File nanshe/nanshe/advanced_image_processing.py
+ - No module dostring!
+ - No docstring for region_properties_vigra.VigraProperties!
+ - No docstring for VigraProperties.__init__!
+ - No docstring for VigraProperties.__len__!
+ - No docstring for VigraProperties.__getitem__!
+ - No docstring for merge_neuron_sets!
+ - No docstring for expand_rois!
+ - No docstring for postprocess_data.array_debug_recorder_enumerator!
+ Needed: 40; Exist: 32; Missing: 8; Coverage: 80.0%
+
+File nanshe/nanshe/binary_image_processing.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
+
+File nanshe/nanshe/debugging_tools.py
+ - No module dostring!
+ Needed: 7; Exist: 6; Missing: 1; Coverage: 85.7%
+
+File nanshe/nanshe/denoising.py
+ - No module dostring!
+ Needed: 4; Exist: 3; Missing: 1; Coverage: 75.0%
+
+File nanshe/nanshe/expanded_numpy.py
+ - No module dostring!
+ - No docstring for norm.wrapped_norm!
+ Needed: 55; Exist: 53; Missing: 2; Coverage: 96.4%
+
+File nanshe/nanshe/generic_decorators.py
+ - No module dostring!
+ - No docstring for MetaStaticVariables.__new__!
+ - No docstring for MetaAllMethodsDecorator.__new__!
+ - No docstring for MetaAllMethodsDecorator.__new__!
+ - No docstring for MetaMethodsDecorator.__new__!
+ Needed: 21; Exist: 16; Missing: 5; Coverage: 76.2%
+
+File nanshe/nanshe/nanshe_converter.py
+ - No module dostring!
+ Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
+
+File nanshe/nanshe/nanshe_learner.py
+ - No module dostring!
+ - No docstring for generate_neurons_blocks!
+ - No docstring for generate_neurons!
+ Needed: 6; Exist: 3; Missing: 3; Coverage: 50.0%
+
+File nanshe/nanshe/nanshe_registerer.py
+ - No module dostring!
+ Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
+
+File nanshe/nanshe/nanshe_viewer.py
+ - No module dostring!
+ - No docstring for HDF5DataSource.numberOfChannels!
+ - No docstring for HDF5DataSource.clean_up!
+ - No docstring for HDF5DataSource.dtype!
+ - No docstring for HDF5DataSource.shape!
+ - No docstring for HDF5DataSource.request!
+ - No docstring for HDF5DataSource.setDirty!
+ - No docstring for HDF5DataSource.__eq__!
+ - No docstring for HDF5DataSource.__ne__!
+ - No docstring for HDF5DataRequest.wait!
+ - No docstring for HDF5DataRequest.getResult!
+ - No docstring for HDF5DataRequest.cancel!
+ - No docstring for HDF5DataRequest.submit!
+ - No docstring for HDF5DataRequest.notify!
+ - No docstring for HDF5DataRequest._doNotify!
+ - No docstring for HDF5Viewer.__init__!
+ - No docstring for HDF5Viewer.addGrayscaleHDF5Source!
+ - No docstring for HDF5Viewer.addGrayscaleHDF5Layer!
+ - No docstring for HDF5Viewer.addAlphaModulatedHDF5Layer!
+ - No docstring for HDF5Viewer.addRGBAHDF5Layer!
+ - No docstring for HDF5Viewer.addRandomColorsHDF5Layer!
+ - No docstring for HDF5Viewer.addColorTableHDF5Source!
+ - No docstring for HDF5Viewer.addColorTableHDF5Layer!
+ - No docstring for createHDF5DataSource!
+ - No docstring for createHDF5DataSource!
+ - No docstring for HDF5NoFusedSourceException!
+ - No docstring for HDF5UndefinedShapeDtypeException!
+ - No docstring for HDF5DataFusedSource!
+ - No docstring for HDF5DataFusedSource.__init__!
+ - No docstring for HDF5DataFusedSource.numberOfChannels!
+ - No docstring for HDF5DataFusedSource.clean_up!
+ - No docstring for HDF5DataFusedSource.dtype!
+ - No docstring for HDF5DataFusedSource.shape!
+ - No docstring for HDF5DataFusedSource.request!
+ - No docstring for HDF5DataFusedSource.setDirty!
+ - No docstring for HDF5DataFusedSource.__eq__!
+ - No docstring for HDF5DataFusedSource.__ne__!
+ - No docstring for HDF5DataFusedRequest!
+ - No docstring for HDF5DataFusedRequest.__init__!
+ - No docstring for HDF5DataFusedRequest.wait!
+ - No docstring for HDF5DataFusedRequest.getResult!
+ - No docstring for HDF5DataFusedRequest.cancel!
+ - No docstring for HDF5DataFusedRequest.submit!
+ - No docstring for HDF5DataFusedRequest.notify!
+ - No docstring for HDF5DataFusedRequest._doNotify!
+ - No docstring for SyncedChannelLayers!
+ - No docstring for SyncedChannelLayers.__init__!
+ - No docstring for SyncedChannelLayers.__call__!
+ - No docstring for EnumeratedProjectionConstantSource.numberOfChannels!
+ - No docstring for EnumeratedProjectionConstantSource.clean_up!
+ - No docstring for EnumeratedProjectionConstantSource.dtype!
+ - No docstring for EnumeratedProjectionConstantSource.shape!
+ - No docstring for EnumeratedProjectionConstantSource.request!
+ - No docstring for EnumeratedProjectionConstantSource.setDirty!
+ - No docstring for EnumeratedProjectionConstantSource.__eq__!
+ - No docstring for EnumeratedProjectionConstantSource.__ne__!
+ - No docstring for EnumeratedProjectionConstantRequest.wait!
+ - No docstring for EnumeratedProjectionConstantRequest.getResult!
+ - No docstring for EnumeratedProjectionConstantRequest.cancel!
+ - No docstring for EnumeratedProjectionConstantRequest.submit!
+ - No docstring for EnumeratedProjectionConstantRequest.notify!
+ - No docstring for EnumeratedProjectionConstantRequest._doNotify!
+ - No docstring for ContourProjectionConstantSource.numberOfChannels!
+ - No docstring for ContourProjectionConstantSource.clean_up!
+ - No docstring for ContourProjectionConstantSource.dtype!
+ - No docstring for ContourProjectionConstantSource.shape!
+ - No docstring for ContourProjectionConstantSource.request!
+ - No docstring for ContourProjectionConstantSource.setDirty!
+ - No docstring for ContourProjectionConstantSource.__eq__!
+ - No docstring for ContourProjectionConstantSource.__ne__!
+ - No docstring for ContourProjectionConstantRequest.wait!
+ - No docstring for ContourProjectionConstantRequest.getResult!
+ - No docstring for ContourProjectionConstantRequest.cancel!
+ - No docstring for ContourProjectionConstantRequest.submit!
+ - No docstring for ContourProjectionConstantRequest.notify!
+ - No docstring for ContourProjectionConstantRequest._doNotify!
+ - No docstring for FloatProjectionConstantSource.numberOfChannels!
+ - No docstring for FloatProjectionConstantSource.clean_up!
+ - No docstring for FloatProjectionConstantSource.dtype!
+ - No docstring for FloatProjectionConstantSource.shape!
+ - No docstring for FloatProjectionConstantSource.request!
+ - No docstring for FloatProjectionConstantSource.setDirty!
+ - No docstring for FloatProjectionConstantSource.__eq__!
+ - No docstring for FloatProjectionConstantSource.__ne__!
+ - No docstring for FloatProjectionConstantRequest.wait!
+ - No docstring for FloatProjectionConstantRequest.getResult!
+ - No docstring for FloatProjectionConstantRequest.cancel!
+ - No docstring for FloatProjectionConstantRequest.submit!
+ - No docstring for FloatProjectionConstantRequest.notify!
+ - No docstring for FloatProjectionConstantRequest._doNotify!
+ - No docstring for MaxProjectionConstantSource.numberOfChannels!
+ - No docstring for MaxProjectionConstantSource.clean_up!
+ - No docstring for MaxProjectionConstantSource.dtype!
+ - No docstring for MaxProjectionConstantSource.shape!
+ - No docstring for MaxProjectionConstantSource.request!
+ - No docstring for MaxProjectionConstantSource.setDirty!
+ - No docstring for MaxProjectionConstantSource.__eq__!
+ - No docstring for MaxProjectionConstantSource.__ne__!
+ - No docstring for MaxProjectionConstantRequest.wait!
+ - No docstring for MaxProjectionConstantRequest.getResult!
+ - No docstring for MaxProjectionConstantRequest.cancel!
+ - No docstring for MaxProjectionConstantRequest.submit!
+ - No docstring for MaxProjectionConstantRequest.notify!
+ - No docstring for MaxProjectionConstantRequest._doNotify!
+ - No docstring for MeanProjectionConstantSource.numberOfChannels!
+ - No docstring for MeanProjectionConstantSource.clean_up!
+ - No docstring for MeanProjectionConstantSource.dtype!
+ - No docstring for MeanProjectionConstantSource.shape!
+ - No docstring for MeanProjectionConstantSource.request!
+ - No docstring for MeanProjectionConstantSource.setDirty!
+ - No docstring for MeanProjectionConstantSource.__eq__!
+ - No docstring for MeanProjectionConstantSource.__ne__!
+ - No docstring for MeanProjectionConstantRequest.wait!
+ - No docstring for MeanProjectionConstantRequest.getResult!
+ - No docstring for MeanProjectionConstantRequest.cancel!
+ - No docstring for MeanProjectionConstantRequest.submit!
+ - No docstring for MeanProjectionConstantRequest.notify!
+ - No docstring for MeanProjectionConstantRequest._doNotify!
+ - No docstring for main!
+ Needed: 145; Exist: 26; Missing: 119; Coverage: 17.9%
+
+File nanshe/nanshe/neuron_matplotlib_viewer.py
+ - No module dostring!
+ - No docstring for TimeNavigator!
+ Needed: 15; Exist: 13; Missing: 2; Coverage: 86.7%
+
+File nanshe/nanshe/read_config.py
+ - No module dostring!
+ Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/nanshe/simple_image_processing.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
+
+File nanshe/nanshe/tiff_file_format.py
+ - No module dostring!
+ Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/nanshe/wavelet_transform.py
+ - No module dostring!
+ Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/nanshe/registration.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
+
+File nanshe/spams_sandbox/__init__.py
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
+
+File nanshe/spams_sandbox/spams_sandbox.py
+ - No module dostring!
+ - No docstring for SPAMSException!
+ Needed: 7; Exist: 5; Missing: 2; Coverage: 71.4%
+
+File nanshe/synthetic_data/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/synthetic_data/synthetic_data.py
+ - No module dostring!
+ Needed: 4; Exist: 3; Missing: 1; Coverage: 75.0%
+
+
+Overall statistics for 27 files:
+Docstrings needed: 417; Docstrings exist: 217; Docstrings missing: 200
+Total docstring coverage: 52.0%;  Grade: not so bad
