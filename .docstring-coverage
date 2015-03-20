@@ -104,6 +104,40 @@ File nanshe/nanshe/nanshe_learner.py
  - No docstring for generate_neurons!
  Needed: 6; Exist: 3; Missing: 3; Coverage: 50.0%
 
+File nanshe/nanshe/neuron_matplotlib_viewer.py
+ - No module dostring!
+ - No docstring for TimeNavigator!
+ Needed: 15; Exist: 13; Missing: 2; Coverage: 86.7%
+
+File nanshe/nanshe/read_config.py
+ - No module dostring!
+ Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/nanshe/simple_image_processing.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
+
+File nanshe/nanshe/tiff_file_format.py
+ - No module dostring!
+ Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/nanshe/wavelet_transform.py
+ - No module dostring!
+ Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/nanshe/HDF5_serializers.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
+
+File nanshe/nanshe/expanded_numpy.py
+ - No module dostring!
+ - No docstring for norm.wrapped_norm!
+ Needed: 57; Exist: 55; Missing: 2; Coverage: 96.5%
+
+File nanshe/nanshe/nanshe_registerer.py
+ - No module dostring!
+ Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
+
 File nanshe/nanshe/nanshe_viewer.py
  - No module dostring!
  - No docstring for HDF5DataSource.numberOfChannels!
@@ -225,40 +259,6 @@ File nanshe/nanshe/nanshe_viewer.py
  - No docstring for MeanProjectionConstantRequest._doNotify!
  - No docstring for main!
  Needed: 145; Exist: 26; Missing: 119; Coverage: 17.9%
-
-File nanshe/nanshe/neuron_matplotlib_viewer.py
- - No module dostring!
- - No docstring for TimeNavigator!
- Needed: 15; Exist: 13; Missing: 2; Coverage: 86.7%
-
-File nanshe/nanshe/read_config.py
- - No module dostring!
- Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
-
-File nanshe/nanshe/simple_image_processing.py
- - No module dostring!
- Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
-
-File nanshe/nanshe/tiff_file_format.py
- - No module dostring!
- Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
-
-File nanshe/nanshe/wavelet_transform.py
- - No module dostring!
- Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
-
-File nanshe/nanshe/HDF5_serializers.py
- - No module dostring!
- Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
-
-File nanshe/nanshe/expanded_numpy.py
- - No module dostring!
- - No docstring for norm.wrapped_norm!
- Needed: 57; Exist: 55; Missing: 2; Coverage: 96.5%
-
-File nanshe/nanshe/nanshe_registerer.py
- - No module dostring!
- Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
 
 File nanshe/nanshe/registration.py
  - No module dostring!

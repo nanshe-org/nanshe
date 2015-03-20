@@ -231,7 +231,8 @@
             <span class="n">out</span><span class="o">=</span><span class="n">this_space_shift</span>
         <span class="p">)</span>
 
-        <span class="n">delta_space_shift</span> <span class="o">=</span> <span class="n">this_space_shift</span> <span class="o">-</span> <span class="n">space_shift</span>
+        <span class="n">delta_space_shift</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">delta_space_shift</span> <span class="o">-=</span> <span class="n">space_shift</span>
         <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
             <span class="n">delta_space_shift</span><span class="p">,</span> <span class="n">delta_space_shift</span><span class="o">.</span><span class="n">T</span>
         <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
