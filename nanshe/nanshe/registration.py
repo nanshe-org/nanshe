@@ -31,7 +31,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_frame_length=-1):
+def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -47,9 +47,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, include_shift=False, block_f
                                                  or tzyx).
             max_iters(int):                      Number of iterations to allow before forcing termination if stable
                                                  point is not found yet. Set to -1 if no limit. (Default -1)
-            include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
             block_frame_length(int):             Number of frames to work with at a time.
                                                  By default all. (Default -1)
+            include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
