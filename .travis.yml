@@ -28,7 +28,7 @@ install:
    - cd src/nanshe-git
 script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
-   - python $BUILDEM_DIR/bin/nosetests --with-coverage --cover-erase --cover-branches --cover-package=nanshe -a '!3D'
+   - python $BUILDEM_DIR/bin/nosetests --with-coverage --cover-erase --cover-branches --cover-package=nanshe -a '!3D','!DRMAA'
    # Build documentation.
    - cd docs
    # Unfortunately, this does not seem to work on TravisCI. This is because sphinx-apidoc cannot be found when in the Makefile. However, it is easily and correctly found right before the call. This may be related to a more general issue ( https://github.com/travis-ci/travis-ci/issues/3084 ). As a consequence, we will just copy code from the Makefile for now.
