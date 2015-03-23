@@ -889,6 +889,7 @@ class TestNansheLearner(object):
 
         assert (len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("DRMAA")
     def test_main_3(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1002,7 +1003,7 @@ class TestNansheLearner(object):
 
         assert (len(unmatched_points) == 0)
 
-    @nose.plugins.attrib.attr("3D")
+    @nose.plugins.attrib.attr("3D", "DRMAA")
     def test_main_6(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1106,6 +1107,7 @@ class TestNansheLearner(object):
 
         assert (len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("DRMAA")
     def test_generate_neurons_io_handler_3(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1207,7 +1209,7 @@ class TestNansheLearner(object):
 
         assert (len(unmatched_points) == 0)
 
-    @nose.plugins.attrib.attr("3D")
+    @nose.plugins.attrib.attr("3D", "DRMAA")
     def test_generate_neurons_io_handler_6(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1337,6 +1339,7 @@ class TestNansheLearner(object):
 
         assert (len(unmatched_points) == 0)
 
+    @nose.plugins.attrib.attr("DRMAA")
     def test_generate_neurons_blocks_2(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
@@ -1408,7 +1411,7 @@ class TestNansheLearner(object):
 
         assert (len(unmatched_points) == 0)
 
-    @nose.plugins.attrib.attr("3D")
+    @nose.plugins.attrib.attr("3D", "DRMAA")
     def test_generate_neurons_blocks_4(self):
         # Attempt to import drmaa.
         # If it fails to import, either the user has no intent in using it or forgot to install it.
