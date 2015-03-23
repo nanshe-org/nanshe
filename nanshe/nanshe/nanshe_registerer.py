@@ -8,12 +8,10 @@ import itertools
 import os
 
 import h5py
-from pathHelpers import PathComponents
 
 import debugging_tools
+from pathHelpers import PathComponents
 import read_config
-
-import expanded_numpy
 import registration
 
 

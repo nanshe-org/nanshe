@@ -4,6 +4,7 @@ __date__ = "$Jul 23, 2014 16:24:36 EDT$"
 
 import functools
 import types
+
 import PyQt4.QtCore
 
 

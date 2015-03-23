@@ -5,7 +5,6 @@ __date__ = "$Apr 9, 2014 4:00:40PM$"
 
 
 import os
-import sys
 import json
 import itertools
 import multiprocessing

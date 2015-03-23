@@ -6,8 +6,6 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 20, 2014 9:46:45 AM$"
 
 
-import ctypes
-import fractions
 import functools
 import itertools
 import operator
@@ -28,6 +26,7 @@ import vigra
 
 
 import additional_generators
+
 
 # Need in order to have logging information no matter what.
 import debugging_tools

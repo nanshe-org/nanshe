@@ -2,8 +2,6 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 26, 2014 11:40:54 EDT$"
 
 
-import glob
-import os
 import collections
 
 import numpy
@@ -11,8 +9,8 @@ import h5py
 
 import vigra
 import vigra.impex
-import pathHelpers
 
+import pathHelpers
 import debugging_tools
 import additional_generators
 import additional_io

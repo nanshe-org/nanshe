@@ -6,11 +6,11 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 18, 2014 20:06:44 EDT$"
 
 
-import h5py
 import re
 import collections
 import itertools
 
+import h5py
 
 
 def get_matching_paths(a_filehandle, a_path_pattern):

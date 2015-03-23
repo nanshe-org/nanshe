@@ -2,7 +2,6 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jan 28, 2015 11:25:47 EST$"
 
 
-
 import itertools
 import os
 import tempfile
@@ -10,6 +9,7 @@ import warnings
 
 import h5py
 import numpy
+
 
 try:
     import pyfftw.interfaces.numpy_fft as fft

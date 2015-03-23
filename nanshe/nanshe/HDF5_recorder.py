@@ -5,13 +5,13 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 4, 2014 11:10:55 AM$"
 
-import copy
 
 import numpy
 import h5py
 
 import HDF5_serializers
 import generic_decorators
+
 
 # Need in order to have logging information no matter what.
 import debugging_tools

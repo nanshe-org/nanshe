@@ -1,6 +1,8 @@
 import itertools
-import numpy
 import math
+
+import numpy
+
 
 
 # Need in order to have logging information no matter what.
