@@ -53,7 +53,10 @@ class EmptyArrayRecorder(object):
 
     def __setitem__(self, key, value):
         # Exception will be thrown if value is empty or if key already exists (as intended).
-        if (value is None) or (value is h5py.Group):
+        if (key == "."):
+            if not ( (value is None) or (value is h5py.Group) ):
+                raise ValueError("Cannot store dataset in top level group ( " + self.hdf5_handle.name + " ).")
+        elif (value is None) or (value is h5py.Group):
             self.__recorders.add(key)
         else:
             if value.size:
