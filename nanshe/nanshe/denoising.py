@@ -83,6 +83,10 @@ def significant_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
         
         Examples:
             
+            >>> significant_mask(numpy.eye(2), noise_threshold = 6.0)
+            array([[False, False],
+                   [False, False]], dtype=bool)
+
             >>> significant_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)
             array([[False, False],
                    [False, False]], dtype=bool)
