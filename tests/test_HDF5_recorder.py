@@ -3,12 +3,19 @@ __date__ = "$Mar 24, 2015 07:35:20 EDT$"
 
 
 
+import tempfile
+import shutil
+
 import numpy
 
 import nanshe.nanshe.HDF5_recorder
 
 
 class TestHDF5Recorder(object):
+    def setup(self):
+        self.temp_dir = tempfile.mkdtemp()
+
+
     def test_EmptyArrayRecorder(self):
         recorder = nanshe.nanshe.HDF5_recorder.EmptyArrayRecorder()
 
@@ -78,3 +85,9 @@ class TestHDF5Recorder(object):
         except KeyError:
             got_key_error = True
         assert got_key_error
+
+
+    def teardown(self):
+        shutil.rmtree(self.temp_dir)
+
+        self.temp_dir = ""
