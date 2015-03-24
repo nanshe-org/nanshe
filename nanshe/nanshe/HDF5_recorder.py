@@ -88,6 +88,9 @@ class HDF5ArrayRecorder(object):
         return(key in self.hdf5_handle)
 
     def __getitem__(self, key):
+        if (key == "."):
+            return(self)
+
         try:
             if isinstance(self.hdf5_handle[key], h5py.Group):
                 return(HDF5ArrayRecorder(self.hdf5_handle[key], overwrite = self.overwrite))
