@@ -20,7 +20,7 @@
 #		   http://ilastik.org/license/
 ###############################################################################
 import os
-from lazyflow.utility.pathHelpers import compressPathForDisplay, getPathVariants, PathComponents
+from nanshe.nanshe.pathHelpers import compressPathForDisplay, getPathVariants, PathComponents
 
 class TestPathHelpers(object):
 
