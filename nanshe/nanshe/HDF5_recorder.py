@@ -177,6 +177,8 @@ class HDF5EnumeratedArrayRecorder(object):
         return(self.get(key) is not None)
 
     def __getitem__(self, key):
+        if (key == "."):
+            return(self)
         try:
             root_i = self.hdf5_index_data_handles.get(".", -1)
             key_i = self.hdf5_index_data_handles.get(key, -1)
