@@ -22,6 +22,11 @@ class TestHDF5Recorder(object):
         recorder = nanshe.nanshe.HDF5_recorder.EmptyArrayRecorder()
 
 
+        # Get current record
+
+        assert recorder is recorder["."]
+
+
         # Check if this stores results.
 
         assert not recorder
@@ -94,6 +99,11 @@ class TestHDF5Recorder(object):
 
         with h5py.File(hdf5_filename, "w") as hdf5_file:
             recorder = nanshe.nanshe.HDF5_recorder.HDF5ArrayRecorder(hdf5_file)
+
+
+            # Get current record
+
+            assert recorder is recorder["."]
 
 
             # Check if this stores results.
@@ -191,6 +201,11 @@ class TestHDF5Recorder(object):
             recorder = nanshe.nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder(
                 hdf5_file
             )
+
+
+            # Get current record
+
+            assert recorder is recorder["."]
 
 
             # Check if this stores results.
