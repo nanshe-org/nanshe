@@ -195,7 +195,7 @@ class HDF5EnumeratedArrayRecorder(object):
             else:
                 key_i_str = str(key_i)
                 return(HDF5_serializers.read_numpy_structured_array_from_HDF5(key_handle, key_i_str))
-        except KeyError:
+        except:
             raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
 
     def __setitem__(self, key, value):
