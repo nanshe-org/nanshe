@@ -1685,7 +1685,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x2f11610&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x3fbd610&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -8230,6 +8230,107 @@ Then, makes sure it is a discrete number of steps from the min_time.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-nanshe.nanshe.pathHelpers">
+<span id="nanshe-nanshe-pathhelpers-module"></span><h2>nanshe.nanshe.pathHelpers module<a class="headerlink" href="#module-nanshe.nanshe.pathHelpers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents">
+<em class="property">class </em><tt class="descclassname">nanshe.nanshe.pathHelpers.</tt><tt class="descname">PathComponents</tt><big>(</big><em>totalPath</em>, <em>cwd=None</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Provides a convenient access to path components of a combined external/internal path to a dataset.
+Also, each of the properties listed below is writable, in which case ALL properties are updated accordingly.</p>
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.HDF5_EXTS">
+<tt class="descname">HDF5_EXTS</tt><em class="property"> = ['.ilp', '.h5', '.hdf5']</em><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.HDF5_EXTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.__setattr__">
+<tt class="descname">__setattr__</tt><big>(</big><em>attr</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.__setattr__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.__setattr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>This prevents us from accidentally writing to a non-existant attribute.
+e.g. if the user tries to say components.fIlEnAmE = &#8216;newfile.h5&#8217;, raise an error.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.extension">
+<tt class="descname">extension</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">.h5</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.externalDirectory">
+<tt class="descname">externalDirectory</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.externalDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.externalDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">/some/path/to</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.externalPath">
+<tt class="descname">externalPath</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.externalPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.externalPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">/some/path/to/file.h5</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.filename">
+<tt class="descname">filename</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">file.h5</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.filenameBase">
+<tt class="descname">filenameBase</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.filenameBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.filenameBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">file</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.internalDatasetName">
+<tt class="descname">internalDatasetName</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.internalDatasetName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.internalDatasetName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">/dataset</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.internalDirectory">
+<tt class="descname">internalDirectory</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.internalDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.internalDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">/with/internal</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.internalPath">
+<tt class="descname">internalPath</tt><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.internalPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.internalPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <tt class="docutils literal"><span class="pre">/with/internal/dataset</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.nanshe.pathHelpers.PathComponents.totalPath">
+<tt class="descname">totalPath</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#PathComponents.totalPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.PathComponents.totalPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the (reconstructed) totalPath to the dataset.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.nanshe.pathHelpers.areOnSameDrive">
+<tt class="descclassname">nanshe.nanshe.pathHelpers.</tt><tt class="descname">areOnSameDrive</tt><big>(</big><em>path1</em>, <em>path2</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#areOnSameDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.areOnSameDrive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nanshe.nanshe.pathHelpers.compressPathForDisplay">
+<tt class="descclassname">nanshe.nanshe.pathHelpers.</tt><tt class="descname">compressPathForDisplay</tt><big>(</big><em>pathstr</em>, <em>maxlength</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#compressPathForDisplay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.compressPathForDisplay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add alternatingly parts of the start and the end of the path
+until maxlength is exceeded. Result: Drive/Dir1/.../Dirn/file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.nanshe.pathHelpers.getPathVariants">
+<tt class="descclassname">nanshe.nanshe.pathHelpers.</tt><tt class="descname">getPathVariants</tt><big>(</big><em>originalPath</em>, <em>workingDirectory</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#getPathVariants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.getPathVariants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take the given filePath (which can be absolute or relative, and may include an internal path suffix),
+and return a tuple of the absolute and relative paths to the file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.nanshe.pathHelpers.isUrl">
+<tt class="descclassname">nanshe.nanshe.pathHelpers.</tt><tt class="descname">isUrl</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/pathHelpers.html#isUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.pathHelpers.isUrl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="module-nanshe.nanshe.read_config">
 <span id="nanshe-nanshe-read-config-module"></span><h2>nanshe.nanshe.read_config module<a class="headerlink" href="#module-nanshe.nanshe.read_config" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -8984,6 +9085,7 @@ a numpy array containing the row of Pascal&#8217;s triangle.</p>
 <li><a class="reference internal" href="#module-nanshe.nanshe.nanshe_registerer">nanshe.nanshe.nanshe_registerer module</a></li>
 <li><a class="reference internal" href="#module-nanshe.nanshe.nanshe_viewer">nanshe.nanshe.nanshe_viewer module</a></li>
 <li><a class="reference internal" href="#module-nanshe.nanshe.neuron_matplotlib_viewer">nanshe.nanshe.neuron_matplotlib_viewer module</a></li>
+<li><a class="reference internal" href="#module-nanshe.nanshe.pathHelpers">nanshe.nanshe.pathHelpers module</a></li>
 <li><a class="reference internal" href="#module-nanshe.nanshe.read_config">nanshe.nanshe.read_config module</a></li>
 <li><a class="reference internal" href="#module-nanshe.nanshe.registration">nanshe.nanshe.registration module</a></li>
 <li><a class="reference internal" href="#module-nanshe.nanshe.simple_image_processing">nanshe.nanshe.simple_image_processing module</a></li>

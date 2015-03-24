@@ -132,6 +132,14 @@ nanshe.nanshe.neuron_matplotlib_viewer module
     :undoc-members:
     :show-inheritance:
 
+nanshe.nanshe.pathHelpers module
+--------------------------------
+
+.. automodule:: nanshe.nanshe.pathHelpers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 nanshe.nanshe.read_config module
 --------------------------------
 

@@ -264,6 +264,21 @@ File nanshe/nanshe/neuron_matplotlib_viewer.py
  - No docstring for TimeNavigator!
  Needed: 15; Exist: 13; Missing: 2; Coverage: 86.7%
 
+File nanshe/nanshe/pathHelpers.py
+ - No module dostring!
+ - No docstring for PathComponents._init!
+ - No docstring for PathComponents.externalPath!
+ - No docstring for PathComponents.externalDirectory!
+ - No docstring for PathComponents.filename!
+ - No docstring for PathComponents.filenameBase!
+ - No docstring for PathComponents.extension!
+ - No docstring for PathComponents.internalPath!
+ - No docstring for PathComponents.internalDatasetName!
+ - No docstring for PathComponents.internalDirectory!
+ - No docstring for areOnSameDrive!
+ - No docstring for isUrl!
+ Needed: 26; Exist: 14; Missing: 12; Coverage: 53.8%
+
 File nanshe/nanshe/read_config.py
  - No module dostring!
  Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
@@ -301,6 +316,6 @@ File nanshe/synthetic_data/synthetic_data.py
  Needed: 4; Exist: 3; Missing: 1; Coverage: 75.0%
 
 
-Overall statistics for 27 files:
-Docstrings needed: 440; Docstrings exist: 220; Docstrings missing: 220
-Total docstring coverage: 50.0%;  Grade: not so bad
+Overall statistics for 28 files:
+Docstrings needed: 466; Docstrings exist: 234; Docstrings missing: 232
+Total docstring coverage: 50.2%;  Grade: not so bad

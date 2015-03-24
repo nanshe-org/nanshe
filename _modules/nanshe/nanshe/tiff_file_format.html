@@ -71,7 +71,7 @@
 
 <span class="kn">import</span> <span class="nn">vigra</span>
 <span class="kn">import</span> <span class="nn">vigra.impex</span>
-<span class="kn">import</span> <span class="nn">lazyflow.utility.pathHelpers</span>
+<span class="kn">import</span> <span class="nn">pathHelpers</span>
 
 <span class="kn">import</span> <span class="nn">debugging_tools</span>
 <span class="kn">import</span> <span class="nn">additional_generators</span>
@@ -299,7 +299,7 @@
     <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">new_hdf5_dataset_dtype</span><span class="p">)</span>
 
     <span class="c"># Get all the needed locations for the HDF5 file and dataset</span>
-    <span class="n">new_hdf5_path_components</span> <span class="o">=</span> <span class="n">lazyflow</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">new_hdf5_pathname</span><span class="p">)</span>
+    <span class="n">new_hdf5_path_components</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">new_hdf5_pathname</span><span class="p">)</span>
     <span class="n">new_hdf5_filename</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">externalPath</span>
     <span class="n">new_hdf5_groupname</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">internalDirectory</span>
     <span class="n">new_hdf5_dataset_name</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">internalPath</span>
