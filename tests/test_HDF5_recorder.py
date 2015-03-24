@@ -94,6 +94,23 @@ class TestHDF5Recorder(object):
         assert got_key_error
 
 
+        # Attempt storing to group
+
+        got_value_error = False
+        try:
+            recorder["."] = numpy.array([])
+        except ValueError:
+            got_value_error = True
+        assert got_value_error
+
+        got_value_error = False
+        try:
+            recorder["."] = None
+        except ValueError:
+            got_value_error = True
+        assert not got_value_error
+
+
     def test_HDF5ArrayRecorder(self):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
 
@@ -192,6 +209,25 @@ class TestHDF5Recorder(object):
             assert got_key_error
 
             assert "key/value" not in hdf5_file
+
+
+            # Attempt storing to group
+
+            got_value_error = False
+            try:
+                recorder["."] = numpy.array([])
+            except ValueError:
+                got_value_error = True
+            assert got_value_error
+
+            got_value_error = False
+            try:
+                recorder["."] = None
+            except ValueError:
+                got_value_error = True
+            assert not got_value_error
+
+            assert len(hdf5_file) == 0
 
 
     def test_HDF5EnumeratedArrayRecorder(self):
@@ -306,6 +342,27 @@ class TestHDF5Recorder(object):
             assert "0/key/1" in hdf5_file
 
             assert len(hdf5_file["0/key/1"]) == 0
+
+
+            # Attempt storing to group
+
+            got_value_error = False
+            try:
+                recorder["."] = numpy.array([])
+            except ValueError:
+                got_value_error = True
+            assert got_value_error
+
+            got_value_error = False
+            try:
+                recorder["."] = None
+            except ValueError:
+                got_value_error = True
+            assert not got_value_error
+
+            assert "1" in hdf5_file
+
+            assert len(hdf5_file["1"]) == 0
 
 
     def teardown(self):
