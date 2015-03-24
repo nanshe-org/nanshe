@@ -60,6 +60,17 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary = False):
                     [ True,  True,  True,  True,  True,  True,  True,  True,  True],
                     [False,  True,  True,  True,  True,  True,  True,  True, False],
                     [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)
+
+            >>> generate_hypersphere_masks((9, 9), (4, 4), 5, include_boundary=True)
+            array([[[False,  True,  True,  True,  True,  True,  True,  True, False],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)
     """
 
     # Convert to arrays
