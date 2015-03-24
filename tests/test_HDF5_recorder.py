@@ -168,6 +168,21 @@ class TestHDF5Recorder(object):
 
             assert "key/value" in hdf5_file
 
+            # Overwrite group test
+
+            recorder.overwrite = True
+
+            recorder["key"] = None
+
+            got_key_error = False
+            try:
+                recorder["key"]["value"]
+            except KeyError:
+                got_key_error = True
+            assert got_key_error
+
+            assert "key/value" not in hdf5_file
+
 
     def teardown(self):
         shutil.rmtree(self.temp_dir)
