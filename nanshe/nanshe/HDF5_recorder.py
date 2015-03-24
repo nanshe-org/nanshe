@@ -97,7 +97,16 @@ class HDF5ArrayRecorder(object):
             raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
 
     def __setitem__(self, key, value):
-        if (value is None) or (value is h5py.Group):
+        if (key == "."):
+            if not ( (value is None) or (value is h5py.Group) ):
+                raise ValueError("Cannot store dataset in top level group ( " + self.hdf5_handle.name + " ).")
+
+            if self.overwrite:
+                for each_key in self.hdf5_handle:
+                    del self.hdf5_handle[each_key]
+
+                self.hdf5_handle.file.flush()
+        elif (value is None) or (value is h5py.Group):
             # Check to see if the output must go somewhere special.
             if key:
                 # If so, check to see if it exists.
