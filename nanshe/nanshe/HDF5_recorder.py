@@ -174,7 +174,7 @@ class HDF5EnumeratedArrayRecorder(object):
         return(value)
 
     def __contains__(self, key):
-        return(key in self.hdf5_handle)
+        return(self.get(key) is not None)
 
     def __getitem__(self, key):
         try:
