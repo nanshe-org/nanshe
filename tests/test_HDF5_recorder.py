@@ -184,6 +184,115 @@ class TestHDF5Recorder(object):
             assert "key/value" not in hdf5_file
 
 
+    def test_HDF5EnumeratedArrayRecorder(self):
+        hdf5_filename = os.path.join(self.temp_dir, "test.h5")
+
+        with h5py.File(hdf5_filename, "w") as hdf5_file:
+            recorder = nanshe.nanshe.HDF5_recorder.HDF5EnumeratedArrayRecorder(
+                hdf5_file
+            )
+
+
+            # Check if this stores results.
+
+            assert recorder
+
+
+            # Check for missing key.
+
+            assert recorder.get("key") is None
+
+            assert recorder.get("key", True)
+
+            assert "key" not in recorder
+
+            got_key_error = False
+            try:
+                recorder["key"]
+            except KeyError:
+                got_key_error = True
+
+            assert got_key_error
+
+
+            # Add subgroup key and check for it.
+
+            recorder["key"] = None
+
+            assert recorder.get("key") is not None
+
+            assert "key" in recorder
+
+            got_key_error = False
+            try:
+                recorder["key"]
+            except KeyError:
+                got_key_error = True
+
+            assert not got_key_error
+
+            assert "0/key" in hdf5_file
+
+
+            # Add data
+
+            got_value_error = False
+            try:
+                recorder["value"] = numpy.array([])
+            except ValueError:
+                got_value_error = True
+            assert got_value_error
+
+            recorder["value"] = numpy.array(0)
+
+            got_key_error = False
+            try:
+                recorder["value"]
+            except KeyError:
+                got_key_error = True
+            assert not got_key_error
+
+            assert "0/value/0" in hdf5_file
+
+            recorder["key"]["value"] = numpy.array(0)
+
+            got_key_error = False
+            try:
+                recorder["key"]["value"]
+            except KeyError:
+                got_key_error = True
+            assert not got_key_error
+
+            assert "0/key/0/value/0" in hdf5_file
+
+            # Recreate data test
+
+            recorder["value"] = numpy.array(0)
+
+            got_key_error = False
+            try:
+                recorder["value"]
+            except KeyError:
+                got_key_error = True
+            assert not got_key_error
+
+            assert "0/value/1" in hdf5_file
+
+            # Recreate group test
+
+            recorder["key"] = None
+
+            assert "0/key/1" not in hdf5_file
+
+            # Update group count
+
+            recorder["key"]["."] = None
+
+            assert "0/key/1" in hdf5_file
+
+            assert len(hdf5_file["0/key/1"]) == 0
+
+
     def teardown(self):
         shutil.rmtree(self.temp_dir)
 
