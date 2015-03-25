@@ -4094,6 +4094,12 @@ def tagging_reorder_array(new_array, from_axis_order = "tzyxc", to_axis_order = 
             >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = "txyzc").shape
             (1, 4, 3, 2, 5)
 
+            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), from_axis_order = ["c","t","x","y","z"]).shape
+            (2, 5, 4, 3, 1)
+
+            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = ["t","x","y","z","c"]).shape
+            (1, 4, 3, 2, 5)
+
     """
 
     if not isinstance(from_axis_order, str):
