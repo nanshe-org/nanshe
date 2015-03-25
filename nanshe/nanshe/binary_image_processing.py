@@ -38,8 +38,26 @@ def binary_dilation(input_array, footprint, out=None):
         ...                  [False, False, False, False,  True, False, False],
         ...                  [False, False, False, False, False, False, False],
         ...                  [False, False, False, False, False, False, False]], dtype=bool)
+        >>> b = numpy.zeros_like(a)
 
         >>> binary_dilation(a, numpy.ones(a.ndim*(3,), dtype=bool))
+        array([[ True,  True,  True, False, False, False, False],
+               [ True,  True,  True, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False,  True,  True,  True, False],
+               [False, False, False,  True,  True,  True, False],
+               [False, False, False,  True,  True,  True, False],
+               [False, False, False, False, False, False, False]], dtype=bool)
+
+        >>> binary_dilation(a, numpy.ones(a.ndim*(3,), dtype=bool), out=b)
+        array([[ True,  True,  True, False, False, False, False],
+               [ True,  True,  True, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False,  True,  True,  True, False],
+               [False, False, False,  True,  True,  True, False],
+               [False, False, False,  True,  True,  True, False],
+               [False, False, False, False, False, False, False]], dtype=bool)
+        >>> b
         array([[ True,  True,  True, False, False, False, False],
                [ True,  True,  True, False, False, False, False],
                [False, False, False, False, False, False, False],
