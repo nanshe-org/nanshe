@@ -69,11 +69,13 @@ class TestGenericDecorators(object):
         def func(a, b=2):
             return(a + b)
 
-        func = nanshe.nanshe.generic_decorators.static_variables(
+        func_wrapped = nanshe.nanshe.generic_decorators.static_variables(
             c = 7
         )(
             func
         )
 
-        assert hasattr(func, "c")
-        assert func.c == 7
+        assert func_wrapped.__wrapped__ == func
+        assert not hasattr(func, "c")
+        assert hasattr(func_wrapped, "c")
+        assert func_wrapped.c == 7
