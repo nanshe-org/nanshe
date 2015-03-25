@@ -29,27 +29,27 @@ logger = debugging_tools.logging.getLogger(__name__)
 def binomial_coefficients(n):
     """
         Generates a row in Pascal's triangle (binomial coefficients).
-        
+
         Args:
             n(int):      which row of Pascal's triangle to return.
-        
+
         Returns:
             cs(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
-        
-        
+
+
         Examples:
             >>> binomial_coefficients(0)
             array([1])
-                   
+
             >>> binomial_coefficients(1)
             array([1, 1])
-                   
+
             >>> binomial_coefficients(2)
             array([1, 2, 1])
-                   
+
             >>> binomial_coefficients(4)
             array([1, 4, 6, 4, 1])
-                   
+
             >>> binomial_coefficients(4.0)
             array([1, 4, 6, 4, 1])
     """
@@ -78,41 +78,41 @@ def binomial_coefficients(n):
 def binomial_1D_array_kernel(i, n = 4):
     """
         Generates a 1D numpy array used to make the kernel for the wavelet transform.
-        
+
         Args:
             i(int):      which scaling to use.
             n(int):      which row of Pascal's triangle to return.
-        
+
         Returns:
             r(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
-        
-        
+
+
         Examples:
             >>> binomial_1D_array_kernel(0)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
-            
+
             >>> binomial_1D_array_kernel(0, 4)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
-            
+
             >>> binomial_1D_array_kernel(1, 4)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
-            
+
             >>> binomial_1D_array_kernel(2, 4)
             array([ 0.0625,  0.    ,  0.25  ,  0.    ,  0.375 ,  0.    ,  0.25  ,
                     0.    ,  0.0625])
-            
+
             >>> binomial_1D_array_kernel(3, 4)
             array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,
                     0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,
                     0.    ,  0.    ,  0.0625])
-            
+
             >>> binomial_1D_array_kernel(4, 4)
             array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,
                     0.    ,  0.    ,  0.    ,  0.    ,  0.0625])
-            
+
             >>> binomial_1D_array_kernel(2, 1)
             array([ 0.5,  0. ,  0.5])
     """
@@ -155,16 +155,16 @@ def binomial_1D_array_kernel(i, n = 4):
 def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
     """
         Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).
-        
+
         Args:
             i(int):                                                 which scaling to use.
             n(int):                                                 which row of Pascal's triangle to return.
             border_treatment(vigra.filters.BorderTreatmentMode):    determines how to deal with the borders.
-        
+
         Returns:
             k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
-        
-        
+
+
         Examples:
             >>> binomial_1D_vigra_kernel(1) # doctest: +ELLIPSIS
             <vigra.filters.Kernel1D object at 0x...>
@@ -191,7 +191,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 def wavelet_transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
-        
+
         Args:
             im0(numpy.ndarray):                                  the original image.
             scale(int):                                          the scale of wavelet transform to apply.
@@ -201,11 +201,11 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
             out(numpy.ndarray):                                  holds final result (cannot use unless
                                                                  include_intermediates is False or an AssertionError
                                                                  will be raised.)
-        
+
         Returns:
             k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
-        
-        
+
+
         Examples:
             >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
