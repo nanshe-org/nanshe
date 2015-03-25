@@ -49,3 +49,17 @@ class TestGenericDecorators(object):
         )
 
         assert func_wrapped_1 == func_wrapped_2
+
+
+    def test_static_variables(self):
+        def func(a, b=2):
+            return(a + b)
+
+        func = nanshe.nanshe.generic_decorators.static_variables(
+            c = 7
+        )(
+            func
+        )
+
+        assert hasattr(func, "c")
+        assert func.c == 7
