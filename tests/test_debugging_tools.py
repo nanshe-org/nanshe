@@ -5,6 +5,8 @@ __date__ ="$July 30, 2014 4:57:43PM$"
 import StringIO
 import logging
 import re
+import sys
+import traceback
 
 import nanshe.nanshe.debugging_tools
 
@@ -137,6 +139,42 @@ class TestDebuggingTools(object):
         result = self.stream.getvalue()
 
         print(result)
+
+        assert (result == expected_result)
+
+
+    def test_log_call_7(self):
+        expected_result = """DEBUG:debugging_tools:Entering callable: "test".\n""" + \
+        """DEBUG:debugging_tools:Arguments: "('c',)\"\n""" + \
+        """Keyword Arguments: "{}".\n""" + \
+        """ERROR:debugging_tools:"""
+
+        @nanshe.nanshe.debugging_tools.log_call(self.logger, to_print_args = True, to_print_exception=True)
+        def test(a, b = 5):
+            return(a + b)
+
+        expected_traceback = StringIO.StringIO()
+
+        try:
+            test("c")
+        except:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+
+            print >>expected_traceback, "Traceback (most recent call last):"
+            traceback.print_tb(exc_traceback.tb_next.tb_next, file=expected_traceback)
+            print >>expected_traceback, exc_type.__name__ + ":", exc_value
+
+            print >>expected_traceback
+            expected_traceback.flush()
+
+        expected_result += expected_traceback.getvalue()
+        expected_traceback.close()
+
+        self.handler.flush()
+        result = self.stream.getvalue()
+
+        print(repr(expected_result))
+        print(repr(result))
 
         assert (result == expected_result)
 
