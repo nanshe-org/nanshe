@@ -28,3 +28,24 @@ class TestGenericDecorators(object):
         )
 
         assert func_wrapped_1 == func_wrapped_2
+
+
+    def test_wraps(self):
+        def wrapper(a_callable):
+            def wrapped(*args, **kwargs):
+                return(a_callable(*args, **kwargs))
+
+            return(wrapped)
+
+        def func(a, b=2):
+            return(a + b)
+
+        func_wrapped_1 = functools.wraps(wrapper)(func)
+        if not hasattr(func_wrapped_1, "__wrapped__"):
+            setattr(func_wrapped_1, "__wrapped__", func)
+
+        func_wrapped_2 = nanshe.nanshe.generic_decorators.wraps(wrapper)(
+            func
+        )
+
+        assert func_wrapped_1 == func_wrapped_2
