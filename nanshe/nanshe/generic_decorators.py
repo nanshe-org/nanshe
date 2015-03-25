@@ -35,7 +35,7 @@ def update_wrapper(wrapper,
     wrapper = functools.update_wrapper(wrapper, wrapped, assigned = assigned, updated = updated)
 
     # Store the underlying callable. Automatic in Python 3.
-    setattr(wrapper, "__wrapped__", wrapped)
+    setattr(wrapper, "__wrapped__", getattr(wrapper, "__wrapped__", wrapped))
 
     return(wrapper)
 
