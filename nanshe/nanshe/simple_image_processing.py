@@ -162,6 +162,9 @@ def renormalized_images(input_array, ord = 2, output_array = None):
             >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == renormalized_images(a, output_array = a))
             True
 
+            >>> a = numpy.array([[1.,2.],[3.,4.]]); b = numpy.zeros_like(a); numpy.all(b == renormalized_images(a, output_array = b))
+            True
+
             >>> renormalized_images(numpy.zeros((2,3,)))
             array([[ 0.,  0.,  0.],
                    [ 0.,  0.,  0.]])
