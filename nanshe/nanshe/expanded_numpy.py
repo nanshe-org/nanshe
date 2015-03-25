@@ -4102,11 +4102,8 @@ def tagging_reorder_array(new_array, from_axis_order = "tzyxc", to_axis_order = 
 
     """
 
-    if not isinstance(from_axis_order, str):
-        from_axis_order = "".join([_ for _ in from_axis_order])
-
-    if not isinstance(to_axis_order, str):
-        to_axis_order = "".join([_ for _ in to_axis_order])
+    from_axis_order = "".join(from_axis_order)
+    to_axis_order = "".join(to_axis_order)
 
     if (from_axis_order != to_axis_order):
         # Change view to the specified one
