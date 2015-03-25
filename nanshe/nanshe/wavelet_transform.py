@@ -38,6 +38,12 @@ def binomial_coefficients(n):
 
 
         Examples:
+            >>> binomial_coefficients(-25)
+            array([], dtype=int64)
+
+            >>> binomial_coefficients(-1)
+            array([], dtype=int64)
+
             >>> binomial_coefficients(0)
             array([1])
 
