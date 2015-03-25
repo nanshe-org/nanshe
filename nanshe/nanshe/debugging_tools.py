@@ -95,20 +95,15 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
                 # We don't return immediately. Why? We want to know if this succeeded or failed.
                 # So, we want the log message below to print after the function runs.
                 diff_time = 0.0
-                if log_call_callable_wrapped.to_print_exception:
-                    start_time = time.time()
-                    try:
-                        result = callable(*args, **kwargs)
-                    except:
-                        logger.error(traceback.format_exc())
-                        raise
-                    end_time = time.time()
-                    diff_time += (end_time - start_time)
-                else:
-                    start_time = time.time()
+                start_time = time.time()
+                try:
                     result = callable(*args, **kwargs)
-                    end_time = time.time()
-                    diff_time += (end_time - start_time)
+                except:
+                    if log_call_callable_wrapped.to_print_exception:
+                        logger.error(traceback.format_exc())
+                    raise
+                end_time = time.time()
+                diff_time += (end_time - start_time)
 
                 # Log that we have exited the callable in question.
                 logger.debug("Exiting callable: \"" + callable.__name__ + "\".")
