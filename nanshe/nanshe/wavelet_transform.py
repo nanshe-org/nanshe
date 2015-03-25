@@ -130,6 +130,9 @@ def binomial_1D_array_kernel(i, n = 4):
     # Get the binomial coefficients.
     cs = list(binomial_coefficients(n))
 
+    # Reuse the correction to `n` found by `binomial_coefficients`.
+    n = len(cs) - 1
+
     # Get the right number of zeros to fill in
     zs = list(numpy.zeros(2 ** (i - 1) - 1, dtype = int))
 
