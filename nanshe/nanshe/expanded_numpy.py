@@ -2944,6 +2944,16 @@ def find_relative_offsets(points, center=None, out=None):
                    [ 1, -1],
                    [ 0,  0]])
 
+            >>> a = numpy.arange(6).reshape(2,3).T % 2; b = numpy.zeros_like(a)
+            >>> find_relative_offsets(a, out=b)
+            array([[ 0,  0],
+                   [ 1, -1],
+                   [ 0,  0]])
+            >>> b
+            array([[ 0,  0],
+                   [ 1, -1],
+                   [ 0,  0]])
+
             >>> a = numpy.arange(6).reshape(2,3).T % 2
             >>> find_relative_offsets(a, out=a)
             array([[ 0,  0],
