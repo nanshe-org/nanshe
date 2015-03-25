@@ -57,9 +57,9 @@ def binomial_coefficients(n):
     # Must be integer
     n = int(n)
 
-    # Below 0 is irrelevant. 
-    if n < 0:
-        n = 0
+    # Below -1 is all the same.
+    if n < -1:
+        n = -1
 
     # Get enough repeats of n to get each coefficent
     ns = numpy.repeat(n, n + 1)
