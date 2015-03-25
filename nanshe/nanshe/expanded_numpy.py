@@ -3578,7 +3578,7 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
             
             >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]), 2)
             array([[ 1.]])
-            
+
             >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]), 2)
             array([[ 0.]])
             
