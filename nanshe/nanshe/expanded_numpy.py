@@ -3667,9 +3667,6 @@ def pair_dot_product_normalized(new_vector_set, ord = 2):
     # Gets all of the norms
     new_vector_set_norms = norm(new_vector_set_float, ord = ord)
 
-    if not new_vector_set_norms.shape:
-        new_vector_set_norms = numpy.array([new_vector_set_norms])
-
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(operator.mul, new_vector_set_norms, new_vector_set_norms)
 
