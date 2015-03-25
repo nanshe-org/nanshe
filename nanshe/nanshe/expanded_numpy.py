@@ -1947,10 +1947,7 @@ def enumerate_masks_max(new_masks, axis = 0):
                     [0, 0, 0, 4]]], dtype=uint64)
     """
 
-    if axis < 0:
-        axis += new_masks.ndim
-
-    assert (0 <= axis < new_masks.ndim)
+    axis %= new_masks.ndim
 
     new_enumerated_masks_max = numpy.zeros(new_masks.shape[:axis] + (1,) + new_masks.shape[axis+1:], dtype=numpy.uint64)
 
