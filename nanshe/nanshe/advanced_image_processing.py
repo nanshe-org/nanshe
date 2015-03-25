@@ -1111,8 +1111,6 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
             return(result)
 
-        pass
-
     if new_label_image.size:
         # This gives a list of dictionaries. However, this is not very usable.
         # So, we will convert this to a structured NumPy array.
