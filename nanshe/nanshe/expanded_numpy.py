@@ -3062,6 +3062,21 @@ def find_shortest_wraparound(points, shape, out=None):
             array([[0, 1],
                    [0, 1],
                    [0, 1]])
+
+            >>> a = -7 * (numpy.arange(6).reshape(3, 2) % 2)
+            >>> b = numpy.zeros_like(a)
+            >>> find_shortest_wraparound(
+            ...     a,
+            ...     (4, 8),
+            ...     out=b
+            ... )
+            array([[0, 1],
+                   [0, 1],
+                   [0, 1]])
+            >>> b
+            array([[0, 1],
+                   [0, 1],
+                   [0, 1]])
     """
 
     if out is None:
