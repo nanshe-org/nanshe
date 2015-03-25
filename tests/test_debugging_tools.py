@@ -223,7 +223,7 @@ class TestDebuggingTools(object):
         assert (re.match(expected_result_2, result_2).group() == result_2)
 
 
-    def test_log_class_2(self):
+    def test_log_class_3(self):
         expected_result_1 = """DEBUG:debugging_tools:Entering callable: "__init__"\.\n""" + \
         """DEBUG:debugging_tools:Exiting callable: "__init__"\.\n""" + \
         """DEBUG:debugging_tools:Run time for callable: "__init__" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
