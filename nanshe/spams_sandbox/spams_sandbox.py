@@ -124,6 +124,11 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
     # Also, it is not needed outside of calling this function.
     import spams
 
+    as_ordered_array_dict = {
+        "F_CONTIGUOUS" : numpy.asfortranarray,
+        "C_CONTIGUOUS" : numpy.ascontiguousarray
+    }
+
 
     # Construct X from shared array.
     X_dtype = X_array_type._dtype_
@@ -133,10 +138,9 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
     X = numpy.frombuffer(X_array, dtype = X_dtype).reshape(X_shape)
     X.setflags(X_flags)
 
-    if "F_CONTIGUOUS" in X_array_type.__name__:
-        X = numpy.asfortranarray(X)
-    elif "C_CONTIGUOUS" in X_array_type.__name__:
-        X = numpy.ascontiguousarray(X)
+    for order_name, as_ordered_array in as_ordered_array_dict.items():
+        if order_name in X_array_type.__name__:
+            X = as_ordered_array(X)
 
     # Construct the result to use the shared buffer.
     result_dtype = result_array_type._dtype_
@@ -146,10 +150,9 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
     result = numpy.frombuffer(result_array, dtype = result_dtype).reshape(result_shape)
     result.setflags(result_flags)
 
-    if "F_CONTIGUOUS" in result_array_type.__name__:
-        result = numpy.asfortranarray(result)
-    elif "C_CONTIGUOUS" in result_array_type.__name__:
-        result = numpy.ascontiguousarray(result)
+    for order_name, as_ordered_array in as_ordered_array_dict.items():
+        if order_name in result_array_type.__name__:
+            result = as_ordered_array(result)
 
 
     result[:] = spams.trainDL(X, *args, **kwargs)
