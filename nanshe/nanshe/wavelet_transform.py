@@ -290,6 +290,20 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                     [-0.375  ,  0.625  , -0.375  ],
                     [-0.34375, -0.375  ,  0.59375]]], dtype=float32)
 
+            >>> out = numpy.empty((1, 3, 3), dtype = numpy.float64)
+            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            ...     scale = 1,
+            ...     include_intermediates = False,
+            ...     include_lower_scales = True,
+            ...     out = out) # doctest: +NORMALIZE_WHITESPACE
+            array([[[ 0.59375, -0.375  , -0.34375],
+                    [-0.375  ,  0.625  , -0.375  ],
+                    [-0.34375, -0.375  ,  0.59375]]])
+            >>> out
+            array([[[ 0.59375, -0.375  , -0.34375],
+                    [-0.375  ,  0.625  , -0.375  ],
+                    [-0.34375, -0.375  ,  0.59375]]])
+
             >>> out = numpy.eye(3, dtype = numpy.uint8)
             >>> wavelet_transform(out,
             ...     scale = 1,
