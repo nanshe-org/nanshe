@@ -1685,7 +1685,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x3f83b90&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x307eb90&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -8973,6 +8973,14 @@ a numpy array containing the row of Pascal&#8217;s triangle.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([], dtype=float64)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">array([ 1.])</span>
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="go">array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])</span>
 </pre></div>
@@ -9059,6 +9067,14 @@ a numpy array containing the row of Pascal&#8217;s triangle.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">)</span>
+<span class="go">array([], dtype=int64)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([], dtype=int64)</span>
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="go">array([1])</span>
 </pre></div>
@@ -9172,6 +9188,36 @@ a numpy array containing the row of Pascal&#8217;s triangle.</p>
 <span class="go">array([[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">       [-0.375  ,  0.625  , -0.375  ],</span>
 <span class="go">       [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wavelet_transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span> 
+<span class="go">array([[[ 0.59375, -0.375  , -0.34375],</span>
+<span class="go">        [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="go">        [-0.34375, -0.375  ,  0.59375]]], dtype=float32)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">array([[[ 0.59375, -0.375  , -0.34375],</span>
+<span class="go">        [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="go">        [-0.34375, -0.375  ,  0.59375]]], dtype=float32)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wavelet_transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span> 
+<span class="go">array([[[ 0.59375, -0.375  , -0.34375],</span>
+<span class="go">        [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="go">        [-0.34375, -0.375  ,  0.59375]]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">array([[[ 0.59375, -0.375  , -0.34375],</span>
+<span class="go">        [-0.375  ,  0.625  , -0.375  ],</span>
+<span class="go">        [-0.34375, -0.375  ,  0.59375]]])</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
