@@ -2708,9 +2708,17 @@ def unique_mapping(mapping, out=None):
             array([[ True, False],
                    [False, False]], dtype=bool)
 
-            >>> a = numpy.ones((2,2), dtype=bool); a
+            >>> a = numpy.ones((2,2), dtype=bool); b = a.copy(); a
             array([[ True,  True],
                    [ True,  True]], dtype=bool)
+
+            >>> unique_mapping(a, out=b)
+            array([[False, False],
+                   [False, False]], dtype=bool)
+
+            >>> b
+            array([[False, False],
+                   [False, False]], dtype=bool)
 
             >>> unique_mapping(a, out=a)
             array([[False, False],
