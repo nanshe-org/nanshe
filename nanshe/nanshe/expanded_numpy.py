@@ -3612,12 +3612,6 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     new_vector_set_1_norms = norm(new_vector_set_1_float, ord = ord)
     new_vector_set_2_norms = norm(new_vector_set_2_float, ord = ord)
 
-    if not new_vector_set_1_norms.shape:
-        new_vector_set_1_norms = numpy.array([new_vector_set_1_norms])
-
-    if not new_vector_set_2_norms.shape:
-        new_vector_set_2_norms = numpy.array([new_vector_set_2_norms])
-
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(operator.mul, new_vector_set_1_norms, new_vector_set_2_norms)
 
