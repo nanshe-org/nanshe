@@ -2425,10 +2425,7 @@ def numpy_array_dtype_list(new_array):
                                             malleable than a numpy.dtype. 
     """
 
-    try:
-        return(list(numpy_structured_array_dtype_generator(new_array)))
-    except NotNumPyStructuredArrayType:
-        return(new_array.dtype.type)
+    return(list(numpy_structured_array_dtype_generator(new_array)))
 
 
 @debugging_tools.log_call(logger)
