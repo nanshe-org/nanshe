@@ -170,9 +170,7 @@ def index_axis_at_pos(new_array, axis, pos):
     """
 
     # Rescale axis inside the bounds
-    axis %= (new_array.ndim)
-    if axis < 0:
-        axis += new_array.ndim
+    axis %= new_array.ndim
 
     # Swaps the first with the desired axis (returns a view)
     new_array_swapped = new_array.swapaxes(0, axis)
