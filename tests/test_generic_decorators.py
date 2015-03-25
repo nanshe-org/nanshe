@@ -51,6 +51,20 @@ class TestGenericDecorators(object):
         assert func_wrapped_1 == func_wrapped_2
 
 
+    def test_identity_wrapper(self):
+        def func(a, b=2):
+            return(a + b)
+
+        func_wrapped = nanshe.nanshe.generic_decorators.identity_wrapper(
+            func
+        )
+
+        assert func_wrapped != func
+        assert not hasattr(func, "__wrapped__")
+        assert hasattr(func_wrapped, "__wrapped__")
+        assert func_wrapped.__wrapped__ == func
+
+
     def test_static_variables(self):
         def func(a, b=2):
             return(a + b)
