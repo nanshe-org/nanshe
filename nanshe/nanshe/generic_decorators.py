@@ -64,6 +64,35 @@ def wraps(wrapped,
     return(functools.partial(update_wrapper, wrapped = wrapped, assigned = assigned, updated = updated))
 
 
+def identity_wrapper(a_callable):
+    """
+        Trivially wraps a given callable without doing anything else to it.
+
+        Args:
+            a_callable(callable):   the callable that is being wrapped.
+
+        Returns:
+            (callable):             a wrapped callable.
+    """
+
+    @wraps(a_callable)
+    def wrapped_callable(*args, **kwargs):
+        """
+            Trivially wraps a given callable without doing anything else to it.
+
+            Args:
+                *args:      Variable length argument list.
+                **kwargs:   Arbitrary keyword arguments.
+
+            Returns:
+                Same as what `a_callable` returns.
+        """
+
+        return(a_callable(*args, **kwargs))
+
+    return(wrapped_callable)
+
+
 def static_variables(**kwargs):
     """
         Returns a decorator that decorates a callable such that it has the given static variables set.
