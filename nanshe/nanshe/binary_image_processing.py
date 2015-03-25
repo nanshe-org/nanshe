@@ -116,8 +116,26 @@ def binary_erosion(input_array, footprint, out = None):
         ...                  [False,  True, False,  True,  True,  True, False],
         ...                  [False,  True, False,  True,  True,  True, False],
         ...                  [False, False, False, False, False, False,  True]], dtype=bool)
+        >>> b = numpy.zeros_like(a)
 
         >>> binary_erosion(a, numpy.ones(a.ndim*(3,), dtype=bool))
+        array([[ True,  True, False, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False,  True, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False, False, False, False]], dtype=bool)
+
+        >>> binary_erosion(a, numpy.ones(a.ndim*(3,), dtype=bool), out=b)
+        array([[ True,  True, False, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False,  True, False, False],
+               [False, False, False, False, False, False, False],
+               [False, False, False, False, False, False, False]], dtype=bool)
+        >>> b
         array([[ True,  True, False, False, False, False, False],
                [False, False, False, False, False, False, False],
                [False, False, False, False, False, False, False],
