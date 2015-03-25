@@ -1484,7 +1484,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     props_dtype = []
 
     # Place on the label props dtype first
-    labeled_props_dtype = expanded_numpy.numpy_array_dtype_list(labeled_props)
+    labeled_props_dtype = expanded_numpy.numpy_structured_array_dtype_list(labeled_props)
     props_dtype.extend(labeled_props_dtype)
 
     # Then add new fields.

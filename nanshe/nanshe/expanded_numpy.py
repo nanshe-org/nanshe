@@ -2410,7 +2410,7 @@ def numpy_structured_array_dtype_generator(new_array):
 
 
 @debugging_tools.log_call(logger)
-def numpy_array_dtype_list(new_array):
+def numpy_structured_array_dtype_list(new_array):
     """
         Takes any NumPy array and returns either a list for a NumPy structured array
         via numpy_structured_array_dtype_generator or if it is a normal NumPy array
