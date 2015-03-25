@@ -1507,6 +1507,17 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
             (numpy.ndarray):                     a view of a numpy array with tiling in various dimension.
         
         Examples:
+            >>> numpy.arange(6).reshape(2,3)
+            array([[0, 1, 2],
+                   [3, 4, 5]])
+
+            >>> expand_view(numpy.arange(6).reshape(2,3))
+            array([[0, 1, 2],
+                   [3, 4, 5]])
+
+            >>> a = numpy.arange(6).reshape(2,3); a is expand_view(a)
+            False
+
             >>> expand_view(numpy.arange(6).reshape(2,3), 1)
             array([[[0],
                     [1],
