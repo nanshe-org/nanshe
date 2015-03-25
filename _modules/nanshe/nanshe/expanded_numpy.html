@@ -2768,9 +2768,17 @@
 <span class="sd">            array([[ True, False],</span>
 <span class="sd">                   [False, False]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; a = numpy.ones((2,2), dtype=bool); a</span>
+<span class="sd">            &gt;&gt;&gt; a = numpy.ones((2,2), dtype=bool); b = a.copy(); a</span>
 <span class="sd">            array([[ True,  True],</span>
 <span class="sd">                   [ True,  True]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; unique_mapping(a, out=b)</span>
+<span class="sd">            array([[False, False],</span>
+<span class="sd">                   [False, False]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; b</span>
+<span class="sd">            array([[False, False],</span>
+<span class="sd">                   [False, False]], dtype=bool)</span>
 
 <span class="sd">            &gt;&gt;&gt; unique_mapping(a, out=a)</span>
 <span class="sd">            array([[False, False],</span>
@@ -2996,6 +3004,16 @@
 <span class="sd">                   [ 1, -1],</span>
 <span class="sd">                   [ 0,  0]])</span>
 
+<span class="sd">            &gt;&gt;&gt; a = numpy.arange(6).reshape(2,3).T % 2; b = numpy.zeros_like(a)</span>
+<span class="sd">            &gt;&gt;&gt; find_relative_offsets(a, out=b)</span>
+<span class="sd">            array([[ 0,  0],</span>
+<span class="sd">                   [ 1, -1],</span>
+<span class="sd">                   [ 0,  0]])</span>
+<span class="sd">            &gt;&gt;&gt; b</span>
+<span class="sd">            array([[ 0,  0],</span>
+<span class="sd">                   [ 1, -1],</span>
+<span class="sd">                   [ 0,  0]])</span>
+
 <span class="sd">            &gt;&gt;&gt; a = numpy.arange(6).reshape(2,3).T % 2</span>
 <span class="sd">            &gt;&gt;&gt; find_relative_offsets(a, out=a)</span>
 <span class="sd">            array([[ 0,  0],</span>
@@ -3101,6 +3119,35 @@
 <span class="sd">            ...     -7 * (numpy.arange(6).reshape(3, 2) % 2),</span>
 <span class="sd">            ...     (4, 8)</span>
 <span class="sd">            ... )</span>
+<span class="sd">            array([[0, 1],</span>
+<span class="sd">                   [0, 1],</span>
+<span class="sd">                   [0, 1]])</span>
+
+<span class="sd">            &gt;&gt;&gt; a = -7 * (numpy.arange(6).reshape(3, 2) % 2)</span>
+<span class="sd">            &gt;&gt;&gt; b = numpy.zeros_like(a)</span>
+<span class="sd">            &gt;&gt;&gt; find_shortest_wraparound(</span>
+<span class="sd">            ...     a,</span>
+<span class="sd">            ...     (4, 8),</span>
+<span class="sd">            ...     out=b</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[0, 1],</span>
+<span class="sd">                   [0, 1],</span>
+<span class="sd">                   [0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; b</span>
+<span class="sd">            array([[0, 1],</span>
+<span class="sd">                   [0, 1],</span>
+<span class="sd">                   [0, 1]])</span>
+
+<span class="sd">            &gt;&gt;&gt; a = -7 * (numpy.arange(6).reshape(3, 2) % 2)</span>
+<span class="sd">            &gt;&gt;&gt; find_shortest_wraparound(</span>
+<span class="sd">            ...     a,</span>
+<span class="sd">            ...     (4, 8),</span>
+<span class="sd">            ...     out=a</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[0, 1],</span>
+<span class="sd">                   [0, 1],</span>
+<span class="sd">                   [0, 1]])</span>
+<span class="sd">            &gt;&gt;&gt; a</span>
 <span class="sd">            array([[0, 1],</span>
 <span class="sd">                   [0, 1],</span>
 <span class="sd">                   [0, 1]])</span>
@@ -3591,7 +3638,7 @@
 <span class="sd">            </span>
 <span class="sd">            &gt;&gt;&gt; dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]), 2)</span>
 <span class="sd">            array([[ 1.]])</span>
-<span class="sd">            </span>
+
 <span class="sd">            &gt;&gt;&gt; dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]), 2)</span>
 <span class="sd">            array([[ 0.]])</span>
 <span class="sd">            </span>
@@ -3624,12 +3671,6 @@
     <span class="c"># Gets all of the norms</span>
     <span class="n">new_vector_set_1_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
     <span class="n">new_vector_set_2_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_2_float</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_vector_set_1_norms</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="n">new_vector_set_1_norms</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_vector_set_1_norms</span><span class="p">])</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_vector_set_2_norms</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="n">new_vector_set_2_norms</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_vector_set_2_norms</span><span class="p">])</span>
 
     <span class="c"># Finds the product of each combination for normalization</span>
     <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">new_vector_set_2_norms</span><span class="p">)</span>
@@ -3685,9 +3726,6 @@
 
     <span class="c"># Gets all of the norms</span>
     <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_vector_set_norms</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">new_vector_set_norms</span><span class="p">])</span>
 
     <span class="c"># Finds the product of each combination for normalization</span>
     <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">)</span>
