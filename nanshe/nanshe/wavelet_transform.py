@@ -321,8 +321,6 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                 W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
                 out = W
             else:
-                pass
-
                 assert ( out.shape == ((scale.max(),) + im0.shape) )
 
                 if not issubclass(out.dtype.type, numpy.float32):
