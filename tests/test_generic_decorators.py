@@ -121,7 +121,7 @@ class TestGenericDecorators(object):
         assert b.__special_object__ == a.__special_object__
 
 
-    def test_metaclasses(self):
+    def test_metaclasses_0(self):
         class Meta1(type):
             pass
 
@@ -140,3 +140,34 @@ class TestGenericDecorators(object):
         assert hasattr(ClassWrapped, "__wrapped__")
         assert hasattr(ClassWrapped.__wrapped__, "__wrapped__")
         assert ClassWrapped.__wrapped__.__wrapped__ == Class
+
+
+    def test_metaclasses_1(self):
+        class Meta1(type):
+            pass
+
+        class Meta2(type):
+            pass
+
+        class Class(object):
+            __slots__ = ("__special_object__",)
+
+            def __init__(self):
+                self.__special_object__ = object
+
+        ClassWrapped = nanshe.nanshe.generic_decorators.metaclasses(
+            Meta1, Meta2
+        )(Class)
+
+        assert ClassWrapped != Class
+        assert not hasattr(Class, "__wrapped__")
+        assert hasattr(ClassWrapped, "__wrapped__")
+        assert hasattr(ClassWrapped.__wrapped__, "__wrapped__")
+        assert ClassWrapped.__wrapped__.__wrapped__ == Class
+
+        a = Class()
+        b = ClassWrapped()
+
+        assert hasattr(a, "__special_object__")
+        assert hasattr(b, "__special_object__")
+        assert b.__special_object__ == a.__special_object__
