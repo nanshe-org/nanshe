@@ -1685,7 +1685,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x30d6c50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x34cbc50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2915,6 +2915,11 @@ a numpy array with noise zeroed.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">)</span>
+<span class="go">array([[False, False],</span>
+<span class="go">       [False, False]], dtype=bool)</span>
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="go">array([[False, False],</span>
 <span class="go">       [False, False]], dtype=bool)</span>
