@@ -83,8 +83,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     result = result.copy()
     p.join()
 
-    if p.exitcode != 0:
-        raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
+    if p.exitcode != 0: raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
 
     return(result)
 
@@ -219,8 +218,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     p.start()
     p.join()
 
-    if p.exitcode != 0:
-        raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
+    if p.exitcode != 0: raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
 
 
     # Reconstruct the result from the output array
