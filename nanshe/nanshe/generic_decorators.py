@@ -76,12 +76,12 @@ def static_variables(**kwargs):
 
     """
 
-    def static_variables_tie(callable):
+    def static_variables_tie(a_callable):
         """
             Decorates a function such that it has the given static variables set.
 
             Args:
-                callable(callable):       the callable to decorate.
+                a_callable(callable):     the callable to decorate.
 
             Returns:
                 (callable):               the callable returned.
@@ -89,9 +89,9 @@ def static_variables(**kwargs):
         """
 
         for each_kwd, each_val in kwargs.items():
-            setattr(callable, each_kwd, each_val)
+            setattr(a_callable, each_kwd, each_val)
 
-        return(callable)
+        return(a_callable)
 
     return(static_variables_tie)
 
