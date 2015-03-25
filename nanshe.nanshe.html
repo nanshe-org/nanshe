@@ -1685,7 +1685,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x3244c50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x32aabd0&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -4203,6 +4203,20 @@ tile if the keyword is not specified.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([[0, 1, 2],</span>
+<span class="go">       [3, 4, 5]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">array([[0, 1, 2],</span>
+<span class="go">       [3, 4, 5]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">array([[[0],</span>
 <span class="go">        [1],</span>
@@ -5637,26 +5651,6 @@ value(s), as well.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="nanshe.nanshe.expanded_numpy.numpy_array_dtype_list">
-<tt class="descclassname">nanshe.nanshe.expanded_numpy.</tt><tt class="descname">numpy_array_dtype_list</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/expanded_numpy.html#numpy_array_dtype_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.expanded_numpy.numpy_array_dtype_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes any NumPy array and returns either a list for a NumPy structured array
-via numpy_structured_array_dtype_generator or if it is a normal NumPy array
-it returns the type used.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the dtype info from.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(list or type):                 something that can be given to numpy.dtype
-to obtain the new_array.dtype, but is more
-malleable than a numpy.dtype.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="nanshe.nanshe.expanded_numpy.numpy_structured_array_dtype_generator">
 <tt class="descclassname">nanshe.nanshe.expanded_numpy.</tt><tt class="descname">numpy_structured_array_dtype_generator</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/expanded_numpy.html#numpy_structured_array_dtype_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.expanded_numpy.numpy_structured_array_dtype_generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a NumPy structured array and returns a generator that goes over
@@ -5671,6 +5665,26 @@ each name in the structured array and yields the name, type, and shape
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><strong>(NotNumPyStructuredArrayType):  if it is a normal NumPy array.</strong> &#8211;</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(iterator):                     An iterator yielding tuples.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.nanshe.expanded_numpy.numpy_structured_array_dtype_list">
+<tt class="descclassname">nanshe.nanshe.expanded_numpy.</tt><tt class="descname">numpy_structured_array_dtype_list</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/expanded_numpy.html#numpy_structured_array_dtype_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.expanded_numpy.numpy_structured_array_dtype_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes any NumPy array and returns either a list for a NumPy structured array
+via numpy_structured_array_dtype_generator or if it is a normal NumPy array
+it returns the type used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the dtype info from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(list or type):                 something that can be given to numpy.dtype
+to obtain the new_array.dtype, but is more
+malleable than a numpy.dtype.</td>
 </tr>
 </tbody>
 </table>
@@ -6407,6 +6421,14 @@ dim.</p>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tagging_reorder_array</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">to_axis_order</span> <span class="o">=</span> <span class="s">&quot;txyzc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(1, 4, 3, 2, 5)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tagging_reorder_array</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">from_axis_order</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="s">&quot;t&quot;</span><span class="p">,</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="s">&quot;z&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(2, 5, 4, 3, 1)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tagging_reorder_array</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">to_axis_order</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;t&quot;</span><span class="p">,</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="s">&quot;c&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(1, 4, 3, 2, 5)</span>
 </pre></div>
 </div>

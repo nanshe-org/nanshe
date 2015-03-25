@@ -230,9 +230,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Rescale axis inside the bounds</span>
-    <span class="n">axis</span> <span class="o">%=</span> <span class="p">(</span><span class="n">new_array</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">axis</span> <span class="o">+=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="n">axis</span> <span class="o">%=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">ndim</span>
 
     <span class="c"># Swaps the first with the desired axis (returns a view)</span>
     <span class="n">new_array_swapped</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
@@ -1567,6 +1565,17 @@
 <span class="sd">            (numpy.ndarray):                     a view of a numpy array with tiling in various dimension.</span>
 <span class="sd">        </span>
 <span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; numpy.arange(6).reshape(2,3)</span>
+<span class="sd">            array([[0, 1, 2],</span>
+<span class="sd">                   [3, 4, 5]])</span>
+
+<span class="sd">            &gt;&gt;&gt; expand_view(numpy.arange(6).reshape(2,3))</span>
+<span class="sd">            array([[0, 1, 2],</span>
+<span class="sd">                   [3, 4, 5]])</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.arange(6).reshape(2,3); a is expand_view(a)</span>
+<span class="sd">            False</span>
+
 <span class="sd">            &gt;&gt;&gt; expand_view(numpy.arange(6).reshape(2,3), 1)</span>
 <span class="sd">            array([[[0],</span>
 <span class="sd">                    [1],</span>
@@ -1736,9 +1745,6 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reps_before</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="n">reps_before</span> <span class="o">=</span> <span class="p">(</span><span class="n">reps_before</span><span class="p">,)</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">reps_after</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">reps_before</span><span class="p">):</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">new_array</span><span class="o">.</span><span class="n">view</span><span class="p">())</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">stride_tricks</span><span class="o">.</span><span class="n">as_strided</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">reps_before</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="n">reps_after</span><span class="p">,</span>
                                                <span class="nb">len</span><span class="p">(</span><span class="n">reps_before</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">strides</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">reps_after</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,))</span> <span class="p">)</span>
@@ -2001,10 +2007,7 @@
 <span class="sd">                    [0, 0, 0, 4]]], dtype=uint64)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">axis</span> <span class="o">+=</span> <span class="n">new_masks</span><span class="o">.</span><span class="n">ndim</span>
-
-    <span class="k">assert</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="n">new_masks</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+    <span class="n">axis</span> <span class="o">%=</span> <span class="n">new_masks</span><span class="o">.</span><span class="n">ndim</span>
 
     <span class="n">new_enumerated_masks_max</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
 
@@ -2467,7 +2470,7 @@
 
 </div>
 <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="numpy_array_dtype_list"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.expanded_numpy.numpy_array_dtype_list">[docs]</a><span class="k">def</span> <span class="nf">numpy_array_dtype_list</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
+<div class="viewcode-block" id="numpy_structured_array_dtype_list"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.expanded_numpy.numpy_structured_array_dtype_list">[docs]</a><span class="k">def</span> <span class="nf">numpy_structured_array_dtype_list</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes any NumPy array and returns either a list for a NumPy structured array</span>
 <span class="sd">        via numpy_structured_array_dtype_generator or if it is a normal NumPy array</span>
@@ -2482,10 +2485,7 @@
 <span class="sd">                                            malleable than a numpy.dtype. </span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">numpy_structured_array_dtype_generator</span><span class="p">(</span><span class="n">new_array</span><span class="p">)))</span>
-    <span class="k">except</span> <span class="n">NotNumPyStructuredArrayType</span><span class="p">:</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">numpy_structured_array_dtype_generator</span><span class="p">(</span><span class="n">new_array</span><span class="p">)))</span>
 
 </div>
 <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
@@ -4154,13 +4154,16 @@
 <span class="sd">            &gt;&gt;&gt; tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = &quot;txyzc&quot;).shape</span>
 <span class="sd">            (1, 4, 3, 2, 5)</span>
 
+<span class="sd">            &gt;&gt;&gt; tagging_reorder_array(numpy.ones((1,2,3,4,5)), from_axis_order = [&quot;c&quot;,&quot;t&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot;]).shape</span>
+<span class="sd">            (2, 5, 4, 3, 1)</span>
+
+<span class="sd">            &gt;&gt;&gt; tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = [&quot;t&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot;,&quot;c&quot;]).shape</span>
+<span class="sd">            (1, 4, 3, 2, 5)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">from_axis_order</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">from_axis_order</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">from_axis_order</span><span class="p">])</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to_axis_order</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">to_axis_order</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">to_axis_order</span><span class="p">])</span>
+    <span class="n">from_axis_order</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">from_axis_order</span><span class="p">)</span>
+    <span class="n">to_axis_order</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_axis_order</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">from_axis_order</span> <span class="o">!=</span> <span class="n">to_axis_order</span><span class="p">):</span>
         <span class="c"># Change view to the specified one</span>
