@@ -117,10 +117,12 @@ def static_variables(**kwargs):
 
         """
 
-        for each_kwd, each_val in kwargs.items():
-            setattr(a_callable, each_kwd, each_val)
+        callable_wrapped = identity_wrapper(a_callable)
 
-        return(a_callable)
+        for each_kwd, each_val in kwargs.items():
+            setattr(callable_wrapped, each_kwd, each_val)
+
+        return(callable_wrapped)
 
     return(static_variables_tie)
 
