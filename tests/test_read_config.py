@@ -17,7 +17,7 @@ class TestReadConfig(object):
         self.temp_dir = tempfile.mkdtemp()
 
 
-    def test0(self):
+    def test0a(self):
         dict_type = dict
 
         params = dict_type()
@@ -39,6 +39,44 @@ class TestReadConfig(object):
         params_out = nanshe.nanshe.read_config.read_parameters(
             config_filename
         )
+
+        assert params == params_out
+
+
+    def test0b(self):
+        dict_type = dict
+
+        params = dict_type()
+        params["b"] = range(3)
+        params["b"].append("__comment__ to drop")
+        params["c"] = "test"
+        params["a"] = 5
+        params["d"] = dict_type(params)
+        params["h"] = [dict_type(params["d"])]
+        params["g"] = [[_k, _v] for _k, _v in params["d"].items()]
+        params["e"] = "__comment__ will be removed"
+        params["__comment__ e"] = "also will be removed"
+        params["f"] = u"will not be unicode"
+
+        config_filename = os.path.join(self.temp_dir, "config.json")
+        with open(config_filename, "w") as config_file:
+            json.dump(params, config_file)
+
+        with open(config_filename, "r") as config_file:
+            params_raw_out = json.load(config_file)
+            assert params == params_raw_out
+
+        params_out = nanshe.nanshe.read_config.read_parameters(
+            config_filename
+        )
+
+        params["b"] = params["b"][:-1]
+        params["d"]["b"] = params["d"]["b"][:-1]
+        params["h"][0]["b"] = params["h"][0]["b"][:-1]
+        params["g"][-1][1] = params["g"][-1][1][:-1]
+        del params["e"]
+        del params["__comment__ e"]
+        params["f"] = params["f"].encode("utf-8")
 
         assert params == params_out
 
