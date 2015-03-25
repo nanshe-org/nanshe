@@ -1685,7 +1685,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x47abc50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x36f5c50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2557,7 +2557,10 @@ Same as out if out was provided.</p>
 <span class="gp">... </span>                 <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
 <span class="gp">... </span>                 <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
 <span class="gp">... </span>                 <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_dilation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_dilation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
 <span class="go">array([[ True,  True,  True, False, False, False, False],</span>
 <span class="go">       [ True,  True,  True, False, False, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False],</span>
@@ -2565,7 +2568,27 @@ Same as out if out was provided.</p>
 <span class="go">       [False, False, False,  True,  True,  True, False],</span>
 <span class="go">       [False, False, False,  True,  True,  True, False],</span>
 <span class="go">       [False, False, False, False, False, False, False]], dtype=bool)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_dilation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">out</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_dilation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">out</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="go">array([[ True,  True,  True, False, False, False, False],</span>
+<span class="go">       [ True,  True,  True, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False,  True,  True,  True, False],</span>
+<span class="go">       [False, False, False,  True,  True,  True, False],</span>
+<span class="go">       [False, False, False,  True,  True,  True, False],</span>
+<span class="go">       [False, False, False, False, False, False, False]], dtype=bool)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
+<span class="go">array([[ True,  True,  True, False, False, False, False],</span>
+<span class="go">       [ True,  True,  True, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False,  True,  True,  True, False],</span>
+<span class="go">       [False, False, False,  True,  True,  True, False],</span>
+<span class="go">       [False, False, False,  True,  True,  True, False],</span>
+<span class="go">       [False, False, False, False, False, False, False]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_dilation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">out</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
 <span class="go">array([[ True,  True,  True, False, False, False, False],</span>
 <span class="go">       [ True,  True,  True, False, False, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False],</span>
@@ -2616,7 +2639,10 @@ Same as out if out was provided.</p>
 <span class="gp">... </span>                 <span class="p">[</span><span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
 <span class="gp">... </span>                 <span class="p">[</span><span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
 <span class="gp">... </span>                 <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_erosion</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_erosion</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
 <span class="go">array([[ True,  True, False, False, False, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False],</span>
@@ -2624,7 +2650,27 @@ Same as out if out was provided.</p>
 <span class="go">       [False, False, False, False,  True, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False]], dtype=bool)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_erosion</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">out</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_erosion</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">out</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="go">array([[ True,  True, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False,  True, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False]], dtype=bool)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
+<span class="go">array([[ True,  True, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False,  True, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False],</span>
+<span class="go">       [False, False, False, False, False, False, False]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_erosion</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">out</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
 <span class="go">array([[ True,  True, False, False, False, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False],</span>
 <span class="go">       [False, False, False, False, False, False, False],</span>
@@ -8633,6 +8679,10 @@ The same array with each images mean removed.</p>
 <span class="go">True</span>
 </pre></div>
 </div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]);</span> <span class="n">b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="n">renormalized_images</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="n">b</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">renormalized_images</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,)))</span>
 <span class="go">array([[ 0.,  0.,  0.],</span>
 <span class="go">       [ 0.,  0.,  0.]])</span>
@@ -8704,6 +8754,15 @@ The same array with each images mean removed.</p>
 <span class="go">array([[-0.5,  0.5],</span>
 <span class="go">       [-0.5,  0.5]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[-0.5,  0.5],</span>
+<span class="go">       [-0.5,  0.5]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]);</span> <span class="n">b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zeroed_mean_images</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="go">array([[-0.5,  0.5],</span>
+<span class="go">       [-0.5,  0.5]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
 <span class="go">array([[-0.5,  0.5],</span>
 <span class="go">       [-0.5,  0.5]])</span>
 </pre></div>

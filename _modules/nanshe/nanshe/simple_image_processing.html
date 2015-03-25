@@ -126,6 +126,14 @@
 <span class="sd">            array([[-0.5,  0.5],</span>
 <span class="sd">                   [-0.5,  0.5]])</span>
 
+<span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]]); b = numpy.zeros_like(a)</span>
+<span class="sd">            &gt;&gt;&gt; zeroed_mean_images(a, output_array=b)</span>
+<span class="sd">            array([[-0.5,  0.5],</span>
+<span class="sd">                   [-0.5,  0.5]])</span>
+<span class="sd">            &gt;&gt;&gt; b</span>
+<span class="sd">            array([[-0.5,  0.5],</span>
+<span class="sd">                   [-0.5,  0.5]])</span>
+
 <span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[1,2],[3,4]]).astype(numpy.float32))</span>
 <span class="sd">            array([[-0.5,  0.5],</span>
 <span class="sd">                   [-0.5,  0.5]], dtype=float32)</span>
@@ -212,6 +220,9 @@
 <span class="sd">            True</span>
 
 <span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == renormalized_images(a, output_array = a))</span>
+<span class="sd">            True</span>
+
+<span class="sd">            &gt;&gt;&gt; a = numpy.array([[1.,2.],[3.,4.]]); b = numpy.zeros_like(a); numpy.all(b == renormalized_images(a, output_array = b))</span>
 <span class="sd">            True</span>
 
 <span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.zeros((2,3,)))</span>
