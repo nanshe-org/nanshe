@@ -38,6 +38,7 @@ def binary_dilation(input_array, footprint, out=None):
         ...                  [False, False, False, False,  True, False, False],
         ...                  [False, False, False, False, False, False, False],
         ...                  [False, False, False, False, False, False, False]], dtype=bool)
+
         >>> binary_dilation(a, numpy.ones(a.ndim*(3,), dtype=bool))
         array([[ True,  True,  True, False, False, False, False],
                [ True,  True,  True, False, False, False, False],
@@ -46,6 +47,7 @@ def binary_dilation(input_array, footprint, out=None):
                [False, False, False,  True,  True,  True, False],
                [False, False, False,  True,  True,  True, False],
                [False, False, False, False, False, False, False]], dtype=bool)
+
         >>> binary_dilation(a, numpy.ones(a.ndim*(3,), dtype=bool), out=a)
         array([[ True,  True,  True, False, False, False, False],
                [ True,  True,  True, False, False, False, False],
@@ -96,6 +98,7 @@ def binary_erosion(input_array, footprint, out = None):
         ...                  [False,  True, False,  True,  True,  True, False],
         ...                  [False,  True, False,  True,  True,  True, False],
         ...                  [False, False, False, False, False, False,  True]], dtype=bool)
+
         >>> binary_erosion(a, numpy.ones(a.ndim*(3,), dtype=bool))
         array([[ True,  True, False, False, False, False, False],
                [False, False, False, False, False, False, False],
@@ -104,6 +107,7 @@ def binary_erosion(input_array, footprint, out = None):
                [False, False, False, False,  True, False, False],
                [False, False, False, False, False, False, False],
                [False, False, False, False, False, False, False]], dtype=bool)
+
         >>> binary_erosion(a, numpy.ones(a.ndim*(3,), dtype=bool), out=a)
         array([[ True,  True, False, False, False, False, False],
                [False, False, False, False, False, False, False],
