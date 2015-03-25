@@ -94,6 +94,12 @@ def binomial_1D_array_kernel(i, n = 4):
 
 
         Examples:
+            >>> binomial_1D_array_kernel(0, -2)
+            array([], dtype=float64)
+
+            >>> binomial_1D_array_kernel(0, 0)
+            array([ 1.])
+
             >>> binomial_1D_array_kernel(0)
             array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])
 
