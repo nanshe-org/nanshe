@@ -66,6 +66,14 @@ def zeroed_mean_images(input_array, output_array = None):
             array([[-0.5,  0.5],
                    [-0.5,  0.5]])
 
+            >>> a = numpy.array([[1.,2.],[3.,4.]]); b = numpy.zeros_like(a)
+            >>> zeroed_mean_images(a, output_array=b)
+            array([[-0.5,  0.5],
+                   [-0.5,  0.5]])
+            >>> b
+            array([[-0.5,  0.5],
+                   [-0.5,  0.5]])
+
             >>> zeroed_mean_images(numpy.array([[1,2],[3,4]]).astype(numpy.float32))
             array([[-0.5,  0.5],
                    [-0.5,  0.5]], dtype=float32)
