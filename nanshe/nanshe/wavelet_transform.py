@@ -127,10 +127,6 @@ def binomial_1D_array_kernel(i, n = 4):
     if i < 1:
         i = 1
 
-    # Below 0 is irrelevant. 
-    if n < 0:
-        n = 0
-
     # Get the binomial coefficients.
     cs = list(binomial_coefficients(n))
 
