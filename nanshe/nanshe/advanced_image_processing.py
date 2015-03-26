@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$Apr 30, 2014 5:23:37PM$"
+__date__ = "$Apr 30, 2014 17:23:37 EDT$"
 
 
 
