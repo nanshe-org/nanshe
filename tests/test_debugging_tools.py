@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$July 30, 2014 4:57:43PM$"
+__date__ = "$Jul 30, 2014 16:57:43 EDT$"
 
 
 import StringIO
