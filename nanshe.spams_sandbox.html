@@ -94,7 +94,12 @@ so that it doesn&#8217;t damage what happens in this one.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>numpy.matrix</em>) &#8211; a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>numpy.matrix</em>) &#8211; a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).</li>
+<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -118,10 +123,18 @@ so that it doesn&#8217;t damage what happens in this one.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>result</strong> &#8211;
-the dictionary found</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
+<li><strong>*kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> &#8211;
+the dictionary found</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.matrix</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -132,6 +145,18 @@ the dictionary found</td>
 <code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">call_spams_trainDL</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.
 Designed to be like the multiprocessing calls.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">For legacy.</p>
@@ -157,6 +182,8 @@ so that it doesn&#8217;t damage what happens in this one.</p>
 <li><strong>result_array</strong> (<em>multiprocessing.RawArray</em>) &#8211; shared memory array to store results in.</li>
 <li><strong>X_array_type</strong> (<em>numpy.ctypeslib.ndpointer</em>) &#8211; a pointer type with properties needed by X_array.</li>
 <li><strong>X_array</strong> (<em>numpy.ndarray</em>) &#8211; currently uses numpy ndarray as input.</li>
+<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
+<li><strong>*kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
 </ul>
 </td>
 </tr>
@@ -182,7 +209,12 @@ so that it doesn&#8217;t damage what happens in this one.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>out_queue</strong> (<em>multiprocessing.Queue</em>) &#8211; what will take the returned dictionary from spams.trainDL.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_queue</strong> (<em>multiprocessing.Queue</em>) &#8211; what will take the returned dictionary from spams.trainDL.</li>
+<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
+<li><strong>*kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
