@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jakirkham/nanshe.svg?branch=master)](https://travis-ci.org/jakirkham/nanshe) [![Coverage Status](https://coveralls.io/repos/jakirkham/nanshe/badge.svg?branch=master)](https://coveralls.io/r/jakirkham/nanshe?branch=master)
+[![Build Status](https://travis-ci.org/jakirkham/nanshe.svg?branch=master)](https://travis-ci.org/jakirkham/nanshe) [![Coverage Status](https://coveralls.io/repos/jakirkham/nanshe/badge.svg?branch=master)](https://coveralls.io/r/jakirkham/nanshe?branch=master) [![License](http://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/copyleft/gpl.html)
 
 -----------------------------------------------------------------------------------------
 
