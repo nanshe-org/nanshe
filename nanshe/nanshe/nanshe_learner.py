@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$Apr 9, 2014 4:00:40PM$"
+__date__ = "$Apr 09, 2014 16:00:40 EDT$"
 
 
 import os
