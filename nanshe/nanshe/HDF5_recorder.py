@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$Jun 4, 2014 11:10:55 AM$"
+__date__ = "$Jun 04, 2014 11:10:55 EDT$"
 
 
 import numpy
