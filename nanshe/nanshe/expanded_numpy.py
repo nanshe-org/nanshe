@@ -2586,7 +2586,7 @@ def norm(new_vector_set, ord = 2):
     # and risk having it break. Also, makes sure the same function can be used in the
     # two cases.
     def wrapped_norm(new_vector):
-        return(numpy.linalg.norm(new_vector, ord = ord))
+        return(numpy.linalg.norm(new_vector, ord=ord))
 
     result = None
 
