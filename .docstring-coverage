@@ -121,7 +121,7 @@ File nanshe/nanshe/generic_decorators.py
  - No docstring for MetaAllMethodsDecorator.__new__!
  - No docstring for MetaAllMethodsDecorator.__new__!
  - No docstring for MetaMethodsDecorator.__new__!
- Needed: 21; Exist: 16; Missing: 5; Coverage: 76.2%
+ Needed: 23; Exist: 18; Missing: 5; Coverage: 78.3%
 
 File nanshe/nanshe/nanshe_converter.py
  - No module dostring!
@@ -317,5 +317,5 @@ File nanshe/synthetic_data/synthetic_data.py
 
 
 Overall statistics for 28 files:
-Docstrings needed: 466; Docstrings exist: 234; Docstrings missing: 232
-Total docstring coverage: 50.2%;  Grade: not so bad
+Docstrings needed: 468; Docstrings exist: 236; Docstrings missing: 232
+Total docstring coverage: 50.4%;  Grade: not so bad

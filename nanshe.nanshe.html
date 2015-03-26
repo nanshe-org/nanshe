@@ -1685,7 +1685,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x307eb90&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">recorders</tt><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x3d9dfd0&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2773,7 +2773,7 @@ as a global variable on the methods, which can be changed at runtime.</li>
 
 <dl class="function">
 <dt id="nanshe.nanshe.debugging_tools.memory_profiler">
-<tt class="descclassname">nanshe.nanshe.debugging_tools.</tt><tt class="descname">memory_profiler</tt><big>(</big><em>logger</em>, <em>interval=1</em>, <em>level=20</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/debugging_tools.html#memory_profiler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.debugging_tools.memory_profiler" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">nanshe.nanshe.debugging_tools.</tt><tt class="descname">memory_profiler</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/debugging_tools.html#memory_profiler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.debugging_tools.memory_profiler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs forever get information about memory usage and dumping it to the logger provided at the given interval.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -7052,6 +7052,22 @@ the results returned.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(decorator):         a decorator for the class.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.nanshe.generic_decorators.identity_wrapper">
+<tt class="descclassname">nanshe.nanshe.generic_decorators.</tt><tt class="descname">identity_wrapper</tt><big>(</big><em>a_callable</em><big>)</big><a class="reference internal" href="_modules/nanshe/nanshe/generic_decorators.html#identity_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.generic_decorators.identity_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trivially wraps a given callable without doing anything else to it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a_callable</strong> (<em>callable</em>) &#8211; the callable that is being wrapped.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(callable):             a wrapped callable.</td>
 </tr>
 </tbody>
 </table>

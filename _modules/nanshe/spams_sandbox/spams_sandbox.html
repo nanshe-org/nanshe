@@ -143,8 +143,7 @@
     <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
@@ -185,6 +184,11 @@
     <span class="c"># Also, it is not needed outside of calling this function.</span>
     <span class="kn">import</span> <span class="nn">spams</span>
 
+    <span class="n">as_ordered_array_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&quot;F_CONTIGUOUS&quot;</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">,</span>
+        <span class="s">&quot;C_CONTIGUOUS&quot;</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ascontiguousarray</span>
+    <span class="p">}</span>
+
 
     <span class="c"># Construct X from shared array.</span>
     <span class="n">X_dtype</span> <span class="o">=</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
@@ -194,10 +198,9 @@
     <span class="n">X</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">X_array</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">X_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_shape</span><span class="p">)</span>
     <span class="n">X</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">X_flags</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="s">&quot;F_CONTIGUOUS&quot;</span> <span class="ow">in</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="s">&quot;C_CONTIGUOUS&quot;</span> <span class="ow">in</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">order_name</span> <span class="ow">in</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">as_ordered_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
     <span class="c"># Construct the result to use the shared buffer.</span>
     <span class="n">result_dtype</span> <span class="o">=</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
@@ -207,10 +210,9 @@
     <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">result_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)</span>
     <span class="n">result</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">result_flags</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="s">&quot;F_CONTIGUOUS&quot;</span> <span class="ow">in</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="s">&quot;C_CONTIGUOUS&quot;</span> <span class="ow">in</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">order_name</span> <span class="ow">in</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">as_ordered_array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 
     <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -279,8 +281,7 @@
     <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
 
 
     <span class="c"># Reconstruct the result from the output array</span>

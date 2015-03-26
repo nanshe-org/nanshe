@@ -95,7 +95,7 @@
     <span class="n">wrapper</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span> <span class="o">=</span> <span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span> <span class="o">=</span> <span class="n">updated</span><span class="p">)</span>
 
     <span class="c"># Store the underlying callable. Automatic in Python 3.</span>
-    <span class="nb">setattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="s">&quot;__wrapped__&quot;</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="s">&quot;__wrapped__&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="s">&quot;__wrapped__&quot;</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
 
@@ -124,6 +124,35 @@
     <span class="k">return</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">update_wrapper</span><span class="p">,</span> <span class="n">wrapped</span> <span class="o">=</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span> <span class="o">=</span> <span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span> <span class="o">=</span> <span class="n">updated</span><span class="p">))</span>
 
 </div>
+<div class="viewcode-block" id="identity_wrapper"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.identity_wrapper">[docs]</a><span class="k">def</span> <span class="nf">identity_wrapper</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trivially wraps a given callable without doing anything else to it.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_callable(callable):   the callable that is being wrapped.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (callable):             a wrapped callable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">a_callable</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapped_callable</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Trivially wraps a given callable without doing anything else to it.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                *args:      Variable length argument list.</span>
+<span class="sd">                **kwargs:   Arbitrary keyword arguments.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                Same as what `a_callable` returns.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">a_callable</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">wrapped_callable</span><span class="p">)</span>
+
+</div>
 <div class="viewcode-block" id="static_variables"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.generic_decorators.static_variables">[docs]</a><span class="k">def</span> <span class="nf">static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a callable such that it has the given static variables set.</span>
@@ -136,22 +165,24 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">static_variables_tie</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">static_variables_tie</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Decorates a function such that it has the given static variables set.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                callable(callable):       the callable to decorate.</span>
+<span class="sd">                a_callable(callable):     the callable to decorate.</span>
 
 <span class="sd">            Returns:</span>
 <span class="sd">                (callable):               the callable returned.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">for</span> <span class="n">each_kwd</span><span class="p">,</span> <span class="n">each_val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="nb">callable</span><span class="p">,</span> <span class="n">each_kwd</span><span class="p">,</span> <span class="n">each_val</span><span class="p">)</span>
+        <span class="n">callable_wrapped</span> <span class="o">=</span> <span class="n">identity_wrapper</span><span class="p">(</span><span class="n">a_callable</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">each_kwd</span><span class="p">,</span> <span class="n">each_val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">callable_wrapped</span><span class="p">,</span> <span class="n">each_kwd</span><span class="p">,</span> <span class="n">each_val</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">callable_wrapped</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">static_variables_tie</span><span class="p">)</span>
 
