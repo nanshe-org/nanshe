@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$May 20, 2014 9:46:45 AM$"
+__date__ = "$May 20, 2014 09:46:45 EDT$"
 
 
 import functools
