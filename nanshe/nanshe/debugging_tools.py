@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$Apr 14, 2014 5:42:07PM$"
+__date__ = "$Apr 14, 2014 17:42:07 EDT$"
 
 import logging
 import traceback
