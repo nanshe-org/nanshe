@@ -2396,8 +2396,7 @@ def numpy_structured_array_dtype_generator(new_array):
     """
 
     # Test to see if this is a NumPy Structured Array
-    if not new_array.dtype.names:
-        raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
+    if not new_array.dtype.names: raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
 
     # Go through each name
     for each_name in new_array.dtype.names:
