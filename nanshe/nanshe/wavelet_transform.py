@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$May 1, 2014 2:24:55PM$"
+__date__ = "$May 01, 2014 14:24:55 EDT$"
 
 
 import warnings
