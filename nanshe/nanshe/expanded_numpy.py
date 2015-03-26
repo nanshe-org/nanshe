@@ -2585,8 +2585,7 @@ def norm(new_vector_set, ord = 2):
     # Wrap the order parameter so as to avoid passing through numpy.apply_along_axis
     # and risk having it break. Also, makes sure the same function can be used in the
     # two cases.
-    def wrapped_norm(a_vector_set):
-        return(numpy.linalg.norm(a_vector_set, ord=ord))
+    wrapped_norm = lambda a_vector_set: numpy.linalg.norm(a_vector_set, ord=ord)
 
     result = None
 
