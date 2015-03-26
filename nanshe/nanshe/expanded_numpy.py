@@ -3895,8 +3895,7 @@ def get_quantiles(probs):
         probs_array.sort()
 
 
-    if not ((0 < probs_array) & (probs_array < 1)).all():
-        raise Exception("Cannot pass values that are not within the range (0, 1).")
+    if not ((0 < probs_array) & (probs_array < 1)).all(): raise Exception("Cannot pass values that are not within the range (0, 1).")
 
 
     return(probs_array)
