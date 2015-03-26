@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__author__ = "John Kirkham"
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 9, 2014 4:00:40PM$"
 
 
