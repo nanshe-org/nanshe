@@ -56,7 +56,7 @@ clean:
 	rm -rf $(BUILDDIR)
 
 rst:
-	$(SPHINXAPIDOC) -f -T -o . .. ../tests
+	$(SPHINXAPIDOC) -f -T -M -o . .. ../tests
 
 html: rst
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
