@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$Apr 3, 2014 8:20:39PM$"
+__date__ = "$Apr 03, 2014 20:20:39 EDT$"
 
 
 # Need in order to have logging information no matter what.
