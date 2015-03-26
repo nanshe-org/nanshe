@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "$Jun 09, 2014 8:51:33AM$"
+__date__ = "$Jun 09, 2014 08:51:33 EDT$"
 
 
 # This program is free software; you can redistribute it and/or
