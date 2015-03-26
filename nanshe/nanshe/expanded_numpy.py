@@ -2396,17 +2396,17 @@ def numpy_structured_array_dtype_generator(new_array):
     """
 
     # Test to see if this is a NumPy Structured Array
-    if new_array.dtype.names:
-        # Go through each name
-        for each_name in new_array.dtype.names:
-            # Get the type (want the actual type, not a str or dtype object)
-            each_dtype = new_array[each_name].dtype.type
-            # Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)
-            each_shape = new_array.dtype[each_name].shape
-
-            yield ( (each_name, each_dtype, each_shape) )
-    else:
+    if not new_array.dtype.names:
         raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
+
+    # Go through each name
+    for each_name in new_array.dtype.names:
+        # Get the type (want the actual type, not a str or dtype object)
+        each_dtype = new_array[each_name].dtype.type
+        # Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)
+        each_shape = new_array.dtype[each_name].shape
+
+        yield ( (each_name, each_dtype, each_shape) )
 
 
 @debugging_tools.log_call(logger)
