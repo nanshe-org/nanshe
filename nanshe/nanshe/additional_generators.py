@@ -1,5 +1,5 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
-__date__ = "Apr 17, 2014 13:43:56 EDT$"
+__date__ = "$Apr 17, 2014 13:43:56 EDT$"
 
 
 import itertools
