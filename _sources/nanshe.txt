@@ -1,6 +1,11 @@
 nanshe package
 ==============
 
+.. automodule:: nanshe
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -10,10 +15,3 @@ Subpackages
     nanshe.spams_sandbox
     nanshe.synthetic_data
 
-Module contents
----------------
-
-.. automodule:: nanshe
-    :members:
-    :undoc-members:
-    :show-inheritance:

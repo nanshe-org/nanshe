@@ -32,10 +32,10 @@
     <link rel="prev" title="nanshe.spams_sandbox package" href="nanshe.spams_sandbox.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
+  <body role="document">
     <div class="relbar-top">
         
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,18 +57,18 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="nanshe-synthetic-data-package">
 <h1>nanshe.synthetic_data package<a class="headerlink" href="#nanshe-synthetic-data-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
+<span class="target" id="module-nanshe.synthetic_data"></span><div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-nanshe.synthetic_data.synthetic_data">
 <span id="nanshe-synthetic-data-synthetic-data-module"></span><h2>nanshe.synthetic_data.synthetic_data module<a class="headerlink" href="#module-nanshe.synthetic_data.synthetic_data" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="nanshe.synthetic_data.synthetic_data.generate_gaussian_images">
-<tt class="descclassname">nanshe.synthetic_data.synthetic_data.</tt><tt class="descname">generate_gaussian_images</tt><big>(</big><em>space</em>, <em>means</em>, <em>std_devs</em>, <em>magnitudes</em><big>)</big><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_gaussian_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_gaussian_images" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.synthetic_data.synthetic_data.</code><code class="descname">generate_gaussian_images</code><span class="sig-paren">(</span><em>space</em>, <em>means</em>, <em>std_devs</em>, <em>magnitudes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_gaussian_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_gaussian_images" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a stack of gaussians (first index indicates which image); where, each contains a gaussian
 using a center and radius provided.</p>
 <div class="admonition note">
@@ -153,7 +153,7 @@ using a center and radius for each mask.</p>
 
 <dl class="function">
 <dt id="nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks">
-<tt class="descclassname">nanshe.synthetic_data.synthetic_data.</tt><tt class="descname">generate_hypersphere_masks</tt><big>(</big><em>space</em>, <em>centers</em>, <em>radii</em>, <em>include_boundary=False</em><big>)</big><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_hypersphere_masks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.synthetic_data.synthetic_data.</code><code class="descname">generate_hypersphere_masks</code><span class="sig-paren">(</span><em>space</em>, <em>centers</em>, <em>radii</em>, <em>include_boundary=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_hypersphere_masks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a stack of masks (first index indicates which mask); where, each contains a hypersphere constructed
 using a center and radius provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -223,7 +223,7 @@ hypersphere using a center and radius for each mask.</p>
 
 <dl class="function">
 <dt id="nanshe.synthetic_data.synthetic_data.generate_random_bound_points">
-<tt class="descclassname">nanshe.synthetic_data.synthetic_data.</tt><tt class="descname">generate_random_bound_points</tt><big>(</big><em>space</em>, <em>radii</em><big>)</big><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_random_bound_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_random_bound_points" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.synthetic_data.synthetic_data.</code><code class="descname">generate_random_bound_points</code><span class="sig-paren">(</span><em>space</em>, <em>radii</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/synthetic_data/synthetic_data.html#generate_random_bound_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.synthetic_data.synthetic_data.generate_random_bound_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a collection of random points that are the center of a  hypersphere contained within the space.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -269,23 +269,19 @@ coordinate.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-nanshe.synthetic_data"></span></div>
 </div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">nanshe.synthetic_data package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-nanshe.synthetic_data.synthetic_data">nanshe.synthetic_data.synthetic_data module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -296,12 +292,14 @@ coordinate.</p>
     <p class="topless"><a href="nanshe.spams_sandbox.html"
                           title="Previous page">&larr; nanshe.spams_sandbox package</a></p>
   </div>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/nanshe.synthetic_data.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nanshe.synthetic_data.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -320,7 +318,7 @@ coordinate.</p>
     </div>
     <div class="relbar-bottom">
         
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -338,9 +336,9 @@ coordinate.</p>
     </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Author.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

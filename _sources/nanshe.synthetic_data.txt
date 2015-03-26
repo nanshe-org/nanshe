@@ -1,6 +1,11 @@
 nanshe.synthetic_data package
 =============================
 
+.. automodule:: nanshe.synthetic_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -13,10 +18,3 @@ nanshe.synthetic_data.synthetic_data module
     :show-inheritance:
 
 
-Module contents
----------------
-
-.. automodule:: nanshe.synthetic_data
-    :members:
-    :undoc-members:
-    :show-inheritance:

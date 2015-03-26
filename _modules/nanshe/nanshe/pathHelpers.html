@@ -32,10 +32,10 @@
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
+  <body role="document">
     <div class="relbar-top">
         
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -46,7 +46,7 @@
              >modules</a> &nbsp; &nbsp;</li>
     <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
 
-          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -55,7 +55,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for nanshe.nanshe.pathHelpers</h1><div class="highlight"><pre>
 <span class="c">###############################################################################</span>
@@ -240,58 +240,58 @@
     <span class="c">#</span>
 
     <span class="nd">@externalPath.setter</span>
-<div class="viewcode-block" id="PathComponents.externalPath"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.externalPath">[docs]</a>    <span class="k">def</span> <span class="nf">externalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">externalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">new</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;/&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span> <span class="n">new</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span> <span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="p">)</span> 
-</div>
+
     <span class="nd">@externalDirectory.setter</span>
-<div class="viewcode-block" id="PathComponents.externalDirectory"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.externalDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">externalDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">externalDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="n">new_external</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">=</span> <span class="n">new_external</span>
-</div>
+
     <span class="nd">@filename.setter</span>
-<div class="viewcode-block" id="PathComponents.filename"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.filename">[docs]</a>    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="n">new_external</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalDirectory</span><span class="p">,</span> <span class="n">new</span> <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">=</span> <span class="n">new_external</span>
-</div>
+
     <span class="nd">@filenameBase.setter</span>
-<div class="viewcode-block" id="PathComponents.filenameBase"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.filenameBase">[docs]</a>    <span class="k">def</span> <span class="nf">filenameBase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">filenameBase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="n">new_external</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalDirectory</span><span class="p">,</span> <span class="n">new</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">=</span> <span class="n">new_external</span>
-</div>
+
     <span class="nd">@extension.setter</span>
-<div class="viewcode-block" id="PathComponents.extension"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.extension">[docs]</a>    <span class="k">def</span> <span class="nf">extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="k">assert</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">new</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">HDF5_EXTS</span><span class="p">),</span> \
             <span class="s">&quot;This PathComponents has an internal path ({}), but you are &quot;</span>\
             <span class="s">&quot;attempting to assign a non-hdf5 extension to it ({})&quot;</span>\
             <span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span><span class="p">,</span> <span class="n">new</span> <span class="p">)</span>
         <span class="n">new_external</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalDirectory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenameBase</span> <span class="o">+</span> <span class="n">new</span> <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">=</span> <span class="n">new_external</span>        
-</div>
+
     <span class="nd">@internalPath.setter</span>
-<div class="viewcode-block" id="PathComponents.internalPath"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.internalPath">[docs]</a>    <span class="k">def</span> <span class="nf">internalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">internalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">HDF5_EXTS</span><span class="p">,</span> \
             <span class="s">&quot;Can&#39;t set an internal path on a filename with extension {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="p">)</span>
         <span class="k">if</span> <span class="n">new</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalPath</span> <span class="o">+</span> <span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="p">)</span>
-</div>
+
     <span class="nd">@internalDatasetName.setter</span>
-<div class="viewcode-block" id="PathComponents.internalDatasetName"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.internalDatasetName">[docs]</a>    <span class="k">def</span> <span class="nf">internalDatasetName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">internalDatasetName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="n">new_internal</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_internalDirectory</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">internalPath</span> <span class="o">=</span> <span class="n">new_internal</span>
-</div>
+
     <span class="nd">@internalDirectory.setter</span>
-<div class="viewcode-block" id="PathComponents.internalDirectory"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.internalDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">internalDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">internalDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">new</span> <span class="ow">and</span> <span class="n">new</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;/&#39;</span><span class="p">:</span>
             <span class="n">new</span> <span class="o">=</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">new</span>
         <span class="n">new_internal</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalDatasetName</span> <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">internalPath</span> <span class="o">=</span> <span class="n">new_internal</span>
-</div></div>
+</div>
 <div class="viewcode-block" id="areOnSameDrive"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.areOnSameDrive">[docs]</a><span class="k">def</span> <span class="nf">areOnSameDrive</span><span class="p">(</span><span class="n">path1</span><span class="p">,</span><span class="n">path2</span><span class="p">):</span>
     <span class="c">#if one path is relative, assume they are on same drive</span>
     <span class="k">if</span> <span class="n">isUrl</span><span class="p">(</span><span class="n">path1</span><span class="p">)</span> <span class="ow">or</span> <span class="n">isUrl</span><span class="p">(</span><span class="n">path2</span><span class="p">):</span>
@@ -360,9 +360,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
@@ -381,7 +381,7 @@
     </div>
     <div class="relbar-bottom">
         
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -392,14 +392,14 @@
              >modules</a> &nbsp; &nbsp;</li>
     <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
 
-          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Author.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -1,6 +1,11 @@
 nanshe.nanshe package
 =====================
 
+.. automodule:: nanshe.nanshe
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -181,10 +186,3 @@ nanshe.nanshe.wavelet_transform module
     :show-inheritance:
 
 
-Module contents
----------------
-
-.. automodule:: nanshe.nanshe
-    :members:
-    :undoc-members:
-    :show-inheritance:

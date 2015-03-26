@@ -1,6 +1,11 @@
 nanshe.spams_sandbox package
 ============================
 
+.. automodule:: nanshe.spams_sandbox
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -13,10 +18,3 @@ nanshe.spams_sandbox.spams_sandbox module
     :show-inheritance:
 
 
-Module contents
----------------
-
-.. automodule:: nanshe.spams_sandbox
-    :members:
-    :undoc-members:
-    :show-inheritance:

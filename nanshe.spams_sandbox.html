@@ -33,10 +33,10 @@
     <link rel="prev" title="nanshe.nanshe package" href="nanshe.nanshe.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
+  <body role="document">
     <div class="relbar-top">
         
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -61,10 +61,14 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="nanshe-spams-sandbox-package">
 <h1>nanshe.spams_sandbox package<a class="headerlink" href="#nanshe-spams-sandbox-package" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-nanshe.spams_sandbox"></span><p>SPAMS seems to step on the interpreter. Despite our best efforts to sandbox it, in a separate thread, it manages
+to still get messed up when neuron_volumina_viewer is on the path. Therefore, we will place all access to it in a
+separate module that cannot see the contents of nanshe. Hopefully, this will make it less likely to create a
+segmentation fault.</p>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -72,13 +76,13 @@
 <span id="nanshe-spams-sandbox-spams-sandbox-module"></span><h2>nanshe.spams_sandbox.spams_sandbox module<a class="headerlink" href="#module-nanshe.spams_sandbox.spams_sandbox" title="Permalink to this headline">¶</a></h2>
 <dl class="exception">
 <dt id="nanshe.spams_sandbox.spams_sandbox.SPAMSException">
-<em class="property">exception </em><tt class="descclassname">nanshe.spams_sandbox.spams_sandbox.</tt><tt class="descname">SPAMSException</tt><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#SPAMSException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.SPAMSException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<em class="property">exception </em><code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">SPAMSException</code><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#SPAMSException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.SPAMSException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL">
-<tt class="descclassname">nanshe.spams_sandbox.spams_sandbox.</tt><tt class="descname">call_multiprocessing_array_spams_trainDL</tt><big>(</big><em>X</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_multiprocessing_array_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">call_multiprocessing_array_spams_trainDL</code><span class="sig-paren">(</span><em>X</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_multiprocessing_array_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</p>
 <p>It is necessary to run SPAMS in a separate process as segmentation faults
 have been discovered in later parts of the Python code dependent on whether
@@ -105,7 +109,7 @@ Look into having the raw data for input for spams.trainDL copied in.</p>
 
 <dl class="function">
 <dt id="nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL">
-<tt class="descclassname">nanshe.spams_sandbox.spams_sandbox.</tt><tt class="descname">call_multiprocessing_queue_spams_trainDL</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_multiprocessing_queue_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">call_multiprocessing_queue_spams_trainDL</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_multiprocessing_queue_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</p>
 <p>It is necessary to run SPAMS in a separate process as segmentation faults
 have been discovered in later parts of the Python code dependent on whether
@@ -133,7 +137,7 @@ the dictionary found</td>
 
 <dl class="function">
 <dt id="nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL">
-<tt class="descclassname">nanshe.spams_sandbox.spams_sandbox.</tt><tt class="descname">call_spams_trainDL</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">call_spams_trainDL</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.
 Designed to be like the multiprocessing calls.</p>
 <div class="admonition note">
@@ -144,7 +148,7 @@ Designed to be like the multiprocessing calls.</p>
 
 <dl class="function">
 <dt id="nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL">
-<tt class="descclassname">nanshe.spams_sandbox.spams_sandbox.</tt><tt class="descname">run_multiprocessing_array_spams_trainDL</tt><big>(</big><em>result_array_type</em>, <em>result_array</em>, <em>X_array_type</em>, <em>X_array</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#run_multiprocessing_array_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">run_multiprocessing_array_spams_trainDL</code><span class="sig-paren">(</span><em>result_array_type</em>, <em>result_array</em>, <em>X_array_type</em>, <em>X_array</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#run_multiprocessing_array_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</p>
 <p>It is necessary to run SPAMS in a separate process as segmentation faults
 have been discovered in later parts of the Python code dependent on whether
@@ -177,7 +181,7 @@ Look into having the raw data for input for spams.trainDL copied in.</p>
 
 <dl class="function">
 <dt id="nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL">
-<tt class="descclassname">nanshe.spams_sandbox.spams_sandbox.</tt><tt class="descname">run_multiprocessing_queue_spams_trainDL</tt><big>(</big><em>out_queue</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#run_multiprocessing_queue_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">run_multiprocessing_queue_spams_trainDL</code><span class="sig-paren">(</span><em>out_queue</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#run_multiprocessing_queue_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Designed to run spams.trainDL in a separate process.</p>
 <p>It is necessary to run SPAMS in a separate process as segmentation faults
 have been discovered in later parts of the Python code dependent on whether
@@ -201,27 +205,19 @@ Look into having the raw data for input for spams.trainDL copied in.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-nanshe.spams_sandbox"></span><p>SPAMS seems to step on the interpreter. Despite our best efforts to sandbox it, in a separate thread, it manages
-to still get messed up when neuron_volumina_viewer is on the path. Therefore, we will place all access to it in a
-separate module that cannot see the contents of nanshe. Hopefully, this will make it less likely to create a
-segmentation fault.</p>
-</div>
 </div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">nanshe.spams_sandbox package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-nanshe.spams_sandbox.spams_sandbox">nanshe.spams_sandbox.spams_sandbox module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -237,12 +233,14 @@ segmentation fault.</p>
     <p class="topless"><a href="nanshe.synthetic_data.html"
                           title="Next page">&rarr; nanshe.synthetic_data package</a></p>
   </div>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/nanshe.spams_sandbox.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nanshe.spams_sandbox.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -261,7 +259,7 @@ segmentation fault.</p>
     </div>
     <div class="relbar-bottom">
         
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -282,9 +280,9 @@ segmentation fault.</p>
     </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Author.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
