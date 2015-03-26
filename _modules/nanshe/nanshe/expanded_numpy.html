@@ -2645,8 +2645,7 @@
     <span class="c"># Wrap the order parameter so as to avoid passing through numpy.apply_along_axis</span>
     <span class="c"># and risk having it break. Also, makes sure the same function can be used in the</span>
     <span class="c"># two cases.</span>
-    <span class="k">def</span> <span class="nf">wrapped_norm</span><span class="p">(</span><span class="n">new_vector</span><span class="p">):</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">new_vector</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">))</span>
+    <span class="n">wrapped_norm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a_vector_set</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
 
