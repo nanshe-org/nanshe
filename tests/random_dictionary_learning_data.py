@@ -1,3 +1,7 @@
+__author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
+__date__ = "Apr 17, 2014 11:27:08 EDT$"
+
+
 import numpy
 import scipy
 import scipy.ndimage
