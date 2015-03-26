@@ -32,10 +32,6 @@ def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
             out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.
             *args(list):                            a list of position arguments to pass to spams.trainDL.
             *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
-
-        Note:
-            Todo
-            Look into having the raw data for input for spams.trainDL copied in.
     """
 
     # It is not needed outside of calling spams.trainDL.
@@ -63,10 +59,6 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
         Args:
             *args(list):                            a list of position arguments to pass to spams.trainDL.
             *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
-
-        Note:
-            Todo
-            Look into having the raw data for input for spams.trainDL copied in.
 
         Returns:
             result(numpy.matrix): the dictionary found
@@ -112,10 +104,6 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
 
         Note:
             This is somewhat faster than using multiprocessing.Queue.
-
-            Todo
-            Need to deal with return_model case.
-            Look into having the raw data for input for spams.trainDL copied in.
     """
 
     # Just to make sure this exists in the new process. Shouldn't be necessary.
@@ -179,10 +167,6 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
 
         Note:
             This is somewhat faster than using multiprocessing.Queue.
-
-            Todo
-            Need to deal with return_model case.
-            Look into having the raw data for input for spams.trainDL copied in.
     """
 
     # Only necessary for dealing with SPAMS
