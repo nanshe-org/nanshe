@@ -11,7 +11,7 @@ import os
 import h5py
 import numpy
 
-import nanshe.nanshe.HDF5_serializers
+import nanshe.hdf5.HDF5_serializers
 import nanshe.nanshe.registration
 
 
@@ -83,7 +83,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -112,7 +112,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -141,7 +141,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -164,7 +164,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -193,7 +193,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -222,7 +222,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -245,7 +245,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -274,7 +274,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -303,7 +303,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -385,7 +385,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -416,7 +416,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -447,7 +447,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -471,7 +471,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -502,7 +502,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -533,7 +533,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -557,7 +557,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -588,7 +588,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)
@@ -619,7 +619,7 @@ class TestRegisterMeanOffsets(object):
         b2 = None
         with h5py.File(fn, "r") as f:
             b2g = f["reg_frames"]
-            b2d = nanshe.nanshe.HDF5_serializers.HDF5MaskedDataset(b2g)
+            b2d = nanshe.hdf5.HDF5_serializers.HDF5MaskedDataset(b2g)
             b2 = b2d[...]
 
         os.remove(fn)

@@ -18,7 +18,7 @@ except Exception as e:
     import numpy.fft as fft
 
 from nanshe.util import additional_generators, expanded_numpy
-import HDF5_serializers
+from nanshe.hdf5 import HDF5_serializers
 
 # Need in order to have logging information no matter what.
 from nanshe.util import debugging_tools
