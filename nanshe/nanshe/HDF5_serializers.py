@@ -9,7 +9,7 @@ import h5py
 
 
 # Need in order to have logging information no matter what.
-import debugging_tools
+from nanshe.util import debugging_tools
 
 
 # Get the logger

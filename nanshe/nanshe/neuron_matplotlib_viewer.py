@@ -3,7 +3,7 @@ __date__ = "$Apr 03, 2014 20:20:39 EDT$"
 
 
 # Need in order to have logging information no matter what.
-import debugging_tools
+from nanshe.util import debugging_tools
 
 
 # Get the logger

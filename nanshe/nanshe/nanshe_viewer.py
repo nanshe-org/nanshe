@@ -25,7 +25,7 @@ __date__ = "$Jun 09, 2014 08:51:33 EDT$"
 """
 
 
-import debugging_tools
+from nanshe.util import debugging_tools
 
 logger = debugging_tools.logging.getLogger(__name__)
 

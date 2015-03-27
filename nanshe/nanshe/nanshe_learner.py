@@ -19,7 +19,7 @@ import h5py
 import pathHelpers
 
 # Need in order to have logging information no matter what.
-import debugging_tools
+from nanshe.util import debugging_tools
 
 from nanshe.util import generic_decorators
 

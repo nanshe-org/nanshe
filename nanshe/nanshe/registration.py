@@ -22,7 +22,7 @@ import expanded_numpy
 import HDF5_serializers
 
 # Need in order to have logging information no matter what.
-import debugging_tools
+from nanshe.util import debugging_tools
 
 
 # Get the logger

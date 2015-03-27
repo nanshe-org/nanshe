@@ -11,7 +11,7 @@ import vigra
 import vigra.impex
 
 import pathHelpers
-import debugging_tools
+from nanshe.util import debugging_tools
 import additional_generators
 import additional_io
 import expanded_numpy

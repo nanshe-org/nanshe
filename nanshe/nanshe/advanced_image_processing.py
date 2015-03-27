@@ -42,7 +42,7 @@ import vigra.analysis
 import rank_filter
 
 # Need in order to have logging information no matter what.
-import debugging_tools
+from nanshe.util import debugging_tools
 
 import expanded_numpy
 
