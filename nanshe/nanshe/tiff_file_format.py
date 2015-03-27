@@ -10,7 +10,7 @@ import h5py
 import vigra
 import vigra.impex
 
-from nanshe.util import iters, additional_io, debugging_tools,\
+from nanshe.util import iters, xglob, debugging_tools,\
     expanded_numpy, pathHelpers
 
 
@@ -206,7 +206,7 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
         new_tiff_filenames = [new_tiff_filenames]
 
     # Expand any regex in path names
-    new_tiff_filenames = additional_io.expand_pathname_list(*new_tiff_filenames)
+    new_tiff_filenames = xglob.expand_pathname_list(*new_tiff_filenames)
 
     # Determine the shape and dtype to use for the dataset (so that everything will fit).
     new_hdf5_dataset_shape = numpy.zeros((3,), dtype = int)

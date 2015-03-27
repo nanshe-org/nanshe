@@ -2,10 +2,10 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jul 28, 2014 11:50:37 EDT$"
 
 
-import nanshe.util.additional_io
+import nanshe.util.xglob
 
 
-class TestAdditionalIO(object):
+class TestXGlob(object):
     num_files = 10
 
     def setup(self):
@@ -14,7 +14,7 @@ class TestAdditionalIO(object):
         self.temp_dir = tempfile.mkdtemp()
 
         self.temp_files = []
-        for i in xrange(TestAdditionalIO.num_files):
+        for i in xrange(TestXGlob.num_files):
             self.temp_files.append(tempfile.NamedTemporaryFile(suffix = ".tif", dir = self.temp_dir))
 
         self.temp_files.sort(cmp = lambda a, b: 2*(a.name > b.name) - 1)
@@ -23,7 +23,7 @@ class TestAdditionalIO(object):
     def test_expand_pathname_list(self):
         import itertools
 
-        matched_filenames = nanshe.util.additional_io.expand_pathname_list(self.temp_dir + "/*.tif")
+        matched_filenames = nanshe.util.xglob.expand_pathname_list(self.temp_dir + "/*.tif")
         matched_filenames.sort(cmp = lambda a, b: 2*(a > b) - 1)
 
         assert (len(matched_filenames) == len(self.temp_files))
