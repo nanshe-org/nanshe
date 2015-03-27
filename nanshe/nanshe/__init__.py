@@ -4,9 +4,9 @@ __date__ = "$Apr 14, 2014 20:37:08 EDT$"
 __all__ = [
     "additional_generators", "additional_io", "advanced_image_processing",
     "binary_image_processing", "debugging_tools", "denoising",
-    "expanded_numpy", "generic_decorators", "HDF5_recorder", "HDF5_searchers",
-    "HDF5_serializers", "nanshe_converter", "nanshe_learner",
-    "nanshe_registerer",  # "nanshe_viewer", "neuron_matplotlib_viewer",
+    "expanded_numpy", "HDF5_recorder", "HDF5_searchers", "HDF5_serializers",
+    "nanshe_converter", "nanshe_learner", "nanshe_registerer",
+    # "nanshe_viewer", "neuron_matplotlib_viewer",
     "pathHelpers", "read_config", "registration", "simple_image_processing",
     "tiff_file_format", "wavelet_transform"
 ]
@@ -18,7 +18,6 @@ import binary_image_processing
 import debugging_tools
 import denoising
 import expanded_numpy
-import generic_decorators
 import HDF5_recorder
 import HDF5_searchers
 import HDF5_serializers

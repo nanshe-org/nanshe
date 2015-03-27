@@ -4,7 +4,7 @@ __date__ = "$Mar 25, 2015 13:30:52 EDT$"
 
 import functools
 
-import nanshe.nanshe.generic_decorators
+import nanshe.util.generic_decorators
 
 
 class TestGenericDecorators(object):
@@ -22,7 +22,7 @@ class TestGenericDecorators(object):
         if not hasattr(func_wrapped_1, "__wrapped__"):
             setattr(func_wrapped_1, "__wrapped__", func)
 
-        func_wrapped_2 = nanshe.nanshe.generic_decorators.update_wrapper(
+        func_wrapped_2 = nanshe.util.generic_decorators.update_wrapper(
             wrapper, func
         )
 
@@ -43,7 +43,7 @@ class TestGenericDecorators(object):
         if not hasattr(func_wrapped_1, "__wrapped__"):
             setattr(func_wrapped_1, "__wrapped__", func)
 
-        func_wrapped_2 = nanshe.nanshe.generic_decorators.wraps(wrapper)(
+        func_wrapped_2 = nanshe.util.generic_decorators.wraps(wrapper)(
             func
         )
 
@@ -54,7 +54,7 @@ class TestGenericDecorators(object):
         def func(a, b=2):
             return(a + b)
 
-        func_wrapped = nanshe.nanshe.generic_decorators.identity_wrapper(
+        func_wrapped = nanshe.util.generic_decorators.identity_wrapper(
             func
         )
 
@@ -68,7 +68,7 @@ class TestGenericDecorators(object):
         def func(a, b=2):
             return(a + b)
 
-        func_wrapped = nanshe.nanshe.generic_decorators.static_variables(
+        func_wrapped = nanshe.util.generic_decorators.static_variables(
             c = 7
         )(
             func
@@ -87,7 +87,7 @@ class TestGenericDecorators(object):
         class Class(object):
             pass
 
-        ClassWrapped = nanshe.nanshe.generic_decorators.metaclass(Meta)(Class)
+        ClassWrapped = nanshe.util.generic_decorators.metaclass(Meta)(Class)
 
         assert ClassWrapped != Class
         assert not hasattr(Class, "__wrapped__")
@@ -105,7 +105,7 @@ class TestGenericDecorators(object):
             def __init__(self):
                 self.__special_object__ = object
 
-        ClassWrapped = nanshe.nanshe.generic_decorators.metaclass(Meta)(Class)
+        ClassWrapped = nanshe.util.generic_decorators.metaclass(Meta)(Class)
 
         assert ClassWrapped != Class
         assert not hasattr(Class, "__wrapped__")
@@ -130,7 +130,7 @@ class TestGenericDecorators(object):
         class Class(object):
             pass
 
-        ClassWrapped = nanshe.nanshe.generic_decorators.metaclasses(
+        ClassWrapped = nanshe.util.generic_decorators.metaclasses(
             Meta1, Meta2
         )(Class)
 
@@ -154,7 +154,7 @@ class TestGenericDecorators(object):
             def __init__(self):
                 self.__special_object__ = object
 
-        ClassWrapped = nanshe.nanshe.generic_decorators.metaclasses(
+        ClassWrapped = nanshe.util.generic_decorators.metaclasses(
             Meta1, Meta2
         )(Class)
 

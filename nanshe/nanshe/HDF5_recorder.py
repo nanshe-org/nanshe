@@ -6,7 +6,7 @@ import numpy
 import h5py
 
 import HDF5_serializers
-import generic_decorators
+from nanshe.util import generic_decorators
 
 
 # Need in order to have logging information no matter what.

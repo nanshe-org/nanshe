@@ -10,7 +10,7 @@ import time
 
 import psutil
 
-import generic_decorators
+from nanshe.util import generic_decorators
 
 
 

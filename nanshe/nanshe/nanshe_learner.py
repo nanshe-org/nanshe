@@ -21,7 +21,7 @@ import pathHelpers
 # Need in order to have logging information no matter what.
 import debugging_tools
 
-import generic_decorators
+from nanshe.util import generic_decorators
 
 import expanded_numpy
 
