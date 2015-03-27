@@ -1,7 +1,7 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 06, 2014 16:21:22 EDT$"
 
-__all__ = ["..", "test_additional_io", "test_advanced_image_processing", "test_debugging_tools", "test_extended_region_props", "test_HDF5_searchers", "test_HDF5_serializers", "test_nanshe_learner", "test_registration", "test_spams_sandbox", "test_tiff_file_format", "random_dictionary_learning_data"]
+__all__ = ["test_additional_io", "test_advanced_image_processing", "test_debugging_tools", "test_extended_region_props", "test_HDF5_searchers", "test_HDF5_serializers", "test_nanshe_learner", "test_registration", "test_spams_sandbox", "test_tiff_file_format", "random_dictionary_learning_data"]
 
 
 import test_additional_io

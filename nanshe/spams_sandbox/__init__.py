@@ -9,7 +9,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 20, 2014 12:01:08 EDT$"
 
 
-__all__ = ["..", "spams_sandbox"]
+__all__ = ["spams_sandbox"]
 
 
 import spams_sandbox

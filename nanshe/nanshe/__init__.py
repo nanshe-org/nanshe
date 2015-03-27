@@ -1,7 +1,7 @@
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 14, 2014 20:37:08 EDT$"
 
-__all__ = ["..", "debugging_tools", "advanced_image_processing", "additional_generators", "binary_image_processing",
+__all__ = ["debugging_tools", "advanced_image_processing", "additional_generators", "binary_image_processing",
            "expanded_numpy", "nanshe_learner", "denoising", "HDF5_recorder", "HDF5_searchers", "HDF5_serializers", #"nanshe_viewer",
            "read_config", "simple_image_processing", "wavelet_transform"]
 
