@@ -15,7 +15,7 @@ import tempfile
 import h5py
 import numpy
 
-import nanshe.nanshe.expanded_numpy
+import nanshe.util.expanded_numpy
 import nanshe.nanshe.HDF5_recorder
 
 import nanshe.synthetic_data.synthetic_data
@@ -751,7 +751,7 @@ class TestNansheLearner(object):
         for i in xrange(len(self.bases_images)):
             image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack[image_stack_slice] = nanshe.nanshe.expanded_numpy.all_permutations_operation(operator.mul,
+            self.image_stack[image_stack_slice] = nanshe.util.expanded_numpy.all_permutations_operation(operator.mul,
                                                                                                    ramp,
                                                                                                    self.bases_images[i])
 
@@ -783,7 +783,7 @@ class TestNansheLearner(object):
         for i in xrange(len(self.bases_images3)):
             image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack3[image_stack_slice3] = nanshe.nanshe.expanded_numpy.all_permutations_operation(operator.mul,
+            self.image_stack3[image_stack_slice3] = nanshe.util.expanded_numpy.all_permutations_operation(operator.mul,
                                                                                                    ramp,
                                                                                                    self.bases_images3[i])
 
@@ -839,7 +839,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -872,7 +872,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -918,7 +918,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -952,7 +952,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -986,7 +986,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1032,7 +1032,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1061,7 +1061,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1090,7 +1090,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1132,7 +1132,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1162,7 +1162,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1192,7 +1192,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1234,7 +1234,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1263,7 +1263,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1293,7 +1293,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1322,7 +1322,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1364,7 +1364,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1394,7 +1394,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1436,7 +1436,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1484,7 +1484,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()
@@ -1533,7 +1533,7 @@ class TestNansheLearner(object):
 
         assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.nanshe.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+        neuron_maxes = (neurons["image"] == nanshe.util.expanded_numpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
         neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
 
         matched = dict()

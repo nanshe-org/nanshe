@@ -44,7 +44,7 @@ import rank_filter
 # Need in order to have logging information no matter what.
 from nanshe.util import debugging_tools
 
-import expanded_numpy
+from nanshe.util import expanded_numpy
 
 # Short function to process image data.
 import binary_image_processing

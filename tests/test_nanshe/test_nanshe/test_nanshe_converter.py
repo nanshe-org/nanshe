@@ -17,7 +17,7 @@ import vigra
 import vigra.impex
 
 import nanshe.util.additional_generators
-import nanshe.nanshe.expanded_numpy
+import nanshe.util.expanded_numpy
 
 import nanshe.nanshe.tiff_file_format
 import nanshe.nanshe.nanshe_converter
@@ -44,7 +44,7 @@ class TestNansheConverter(object):
 
             self.filedata[each_filename] = each_data
 
-            vigra.impex.writeVolume(nanshe.nanshe.expanded_numpy.tagging_reorder_array(each_data, to_axis_order="czyxt")[0, 0],
+            vigra.impex.writeVolume(nanshe.util.expanded_numpy.tagging_reorder_array(each_data, to_axis_order="czyxt")[0, 0],
                                     os.path.join(self.temp_dir, "test_tiff_" + str(i) + ".tif"), "")
 
     def test_main(self):
@@ -74,7 +74,7 @@ class TestNansheConverter(object):
         with h5py.File(hdf5_filename, "r") as hdf5_handle:
             data = hdf5_handle["data"].value
 
-        self_data_h5 = nanshe.nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
+        self_data_h5 = nanshe.util.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
 
         assert (data == self_data_h5).all()
 

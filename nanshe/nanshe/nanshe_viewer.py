@@ -48,8 +48,7 @@ from volumina.layer import GrayscaleLayer, RGBALayer, ColortableLayer, Clickable
 from volumina.viewer import Viewer
 
 import HDF5_searchers
-import expanded_numpy
-from nanshe.util import additional_generators
+from nanshe.util import additional_generators, expanded_numpy
 
 
 
