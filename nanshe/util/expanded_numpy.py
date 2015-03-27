@@ -21,7 +21,7 @@ import bottleneck
 import vigra
 
 
-import additional_generators
+import iters
 
 
 # Need in order to have logging information no matter what.
@@ -422,7 +422,7 @@ def squish(new_array, axis=None, keepdims=False):
     axes = tuple(axes)
 
     # Put all axes not part of the group in front and stuff the rest at the back.
-    axis_order = tuple(additional_generators.xrange_with_skip(new_array.ndim, to_skip=axes)) + axes
+    axis_order = tuple(iters.xrange_with_skip(new_array.ndim, to_skip=axes)) + axes
     result = new_array.transpose(axis_order)
 
     # Squash the axes at the end into one dimension.
@@ -648,7 +648,7 @@ def unsquish(new_array, shape, axis=None):
     # This will also eliminate singleton axes that weren't part of the original shape (i.e. squish keepdim=True).
     shape_transposed = tuple()
     # Get how the axis order was changed
-    old_axis_order_iter = itertools.chain(additional_generators.xrange_with_skip(len(shape), to_skip=axes), axes)
+    old_axis_order_iter = itertools.chain(iters.xrange_with_skip(len(shape), to_skip=axes), axes)
 
     for i in old_axis_order_iter:
         shape_transposed += shape[i:i+1]
@@ -658,7 +658,7 @@ def unsquish(new_array, shape, axis=None):
     # Find out how the axes will need to be transposed to return to the original order.
     if axis is not None:
         # Get how the axis order was changed
-        old_axis_order_iter = itertools.chain(additional_generators.xrange_with_skip(len(shape), to_skip=axes), axes)
+        old_axis_order_iter = itertools.chain(iters.xrange_with_skip(len(shape), to_skip=axes), axes)
         # Get the current axis order (i.e. in order)
         current_axis_order_iter = xrange(len(shape))
 

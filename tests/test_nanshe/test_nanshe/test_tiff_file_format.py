@@ -16,7 +16,7 @@ import h5py
 import vigra
 import vigra.impex
 
-import nanshe.util.additional_generators
+import nanshe.util.iters
 import nanshe.util.expanded_numpy
 
 import nanshe.nanshe.tiff_file_format
@@ -32,9 +32,9 @@ class TestTiffFileFormat(object):
         self.data = numpy.random.random_integers(0, 255, (1000, 1, 102, 101, 1)).astype(numpy.uint8)
 
         self.temp_dir = tempfile.mkdtemp()
-        for i, i_str, (a_b, a_e) in nanshe.util.additional_generators.filled_stringify_enumerate(
+        for i, i_str, (a_b, a_e) in nanshe.util.iters.filled_stringify_enumerate(
                                         itertools.izip(
-                                                *nanshe.util.additional_generators.lagged_generators(
+                                                *nanshe.util.iters.lagged_generators(
                                                     xrange(0, self.data.shape[0] + 100 - 1, 100)
                                                 )
                                         )

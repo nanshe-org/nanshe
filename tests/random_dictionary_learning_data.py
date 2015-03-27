@@ -7,7 +7,7 @@ import scipy
 import scipy.ndimage
 
 import nanshe.util.debugging_tools
-import nanshe.util.additional_generators
+import nanshe.util.iters
 
 
 # Get the logger
@@ -221,7 +221,7 @@ class DictionaryLearningRandomDataGenerator(object):
             each_result.centroid_activation_frames = []        
             for each_point_group in point_groups:
                 # Get an index array
-                each_point_group_index_array = nanshe.util.additional_generators.list_indices_to_index_array(each_point_group)
+                each_point_group_index_array = nanshe.util.iters.list_indices_to_index_array(each_point_group)
                 
                 # Create an empty activation frame
                 each_centroid_activation_frame = numpy.zeros(self.frame_shape)

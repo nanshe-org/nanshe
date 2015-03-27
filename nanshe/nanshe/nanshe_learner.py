@@ -19,7 +19,7 @@ import h5py
 # Need in order to have logging information no matter what.
 from nanshe.util import debugging_tools
 
-from nanshe.util import additional_generators, expanded_numpy,\
+from nanshe.util import iters, expanded_numpy,\
     generic_decorators, pathHelpers
 
 from nanshe import hdf5
@@ -284,7 +284,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     # Estimate bounds for each slice. Uses typical python [begin, end) for the indices.
     estimated_bounds = numpy.zeros( tuple(num_blocks_array) , dtype = (int, original_images_pared_shape_array.shape + (2,)) )
 
-    for each_block_indices in additional_generators.index_generator(*num_blocks_array):
+    for each_block_indices in iters.index_generator(*num_blocks_array):
         for each_dim, each_block_dim_index in enumerate(each_block_indices):
             estimated_lower_bound = each_block_dim_index * block_shape_array[each_dim]
             estimated_upper_bound = (each_block_dim_index + 1) * block_shape_array[each_dim]
@@ -366,7 +366,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
             # File is already open
             input_file_handle = output_file_handle
 
-        for i, i_str, sequential_block_i in additional_generators.filled_stringify_enumerate(original_images_pared_slices.flat):
+        for i, i_str, sequential_block_i in iters.filled_stringify_enumerate(original_images_pared_slices.flat):
             intermediate_basename_i = intermediate_output_dir + "/" + i_str
 
             # Hold redirected stdout and stderr for each subprocess.
@@ -520,7 +520,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
         new_neurons_set = advanced_image_processing.get_empty_neuron(shape=tuple(original_images_shape_array[1:]), dtype=float)
 
-        for i, i_str, (output_filename_block_i, sequential_block_i) in additional_generators.filled_stringify_enumerate(itertools.izip(output_filename_block, original_images_pared_slices.flat)):
+        for i, i_str, (output_filename_block_i, sequential_block_i) in iters.filled_stringify_enumerate(itertools.izip(output_filename_block, original_images_pared_slices.flat)):
             windowed_slice_i = tuple([slice(_1, _2, 1) for _1, _2 in [(None, None)] + sequential_block_i["windowed_stack_selection"].tolist()[1:]])
             window_trimmed_i = tuple([slice(_1, _2, 1) for _1, _2 in sequential_block_i["windowed_block_selection"].tolist()])
             output_filename_block_i = output_filename_block_i.rstrip("/")

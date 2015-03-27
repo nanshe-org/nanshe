@@ -10,7 +10,7 @@ import h5py
 import vigra
 import vigra.impex
 
-from nanshe.util import additional_generators, additional_io, debugging_tools,\
+from nanshe.util import iters, additional_io, debugging_tools,\
     expanded_numpy, pathHelpers
 
 
@@ -79,7 +79,7 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order = "
 
     # Correct the axis order
     if (axis_order != "zyxtc"):
-        vigra_ordering = dict(additional_generators.reverse_each_element(enumerate("zyxtc")))
+        vigra_ordering = dict(iters.reverse_each_element(enumerate("zyxtc")))
 
         new_tiff_file_shape_transposed = []
         for each_axis_label in axis_order:
@@ -199,7 +199,7 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, 
     assert (pages_to_channel > 0)
 
     # Get the axes that do not change
-    static_axes = numpy.array(list(additional_generators.xrange_with_skip(3, to_skip = axis)))
+    static_axes = numpy.array(list(iters.xrange_with_skip(3, to_skip = axis)))
 
     # if it is only a single str, make it a singleton list
     if isinstance(new_tiff_filenames, str):

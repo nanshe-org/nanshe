@@ -17,7 +17,7 @@ except Exception as e:
     warnings.warn(str(e) + ". Falling back to NumPy FFTPACK.", ImportWarning)
     import numpy.fft as fft
 
-from nanshe.util import additional_generators, expanded_numpy
+from nanshe.util import iters, expanded_numpy
 from nanshe import hdf5
 
 # Need in order to have logging information no matter what.
@@ -161,7 +161,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         )
         this_space_shift = numpy.empty_like(space_shift)
 
-    for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+    for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, len(frames2reg.shape)))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
 
@@ -186,23 +186,23 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = 0
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             frames2reg_shifted_fft_ij = numpy.exp(1j * numpy.tensordot(space_shift[i:j], unit_space_shift_fft, axes=[-1, 0]))
             frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
             template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
         template_fft /= len(frames2reg)
 
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift[i:j] = find_offsets(frames2reg_fft[i:j], template_fft)
 
         # Remove global shifts.
         this_space_shift_mean = numpy.zeros(this_space_shift.shape[1:], dtype=this_space_shift.dtype)
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift_mean = this_space_shift[i:j].sum(axis=0)
         this_space_shift_mean = numpy.round(
             this_space_shift_mean.astype(float) / len(this_space_shift)
         ).astype(int)
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift[i:j] = expanded_numpy.find_relative_offsets(
                 this_space_shift[i:j],
                 this_space_shift_mean
@@ -211,19 +211,19 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
         # them bound by the half shape, but with either sign.
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift[i:j] = expanded_numpy.find_shortest_wraparound(
                 this_space_shift[i:j],
                 frames2reg_fft.shape[1:]
             )
 
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             delta_space_shift_ij = this_space_shift[i:j] - space_shift[i:j]
             squared_magnitude_delta_space_shift += numpy.dot(
                 delta_space_shift_ij, delta_space_shift_ij.T
             ).sum()
 
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             space_shift[i:j] = this_space_shift[i:j]
 
         if max_iters != -1:
@@ -239,7 +239,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         space_shift_min = numpy.zeros(
             space_shift.shape[1:], dtype=space_shift.dtype
         )
-        for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             numpy.maximum(
                 space_shift_max,
                 space_shift[i:j].max(axis=0),
@@ -285,7 +285,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
             reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
             reg_frames.set_fill_value(reg_frames.dtype.type(0))
 
-    for i, j in additional_generators.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+    for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         for k in xrange(i, j):
             if to_truncate:
                 reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k])[reg_frames_slice]

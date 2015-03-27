@@ -25,7 +25,7 @@ import skimage.feature
 import skimage.morphology
 import skimage.segmentation
 
-from nanshe.util import additional_generators
+from nanshe.util import iters
 
 # To allow for more advanced iteration patterns
 import itertools
@@ -2743,7 +2743,7 @@ def postprocess_data(new_dictionary, **parameters):
         postprocess_data.recorders.array_debug_recorder["neuron_sets"] = None
         neuron_sets_array_debug_recorder = postprocess_data.recorders.array_debug_recorder["neuron_sets"]
 
-        for i, i_str, each in additional_generators.filled_stringify_enumerate(new_list):
+        for i, i_str, each in iters.filled_stringify_enumerate(new_list):
             neuron_sets_array_debug_recorder[i_str] = None
             yield ( (i, each, neuron_sets_array_debug_recorder[i_str]) )
 
