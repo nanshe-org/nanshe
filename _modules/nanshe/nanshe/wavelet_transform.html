@@ -386,15 +386,11 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span>
 
-        <span class="k">assert</span><span class="p">(</span>
-            <span class="n">scale</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">scale</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> \
             <span class="s">&quot;Scale should only have 1 dimension. Instead, got scale.ndim = </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scale</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
-        <span class="p">)</span>
 
-        <span class="k">assert</span><span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span> <span class="o">==</span> <span class="n">im0</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span> <span class="o">==</span> <span class="n">im0</span><span class="o">.</span><span class="n">ndim</span><span class="p">),</span> \
             <span class="s">&quot;Scale should have a value of each dimension of im0. Instead, got len(scale) = </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> and im0.ndim = </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">im0</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
-        <span class="p">)</span>
 
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">scale</span><span class="p">],</span> <span class="n">im0</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>

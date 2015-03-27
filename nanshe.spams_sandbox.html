@@ -63,9 +63,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="nanshe-spams-sandbox-package">
-<h1>nanshe.spams_sandbox package<a class="headerlink" href="#nanshe-spams-sandbox-package" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-nanshe.spams_sandbox"></span><p>SPAMS seems to step on the interpreter. Despite our best efforts to sandbox it, in a separate thread, it manages
+  <div class="section" id="module-nanshe.spams_sandbox">
+<span id="nanshe-spams-sandbox-package"></span><h1>nanshe.spams_sandbox package<a class="headerlink" href="#module-nanshe.spams_sandbox" title="Permalink to this headline">¶</a></h1>
+<p>SPAMS seems to step on the interpreter. Despite our best efforts to sandbox it, in a separate thread, it manages
 to still get messed up when neuron_volumina_viewer is on the path. Therefore, we will place all access to it in a
 separate module that cannot see the contents of nanshe. Hopefully, this will make it less likely to create a
 segmentation fault.</p>
