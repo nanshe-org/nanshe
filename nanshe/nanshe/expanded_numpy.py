@@ -21,7 +21,7 @@ import bottleneck
 import vigra
 
 
-import additional_generators
+from nanshe.util import additional_generators
 
 
 # Need in order to have logging information no matter what.

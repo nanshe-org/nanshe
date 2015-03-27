@@ -17,7 +17,7 @@ except Exception as e:
     warnings.warn(str(e) + ". Falling back to NumPy FFTPACK.", ImportWarning)
     import numpy.fft as fft
 
-import additional_generators
+from nanshe.util import additional_generators
 import expanded_numpy
 import HDF5_serializers
 

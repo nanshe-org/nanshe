@@ -2,15 +2,14 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 14, 2014 20:37:08 EDT$"
 
 __all__ = [
-    "additional_generators", "additional_io", "advanced_image_processing",
-    "binary_image_processing", "denoising", "expanded_numpy", "HDF5_recorder",
-    "HDF5_searchers", "HDF5_serializers", "nanshe_converter", "nanshe_learner",
+    "additional_io", "advanced_image_processing", "binary_image_processing",
+    "denoising", "expanded_numpy", "HDF5_recorder", "HDF5_searchers",
+    "HDF5_serializers", "nanshe_converter", "nanshe_learner",
     "nanshe_registerer",  # "nanshe_viewer", "neuron_matplotlib_viewer",
     "pathHelpers", "read_config", "registration", "simple_image_processing",
     "tiff_file_format", "wavelet_transform"
 ]
 
-import additional_generators
 import additional_io
 import advanced_image_processing
 import binary_image_processing

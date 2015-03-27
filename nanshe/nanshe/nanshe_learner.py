@@ -21,11 +21,9 @@ import pathHelpers
 # Need in order to have logging information no matter what.
 from nanshe.util import debugging_tools
 
-from nanshe.util import generic_decorators
+from nanshe.util import additional_generators, generic_decorators
 
 import expanded_numpy
-
-import additional_generators
 
 import HDF5_recorder
 

@@ -25,7 +25,7 @@ import skimage.feature
 import skimage.morphology
 import skimage.segmentation
 
-import additional_generators
+from nanshe.util import additional_generators
 
 # To allow for more advanced iteration patterns
 import itertools

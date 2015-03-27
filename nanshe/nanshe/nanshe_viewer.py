@@ -49,7 +49,7 @@ from volumina.viewer import Viewer
 
 import HDF5_searchers
 import expanded_numpy
-import additional_generators
+from nanshe.util import additional_generators
 
 
 
