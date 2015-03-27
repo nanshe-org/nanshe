@@ -10,7 +10,7 @@ import scipy.misc
 
 import vigra
 
-from nanshe.hdf5 import HDF5_recorder
+from nanshe.hdf5 import record
 
 
 # Need in order to have logging information no matter what.
@@ -194,7 +194,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def wavelet_transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 

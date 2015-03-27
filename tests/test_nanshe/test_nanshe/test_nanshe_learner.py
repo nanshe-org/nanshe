@@ -16,7 +16,7 @@ import h5py
 import numpy
 
 import nanshe.util.expanded_numpy
-import nanshe.hdf5.HDF5_recorder
+import nanshe.hdf5.record
 
 import nanshe.synthetic_data.synthetic_data
 
@@ -1458,16 +1458,16 @@ class TestNansheLearner(object):
             output_group = output_file_handle["/"]
 
             # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.hdf5.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+            array_debug_recorder = nanshe.hdf5.record.generate_HDF5_array_recorder(output_group,
                 group_name = "debug",
                 enable = self.config_a_block["debug"],
                 overwrite_group = False,
-                recorder_constructor = nanshe.hdf5.HDF5_recorder.HDF5EnumeratedArrayRecorder
+                recorder_constructor = nanshe.hdf5.record.HDF5EnumeratedArrayRecorder
             )
 
             # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.hdf5.HDF5_recorder.generate_HDF5_array_recorder(output_group,
-                recorder_constructor = nanshe.hdf5.HDF5_recorder.HDF5ArrayRecorder,
+            resume_logger = nanshe.hdf5.record.generate_HDF5_array_recorder(output_group,
+                recorder_constructor = nanshe.hdf5.record.HDF5ArrayRecorder,
                 overwrite = True
             )
 
@@ -1507,16 +1507,16 @@ class TestNansheLearner(object):
             output_group = output_file_handle["/"]
 
             # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.hdf5.HDF5_recorder.generate_HDF5_array_recorder(output_group,
+            array_debug_recorder = nanshe.hdf5.record.generate_HDF5_array_recorder(output_group,
                 group_name = "debug",
                 enable = self.config_a_block["debug"],
                 overwrite_group = False,
-                recorder_constructor = nanshe.hdf5.HDF5_recorder.HDF5EnumeratedArrayRecorder
+                recorder_constructor = nanshe.hdf5.record.HDF5EnumeratedArrayRecorder
             )
 
             # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.hdf5.HDF5_recorder.generate_HDF5_array_recorder(output_group,
-                recorder_constructor = nanshe.hdf5.HDF5_recorder.HDF5ArrayRecorder,
+            resume_logger = nanshe.hdf5.record.generate_HDF5_array_recorder(output_group,
+                recorder_constructor = nanshe.hdf5.record.HDF5ArrayRecorder,
                 overwrite = True
             )
 

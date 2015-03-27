@@ -59,7 +59,7 @@ import denoising
 # Wavelet transformation operations
 import wavelet_transform
 
-from nanshe.hdf5 import HDF5_recorder
+from nanshe.hdf5 import record
 
 
 # Get the logger
@@ -67,7 +67,7 @@ logger = debugging_tools.logging.getLogger(__name__)
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def remove_zeroed_lines(new_data,
                         erosion_shape,
                         dilation_shape,
@@ -162,7 +162,7 @@ def remove_zeroed_lines(new_data,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def estimate_f0(new_data,
                 half_window_size,
                 which_quantile,
@@ -267,7 +267,7 @@ def estimate_f0(new_data,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def extract_f0(new_data,
                half_window_size,
                which_quantile,
@@ -350,7 +350,7 @@ def extract_f0(new_data,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def normalize_data(new_data, out = None, **parameters):
     """
         Removes the mean from each image and normalizes each image as if they were vectors.
@@ -418,7 +418,7 @@ def normalize_data(new_data, out = None, **parameters):
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def preprocess_data(new_data, out = None, **parameters):
     """
         Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and
@@ -497,7 +497,7 @@ def preprocess_data(new_data, out = None, **parameters):
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def generate_dictionary(new_data, **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
@@ -1515,7 +1515,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
 
 
 @debugging_tools.log_class(logger)
-@HDF5_recorder.class_static_array_debug_recorder
+@record.class_static_array_debug_recorder
 class ExtendedRegionProps(object):
     """
         Using the results of extended_region_local_maxima_properties with given intensity and label images, the
@@ -1856,7 +1856,7 @@ def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parame
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def wavelet_denoising(new_image,
                       accepted_region_shape_constraints,
                       accepted_neuron_shape_constraints,
@@ -2001,7 +2001,7 @@ def wavelet_denoising(new_image,
 
         logger.debug("Found new label image.")
 
-        # ExtendedRegionProps.recorders.array_debug_recorder = HDF5_recorder.HDF5EnumeratedArrayRecorder(
+        # ExtendedRegionProps.recorders.array_debug_recorder = record.HDF5EnumeratedArrayRecorder(
         #     wavelet_denoising.recorders.array_debug_recorder.hdf5_handle
         # )
         ExtendedRegionProps.recorders.array_debug_recorder = wavelet_denoising.recorders.array_debug_recorder
@@ -2157,7 +2157,7 @@ def wavelet_denoising(new_image,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def extract_neurons(new_image, neuron_masks):
     """
         Extracts neurons from an image using a stack of masks.
@@ -2191,7 +2191,7 @@ def extract_neurons(new_image, neuron_masks):
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def fuse_neurons(neuron_1,
                  neuron_2,
                  fraction_mean_neuron_max_threshold,
@@ -2251,7 +2251,7 @@ def fuse_neurons(neuron_1,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def merge_neuron_sets(new_neuron_set_1,
                       new_neuron_set_2,
                       alignment_min_threshold,
@@ -2267,7 +2267,7 @@ def merge_neuron_sets(new_neuron_set_1,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def merge_neuron_sets_once(new_neuron_set_1,
                       new_neuron_set_2,
                       alignment_min_threshold,
@@ -2437,7 +2437,7 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the new_neuron_set (composed of new_neuron_set_1)
         for i, j in itertools.izip(new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse):
-            # fuse_neurons.recorders.array_debug_recorder = HDF5_recorder.HDF5EnumeratedArrayRecorder(
+            # fuse_neurons.recorders.array_debug_recorder = record.HDF5EnumeratedArrayRecorder(
             #     merge_neuron_sets_once.recorders.array_debug_recorder.hdf5_handle
             # )
             fuse_neurons.recorders.array_debug_recorder = merge_neuron_sets_once.recorders.array_debug_recorder
@@ -2468,7 +2468,7 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def merge_neuron_sets_repeatedly(new_neuron_set_1,
                                  new_neuron_set_2,
                                  alignment_min_threshold,
@@ -2659,7 +2659,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the new_neuron_set (composed of new_neuron_set_1)
         for i, j in itertools.izip(new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse):
-            # fuse_neurons.recorders.array_debug_recorder = HDF5_recorder.HDF5EnumeratedArrayRecorder(
+            # fuse_neurons.recorders.array_debug_recorder = record.HDF5EnumeratedArrayRecorder(
             #     merge_neuron_sets_repeatedly.recorders.array_debug_recorder.hdf5_handle
             # )
             fuse_neurons.recorders.array_debug_recorder = merge_neuron_sets_repeatedly.recorders.array_debug_recorder
@@ -2679,7 +2679,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def expand_rois(new_data, roi_masks, **parameters):
     # Find time traces: spatial mean of activity for each ROI
     # Normalize time traces: subtract mean from each time trace and normalize each relative to L_2
@@ -2720,7 +2720,7 @@ def expand_rois(new_data, roi_masks, **parameters):
 
 
 @debugging_tools.log_call(logger)
-@HDF5_recorder.static_array_debug_recorder
+@record.static_array_debug_recorder
 def postprocess_data(new_dictionary, **parameters):
     """
         Generates neurons from the dictionary.

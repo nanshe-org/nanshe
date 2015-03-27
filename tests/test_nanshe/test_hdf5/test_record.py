@@ -9,16 +9,16 @@ import shutil
 import h5py
 import numpy
 
-import nanshe.hdf5.HDF5_recorder
+import nanshe.hdf5.record
 
 
-class TestHDF5Recorder(object):
+class TestRecord(object):
     def setup(self):
         self.temp_dir = tempfile.mkdtemp()
 
 
     def test_EmptyArrayRecorder(self):
-        recorder = nanshe.hdf5.HDF5_recorder.EmptyArrayRecorder()
+        recorder = nanshe.hdf5.record.EmptyArrayRecorder()
 
 
         # Get current record
@@ -114,7 +114,7 @@ class TestHDF5Recorder(object):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
 
         with h5py.File(hdf5_filename, "w") as hdf5_file:
-            recorder = nanshe.hdf5.HDF5_recorder.HDF5ArrayRecorder(hdf5_file)
+            recorder = nanshe.hdf5.record.HDF5ArrayRecorder(hdf5_file)
 
 
             # Get current record
@@ -233,7 +233,7 @@ class TestHDF5Recorder(object):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
 
         with h5py.File(hdf5_filename, "w") as hdf5_file:
-            recorder = nanshe.hdf5.HDF5_recorder.HDF5EnumeratedArrayRecorder(
+            recorder = nanshe.hdf5.record.HDF5EnumeratedArrayRecorder(
                 hdf5_file
             )
 
