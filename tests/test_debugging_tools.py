@@ -225,7 +225,7 @@ class TestDebuggingTools(object):
         """DEBUG:""" + self.logger.name + """:Run time for callable: "__init__" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         expected_result_2 = """DEBUG:""" + self.logger.name + """:Entering callable: \"__call__\"\.\n""" + \
-            """DEBUG:""" + self.logger.name + """:Arguments: \"\(<tests\.test_debugging_tools\.Test object at 0x[0-9a-f]+>,\)\"\n""" + \
+            """DEBUG:""" + self.logger.name + """:Arguments: \"\(<""" + __name__ + """\.Test object at 0x[0-9a-f]+>,\)\"\n""" + \
             """Keyword Arguments: \"\{\}\"\.\n""" + \
             """DEBUG:""" + self.logger.name + """:Exiting callable: \"__call__\"\.\n""" + \
             """DEBUG:""" + self.logger.name + """:Run time for callable: \"__call__\" is \"[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s\"\.\n"""
