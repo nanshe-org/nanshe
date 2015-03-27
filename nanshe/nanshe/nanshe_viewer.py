@@ -47,7 +47,7 @@ from volumina.pixelpipeline.datasources import is_pure_slicing
 from volumina.layer import GrayscaleLayer, RGBALayer, ColortableLayer, ClickableColortableLayer, AlphaModulatedLayer
 from volumina.viewer import Viewer
 
-from nanshe.hdf5 import search
+from nanshe import hdf5
 from nanshe.util import additional_generators, expanded_numpy
 
 
@@ -1651,7 +1651,7 @@ def main(*argv):
 
                 # TODO: See if we can't move this loop out. (Could change this parsed_args.parameters_expanded to an collections.OrderedDict and store none for values (ordered set).)
                 for each_file in parsed_args.file_handles:
-                    new_matches = search.get_matching_grouped_paths(each_file, each_layer_source_location)
+                    new_matches = hdf5.search.get_matching_grouped_paths(each_file, each_layer_source_location)
                     new_matches_ldict = itertools.izip(new_matches, itertools.repeat(None))
                     parsed_args.parameters_expanded[-1][each_layer_name][-1].update(new_matches_ldict)
 
