@@ -22,7 +22,7 @@ from nanshe.util import debugging_tools
 from nanshe.util import additional_generators, expanded_numpy,\
     generic_decorators, pathHelpers
 
-from nanshe.hdf5 import record
+from nanshe import hdf5
 
 # Short function to process image data.
 import advanced_image_processing
@@ -126,16 +126,16 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
                 output_group["original_images"] = h5py.ExternalLink(input_filename_details.externalPath, input_dataset_name)
 
         # Get a debug logger for the HDF5 file (if needed)
-        array_debug_recorder = record.generate_HDF5_array_recorder(output_group,
+        array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(output_group,
             group_name = "debug",
             enable = debug,
             overwrite_group = False,
-            recorder_constructor = record.HDF5EnumeratedArrayRecorder
+            recorder_constructor = hdf5.record.HDF5EnumeratedArrayRecorder
         )
 
         # Saves intermediate result to make resuming easier
-        resume_logger = record.generate_HDF5_array_recorder(output_group,
-            recorder_constructor = record.HDF5ArrayRecorder,
+        resume_logger = hdf5.record.generate_HDF5_array_recorder(output_group,
+            recorder_constructor = hdf5.record.HDF5ArrayRecorder,
             overwrite = True
         )
 
@@ -561,11 +561,11 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                         #TODO: Correct centroid to larger block position.
                         neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
 
-                        array_debug_recorder = record.generate_HDF5_array_recorder(output_group,
+                        array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(output_group,
                             group_name = "debug",
                             enable = debug,
                             overwrite_group = False,
-                            recorder_constructor = record.HDF5EnumeratedArrayRecorder
+                            recorder_constructor = hdf5.record.HDF5EnumeratedArrayRecorder
                         )
 
                         advanced_image_processing.merge_neuron_sets.recorders.array_debug_recorder = array_debug_recorder
@@ -596,8 +596,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
 
 @debugging_tools.log_call(logger)
-@record.static_subgrouping_array_recorders(array_debug_recorder = record.EmptyArrayRecorder())
-@generic_decorators.static_variables(resume_logger = record.EmptyArrayRecorder())
+@hdf5.record.static_subgrouping_array_recorders(array_debug_recorder = hdf5.record.EmptyArrayRecorder())
+@generic_decorators.static_variables(resume_logger = hdf5.record.EmptyArrayRecorder())
 def generate_neurons(original_images, run_stage = "all", **parameters):
     if "original_images_max_projection" not in generate_neurons.recorders.array_debug_recorder:
         generate_neurons.recorders.array_debug_recorder["original_images_max_projection"] = expanded_numpy.add_singleton_op(
