@@ -22,7 +22,7 @@ from nanshe.util import debugging_tools
 from nanshe.util import additional_generators, expanded_numpy,\
     generic_decorators, pathHelpers
 
-import HDF5_recorder
+from nanshe.hdf5 import HDF5_recorder
 
 # Short function to process image data.
 import advanced_image_processing

@@ -10,7 +10,7 @@ import scipy.misc
 
 import vigra
 
-import HDF5_recorder
+from nanshe.hdf5 import HDF5_recorder
 
 
 # Need in order to have logging information no matter what.

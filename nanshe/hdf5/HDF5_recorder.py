@@ -5,7 +5,7 @@ __date__ = "$Jun 04, 2014 11:10:55 EDT$"
 import numpy
 import h5py
 
-from nanshe.hdf5 import HDF5_serializers
+import HDF5_serializers
 from nanshe.util import generic_decorators
 
 
