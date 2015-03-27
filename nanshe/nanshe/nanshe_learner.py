@@ -30,8 +30,6 @@ import advanced_image_processing
 # For IO. Right now, just includes read_parameters for reading a config.json file.
 from nanshe.util import read_config
 
-from nanshe.hdf5 import serializers
-
 
 # Get the logger
 logger = debugging_tools.logging.getLogger(__name__)
@@ -105,7 +103,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
     # Read the input data.
     original_images = None
     with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
-        original_images = serializers.read_numpy_structured_array_from_HDF5(input_file_handle, input_dataset_name)
+        original_images = hdf5.serializers.read_numpy_structured_array_from_HDF5(input_file_handle, input_dataset_name)
         original_images = original_images.astype(numpy.float32)
 
     # Write out the output.
@@ -529,7 +527,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
             with h5py.File(output_filename_block_i, "r") as each_block_file_handle:
                 if "neurons" in each_block_file_handle:
-                    neurons_block_i_smaller = serializers.read_numpy_structured_array_from_HDF5(each_block_file_handle, "/neurons")
+                    neurons_block_i_smaller = hdf5.serializers.read_numpy_structured_array_from_HDF5(each_block_file_handle, "/neurons")
 
                     neurons_block_i_windowed_count = numpy.squeeze(numpy.apply_over_axes(numpy.sum, neurons_block_i_smaller["mask"].astype(float), tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))))
 
@@ -572,7 +570,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                         new_neurons_set = advanced_image_processing.merge_neuron_sets(new_neurons_set, neurons_block_i,
                                                                                       **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"])
 
-        serializers.create_numpy_structured_array_in_HDF5(output_group, "neurons", new_neurons_set, overwrite = True)
+        hdf5.serializers.create_numpy_structured_array_in_HDF5(output_group, "neurons", new_neurons_set, overwrite = True)
 
         if "parameters" not in output_group["neurons"].attrs:
             output_group["neurons"].attrs["parameters"] = repr(dict(list(parameters.items()) + \
