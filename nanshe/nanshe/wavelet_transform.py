@@ -326,15 +326,11 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
     try:
         scale = numpy.array(list(scale))
 
-        assert(
-            scale.ndim == 1,
+        assert (scale.ndim == 1), \
             "Scale should only have 1 dimension. Instead, got scale.ndim = \"" + str(scale.ndim) + "\"."
-        )
 
-        assert(
-            len(scale) == im0.ndim,
+        assert (len(scale) == im0.ndim), \
             "Scale should have a value of each dimension of im0. Instead, got len(scale) = \"" + str(len(scale)) + "\" and im0.ndim = \"" + str(im0.ndim) + "\"."
-        )
 
     except TypeError:
         scale = numpy.repeat([scale], im0.ndim)
