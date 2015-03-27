@@ -2,7 +2,6 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Oct 16, 2014 23:21:43 EDT$"
 
 
-
 # Generally useful and fast to import so done immediately.
 import numpy
 

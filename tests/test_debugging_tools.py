@@ -10,6 +10,7 @@ import traceback
 
 import nanshe.nanshe.debugging_tools
 
+
 class TestDebuggingTools(object):
     def setup(self):
         self.stream = StringIO.StringIO()

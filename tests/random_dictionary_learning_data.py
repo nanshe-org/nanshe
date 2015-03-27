@@ -15,9 +15,6 @@ logger = nanshe.nanshe.debugging_tools.logging.getLogger(__name__)
 
 
 
-
-
-
 class MappingDiscreteUniformDistributionGenerator(object):
     """
         Given a bunch of arguments. This will create a random element generator that returns one or many

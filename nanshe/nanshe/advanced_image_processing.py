@@ -2,7 +2,6 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 30, 2014 17:23:37 EDT$"
 
 
-
 # Allows for type conversions for C/C++ functions.
 import ctypes
 

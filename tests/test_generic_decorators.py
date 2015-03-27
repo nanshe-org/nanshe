@@ -7,7 +7,6 @@ import functools
 import nanshe.nanshe.generic_decorators
 
 
-
 class TestGenericDecorators(object):
     def test_update_wrapper(self):
         def wrapper(a_callable):
