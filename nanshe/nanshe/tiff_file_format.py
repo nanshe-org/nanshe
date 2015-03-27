@@ -10,9 +10,8 @@ import h5py
 import vigra
 import vigra.impex
 
-import pathHelpers
 from nanshe.util import additional_generators, additional_io, debugging_tools,\
-    expanded_numpy
+    expanded_numpy, pathHelpers
 
 
 

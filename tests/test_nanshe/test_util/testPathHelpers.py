@@ -20,7 +20,9 @@
 #		   http://ilastik.org/license/
 ###############################################################################
 import os
-from nanshe.nanshe.pathHelpers import compressPathForDisplay, getPathVariants, PathComponents
+
+from nanshe.util.pathHelpers import compressPathForDisplay, getPathVariants, PathComponents
+
 
 class TestPathHelpers(object):
 

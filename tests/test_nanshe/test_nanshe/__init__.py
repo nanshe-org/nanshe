@@ -6,8 +6,7 @@ __all__ = [
     "test_HDF5_recorder", "test_HDF5_searchers", "test_HDF5_serializers",
     "test_nanshe_converter", "test_nanshe_learner", "test_nanshe_registerer",
     # "test_nanshe_viewer",
-    "test_read_config", "test_registration", "test_tiff_file_format",
-    "testPathHelpers"
+    "test_read_config", "test_registration", "test_tiff_file_format"
 ]
 
 
@@ -23,4 +22,3 @@ import test_nanshe_registerer
 import test_read_config
 import test_registration
 import test_tiff_file_format
-import testPathHelpers

@@ -10,7 +10,7 @@ import os
 import h5py
 
 from nanshe.util import debugging_tools
-from pathHelpers import PathComponents
+from nanshe.util.pathHelpers import PathComponents
 import read_config
 import registration
 
