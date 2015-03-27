@@ -5,7 +5,7 @@ __date__ = "$Jun 04, 2014 11:10:55 EDT$"
 import numpy
 import h5py
 
-import HDF5_serializers
+import serializers
 from nanshe.util import generic_decorators
 
 
@@ -97,7 +97,7 @@ class HDF5ArrayRecorder(object):
             if isinstance(self.hdf5_handle[key], h5py.Group):
                 return(HDF5ArrayRecorder(self.hdf5_handle[key], overwrite = self.overwrite))
             else:
-                return(HDF5_serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
+                return(serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
         except:
             raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
 
@@ -132,7 +132,7 @@ class HDF5ArrayRecorder(object):
             # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
             # Exception will be thrown if value is empty or if key already exists (as intended).
             if value.size:
-                HDF5_serializers.create_numpy_structured_array_in_HDF5(self.hdf5_handle,
+                serializers.create_numpy_structured_array_in_HDF5(self.hdf5_handle,
                                                                       key,
                                                                       value,
                                                                       overwrite = self.overwrite)
@@ -210,7 +210,7 @@ class HDF5EnumeratedArrayRecorder(object):
                 return(HDF5EnumeratedArrayRecorder(key_handle))
             else:
                 key_i_str = str(key_i)
-                return(HDF5_serializers.read_numpy_structured_array_from_HDF5(key_handle, key_i_str))
+                return(serializers.read_numpy_structured_array_from_HDF5(key_handle, key_i_str))
         except:
             raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
 
@@ -262,7 +262,7 @@ class HDF5EnumeratedArrayRecorder(object):
 
                     self.hdf5_index_data_handles[key] += 1
 
-                    HDF5_serializers.create_numpy_structured_array_in_HDF5(hdf5_index_handle[key],
+                    serializers.create_numpy_structured_array_in_HDF5(hdf5_index_handle[key],
                                                                            str(self.hdf5_index_data_handles[key]),
                                                                            value)
 

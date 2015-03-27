@@ -18,7 +18,7 @@ except Exception as e:
     import numpy.fft as fft
 
 from nanshe.util import additional_generators, expanded_numpy
-from nanshe.hdf5 import HDF5_serializers
+from nanshe.hdf5 import serializers
 
 # Need in order to have logging information no matter what.
 from nanshe.util import debugging_tools
@@ -274,7 +274,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
             )
         else:
             reg_frames = temporaries_file.create_group("reg_frames")
-            reg_frames = HDF5_serializers.HDF5MaskedDataset(
+            reg_frames = serializers.HDF5MaskedDataset(
                 reg_frames, shape=frames2reg.shape, dtype=frames2reg.dtype
             )
     else:
