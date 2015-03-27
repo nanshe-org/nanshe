@@ -69,6 +69,15 @@
 <span class="kn">import</span> <span class="nn">h5py</span>
 
 
+<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="kn">import</span> <span class="nn">debugging_tools</span>
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_paths"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_paths">[docs]</a><span class="k">def</span> <span class="nf">get_matching_paths</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
@@ -114,6 +123,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span>
 
 </div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_paths_groups"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_paths_groups">[docs]</a><span class="k">def</span> <span class="nf">get_matching_paths_groups</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for parts of the path pattern and tries to match them in order.</span>
@@ -182,6 +192,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
 
 </div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_grouped_paths"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths">[docs]</a><span class="k">def</span> <span class="nf">get_matching_grouped_paths</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
@@ -211,6 +222,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span>
 
 </div>
+<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_grouped_paths_found"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths_found">[docs]</a><span class="k">def</span> <span class="nf">get_matching_grouped_paths_found</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for existing paths that match the full provide pattern path.</span>

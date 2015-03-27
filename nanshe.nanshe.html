@@ -222,7 +222,7 @@ given function.</td>
 <span id="nanshe-nanshe-hdf5-searchers-module"></span><h2>nanshe.nanshe.HDF5_searchers module<a class="headerlink" href="#module-nanshe.nanshe.HDF5_searchers" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths">
-<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_grouped_paths</code><span class="sig-paren">(</span><em>a_filehandle</em>, <em>a_path_pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_grouped_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_grouped_paths</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_grouped_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks for existing paths that match the full provide pattern path.
 Returns a list of matches as keys and whether they are found in the HDF5 file or not.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -256,7 +256,7 @@ they are found.</td>
 
 <dl class="function">
 <dt id="nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths_found">
-<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_grouped_paths_found</code><span class="sig-paren">(</span><em>a_filehandle</em>, <em>a_path_pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_grouped_paths_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths_found" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_grouped_paths_found</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_grouped_paths_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_grouped_paths_found" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks for existing paths that match the full provide pattern path.
 Returns a list of matches as keys and whether they are found in the HDF5 file or not.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -290,7 +290,7 @@ and whether they are found.</td>
 
 <dl class="function">
 <dt id="nanshe.nanshe.HDF5_searchers.get_matching_paths">
-<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_paths</code><span class="sig-paren">(</span><em>a_filehandle</em>, <em>a_path_pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_paths" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_paths</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks for existing paths that match the full provide pattern path.
 Returns a list of matches for the given file handle.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -323,7 +323,7 @@ Returns a list of matches for the given file handle.</p>
 
 <dl class="function">
 <dt id="nanshe.nanshe.HDF5_searchers.get_matching_paths_groups">
-<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_paths_groups</code><span class="sig-paren">(</span><em>a_filehandle</em>, <em>a_path_pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_paths_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_paths_groups" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nanshe.nanshe.HDF5_searchers.</code><code class="descname">get_matching_paths_groups</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/nanshe/HDF5_searchers.html#get_matching_paths_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.nanshe.HDF5_searchers.get_matching_paths_groups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks for parts of the path pattern and tries to match them in order.
 Returns a list of matches that can be combined to yield acceptable matches for the given file handle.</p>
 <div class="admonition note">
@@ -1755,7 +1755,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders">
-<code class="descname">recorders</code><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x493ca50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recorders</code><em class="property"> = &lt;nanshe.nanshe.HDF5_recorder.ClassSubgroupingRecorders object at 0x3700a50&gt;</em><a class="headerlink" href="#nanshe.nanshe.advanced_image_processing.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
