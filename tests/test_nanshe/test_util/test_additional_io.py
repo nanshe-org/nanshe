@@ -2,7 +2,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jul 28, 2014 11:50:37 EDT$"
 
 
-import nanshe.nanshe.additional_io
+import nanshe.util.additional_io
 
 
 class TestAdditionalIO(object):
@@ -23,7 +23,7 @@ class TestAdditionalIO(object):
     def test_expand_pathname_list(self):
         import itertools
 
-        matched_filenames = nanshe.nanshe.additional_io.expand_pathname_list(self.temp_dir + "/*.tif")
+        matched_filenames = nanshe.util.additional_io.expand_pathname_list(self.temp_dir + "/*.tif")
         matched_filenames.sort(cmp = lambda a, b: 2*(a > b) - 1)
 
         assert (len(matched_filenames) == len(self.temp_files))

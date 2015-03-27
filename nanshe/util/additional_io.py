@@ -4,7 +4,7 @@ __date__ = "$Jun 26, 2014 18:24:25 EDT$"
 
 import glob
 
-from nanshe.util import debugging_tools
+import debugging_tools
 
 
 
