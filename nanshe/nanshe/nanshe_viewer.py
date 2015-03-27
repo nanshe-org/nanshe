@@ -47,7 +47,7 @@ from volumina.pixelpipeline.datasources import is_pure_slicing
 from volumina.layer import GrayscaleLayer, RGBALayer, ColortableLayer, ClickableColortableLayer, AlphaModulatedLayer
 from volumina.viewer import Viewer
 
-import HDF5_searchers
+from nanshe.hdf5 import HDF5_searchers
 from nanshe.util import additional_generators, expanded_numpy
 
 
