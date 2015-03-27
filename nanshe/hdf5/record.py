@@ -10,14 +10,14 @@ from nanshe.util import generic_decorators
 
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 class EmptyArrayRecorder(object):
     def __init__(self):
         self.__recorders = set()
@@ -64,7 +64,7 @@ class EmptyArrayRecorder(object):
                 raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 class HDF5ArrayRecorder(object):
     def __init__(self, hdf5_handle, overwrite = False):
         self.hdf5_handle = hdf5_handle
@@ -143,7 +143,7 @@ class HDF5ArrayRecorder(object):
                 raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 class HDF5EnumeratedArrayRecorder(object):
     def __init__(self, hdf5_handle):
         self.hdf5_handle = hdf5_handle
@@ -271,7 +271,7 @@ class HDF5EnumeratedArrayRecorder(object):
                     raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, overwrite_group = False, recorder_constructor = HDF5ArrayRecorder, **kwargs):
     """
         Generates a function used for writing arrays (structured or otherwise)
@@ -326,7 +326,7 @@ def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, ov
         return(EmptyArrayRecorder())
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def static_subgrouping_array_recorders(*args, **kwargs):
     """
         Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.
@@ -342,7 +342,7 @@ def static_subgrouping_array_recorders(*args, **kwargs):
                                                         given function.
     """
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def static_subgrouping_array_recorders_tie(callable):
         """
             Creates a decorator that adds a static variable recorders to the function it decorates.
@@ -419,7 +419,7 @@ def static_subgrouping_array_recorders(*args, **kwargs):
     return(static_subgrouping_array_recorders_tie)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def static_array_debug_recorder(callable):
     """
         Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the
@@ -438,7 +438,7 @@ def static_array_debug_recorder(callable):
     return(callable)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def class_static_subgrouping_array_recorders(*args, **kwargs):
     """
         Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.
@@ -454,7 +454,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                                                         given function.
     """
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def class_static_subgrouping_array_recorders_tie(a_class):
         """
             Creates a decorator that adds a static variable recorders to the function it decorates.
@@ -574,7 +574,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
     return(class_static_subgrouping_array_recorders_tie)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def class_static_array_debug_recorder(a_class):
     """
         Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the

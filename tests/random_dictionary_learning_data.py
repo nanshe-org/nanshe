@@ -6,12 +6,12 @@ import numpy
 import scipy
 import scipy.ndimage
 
-import nanshe.util.debugging_tools
+import nanshe.util.prof
 import nanshe.util.iters
 
 
 # Get the logger
-logger = nanshe.util.debugging_tools.logging.getLogger(__name__)
+logger = nanshe.util.prof.logging.getLogger(__name__)
 
 
 

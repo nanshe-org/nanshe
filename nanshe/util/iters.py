@@ -10,13 +10,13 @@ import numpy
 
 
 # Need in order to have logging information no matter what.
-import debugging_tools
+import prof
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def index_generator(*sizes):
     """
         Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size.
@@ -60,7 +60,7 @@ def index_generator(*sizes):
     return(chain_gen)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def index_enumerator(*sizes):
     """
         Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size (i.e. like
@@ -105,7 +105,7 @@ def index_enumerator(*sizes):
     return(chain_gen)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def list_indices_to_index_array(list_indices):
     """
         Converts a list of tuple indices to numpy index array.
@@ -132,7 +132,7 @@ def list_indices_to_index_array(list_indices):
     return(tuple(numpy.array(zip(*list_indices))))
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def list_indices_to_numpy_bool_array(list_indices, shape):
     """
         Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.
@@ -183,7 +183,7 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
     return(result)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def repeat_generator(a_iter, n = 1):
     """
         Repeats each value on an iterator given n-times before proceeding to the next value.
@@ -224,7 +224,7 @@ def repeat_generator(a_iter, n = 1):
             yield(each_value)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def cycle_generator(a_iter, n = 1):
     """
         Cycles through an iterator n-times.
@@ -266,7 +266,7 @@ def cycle_generator(a_iter, n = 1):
         yield(each_value)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def iter_with_skip_indices(a_iter, to_skip = None):
     """
         Behaves as a normal iterator except allows for skipping arbitrary values, as well.
@@ -326,7 +326,7 @@ def iter_with_skip_indices(a_iter, to_skip = None):
             next_to_skip = next(to_skip, None)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def iter_with_skip_values(a_iter, to_skip = None):
     """
         Behaves as a normal iterator except allows for skipping arbitrary values, as well.
@@ -384,7 +384,7 @@ def iter_with_skip_values(a_iter, to_skip = None):
             yield(each)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def xrange_with_skip(start, stop = None, step = None, to_skip = None):
     """
         Behaves as xrange does except allows for skipping arbitrary values as well.
@@ -542,7 +542,7 @@ def splitting_xrange(a, b = None):
         yield(each)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def cumulative_generator(new_op, new_iter):
     """
         Takes each value from new_iter and applies new_op to it with the result
@@ -588,7 +588,7 @@ def cumulative_generator(new_op, new_iter):
         yield (cur)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def reverse_each_element(new_iter):
     """
         Takes each element yielded by new_iter and reverses it using reversed.
@@ -619,7 +619,7 @@ def reverse_each_element(new_iter):
         yield ( type(each)(reversed(each)) )
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def lagged_generators(new_iter, n = 2):
     """
         Creates a tuple of generators with each next generator one step ahead of the previous generator.
@@ -683,7 +683,7 @@ def lagged_generators(new_iter, n = 2):
     return(all_iters)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def lagged_generators_zipped(new_iter, n = 2, longest=False, fillvalue=None):
     """
         Creates a tuple of generators with each next generator one step ahead of the previous generator.
@@ -731,7 +731,7 @@ def lagged_generators_zipped(new_iter, n = 2, longest=False, fillvalue=None):
     return(zipped_iters)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def filled_stringify_numbers(new_iter, include_numbers = False):
     """
         Like enumerate except it also returns a string with the number from enumeration with left padding by zero.
@@ -793,7 +793,7 @@ def filled_stringify_numbers(new_iter, include_numbers = False):
             yield( str(each).zfill(digits) )
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def filled_stringify_xrange(new_iter):
     """
         Takes each element yielded by new_iter and reverses it using reversed.
@@ -845,7 +845,7 @@ def filled_stringify_xrange(new_iter):
         yield ( (i, i_str) )
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def filled_stringify_enumerate(new_iter):
     """
         Takes each element yielded by new_iter and reverses it using reversed.
@@ -897,7 +897,7 @@ def filled_stringify_enumerate(new_iter):
         yield ( (i, i_str, each) )
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def reformat_slice(a_slice, a_length = None):
     """
         Takes a slice and reformats it to fill in as many undefined values as possible.
@@ -1052,7 +1052,7 @@ def reformat_slice(a_slice, a_length = None):
     return(new_slice)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def reformat_slices(slices, lengths = None):
     """
         Takes a tuple of slices and reformats them to fill in as many undefined values as possible.
@@ -1112,7 +1112,7 @@ class UnknownSliceLengthException(Exception):
     pass
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def len_slice(a_slice, a_length = None):
     """
         Determines how many elements a slice will contain.
@@ -1178,7 +1178,7 @@ def len_slice(a_slice, a_length = None):
     return(new_slice_size)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def len_slices(slices, lengths = None):
     """
         Takes a tuple of slices and reformats them to fill in as many undefined values as possible.

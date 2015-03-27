@@ -4,17 +4,17 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 26, 2014 17:33:37 EDT$"
 
 
-from nanshe.util import debugging_tools, read_config
+from nanshe.util import prof, read_config
 import tiff_file_format
 
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def main(*argv):
     """
         Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.

@@ -25,9 +25,9 @@ __date__ = "$Jun 09, 2014 08:51:33 EDT$"
 """
 
 
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 import os
 import collections
@@ -58,7 +58,7 @@ class HDF5DatasetNotFoundException( Exception ):
     """
     pass
 
-@debugging_tools.qt_log_class(logger)
+@prof.qt_log_class(logger)
 class HDF5DataSource( QObject ):
     """
         Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.
@@ -238,7 +238,7 @@ class HDF5DataSource( QObject ):
 assert issubclass(HDF5DataSource, SourceABC)
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 class HDF5DataRequest( object ):
     """
         Created by an HDF5DataSource to provide a way to request slices of the HDF5 file in a nice way.
@@ -369,7 +369,7 @@ class HDF5DataRequest( object ):
 assert issubclass(HDF5DataRequest, RequestABC)
 
 
-@debugging_tools.qt_log_class(logger)
+@prof.qt_log_class(logger)
 class HDF5Viewer(Viewer):
     """
         Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.
@@ -477,7 +477,7 @@ class HDF5Viewer(Viewer):
 
 
 @multimethod(str, bool)
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def createHDF5DataSource(full_path, withShape = False):
     # Get a source for the HDF5 file.
     src = HDF5DataSource(full_path)
@@ -488,7 +488,7 @@ def createHDF5DataSource(full_path, withShape = False):
         return src
 
 @multimethod(str)
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def createHDF5DataSource(full_path):
     return createHDF5DataSource(full_path, False)
 
@@ -499,7 +499,7 @@ class HDF5NoFusedSourceException( Exception ):
 class HDF5UndefinedShapeDtypeException( Exception ):
     pass
 
-@debugging_tools.qt_log_class(logger)
+@prof.qt_log_class(logger)
 class HDF5DataFusedSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -628,7 +628,7 @@ class HDF5DataFusedSource( QObject ):
 assert issubclass(HDF5DataFusedSource, SourceABC)
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 class HDF5DataFusedRequest( object ):
     def __init__( self, fuse_axis, data_shape, data_dtype, *data_requests ):
         # TODO: Look at adding assertion check on slices.
@@ -715,7 +715,7 @@ class EnumeratedProjectionConstantSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_source, axis = -1):
         """
             Constructs an EnumeratedProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
@@ -746,25 +746,25 @@ class EnumeratedProjectionConstantSource( QObject ):
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def numberOfChannels(self):
         return(self.dataset_shape[-1])
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def clean_up(self):
         # Close file
         self.constant_source = None
         self.axis = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def dtype(self):
         return(self.constant_source.dtype())
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def shape(self):
         return(self._shape)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('EnumeratedProjectionConstantSource: slicing is not pure')
@@ -779,20 +779,20 @@ class EnumeratedProjectionConstantSource( QObject ):
                                             slicing)
         )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
         self.isDirty.emit( slicing )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __eq__( self, other ):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __ne__( self, other ):
         if other is None:
             return True
@@ -816,7 +816,7 @@ class EnumeratedProjectionConstantRequest( object ):
 
     """
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_request, axis, slicing ):
         """
             Constructs an EnumeratedProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
@@ -836,7 +836,7 @@ class EnumeratedProjectionConstantRequest( object ):
 
         self._result = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def wait( self ):
         if self._result is None:
             # Get the result of the request needed
@@ -855,25 +855,25 @@ class EnumeratedProjectionConstantRequest( object ):
 
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def getResult(self):
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def cancel( self ):
         pass
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def submit( self ):
         pass
 
     # callback( result = result, **kwargs )
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def notify( self, callback, **kwargs ):
         t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
         t.start()
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def _doNotify( self, callback, kwargs ):
         result = self.wait()
         callback(result, **kwargs)
@@ -899,7 +899,7 @@ class ContourProjectionConstantSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_source, axis = -1):
         """
             Constructs an ContourProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
@@ -926,25 +926,25 @@ class ContourProjectionConstantSource( QObject ):
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def numberOfChannels(self):
         return(self.dataset_shape[-1])
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def clean_up(self):
         # Close file
         self.constant_source = None
         self.axis = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def dtype(self):
         return(self.constant_source.dtype())
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def shape(self):
         return(self._shape)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('ContourProjectionConstantSource: slicing is not pure')
@@ -954,20 +954,20 @@ class ContourProjectionConstantSource( QObject ):
                                             slicing)
         )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
         self.isDirty.emit( slicing )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __eq__( self, other ):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __ne__( self, other ):
         if other is None:
             return True
@@ -991,7 +991,7 @@ class ContourProjectionConstantRequest( object ):
 
     """
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_request, axis, slicing ):
         """
             Constructs an ContourProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
@@ -1011,7 +1011,7 @@ class ContourProjectionConstantRequest( object ):
 
         self._result = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def wait( self ):
         if self._result is None:
             # Get the result of the request needed
@@ -1024,25 +1024,25 @@ class ContourProjectionConstantRequest( object ):
 
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def getResult(self):
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def cancel( self ):
         pass
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def submit( self ):
         pass
 
     # callback( result = result, **kwargs )
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def notify( self, callback, **kwargs ):
         t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
         t.start()
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def _doNotify( self, callback, kwargs ):
         result = self.wait()
         callback(result, **kwargs)
@@ -1068,7 +1068,7 @@ class FloatProjectionConstantSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_source):
         """
             Constructs an FloatProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
@@ -1084,45 +1084,45 @@ class FloatProjectionConstantSource( QObject ):
         self.constant_source = constant_source
         self._shape = self.constant_source.shape()
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def numberOfChannels(self):
         return(self.dataset_shape[-1])
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def clean_up(self):
         # Close file
         self.constant_source = None
         self.axis = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def dtype(self):
         return(numpy.float64)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def shape(self):
         return(self._shape)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('FloatProjectionConstantSource: slicing is not pure')
 
         return(FloatProjectionConstantRequest(self.constant_source.request(slicing)))
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
         self.isDirty.emit( slicing )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __eq__( self, other ):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __ne__( self, other ):
         if other is None:
             return True
@@ -1146,7 +1146,7 @@ class FloatProjectionConstantRequest( object ):
 
     """
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_request ):
         """
             Constructs an FloatProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
@@ -1162,7 +1162,7 @@ class FloatProjectionConstantRequest( object ):
 
         self._result = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def wait( self ):
         if self._result is None:
             # Get the result of the request needed
@@ -1175,25 +1175,25 @@ class FloatProjectionConstantRequest( object ):
 
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def getResult(self):
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def cancel( self ):
         pass
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def submit( self ):
         pass
 
     # callback( result = result, **kwargs )
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def notify( self, callback, **kwargs ):
         t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
         t.start()
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def _doNotify( self, callback, kwargs ):
         result = self.wait()
         callback(result, **kwargs)
@@ -1220,7 +1220,7 @@ class MaxProjectionConstantSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_source, axis = -1):
         """
             Constructs an MaxProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
@@ -1252,25 +1252,25 @@ class MaxProjectionConstantSource( QObject ):
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def numberOfChannels(self):
         return(self.dataset_shape[-1])
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def clean_up(self):
         # Close file
         self.constant_source = None
         self.axis = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def dtype(self):
         return(self.constant_source.dtype())
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def shape(self):
         return(self._shape)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('MaxProjectionConstantSource: slicing is not pure')
@@ -1285,20 +1285,20 @@ class MaxProjectionConstantSource( QObject ):
                                             slicing)
         )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
         self.isDirty.emit( slicing )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __eq__( self, other ):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __ne__( self, other ):
         if other is None:
             return True
@@ -1322,7 +1322,7 @@ class MaxProjectionConstantRequest( object ):
 
     """
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_request, axis, slicing ):
         """
             Constructs an MaxProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
@@ -1342,7 +1342,7 @@ class MaxProjectionConstantRequest( object ):
 
         self._result = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def wait( self ):
         if self._result is None:
             # Get the result of the request needed
@@ -1361,25 +1361,25 @@ class MaxProjectionConstantRequest( object ):
 
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def getResult(self):
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def cancel( self ):
         pass
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def submit( self ):
         pass
 
     # callback( result = result, **kwargs )
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def notify( self, callback, **kwargs ):
         t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
         t.start()
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def _doNotify( self, callback, kwargs ):
         result = self.wait()
         callback(result, **kwargs)
@@ -1406,7 +1406,7 @@ class MeanProjectionConstantSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_source, axis = -1):
         """
             Constructs an MeanProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
@@ -1438,25 +1438,25 @@ class MeanProjectionConstantSource( QObject ):
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def numberOfChannels(self):
         return(self.dataset_shape[-1])
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def clean_up(self):
         # Close file
         self.constant_source = None
         self.axis = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def dtype(self):
         return(self.constant_source.dtype())
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def shape(self):
         return(self._shape)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def request( self, slicing ):
         if not is_pure_slicing(slicing):
             raise Exception('MeanProjectionConstantSource: slicing is not pure')
@@ -1471,20 +1471,20 @@ class MeanProjectionConstantSource( QObject ):
                                             slicing)
         )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def setDirty( self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
         self.isDirty.emit( slicing )
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __eq__( self, other ):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __ne__( self, other ):
         if other is None:
             return True
@@ -1508,7 +1508,7 @@ class MeanProjectionConstantRequest( object ):
 
     """
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def __init__( self, constant_request, axis, slicing ):
         """
             Constructs an MeanProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
@@ -1528,7 +1528,7 @@ class MeanProjectionConstantRequest( object ):
 
         self._result = None
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def wait( self ):
         if self._result is None:
             # Get the result of the request needed
@@ -1547,25 +1547,25 @@ class MeanProjectionConstantRequest( object ):
 
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def getResult(self):
         return self._result
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def cancel( self ):
         pass
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def submit( self ):
         pass
 
     # callback( result = result, **kwargs )
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def notify( self, callback, **kwargs ):
         t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
         t.start()
 
-    @debugging_tools.log_call(logger)
+    @prof.log_call(logger)
     def _doNotify( self, callback, kwargs ):
         result = self.wait()
         callback(result, **kwargs)
@@ -1574,7 +1574,7 @@ assert issubclass(MeanProjectionConstantRequest, RequestABC)
 
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def main(*argv):
     # TODO: Try to extract code for viewing each file with each viewer. This way multiple files generates multiple viewers.
 

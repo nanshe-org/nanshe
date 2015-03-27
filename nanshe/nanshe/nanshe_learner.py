@@ -17,7 +17,7 @@ import numpy
 import h5py
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 from nanshe.util import iters, expanded_numpy,\
     generic_decorators, pathHelpers
@@ -32,11 +32,11 @@ from nanshe.util import read_config
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def generate_neurons_io_handler(input_filename, output_filename, parameters_filename):
     """
         Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
@@ -66,7 +66,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
         generate_neurons_a_block(input_filename, output_filename, **parameters)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def generate_neurons_a_block(input_filename, output_filename, debug = False, **parameters):
     """
         Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
@@ -151,7 +151,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
             )
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, use_drmaa = False, num_drmaa_cores = 16, debug = False, **parameters):
     #TODO: Move this function into a new module with its own command line interface.
     #TODO: Heavy refactoring required on this function.
@@ -593,7 +593,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     logger.info("Run time for merge over all blocks is \"" + str(diff_time) + " s\".")
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_subgrouping_array_recorders(array_debug_recorder = hdf5.record.EmptyArrayRecorder())
 @generic_decorators.static_variables(resume_logger = hdf5.record.EmptyArrayRecorder())
 def generate_neurons(original_images, run_stage = "all", **parameters):
@@ -666,7 +666,7 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
         logger.info("Found ," + str(len(new_neurons)) + ", neurons were found in the data.")
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def main(*argv):
     """
         Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.
@@ -682,7 +682,7 @@ def main(*argv):
     import argparse
     import threading
 
-    memory_profiler_thread = threading.Thread(target=debugging_tools.memory_profiler, args=(logger,))
+    memory_profiler_thread = threading.Thread(target=prof.memory_profiler, args=(logger,))
     memory_profiler_thread.daemon = True
     memory_profiler_thread.start()
 

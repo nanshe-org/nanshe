@@ -9,14 +9,14 @@ import h5py
 
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overwrite = False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
@@ -72,7 +72,7 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
         file_handle.close()
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
     """
         Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.

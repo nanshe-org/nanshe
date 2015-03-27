@@ -14,14 +14,14 @@ from nanshe import hdf5
 
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def binomial_coefficients(n):
     """
         Generates a row in Pascal's triangle (binomial coefficients).
@@ -76,7 +76,7 @@ def binomial_coefficients(n):
     return(cs)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def binomial_1D_array_kernel(i, n = 4):
     """
         Generates a 1D numpy array used to make the kernel for the wavelet transform.
@@ -158,7 +158,7 @@ def binomial_1D_array_kernel(i, n = 4):
     return(r)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
     """
         Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).
@@ -193,7 +193,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
     return(k)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def wavelet_transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
     """

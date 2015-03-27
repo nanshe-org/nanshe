@@ -42,7 +42,7 @@ import vigra.analysis
 import rank_filter
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 from nanshe.util import expanded_numpy
 
@@ -63,10 +63,10 @@ from nanshe import hdf5
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def remove_zeroed_lines(new_data,
                         erosion_shape,
@@ -161,7 +161,7 @@ def remove_zeroed_lines(new_data,
     return(out)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def estimate_f0(new_data,
                 half_window_size,
@@ -266,7 +266,7 @@ def estimate_f0(new_data,
     return(out)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def extract_f0(new_data,
                half_window_size,
@@ -349,7 +349,7 @@ def extract_f0(new_data,
         return(new_data_df_over_f)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def normalize_data(new_data, out = None, **parameters):
     """
@@ -417,7 +417,7 @@ def normalize_data(new_data, out = None, **parameters):
     return(out)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def preprocess_data(new_data, out = None, **parameters):
     """
@@ -496,7 +496,7 @@ def preprocess_data(new_data, out = None, **parameters):
     return(out)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def generate_dictionary(new_data, **parameters):
     """
@@ -564,7 +564,7 @@ def generate_dictionary(new_data, **parameters):
     return(new_dictionary)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def region_properties_scikit_image(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label image.
@@ -842,7 +842,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
 
     return(new_label_image_props_with_arrays)
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def region_properties_vigra(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label image.
@@ -1183,7 +1183,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
     return(new_label_image_props_with_arrays)
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def region_properties(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label image.
@@ -1222,7 +1222,7 @@ def region_properties(new_label_image, *args, **kwargs):
 
     return(region_properties_vigra(new_label_image, *args, **kwargs))
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def get_neuron_dtype(shape, dtype):
     """
         Gets the type based on properties of an image.
@@ -1270,7 +1270,7 @@ def get_neuron_dtype(shape, dtype):
     return(neurons_dtype)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def get_empty_neuron(shape, dtype):
     """
         Gets a numpy structured array using the type from get_neuron_dtype that has no contents.
@@ -1310,7 +1310,7 @@ def get_empty_neuron(shape, dtype):
     return(neurons)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def get_one_neuron(shape, dtype):
     """
         Gets a numpy structured array using the type from get_neuron_dtype that has one neuron with all zeros.
@@ -1370,7 +1370,7 @@ def get_one_neuron(shape, dtype):
     return(neurons)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def generate_local_maxima_vigra(new_intensity_image):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
@@ -1395,7 +1395,7 @@ def generate_local_maxima_vigra(new_intensity_image):
     return(local_maxima_mask)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborhood_size = 1):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
@@ -1418,7 +1418,7 @@ def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborho
     return(local_maxima_mask)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def generate_local_maxima(new_intensity_image):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
@@ -1434,7 +1434,7 @@ def generate_local_maxima(new_intensity_image):
     return(generate_local_maxima_vigra(new_intensity_image))
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def extended_region_local_maxima_properties(new_intensity_image, new_label_image, **kwargs):
     """
         Generates local maxima along with other properties for each labeled region
@@ -1514,7 +1514,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     return(local_maxima_props)
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 @hdf5.record.class_static_array_debug_recorder
 class ExtendedRegionProps(object):
     """
@@ -1760,7 +1760,7 @@ class ExtendedRegionProps(object):
         self.count = self.count[:len(reverse_label_mapping)].copy()
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max, **parameters):
     """
         Removes the local maxima for regions, which have too many pixels that are below the intensity of their local
@@ -1811,7 +1811,7 @@ def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max,
     return(new_local_maxima)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parameters):
     """
         Removes local maxima that are too close to each other.
@@ -1855,7 +1855,7 @@ def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parame
     return(new_local_maxima)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def wavelet_denoising(new_image,
                       accepted_region_shape_constraints,
@@ -2156,7 +2156,7 @@ def wavelet_denoising(new_image,
     return(neurons)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def extract_neurons(new_image, neuron_masks):
     """
@@ -2190,7 +2190,7 @@ def extract_neurons(new_image, neuron_masks):
     return(neurons)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def fuse_neurons(neuron_1,
                  neuron_2,
@@ -2250,7 +2250,7 @@ def fuse_neurons(neuron_1,
     return(new_neuron)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def merge_neuron_sets(new_neuron_set_1,
                       new_neuron_set_2,
@@ -2266,7 +2266,7 @@ def merge_neuron_sets(new_neuron_set_1,
                                         **parameters))
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def merge_neuron_sets_once(new_neuron_set_1,
                       new_neuron_set_2,
@@ -2467,7 +2467,7 @@ def merge_neuron_sets_once(new_neuron_set_1,
     return(new_neuron_set)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def merge_neuron_sets_repeatedly(new_neuron_set_1,
                                  new_neuron_set_2,
@@ -2678,7 +2678,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
     return(new_neuron_set)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def expand_rois(new_data, roi_masks, **parameters):
     # Find time traces: spatial mean of activity for each ROI
@@ -2719,7 +2719,7 @@ def expand_rois(new_data, roi_masks, **parameters):
     return(correlation_map)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
 def postprocess_data(new_dictionary, **parameters):
     """

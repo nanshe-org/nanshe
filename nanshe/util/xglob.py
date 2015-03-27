@@ -4,16 +4,16 @@ __date__ = "$Jun 26, 2014 18:24:25 EDT$"
 
 import glob
 
-import debugging_tools
+import prof
 
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def expand_pathname_list(*pathnames):
     """
         Takes each pathname in those given and expands them using regex.

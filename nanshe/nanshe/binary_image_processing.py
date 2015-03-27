@@ -10,14 +10,14 @@ import scipy.ndimage
 import scipy.ndimage.filters
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def binary_dilation(input_array, footprint, out=None):
     """
         Performs simple binary dilation on a bool array of arbitrary dimension.
@@ -95,7 +95,7 @@ def binary_dilation(input_array, footprint, out=None):
     return(out)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def binary_erosion(input_array, footprint, out = None):
     """
         Performs simple binary erosion on a bool array of arbitrary dimension.

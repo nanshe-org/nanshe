@@ -6,14 +6,14 @@ __date__ = "$Apr 30, 2014 17:14:50 EDT$"
 import numpy
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def zeroed_mean_images(input_array, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
@@ -107,7 +107,7 @@ def zeroed_mean_images(input_array, output_array = None):
     return(output_array)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def renormalized_images(input_array, ord = 2, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.

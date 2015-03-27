@@ -3,11 +3,11 @@ __date__ = "$Apr 03, 2014 20:20:39 EDT$"
 
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 import matplotlib as mpl
 import matplotlib.figure
@@ -15,7 +15,7 @@ import matplotlib.figure
 from matplotlib.widgets import Slider, Button
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 class NeuronMatplotlibViewer(matplotlib.figure.Figure):
     """
         Provides a way to interact with numpy arrays pulled from neuron images.
@@ -93,7 +93,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             self.canvas.draw_idle()
 
 
-@debugging_tools.log_class(logger)
+@prof.log_class(logger)
 class TimeNavigator(object):
     def __init__(self, fig, max_time, min_time = 0, time_step = 1, axcolor = 'lightgoldenrodyellow',
                  hovercolor = '0.975'):

@@ -21,15 +21,15 @@ from nanshe.util import iters, expanded_numpy
 from nanshe import hdf5
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False, to_truncate=False):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
@@ -324,7 +324,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
     return(result)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def find_offsets(frames2reg_fft, template_fft):
     """
         Computes the convolution of the template with the frames by taking advantage of their FFTs for faster

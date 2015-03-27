@@ -10,14 +10,14 @@ import h5py
 
 
 # Need in order to have logging information no matter what.
-from nanshe.util import debugging_tools
+from nanshe.util import prof
 
 
 # Get the logger
-logger = debugging_tools.logging.getLogger(__name__)
+logger = prof.logging.getLogger(__name__)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def get_matching_paths(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
@@ -63,7 +63,7 @@ def get_matching_paths(a_filehandle, a_path_pattern):
     return(current_pattern_group_matches)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def get_matching_paths_groups(a_filehandle, a_path_pattern):
     """
         Looks for parts of the path pattern and tries to match them in order.
@@ -132,7 +132,7 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
     return(groups)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def get_matching_grouped_paths(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
@@ -162,7 +162,7 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
     return(paths_found)
 
 
-@debugging_tools.log_call(logger)
+@prof.log_call(logger)
 def get_matching_grouped_paths_found(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
