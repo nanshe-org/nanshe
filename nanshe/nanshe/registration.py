@@ -17,7 +17,7 @@ except Exception as e:
     warnings.warn(str(e) + ". Falling back to NumPy FFTPACK.", ImportWarning)
     import numpy.fft as fft
 
-from nanshe.util import iters, expanded_numpy
+from nanshe.util import iters, xnumpy
 from nanshe import hdf5
 
 # Need in order to have logging information no matter what.
@@ -170,7 +170,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
     negative_wave_vector *= 2*numpy.pi
     numpy.negative(negative_wave_vector, out=negative_wave_vector)
 
-    template_fft_indices = expanded_numpy.cartesian_product([numpy.arange(_) for _ in template_fft.shape])
+    template_fft_indices = xnumpy.cartesian_product([numpy.arange(_) for _ in template_fft.shape])
 
     unit_space_shift_fft = template_fft_indices * negative_wave_vector
     unit_space_shift_fft = unit_space_shift_fft.T.copy()
@@ -203,7 +203,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
             this_space_shift_mean.astype(float) / len(this_space_shift)
         ).astype(int)
         for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            this_space_shift[i:j] = expanded_numpy.find_relative_offsets(
+            this_space_shift[i:j] = xnumpy.find_relative_offsets(
                 this_space_shift[i:j],
                 this_space_shift_mean
             )
@@ -212,7 +212,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
         # them bound by the half shape, but with either sign.
         for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            this_space_shift[i:j] = expanded_numpy.find_shortest_wraparound(
+            this_space_shift[i:j] = xnumpy.find_shortest_wraparound(
                 this_space_shift[i:j],
                 frames2reg_fft.shape[1:]
             )
@@ -288,9 +288,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
     for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         for k in xrange(i, j):
             if to_truncate:
-                reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k])[reg_frames_slice]
+                reg_frames[k] = xnumpy.roll(frames2reg[k], space_shift[k])[reg_frames_slice]
             else:
-                reg_frames[k] = expanded_numpy.roll(frames2reg[k], space_shift[k], to_mask=True)
+                reg_frames[k] = xnumpy.roll(frames2reg[k], space_shift[k], to_mask=True)
 
     result = None
     results_filename = ""
@@ -413,7 +413,7 @@ def find_offsets(frames2reg_fft, template_fft):
     frames2reg_template_conv = fft.ifftn(frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
 
     # Find where the convolution is maximal. Will have the most things in common between the template and frames.
-    frames2reg_template_conv_max, frames2reg_template_conv_max_indices = expanded_numpy.max_abs(
+    frames2reg_template_conv_max, frames2reg_template_conv_max_indices = xnumpy.max_abs(
         frames2reg_template_conv, axis=range(1, frames2reg_fft.ndim), return_indices=True
     )
 

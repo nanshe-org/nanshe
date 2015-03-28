@@ -19,7 +19,7 @@ import h5py
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
-from nanshe.util import iters, expanded_numpy,\
+from nanshe.util import iters, xnumpy,\
     generic_decorators, pathHelpers
 
 from nanshe import hdf5
@@ -313,13 +313,13 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
     # Get the slice information to get the windowed block from the original image stack.
     original_images_pared_slices["windowed_stack_selection"] = original_images_pared_slices["windowed"]
-    original_images_pared_slices["windowed_stack_selection"] += expanded_numpy.expand_view(half_border_shape_array, reps_after=2)
+    original_images_pared_slices["windowed_stack_selection"] += xnumpy.expand_view(half_border_shape_array, reps_after=2)
 
     # Get slice information for the portion within original_images_pared_slices["windowed"],
     # which corresponds to original_images_pared_slices["actual"]
     # original_images_pared_slices["windowed_block_selection"][..., 0] = 0
     original_images_pared_slices["windowed_block_selection"][..., 1] = (original_images_pared_slices["actual"][..., 1] - original_images_pared_slices["actual"][..., 0])
-    original_images_pared_slices["windowed_block_selection"][:] += expanded_numpy.expand_view((original_images_pared_slices["actual"][..., 0] - original_images_pared_slices["windowed"][..., 0]), reps_after=2)
+    original_images_pared_slices["windowed_block_selection"][:] += xnumpy.expand_view((original_images_pared_slices["actual"][..., 0] - original_images_pared_slices["windowed"][..., 0]), reps_after=2)
 
     # Get a directory for intermediate results.
     try:
@@ -598,14 +598,14 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 @generic_decorators.static_variables(resume_logger = hdf5.record.EmptyArrayRecorder())
 def generate_neurons(original_images, run_stage = "all", **parameters):
     if "original_images_max_projection" not in generate_neurons.recorders.array_debug_recorder:
-        generate_neurons.recorders.array_debug_recorder["original_images_max_projection"] = expanded_numpy.add_singleton_op(
+        generate_neurons.recorders.array_debug_recorder["original_images_max_projection"] = xnumpy.add_singleton_op(
             numpy.max,
             original_images,
             axis = 0
         )
 
     if "original_images_mean_projection" not in generate_neurons.recorders.array_debug_recorder:
-        generate_neurons.recorders.array_debug_recorder["original_images_mean_projection"] = expanded_numpy.add_singleton_op(
+        generate_neurons.recorders.array_debug_recorder["original_images_mean_projection"] = xnumpy.add_singleton_op(
             numpy.mean,
             original_images,
             axis = 0
@@ -622,7 +622,7 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
         generate_neurons.resume_logger["preprocessed_images"] = new_preprocessed_images
 
         if "preprocessed_images_max_projection" not in generate_neurons.recorders.array_debug_recorder:
-            generate_neurons.recorders.array_debug_recorder["preprocessed_images_max_projection"] = expanded_numpy.add_singleton_op(
+            generate_neurons.recorders.array_debug_recorder["preprocessed_images_max_projection"] = xnumpy.add_singleton_op(
             numpy.max,
             new_preprocessed_images,
             axis = 0
@@ -640,7 +640,7 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
         generate_neurons.resume_logger["dictionary"] = new_dictionary
 
         if "dictionary_max_projection" not in generate_neurons.recorders.array_debug_recorder:
-            generate_neurons.recorders.array_debug_recorder["dictionary_max_projection"] = expanded_numpy.add_singleton_op(
+            generate_neurons.recorders.array_debug_recorder["dictionary_max_projection"] = xnumpy.add_singleton_op(
             numpy.max,
             new_dictionary,
             axis = 0

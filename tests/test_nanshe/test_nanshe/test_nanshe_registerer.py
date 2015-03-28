@@ -14,7 +14,7 @@ import tempfile
 import h5py
 import numpy
 
-import nanshe.util.expanded_numpy
+import nanshe.util.xnumpy
 import nanshe.nanshe.nanshe_registerer
 
 
@@ -53,7 +53,7 @@ class TestNansheRegisterer(object):
         a[:, 3:-3, 3:-3] = 1
 
         b = numpy.ma.masked_array(a.copy())
-        b = nanshe.util.expanded_numpy.truncate_masked_frames(b)
+        b = nanshe.util.xnumpy.truncate_masked_frames(b)
 
 
         with open(self.config_filename, "a") as config_file:
@@ -91,7 +91,7 @@ class TestNansheRegisterer(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        b = nanshe.util.expanded_numpy.truncate_masked_frames(b)
+        b = nanshe.util.xnumpy.truncate_masked_frames(b)
 
 
         with open(self.config_filename, "a") as config_file:
@@ -129,7 +129,7 @@ class TestNansheRegisterer(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        b = nanshe.util.expanded_numpy.truncate_masked_frames(b)
+        b = nanshe.util.xnumpy.truncate_masked_frames(b)
 
 
         with open(self.config_filename, "a") as config_file:
@@ -161,7 +161,7 @@ class TestNansheRegisterer(object):
         a[:, 3:-3, 3:-3, 3:-3] = 1
 
         b = numpy.ma.masked_array(a.copy())
-        b = nanshe.util.expanded_numpy.truncate_masked_frames(b)
+        b = nanshe.util.xnumpy.truncate_masked_frames(b)
 
 
         with open(self.config_filename, "a") as config_file:
@@ -201,7 +201,7 @@ class TestNansheRegisterer(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        b = nanshe.util.expanded_numpy.truncate_masked_frames(b)
+        b = nanshe.util.xnumpy.truncate_masked_frames(b)
 
 
         with open(self.config_filename, "a") as config_file:
@@ -241,7 +241,7 @@ class TestNansheRegisterer(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        b = nanshe.util.expanded_numpy.truncate_masked_frames(b)
+        b = nanshe.util.xnumpy.truncate_masked_frames(b)
 
 
         with open(self.config_filename, "a") as config_file:

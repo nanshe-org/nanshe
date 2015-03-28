@@ -44,7 +44,7 @@ import rank_filter
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
-from nanshe.util import expanded_numpy
+from nanshe.util import xnumpy
 
 # Short function to process image data.
 import binary_image_processing
@@ -138,12 +138,12 @@ def remove_zeroed_lines(new_data,
                     zero_mask_i_labeled_j_points_arange = numpy.arange(len(zero_mask_i_labeled_j_points))
                     zero_mask_i_labeled_j_outline_points_arange = numpy.arange(len(zero_mask_i_labeled_j_outline_points))
 
-                    zero_mask_i_labeled_j_points_arange_tile = expanded_numpy.expand_view(
+                    zero_mask_i_labeled_j_points_arange_tile = xnumpy.expand_view(
                         zero_mask_i_labeled_j_points_arange,
                         reps_before=len(zero_mask_i_labeled_j_outline_points_arange)
                     ).ravel()
 
-                    zero_mask_i_labeled_j_outline_points_arange_repeat = expanded_numpy.expand_view(
+                    zero_mask_i_labeled_j_outline_points_arange_repeat = xnumpy.expand_view(
                         zero_mask_i_labeled_j_outline_points_arange,
                         reps_after=len(zero_mask_i_labeled_j_points_arange)
                     ).ravel()
@@ -446,7 +446,7 @@ def preprocess_data(new_data, out = None, **parameters):
                             out = new_data_maybe_lines_removed,
                             **parameters["remove_zeroed_lines"])
         preprocess_data.recorders.array_debug_recorder["images_lines_removed"] = new_data_maybe_lines_removed
-        preprocess_data.recorders.array_debug_recorder["images_lines_removed_max"] = expanded_numpy.add_singleton_op(
+        preprocess_data.recorders.array_debug_recorder["images_lines_removed_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_maybe_lines_removed,
             axis = 0
@@ -459,7 +459,7 @@ def preprocess_data(new_data, out = None, **parameters):
                    out = new_data_maybe_f0_result,
                    **parameters["extract_f0"])
         preprocess_data.recorders.array_debug_recorder["images_f0"] = new_data_maybe_f0_result
-        preprocess_data.recorders.array_debug_recorder["images_f0_max"] = expanded_numpy.add_singleton_op(
+        preprocess_data.recorders.array_debug_recorder["images_f0_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_maybe_f0_result,
             axis = 0
@@ -474,7 +474,7 @@ def preprocess_data(new_data, out = None, **parameters):
                                             out = new_data_maybe_wavelet_result,
                                             **parameters["wavelet_transform"])
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed"] = new_data_maybe_wavelet_result
-        preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = expanded_numpy.add_singleton_op(
+        preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_maybe_wavelet_result,
             axis = 0
@@ -487,7 +487,7 @@ def preprocess_data(new_data, out = None, **parameters):
                    **parameters["normalize_data"])
 
     preprocess_data.recorders.array_debug_recorder["images_normalized"] = new_data_normalized
-    preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = expanded_numpy.add_singleton_op(
+    preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_normalized,
             axis = 0
@@ -543,7 +543,7 @@ def generate_dictionary(new_data, **parameters):
     new_data_processed = numpy.asarray(new_data, dtype=float_dtype)
 
     # Reshape data into a matrix (each image is now a column vector)
-    new_data_processed = expanded_numpy.array_to_matrix(new_data_processed)
+    new_data_processed = xnumpy.array_to_matrix(new_data_processed)
     new_data_processed = numpy.asmatrix(new_data_processed)
     new_data_processed = new_data_processed.transpose()
 
@@ -1479,7 +1479,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     props_dtype = []
 
     # Place on the label props dtype first
-    labeled_props_dtype = expanded_numpy.numpy_structured_array_dtype_list(labeled_props)
+    labeled_props_dtype = xnumpy.numpy_structured_array_dtype_list(labeled_props)
     props_dtype.extend(labeled_props_dtype)
 
     # Then add new fields.
@@ -1601,7 +1601,7 @@ class ExtendedRegionProps(object):
 
             ExtendedRegionProps.recorders.array_debug_recorder["count"] = self.count
             ExtendedRegionProps.recorders.array_debug_recorder["masks"] = \
-                expanded_numpy.all_permutations_equal(failed_labels, self.label_image)
+                xnumpy.all_permutations_equal(failed_labels, self.label_image)
             ExtendedRegionProps.recorders.array_debug_recorder["masks_labels"] = failed_labels
 
             # Renumber labels. This way there are no labels without local maxima.
@@ -1687,7 +1687,7 @@ class ExtendedRegionProps(object):
         if inactive_label_count_mask.any():
             # Find the labels to remove from the label image and mask and remove them
             labels_to_remove = self.count["label"][inactive_label_count_mask]
-            labels_to_remove_mask = expanded_numpy.contains(self.label_image, labels_to_remove)
+            labels_to_remove_mask = xnumpy.contains(self.label_image, labels_to_remove)
             self.label_image[labels_to_remove_mask] = 0
             self.image_mask[labels_to_remove_mask] = 0
             self.intensity_image[labels_to_remove_mask] = 0
@@ -1741,17 +1741,17 @@ class ExtendedRegionProps(object):
         reverse_label_mapping = reverse_label_mapping[reverse_label_mapping != 0]
 
         # Find which of the old labels appear in self.props["label"] (skip 0)
-        props_reverse_mapped = expanded_numpy.all_permutations_equal(reverse_label_mapping, self.props["label"])
+        props_reverse_mapped = xnumpy.all_permutations_equal(reverse_label_mapping, self.props["label"])
         # Get the new labels by noting they must range from 0 to the length of reverse_label_mapping.
         # Skip zero as it is not necessary to check for it.
         new_labels = numpy.arange(1, len(reverse_label_mapping) + 1)
         # Expand new_labels into a view of the same size as props_reverse_mapped
-        new_labels_expanded = expanded_numpy.expand_view(new_labels, reps_after = self.props["label"].shape)
+        new_labels_expanded = xnumpy.expand_view(new_labels, reps_after = self.props["label"].shape)
         # Replace the labels with the matches and combine them
         self.props["label"] = (props_reverse_mapped * new_labels_expanded).sum(axis = 0)
 
         # Get a mask over the labels to find what is contained
-        new_count_mask = expanded_numpy.contains(self.count["label"], reverse_label_mapping)
+        new_count_mask = xnumpy.contains(self.count["label"], reverse_label_mapping)
         # Move the values of the count into the proper lower labels and zero everything else
         self.count["count"][:len(reverse_label_mapping)] = self.count["count"][new_count_mask]
         self.count["count"][len(reverse_label_mapping):] = 0
@@ -2009,19 +2009,19 @@ def wavelet_denoising(new_image,
 
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = \
-            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
+            xnumpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
 
         local_maxima = remove_low_intensity_local_maxima(local_maxima, **parameters["remove_low_intensity_local_maxima"])
 
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = \
-            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
+            xnumpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
 
         local_maxima = remove_too_close_local_maxima(local_maxima, **parameters["remove_too_close_local_maxima"])
 
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = \
-            expanded_numpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
+            xnumpy.generate_labeled_contours(local_maxima.label_image > 0)[None]
 
         if local_maxima.props.size:
             logger.debug("Entering watershed segmentation.")
@@ -2045,7 +2045,7 @@ def wavelet_denoising(new_image,
             wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = \
                 new_wavelet_image_denoised_segmentation[None]
             wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation_contours"] = \
-                expanded_numpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation)[None]
+                xnumpy.generate_labeled_contours(new_wavelet_image_denoised_segmentation)[None]
 
             watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
                                                          new_wavelet_image_denoised_segmentation,
@@ -2054,7 +2054,7 @@ def wavelet_denoising(new_image,
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
                 watershed_local_maxima.label_image[None]
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+                xnumpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
@@ -2063,14 +2063,14 @@ def wavelet_denoising(new_image,
             new_watershed_local_maxima_count_duplicates_mask = (watershed_local_maxima.count["count"] > 1)
             new_watershed_local_maxima_count_duplicate_labels = watershed_local_maxima.count["label"][
                 new_watershed_local_maxima_count_duplicates_mask]
-            new_watershed_local_maxima_props_duplicates_mask = expanded_numpy.contains(
+            new_watershed_local_maxima_props_duplicates_mask = xnumpy.contains(
                 watershed_local_maxima.props["label"], new_watershed_local_maxima_count_duplicate_labels)
             watershed_local_maxima.remove_prop_mask(new_watershed_local_maxima_props_duplicates_mask)
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
                 watershed_local_maxima.label_image[None]
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+                xnumpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
             if watershed_local_maxima.props.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
@@ -2109,7 +2109,7 @@ def wavelet_denoising(new_image,
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
                 watershed_local_maxima.label_image[None]
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                               expanded_numpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+                               xnumpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
             if watershed_local_maxima.props.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
@@ -2121,19 +2121,19 @@ def wavelet_denoising(new_image,
                 neurons = numpy.zeros(len(watershed_local_maxima.props), dtype = neurons.dtype)
 
                 # Get masks for all cells
-                neurons["mask"] = expanded_numpy.all_permutations_equal(watershed_local_maxima.props["label"],
+                neurons["mask"] = xnumpy.all_permutations_equal(watershed_local_maxima.props["label"],
                                                                         watershed_local_maxima.label_image)
 
                 neurons["image"] = new_image * neurons["mask"]
 
                 neurons["area"] = watershed_local_maxima.props["area"]
 
-                neurons["max_F"] = expanded_numpy.array_to_matrix(neurons["image"]).max(axis = 1)
+                neurons["max_F"] = xnumpy.array_to_matrix(neurons["image"]).max(axis = 1)
 
                 for i in xrange(len(neurons)):
                     neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
-                    neurons["contour"][i] = expanded_numpy.generate_contour(neurons["mask"][i])
+                    neurons["contour"][i] = xnumpy.generate_contour(neurons["mask"][i])
                     neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
                     neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
@@ -2175,13 +2175,13 @@ def extract_neurons(new_image, neuron_masks):
 
     neurons["mask"] = neuron_masks
     neurons["image"] = new_image * neurons["mask"]
-    neurons["area"] = expanded_numpy.array_to_matrix(neurons["mask"]).sum(axis = 1)
-    neurons["max_F"] = expanded_numpy.array_to_matrix(neurons["image"]).max(axis = 1)
+    neurons["area"] = xnumpy.array_to_matrix(neurons["mask"]).sum(axis = 1)
+    neurons["max_F"] = xnumpy.array_to_matrix(neurons["image"]).max(axis = 1)
 
     for i in xrange(len(neurons)):
         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
-        neurons["contour"][i] = expanded_numpy.generate_contour(neurons["mask"][i])
+        neurons["contour"][i] = xnumpy.generate_contour(neurons["mask"][i])
         neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
         neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
@@ -2231,7 +2231,7 @@ def fuse_neurons(neuron_1,
 
     new_neuron["mask"] = mean_neuron_mask
 
-    new_neuron["contour"] = expanded_numpy.generate_contour(new_neuron["mask"])
+    new_neuron["contour"] = xnumpy.generate_contour(new_neuron["mask"])
 
     new_neuron["image"] = mean_neuron * new_neuron["mask"]
 
@@ -2319,14 +2319,14 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         new_neuron_set = new_neuron_set_1.copy()
 
-        new_neuron_set_1_flattened = expanded_numpy.array_to_matrix(new_neuron_set_1["image"])
-        new_neuron_set_2_flattened = expanded_numpy.array_to_matrix(new_neuron_set_2["image"])
+        new_neuron_set_1_flattened = xnumpy.array_to_matrix(new_neuron_set_1["image"])
+        new_neuron_set_2_flattened = xnumpy.array_to_matrix(new_neuron_set_2["image"])
 
-        new_neuron_set_1_flattened_mask = expanded_numpy.array_to_matrix(new_neuron_set_1["mask"])
-        new_neuron_set_2_flattened_mask = expanded_numpy.array_to_matrix(new_neuron_set_2["mask"])
+        new_neuron_set_1_flattened_mask = xnumpy.array_to_matrix(new_neuron_set_1["mask"])
+        new_neuron_set_2_flattened_mask = xnumpy.array_to_matrix(new_neuron_set_2["mask"])
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = expanded_numpy.dot_product_normalized(new_neuron_set_1_flattened,
+        new_neuron_set_angle = xnumpy.dot_product_normalized(new_neuron_set_1_flattened,
                                                                      new_neuron_set_2_flattened,
                                                                      ord = 2)
 
@@ -2334,7 +2334,7 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         # Measure the distance between the two masks
         # (note distance relative to the total mask content of each mask individually)
-        new_neuron_set_masks_overlaid_1, new_neuron_set_masks_overlaid_2 = expanded_numpy.dot_product_partially_normalized(
+        new_neuron_set_masks_overlaid_1, new_neuron_set_masks_overlaid_2 = xnumpy.dot_product_partially_normalized(
             new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask, ord = 1)
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1"] = new_neuron_set_masks_overlaid_1
@@ -2528,12 +2528,12 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
     while (new_neuron_set.size != 1) and (original_new_neuron_set_size != new_neuron_set.size):
         original_new_neuron_set_size = new_neuron_set.size
 
-        new_neuron_set_flattened_image = expanded_numpy.array_to_matrix(new_neuron_set["image"])
+        new_neuron_set_flattened_image = xnumpy.array_to_matrix(new_neuron_set["image"])
 
-        new_neuron_set_flattened_mask = expanded_numpy.array_to_matrix(new_neuron_set["mask"])
+        new_neuron_set_flattened_mask = xnumpy.array_to_matrix(new_neuron_set["mask"])
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = expanded_numpy.pair_dot_product_normalized(new_neuron_set_flattened_image,
+        new_neuron_set_angle = xnumpy.pair_dot_product_normalized(new_neuron_set_flattened_image,
                                                                           ord = 2)
         new_neuron_set_angle = numpy.triu(new_neuron_set_angle, k = 1)
 
@@ -2541,7 +2541,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
         # Measure the distance between the two masks
         # (note distance relative to the total mask content of each mask individually)
-        new_neuron_set_masks_overlaid = expanded_numpy.pair_dot_product_partially_normalized(
+        new_neuron_set_masks_overlaid = xnumpy.pair_dot_product_partially_normalized(
             new_neuron_set_flattened_mask, ord = 1)
         numpy.fill_diagonal(new_neuron_set_masks_overlaid, 0)
 
@@ -2694,11 +2694,11 @@ def expand_rois(new_data, roi_masks, **parameters):
     roi_areas = roi_masks.sum(axis=tuple(xrange(1, roi_masks.ndim)))
 
     # Add fake dimensions so that both arrays have dimensions number of ROIs and then tyx or tzyx.
-    new_data_normalized_expanded = expanded_numpy.expand_view(new_data_normalized, reps_before=len(roi_masks))
-    roi_masks_expanded = expanded_numpy.expand_view(roi_masks, reps_before=len(new_data_normalized)).swapaxes(0, 1)
+    new_data_normalized_expanded = xnumpy.expand_view(new_data_normalized, reps_before=len(roi_masks))
+    roi_masks_expanded = xnumpy.expand_view(roi_masks, reps_before=len(new_data_normalized)).swapaxes(0, 1)
 
     # Added time afterwards for dividing time traces.
-    roi_areas_expanded = expanded_numpy.expand_view(roi_areas, reps_after=len(new_data_normalized))
+    roi_areas_expanded = xnumpy.expand_view(roi_areas, reps_after=len(new_data_normalized))
 
     # Compute the time traces such that they are the average activity inside the ROI
     time_traces = new_data_normalized_expanded * roi_masks_expanded
@@ -2710,7 +2710,7 @@ def expand_rois(new_data, roi_masks, **parameters):
                                             **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
 
     # Convert to matrix.
-    new_data_normalized_matrix = expanded_numpy.array_to_matrix(new_data_normalized)
+    new_data_normalized_matrix = xnumpy.array_to_matrix(new_data_normalized)
 
     # Compute the correlation map
     correlation_map = numpy.dot(normalized_time_traces, new_data_normalized_matrix)
@@ -2770,8 +2770,8 @@ def postprocess_data(new_dictionary, **parameters):
 
         unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(numpy.uint64)
 
-        unmerged_neuron_set_contours *= expanded_numpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
-        unmerged_neuron_set_contours = expanded_numpy.add_singleton_op(
+        unmerged_neuron_set_contours *= xnumpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
+        unmerged_neuron_set_contours = xnumpy.add_singleton_op(
             numpy.max,
             unmerged_neuron_set_contours,
             axis = 0
@@ -2784,8 +2784,8 @@ def postprocess_data(new_dictionary, **parameters):
 
         new_neurons_set_contours = new_neurons_set["contour"].astype(numpy.uint64)
 
-        new_neurons_set_contours *= expanded_numpy.expand_enumerate(new_neurons_set_contours, start = 1)
-        new_neurons_set_contours = expanded_numpy.add_singleton_op(
+        new_neurons_set_contours *= xnumpy.expand_enumerate(new_neurons_set_contours, start = 1)
+        new_neurons_set_contours = xnumpy.add_singleton_op(
             numpy.max,
             new_neurons_set_contours,
             axis = 0

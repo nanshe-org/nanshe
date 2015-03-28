@@ -10,7 +10,7 @@ import itertools
 
 import numpy
 
-import nanshe.util.expanded_numpy
+import nanshe.util.xnumpy
 
 import nanshe.nanshe.advanced_image_processing
 
@@ -32,7 +32,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         assert (len(e.props) == len(p))
@@ -41,14 +41,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -71,7 +71,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -84,14 +84,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == numpy.array([2, 1])).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -113,7 +113,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -126,14 +126,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -155,7 +155,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -175,14 +175,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -204,7 +204,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -228,14 +228,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -258,7 +258,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         assert (len(e.props) == len(p))
@@ -267,14 +267,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -298,7 +298,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -311,14 +311,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == numpy.array([2, 1])).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -341,7 +341,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -354,14 +354,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -384,7 +384,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -404,14 +404,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
@@ -434,7 +434,7 @@ class TestAdvancedImageProcessing(object):
         g *= m
 
         e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(g.max(axis = 0),
-                nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)
+                nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype = bool)
@@ -458,14 +458,14 @@ class TestAdvancedImageProcessing(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)).all()
 
         assert (e.intensity_image == g.max(axis = 0)).all()
 
         assert (e.image_mask == m.max(axis = 0)).all()
 
         assert (e.props == nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
-            nanshe.util.expanded_numpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0), properties = ["label", "centroid"])).all()
 
         assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
 
