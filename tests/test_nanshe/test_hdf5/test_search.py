@@ -9,7 +9,7 @@ import tempfile
 
 import h5py
 
-import nanshe.hdf5.HDF5_searchers
+import nanshe.hdf5.search
 
 
 class TestHDF5Searchers(object):
@@ -60,7 +60,7 @@ class TestHDF5Searchers(object):
             self.temp_hdf5_file.create_group(_)
 
     def test_get_matching_paths(self):
-        all_matched = nanshe.hdf5.HDF5_searchers.get_matching_paths(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
+        all_matched = nanshe.hdf5.search.get_matching_paths(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
 
         assert (len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1) - 1))
 
@@ -68,7 +68,7 @@ class TestHDF5Searchers(object):
             assert (_1 == _2)
 
     def test_get_matching_paths_groups(self):
-        all_matched = nanshe.hdf5.HDF5_searchers.get_matching_paths_groups(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
+        all_matched = nanshe.hdf5.search.get_matching_paths_groups(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
 
         num_permutations = 1
         for each_group_match_list in all_matched:
@@ -83,7 +83,7 @@ class TestHDF5Searchers(object):
             assert (_1 == _2)
 
     def test_get_matching_grouped_paths(self):
-        all_matched = nanshe.hdf5.HDF5_searchers.get_matching_grouped_paths(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
+        all_matched = nanshe.hdf5.search.get_matching_grouped_paths(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
 
         assert (len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
 
@@ -91,7 +91,7 @@ class TestHDF5Searchers(object):
             assert (_1 == _2)
 
     def test_get_matching_grouped_paths_found(self):
-        all_matched = nanshe.hdf5.HDF5_searchers.get_matching_grouped_paths_found(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
+        all_matched = nanshe.hdf5.search.get_matching_grouped_paths_found(self.temp_hdf5_file, u"/test/[0-9]{3}/group/[0-9]/data")
 
         assert (len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
 
