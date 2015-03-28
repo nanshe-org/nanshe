@@ -905,7 +905,7 @@ class TestNansheLearner(object):
 
         executable = os.path.splitext(nanshe.nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
 
-        argv = (executable, self.config_blocks_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
+        argv = (executable, self.config_blocks_drmaa_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
         assert (0 == nanshe.nanshe.nanshe_learner.main(*argv))
 
