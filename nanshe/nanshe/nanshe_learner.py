@@ -20,7 +20,7 @@ import h5py
 from nanshe.util import prof
 
 from nanshe.util import iters, xnumpy,\
-    generic_decorators, pathHelpers
+    wrappers, pathHelpers
 
 from nanshe import hdf5
 
@@ -595,7 +595,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
 
 @prof.log_call(logger)
 @hdf5.record.static_subgrouping_array_recorders(array_debug_recorder = hdf5.record.EmptyArrayRecorder())
-@generic_decorators.static_variables(resume_logger = hdf5.record.EmptyArrayRecorder())
+@wrappers.static_variables(resume_logger = hdf5.record.EmptyArrayRecorder())
 def generate_neurons(original_images, run_stage = "all", **parameters):
     if "original_images_max_projection" not in generate_neurons.recorders.array_debug_recorder:
         generate_neurons.recorders.array_debug_recorder["original_images_max_projection"] = xnumpy.add_singleton_op(

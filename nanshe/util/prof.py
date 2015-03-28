@@ -10,7 +10,7 @@ import time
 
 import psutil
 
-import generic_decorators
+import wrappers
 
 
 
@@ -57,8 +57,8 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
                 log_call_callable_wrapped, which is wrapped around the function in question.
         """
 
-        @generic_decorators.wraps(callable)
-        @generic_decorators.static_variables(to_log_call = to_log_call,
+        @wrappers.wraps(callable)
+        @wrappers.static_variables(to_log_call = to_log_call,
                                              to_print_args = to_print_args,
                                              to_print_time = to_print_time,
                                              to_print_exception = to_print_exception)
@@ -150,7 +150,7 @@ def log_class(logger, to_log_call = True, to_print_args = False, to_print_time =
             log_call_decorator (for wrapping)
     """
 
-    return(generic_decorators.class_decorate_all_methods(log_call(logger,
+    return(wrappers.class_decorate_all_methods(log_call(logger,
                                                                   to_log_call = to_log_call,
                                                                   to_print_args = to_print_args,
                                                                   to_print_time = to_print_time,
@@ -185,14 +185,14 @@ def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_tim
             log_call_decorator (for wrapping)
     """
 
-    return(generic_decorators.qt_class_decorate_all_methods(log_call(logger,
+    return(wrappers.qt_class_decorate_all_methods(log_call(logger,
                                                                      to_log_call = to_log_call,
                                                                      to_print_args = to_print_args,
                                                                      to_print_time = to_print_time,
                                                                      to_print_exception = to_print_exception)))
 
 
-@generic_decorators.static_variables(to_run = True)
+@wrappers.static_variables(to_run = True)
 def memory_profiler(logger, interval = 1, level=logging.INFO):
     """
         Runs forever get information about memory usage and dumping it to the logger provided at the given interval.

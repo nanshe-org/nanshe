@@ -6,7 +6,7 @@ import numpy
 import h5py
 
 import serializers
-from nanshe.util import generic_decorators
+from nanshe.util import wrappers
 
 
 # Need in order to have logging information no matter what.
@@ -400,9 +400,9 @@ def static_subgrouping_array_recorders(*args, **kwargs):
                 if _k != "__dict__":
                     del self.__dict__[_k]
 
-        callable = generic_decorators.static_variables(recorders = SubgroupingRecorders(*args, **kwargs))(callable)
+        callable = wrappers.static_variables(recorders = SubgroupingRecorders(*args, **kwargs))(callable)
 
-        @generic_decorators.wraps(callable)
+        @wrappers.wraps(callable)
         def static_subgrouping_array_recorders_wrapper(*args, **kwargs):
             # Force all recorders to ensure their output Group exists.
             # All of them actually make the directory.
@@ -512,10 +512,10 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 if _k != "__dict__":
                     del self.__dict__[_k]
 
-        a_class = generic_decorators.class_static_variables(recorders = ClassSubgroupingRecorders(*args, **kwargs))(a_class)
+        a_class = wrappers.class_static_variables(recorders = ClassSubgroupingRecorders(*args, **kwargs))(a_class)
 
         def class_static_subgrouping_array_recorders__init__decorator(callable):
-            @generic_decorators.wraps(callable)
+            @wrappers.wraps(callable)
             def class_static_subgrouping_array_recorders__init__wrapper(self, *args, **kwargs):
                 # Force all recorders to ensure their output Group exists.
                 # All of them actually make the directory.
@@ -534,7 +534,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
         def class_static_subgrouping_array_recorders_decorator(callable):
             callable = static_subgrouping_array_recorders()(callable)
 
-            @generic_decorators.wraps(callable)
+            @wrappers.wraps(callable)
             def class_static_subgrouping_array_recorders_wrapper(self, *args, **kwargs):
                 # Force all recorders to ensure their output Group exists.
                 # All of them actually make the directory.
@@ -552,10 +552,10 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
             return(class_static_subgrouping_array_recorders_wrapper)
 
         # Wraps __init__ only
-        a_class = generic_decorators.class_decorate_methods(__init__ = class_static_subgrouping_array_recorders__init__decorator)(a_class)
+        a_class = wrappers.class_decorate_methods(__init__ = class_static_subgrouping_array_recorders__init__decorator)(a_class)
 
         # Wrap everything
-        a_class = generic_decorators.class_decorate_all_methods(class_static_subgrouping_array_recorders_decorator)(a_class)
+        a_class = wrappers.class_decorate_all_methods(class_static_subgrouping_array_recorders_decorator)(a_class)
 
 
         # Must be done last.
@@ -567,7 +567,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
 
                 return(super(MetaSubgroupingRecorders, self).__call__(*args, **kwargs))
 
-        a_class = generic_decorators.metaclass(MetaSubgroupingRecorders)(a_class)
+        a_class = wrappers.metaclass(MetaSubgroupingRecorders)(a_class)
 
         return(a_class)
 
