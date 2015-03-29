@@ -1,4 +1,4 @@
-pe_name            smp
+pe_name            batch
 slots              999
 user_lists         NONE
 xuser_lists        NONE
