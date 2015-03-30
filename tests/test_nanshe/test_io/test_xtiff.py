@@ -19,7 +19,7 @@ import vigra.impex
 import nanshe.util.iters
 import nanshe.util.xnumpy
 
-import nanshe.nanshe.xtiff
+import nanshe.io.xtiff
 import nanshe.nanshe.nanshe_converter
 
 
@@ -49,7 +49,7 @@ class TestXTiff(object):
 
     def test_get_multipage_tiff_shape_dtype(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_shape_dtype = nanshe.nanshe.xtiff.get_multipage_tiff_shape_dtype(each_filename)
+            each_shape_dtype = nanshe.io.xtiff.get_multipage_tiff_shape_dtype(each_filename)
 
             each_filedata = nanshe.util.xnumpy.tagging_reorder_array(each_filedata, to_axis_order="zyxtc")[0]
 
@@ -58,7 +58,7 @@ class TestXTiff(object):
 
     def test_get_multipage_tiff_shape_dtype_transformed(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_shape_dtype = nanshe.nanshe.xtiff.get_multipage_tiff_shape_dtype_transformed(each_filename,
+            each_shape_dtype = nanshe.io.xtiff.get_multipage_tiff_shape_dtype_transformed(each_filename,
                                                                                                   axis_order = "tzyxc")
 
             assert (each_shape_dtype["shape"] == each_filedata.shape)
@@ -66,7 +66,7 @@ class TestXTiff(object):
 
     def test_get_standard_tiff_array(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_data = nanshe.nanshe.xtiff.get_standard_tiff_array(each_filename)
+            each_data = nanshe.io.xtiff.get_standard_tiff_array(each_filename)
 
             assert (each_data.shape == each_filedata.shape)
             assert (each_data.dtype == each_filedata.dtype)
@@ -77,7 +77,7 @@ class TestXTiff(object):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
         hdf5_filepath = hdf5_filename + "/data"
 
-        nanshe.nanshe.xtiff.convert_tiffs(self.filedata.keys(), hdf5_filepath)
+        nanshe.io.xtiff.convert_tiffs(self.filedata.keys(), hdf5_filepath)
 
         assert os.path.exists(hdf5_filename)
 

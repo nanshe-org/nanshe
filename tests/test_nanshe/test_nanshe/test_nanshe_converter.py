@@ -19,7 +19,7 @@ import vigra.impex
 import nanshe.util.iters
 import nanshe.util.xnumpy
 
-import nanshe.nanshe.xtiff
+import nanshe.io.xtiff
 import nanshe.nanshe.nanshe_converter
 
 
