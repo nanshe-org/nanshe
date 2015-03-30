@@ -91,39 +91,6 @@ class TestTiffFileFormat(object):
 
         os.remove(hdf5_filename)
 
-    def test_nanshe_converter(self):
-        params = {
-            "axis" : 0,
-            "channel" : 0,
-            "z_index" : 0,
-            "pages_to_channel" : 1
-        }
-
-        config_filename = os.path.join(self.temp_dir, "config.json")
-
-        hdf5_filename = os.path.join(self.temp_dir, "test.h5")
-        hdf5_filepath = hdf5_filename + "/data"
-
-        with open(config_filename, "w") as fid:
-            json.dump(params, fid)
-            fid.write("\n")
-
-        main_args = ["./nanshe_converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
-
-        assert (nanshe.nanshe.nanshe_converter.main(*main_args) == 0)
-
-        assert os.path.exists(hdf5_filename)
-
-        data = None
-        with h5py.File(hdf5_filename, "r") as hdf5_handle:
-            data = hdf5_handle["data"].value
-
-        self_data_h5 = nanshe.nanshe.expanded_numpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
-
-        assert (data == self_data_h5).all()
-
-        os.remove(hdf5_filename)
-
     def teardown(self):
         shutil.rmtree(self.temp_dir)
 
