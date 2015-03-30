@@ -5,7 +5,7 @@ __date__ = "$Jun 26, 2014 17:33:37 EDT$"
 
 
 from nanshe.util import prof, xjson
-import tiff_file_format
+import xtiff
 
 
 
@@ -65,7 +65,7 @@ def main(*argv):
     parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename)
 
     if parsed_args.format == "tiff":
-        tiff_file_format.convert_tiffs(parsed_args.input_files, parsed_args.output_file[0], **parsed_args.parameters)
+        xtiff.convert_tiffs(parsed_args.input_files, parsed_args.output_file[0], **parsed_args.parameters)
 
     return(0)
 

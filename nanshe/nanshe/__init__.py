@@ -5,8 +5,7 @@ __all__ = [
     "advanced_image_processing", "binary_image_processing", "denoising",
     "nanshe_converter", "nanshe_learner", "nanshe_registerer",
     # "nanshe_viewer", "neuron_matplotlib_viewer",
-    "registration", "simple_image_processing", "tiff_file_format",
-    "wavelet_transform"
+    "registration", "simple_image_processing", "xtiff", "wavelet_transform"
 ]
 
 import advanced_image_processing
@@ -19,5 +18,5 @@ import nanshe_registerer
 # import neuron_matplotlib_viewer
 import registration
 import simple_image_processing
-import tiff_file_format
+import xtiff
 import wavelet_transform
