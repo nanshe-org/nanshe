@@ -16,6 +16,8 @@ import numpy
 
 import h5py
 
+import nanshe
+
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
@@ -398,18 +400,27 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
         if input_file_handle != output_file_handle:
             input_file_handle.close()
 
-    # TODO: Refactor into a separate function somehow.
-    cur_module_name = None
-    if __name__ == "__main__":
-        import __main__
-        cur_module_name = os.path.splitext(__main__.__file__)[0]
-    else:
-        cur_module_name = os.path.splitext(__file__)[0]
+    cur_module_dirpath = os.path.dirname(os.path.dirname(nanshe.__file__))
+    cur_module_filepath = os.path.splitext(os.path.abspath(__file__))[0]
+    cur_module_name = os.path.relpath(cur_module_filepath, cur_module_dirpath)
+    cur_module_name = cur_module_name.replace(os.path.sep, ".")
+    cur_module_filepath += os.extsep + "py"
 
-    executable = cur_module_name + os.extsep + "py"
-    executable = os.path.abspath(executable)
+    import sys
 
-    block_process_args_gen = itertools.izip(itertools.repeat(executable),
+    python = sys.executable
+
+    executable_run = ""
+    executable_run += "from sys import argv, path, exit; "
+
+    executable_run += "path[:] = [\"%s\"] + [_ for _ in path if _ != \"%s\"]; " % \
+                      (cur_module_dirpath, cur_module_dirpath,)
+    executable_run += "from %s import main; exit(main(*argv))" % \
+                      (cur_module_name,)
+
+    block_process_args_gen = itertools.izip(itertools.repeat(python),
+                                            itertools.repeat("-c"),
+                                            itertools.repeat(executable_run),
                                             itertools.repeat(intermediate_config),
                                             input_filename_block,
                                             output_filename_block,
@@ -437,7 +448,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
         ready_processes = []
         for each_arg_pack in block_process_args_gen:
             ready_processes.append((each_arg_pack, s.createJobTemplate()))
-            ready_processes[-1][1].jobName = os.path.basename(os.path.splitext(cur_module_name)[0]) + "-" + \
+            ready_processes[-1][1].jobName = os.path.basename(os.path.splitext(cur_module_filepath)[0]) + "-" + \
                                              os.path.basename(os.path.dirname(each_arg_pack[3].split(".h5")[0])) + "-" + \
                                              os.path.basename(each_arg_pack[3].split(".h5")[0])
             ready_processes[-1][1].remoteCommand = each_arg_pack[0]
