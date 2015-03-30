@@ -10,7 +10,7 @@ import scipy.misc
 
 import vigra
 
-from nanshe import hdf5
+from nanshe.io import hdf5
 
 
 # Need in order to have logging information no matter what.

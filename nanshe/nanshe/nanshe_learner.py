@@ -22,7 +22,7 @@ from nanshe.util import prof
 from nanshe.util import iters, xnumpy,\
     wrappers, pathHelpers
 
-from nanshe import hdf5
+from nanshe.io import hdf5
 
 # Short function to process image data.
 import advanced_image_processing

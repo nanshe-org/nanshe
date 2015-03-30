@@ -18,7 +18,7 @@ except Exception as e:
     import numpy.fft as fft
 
 from nanshe.util import iters, xnumpy
-from nanshe import hdf5
+from nanshe.io import hdf5
 
 # Need in order to have logging information no matter what.
 from nanshe.util import prof

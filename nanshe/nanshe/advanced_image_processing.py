@@ -59,7 +59,7 @@ import denoising
 # Wavelet transformation operations
 import wavelet_transform
 
-from nanshe import hdf5
+from nanshe.io import hdf5
 
 
 # Get the logger
