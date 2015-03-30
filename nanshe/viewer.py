@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 09, 2014 08:51:33 EDT$"
 
@@ -1746,12 +1744,3 @@ def main(*argv):
     del parsed_args.file_handles
 
     return(exit_code)
-
-
-
-if __name__ == "__main__":
-    # only necessary if running main (normally if calling command line). no point in importing otherwise.
-    import sys
-
-    # call main if the script is loaded from command line. otherwise, user can import package without main being called.
-    sys.exit(main(*sys.argv))

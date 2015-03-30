@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 09, 2014 16:00:40 EDT$"
 
@@ -722,11 +720,3 @@ def main(*argv):
     generate_neurons_io_handler(parsed_args.input_file, parsed_args.output_file, parsed_args.config_filename)
 
     return(0)
-
-
-if __name__ == "__main__":
-    # only necessary if running main (normally if calling command line). no point in importing otherwise.
-    import sys
-
-    # call main if the script is loaded from command line. otherwise, user can import package without main being called.
-    sys.exit(main(*sys.argv))

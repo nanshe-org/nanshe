@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 26, 2014 17:33:37 EDT$"
 
@@ -68,11 +66,3 @@ def main(*argv):
         xtiff.convert_tiffs(parsed_args.input_files, parsed_args.output_file[0], **parsed_args.parameters)
 
     return(0)
-
-
-if __name__ == "__main__":
-    # only necessary if running main (normally if calling command line). no point in importing otherwise.
-    import sys
-
-    # call main if the script is loaded from command line. otherwise, user can import package without main being called.
-    sys.exit(main(*sys.argv))
