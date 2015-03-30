@@ -20,10 +20,10 @@ import nanshe.util.iters
 import nanshe.util.xnumpy
 
 import nanshe.io.xtiff
-import nanshe.nanshe_converter
+import nanshe.converter
 
 
-class TestNansheConverter(object):
+class TestConverter(object):
     def setup(self):
         self.temp_dir = ""
         self.filedata = collections.OrderedDict()
@@ -64,9 +64,9 @@ class TestNansheConverter(object):
             json.dump(params, fid)
             fid.write("\n")
 
-        main_args = ["./nanshe_converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
+        main_args = ["./converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
 
-        assert (nanshe.nanshe_converter.main(*main_args) == 0)
+        assert (nanshe.converter.main(*main_args) == 0)
 
         assert os.path.exists(hdf5_filename)
 
