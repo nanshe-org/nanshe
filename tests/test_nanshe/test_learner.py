@@ -20,10 +20,10 @@ import nanshe.io.hdf5.record
 
 import nanshe.synthetic_data.synthetic_data
 
-import nanshe.nanshe_learner
+import nanshe.learner
 
 
-class TestNansheLearner(object):
+class TestLearner(object):
     def setup(self):
         self.config_a_block = {
             "debug" : True,
@@ -824,11 +824,11 @@ class TestNansheLearner(object):
             fid.write("\n")
 
     def test_main_1(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_a_block_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
-        assert (0 == nanshe.nanshe_learner.main(*argv))
+        assert (0 == nanshe.learner.main(*argv))
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -857,11 +857,11 @@ class TestNansheLearner(object):
         assert (len(unmatched_points) == 0)
 
     def test_main_2(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
-        assert (0 == nanshe.nanshe_learner.main(*argv))
+        assert (0 == nanshe.learner.main(*argv))
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -903,11 +903,11 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_drmaa_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
-        assert (0 == nanshe.nanshe_learner.main(*argv))
+        assert (0 == nanshe.learner.main(*argv))
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -937,11 +937,11 @@ class TestNansheLearner(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_main_4(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_a_block_3D_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
 
-        assert (0 == nanshe.nanshe_learner.main(*argv))
+        assert (0 == nanshe.learner.main(*argv))
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -971,11 +971,11 @@ class TestNansheLearner(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_main_5(self):
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_3D_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
 
-        assert (0 == nanshe.nanshe_learner.main(*argv))
+        assert (0 == nanshe.learner.main(*argv))
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1017,11 +1017,11 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        executable = os.path.splitext(nanshe.nanshe_learner.__file__)[0] + os.extsep + "py"
+        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
         argv = (executable, self.config_blocks_3D_drmaa_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
 
-        assert (0 == nanshe.nanshe_learner.main(*argv))
+        assert (0 == nanshe.learner.main(*argv))
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1050,7 +1050,7 @@ class TestNansheLearner(object):
         assert (len(unmatched_points) == 0)
 
     def test_generate_neurons_io_handler_1(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_a_block_filename)
+        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_a_block_filename)
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1079,7 +1079,7 @@ class TestNansheLearner(object):
         assert (len(unmatched_points) == 0)
 
     def test_generate_neurons_io_handler_2(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_filename)
+        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_filename)
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1121,7 +1121,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_generate_neurons_io_handler_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_drmaa_filename)
+        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_drmaa_filename)
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1151,7 +1151,7 @@ class TestNansheLearner(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_io_handler_4(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_a_block_3D_filename)
+        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_a_block_3D_filename)
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1181,7 +1181,7 @@ class TestNansheLearner(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_io_handler_5(self):
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_filename)
+        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_filename)
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1223,7 +1223,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_drmaa_filename)
+        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_drmaa_filename)
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1252,7 +1252,7 @@ class TestNansheLearner(object):
         assert (len(unmatched_points) == 0)
 
     def test_generate_neurons_a_block_1(self):
-        nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_a_block)
+        nanshe.learner.generate_neurons_a_block(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_a_block)
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1282,7 +1282,7 @@ class TestNansheLearner(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_a_block_2(self):
-        nanshe.nanshe_learner.generate_neurons_a_block(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_a_block_3D)
+        nanshe.learner.generate_neurons_a_block(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_a_block_3D)
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1311,7 +1311,7 @@ class TestNansheLearner(object):
         assert (len(unmatched_points) == 0)
 
     def test_generate_neurons_blocks_1(self):
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks["generate_neurons_blocks"])
+        nanshe.learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks["generate_neurons_blocks"])
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1353,7 +1353,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks_drmaa["generate_neurons_blocks"])
+        nanshe.learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks_drmaa["generate_neurons_blocks"])
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1383,7 +1383,7 @@ class TestNansheLearner(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_blocks_3(self):
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D["generate_neurons_blocks"])
+        nanshe.learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D["generate_neurons_blocks"])
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1425,7 +1425,7 @@ class TestNansheLearner(object):
             # The drmaa library was not specified, but python-drmaa is installed.
             raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        nanshe.nanshe_learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D_drmaa["generate_neurons_blocks"])
+        nanshe.learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D_drmaa["generate_neurons_blocks"])
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
@@ -1471,9 +1471,9 @@ class TestNansheLearner(object):
                 overwrite = True
             )
 
-            nanshe.nanshe_learner.generate_neurons.resume_logger = resume_logger
-            nanshe.nanshe_learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.nanshe_learner.generate_neurons(self.image_stack, **self.config_a_block["generate_neurons"])
+            nanshe.learner.generate_neurons.resume_logger = resume_logger
+            nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
+            nanshe.learner.generate_neurons(self.image_stack, **self.config_a_block["generate_neurons"])
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1520,9 +1520,9 @@ class TestNansheLearner(object):
                 overwrite = True
             )
 
-            nanshe.nanshe_learner.generate_neurons.resume_logger = resume_logger
-            nanshe.nanshe_learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.nanshe_learner.generate_neurons(self.image_stack3, **self.config_a_block_3D["generate_neurons"])
+            nanshe.learner.generate_neurons.resume_logger = resume_logger
+            nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
+            nanshe.learner.generate_neurons(self.image_stack3, **self.config_a_block_3D["generate_neurons"])
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
