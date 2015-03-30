@@ -9,9 +9,8 @@ import os
 
 import h5py
 
-from nanshe.util import debugging_tools
+from nanshe.util import debugging_tools, read_config
 from nanshe.util.pathHelpers import PathComponents
-import read_config
 import registration
 
 

@@ -4,8 +4,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 26, 2014 17:33:37 EDT$"
 
 
-from nanshe.util import debugging_tools
-import read_config
+from nanshe.util import debugging_tools, read_config
 import tiff_file_format
 
 

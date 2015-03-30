@@ -8,7 +8,7 @@ import os
 import shutil
 import tempfile
 
-import nanshe.nanshe.read_config
+import nanshe.util.read_config
 
 
 class TestReadConfig(object):
@@ -35,7 +35,7 @@ class TestReadConfig(object):
             params_raw_out = json.load(config_file)
             assert params == params_raw_out
 
-        params_out = nanshe.nanshe.read_config.read_parameters(
+        params_out = nanshe.util.read_config.read_parameters(
             config_filename
         )
 
@@ -65,7 +65,7 @@ class TestReadConfig(object):
             params_raw_out = json.load(config_file)
             assert params == params_raw_out
 
-        params_out = nanshe.nanshe.read_config.read_parameters(
+        params_out = nanshe.util.read_config.read_parameters(
             config_filename
         )
 
@@ -99,7 +99,7 @@ class TestReadConfig(object):
             params_raw_out = json.load(config_file)
             assert params == params_raw_out
 
-        params_out = nanshe.nanshe.read_config.read_parameters(
+        params_out = nanshe.util.read_config.read_parameters(
             config_filename, maintain_order=True
         )
 
@@ -129,7 +129,7 @@ class TestReadConfig(object):
             params_raw_out = json.load(config_file)
             assert params == params_raw_out
 
-        params_out = nanshe.nanshe.read_config.read_parameters(
+        params_out = nanshe.util.read_config.read_parameters(
             config_filename, maintain_order=True
         )
 

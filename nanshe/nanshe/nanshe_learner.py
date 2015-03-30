@@ -28,7 +28,7 @@ import HDF5_recorder
 import advanced_image_processing
 
 # For IO. Right now, just includes read_parameters for reading a config.json file.
-import read_config
+from nanshe.util import read_config
 
 import HDF5_serializers
 

@@ -1579,7 +1579,7 @@ def main(*argv):
     # TODO: Try to extract code for viewing each file with each viewer. This way multiple files generates multiple viewers.
 
     # Only necessary if running main (normally if calling command line). No point in importing otherwise.
-    import read_config
+    from nanshe.util import read_config
     import argparse
 
     argv = list(argv)
