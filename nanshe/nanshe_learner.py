@@ -25,7 +25,7 @@ from nanshe.util import iters, xnumpy,\
 from nanshe.io import hdf5
 
 # Short function to process image data.
-import advanced_image_processing
+from nanshe.imp import advanced_image_processing
 
 # For IO. Right now, just includes read_parameters for reading a config.json file.
 from nanshe.io import xjson

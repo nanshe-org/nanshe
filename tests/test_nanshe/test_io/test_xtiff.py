@@ -20,7 +20,7 @@ import nanshe.util.iters
 import nanshe.util.xnumpy
 
 import nanshe.io.xtiff
-import nanshe.imp.nanshe_converter
+import nanshe.nanshe_converter
 
 
 class TestXTiff(object):

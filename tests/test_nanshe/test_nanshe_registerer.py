@@ -15,7 +15,7 @@ import h5py
 import numpy
 
 import nanshe.util.xnumpy
-import nanshe.imp.nanshe_registerer
+import nanshe.nanshe_registerer
 
 
 class TestNansheRegisterer(object):
@@ -65,8 +65,8 @@ class TestNansheRegisterer(object):
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
 
-        nanshe.imp.nanshe_registerer.main(
-            nanshe.imp.nanshe_registerer.__file__,
+        nanshe.nanshe_registerer.main(
+            nanshe.nanshe_registerer.__file__,
             self.config_filename,
             self.data_filepath,
             self.result_filepath
@@ -103,8 +103,8 @@ class TestNansheRegisterer(object):
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
 
-        nanshe.imp.nanshe_registerer.main(
-            nanshe.imp.nanshe_registerer.__file__,
+        nanshe.nanshe_registerer.main(
+            nanshe.nanshe_registerer.__file__,
             self.config_filename,
             self.data_filepath,
             self.result_filepath
@@ -141,8 +141,8 @@ class TestNansheRegisterer(object):
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
 
-        nanshe.imp.nanshe_registerer.main(
-            nanshe.imp.nanshe_registerer.__file__,
+        nanshe.nanshe_registerer.main(
+            nanshe.nanshe_registerer.__file__,
             self.config_filename,
             self.data_filepath,
             self.result_filepath
@@ -173,8 +173,8 @@ class TestNansheRegisterer(object):
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
 
-        nanshe.imp.nanshe_registerer.main(
-            nanshe.imp.nanshe_registerer.__file__,
+        nanshe.nanshe_registerer.main(
+            nanshe.nanshe_registerer.__file__,
             self.config_filename,
             self.data_filepath,
             self.result_filepath
@@ -213,8 +213,8 @@ class TestNansheRegisterer(object):
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
 
-        nanshe.imp.nanshe_registerer.main(
-            nanshe.imp.nanshe_registerer.__file__,
+        nanshe.nanshe_registerer.main(
+            nanshe.nanshe_registerer.__file__,
             self.config_filename,
             self.data_filepath,
             self.result_filepath
@@ -253,8 +253,8 @@ class TestNansheRegisterer(object):
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
 
-        nanshe.imp.nanshe_registerer.main(
-            nanshe.imp.nanshe_registerer.__file__,
+        nanshe.nanshe_registerer.main(
+            nanshe.nanshe_registerer.__file__,
             self.config_filename,
             self.data_filepath,
             self.result_filepath
