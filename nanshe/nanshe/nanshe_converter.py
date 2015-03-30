@@ -4,7 +4,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 26, 2014 17:33:37 EDT$"
 
 
-from nanshe.util import prof, read_config
+from nanshe.util import prof, xjson
 import tiff_file_format
 
 
@@ -62,7 +62,7 @@ def main(*argv):
     parsed_args = parser.parse_args(argv[1:])
 
     # Go ahead and stuff in parameters with the other parsed_args
-    parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
+    parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename)
 
     if parsed_args.format == "tiff":
         tiff_file_format.convert_tiffs(parsed_args.input_files, parsed_args.output_file[0], **parsed_args.parameters)

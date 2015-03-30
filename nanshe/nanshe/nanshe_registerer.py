@@ -9,7 +9,7 @@ import os
 
 import h5py
 
-from nanshe.util import prof, read_config
+from nanshe.util import prof, xjson
 from nanshe.util.pathHelpers import PathComponents
 import registration
 
@@ -63,7 +63,7 @@ def main(*argv):
     parsed_args = parser.parse_args(argv[1:])
 
     # Go ahead and stuff in parameters with the other parsed_args
-    parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename)
+    parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename)
 
     parsed_args.input_file_components = []
     for each_input_filename in parsed_args.input_filenames:

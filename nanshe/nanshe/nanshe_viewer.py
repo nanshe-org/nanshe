@@ -1579,7 +1579,7 @@ def main(*argv):
     # TODO: Try to extract code for viewing each file with each viewer. This way multiple files generates multiple viewers.
 
     # Only necessary if running main (normally if calling command line). No point in importing otherwise.
-    from nanshe.util import read_config
+    from nanshe.util import xjson
     import argparse
 
     argv = list(argv)
@@ -1599,7 +1599,7 @@ def main(*argv):
     # Go ahead and stuff in parameters with the other parsed_args
     # A little risky if parsed_args may later contain a parameters variable due to changing the main file
     # or argparse changing behavior; however, this keeps all arguments in the same place.
-    parsed_args.parameters = read_config.read_parameters(parsed_args.config_filename, maintain_order = True)
+    parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename, maintain_order = True)
 
     # Open all of the files and store their handles
     parsed_args.file_handles = []

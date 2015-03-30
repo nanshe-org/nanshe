@@ -28,7 +28,7 @@ from nanshe.io import hdf5
 import advanced_image_processing
 
 # For IO. Right now, just includes read_parameters for reading a config.json file.
-from nanshe.util import read_config
+from nanshe.util import xjson
 
 
 # Get the logger
@@ -58,7 +58,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
         raise Exception("Parameter file with filename: \"" + parameters_filename + "\"" + " provided with an unknown file extension: \"" + parameters_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse the parameters from the json file.
-    parameters = read_config.read_parameters(parameters_filename)
+    parameters = xjson.read_parameters(parameters_filename)
 
     if (len(parameters) == 1) and ("generate_neurons_blocks" in parameters):
         generate_neurons_blocks(input_filename, output_filename, **parameters["generate_neurons_blocks"])
