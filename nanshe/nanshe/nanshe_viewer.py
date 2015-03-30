@@ -1579,7 +1579,7 @@ def main(*argv):
     # TODO: Try to extract code for viewing each file with each viewer. This way multiple files generates multiple viewers.
 
     # Only necessary if running main (normally if calling command line). No point in importing otherwise.
-    from nanshe.util import xjson
+    from nanshe.io import xjson
     import argparse
 
     argv = list(argv)

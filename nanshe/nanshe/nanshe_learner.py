@@ -28,7 +28,7 @@ from nanshe.io import hdf5
 import advanced_image_processing
 
 # For IO. Right now, just includes read_parameters for reading a config.json file.
-from nanshe.util import xjson
+from nanshe.io import xjson
 
 
 # Get the logger

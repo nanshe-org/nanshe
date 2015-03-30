@@ -4,7 +4,8 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 26, 2014 17:33:37 EDT$"
 
 
-from nanshe.util import prof, xjson
+from nanshe.util import prof
+from nanshe.io import xjson
 import xtiff
 
 

@@ -9,7 +9,8 @@ import os
 
 import h5py
 
-from nanshe.util import prof, xjson
+from nanshe.util import prof
+from nanshe.io import xjson
 from nanshe.util.pathHelpers import PathComponents
 import registration
 
