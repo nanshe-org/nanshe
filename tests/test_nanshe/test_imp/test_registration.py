@@ -12,7 +12,7 @@ import h5py
 import numpy
 
 import nanshe.io.hdf5.serializers
-import nanshe.nanshe.registration
+import nanshe.imp.registration
 
 
 class TestRegisterMeanOffsets(object):
@@ -23,7 +23,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+        b2 = nanshe.imp.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
@@ -43,7 +43,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
 
-        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+        b2 = nanshe.imp.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
@@ -63,7 +63,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
 
-        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+        b2 = nanshe.imp.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
@@ -76,7 +76,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 10
         )
 
@@ -105,7 +105,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 10
         )
 
@@ -134,7 +134,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 10
         )
 
@@ -157,7 +157,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 7
         )
 
@@ -186,7 +186,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 7
         )
 
@@ -215,7 +215,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 7
         )
 
@@ -238,7 +238,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 30
         )
 
@@ -267,7 +267,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 30
         )
 
@@ -296,7 +296,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3] = numpy.ma.masked
         b[10, :3, :] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 30
         )
 
@@ -320,7 +320,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+        b2 = nanshe.imp.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
@@ -342,7 +342,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
 
-        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+        b2 = nanshe.imp.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
@@ -364,7 +364,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
 
-        b2 = nanshe.nanshe.registration.register_mean_offsets(a)
+        b2 = nanshe.imp.registration.register_mean_offsets(a)
 
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
@@ -378,7 +378,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 10
         )
 
@@ -409,7 +409,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 10
         )
 
@@ -440,7 +440,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 10
         )
 
@@ -464,7 +464,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 7
         )
 
@@ -495,7 +495,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 7
         )
 
@@ -526,7 +526,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 7
         )
 
@@ -550,7 +550,7 @@ class TestRegisterMeanOffsets(object):
 
         b = numpy.ma.masked_array(a.copy())
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 30
         )
 
@@ -581,7 +581,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 30
         )
 
@@ -612,7 +612,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :3, :] = numpy.ma.masked
         b[10, :, :, :3] = numpy.ma.masked
 
-        fn = nanshe.nanshe.registration.register_mean_offsets(
+        fn = nanshe.imp.registration.register_mean_offsets(
             a, block_frame_length = 30
         )
 
@@ -642,7 +642,7 @@ class TestFindOffsets(object):
         amf = numpy.fft.fftn(am, axes=range(am.ndim))
 
 
-        a_off2 = nanshe.nanshe.registration.find_offsets(af, amf)
+        a_off2 = nanshe.imp.registration.find_offsets(af, amf)
 
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
@@ -666,7 +666,7 @@ class TestFindOffsets(object):
         amf = numpy.fft.fftn(am, axes=range(am.ndim))
 
 
-        a_off2 = nanshe.nanshe.registration.find_offsets(af, amf)
+        a_off2 = nanshe.imp.registration.find_offsets(af, amf)
 
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
@@ -690,7 +690,7 @@ class TestFindOffsets(object):
         amf = numpy.fft.fftn(am, axes=range(am.ndim))
 
 
-        a_off2 = nanshe.nanshe.registration.find_offsets(af, amf)
+        a_off2 = nanshe.imp.registration.find_offsets(af, amf)
 
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
@@ -708,7 +708,7 @@ class TestFindOffsets(object):
         amf = numpy.fft.fftn(am, axes=range(am.ndim))
 
 
-        a_off2 = nanshe.nanshe.registration.find_offsets(af, amf)
+        a_off2 = nanshe.imp.registration.find_offsets(af, amf)
 
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
@@ -733,7 +733,7 @@ class TestFindOffsets(object):
         amf = numpy.fft.fftn(am, axes=range(am.ndim))
 
 
-        a_off2 = nanshe.nanshe.registration.find_offsets(af, amf)
+        a_off2 = nanshe.imp.registration.find_offsets(af, amf)
 
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()
@@ -758,7 +758,7 @@ class TestFindOffsets(object):
         amf = numpy.fft.fftn(am, axes=range(am.ndim))
 
 
-        a_off2 = nanshe.nanshe.registration.find_offsets(af, amf)
+        a_off2 = nanshe.imp.registration.find_offsets(af, amf)
 
         assert (a_off2.dtype == a_off.dtype)
         assert (a_off2 == a_off).all()

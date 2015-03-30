@@ -2,4 +2,4 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Mar 18, 2015 22:25:20 EDT$"
 
 
-import nanshe.nanshe.nanshe_viewer
+import nanshe.imp.nanshe_viewer

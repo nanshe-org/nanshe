@@ -16,7 +16,7 @@ import scipy.stats
 
 import nanshe.util.xnumpy
 
-import nanshe.nanshe.advanced_image_processing
+import nanshe.imp.advanced_image_processing
 
 import nanshe.synthetic_data.synthetic_data
 
@@ -35,7 +35,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
+        b = nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert (a == b).all()
 
@@ -52,7 +52,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
+        b = nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert (a == b).all()
 
@@ -73,7 +73,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
+        b = nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert (a == b).all()
 
@@ -90,7 +90,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
+        b = nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
 
         assert (a == b).all()
 
@@ -107,7 +107,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
+        b = nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, dilation_shape=dilation_shape, erosion_shape=erosion_shape)
 
         assert (a == b).all()
 
@@ -124,7 +124,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
+        b = nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert numpy.allclose(a, b, rtol=0, atol=1e-13)
 
@@ -144,7 +144,7 @@ class TestAdvancedImageProcessing(object):
         for each_r in r:
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
-        b = nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
+        b = nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape)
 
         assert numpy.allclose(a, b, rtol=0, atol=1e-13)
 
@@ -162,7 +162,7 @@ class TestAdvancedImageProcessing(object):
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
         b = numpy.zeros_like(a)
-        nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
+        nanshe.imp.advanced_image_processing.remove_zeroed_lines(ar, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
 
         assert (a == b).all()
 
@@ -180,7 +180,7 @@ class TestAdvancedImageProcessing(object):
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1])[:] = 0
 
         b = ar
-        nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(b, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
+        nanshe.imp.advanced_image_processing.remove_zeroed_lines(b, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
 
         assert (a == b).all()
 
@@ -199,7 +199,7 @@ class TestAdvancedImageProcessing(object):
             nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(ar, 0, each_r[0]), -1, each_r[-1]), -1, each_r[-2])[:] = 0
 
         b = ar
-        nanshe.nanshe.advanced_image_processing.remove_zeroed_lines(b, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
+        nanshe.imp.advanced_image_processing.remove_zeroed_lines(b, erosion_shape=erosion_shape, dilation_shape=dilation_shape, out=b)
 
         assert (a == b).all()
 
@@ -213,7 +213,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.ones((100, 101, 102))
 
-        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+        b = nanshe.imp.advanced_image_processing.estimate_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -234,7 +234,7 @@ class TestAdvancedImageProcessing(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+        nanshe.imp.advanced_image_processing.estimate_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -256,7 +256,7 @@ class TestAdvancedImageProcessing(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.nanshe.advanced_image_processing.estimate_f0(b,
+        nanshe.imp.advanced_image_processing.estimate_f0(b,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -280,7 +280,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102))
 
-        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+        b = nanshe.imp.advanced_image_processing.estimate_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -303,7 +303,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.ones((100, 101, 102, 103))
 
-        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+        b = nanshe.imp.advanced_image_processing.estimate_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -327,7 +327,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102, 103))
 
-        b = nanshe.nanshe.advanced_image_processing.estimate_f0(a,
+        b = nanshe.imp.advanced_image_processing.estimate_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -350,7 +350,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.ones((100, 101, 102))
 
-        b = nanshe.nanshe.advanced_image_processing.extract_f0(a,
+        b = nanshe.imp.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -373,7 +373,7 @@ class TestAdvancedImageProcessing(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.nanshe.advanced_image_processing.extract_f0(a,
+        nanshe.imp.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -397,7 +397,7 @@ class TestAdvancedImageProcessing(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.nanshe.advanced_image_processing.extract_f0(b,
+        nanshe.imp.advanced_image_processing.extract_f0(b,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -423,7 +423,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102))
 
-        b = nanshe.nanshe.advanced_image_processing.extract_f0(a,
+        b = nanshe.imp.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -451,7 +451,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.ones((100, 101, 102, 103))
 
-        b = nanshe.nanshe.advanced_image_processing.extract_f0(a,
+        b = nanshe.imp.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -477,7 +477,7 @@ class TestAdvancedImageProcessing(object):
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102, 103))
 
-        b = nanshe.nanshe.advanced_image_processing.extract_f0(a,
+        b = nanshe.imp.advanced_image_processing.extract_f0(a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size = spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -540,7 +540,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
-        nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+        nanshe.imp.advanced_image_processing.preprocess_data(image_stack, **config)
 
     def test_preprocess_data_2(self):
         ## Does NOT test accuracy.
@@ -580,7 +580,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
-        nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+        nanshe.imp.advanced_image_processing.preprocess_data(image_stack, **config)
 
     def test_preprocess_data_3(self):
         ## Does NOT test accuracy.
@@ -619,7 +619,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
-        nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+        nanshe.imp.advanced_image_processing.preprocess_data(image_stack, **config)
 
     def test_preprocess_data_4(self):
         ## Does NOT test accuracy.
@@ -661,7 +661,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
-        nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+        nanshe.imp.advanced_image_processing.preprocess_data(image_stack, **config)
 
     @nose.plugins.attrib.attr("3D")
     def test_preprocess_data_5(self):
@@ -702,7 +702,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
-        nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+        nanshe.imp.advanced_image_processing.preprocess_data(image_stack, **config)
 
     @nose.plugins.attrib.attr("3D")
     def test_preprocess_data_6(self):
@@ -734,7 +734,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
-        nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+        nanshe.imp.advanced_image_processing.preprocess_data(image_stack, **config)
 
     @nose.plugins.attrib.attr("3D")
     def test_preprocess_data_7(self):
@@ -767,7 +767,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         image_stack = images.max(axis = 0)
 
-        nanshe.nanshe.advanced_image_processing.preprocess_data(image_stack, **config)
+        nanshe.imp.advanced_image_processing.preprocess_data(image_stack, **config)
 
     def test_generate_dictionary_0(self):
         p = numpy.array([[27, 51],
@@ -779,7 +779,7 @@ class TestAdvancedImageProcessing(object):
 
         g = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.nanshe.advanced_image_processing.generate_dictionary(g.astype(numpy.float32),
+        d = nanshe.imp.advanced_image_processing.generate_dictionary(g.astype(numpy.float32),
                                                                                     **{
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
@@ -831,7 +831,7 @@ class TestAdvancedImageProcessing(object):
 
         g = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.nanshe.advanced_image_processing.generate_dictionary(g.astype(float),
+        d = nanshe.imp.advanced_image_processing.generate_dictionary(g.astype(float),
                                                                                     **{
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
@@ -884,7 +884,7 @@ class TestAdvancedImageProcessing(object):
 
         g = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.nanshe.advanced_image_processing.generate_dictionary(g.astype(numpy.float32),
+        d = nanshe.imp.advanced_image_processing.generate_dictionary(g.astype(numpy.float32),
                                                                                     **{
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
@@ -937,7 +937,7 @@ class TestAdvancedImageProcessing(object):
 
         g = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.nanshe.advanced_image_processing.generate_dictionary(g.astype(float),
+        d = nanshe.imp.advanced_image_processing.generate_dictionary(g.astype(float),
                                                                                     **{
                                                                                         "spams.trainDL" : {
                                                                                             "gamma2" : 0,
@@ -989,7 +989,7 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
-        m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
+        m = nanshe.imp.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
 
@@ -1004,7 +1004,7 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
-        m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
+        m = nanshe.imp.advanced_image_processing.generate_local_maxima_vigra(g.max(axis = 0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
 
@@ -1018,7 +1018,7 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
-        m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
+        m = nanshe.imp.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_local_maxima_scikit_image_2(self):
@@ -1031,7 +1031,7 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
-        m = nanshe.nanshe.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
+        m = nanshe.imp.advanced_image_processing.generate_local_maxima_scikit_image(g.max(axis = 0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
 
@@ -1045,7 +1045,7 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
-        m = nanshe.nanshe.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
+        m = nanshe.imp.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
 
@@ -1060,7 +1060,7 @@ class TestAdvancedImageProcessing(object):
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
         g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
-        m = nanshe.nanshe.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
+        m = nanshe.imp.advanced_image_processing.generate_local_maxima(g.max(axis = 0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
 
@@ -1077,7 +1077,7 @@ class TestAdvancedImageProcessing(object):
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
+        e = nanshe.imp.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
@@ -1107,7 +1107,7 @@ class TestAdvancedImageProcessing(object):
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
+        e = nanshe.imp.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
@@ -1143,7 +1143,7 @@ class TestAdvancedImageProcessing(object):
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
+        e = nanshe.imp.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
@@ -1174,7 +1174,7 @@ class TestAdvancedImageProcessing(object):
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.nanshe.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
+        e = nanshe.imp.advanced_image_processing.extended_region_local_maxima_properties(g.max(axis = 0),
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis = 0)
         )
 
@@ -1207,9 +1207,9 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, 1.0)
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, 1.0)
 
         assert (len(points) == len(e.props))
 
@@ -1226,7 +1226,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
         for i in xrange(len(masks)):
@@ -1237,7 +1237,7 @@ class TestAdvancedImageProcessing(object):
 
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[0])
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[0])
 
         assert (len(points) == len(e.props))
 
@@ -1254,7 +1254,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
         for i in xrange(len(masks)):
@@ -1265,7 +1265,7 @@ class TestAdvancedImageProcessing(object):
 
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1])
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1])
 
         assert (len(points) == len(e.props))
 
@@ -1282,7 +1282,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
         for i in xrange(len(masks)):
@@ -1293,7 +1293,7 @@ class TestAdvancedImageProcessing(object):
 
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
                                                                                    numpy.finfo(float).eps)
 
         assert (len(points) == len(e.props))
@@ -1312,9 +1312,9 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, 1.0)
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, 1.0)
 
         assert (len(points) == len(e.props))
 
@@ -1332,7 +1332,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
         for i in xrange(len(masks)):
@@ -1343,7 +1343,7 @@ class TestAdvancedImageProcessing(object):
 
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[0])
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[0])
 
         assert (len(points) == len(e.props))
 
@@ -1361,7 +1361,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
         for i in xrange(len(masks)):
@@ -1372,7 +1372,7 @@ class TestAdvancedImageProcessing(object):
 
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1])
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1])
 
         assert (len(points) == len(e.props))
 
@@ -1390,7 +1390,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
         for i in xrange(len(masks)):
@@ -1401,7 +1401,7 @@ class TestAdvancedImageProcessing(object):
 
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
+        e2 = nanshe.imp.advanced_image_processing.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
                                                                                    numpy.finfo(float).eps)
 
         assert (len(points) == len(e.props))
@@ -1419,7 +1419,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1427,7 +1427,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1444,7 +1444,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1452,7 +1452,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1469,7 +1469,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1477,7 +1477,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1496,7 +1496,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1504,7 +1504,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1524,7 +1524,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1532,7 +1532,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1550,7 +1550,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis = 0)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1558,7 +1558,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1576,7 +1576,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1584,7 +1584,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1604,7 +1604,7 @@ class TestAdvancedImageProcessing(object):
         images = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
         labels = masks.max(axis = 0).astype(int)
 
-        e = nanshe.nanshe.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
+        e = nanshe.imp.advanced_image_processing.ExtendedRegionProps(images.max(axis = 0), labels)
 
         dist = scipy.spatial.distance.pdist(points).max()
         i = 0
@@ -1612,7 +1612,7 @@ class TestAdvancedImageProcessing(object):
             i += 1
         dist += i * numpy.finfo(type(dist)).eps
 
-        e2 = nanshe.nanshe.advanced_image_processing.remove_too_close_local_maxima(e, dist)
+        e2 = nanshe.imp.advanced_image_processing.remove_too_close_local_maxima(e, dist)
 
         assert (len(points) == len(e.props))
 
@@ -1662,7 +1662,7 @@ class TestAdvancedImageProcessing(object):
         original_neuron_image = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(shape, neuron_centers, (50.0/3.0,)*len(neuron_centers), (1.0/3.0,)*len(neuron_centers)).sum(axis = 0)
         original_neurons_mask = (original_neuron_image >= 0.00014218114898827068)
 
-        neurons = nanshe.nanshe.advanced_image_processing.wavelet_denoising(original_neuron_image, **params)
+        neurons = nanshe.imp.advanced_image_processing.wavelet_denoising(original_neuron_image, **params)
 
         assert (len(neuron_centers) == len(neurons))
         assert (original_neurons_mask == neurons["mask"].max(axis = 0)).all()
@@ -1716,7 +1716,7 @@ class TestAdvancedImageProcessing(object):
         neuron_masks = (neuron_images >= (neuron_magnitudes.max() * scipy.stats.norm.pdf(3 * neuron_spreads.max(), scale=neuron_spreads.max())**len(shape)))
         neuron_images *= neuron_masks
 
-        neurons = nanshe.nanshe.advanced_image_processing.wavelet_denoising(neuron_images.max(axis = 0), **params)
+        neurons = nanshe.imp.advanced_image_processing.wavelet_denoising(neuron_images.max(axis = 0), **params)
 
         # Resort neuron image order based on most similar.
         result_neurons_distance = scipy.spatial.distance.cdist(neuron_images.reshape(neurons.shape + (-1,)) , neurons["image"].reshape(neurons.shape + (-1,)))
@@ -1797,7 +1797,7 @@ class TestAdvancedImageProcessing(object):
         neuron_masks = (neuron_images >= (neuron_magnitudes.max() * scipy.stats.norm.pdf(3 * neuron_spreads.max(), scale=neuron_spreads.max())**len(shape)))
         neuron_images *= neuron_masks
 
-        neurons = nanshe.nanshe.advanced_image_processing.wavelet_denoising(neuron_images.max(axis = 0), **params)
+        neurons = nanshe.imp.advanced_image_processing.wavelet_denoising(neuron_images.max(axis = 0), **params)
 
         # Resort neuron image order based on most similar.
         result_neurons_distance = scipy.spatial.distance.cdist(neuron_images.reshape(neurons.shape + (-1,)) , neurons["image"].reshape(neurons.shape + (-1,)))
@@ -1854,7 +1854,7 @@ class TestAdvancedImageProcessing(object):
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
             circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
         assert (len(circle_masks) == len(neurons))
 
@@ -1898,7 +1898,7 @@ class TestAdvancedImageProcessing(object):
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
             circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
         assert (len(circle_masks) == len(neurons))
 
@@ -1942,9 +1942,9 @@ class TestAdvancedImageProcessing(object):
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
             circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        fused_neurons = nanshe.nanshe.advanced_image_processing.fuse_neurons(neurons[0], neurons[1],
+        fused_neurons = nanshe.imp.advanced_image_processing.fuse_neurons(neurons[0], neurons[1],
                                                                       fraction_mean_neuron_max_threshold)
 
         assert (neurons["mask"].sum(axis = 0) == fused_neurons["mask"]).all()
@@ -1986,9 +1986,9 @@ class TestAdvancedImageProcessing(object):
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis = 1)
             circle_mask_cov[circle_mask_i] = numpy.cov(each_circle_mask_points)
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        fused_neurons = nanshe.nanshe.advanced_image_processing.fuse_neurons(neurons[0], neurons[1],
+        fused_neurons = nanshe.imp.advanced_image_processing.fuse_neurons(neurons[0], neurons[1],
                                                                       fraction_mean_neuron_max_threshold)
 
         assert (neurons["mask"].sum(axis = 0) == fused_neurons["mask"]).all()
@@ -2023,9 +2023,9 @@ class TestAdvancedImageProcessing(object):
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.util.xnumpy.expand_view(circle_radii, image.shape))
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
+        merged_neurons = nanshe.imp.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
         assert (len(neurons) == len(circle_centers))
 
@@ -2051,9 +2051,9 @@ class TestAdvancedImageProcessing(object):
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.util.xnumpy.expand_view(circle_radii, image.shape))
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons, neurons, alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
+        merged_neurons = nanshe.imp.advanced_image_processing.merge_neuron_sets(neurons, neurons, alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
         assert (len(neurons) == len(circle_centers))
 
@@ -2080,9 +2080,9 @@ class TestAdvancedImageProcessing(object):
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.util.xnumpy.expand_view(circle_radii, image.shape))
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
+        merged_neurons = nanshe.imp.advanced_image_processing.merge_neuron_sets(neurons[:1], neurons[1:], alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
         assert (len(neurons) == len(circle_centers))
 
@@ -2109,9 +2109,9 @@ class TestAdvancedImageProcessing(object):
 
         circle_masks = (circle_offsets_squared.sum(axis = 1)**.5 < nanshe.util.xnumpy.expand_view(circle_radii, image.shape))
 
-        neurons = nanshe.nanshe.advanced_image_processing.extract_neurons(image, circle_masks)
+        neurons = nanshe.imp.advanced_image_processing.extract_neurons(image, circle_masks)
 
-        merged_neurons = nanshe.nanshe.advanced_image_processing.merge_neuron_sets(neurons, neurons, alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
+        merged_neurons = nanshe.imp.advanced_image_processing.merge_neuron_sets(neurons, neurons, alignment_min_threshold, overlap_min_threshold, fuse_neurons = fuse_neurons)
 
         assert (len(neurons) == len(circle_centers))
 
@@ -2184,7 +2184,7 @@ class TestAdvancedImageProcessing(object):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis = 0)
             bases_images[i] = images[list(each_basis_indices)].max(axis = 0)
 
-        neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
+        neurons = nanshe.imp.advanced_image_processing.postprocess_data(bases_images, **config)
 
         assert (len(points) == len(neurons))
 
@@ -2272,7 +2272,7 @@ class TestAdvancedImageProcessing(object):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis = 0)
             bases_images[i] = images[list(each_basis_indices)].max(axis = 0)
 
-        neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
+        neurons = nanshe.imp.advanced_image_processing.postprocess_data(bases_images, **config)
 
         assert (len(points) == len(neurons))
 
@@ -2363,7 +2363,7 @@ class TestAdvancedImageProcessing(object):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis = 0)
             bases_images[i] = images[list(each_basis_indices)].max(axis = 0)
 
-        neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
+        neurons = nanshe.imp.advanced_image_processing.postprocess_data(bases_images, **config)
 
         assert (len(points) == len(neurons))
 
@@ -2449,7 +2449,7 @@ class TestAdvancedImageProcessing(object):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis = 0)
             bases_images[i] = images[list(each_basis_indices)].max(axis = 0)
 
-        neurons = nanshe.nanshe.advanced_image_processing.postprocess_data(bases_images, **config)
+        neurons = nanshe.imp.advanced_image_processing.postprocess_data(bases_images, **config)
 
         assert (len(points) == len(neurons))
 

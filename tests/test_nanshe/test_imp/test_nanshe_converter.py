@@ -20,7 +20,7 @@ import nanshe.util.iters
 import nanshe.util.xnumpy
 
 import nanshe.io.xtiff
-import nanshe.nanshe.nanshe_converter
+import nanshe.imp.nanshe_converter
 
 
 class TestNansheConverter(object):
@@ -66,7 +66,7 @@ class TestNansheConverter(object):
 
         main_args = ["./nanshe_converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
 
-        assert (nanshe.nanshe.nanshe_converter.main(*main_args) == 0)
+        assert (nanshe.imp.nanshe_converter.main(*main_args) == 0)
 
         assert os.path.exists(hdf5_filename)
 
