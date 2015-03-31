@@ -87,6 +87,45 @@ need only replace ``setup.cfg`` with ``setup.all.cfg``.
 
     python setup.py nosetests
 
+-------------------------------------
+ Documentation
+-------------------------------------
+Current documentation can be found on the GitHub page
+( http://jakirkham.github.io/nanshe/ ). A new copy is rebuilt any time there is
+a passing commit is added to the ``master`` branch. Each documentation commit is
+added to ``gh-pages`` branch with a reference to the commit ``master`` that
+triggered the build as well as version number if provided.
+
+It is also possible to build the documentation from source. This project uses
+Sphinx_ for generating documentation. Please make sure you have it installed if
+you wish to use it. The ``rst`` files (outside of ``index.rst`` are not
+distributed with the source code. This is because is trivial to generate them
+and it is to easy for module to become out of sync with documentation if they
+are distributed. However, building ``rst`` files has been made a dependency of
+all other documentation build steps so one does not have to think about this.
+The easiest way to build documentation is to do the following. This will build
+and place all the documentation in ``_build/html``. Simply open the
+``index.html`` file to take a look. There is a ``make.bat`` file for windows.
+
+.. code-block:: sh
+
+    cd docs
+    make html
+
+Other forms of documentation can be generated and a list can be provided by
+using ``help``.
+
+.. code-block:: sh
+
+    make help
+
+To remove the documentation and all build artifacts used to make it one can use
+the standard ``clean`` command.
+
+.. code-block:: sh
+
+    make clean
+
 
 .. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660
 .. _`10.1145/1553374.1553463`: http://dx.doi.org/10.1145/1553374.1553463
@@ -106,6 +145,7 @@ need only replace ``setup.cfg`` with ``setup.all.cfg``.
 .. _setuptools: https://pythonhosted.org/setuptools/
 .. _nose: http://nose.readthedocs.org/en/latest/
 .. _drmaa: https://github.com/pygridtools/drmaa-python
+.. _Sphinx: http://sphinx-doc.org/
 """
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Dec 22, 2014 08:46:12 EST$"
