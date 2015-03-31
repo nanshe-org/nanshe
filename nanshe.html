@@ -97,6 +97,79 @@ used, but <a class="reference external" href="http://www.openblas.net/">OpenBLAS
 will require modifying the setup.py script. On Windows, the setup.py links to
 <a class="reference external" href="http://www.r-project.org/">R</a>, which should be changed if another BLAS is available.</p>
 </div>
+<div class="section" id="building">
+<h3>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h3>
+<p>As this module is pure Python, building follows through the standard method.
+Currently, we require <a class="reference external" href="https://pythonhosted.org/setuptools/">setuptools</a> for installation; so, make sure it is
+installed. Then simply issue the following command to build and install.</p>
+<div class="highlight-sh"><div class="highlight"><pre>python setup.py install
+</pre></div>
+</div>
+<p>Alternatively, one can build and then install in two steps if that is
+preferable.</p>
+<div class="highlight-sh"><div class="highlight"><pre>python setup.py build
+python setup.py install
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<p>Running the test suite is fairly straightforward. Testing is done using <a class="reference external" href="http://nose.readthedocs.org/en/latest/">nose</a>;
+so, make sure you have a running copy if you wish to run the tests. Some of the
+tests require <a class="reference external" href="https://github.com/pygridtools/drmaa-python">drmaa</a> installed and properly configured. If that is not the
+case, those tests will be skipped automatically. To run the test suite, one
+must be in the source directory. Then simply run the following command. This
+will run all the tests and doctests. Depending on your machine, this will take
+a few minutes to complete.</p>
+<div class="highlight-sh"><div class="highlight"><pre>nosetests
+</pre></div>
+</div>
+<p>The full test suite includes 3D tests, which are very slow to run and so are
+not run by default. As the code has been written to be dimensionally agnostic,
+these tests don&#8217;t cover anything that the 2D tests don&#8217;t already cover. To run
+the 3D tests, simply use <code class="docutils literal"><span class="pre">setup.all.cfg</span></code>.</p>
+<div class="highlight-sh"><div class="highlight"><pre>nosetests -c setup.all.cfg
+</pre></div>
+</div>
+<p>It is also possible to run this as part of the setup.py process. In which case,
+this can be done as shown below. If 3D tests are required for this portion, one
+need only replace <code class="docutils literal"><span class="pre">setup.cfg</span></code> with <code class="docutils literal"><span class="pre">setup.all.cfg</span></code>.</p>
+<div class="highlight-sh"><div class="highlight"><pre>python setup.py nosetests
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>Current documentation can be found on the GitHub page
+( <a class="reference external" href="http://jakirkham.github.io/nanshe/">http://jakirkham.github.io/nanshe/</a> ). A new copy is rebuilt any time there is
+a passing commit is added to the <code class="docutils literal"><span class="pre">master</span></code> branch. Each documentation commit is
+added to <code class="docutils literal"><span class="pre">gh-pages</span></code> branch with a reference to the commit <code class="docutils literal"><span class="pre">master</span></code> that
+triggered the build as well as version number if provided.</p>
+<p>It is also possible to build the documentation from source. This project uses
+<a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> for generating documentation. Please make sure you have it installed if
+you wish to use it. The <code class="docutils literal"><span class="pre">rst</span></code> files (outside of <code class="docutils literal"><span class="pre">index.rst</span></code> are not
+distributed with the source code. This is because is trivial to generate them
+and it is to easy for module to become out of sync with documentation if they
+are distributed. However, building <code class="docutils literal"><span class="pre">rst</span></code> files has been made a dependency of
+all other documentation build steps so one does not have to think about this.
+The easiest way to build documentation is to do the following. This will build
+and place all the documentation in <code class="docutils literal"><span class="pre">_build/html</span></code>. Simply open the
+<code class="docutils literal"><span class="pre">index.html</span></code> file to take a look. There is a <code class="docutils literal"><span class="pre">make.bat</span></code> file for windows.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nb">cd </span>docs
+make html
+</pre></div>
+</div>
+<p>Other forms of documentation can be generated and a list can be provided by
+using <code class="docutils literal"><span class="pre">help</span></code>.</p>
+<div class="highlight-sh"><div class="highlight"><pre>make <span class="nb">help</span>
+</pre></div>
+</div>
+<p>To remove the documentation and all build artifacts used to make it one can use
+the standard <code class="docutils literal"><span class="pre">clean</span></code> command.</p>
+<div class="highlight-sh"><div class="highlight"><pre>make clean
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
@@ -1318,6 +1391,9 @@ inside the request instance. So, if this request instance is kept, this won&#821
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#installation">Installation</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#building">Building</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
