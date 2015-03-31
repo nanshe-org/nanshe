@@ -11,6 +11,7 @@ Contents:
 .. toctree::
    :glob:
 
+   README <readme>
    *
 
 
