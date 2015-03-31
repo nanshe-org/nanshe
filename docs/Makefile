@@ -51,8 +51,10 @@ help:
 
 clean:
 	mv index.rst index.rst.saved
+	mv readme.rst readme.rst.saved
 	rm -f *.rst
 	mv index.rst.saved index.rst
+	mv readme.rst.saved readme.rst
 	rm -rf $(BUILDDIR)
 
 rst:
