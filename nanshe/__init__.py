@@ -1,4 +1,8 @@
 """
+=====================================
+ Overview
+=====================================
+
 The ```nanshe``` package is an image processing package that contains a variety
 of different techniques, which are used primarily to assemble the ADINA
 algorithm proposed by Diego, et al.
@@ -15,6 +19,13 @@ applied optionally. For example, removing registration artifacts from
 a line-by-line registration algorithm, background subtraction, and a wavelet
 transform to filter objects in a particular size.
 
+=====================================
+ Installation
+=====================================
+
+-------------------------------------
+ Dependencies
+-------------------------------------
 Implementation of the algorithm has been done here in pure Python. However, a
 few dependencies are required to get started. These include NumPy_, SciPy_,
 h5py_, scikit-image_, SPAMS_, VIGRA_, and rank_filter_. The first 4 can be
