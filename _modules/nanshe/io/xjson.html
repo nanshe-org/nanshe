@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.nanshe.read_config &mdash; ..  documentation</title>
+    <title>nanshe.io.xjson &mdash; ..  documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -57,21 +57,21 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for nanshe.nanshe.read_config</h1><div class="highlight"><pre>
+  <h1>Source code for nanshe.io.xjson</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 30, 2014 16:54:30 EDT$&quot;</span>
 
 
 <span class="c"># Need in order to have logging information no matter what.</span>
-<span class="kn">import</span> <span class="nn">debugging_tools</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
 
 
 <span class="c"># Get the logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.read_config.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../../nanshe.io.html#nanshe.io.xjson.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads the contents of a json config file and returns the parameters.</span>
 <span class="sd">        </span>
@@ -97,7 +97,7 @@
         <span class="n">json_dict</span> <span class="o">=</span> <span class="nb">dict</span>
 
 
-    <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_str</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the str.</span>
@@ -116,7 +116,7 @@
         <span class="k">return</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
 
 
-    <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the list (and its contents).</span>
@@ -144,7 +144,7 @@
         <span class="k">return</span><span class="p">(</span><span class="n">transformed_list</span><span class="p">)</span>
 
 
-    <span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the dict (and its contents).</span>

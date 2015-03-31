@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.nanshe.additional_io &mdash; ..  documentation</title>
+    <title>nanshe.util.xglob &mdash; ..  documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -57,24 +57,24 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for nanshe.nanshe.additional_io</h1><div class="highlight"><pre>
+  <h1>Source code for nanshe.util.xglob</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 26, 2014 18:24:25 EDT$&quot;</span>
 
 
 <span class="kn">import</span> <span class="nn">glob</span>
 
-<span class="kn">import</span> <span class="nn">debugging_tools</span>
+<span class="kn">import</span> <span class="nn">prof</span>
 
 
 
 <span class="c"># Get the logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
 
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="expand_pathname_list"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_io.expand_pathname_list">[docs]</a><span class="k">def</span> <span class="nf">expand_pathname_list</span><span class="p">(</span><span class="o">*</span><span class="n">pathnames</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="expand_pathname_list"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.xglob.expand_pathname_list">[docs]</a><span class="k">def</span> <span class="nf">expand_pathname_list</span><span class="p">(</span><span class="o">*</span><span class="n">pathnames</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each pathname in those given and expands them using regex.</span>
 

@@ -1,0 +1,36 @@
+nanshe.io.hdf5 package
+======================
+
+.. automodule:: nanshe.io.hdf5
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+nanshe.io.hdf5.record module
+----------------------------
+
+.. automodule:: nanshe.io.hdf5.record
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nanshe.io.hdf5.search module
+----------------------------
+
+.. automodule:: nanshe.io.hdf5.search
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nanshe.io.hdf5.serializers module
+---------------------------------
+
+.. automodule:: nanshe.io.hdf5.serializers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

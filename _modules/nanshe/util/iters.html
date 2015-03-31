@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.nanshe.additional_generators &mdash; ..  documentation</title>
+    <title>nanshe.util.iters &mdash; ..  documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -57,7 +57,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for nanshe.nanshe.additional_generators</h1><div class="highlight"><pre>
+  <h1>Source code for nanshe.util.iters</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 17, 2014 13:43:56 EDT$&quot;</span>
 
@@ -70,14 +70,14 @@
 
 
 <span class="c"># Need in order to have logging information no matter what.</span>
-<span class="kn">import</span> <span class="nn">debugging_tools</span>
+<span class="kn">import</span> <span class="nn">prof</span>
 
 <span class="c"># Get the logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="index_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.index_generator">[docs]</a><span class="k">def</span> <span class="nf">index_generator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="index_generator"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.index_generator">[docs]</a><span class="k">def</span> <span class="nf">index_generator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size.</span>
 <span class="sd">        </span>
@@ -120,8 +120,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="index_enumerator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.index_enumerator">[docs]</a><span class="k">def</span> <span class="nf">index_enumerator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="index_enumerator"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.index_enumerator">[docs]</a><span class="k">def</span> <span class="nf">index_enumerator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size (i.e. like</span>
 <span class="sd">        index_generator). However, also included is an index corresponding to how many elements have been seen.</span>
@@ -165,8 +165,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="list_indices_to_index_array"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.list_indices_to_index_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_index_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="list_indices_to_index_array"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.list_indices_to_index_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_index_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts a list of tuple indices to numpy index array.</span>
 <span class="sd">        </span>
@@ -192,8 +192,8 @@
     <span class="k">return</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">list_indices</span><span class="p">))))</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="list_indices_to_numpy_bool_array"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.list_indices_to_numpy_bool_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_numpy_bool_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="list_indices_to_numpy_bool_array"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.list_indices_to_numpy_bool_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_numpy_bool_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.</span>
 <span class="sd">        All indices in list_indices are set to True in the numpy.ndarray. The rest are False by default.</span>
@@ -243,8 +243,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="repeat_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.repeat_generator">[docs]</a><span class="k">def</span> <span class="nf">repeat_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="repeat_generator"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.repeat_generator">[docs]</a><span class="k">def</span> <span class="nf">repeat_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Repeats each value on an iterator given n-times before proceeding to the next value.</span>
 
@@ -284,8 +284,8 @@
             <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="cycle_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.cycle_generator">[docs]</a><span class="k">def</span> <span class="nf">cycle_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="cycle_generator"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.cycle_generator">[docs]</a><span class="k">def</span> <span class="nf">cycle_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cycles through an iterator n-times.</span>
 
@@ -326,8 +326,8 @@
         <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="iter_with_skip_indices"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.iter_with_skip_indices">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_indices</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="iter_with_skip_indices"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.iter_with_skip_indices">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_indices</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary values, as well.</span>
 <span class="sd">        These values to be skipped should be specified by their indices using some iterable.</span>
@@ -386,8 +386,8 @@
             <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="iter_with_skip_values"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.iter_with_skip_values">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_values</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="iter_with_skip_values"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.iter_with_skip_values">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_values</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary values, as well.</span>
 <span class="sd">        These values to be skipped should be specified by their indices using some iterable.</span>
@@ -444,8 +444,8 @@
             <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="xrange_with_skip"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.xrange_with_skip">[docs]</a><span class="k">def</span> <span class="nf">xrange_with_skip</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="xrange_with_skip"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.xrange_with_skip">[docs]</a><span class="k">def</span> <span class="nf">xrange_with_skip</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">to_skip</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves as xrange does except allows for skipping arbitrary values as well.</span>
 <span class="sd">        These values to be skipped should be specified using some iterable.</span>
@@ -521,7 +521,7 @@
             <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="splitting_xrange"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.splitting_xrange">[docs]</a><span class="k">def</span> <span class="nf">splitting_xrange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="splitting_xrange"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.splitting_xrange">[docs]</a><span class="k">def</span> <span class="nf">splitting_xrange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Similar to xrange except that it recursively proceeds through the given range in such a way that values that</span>
 <span class="sd">        follow each other are preferably not only non-sequential, but fairly different. This does not always work with</span>
@@ -602,8 +602,8 @@
         <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="cumulative_generator"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.cumulative_generator">[docs]</a><span class="k">def</span> <span class="nf">cumulative_generator</span><span class="p">(</span><span class="n">new_op</span><span class="p">,</span> <span class="n">new_iter</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="cumulative_generator"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.cumulative_generator">[docs]</a><span class="k">def</span> <span class="nf">cumulative_generator</span><span class="p">(</span><span class="n">new_op</span><span class="p">,</span> <span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each value from new_iter and applies new_op to it with the result</span>
 <span class="sd">        of previous values.</span>
@@ -648,8 +648,8 @@
         <span class="k">yield</span> <span class="p">(</span><span class="n">cur</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="reverse_each_element"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.reverse_each_element">[docs]</a><span class="k">def</span> <span class="nf">reverse_each_element</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reverse_each_element"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.reverse_each_element">[docs]</a><span class="k">def</span> <span class="nf">reverse_each_element</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
 <span class="sd">        </span>
@@ -679,8 +679,8 @@
         <span class="k">yield</span> <span class="p">(</span> <span class="nb">type</span><span class="p">(</span><span class="n">each</span><span class="p">)(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">each</span><span class="p">))</span> <span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="lagged_generators"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.lagged_generators">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="lagged_generators"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.lagged_generators">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a tuple of generators with each next generator one step ahead of the previous generator.</span>
 
@@ -743,8 +743,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">all_iters</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="lagged_generators_zipped"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.lagged_generators_zipped">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators_zipped</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">longest</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="lagged_generators_zipped"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.lagged_generators_zipped">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators_zipped</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">longest</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a tuple of generators with each next generator one step ahead of the previous generator.</span>
 
@@ -791,8 +791,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">zipped_iters</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="filled_stringify_numbers"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.filled_stringify_numbers">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">include_numbers</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="filled_stringify_numbers"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.filled_stringify_numbers">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">include_numbers</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Like enumerate except it also returns a string with the number from enumeration with left padding by zero.</span>
 <span class="sd">        </span>
@@ -853,8 +853,8 @@
             <span class="k">yield</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">each</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="filled_stringify_xrange"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.filled_stringify_xrange">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_xrange</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="filled_stringify_xrange"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.filled_stringify_xrange">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_xrange</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
 
@@ -905,8 +905,8 @@
         <span class="k">yield</span> <span class="p">(</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">)</span> <span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="filled_stringify_enumerate"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.filled_stringify_enumerate">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_enumerate</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="filled_stringify_enumerate"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.filled_stringify_enumerate">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_enumerate</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
 
@@ -957,8 +957,8 @@
         <span class="k">yield</span> <span class="p">(</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="n">each</span><span class="p">)</span> <span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="reformat_slice"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.reformat_slice">[docs]</a><span class="k">def</span> <span class="nf">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reformat_slice"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.reformat_slice">[docs]</a><span class="k">def</span> <span class="nf">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a slice and reformats it to fill in as many undefined values as possible.</span>
 
@@ -1112,8 +1112,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="reformat_slices"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.reformat_slices">[docs]</a><span class="k">def</span> <span class="nf">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reformat_slices"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.reformat_slices">[docs]</a><span class="k">def</span> <span class="nf">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</span>
 
@@ -1164,7 +1164,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_slices</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="UnknownSliceLengthException"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.UnknownSliceLengthException">[docs]</a><span class="k">class</span> <span class="nc">UnknownSliceLengthException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="UnknownSliceLengthException"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.UnknownSliceLengthException">[docs]</a><span class="k">class</span> <span class="nc">UnknownSliceLengthException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raised if a slice does not have a known length.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1172,8 +1172,8 @@
     <span class="k">pass</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="len_slice"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.len_slice">[docs]</a><span class="k">def</span> <span class="nf">len_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="len_slice"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.len_slice">[docs]</a><span class="k">def</span> <span class="nf">len_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines how many elements a slice will contain.</span>
 
@@ -1238,8 +1238,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_slice_size</span><span class="p">)</span>
 
 </div>
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="len_slices"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.additional_generators.len_slices">[docs]</a><span class="k">def</span> <span class="nf">len_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="len_slices"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.iters.len_slices">[docs]</a><span class="k">def</span> <span class="nf">len_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</span>
 

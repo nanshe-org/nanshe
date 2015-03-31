@@ -1,142 +1,22 @@
 
 File nanshe/__init__.py
- - No module dostring!
- Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
-File nanshe/nanshe/HDF5_recorder.py
- - No module dostring!
- - No docstring for EmptyArrayRecorder!
- - No docstring for EmptyArrayRecorder.__init__!
- - No docstring for EmptyArrayRecorder.__nonzero__!
- - No docstring for EmptyArrayRecorder.get!
- - No docstring for EmptyArrayRecorder.__contains__!
- - No docstring for EmptyArrayRecorder.__getitem__!
- - No docstring for EmptyArrayRecorder.__setitem__!
- - No docstring for HDF5ArrayRecorder!
- - No docstring for HDF5ArrayRecorder.__init__!
- - No docstring for HDF5ArrayRecorder.__nonzero__!
- - No docstring for HDF5ArrayRecorder.get!
- - No docstring for HDF5ArrayRecorder.__contains__!
- - No docstring for HDF5ArrayRecorder.__getitem__!
- - No docstring for HDF5ArrayRecorder.__setitem__!
- - No docstring for HDF5EnumeratedArrayRecorder!
- - No docstring for HDF5EnumeratedArrayRecorder.__init__!
- - No docstring for HDF5EnumeratedArrayRecorder.__nonzero__!
- - No docstring for HDF5EnumeratedArrayRecorder.get!
- - No docstring for HDF5EnumeratedArrayRecorder.__contains__!
- - No docstring for HDF5EnumeratedArrayRecorder.__getitem__!
- - No docstring for HDF5EnumeratedArrayRecorder.__setitem__!
- - No docstring for static_subgrouping_array_recorders_tie.SubgroupingRecorders!
- - No docstring for SubgroupingRecorders.__init__!
- - No docstring for SubgroupingRecorders.__getattr__!
- - No docstring for SubgroupingRecorders.__setattr__!
- - No docstring for SubgroupingRecorders.__delattr__!
- - No docstring for static_subgrouping_array_recorders_tie.static_subgrouping_array_recorders_wrapper!
- - No docstring for class_static_subgrouping_array_recorders_tie.ClassSubgroupingRecorders!
- - No docstring for ClassSubgroupingRecorders.__init__!
- - No docstring for ClassSubgroupingRecorders.__getattr__!
- - No docstring for ClassSubgroupingRecorders.__setattr__!
- - No docstring for ClassSubgroupingRecorders.__delattr__!
- - No docstring for class_static_subgrouping_array_recorders_tie.class_static_subgrouping_array_recorders__init__decorator!
- - No docstring for class_static_subgrouping_array_recorders__init__decorator.class_static_subgrouping_array_recorders__init__wrapper!
- - No docstring for class_static_subgrouping_array_recorders_tie.class_static_subgrouping_array_recorders_decorator!
- - No docstring for class_static_subgrouping_array_recorders_decorator.class_static_subgrouping_array_recorders_wrapper!
- - No docstring for class_static_subgrouping_array_recorders_tie.MetaSubgroupingRecorders!
- - No docstring for MetaSubgroupingRecorders.__call__!
- Needed: 46; Exist: 7; Missing: 39; Coverage: 15.2%
-
-File nanshe/nanshe/HDF5_searchers.py
- - No module dostring!
- - No docstring for get_matching_paths_groups.get_matching_paths_groups_recursive!
- Needed: 6; Exist: 4; Missing: 2; Coverage: 66.7%
-
-File nanshe/nanshe/HDF5_serializers.py
- - No module dostring!
- - No docstring for HDF5MaskedDataset.__init__!
- - No docstring for HDF5MaskedDataset.group!
- - No docstring for HDF5MaskedDataset.name!
- - No docstring for HDF5MaskedDataset.data!
- - No docstring for HDF5MaskedDataset.data!
- - No docstring for HDF5MaskedDataset.mask!
- - No docstring for HDF5MaskedDataset.mask!
- - No docstring for HDF5MaskedDataset.fill_value!
- - No docstring for HDF5MaskedDataset.fill_value!
- - No docstring for HDF5MaskedDataset.__len__!
- - No docstring for HDF5MaskedDataset.dims!
- - No docstring for HDF5MaskedDataset.ndim!
- - No docstring for HDF5MaskedDataset.shape!
- - No docstring for HDF5MaskedDataset.shape!
- - No docstring for HDF5MaskedDataset.size!
- - No docstring for HDF5MaskedDataset.dtype!
- - No docstring for HDF5MaskedDataset.resize!
- - No docstring for HDF5MaskedDataset.__getitem__!
- - No docstring for HDF5MaskedDataset.__setitem__!
- - No docstring for HDF5MaskedDataset.__array__!
- Needed: 24; Exist: 3; Missing: 21; Coverage: 12.5%
-
-File nanshe/nanshe/__init__.py
- - No module dostring!
- Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
-
-File nanshe/nanshe/additional_generators.py
- - No module dostring!
- - No docstring for splitting_xrange.splitting_xrange_helper!
- Needed: 24; Exist: 22; Missing: 2; Coverage: 91.7%
-
-File nanshe/nanshe/additional_io.py
+File nanshe/converter.py
  - No module dostring!
  Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
 
-File nanshe/nanshe/advanced_image_processing.py
- - No module dostring!
- - No docstring for region_properties_vigra.VigraProperties!
- - No docstring for VigraProperties.__init__!
- - No docstring for VigraProperties.__len__!
- - No docstring for VigraProperties.__getitem__!
- - No docstring for merge_neuron_sets!
- - No docstring for expand_rois!
- - No docstring for postprocess_data.array_debug_recorder_enumerator!
- Needed: 40; Exist: 32; Missing: 8; Coverage: 80.0%
-
-File nanshe/nanshe/binary_image_processing.py
- - No module dostring!
- Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
-
-File nanshe/nanshe/debugging_tools.py
- - No module dostring!
- Needed: 7; Exist: 6; Missing: 1; Coverage: 85.7%
-
-File nanshe/nanshe/denoising.py
- - No module dostring!
- Needed: 4; Exist: 3; Missing: 1; Coverage: 75.0%
-
-File nanshe/nanshe/expanded_numpy.py
- - No module dostring!
- Needed: 56; Exist: 55; Missing: 1; Coverage: 98.2%
-
-File nanshe/nanshe/generic_decorators.py
- - No module dostring!
- - No docstring for MetaStaticVariables.__new__!
- - No docstring for MetaAllMethodsDecorator.__new__!
- - No docstring for MetaAllMethodsDecorator.__new__!
- - No docstring for MetaMethodsDecorator.__new__!
- Needed: 23; Exist: 18; Missing: 5; Coverage: 78.3%
-
-File nanshe/nanshe/nanshe_converter.py
- - No module dostring!
- Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
-
-File nanshe/nanshe/nanshe_learner.py
+File nanshe/learner.py
  - No module dostring!
  - No docstring for generate_neurons_blocks!
  - No docstring for generate_neurons!
  Needed: 6; Exist: 3; Missing: 3; Coverage: 50.0%
 
-File nanshe/nanshe/nanshe_registerer.py
+File nanshe/registerer.py
  - No module dostring!
  Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
 
-File nanshe/nanshe/nanshe_viewer.py
+File nanshe/viewer.py
  - No module dostring!
  - No docstring for HDF5DataSource.numberOfChannels!
  - No docstring for HDF5DataSource.clean_up!
@@ -258,45 +138,132 @@ File nanshe/nanshe/nanshe_viewer.py
  - No docstring for main!
  Needed: 145; Exist: 26; Missing: 119; Coverage: 17.9%
 
-File nanshe/nanshe/neuron_matplotlib_viewer.py
+File nanshe/imp/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/imp/advanced_image_processing.py
+ - No module dostring!
+ - No docstring for region_properties_vigra.VigraProperties!
+ - No docstring for VigraProperties.__init__!
+ - No docstring for VigraProperties.__len__!
+ - No docstring for VigraProperties.__getitem__!
+ - No docstring for merge_neuron_sets!
+ - No docstring for expand_rois!
+ - No docstring for postprocess_data.array_debug_recorder_enumerator!
+ Needed: 40; Exist: 32; Missing: 8; Coverage: 80.0%
+
+File nanshe/imp/binary_image_processing.py
+ - No module dostring!
+ Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
+
+File nanshe/imp/denoising.py
+ - No module dostring!
+ Needed: 4; Exist: 3; Missing: 1; Coverage: 75.0%
+
+File nanshe/imp/neuron_matplotlib_viewer.py
  - No module dostring!
  - No docstring for TimeNavigator!
  Needed: 15; Exist: 13; Missing: 2; Coverage: 86.7%
 
-File nanshe/nanshe/pathHelpers.py
- - No module dostring!
- - No docstring for PathComponents._init!
- - No docstring for PathComponents.externalPath!
- - No docstring for PathComponents.externalDirectory!
- - No docstring for PathComponents.filename!
- - No docstring for PathComponents.filenameBase!
- - No docstring for PathComponents.extension!
- - No docstring for PathComponents.internalPath!
- - No docstring for PathComponents.internalDatasetName!
- - No docstring for PathComponents.internalDirectory!
- - No docstring for areOnSameDrive!
- - No docstring for isUrl!
- Needed: 26; Exist: 14; Missing: 12; Coverage: 53.8%
-
-File nanshe/nanshe/read_config.py
- - No module dostring!
- Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
-
-File nanshe/nanshe/registration.py
+File nanshe/imp/registration.py
  - No module dostring!
  Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
 
-File nanshe/nanshe/simple_image_processing.py
+File nanshe/imp/simple_image_processing.py
  - No module dostring!
  Needed: 3; Exist: 2; Missing: 1; Coverage: 66.7%
 
-File nanshe/nanshe/tiff_file_format.py
+File nanshe/imp/wavelet_transform.py
  - No module dostring!
  Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
 
-File nanshe/nanshe/wavelet_transform.py
+File nanshe/io/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/io/xjson.py
  - No module dostring!
  Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/io/xtiff.py
+ - No module dostring!
+ Needed: 5; Exist: 4; Missing: 1; Coverage: 80.0%
+
+File nanshe/io/hdf5/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/io/hdf5/record.py
+ - No module dostring!
+ - No docstring for EmptyArrayRecorder!
+ - No docstring for EmptyArrayRecorder.__init__!
+ - No docstring for EmptyArrayRecorder.__nonzero__!
+ - No docstring for EmptyArrayRecorder.get!
+ - No docstring for EmptyArrayRecorder.__contains__!
+ - No docstring for EmptyArrayRecorder.__getitem__!
+ - No docstring for EmptyArrayRecorder.__setitem__!
+ - No docstring for HDF5ArrayRecorder!
+ - No docstring for HDF5ArrayRecorder.__init__!
+ - No docstring for HDF5ArrayRecorder.__nonzero__!
+ - No docstring for HDF5ArrayRecorder.get!
+ - No docstring for HDF5ArrayRecorder.__contains__!
+ - No docstring for HDF5ArrayRecorder.__getitem__!
+ - No docstring for HDF5ArrayRecorder.__setitem__!
+ - No docstring for HDF5EnumeratedArrayRecorder!
+ - No docstring for HDF5EnumeratedArrayRecorder.__init__!
+ - No docstring for HDF5EnumeratedArrayRecorder.__nonzero__!
+ - No docstring for HDF5EnumeratedArrayRecorder.get!
+ - No docstring for HDF5EnumeratedArrayRecorder.__contains__!
+ - No docstring for HDF5EnumeratedArrayRecorder.__getitem__!
+ - No docstring for HDF5EnumeratedArrayRecorder.__setitem__!
+ - No docstring for static_subgrouping_array_recorders_tie.SubgroupingRecorders!
+ - No docstring for SubgroupingRecorders.__init__!
+ - No docstring for SubgroupingRecorders.__getattr__!
+ - No docstring for SubgroupingRecorders.__setattr__!
+ - No docstring for SubgroupingRecorders.__delattr__!
+ - No docstring for static_subgrouping_array_recorders_tie.static_subgrouping_array_recorders_wrapper!
+ - No docstring for class_static_subgrouping_array_recorders_tie.ClassSubgroupingRecorders!
+ - No docstring for ClassSubgroupingRecorders.__init__!
+ - No docstring for ClassSubgroupingRecorders.__getattr__!
+ - No docstring for ClassSubgroupingRecorders.__setattr__!
+ - No docstring for ClassSubgroupingRecorders.__delattr__!
+ - No docstring for class_static_subgrouping_array_recorders_tie.class_static_subgrouping_array_recorders__init__decorator!
+ - No docstring for class_static_subgrouping_array_recorders__init__decorator.class_static_subgrouping_array_recorders__init__wrapper!
+ - No docstring for class_static_subgrouping_array_recorders_tie.class_static_subgrouping_array_recorders_decorator!
+ - No docstring for class_static_subgrouping_array_recorders_decorator.class_static_subgrouping_array_recorders_wrapper!
+ - No docstring for class_static_subgrouping_array_recorders_tie.MetaSubgroupingRecorders!
+ - No docstring for MetaSubgroupingRecorders.__call__!
+ Needed: 46; Exist: 7; Missing: 39; Coverage: 15.2%
+
+File nanshe/io/hdf5/search.py
+ - No module dostring!
+ - No docstring for get_matching_paths_groups.get_matching_paths_groups_recursive!
+ Needed: 6; Exist: 4; Missing: 2; Coverage: 66.7%
+
+File nanshe/io/hdf5/serializers.py
+ - No module dostring!
+ - No docstring for HDF5MaskedDataset.__init__!
+ - No docstring for HDF5MaskedDataset.group!
+ - No docstring for HDF5MaskedDataset.name!
+ - No docstring for HDF5MaskedDataset.data!
+ - No docstring for HDF5MaskedDataset.data!
+ - No docstring for HDF5MaskedDataset.mask!
+ - No docstring for HDF5MaskedDataset.mask!
+ - No docstring for HDF5MaskedDataset.fill_value!
+ - No docstring for HDF5MaskedDataset.fill_value!
+ - No docstring for HDF5MaskedDataset.__len__!
+ - No docstring for HDF5MaskedDataset.dims!
+ - No docstring for HDF5MaskedDataset.ndim!
+ - No docstring for HDF5MaskedDataset.shape!
+ - No docstring for HDF5MaskedDataset.shape!
+ - No docstring for HDF5MaskedDataset.size!
+ - No docstring for HDF5MaskedDataset.dtype!
+ - No docstring for HDF5MaskedDataset.resize!
+ - No docstring for HDF5MaskedDataset.__getitem__!
+ - No docstring for HDF5MaskedDataset.__setitem__!
+ - No docstring for HDF5MaskedDataset.__array__!
+ Needed: 24; Exist: 3; Missing: 21; Coverage: 12.5%
 
 File nanshe/spams_sandbox/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -314,7 +281,51 @@ File nanshe/synthetic_data/synthetic_data.py
  - No module dostring!
  Needed: 4; Exist: 3; Missing: 1; Coverage: 75.0%
 
+File nanshe/util/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
 
-Overall statistics for 28 files:
-Docstrings needed: 467; Docstrings exist: 236; Docstrings missing: 231
-Total docstring coverage: 50.5%;  Grade: not so bad
+File nanshe/util/iters.py
+ - No module dostring!
+ - No docstring for splitting_xrange.splitting_xrange_helper!
+ Needed: 24; Exist: 22; Missing: 2; Coverage: 91.7%
+
+File nanshe/util/pathHelpers.py
+ - No module dostring!
+ - No docstring for PathComponents._init!
+ - No docstring for PathComponents.externalPath!
+ - No docstring for PathComponents.externalDirectory!
+ - No docstring for PathComponents.filename!
+ - No docstring for PathComponents.filenameBase!
+ - No docstring for PathComponents.extension!
+ - No docstring for PathComponents.internalPath!
+ - No docstring for PathComponents.internalDatasetName!
+ - No docstring for PathComponents.internalDirectory!
+ - No docstring for areOnSameDrive!
+ - No docstring for isUrl!
+ Needed: 26; Exist: 14; Missing: 12; Coverage: 53.8%
+
+File nanshe/util/prof.py
+ - No module dostring!
+ Needed: 7; Exist: 6; Missing: 1; Coverage: 85.7%
+
+File nanshe/util/wrappers.py
+ - No module dostring!
+ - No docstring for MetaStaticVariables.__new__!
+ - No docstring for MetaAllMethodsDecorator.__new__!
+ - No docstring for MetaAllMethodsDecorator.__new__!
+ - No docstring for MetaMethodsDecorator.__new__!
+ Needed: 23; Exist: 18; Missing: 5; Coverage: 78.3%
+
+File nanshe/util/xglob.py
+ - No module dostring!
+ Needed: 2; Exist: 1; Missing: 1; Coverage: 50.0%
+
+File nanshe/util/xnumpy.py
+ - No module dostring!
+ Needed: 56; Exist: 55; Missing: 1; Coverage: 98.2%
+
+
+Overall statistics for 31 files:
+Docstrings needed: 470; Docstrings exist: 237; Docstrings missing: 233
+Total docstring coverage: 50.4%;  Grade: not so bad

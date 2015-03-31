@@ -8,28 +8,28 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.nanshe.nanshe_converter &mdash; ..  documentation</title>
+    <title>nanshe.converter &mdash; ..  documentation</title>
     
-    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../',
+        URL_ROOT:    '../../',
         VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
-    <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="..  documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" /> 
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body role="document">
@@ -39,14 +39,14 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
+          <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
+          <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+    <li><a href="../../index.html">..  documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>
@@ -57,26 +57,23 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for nanshe.nanshe.nanshe_converter</h1><div class="highlight"><pre>
-<span class="c">#!/usr/bin/env python</span>
-
+  <h1>Source code for nanshe.converter</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 26, 2014 17:33:37 EDT$&quot;</span>
 
 
-<span class="kn">import</span> <span class="nn">debugging_tools</span>
-<span class="kn">import</span> <span class="nn">read_config</span>
-<span class="kn">import</span> <span class="nn">tiff_file_format</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+<span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">xjson</span><span class="p">,</span> <span class="n">xtiff</span>
 
 
 
 <span class="c"># Get the logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">debugging_tools</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
 
-<span class="nd">@debugging_tools.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.nanshe_converter.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">):</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../nanshe.html#nanshe.converter.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.</span>
 
@@ -123,20 +120,12 @@
     <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
     <span class="c"># Go ahead and stuff in parameters with the other parsed_args</span>
-    <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">read_config</span><span class="o">.</span><span class="n">read_parameters</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">)</span>
+    <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">xjson</span><span class="o">.</span><span class="n">read_parameters</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s">&quot;tiff&quot;</span><span class="p">:</span>
-        <span class="n">tiff_file_format</span><span class="o">.</span><span class="n">convert_tiffs</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">,</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="n">xtiff</span><span class="o">.</span><span class="n">convert_tiffs</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">,</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-</div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c"># only necessary if running main (normally if calling command line). no point in importing otherwise.</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-
-    <span class="c"># call main if the script is loaded from command line. otherwise, user can import package without main being called.</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -146,7 +135,7 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../../search.html" method="get">
+    <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -167,14 +156,14 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
+          <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
+          <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+    <li><a href="../../index.html">..  documentation</a> &raquo;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     </div>

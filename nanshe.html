@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="top" title="..  documentation" href="index.html" />
-    <link rel="next" title="nanshe.nanshe package" href="nanshe.nanshe.html" />
+    <link rel="next" title="nanshe.imp package" href="nanshe.imp.html" />
     <link rel="prev" title="Welcome to nanshe’s documentation!" href="index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -46,7 +46,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.nanshe.html" title="nanshe.nanshe package"
+          <a href="nanshe.imp.html" title="nanshe.imp package"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="index.html" title="Welcome to nanshe’s documentation!"
@@ -63,36 +63,61 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-nanshe">
-<span id="nanshe-package"></span><h1>nanshe package<a class="headerlink" href="#module-nanshe" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="nanshe-package">
+<h1>nanshe package<a class="headerlink" href="#nanshe-package" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-nanshe"></span><p>The <code class="docutils literal"><span class="pre">`nanshe`</span></code> package is an image processing package that contains a variety
+of different techniques, which are used primarily to assemble the ADINA
+algorithm proposed by Diego, et al.
+( doi:<a class="reference external" href="http://dx.doi.org/10.1109/ISBI.2013.6556660">10.1109/ISBI.2013.6556660</a> ) to extract active neurons from
+an image sequence. This algorithm uses online dictionary learning (a form of
+matrix factorization) at its heart as implemented by Marial, et al.
+( doi:<a class="reference external" href="http://dx.doi.org/10.1145/1553374.1553463">10.1145/1553374.1553463</a> ) to find a set of atoms (or basis
+images) that are representative of an image sequence and can be used to
+approximately reconstruct the sequence. However, it is designed in a modular
+way so that a different matrix factorization could be swapped in and
+appropriately parameterized. Other portions of the algorithm include a
+preprocessing phase that has a variety of different techniques that can be
+applied optionally. For example, removing registration artifacts from
+a line-by-line registration algorithm, background subtraction, and a wavelet
+transform to filter objects in a particular size.</p>
+<p>Implementation of the algorithm has been done here in pure Python. However, a
+few dependencies are required to get started. These include <a class="reference external" href="http://www.numpy.org/">NumPy</a>, <a class="reference external" href="http://www.scipy.org/">SciPy</a>,
+<a class="reference external" href="http://www.h5py.org/">h5py</a>, <a class="reference external" href="http://scikit-image.org/">scikit-image</a>, <a class="reference external" href="http://spams-devel.gforge.inria.fr/">SPAMS</a>, <a class="reference external" href="http://ukoethe.github.io/vigra/">VIGRA</a>, and <a class="reference external" href="https://github.com/jakirkham/rank_filter/">rank_filter</a>. The first 4 can be
+found in standard distributions like <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda</a>. Installing VIGRA and
+rank_filter can be done by using <a class="reference external" href="http://www.cmake.org/">CMake</a>. SPAMS requires an existing BLAS/LAPACK
+implementation. On Mac and Linux, this can be anything. Typically <a class="reference external" href="http://math-atlas.sourceforge.net/">ATLAS</a> is
+used, but <a class="reference external" href="http://www.openblas.net/">OpenBLAS</a> or <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel MKL</a> (if available) can be used, as well. This
+will require modifying the setup.py script. On Windows, the setup.py links to
+<a class="reference external" href="http://www.r-project.org/">R</a>, which should be changed if another BLAS is available.</p>
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.nanshe.html">nanshe.nanshe package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.HDF5_recorder">nanshe.nanshe.HDF5_recorder module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.HDF5_searchers">nanshe.nanshe.HDF5_searchers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.HDF5_serializers">nanshe.nanshe.HDF5_serializers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.additional_generators">nanshe.nanshe.additional_generators module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.additional_io">nanshe.nanshe.additional_io module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.advanced_image_processing">nanshe.nanshe.advanced_image_processing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.binary_image_processing">nanshe.nanshe.binary_image_processing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.debugging_tools">nanshe.nanshe.debugging_tools module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.denoising">nanshe.nanshe.denoising module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.expanded_numpy">nanshe.nanshe.expanded_numpy module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.generic_decorators">nanshe.nanshe.generic_decorators module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.nanshe_converter">nanshe.nanshe.nanshe_converter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.nanshe_learner">nanshe.nanshe.nanshe_learner module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.nanshe_registerer">nanshe.nanshe.nanshe_registerer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.nanshe_viewer">nanshe.nanshe.nanshe_viewer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.neuron_matplotlib_viewer">nanshe.nanshe.neuron_matplotlib_viewer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.pathHelpers">nanshe.nanshe.pathHelpers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.read_config">nanshe.nanshe.read_config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.registration">nanshe.nanshe.registration module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.simple_image_processing">nanshe.nanshe.simple_image_processing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.tiff_file_format">nanshe.nanshe.tiff_file_format module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.nanshe.html#module-nanshe.nanshe.wavelet_transform">nanshe.nanshe.wavelet_transform module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.imp.html">nanshe.imp package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#module-nanshe.imp.advanced_image_processing">nanshe.imp.advanced_image_processing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#module-nanshe.imp.binary_image_processing">nanshe.imp.binary_image_processing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#module-nanshe.imp.denoising">nanshe.imp.denoising module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#module-nanshe.imp.neuron_matplotlib_viewer">nanshe.imp.neuron_matplotlib_viewer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#module-nanshe.imp.registration">nanshe.imp.registration module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#module-nanshe.imp.simple_image_processing">nanshe.imp.simple_image_processing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#module-nanshe.imp.wavelet_transform">nanshe.imp.wavelet_transform module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.io.html">nanshe.io package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.io.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.io.hdf5.html">nanshe.io.hdf5 package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.html#module-nanshe.io.hdf5.record">nanshe.io.hdf5.record module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.html#module-nanshe.io.hdf5.search">nanshe.io.hdf5.search module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.html#module-nanshe.io.hdf5.serializers">nanshe.io.hdf5.serializers module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.io.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.io.html#module-nanshe.io.xjson">nanshe.io.xjson module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.io.html#module-nanshe.io.xtiff">nanshe.io.xtiff module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nanshe.spams_sandbox.html">nanshe.spams_sandbox package</a><ul>
@@ -105,8 +130,1170 @@
 <li class="toctree-l2"><a class="reference internal" href="nanshe.synthetic_data.html#module-nanshe.synthetic_data.synthetic_data">nanshe.synthetic_data.synthetic_data module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.util.html">nanshe.util package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#module-nanshe.util.iters">nanshe.util.iters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#module-nanshe.util.pathHelpers">nanshe.util.pathHelpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#module-nanshe.util.prof">nanshe.util.prof module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#module-nanshe.util.wrappers">nanshe.util.wrappers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#module-nanshe.util.xglob">nanshe.util.xglob module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#module-nanshe.util.xnumpy">nanshe.util.xnumpy module</a></li>
+</ul>
+</li>
 </ul>
 </div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nanshe.converter">
+<span id="nanshe-converter-module"></span><h2>nanshe.converter module<a class="headerlink" href="#module-nanshe.converter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nanshe.converter.main">
+<code class="descclassname">nanshe.converter.</code><code class="descname">main</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/converter.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.converter.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>argv</strong> (<em>list</em>) &#8211; arguments (includes command line call).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">exit code (0 if success)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nanshe.learner">
+<span id="nanshe-learner-module"></span><h2>nanshe.learner module<a class="headerlink" href="#module-nanshe.learner" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nanshe.learner.generate_neurons">
+<code class="descclassname">nanshe.learner.</code><code class="descname">generate_neurons</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/learner.html#generate_neurons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.learner.generate_neurons" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nanshe.learner.generate_neurons_a_block">
+<code class="descclassname">nanshe.learner.</code><code class="descname">generate_neurons_a_block</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/learner.html#generate_neurons_a_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.learner.generate_neurons_a_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
+dataset). Also,</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>HDF5 filename to read from (should be a path to a h5py.Dataset)</strong> (<em>input_filename</em>) &#8211; </li>
+<li><strong>HDF5 filename to write to (should be a path to a h5py.Group)</strong> (<em>output_filename</em>) &#8211; </li>
+<li><strong>how the run should be configured.</strong> (<em>parameters</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.learner.generate_neurons_blocks">
+<code class="descclassname">nanshe.learner.</code><code class="descname">generate_neurons_blocks</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/learner.html#generate_neurons_blocks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.learner.generate_neurons_blocks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nanshe.learner.generate_neurons_io_handler">
+<code class="descclassname">nanshe.learner.</code><code class="descname">generate_neurons_io_handler</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/learner.html#generate_neurons_io_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.learner.generate_neurons_io_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
+dataset). Also,</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>HDF5 filename to read from (should be a path to a h5py.Dataset)</strong> (<em>input_filename</em>) &#8211; </li>
+<li><strong>HDF5 filename to write to (should be a path to a h5py.Group)</strong> (<em>output_filename</em>) &#8211; </li>
+<li><strong>JSON filename with parameters.</strong> (<em>parameters_filename</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.learner.main">
+<code class="descclassname">nanshe.learner.</code><code class="descname">main</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/learner.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.learner.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>argv</strong> (<em>list</em>) &#8211; arguments (includes command line call).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">exit code (0 if success)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nanshe.registerer">
+<span id="nanshe-registerer-module"></span><h2>nanshe.registerer module<a class="headerlink" href="#module-nanshe.registerer" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nanshe.registerer.main">
+<code class="descclassname">nanshe.registerer.</code><code class="descname">main</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/registerer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.registerer.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>argv</strong> (<em>list</em>) &#8211; arguments (includes command line call).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">exit code (0 if success)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nanshe.viewer">
+<span id="nanshe-viewer-module"></span><h2>nanshe.viewer module<a class="headerlink" href="#module-nanshe.viewer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">ContourProjectionConstantRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.constant_request">
+<code class="descname">constant_request</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.constant_request" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant RequestABC</em></p>
+<p>The request to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take the max projection along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>Slicing to be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantRequest.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.getResult">
+<code class="descname">getResult</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantRequest.getResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.getResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.notify">
+<code class="descname">notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantRequest.notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantRequest.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantRequest.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantRequest.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.ContourProjectionConstantSource">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">ContourProjectionConstantSource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtCore.QObject</span></code></p>
+<p>Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.constant_request">
+<code class="descname">constant_request</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.constant_request" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant RequestABC</em></p>
+<p>The request to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take the max projection along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>Slicing to be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantSource.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.dtype">
+<code class="descname">dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantSource.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.isDirty">
+<code class="descname">isDirty</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.isDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.numberOfChannels">
+<code class="descname">numberOfChannels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantSource.numberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.numberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.numberOfChannelsChanged">
+<code class="descname">numberOfChannelsChanged</code><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.numberOfChannelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantSource.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.setDirty">
+<code class="descname">setDirty</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantSource.setDirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.setDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.ContourProjectionConstantSource.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantSource.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantSource.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">EnumeratedProjectionConstantRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Created by an EnumeratedProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.constant_request">
+<code class="descname">constant_request</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.constant_request" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant RequestABC</em></p>
+<p>The request to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take the max projection along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>Slicing to be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantRequest.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.getResult">
+<code class="descname">getResult</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantRequest.getResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.getResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.notify">
+<code class="descname">notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantRequest.notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantRequest.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantRequest.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantRequest.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantRequest.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">EnumeratedProjectionConstantSource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtCore.QObject</span></code></p>
+<p>Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.constant_source">
+<code class="descname">constant_source</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.constant_source" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant SourceABC</em></p>
+<p>Source to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take compute the max along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource._shape">
+<code class="descname">_shape</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource._shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>The shape of the source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantSource.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.dtype">
+<code class="descname">dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantSource.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.isDirty">
+<code class="descname">isDirty</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.isDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.numberOfChannels">
+<code class="descname">numberOfChannels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantSource.numberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.numberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.numberOfChannelsChanged">
+<code class="descname">numberOfChannelsChanged</code><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.numberOfChannelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantSource.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.setDirty">
+<code class="descname">setDirty</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantSource.setDirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.setDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.EnumeratedProjectionConstantSource.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#EnumeratedProjectionConstantSource.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.EnumeratedProjectionConstantSource.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">FloatProjectionConstantRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.constant_request">
+<code class="descname">constant_request</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.constant_request" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant RequestABC</em></p>
+<p>The request to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take the max projection along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>Slicing to be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantRequest.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.getResult">
+<code class="descname">getResult</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantRequest.getResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.getResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.notify">
+<code class="descname">notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantRequest.notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantRequest.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantRequest.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantRequest.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantRequest.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.FloatProjectionConstantSource">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">FloatProjectionConstantSource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtCore.QObject</span></code></p>
+<p>Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.constant_request">
+<code class="descname">constant_request</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.constant_request" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant RequestABC</em></p>
+<p>The request to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take the max projection along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>Slicing to be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantSource.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.dtype">
+<code class="descname">dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantSource.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.isDirty">
+<code class="descname">isDirty</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.isDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.numberOfChannels">
+<code class="descname">numberOfChannels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantSource.numberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.numberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.numberOfChannelsChanged">
+<code class="descname">numberOfChannelsChanged</code><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.numberOfChannelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantSource.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.setDirty">
+<code class="descname">setDirty</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantSource.setDirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.setDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.FloatProjectionConstantSource.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#FloatProjectionConstantSource.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.FloatProjectionConstantSource.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.HDF5DataFusedRequest">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5DataFusedRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedRequest.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedRequest.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedRequest.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedRequest.getResult">
+<code class="descname">getResult</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedRequest.getResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedRequest.getResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedRequest.notify">
+<code class="descname">notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedRequest.notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedRequest.notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedRequest.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedRequest.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedRequest.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedRequest.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedRequest.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedRequest.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.HDF5DataFusedSource">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5DataFusedSource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtCore.QObject</span></code></p>
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedSource.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedSource.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedSource.dtype">
+<code class="descname">dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedSource.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataFusedSource.isDirty">
+<code class="descname">isDirty</code><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.isDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedSource.numberOfChannels">
+<code class="descname">numberOfChannels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedSource.numberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.numberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataFusedSource.numberOfChannelsChanged">
+<code class="descname">numberOfChannelsChanged</code><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.numberOfChannelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedSource.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedSource.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedSource.setDirty">
+<code class="descname">setDirty</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedSource.setDirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.setDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataFusedSource.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataFusedSource.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataFusedSource.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.HDF5DataRequest">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5DataRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Created by an HDF5DataSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataRequest.file_handle">
+<code class="descname">file_handle</code><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.file_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>h5py.File or str</em></p>
+<p>A handle for reading the HDF5 file or the external file path.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataRequest.dataset_path">
+<code class="descname">dataset_path</code><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.dataset_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>Internal path to the dataset</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataRequest.axis_order">
+<code class="descname">axis_order</code><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.axis_order" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>A tuple representing how to reshape the array before returning a request.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataRequest.dataset_dtype">
+<code class="descname">dataset_dtype</code><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.dataset_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.dtype or type</em></p>
+<p>The type of the underlying dataset.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataRequest.throw_on_not_found">
+<code class="descname">throw_on_not_found</code><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.throw_on_not_found" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em></p>
+<p>Whether to throw an exception if the dataset is not found.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataRequest.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>The slicing request by Volumina.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataRequest.actual_slicing">
+<code class="descname">actual_slicing</code><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.actual_slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>The actual slicing that will be performed on the dataset.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">throw_on_not_found</code></dt>
+<dd><p><em>bool</em></p>
+<p>Whether to throw an exception if the dataset is not found.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before returning the result to Volumina the axes will likely need to be transposed. Also, singleton axes
+will need to be inserted to ensure the dimensionality is 5 as Volumina expects. This result will be cached
+inside the request instance. So, if this request instance is kept, this won&#8217;t need to be repeated.</p>
+</div>
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataRequest.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataRequest.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataRequest.getResult">
+<code class="descname">getResult</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataRequest.getResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.getResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataRequest.notify">
+<code class="descname">notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataRequest.notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataRequest.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataRequest.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataRequest.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataRequest.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataRequest.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.HDF5DataSource">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5DataSource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtCore.QObject</span></code></p>
+<p>Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.</p>
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.file_handle">
+<code class="descname">file_handle</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.file_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>h5py.File or str</em></p>
+<p>A handle for reading the HDF5 file or the external file path.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.file_path">
+<code class="descname">file_path</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>External path to the file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.dataset_path">
+<code class="descname">dataset_path</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.dataset_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>Internal path to the dataset</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.full_path">
+<code class="descname">full_path</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.full_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>Both external and internal paths combined as one path</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.dataset_shape">
+<code class="descname">dataset_shape</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.dataset_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>A tuple representing the shape of the dataset in each dimension</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.dataset_dtype">
+<code class="descname">dataset_dtype</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.dataset_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.dtype or type</em></p>
+<p>The type of the underlying dataset.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.axis_order">
+<code class="descname">axis_order</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.axis_order" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>A tuple representing how to reshape the array before returning a request</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataSource.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataSource.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataSource.dtype">
+<code class="descname">dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataSource.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.isDirty">
+<code class="descname">isDirty</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.isDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataSource.numberOfChannels">
+<code class="descname">numberOfChannels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataSource.numberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.numberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5DataSource.numberOfChannelsChanged">
+<code class="descname">numberOfChannelsChanged</code><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.numberOfChannelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataSource.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataSource.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataSource.setDirty">
+<code class="descname">setDirty</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataSource.setDirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.setDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5DataSource.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DataSource.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DataSource.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="nanshe.viewer.HDF5DatasetNotFoundException">
+<em class="property">exception </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5DatasetNotFoundException</code><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5DatasetNotFoundException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5DatasetNotFoundException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<p>An exception raised when a dataset is not found in an HDF5 file.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="nanshe.viewer.HDF5NoFusedSourceException">
+<em class="property">exception </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5NoFusedSourceException</code><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5NoFusedSourceException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5NoFusedSourceException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="nanshe.viewer.HDF5UndefinedShapeDtypeException">
+<em class="property">exception </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5UndefinedShapeDtypeException</code><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5UndefinedShapeDtypeException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5UndefinedShapeDtypeException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.HDF5Viewer">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">HDF5Viewer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">volumina.viewer.Viewer</span></code></p>
+<p>Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.</p>
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5Viewer.file_handle">
+<code class="descname">file_handle</code><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.file_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>h5py.File or str</em></p>
+<p>A handle for reading the HDF5 file or the external file path.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5Viewer.file_path">
+<code class="descname">file_path</code><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>External path to the file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5Viewer.dataset_path">
+<code class="descname">dataset_path</code><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.dataset_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>Internal path to the dataset</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5Viewer.full_path">
+<code class="descname">full_path</code><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.full_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>Both external and internal paths combined as one path</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5Viewer.dataset_shape">
+<code class="descname">dataset_shape</code><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.dataset_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>A tuple representing the shape of the dataset in each dimension</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5Viewer.dataset_dtype">
+<code class="descname">dataset_dtype</code><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.dataset_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.dtype or type</em></p>
+<p>The type of the underlying dataset.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.HDF5Viewer.axis_order">
+<code class="descname">axis_order</code><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.axis_order" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>A tuple representing how to reshape the array before returning a request</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5Viewer.addAlphaModulatedHDF5Layer">
+<code class="descname">addAlphaModulatedHDF5Layer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer.addAlphaModulatedHDF5Layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.addAlphaModulatedHDF5Layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5Viewer.addColorTableHDF5Layer">
+<code class="descname">addColorTableHDF5Layer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer.addColorTableHDF5Layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.addColorTableHDF5Layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5Viewer.addColorTableHDF5Source">
+<code class="descname">addColorTableHDF5Source</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer.addColorTableHDF5Source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.addColorTableHDF5Source" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5Viewer.addGrayscaleHDF5Layer">
+<code class="descname">addGrayscaleHDF5Layer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer.addGrayscaleHDF5Layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.addGrayscaleHDF5Layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5Viewer.addGrayscaleHDF5Source">
+<code class="descname">addGrayscaleHDF5Source</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer.addGrayscaleHDF5Source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.addGrayscaleHDF5Source" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5Viewer.addRGBAHDF5Layer">
+<code class="descname">addRGBAHDF5Layer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer.addRGBAHDF5Layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.addRGBAHDF5Layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.HDF5Viewer.addRandomColorsHDF5Layer">
+<code class="descname">addRandomColorsHDF5Layer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#HDF5Viewer.addRandomColorsHDF5Layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.HDF5Viewer.addRandomColorsHDF5Layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">MaxProjectionConstantRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Created by an MaxProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.constant_request">
+<code class="descname">constant_request</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.constant_request" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant RequestABC</em></p>
+<p>The request to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take the max projection along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>Slicing to be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantRequest.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.getResult">
+<code class="descname">getResult</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantRequest.getResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.getResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.notify">
+<code class="descname">notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantRequest.notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantRequest.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantRequest.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantRequest.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantRequest.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.MaxProjectionConstantSource">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">MaxProjectionConstantSource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtCore.QObject</span></code></p>
+<p>Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.constant_source">
+<code class="descname">constant_source</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.constant_source" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant SourceABC</em></p>
+<p>Source to take the max projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take compute the max along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantSource._shape">
+<code class="descname">_shape</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource._shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>The shape of the source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantSource.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.dtype">
+<code class="descname">dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantSource.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.isDirty">
+<code class="descname">isDirty</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.isDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.numberOfChannels">
+<code class="descname">numberOfChannels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantSource.numberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.numberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.numberOfChannelsChanged">
+<code class="descname">numberOfChannelsChanged</code><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.numberOfChannelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantSource.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.setDirty">
+<code class="descname">setDirty</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantSource.setDirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.setDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MaxProjectionConstantSource.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MaxProjectionConstantSource.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MaxProjectionConstantSource.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">MeanProjectionConstantRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Created by an MeanProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.constant_request">
+<code class="descname">constant_request</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.constant_request" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant RequestABC</em></p>
+<p>The request to take the mean projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take the mean projection along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.slicing">
+<code class="descname">slicing</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of slices</em></p>
+<p>Slicing to be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantRequest.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.getResult">
+<code class="descname">getResult</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantRequest.getResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.getResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.notify">
+<code class="descname">notify</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantRequest.notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantRequest.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.submit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantRequest.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantRequest.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantRequest.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.MeanProjectionConstantSource">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">MeanProjectionConstantSource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtCore.QObject</span></code></p>
+<p>Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a mean projection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was not designed to know about dirtiness or any sort of changing data.</p>
+</div>
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.constant_source">
+<code class="descname">constant_source</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.constant_source" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>a constant SourceABC</em></p>
+<p>Source to take the mean projection of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.axis">
+<code class="descname">axis</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>The axis to take compute the mean along.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantSource._shape">
+<code class="descname">_shape</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource._shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em></p>
+<p>The shape of the source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantSource.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.dtype">
+<code class="descname">dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantSource.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.isDirty">
+<code class="descname">isDirty</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.isDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.numberOfChannels">
+<code class="descname">numberOfChannels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantSource.numberOfChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.numberOfChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.numberOfChannelsChanged">
+<code class="descname">numberOfChannelsChanged</code><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.numberOfChannelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantSource.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.setDirty">
+<code class="descname">setDirty</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantSource.setDirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.setDirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.viewer.MeanProjectionConstantSource.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#MeanProjectionConstantSource.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.MeanProjectionConstantSource.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.viewer.SyncedChannelLayers">
+<em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">SyncedChannelLayers</code><span class="sig-paren">(</span><em>*layers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#SyncedChannelLayers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.SyncedChannelLayers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.viewer.main">
+<code class="descclassname">nanshe.viewer.</code><code class="descname">main</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 
@@ -120,6 +1307,11 @@
     <ul>
 <li><a class="reference internal" href="#">nanshe package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-nanshe.converter">nanshe.converter module</a></li>
+<li><a class="reference internal" href="#module-nanshe.learner">nanshe.learner module</a></li>
+<li><a class="reference internal" href="#module-nanshe.registerer">nanshe.registerer module</a></li>
+<li><a class="reference internal" href="#module-nanshe.viewer">nanshe.viewer module</a></li>
 </ul>
 </li>
 </ul>
@@ -132,8 +1324,8 @@
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
-    <p class="topless"><a href="nanshe.nanshe.html"
-                          title="Next page">&rarr; nanshe.nanshe package</a></p>
+    <p class="topless"><a href="nanshe.imp.html"
+                          title="Next page">&rarr; nanshe.imp package</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -171,7 +1363,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.nanshe.html" title="nanshe.nanshe package"
+          <a href="nanshe.imp.html" title="nanshe.imp package"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
           <a href="index.html" title="Welcome to nanshe’s documentation!"

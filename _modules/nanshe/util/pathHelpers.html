@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.nanshe.pathHelpers &mdash; ..  documentation</title>
+    <title>nanshe.util.pathHelpers &mdash; ..  documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -57,7 +57,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for nanshe.nanshe.pathHelpers</h1><div class="highlight"><pre>
+  <h1>Source code for nanshe.util.pathHelpers</h1><div class="highlight"><pre>
 <span class="c">###############################################################################</span>
 <span class="c">#   lazyflow: data flow based lazy parallel computation framework</span>
 <span class="c">#</span>
@@ -81,7 +81,7 @@
 <span class="c">###############################################################################</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<div class="viewcode-block" id="PathComponents"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents">[docs]</a><span class="k">class</span> <span class="nc">PathComponents</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="PathComponents"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.pathHelpers.PathComponents">[docs]</a><span class="k">class</span> <span class="nc">PathComponents</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Provides a convenient access to path components of a combined external/internal path to a dataset.</span>
 <span class="sd">    Also, each of the properties listed below is writable, in which case ALL properties are updated accordingly.</span>
@@ -156,7 +156,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalPath</span> <span class="p">)[</span><span class="mi">1</span><span class="p">]</span>          <span class="c"># file.h5</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filenameBase</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>         <span class="c"># file</span>
     
-<div class="viewcode-block" id="PathComponents.__setattr__"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.__setattr__">[docs]</a>    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="PathComponents.__setattr__"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.pathHelpers.PathComponents.__setattr__">[docs]</a>    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This prevents us from accidentally writing to a non-existant attribute.</span>
 <span class="sd">        e.g. if the user tries to say components.fIlEnAmE = &#39;newfile.h5&#39;, raise an error.</span>
@@ -166,7 +166,7 @@
             <span class="n">oldval</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
         <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span> <span class="p">)</span>
 </div>
-<div class="viewcode-block" id="PathComponents.totalPath"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.PathComponents.totalPath">[docs]</a>    <span class="k">def</span> <span class="nf">totalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PathComponents.totalPath"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.pathHelpers.PathComponents.totalPath">[docs]</a>    <span class="k">def</span> <span class="nf">totalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the (reconstructed) totalPath to the dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -292,7 +292,7 @@
         <span class="n">new_internal</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalDatasetName</span> <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">internalPath</span> <span class="o">=</span> <span class="n">new_internal</span>
 </div>
-<div class="viewcode-block" id="areOnSameDrive"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.areOnSameDrive">[docs]</a><span class="k">def</span> <span class="nf">areOnSameDrive</span><span class="p">(</span><span class="n">path1</span><span class="p">,</span><span class="n">path2</span><span class="p">):</span>
+<div class="viewcode-block" id="areOnSameDrive"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.pathHelpers.areOnSameDrive">[docs]</a><span class="k">def</span> <span class="nf">areOnSameDrive</span><span class="p">(</span><span class="n">path1</span><span class="p">,</span><span class="n">path2</span><span class="p">):</span>
     <span class="c">#if one path is relative, assume they are on same drive</span>
     <span class="k">if</span> <span class="n">isUrl</span><span class="p">(</span><span class="n">path1</span><span class="p">)</span> <span class="ow">or</span> <span class="n">isUrl</span><span class="p">(</span><span class="n">path2</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">False</span>
@@ -302,7 +302,7 @@
     <span class="n">drive2</span><span class="p">,</span><span class="n">path2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitdrive</span><span class="p">(</span><span class="n">path2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">drive1</span><span class="o">==</span><span class="n">drive2</span>
 </div>
-<div class="viewcode-block" id="compressPathForDisplay"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.compressPathForDisplay">[docs]</a><span class="k">def</span> <span class="nf">compressPathForDisplay</span><span class="p">(</span><span class="n">pathstr</span><span class="p">,</span><span class="n">maxlength</span><span class="p">):</span>
+<div class="viewcode-block" id="compressPathForDisplay"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.pathHelpers.compressPathForDisplay">[docs]</a><span class="k">def</span> <span class="nf">compressPathForDisplay</span><span class="p">(</span><span class="n">pathstr</span><span class="p">,</span><span class="n">maxlength</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Add alternatingly parts of the start and the end of the path</span>
 <span class="sd">    until maxlength is exceeded. Result: Drive/Dir1/.../Dirn/file&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pathstr</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">maxlength</span><span class="p">:</span>
@@ -325,11 +325,11 @@
         <span class="n">prefix</span> <span class="o">=</span> <span class="n">c</span>
     <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">dots</span> <span class="o">+</span> <span class="n">suffix</span>
 </div>
-<div class="viewcode-block" id="isUrl"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.isUrl">[docs]</a><span class="k">def</span> <span class="nf">isUrl</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="isUrl"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.pathHelpers.isUrl">[docs]</a><span class="k">def</span> <span class="nf">isUrl</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="c"># For now, the simplest rule will work.</span>
     <span class="k">return</span> <span class="s">&#39;://&#39;</span> <span class="ow">in</span> <span class="n">path</span>
 </div>
-<div class="viewcode-block" id="getPathVariants"><a class="viewcode-back" href="../../../nanshe.nanshe.html#nanshe.nanshe.pathHelpers.getPathVariants">[docs]</a><span class="k">def</span> <span class="nf">getPathVariants</span><span class="p">(</span><span class="n">originalPath</span><span class="p">,</span> <span class="n">workingDirectory</span><span class="p">):</span>
+<div class="viewcode-block" id="getPathVariants"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.pathHelpers.getPathVariants">[docs]</a><span class="k">def</span> <span class="nf">getPathVariants</span><span class="p">(</span><span class="n">originalPath</span><span class="p">,</span> <span class="n">workingDirectory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Take the given filePath (which can be absolute or relative, and may include an internal path suffix),</span>
 <span class="sd">    and return a tuple of the absolute and relative paths to the file.</span>

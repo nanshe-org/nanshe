@@ -1,0 +1,60 @@
+nanshe.util package
+===================
+
+.. automodule:: nanshe.util
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+nanshe.util.iters module
+------------------------
+
+.. automodule:: nanshe.util.iters
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nanshe.util.pathHelpers module
+------------------------------
+
+.. automodule:: nanshe.util.pathHelpers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nanshe.util.prof module
+-----------------------
+
+.. automodule:: nanshe.util.prof
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nanshe.util.wrappers module
+---------------------------
+
+.. automodule:: nanshe.util.wrappers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nanshe.util.xglob module
+------------------------
+
+.. automodule:: nanshe.util.xglob
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nanshe.util.xnumpy module
+-------------------------
+
+.. automodule:: nanshe.util.xnumpy
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
