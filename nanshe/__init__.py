@@ -36,6 +36,25 @@ used, but OpenBLAS_ or `Intel MKL`_ (if available) can be used, as well. This
 will require modifying the setup.py script. On Windows, the setup.py links to
 R_, which should be changed if another BLAS is available.
 
+-------------------------------------
+ Building
+-------------------------------------
+As this module is pure Python, building follows through the standard method.
+Currently, we require setuptools_ for installation; so, make sure it is
+installed. Then simply issue the following command to build and install.
+
+.. code-block:: sh
+
+    python setup.py install
+
+Alternatively, one can build and then install in two steps if that is
+preferable.
+
+.. code-block:: sh
+
+    python setup.py build
+    python setup.py install
+
 
 .. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660
 .. _`10.1145/1553374.1553463`: http://dx.doi.org/10.1145/1553374.1553463
@@ -52,6 +71,7 @@ R_, which should be changed if another BLAS is available.
 .. _OpenBLAS: http://www.openblas.net/
 .. _`Intel MKL`: https://software.intel.com/en-us/intel-mkl
 .. _R: http://www.r-project.org/
+.. _setuptools: https://pythonhosted.org/setuptools/
 """
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Dec 22, 2014 08:46:12 EST$"
