@@ -65,7 +65,9 @@
             
   <div class="section" id="nanshe-package">
 <h1>nanshe package<a class="headerlink" href="#nanshe-package" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-nanshe"></span><p>The <code class="docutils literal"><span class="pre">`nanshe`</span></code> package is an image processing package that contains a variety
+<span class="target" id="module-nanshe"></span><div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">`nanshe`</span></code> package is an image processing package that contains a variety
 of different techniques, which are used primarily to assemble the ADINA
 algorithm proposed by Diego, et al.
 ( doi:<a class="reference external" href="http://dx.doi.org/10.1109/ISBI.2013.6556660">10.1109/ISBI.2013.6556660</a> ) to extract active neurons from
@@ -80,6 +82,11 @@ preprocessing phase that has a variety of different techniques that can be
 applied optionally. For example, removing registration artifacts from
 a line-by-line registration algorithm, background subtraction, and a wavelet
 transform to filter objects in a particular size.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
 <p>Implementation of the algorithm has been done here in pure Python. However, a
 few dependencies are required to get started. These include <a class="reference external" href="http://www.numpy.org/">NumPy</a>, <a class="reference external" href="http://www.scipy.org/">SciPy</a>,
 <a class="reference external" href="http://www.h5py.org/">h5py</a>, <a class="reference external" href="http://scikit-image.org/">scikit-image</a>, <a class="reference external" href="http://spams-devel.gforge.inria.fr/">SPAMS</a>, <a class="reference external" href="http://ukoethe.github.io/vigra/">VIGRA</a>, and <a class="reference external" href="https://github.com/jakirkham/rank_filter/">rank_filter</a>. The first 4 can be
@@ -89,6 +96,8 @@ implementation. On Mac and Linux, this can be anything. Typically <a class="refe
 used, but <a class="reference external" href="http://www.openblas.net/">OpenBLAS</a> or <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel MKL</a> (if available) can be used, as well. This
 will require modifying the setup.py script. On Windows, the setup.py links to
 <a class="reference external" href="http://www.r-project.org/">R</a>, which should be changed if another BLAS is available.</p>
+</div>
+</div>
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -1306,6 +1315,11 @@ inside the request instance. So, if this request instance is kept, this won&#821
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">nanshe package</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-nanshe.converter">nanshe.converter module</a></li>
