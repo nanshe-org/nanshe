@@ -55,6 +55,38 @@ preferable.
     python setup.py build
     python setup.py install
 
+-------------------------------------
+ Testing
+-------------------------------------
+Running the test suite is fairly straightforward. Testing is done using nose_;
+so, make sure you have a running copy if you wish to run the tests. Some of the
+tests require drmaa_ installed and properly configured. If that is not the
+case, those tests will be skipped automatically. To run the test suite, one
+must be in the source directory. Then simply run the following command. This
+will run all the tests and doctests. Depending on your machine, this will take
+a few minutes to complete.
+
+.. code-block:: sh
+
+    nosetests
+
+The full test suite includes 3D tests, which are very slow to run and so are
+not run by default. As the code has been written to be dimensionally agnostic,
+these tests don't cover anything that the 2D tests don't already cover. To run
+the 3D tests, simply use ``setup.all.cfg``.
+
+.. code-block:: sh
+
+    nosetests -c setup.all.cfg
+
+It is also possible to run this as part of the setup.py process. In which case,
+this can be done as shown below. If 3D tests are required for this portion, one
+need only replace ``setup.cfg`` with ``setup.all.cfg``.
+
+.. code-block:: sh
+
+    python setup.py nosetests
+
 
 .. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660
 .. _`10.1145/1553374.1553463`: http://dx.doi.org/10.1145/1553374.1553463
@@ -72,6 +104,8 @@ preferable.
 .. _`Intel MKL`: https://software.intel.com/en-us/intel-mkl
 .. _R: http://www.r-project.org/
 .. _setuptools: https://pythonhosted.org/setuptools/
+.. _nose: http://nose.readthedocs.org/en/latest/
+.. _drmaa: https://github.com/pygridtools/drmaa-python
 """
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Dec 22, 2014 08:46:12 EST$"
