@@ -57,7 +57,7 @@ import registration
 from filters.noise import estimate_noise, significant_mask
 
 # Wavelet transformation operations
-import wavelet
+from filters import wavelet
 
 from nanshe.io import hdf5
 
