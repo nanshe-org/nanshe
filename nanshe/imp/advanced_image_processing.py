@@ -54,7 +54,7 @@ from simple_image_processing import zeroed_mean_images, renormalized_images
 import registration
 
 # To remove noise from the basis images
-import denoising
+from denoising import estimate_noise, significant_mask
 
 # Wavelet transformation operations
 import wavelet_transform
@@ -1889,8 +1889,8 @@ def wavelet_denoising(new_image,
     logger.debug("Removing noise...")
 
     # Contains a bool array with significant values True and noise False.
-    new_image_noise_estimate = denoising.estimate_noise(new_image,
-                                                        **parameters["denoising.estimate_noise"])
+    new_image_noise_estimate = estimate_noise(new_image,
+                                              **parameters["estimate_noise"])
 
     # Dictionary with wavelet transform applied. Wavelet transform is the first index.
     new_wavelet_transformed_image = wavelet_transform.wavelet_transform(new_image,
@@ -1903,9 +1903,9 @@ def wavelet_denoising(new_image,
             new_wavelet_transformed_image[i][None]
 
     # Contains a bool array with significant values True and noise False for all wavelet transforms.
-    new_wavelet_transformed_image_significant_mask = denoising.significant_mask(new_wavelet_transformed_image,
-                                                                                noise_estimate = new_image_noise_estimate,
-                                                                                **parameters["denoising.significant_mask"])
+    new_wavelet_transformed_image_significant_mask = significant_mask(new_wavelet_transformed_image,
+                                                                      noise_estimate = new_image_noise_estimate,
+                                                                      **parameters["significant_mask"])
 
     for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
         wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image_significant_mask"] = \

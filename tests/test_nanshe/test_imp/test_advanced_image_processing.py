@@ -1644,10 +1644,10 @@ class TestAdvancedImageProcessing(object):
                     "min" : 30
                 }
             },
-            "denoising.estimate_noise" : {
+            "estimate_noise" : {
                 "significance_threshold" : 3.0
             },
-            "denoising.significant_mask" : {
+            "significant_mask" : {
                 "noise_threshold" : 3.0
             },
             "remove_too_close_local_maxima" : {
@@ -1692,10 +1692,10 @@ class TestAdvancedImageProcessing(object):
                     "min" : 0
                 }
             },
-            "denoising.estimate_noise" : {
+            "estimate_noise" : {
                 "significance_threshold" : 3.0
             },
-            "denoising.significant_mask" : {
+            "significant_mask" : {
                 "noise_threshold" : 3.0
             },
             "remove_too_close_local_maxima" : {
@@ -1773,10 +1773,10 @@ class TestAdvancedImageProcessing(object):
                     "min" : 10000
                 }
             },
-            "denoising.estimate_noise" : {
+            "estimate_noise" : {
                 "significance_threshold" : 3.0
             },
-            "denoising.significant_mask" : {
+            "significant_mask" : {
                 "noise_threshold" : 3.0
             },
             "remove_too_close_local_maxima" : {
@@ -2142,10 +2142,10 @@ class TestAdvancedImageProcessing(object):
                         "min" : 30
                     }
                 },
-                "denoising.estimate_noise" : {
+                "estimate_noise" : {
                     "significance_threshold" : 3.0
                 },
-                "denoising.significant_mask" : {
+                "significant_mask" : {
                     "noise_threshold" : 3.0
                 },
                 "remove_too_close_local_maxima" : {
@@ -2232,10 +2232,10 @@ class TestAdvancedImageProcessing(object):
                         "min" : 30
                     }
                 },
-                "denoising.estimate_noise" : {
+                "estimate_noise" : {
                     "significance_threshold" : 3.0
                 },
-                "denoising.significant_mask" : {
+                "significant_mask" : {
                     "noise_threshold" : 3.0
                 },
                 "remove_too_close_local_maxima" : {
@@ -2321,10 +2321,10 @@ class TestAdvancedImageProcessing(object):
                         "min" : 1000.0
                     }
                 },
-                "denoising.estimate_noise" : {
+                "estimate_noise" : {
                     "significance_threshold" : 3.0
                 },
-                "denoising.significant_mask" : {
+                "significant_mask" : {
                     "noise_threshold" : 3.0
                 },
                 "remove_too_close_local_maxima" : {
@@ -2412,10 +2412,10 @@ class TestAdvancedImageProcessing(object):
                         "min" : 10000.0
                     }
                 },
-                "denoising.estimate_noise" : {
+                "estimate_noise" : {
                     "significance_threshold" : 3.0
                 },
-                "denoising.significant_mask" : {
+                "significant_mask" : {
                     "noise_threshold" : 3.0
                 },
                 "remove_too_close_local_maxima" : {

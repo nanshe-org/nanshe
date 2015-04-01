@@ -174,9 +174,9 @@
                 
                 "wavelet_denoising" : {
                     
-                    "__comment__denoising.estimate_noise" : "Estimates the upper bound on the noise by finding the standard deviation on a subset of the data. The subset is determined by finding the standard deviation ( std_all ) for all of the data and determining what is within that std_all*significance_threshold. It is recommended that significance_threshold is left at 3.0.",
+                    "__comment__estimate_noise" : "Estimates the upper bound on the noise by finding the standard deviation on a subset of the data. The subset is determined by finding the standard deviation ( std_all ) for all of the data and determining what is within that std_all*significance_threshold. It is recommended that significance_threshold is left at 3.0.",
                     
-                    "denoising.estimate_noise" : {
+                    "estimate_noise" : {
                         "significance_threshold" : 3.0
                     },
                     
@@ -190,9 +190,9 @@
                     },
                     
                     
-                    "__comment__denoising.significant_mask" : "Using the noise estimate from denoising.estimate_noise and the wavelet transformed image from wavelet_transform.wavelet_transform, anything within the noise range from before scaled up by the noise_threshold. Typical values are 2.0-4.0.",
+                    "__comment__significant_mask" : "Using the noise estimate from estimate_noise and the wavelet transformed image from wavelet_transform.wavelet_transform, anything within the noise range from before scaled up by the noise_threshold. Typical values are 2.0-4.0.",
                     
-                    "denoising.significant_mask" : {
+                    "significant_mask" : {
                         "noise_threshold" : 3.0
                     },
                     

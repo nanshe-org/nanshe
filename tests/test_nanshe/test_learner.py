@@ -52,10 +52,10 @@ class TestLearner(object):
                                 "min" : 30
                             }
                         },
-                        "denoising.estimate_noise" : {
+                        "estimate_noise" : {
                             "significance_threshold" : 3.0
                         },
-                        "denoising.significant_mask" : {
+                        "significant_mask" : {
                             "noise_threshold" : 3.0
                         },
                         "remove_too_close_local_maxima" : {
@@ -152,10 +152,10 @@ class TestLearner(object):
                                 "min" : 150
                             }
                         },
-                        "denoising.estimate_noise" : {
+                        "estimate_noise" : {
                             "significance_threshold" : 3.0
                         },
-                        "denoising.significant_mask" : {
+                        "significant_mask" : {
                             "noise_threshold" : 3.0
                         },
                         "remove_too_close_local_maxima" : {
@@ -287,15 +287,15 @@ class TestLearner(object):
 
                     "postprocess_data" : {
 
-                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_denoising.",
+                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_",
 
                         "wavelet_denoising" : {
 
-                            "denoising.estimate_noise" : {
+                            "estimate_noise" : {
                                 "significance_threshold" : 3.0
                             },
 
-                            "denoising.significant_mask" : {
+                            "significant_mask" : {
                                 "noise_threshold" : 3.0
                             },
 
@@ -385,10 +385,10 @@ class TestLearner(object):
                                     "min" : 150
                                 }
                             },
-                            "denoising.estimate_noise" : {
+                            "estimate_noise" : {
                                 "significance_threshold" : 3.0
                             },
-                            "denoising.significant_mask" : {
+                            "significant_mask" : {
                                 "noise_threshold" : 2.0
                             },
                             "remove_too_close_local_maxima" : {
@@ -524,15 +524,15 @@ class TestLearner(object):
 
                     "postprocess_data" : {
 
-                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_denoising.",
+                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_",
 
                         "wavelet_denoising" : {
 
-                            "denoising.estimate_noise" : {
+                            "estimate_noise" : {
                                 "significance_threshold" : 3.0
                             },
 
-                            "denoising.significant_mask" : {
+                            "significant_mask" : {
                                 "noise_threshold" : 3.0
                             },
 
@@ -625,10 +625,10 @@ class TestLearner(object):
                                     "min" : 150
                                 }
                             },
-                            "denoising.estimate_noise" : {
+                            "estimate_noise" : {
                                 "significance_threshold" : 3.0
                             },
-                            "denoising.significant_mask" : {
+                            "significant_mask" : {
                                 "noise_threshold" : 2.0
                             },
                             "remove_too_close_local_maxima" : {
