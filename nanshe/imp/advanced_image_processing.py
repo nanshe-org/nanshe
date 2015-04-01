@@ -47,7 +47,7 @@ from nanshe.util import prof
 from nanshe.util import xnumpy
 
 # Short function to process image data.
-import masks
+import filters.masks
 from simple_image_processing import zeroed_mean_images, renormalized_images
 
 # Algorithms to register the data.
@@ -105,7 +105,7 @@ def remove_zeroed_lines(new_data,
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
 
-        zero_mask_i[:] = masks.binary_erosion(zero_mask_i, erosion_structure)
+        zero_mask_i[:] = filters.masks.binary_erosion(zero_mask_i, erosion_structure)
 
         zero_masks_eroded[i] = zero_mask_i
 
@@ -114,7 +114,7 @@ def remove_zeroed_lines(new_data,
         for j in xrange(1, zero_mask_i_num_labels + 1):
             zero_mask_i_labeled_j = (zero_mask_i_labeled == j)
 
-            zero_mask_i_labeled_j_dilated = masks.binary_dilation(zero_mask_i_labeled_j, dilation_structure).astype(bool)
+            zero_mask_i_labeled_j_dilated = filters.masks.binary_dilation(zero_mask_i_labeled_j, dilation_structure).astype(bool)
 
             zero_mask_i_labeled_j_outline = zero_mask_i_labeled_j_dilated - zero_mask_i_labeled_j
 
