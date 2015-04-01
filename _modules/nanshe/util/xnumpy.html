@@ -70,6 +70,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">scipy</span>
 
+<span class="kn">import</span> <span class="nn">scipy.misc</span>
 <span class="kn">import</span> <span class="nn">scipy.spatial</span>
 <span class="kn">import</span> <span class="nn">scipy.ndimage</span>
 <span class="kn">import</span> <span class="nn">scipy.ndimage.morphology</span>
@@ -4024,6 +4025,62 @@
     <span class="n">new_quantiles</span><span class="o">.</span><span class="n">set_fill_value</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_quantiles</span><span class="p">)</span>
+
+</div>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="binomial_coefficients"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.binomial_coefficients">[docs]</a><span class="k">def</span> <span class="nf">binomial_coefficients</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a row in Pascal&#39;s triangle (binomial coefficients).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n(int):      which row of Pascal&#39;s triangle to return.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            cs(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(-25)</span>
+<span class="sd">            array([], dtype=int64)</span>
+
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(-1)</span>
+<span class="sd">            array([], dtype=int64)</span>
+
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(0)</span>
+<span class="sd">            array([1])</span>
+
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(1)</span>
+<span class="sd">            array([1, 1])</span>
+
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(2)</span>
+<span class="sd">            array([1, 2, 1])</span>
+
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(4)</span>
+<span class="sd">            array([1, 4, 6, 4, 1])</span>
+
+<span class="sd">            &gt;&gt;&gt; binomial_coefficients(4.0)</span>
+<span class="sd">            array([1, 4, 6, 4, 1])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Must be integer</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="c"># Below -1 is all the same.</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="c"># Get enough repeats of n to get each coefficent</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c"># Get all relevant k&#39;s</span>
+    <span class="n">ks</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Get all the coefficents in order</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
 <div class="viewcode-block" id="line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.line_filter">[docs]</a><span class="k">def</span> <span class="nf">line_filter</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>

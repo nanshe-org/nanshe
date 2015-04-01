@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.imp.filters.noise &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for nanshe.imp.filters.noise</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$May 01, 2014 14:23:45 EDT$&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+
+<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+
+
+<span class="c"># Get the logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="estimate_noise"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.estimate_noise">[docs]</a><span class="k">def</span> <span class="nf">estimate_noise</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">significance_threshold</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Estimates the noise in the given array.</span>
+<span class="sd">        </span>
+<span class="sd">        Using the array finds what the standard deviation is of some values in</span>
+<span class="sd">        the array, which are within the standard deviation of the whole array times</span>
+<span class="sd">        the significance threshold</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            input_array(numpy.ndarray):          the array to estimate noise of.</span>
+<span class="sd">            significance_threshold(float):      the number of standard deviations (of the whole array), below which must be noise.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            cs(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; estimate_noise(numpy.eye(2))</span>
+<span class="sd">            0.5</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; estimate_noise(numpy.eye(2), significance_threshold = 3)</span>
+<span class="sd">            0.5</span>
+<span class="sd">                   </span>
+<span class="sd">            &gt;&gt;&gt; estimate_noise(numpy.eye(3), significance_threshold = 3)</span>
+<span class="sd">            0.47140452079103173</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 1))/1000</span>
+<span class="sd">            0.166</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 2))/1000</span>
+<span class="sd">            0.288</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 3))/1000</span>
+<span class="sd">            0.288</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">stddev</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+    <span class="c"># Find cells that are inside an acceptable range (3 std devs from the mean by default)</span>
+    <span class="n">insignificant_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">input_array</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">significance_threshold</span> <span class="o">*</span> <span class="n">stddev</span>
+
+    <span class="c"># Those cells have noise. Estimate the standard deviation on them. That will be our noise unit size.</span>
+    <span class="n">noise</span> <span class="o">=</span> <span class="n">input_array</span><span class="p">[</span><span class="n">insignificant_mask</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
+
+</div>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="significant_mask"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.significant_mask">[docs]</a><span class="k">def</span> <span class="nf">significant_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            input_array(numpy.ndarray):          the array, which needs noise removed.</span>
+<span class="sd">            noise_threshold(float):             the estimated noise times this value determines the max value to</span>
+<span class="sd">                                                 consider as noise (to zero).</span>
+
+<span class="sd">            in_place(bool):                      whether to modify input_array directly or to return a copy instead.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            result(numpy.ndarray): a numpy array with noise zeroed.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), noise_threshold = 6.0)</span>
+<span class="sd">            array([[False, False],</span>
+<span class="sd">                   [False, False]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)</span>
+<span class="sd">            array([[False, False],</span>
+<span class="sd">                   [False, False]], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)</span>
+<span class="sd">            array([[ True,  True],</span>
+<span class="sd">                   [ True,  True]], dtype=bool)</span>
+<span class="sd">                   </span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            array([[False, False, False],</span>
+<span class="sd">                   [False, False, False],</span>
+<span class="sd">                   [False, False, False]], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            array([[ True, False, False],</span>
+<span class="sd">                   [False,  True, False],</span>
+<span class="sd">                   [False, False,  True]], dtype=bool)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c"># Estimate noise with the default estimate_noise function if a value is not provided.</span>
+    <span class="k">if</span> <span class="n">noise_estimate</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">noise_estimate</span> <span class="o">=</span> <span class="n">estimate_noise</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span>
+
+    <span class="c"># Get all the noisy points in a mask and toss them.</span>
+    <span class="n">significant_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">input_array</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">noise_threshold</span> <span class="o">*</span> <span class="n">noise_estimate</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">significant_mask</span><span class="p">)</span>
+
+</div>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<div class="viewcode-block" id="noise_mask"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.noise_mask">[docs]</a><span class="k">def</span> <span class="nf">noise_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_array(numpy.ndarray):          the array to use for generating the noise mask.</span>
+
+<span class="sd">            significance_threshold(float):      the number of standard deviations (of the whole array),</span>
+<span class="sd">                                                 below which must be noise.</span>
+
+<span class="sd">            noise_threshold(float):             the estimated noise times this value determines the max value</span>
+<span class="sd">                                                 to consider as noise (to zero).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            result(numpy.ndarray): a numpy array with noise zeroed.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)</span>
+<span class="sd">            array([[ True,  True],</span>
+<span class="sd">                   [ True,  True]], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)</span>
+<span class="sd">            array([[False, False],</span>
+<span class="sd">                   [False, False]], dtype=bool)</span>
+<span class="sd">                   </span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            array([[ True,  True,  True],</span>
+<span class="sd">                   [ True,  True,  True],</span>
+<span class="sd">                   [ True,  True,  True]], dtype=bool)</span>
+<span class="sd">            </span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            array([[False,  True,  True],</span>
+<span class="sd">                   [ True, False,  True],</span>
+<span class="sd">                   [ True,  True, False]], dtype=bool)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Get all the significant points in a mask.</span>
+    <span class="n">noisy_mask</span> <span class="o">=</span> <span class="n">significant_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="n">noise_threshold</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="n">noise_estimate</span><span class="p">)</span>
+
+    <span class="c"># Invert the maske</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">noisy_mask</span><span class="p">,</span> <span class="n">noisy_mask</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">noisy_mask</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

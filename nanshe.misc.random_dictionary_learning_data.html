@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.misc.random_dictionary_learning_data module &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="index.html" />
+    <link rel="next" title="nanshe.registerer module" href="nanshe.registerer.html" />
+    <link rel="prev" title="nanshe.misc.neuron_matplotlib_viewer module" href="nanshe.misc.neuron_matplotlib_viewer.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.registerer.html" title="nanshe.registerer module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.misc.neuron_matplotlib_viewer.html" title="nanshe.misc.neuron_matplotlib_viewer module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nanshe.misc.random_dictionary_learning_data">
+<span id="nanshe-misc-random-dictionary-learning-data-module"></span><h1>nanshe.misc.random_dictionary_learning_data module<a class="headerlink" href="#module-nanshe.misc.random_dictionary_learning_data" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator">
+<em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">DictionaryLearningRandomDataGenerator</code><span class="sig-paren">(</span><em>frame_shape</em>, <em>num_objects</em>, <em>num_groups</em>, <em>num_frames</em>, <em>mean_group_size</em>, <em>object_spread</em>, <em>object_max_intensity</em>, <em>object_min_intensity</em>, <em>background_noise_intensity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A Random Generator that build pseudo-data similar in nature to that which the ADINA algorithm is run.</p>
+<dl class="method">
+<dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>num_runs=1</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a series of pseudo-videos.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>num_runs</strong> (<em>int</em>) &#8211; number of pseudo-videos to generate</li>
+<li><strong>seed</strong> (<em>int</em>) &#8211; uses the seed for numpy.random.seed if provided.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> &#8211;
+a list of DictionaryLearningRandomDataSample instances with relevant data from generation included.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataSample">
+<em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">DictionaryLearningRandomDataSample</code><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataSample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Essentially a struct with its values set at runtime by DictionaryLearningRandomDataGenerator calls.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator">
+<em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">MappingDiscreteGeometricDistributionGenerator</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteGeometricDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A random generator of groups. Each group has a size that is geometrically distributed.
+However, the individuals chosen for the group are all equally likely.</p>
+<dl class="method">
+<dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>p</em>, <em>size=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteGeometricDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a number of groups equal to size with each group size being distributed geometrically by p.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>the probability of success for a geometric distribution (starts with 1 so has mean 1/p).</strong> (<em>p(float)</em>) &#8211; </li>
+<li><strong>the number of groups to make</strong> (<em>size(int)</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> &#8211;
+a list of groups of arguments drawn (None if no arguments)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator">
+<em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">MappingDiscreteUniformDistributionGenerator</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Given a bunch of arguments. This will create a random element generator that returns one or many</p>
+<dl class="method">
+<dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>size=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteUniformDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a certain number of elements with equal likelihood and returns them in a list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of elements to draw (one if unspecified).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> &#8211;
+a list of arguments drawn (None if no arguments)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator">
+<em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">NumpyRandomArrayDiscreteUniformDistributionGenerator</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#NumpyRandomArrayDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Creates a random numpy array (with type bool) generator that will set
+a certain number of random positions in the array to True (like Bernoulli random distribution)</p>
+<dl class="method">
+<dt id="nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>size=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a numpy array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of Trues to have in the numpy array.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> &#8211;
+a boolean numpy array with a fixed number of randomly placed Trues</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="nanshe.misc.neuron_matplotlib_viewer.html"
+                          title="Previous page">&larr; nanshe.misc.neuron_matplotlib_viewer module</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="nanshe.registerer.html"
+                          title="Next page">&rarr; nanshe.registerer module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nanshe.misc.random_dictionary_learning_data.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.registerer.html" title="nanshe.registerer module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.misc.neuron_matplotlib_viewer.html" title="nanshe.misc.neuron_matplotlib_viewer module"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

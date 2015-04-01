@@ -1,0 +1,7 @@
+nanshe.syn.data module
+======================
+
+.. automodule:: nanshe.syn.data
+    :members:
+    :undoc-members:
+    :show-inheritance:

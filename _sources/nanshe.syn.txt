@@ -1,0 +1,15 @@
+nanshe.syn package
+==================
+
+.. automodule:: nanshe.syn
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   nanshe.syn.data
+

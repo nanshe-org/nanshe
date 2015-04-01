@@ -1,0 +1,7 @@
+nanshe.imp.filters.masks module
+===============================
+
+.. automodule:: nanshe.imp.filters.masks
+    :members:
+    :undoc-members:
+    :show-inheritance:

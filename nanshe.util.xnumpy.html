@@ -482,6 +482,54 @@ the result of the following operation on the specific indicies</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="nanshe.util.xnumpy.binomial_coefficients">
+<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">binomial_coefficients</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#binomial_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.binomial_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a row in Pascal&#8217;s triangle (binomial coefficients).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) &#8211; which row of Pascal&#8217;s triangle to return.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>cs</strong> &#8211;
+a numpy array containing the row of Pascal&#8217;s triangle.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">)</span>
+<span class="go">array([], dtype=int64)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([], dtype=int64)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">array([1])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([1, 1])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([1, 2, 1])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">array([1, 4, 6, 4, 1])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
+<span class="go">array([1, 4, 6, 4, 1])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="nanshe.util.xnumpy.cartesian_product">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">cartesian_product</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#cartesian_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.cartesian_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes the cartesian product between the elements in each array.</p>

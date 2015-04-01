@@ -1,0 +1,17 @@
+nanshe.imp.filters package
+==========================
+
+.. automodule:: nanshe.imp.filters
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   nanshe.imp.filters.masks
+   nanshe.imp.filters.noise
+   nanshe.imp.filters.wavelet
+

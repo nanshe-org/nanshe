@@ -1,0 +1,7 @@
+nanshe.misc.random_dictionary_learning_data module
+==================================================
+
+.. automodule:: nanshe.misc.random_dictionary_learning_data
+    :members:
+    :undoc-members:
+    :show-inheritance:

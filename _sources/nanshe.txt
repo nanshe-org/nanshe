@@ -11,10 +11,11 @@ Subpackages
 
 .. toctree::
 
+    nanshe.box
     nanshe.imp
     nanshe.io
-    nanshe.spams_sandbox
-    nanshe.synthetic_data
+    nanshe.misc
+    nanshe.syn
     nanshe.util
 
 Submodules

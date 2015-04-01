@@ -1,7 +1,0 @@
-nanshe.synthetic_data.synthetic_data module
-===========================================
-
-.. automodule:: nanshe.synthetic_data.synthetic_data
-    :members:
-    :undoc-members:
-    :show-inheritance:

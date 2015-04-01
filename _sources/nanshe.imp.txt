@@ -6,16 +6,19 @@ nanshe.imp package
     :undoc-members:
     :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+
+    nanshe.imp.filters
+
 Submodules
 ----------
 
 .. toctree::
 
-   nanshe.imp.advanced_image_processing
-   nanshe.imp.binary_image_processing
-   nanshe.imp.denoising
-   nanshe.imp.neuron_matplotlib_viewer
    nanshe.imp.registration
-   nanshe.imp.simple_image_processing
-   nanshe.imp.wavelet_transform
+   nanshe.imp.renorm
+   nanshe.imp.segment
 

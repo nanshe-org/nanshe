@@ -1,0 +1,7 @@
+nanshe.imp.renorm module
+========================
+
+.. automodule:: nanshe.imp.renorm
+    :members:
+    :undoc-members:
+    :show-inheritance:

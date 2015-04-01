@@ -1,0 +1,7 @@
+nanshe.imp.segment module
+=========================
+
+.. automodule:: nanshe.imp.segment
+    :members:
+    :undoc-members:
+    :show-inheritance:

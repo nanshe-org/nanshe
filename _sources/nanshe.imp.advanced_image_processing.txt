@@ -1,7 +1,0 @@
-nanshe.imp.advanced_image_processing module
-===========================================
-
-.. automodule:: nanshe.imp.advanced_image_processing
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.box.spams_sandbox &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../../_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for nanshe.box.spams_sandbox</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 20, 2014 12:07:48 EDT$&quot;</span>
+
+
+<span class="c">#import nanshe.advanced_debugging</span>
+
+
+<span class="c">#logger = nanshe.advanced_debugging.logging.getLogger(__name__)</span>
+
+
+
+
+<div class="viewcode-block" id="SPAMSException"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.SPAMSException">[docs]</a><span class="k">class</span> <span class="nc">SPAMSException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+<div class="viewcode-block" id="run_multiprocessing_queue_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_queue_spams_trainDL</span><span class="p">(</span><span class="n">out_queue</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Designed to run spams.trainDL in a separate process.</span>
+
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
+<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
+<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
+<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
+<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+
+<span class="sd">        This particular version uses a multiprocessing.Queue to return the resulting dictionary.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.</span>
+<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
+<span class="sd">            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># It is not needed outside of calling spams.trainDL.</span>
+    <span class="c"># Also, it takes a long time to load this module.</span>
+    <span class="kn">import</span> <span class="nn">spams</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">out_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+<div class="viewcode-block" id="call_multiprocessing_queue_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_queue_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
+
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
+<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
+<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
+<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
+<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+
+<span class="sd">        This particular version uses a multiprocessing.Queue to return the resulting dictionary.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
+<span class="sd">            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            result(numpy.matrix): the dictionary found</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Only necessary for dealing with SPAMS</span>
+    <span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+    <span class="n">out_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">run_multiprocessing_queue_spams_trainDL</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">out_queue</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">out_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+<div class="viewcode-block" id="run_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span> <span class="n">result_array</span><span class="p">,</span> <span class="n">X_array_type</span><span class="p">,</span> <span class="n">X_array</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
+
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
+<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
+<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
+<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
+<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+
+<span class="sd">        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with properties needed by result_array.</span>
+<span class="sd">            result_array(multiprocessing.RawArray):         shared memory array to store results in.</span>
+<span class="sd">            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with properties needed by X_array.</span>
+<span class="sd">            X_array(numpy.ndarray):                         currently uses numpy ndarray as input.</span>
+<span class="sd">            *args(list):                                    a list of position arguments to pass to spams.trainDL.</span>
+<span class="sd">            *kwargs(dict):                                  a dictionary of keyword arguments to pass to spams.trainDL.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This is somewhat faster than using multiprocessing.Queue.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Just to make sure this exists in the new process. Shouldn&#39;t be necessary.</span>
+    <span class="kn">import</span> <span class="nn">numpy</span>
+    <span class="c"># Just to make sure this exists in the new process. Shouldn&#39;t be necessary.</span>
+    <span class="c"># Also, it is not needed outside of calling this function.</span>
+    <span class="kn">import</span> <span class="nn">spams</span>
+
+    <span class="n">as_ordered_array_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&quot;F_CONTIGUOUS&quot;</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">,</span>
+        <span class="s">&quot;C_CONTIGUOUS&quot;</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ascontiguousarray</span>
+    <span class="p">}</span>
+
+
+    <span class="c"># Construct X from shared array.</span>
+    <span class="n">X_dtype</span> <span class="o">=</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
+    <span class="n">X_shape</span> <span class="o">=</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">_shape_</span>
+    <span class="n">X_flags</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">multiarray</span><span class="o">.</span><span class="n">flagsobj</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_flags_</span><span class="p">)</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">X_array</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">X_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_shape</span><span class="p">)</span>
+    <span class="n">X</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">X_flags</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">order_name</span> <span class="ow">in</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">as_ordered_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="c"># Construct the result to use the shared buffer.</span>
+    <span class="n">result_dtype</span> <span class="o">=</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
+    <span class="n">result_shape</span> <span class="o">=</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span>
+    <span class="n">result_flags</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">multiarray</span><span class="o">.</span><span class="n">flagsobj</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_flags_</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">result_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">result_flags</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">order_name</span> <span class="ow">in</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">as_ordered_array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+    <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+<div class="viewcode-block" id="call_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
+
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
+<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
+<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
+<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
+<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+
+<span class="sd">        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            X(numpy.matrix):                        a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).</span>
+<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This is somewhat faster than using multiprocessing.Queue.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Only necessary for dealing with SPAMS</span>
+    <span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+    <span class="c"># Just to make sure this exists in the new process. Shouldn&#39;t be necessary.</span>
+    <span class="kn">import</span> <span class="nn">numpy</span>
+
+
+    <span class="c"># Types for X_array</span>
+    <span class="n">X_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
+    <span class="n">X_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()]))</span>
+
+    <span class="c"># Create a shared array to contain X</span>
+    <span class="n">X_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">X_array_ctype</span><span class="p">,</span>
+                                    <span class="n">X</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                                    <span class="n">lock</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="c"># Copy over the contents of X.</span>
+    <span class="n">X_array_numpy</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">X_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
+    <span class="n">X_array_numpy</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="n">X_array_numpy</span> <span class="o">=</span> <span class="bp">None</span>
+
+
+    <span class="c"># Types for result_array</span>
+    <span class="n">result_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;K&quot;</span><span class="p">]))</span>
+    <span class="n">result_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()]))</span>
+
+    <span class="c"># Create a shared array to contain the result</span>
+    <span class="n">result_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">result_array_ctype</span><span class="p">,</span>
+                                         <span class="n">numpy</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">),</span>
+                                         <span class="n">lock</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">run_multiprocessing_array_spams_trainDL</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span> <span class="n">result_array</span><span class="p">,</span> <span class="n">X_array_type</span><span class="p">,</span> <span class="n">X_array</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+
+
+    <span class="c"># Reconstruct the result from the output array</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+<div class="viewcode-block" id="call_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.</span>
+<span class="sd">        Designed to be like the multiprocessing calls.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            For legacy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># It is not needed outside of calling spams.trainDL.</span>
+    <span class="c"># Also, it takes a long time to load this module.</span>
+    <span class="kn">import</span> <span class="nn">spams</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+    <li><a href="../../../index.html">..  documentation</a> &raquo;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

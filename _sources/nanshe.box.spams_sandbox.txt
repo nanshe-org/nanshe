@@ -1,0 +1,7 @@
+nanshe.box.spams_sandbox module
+===============================
+
+.. automodule:: nanshe.box.spams_sandbox
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+nanshe.imp.filters.wavelet module
+=================================
+
+.. automodule:: nanshe.imp.filters.wavelet
+    :members:
+    :undoc-members:
+    :show-inheritance:

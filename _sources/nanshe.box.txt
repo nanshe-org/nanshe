@@ -1,0 +1,15 @@
+nanshe.box package
+==================
+
+.. automodule:: nanshe.box
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   nanshe.box.spams_sandbox
+
