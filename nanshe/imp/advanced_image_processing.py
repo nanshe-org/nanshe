@@ -54,7 +54,7 @@ from simple_image_processing import zeroed_mean_images, renormalized_images
 import registration
 
 # To remove noise from the basis images
-from filters.denoising import estimate_noise, significant_mask
+from filters.noise import estimate_noise, significant_mask
 
 # Wavelet transformation operations
 from wavelet_transform import wavelet_transform
