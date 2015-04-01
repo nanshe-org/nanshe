@@ -89,7 +89,7 @@
             "__comment__normalize_data" : "How to normalize data. L_2 norm recommended.",
             
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             }

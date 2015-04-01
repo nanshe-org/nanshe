@@ -498,7 +498,7 @@ class TestAdvancedImageProcessing(object):
 
         config = {
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             },
@@ -547,7 +547,7 @@ class TestAdvancedImageProcessing(object):
 
         config = {
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             },
@@ -587,7 +587,7 @@ class TestAdvancedImageProcessing(object):
 
         config = {
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             },
@@ -626,7 +626,7 @@ class TestAdvancedImageProcessing(object):
 
         config = {
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             },
@@ -669,7 +669,7 @@ class TestAdvancedImageProcessing(object):
 
         config = {
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             },
@@ -710,7 +710,7 @@ class TestAdvancedImageProcessing(object):
 
         config = {
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             },
@@ -742,7 +742,7 @@ class TestAdvancedImageProcessing(object):
 
         config = {
             "normalize_data" : {
-                "simple_image_processing.renormalized_images" : {
+                "renormalized_images" : {
                     "ord" : 2
                 }
             },

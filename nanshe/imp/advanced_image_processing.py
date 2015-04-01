@@ -48,7 +48,7 @@ from nanshe.util import xnumpy
 
 # Short function to process image data.
 import binary_image_processing
-import simple_image_processing
+from simple_image_processing import zeroed_mean_images, renormalized_images
 
 # Algorithms to register the data.
 import registration
@@ -357,7 +357,7 @@ def normalize_data(new_data, out = None, **parameters):
 
         Args:
             new_data(numpy.ndarray):                array of data for normalization (first axis is time).
-            **parameters(dict):                     contains arguments for simple_image_processing.renormalized_images.
+            **parameters(dict):                     contains arguments for renormalized_images.
 
         Returns:
             numpy.ndarray:                          data that has been normalized.
@@ -366,14 +366,14 @@ def normalize_data(new_data, out = None, **parameters):
             >>> a = numpy.zeros((2,2,2,))
             >>> a[1,1,1] = 1
             >>> a[0,0,0] = 1
-            >>> normalize_data(a, **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+            >>> normalize_data(a, **{"renormalized_images" : { "ord" : 2 }})
             array([[[ 0.8660254 , -0.28867513],
                     [-0.28867513, -0.28867513]],
             <BLANKLINE>
                    [[-0.28867513, -0.28867513],
                     [-0.28867513,  0.8660254 ]]])
             >>> b = numpy.zeros_like(a)
-            >>> normalize_data(a, out=b, **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+            >>> normalize_data(a, out=b, **{"renormalized_images" : { "ord" : 2 }})
             array([[[ 0.8660254 , -0.28867513],
                     [-0.28867513, -0.28867513]],
             <BLANKLINE>
@@ -385,7 +385,7 @@ def normalize_data(new_data, out = None, **parameters):
             <BLANKLINE>
                    [[-0.28867513, -0.28867513],
                     [-0.28867513,  0.8660254 ]]])
-            >>> normalize_data(a, out=a, **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+            >>> normalize_data(a, out=a, **{"renormalized_images" : { "ord" : 2 }})
             array([[[ 0.8660254 , -0.28867513],
                     [-0.28867513, -0.28867513]],
             <BLANKLINE>
@@ -406,13 +406,13 @@ def normalize_data(new_data, out = None, **parameters):
         out[:] = new_data
 
     # Remove the mean of each row vector
-    simple_image_processing.zeroed_mean_images(out,
-                                               output_array = out)
+    zeroed_mean_images(out,
+                       output_array = out)
 
     # Renormalize each row vector using some specified normalization
-    simple_image_processing.renormalized_images(out,
-                                                output_array = out,
-                                                **parameters["simple_image_processing.renormalized_images"])
+    renormalized_images(out,
+                        output_array = out,
+                        **parameters["renormalized_images"])
 
     return(out)
 
@@ -2688,7 +2688,7 @@ def expand_rois(new_data, roi_masks, **parameters):
 
     # Normalize the data
     new_data_normalized = normalize_data(new_data,
-                                         **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+                                         **{"renormalized_images" : { "ord" : 2 }})
 
     # Compute the area of each ROI in order to properly compute the average activity of each ROI.
     roi_areas = roi_masks.sum(axis=tuple(xrange(1, roi_masks.ndim)))
@@ -2707,7 +2707,7 @@ def expand_rois(new_data, roi_masks, **parameters):
 
     # Normalize the time traces
     normalized_time_traces = normalize_data(time_traces,
-                                            **{"simple_image_processing.renormalized_images" : { "ord" : 2 }})
+                                            **{"renormalized_images" : { "ord" : 2 }})
 
     # Convert to matrix.
     new_data_normalized_matrix = xnumpy.array_to_matrix(new_data_normalized)
