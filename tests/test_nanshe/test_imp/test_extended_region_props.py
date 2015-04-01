@@ -14,7 +14,7 @@ import nanshe.util.xnumpy
 
 import nanshe.imp.segment
 
-import nanshe.synthetic_data.synthetic_data
+import nanshe.syn.synthetic_data
 
 
 class TestSegment(object):
@@ -27,7 +27,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -65,7 +65,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
@@ -108,7 +108,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -150,7 +150,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -199,7 +199,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.00065)
         g *= m
 
@@ -253,7 +253,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 
@@ -292,7 +292,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
@@ -336,7 +336,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 
@@ -379,7 +379,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 
@@ -429,7 +429,7 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype = float)
 
-        g = nanshe.synthetic_data.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.synthetic_data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
         m = (g > 0.000016)
         g *= m
 

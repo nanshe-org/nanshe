@@ -152,8 +152,8 @@ __date__ = "$Dec 22, 2014 08:46:12 EST$"
 
 
 __all__ = [
-    "box", "converter", "io", "imp", "learner" "registerer", "synthetic_data",
-    "util",  # "viewer"
+    "box", "converter", "io", "imp", "learner" "registerer", "syn", "util",
+    # "viewer"
 ]
 
 import box
@@ -162,6 +162,6 @@ import io
 import imp
 import learner
 import registerer
-import synthetic_data
+import syn
 import util
 # import viewer           # Must be commented as there is some segfault coming from Volumina.

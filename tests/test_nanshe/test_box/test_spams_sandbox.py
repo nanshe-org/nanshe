@@ -13,7 +13,7 @@ import numpy
 
 import nanshe.box.spams_sandbox
 
-import nanshe.synthetic_data.synthetic_data
+import nanshe.syn.synthetic_data
 
 
 class TestSpamsSandbox(object):
@@ -30,14 +30,14 @@ class TestSpamsSandbox(object):
         self.space3 = numpy.array((100, 100, 100))
         self.radii = numpy.array((5, 6, 7))
 
-        self.g = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(self.space, self.p, self.radii)
+        self.g = nanshe.syn.synthetic_data.generate_hypersphere_masks(self.space, self.p, self.radii)
 
         self.g = self.g.reshape((self.g.shape[0], -1))
         self.g = self.g.transpose()
         self.g = numpy.asmatrix(self.g)
         self.g = numpy.asfortranarray(self.g)
 
-        self.g3 = nanshe.synthetic_data.synthetic_data.generate_hypersphere_masks(self.space3, self.p3, self.radii)
+        self.g3 = nanshe.syn.synthetic_data.generate_hypersphere_masks(self.space3, self.p3, self.radii)
 
         self.g3 = self.g3.reshape((self.g3.shape[0], -1))
         self.g3 = self.g3.transpose()
