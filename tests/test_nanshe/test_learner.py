@@ -18,7 +18,7 @@ import numpy
 import nanshe.util.xnumpy
 import nanshe.io.hdf5.record
 
-import nanshe.syn.synthetic_data
+import nanshe.syn.data
 
 import nanshe.learner
 
@@ -733,8 +733,8 @@ class TestLearner(object):
         self.bases_indices = [[1, 3, 4], [0, 2], [5]]
         self.linspace_length = 25
 
-        self.masks = nanshe.syn.synthetic_data.generate_hypersphere_masks(self.space, self.points, self.radii)
-        self.images = nanshe.syn.synthetic_data.generate_gaussian_images(self.space, self.points, self.radii/3.0, self.magnitudes) * self.masks
+        self.masks = nanshe.syn.data.generate_hypersphere_masks(self.space, self.points, self.radii)
+        self.images = nanshe.syn.data.generate_gaussian_images(self.space, self.points, self.radii/3.0, self.magnitudes) * self.masks
 
         self.bases_masks = numpy.zeros((len(self.bases_indices),) + self.masks.shape[1:] , dtype=self.masks.dtype)
         self.bases_images = numpy.zeros((len(self.bases_indices),) + self.images.shape[1:] , dtype=self.images.dtype)
@@ -765,8 +765,8 @@ class TestLearner(object):
                                     [36, 15, 41],
                                     [22, 16, 34]])
 
-        self.masks3 = nanshe.syn.synthetic_data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
-        self.images3 = nanshe.syn.synthetic_data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
+        self.masks3 = nanshe.syn.data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
+        self.images3 = nanshe.syn.data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
 
         self.bases_masks3 = numpy.zeros((len(self.bases_indices),) + self.masks3.shape[1:] , dtype=self.masks3.dtype)
         self.bases_images3 = numpy.zeros((len(self.bases_indices),) + self.images3.shape[1:] , dtype=self.images3.dtype)
