@@ -1,0 +1,7 @@
+nanshe.util.iters module
+========================
+
+.. automodule:: nanshe.util.iters
+    :members:
+    :undoc-members:
+    :show-inheritance:

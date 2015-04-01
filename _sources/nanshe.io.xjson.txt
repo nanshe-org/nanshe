@@ -1,0 +1,7 @@
+nanshe.io.xjson module
+======================
+
+.. automodule:: nanshe.io.xjson
+    :members:
+    :undoc-members:
+    :show-inheritance:

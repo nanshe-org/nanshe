@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.imp.neuron_matplotlib_viewer module &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="index.html" />
+    <link rel="next" title="nanshe.imp.registration module" href="nanshe.imp.registration.html" />
+    <link rel="prev" title="nanshe.imp.denoising module" href="nanshe.imp.denoising.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.imp.registration.html" title="nanshe.imp.registration module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.imp.denoising.html" title="nanshe.imp.denoising module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nanshe.imp.neuron_matplotlib_viewer">
+<span id="nanshe-imp-neuron-matplotlib-viewer-module"></span><h1>nanshe.imp.neuron_matplotlib_viewer module<a class="headerlink" href="#module-nanshe.imp.neuron_matplotlib_viewer" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.NeuronMatplotlibViewer">
+<em class="property">class </em><code class="descclassname">nanshe.imp.neuron_matplotlib_viewer.</code><code class="descname">NeuronMatplotlibViewer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#NeuronMatplotlibViewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.NeuronMatplotlibViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">matplotlib.figure.Figure</span></code></p>
+<p>Provides a way to interact with numpy arrays pulled from neuron images.</p>
+<p>Wraps a Matplotlib figure instance.</p>
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.NeuronMatplotlibViewer.set_images">
+<code class="descname">set_images</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#NeuronMatplotlibViewer.set_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.NeuronMatplotlibViewer.set_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the images to be viewed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_neuron_images</strong> (<em>numpy.ndarray</em>) &#8211; array of images (first index is which image)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.NeuronMatplotlibViewer.time_update">
+<code class="descname">time_update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#NeuronMatplotlibViewer.time_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.NeuronMatplotlibViewer.time_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to be called by the TimeNavigator when the time changes. Updates image displayed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator">
+<em class="property">class </em><code class="descclassname">nanshe.imp.neuron_matplotlib_viewer.</code><code class="descname">TimeNavigator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.begin_time">
+<code class="descname">begin_time</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.begin_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.begin_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets time to min_time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Matplotlib event that caused the call to this callback.</strong> (<em>event</em>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.disconnect">
+<code class="descname">disconnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnects the given cid from being notified of time updates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ID of callback to pull</strong> (<em>cid</em>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.end_time">
+<code class="descname">end_time</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.end_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.end_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets time to max_time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Matplotlib event that caused the call to this callback.</strong> (<em>event</em>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.next_time">
+<code class="descname">next_time</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.next_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.next_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets time to one time_step after.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Matplotlib event that caused the call to this callback.</strong> (<em>event</em>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.normalize_val">
+<code class="descname">normalize_val</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.normalize_val"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.normalize_val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the time value and normalizes it to fit within the range.
+Then, makes sure it is a discrete number of steps from the min_time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>float position from the slider bar to correct</strong> (<em>val</em>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the normalized value.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.on_time_update">
+<code class="descname">on_time_update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.on_time_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.on_time_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a callback function for notification when the time is updated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function call when the time is updated</strong> (<em>func</em>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a callback ID or cid to allow pulling the callback when no longer necessary.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.prev_time">
+<code class="descname">prev_time</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.prev_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.prev_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets time to one time_step prior.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Matplotlib event that caused the call to this callback.</strong> (<em>event</em>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.time_update">
+<code class="descname">time_update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/neuron_matplotlib_viewer.html#TimeNavigator.time_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.neuron_matplotlib_viewer.TimeNavigator.time_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the time value and normalizes it within the range if it does not fit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>float position from slider bar to move to</strong> (<em>val</em>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="nanshe.imp.denoising.html"
+                          title="Previous page">&larr; nanshe.imp.denoising module</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="nanshe.imp.registration.html"
+                          title="Next page">&rarr; nanshe.imp.registration module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nanshe.imp.neuron_matplotlib_viewer.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.imp.registration.html" title="nanshe.imp.registration module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.imp.denoising.html" title="nanshe.imp.denoising module"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

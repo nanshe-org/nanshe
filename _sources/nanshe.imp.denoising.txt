@@ -1,0 +1,7 @@
+nanshe.imp.denoising module
+===========================
+
+.. automodule:: nanshe.imp.denoising
+    :members:
+    :undoc-members:
+    :show-inheritance:

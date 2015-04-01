@@ -20,36 +20,10 @@ Subpackages
 Submodules
 ----------
 
-nanshe.converter module
------------------------
+.. toctree::
 
-.. automodule:: nanshe.converter
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nanshe.learner module
----------------------
-
-.. automodule:: nanshe.learner
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nanshe.registerer module
-------------------------
-
-.. automodule:: nanshe.registerer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nanshe.viewer module
---------------------
-
-.. automodule:: nanshe.viewer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   nanshe.converter
+   nanshe.learner
+   nanshe.registerer
+   nanshe.viewer
 

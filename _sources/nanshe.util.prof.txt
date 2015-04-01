@@ -1,0 +1,7 @@
+nanshe.util.prof module
+=======================
+
+.. automodule:: nanshe.util.prof
+    :members:
+    :undoc-members:
+    :show-inheritance:

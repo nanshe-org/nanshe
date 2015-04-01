@@ -1,0 +1,7 @@
+nanshe.imp.neuron_matplotlib_viewer module
+==========================================
+
+.. automodule:: nanshe.imp.neuron_matplotlib_viewer
+    :members:
+    :undoc-members:
+    :show-inheritance:

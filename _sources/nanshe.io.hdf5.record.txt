@@ -1,0 +1,7 @@
+nanshe.io.hdf5.record module
+============================
+
+.. automodule:: nanshe.io.hdf5.record
+    :members:
+    :undoc-members:
+    :show-inheritance:

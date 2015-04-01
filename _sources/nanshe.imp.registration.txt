@@ -1,0 +1,7 @@
+nanshe.imp.registration module
+==============================
+
+.. automodule:: nanshe.imp.registration
+    :members:
+    :undoc-members:
+    :show-inheritance:

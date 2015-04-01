@@ -9,12 +9,7 @@ nanshe.spams_sandbox package
 Submodules
 ----------
 
-nanshe.spams_sandbox.spams_sandbox module
------------------------------------------
+.. toctree::
 
-.. automodule:: nanshe.spams_sandbox.spams_sandbox
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   nanshe.spams_sandbox.spams_sandbox
 

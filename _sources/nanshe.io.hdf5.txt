@@ -9,28 +9,9 @@ nanshe.io.hdf5 package
 Submodules
 ----------
 
-nanshe.io.hdf5.record module
-----------------------------
+.. toctree::
 
-.. automodule:: nanshe.io.hdf5.record
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nanshe.io.hdf5.search module
-----------------------------
-
-.. automodule:: nanshe.io.hdf5.search
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nanshe.io.hdf5.serializers module
----------------------------------
-
-.. automodule:: nanshe.io.hdf5.serializers
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   nanshe.io.hdf5.record
+   nanshe.io.hdf5.search
+   nanshe.io.hdf5.serializers
 

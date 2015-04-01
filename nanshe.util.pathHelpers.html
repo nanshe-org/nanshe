@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.util.pathHelpers module &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="index.html" />
+    <link rel="next" title="nanshe.util.prof module" href="nanshe.util.prof.html" />
+    <link rel="prev" title="nanshe.util.iters module" href="nanshe.util.iters.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.prof.html" title="nanshe.util.prof module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.iters.html" title="nanshe.util.iters module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nanshe.util.pathHelpers">
+<span id="nanshe-util-pathhelpers-module"></span><h1>nanshe.util.pathHelpers module<a class="headerlink" href="#module-nanshe.util.pathHelpers" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="nanshe.util.pathHelpers.PathComponents">
+<em class="property">class </em><code class="descclassname">nanshe.util.pathHelpers.</code><code class="descname">PathComponents</code><span class="sig-paren">(</span><em>totalPath</em>, <em>cwd=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/pathHelpers.html#PathComponents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Provides a convenient access to path components of a combined external/internal path to a dataset.
+Also, each of the properties listed below is writable, in which case ALL properties are updated accordingly.</p>
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.HDF5_EXTS">
+<code class="descname">HDF5_EXTS</code><em class="property"> = ['.ilp', '.h5', '.hdf5']</em><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.HDF5_EXTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nanshe.util.pathHelpers.PathComponents.__setattr__">
+<code class="descname">__setattr__</code><span class="sig-paren">(</span><em>attr</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/pathHelpers.html#PathComponents.__setattr__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.__setattr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>This prevents us from accidentally writing to a non-existant attribute.
+e.g. if the user tries to say components.fIlEnAmE = &#8216;newfile.h5&#8217;, raise an error.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.extension">
+<code class="descname">extension</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">.h5</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.externalDirectory">
+<code class="descname">externalDirectory</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.externalDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">/some/path/to</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.externalPath">
+<code class="descname">externalPath</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.externalPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">/some/path/to/file.h5</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.filename">
+<code class="descname">filename</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">file.h5</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.filenameBase">
+<code class="descname">filenameBase</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.filenameBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">file</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.internalDatasetName">
+<code class="descname">internalDatasetName</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.internalDatasetName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">/dataset</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.internalDirectory">
+<code class="descname">internalDirectory</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.internalDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">/with/internal</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nanshe.util.pathHelpers.PathComponents.internalPath">
+<code class="descname">internalPath</code><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.internalPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: <code class="docutils literal"><span class="pre">/with/internal/dataset</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nanshe.util.pathHelpers.PathComponents.totalPath">
+<code class="descname">totalPath</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/pathHelpers.html#PathComponents.totalPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.pathHelpers.PathComponents.totalPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the (reconstructed) totalPath to the dataset.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.pathHelpers.areOnSameDrive">
+<code class="descclassname">nanshe.util.pathHelpers.</code><code class="descname">areOnSameDrive</code><span class="sig-paren">(</span><em>path1</em>, <em>path2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/pathHelpers.html#areOnSameDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.pathHelpers.areOnSameDrive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.pathHelpers.compressPathForDisplay">
+<code class="descclassname">nanshe.util.pathHelpers.</code><code class="descname">compressPathForDisplay</code><span class="sig-paren">(</span><em>pathstr</em>, <em>maxlength</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/pathHelpers.html#compressPathForDisplay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.pathHelpers.compressPathForDisplay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add alternatingly parts of the start and the end of the path
+until maxlength is exceeded. Result: Drive/Dir1/.../Dirn/file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.pathHelpers.getPathVariants">
+<code class="descclassname">nanshe.util.pathHelpers.</code><code class="descname">getPathVariants</code><span class="sig-paren">(</span><em>originalPath</em>, <em>workingDirectory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/pathHelpers.html#getPathVariants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.pathHelpers.getPathVariants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take the given filePath (which can be absolute or relative, and may include an internal path suffix),
+and return a tuple of the absolute and relative paths to the file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.pathHelpers.isUrl">
+<code class="descclassname">nanshe.util.pathHelpers.</code><code class="descname">isUrl</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/pathHelpers.html#isUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.pathHelpers.isUrl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="nanshe.util.iters.html"
+                          title="Previous page">&larr; nanshe.util.iters module</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="nanshe.util.prof.html"
+                          title="Next page">&rarr; nanshe.util.prof module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nanshe.util.pathHelpers.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.prof.html" title="nanshe.util.prof module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.iters.html" title="nanshe.util.iters module"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

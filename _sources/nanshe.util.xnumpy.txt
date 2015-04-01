@@ -1,0 +1,7 @@
+nanshe.util.xnumpy module
+=========================
+
+.. automodule:: nanshe.util.xnumpy
+    :members:
+    :undoc-members:
+    :show-inheritance:

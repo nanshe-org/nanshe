@@ -68,7 +68,7 @@
 <span class="kn">import</span> <span class="nn">PyQt4.QtCore</span>
 
 
-<div class="viewcode-block" id="update_wrapper"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.update_wrapper">[docs]</a><span class="k">def</span> <span class="nf">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span>
+<div class="viewcode-block" id="update_wrapper"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.update_wrapper">[docs]</a><span class="k">def</span> <span class="nf">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span>
                    <span class="n">wrapped</span><span class="p">,</span>
                    <span class="n">assigned</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_ASSIGNMENTS</span><span class="p">,</span>
                    <span class="n">updated</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_UPDATES</span><span class="p">):</span>
@@ -100,7 +100,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="wraps"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.wraps">[docs]</a><span class="k">def</span> <span class="nf">wraps</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span>
+<div class="viewcode-block" id="wraps"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.wraps">[docs]</a><span class="k">def</span> <span class="nf">wraps</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span>
           <span class="n">assigned</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_ASSIGNMENTS</span><span class="p">,</span>
           <span class="n">updated</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_UPDATES</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -124,7 +124,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">update_wrapper</span><span class="p">,</span> <span class="n">wrapped</span> <span class="o">=</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span> <span class="o">=</span> <span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span> <span class="o">=</span> <span class="n">updated</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="identity_wrapper"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.identity_wrapper">[docs]</a><span class="k">def</span> <span class="nf">identity_wrapper</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
+<div class="viewcode-block" id="identity_wrapper"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.identity_wrapper">[docs]</a><span class="k">def</span> <span class="nf">identity_wrapper</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Trivially wraps a given callable without doing anything else to it.</span>
 
@@ -153,7 +153,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">wrapped_callable</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="static_variables"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.static_variables">[docs]</a><span class="k">def</span> <span class="nf">static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="static_variables"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.static_variables">[docs]</a><span class="k">def</span> <span class="nf">static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a callable such that it has the given static variables set.</span>
 
@@ -187,7 +187,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">static_variables_tie</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="metaclass"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.metaclass">[docs]</a><span class="k">def</span> <span class="nf">metaclass</span><span class="p">(</span><span class="n">meta</span><span class="p">):</span>
+<div class="viewcode-block" id="metaclass"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.metaclass">[docs]</a><span class="k">def</span> <span class="nf">metaclass</span><span class="p">(</span><span class="n">meta</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a class such that the given metaclass is applied.</span>
 
@@ -237,7 +237,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass_wrapper</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="metaclasses"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.metaclasses">[docs]</a><span class="k">def</span> <span class="nf">metaclasses</span><span class="p">(</span><span class="o">*</span><span class="n">metas</span><span class="p">):</span>
+<div class="viewcode-block" id="metaclasses"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.metaclasses">[docs]</a><span class="k">def</span> <span class="nf">metaclasses</span><span class="p">(</span><span class="o">*</span><span class="n">metas</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a class such that the given metaclasses are applied.</span>
 
@@ -274,7 +274,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">metaclasses_wrapper</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="class_static_variables"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.class_static_variables">[docs]</a><span class="k">def</span> <span class="nf">class_static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="class_static_variables"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.class_static_variables">[docs]</a><span class="k">def</span> <span class="nf">class_static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a class such that it has the given static variables set.</span>
 
@@ -299,7 +299,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaStaticVariables</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
+<div class="viewcode-block" id="class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</span>
 
@@ -331,7 +331,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="qt_class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.qt_class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">qt_class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
+<div class="viewcode-block" id="qt_class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.qt_class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">qt_class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</span>
 
@@ -366,7 +366,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="class_decorate_methods"><a class="viewcode-back" href="../../../nanshe.util.html#nanshe.util.wrappers.class_decorate_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_methods</span><span class="p">(</span><span class="o">**</span><span class="n">method_decorators</span><span class="p">):</span>
+<div class="viewcode-block" id="class_decorate_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.class_decorate_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_methods</span><span class="p">(</span><span class="o">**</span><span class="n">method_decorators</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a class such that specified methods are decorated by the decorators provided.</span>
 

@@ -1,0 +1,7 @@
+nanshe.util.wrappers module
+===========================
+
+.. automodule:: nanshe.util.wrappers
+    :members:
+    :undoc-members:
+    :show-inheritance:

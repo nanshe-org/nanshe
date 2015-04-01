@@ -1,0 +1,7 @@
+nanshe.imp.simple_image_processing module
+=========================================
+
+.. automodule:: nanshe.imp.simple_image_processing
+    :members:
+    :undoc-members:
+    :show-inheritance:

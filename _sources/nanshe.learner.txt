@@ -1,0 +1,7 @@
+nanshe.learner module
+=====================
+
+.. automodule:: nanshe.learner
+    :members:
+    :undoc-members:
+    :show-inheritance:

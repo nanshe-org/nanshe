@@ -77,7 +77,7 @@
 
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="create_numpy_structured_array_in_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.html#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">[docs]</a><span class="k">def</span> <span class="nf">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="create_numpy_structured_array_in_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">[docs]</a><span class="k">def</span> <span class="nf">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.</span>
 <span class="sd">        Also, will handle normal NumPy arrays and scalars, as well.</span>
@@ -133,7 +133,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-<div class="viewcode-block" id="read_numpy_structured_array_from_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.html#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">[docs]</a><span class="k">def</span> <span class="nf">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">):</span>
+<div class="viewcode-block" id="read_numpy_structured_array_from_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">[docs]</a><span class="k">def</span> <span class="nf">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.</span>
 <span class="sd">        Also, it will handle normal NumPy arrays and scalars, as well.</span>
@@ -212,7 +212,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="HDF5MaskedDataset"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset">[docs]</a><span class="k">class</span> <span class="nc">HDF5MaskedDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="HDF5MaskedDataset"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset">[docs]</a><span class="k">class</span> <span class="nc">HDF5MaskedDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides an abstraction of the masked array the HDF5 Group where the contents of a</span>
 <span class="sd">        masked array are serialized.</span>
@@ -351,7 +351,7 @@
     <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-<div class="viewcode-block" id="HDF5MaskedDataset.resize"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset.resize">[docs]</a>    <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="HDF5MaskedDataset.resize"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset.resize">[docs]</a>    <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
 </div>

@@ -1,0 +1,7 @@
+nanshe.io.xtiff module
+======================
+
+.. automodule:: nanshe.io.xtiff
+    :members:
+    :undoc-members:
+    :show-inheritance:

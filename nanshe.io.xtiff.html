@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.io.xtiff module &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="index.html" />
+    <link rel="next" title="nanshe.learner module" href="nanshe.learner.html" />
+    <link rel="prev" title="nanshe.io.xjson module" href="nanshe.io.xjson.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.learner.html" title="nanshe.learner module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.io.xjson.html" title="nanshe.io.xjson module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nanshe.io.xtiff">
+<span id="nanshe-io-xtiff-module"></span><h1>nanshe.io.xtiff module<a class="headerlink" href="#module-nanshe.io.xtiff" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="nanshe.io.xtiff.convert_tiffs">
+<code class="descclassname">nanshe.io.xtiff.</code><code class="descname">convert_tiffs</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/xtiff.html#convert_tiffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.xtiff.convert_tiffs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a stack of tiffs to an HDF5 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>new_tiff_filenames</strong> (<em>list or str</em>) &#8211; takes a str for a single file or a list of strs for filenames to combine
+(allows regex).</li>
+<li><strong>new_hdf5_pathname</strong> (<em>str</em>) &#8211; the HDF5 file and location to store the dataset.</li>
+<li><strong>axis</strong> (<em>int</em>) &#8211; which axis to concatenate along.</li>
+<li><strong>channel</strong> (<em>int</em>) &#8211; which channel to select for the HDF5 (can only keep one).</li>
+<li><strong>z_index</strong> (<em>int</em>) &#8211; which z value to take (the algorithm is not setup for 3D data yet)</li>
+<li><strong>pages_to_channel</strong> (<em>int</em>) &#8211; if channels are not normally stored in the channel variable, but are
+stored as pages, then this will split neighboring pages into separate
+channels.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.io.xtiff.get_multipage_tiff_shape_dtype">
+<code class="descclassname">nanshe.io.xtiff.</code><code class="descname">get_multipage_tiff_shape_dtype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/xtiff.html#get_multipage_tiff_shape_dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.xtiff.get_multipage_tiff_shape_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the info about the shape (including page number as time) and dtype.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_tiff_filename</strong> (<em>str</em>) &#8211; the TIFF file to get info about</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an ordered dictionary with &#8220;shape&#8221; first and &#8220;dtype&#8221; (type) second.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(collections.OrderedDict)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.io.xtiff.get_multipage_tiff_shape_dtype_transformed">
+<code class="descclassname">nanshe.io.xtiff.</code><code class="descname">get_multipage_tiff_shape_dtype_transformed</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/xtiff.html#get_multipage_tiff_shape_dtype_transformed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.xtiff.get_multipage_tiff_shape_dtype_transformed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the info about the shape and dtype after some transformations have been performed .</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>new_tiff_filename</strong> (<em>str</em>) &#8211; the TIFF file to get info about</li>
+<li><strong>axis_order</strong> (<em>str</em>) &#8211; the desired axis order when reshaped</li>
+<li><strong>pages_to_channel</strong> (<em>int</em>) &#8211; number of channels to divide from the pages</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an ordered dictionary with &#8220;shape&#8221; first and &#8220;dtype&#8221; (type) second.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(collections.OrderedDict)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.io.xtiff.get_standard_tiff_array">
+<code class="descclassname">nanshe.io.xtiff.</code><code class="descname">get_standard_tiff_array</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/xtiff.html#get_standard_tiff_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.xtiff.get_standard_tiff_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a tiff file and returns a standard 5D array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>new_tiff_filename</strong> (<em>str</em>) &#8211; the TIFF file to read in</li>
+<li><strong>axis_order</strong> (<em>int</em>) &#8211; how to order the axes (by default returns &#8220;tzyxc&#8221;).</li>
+<li><strong>pages_to_channel</strong> (<em>int</em>) &#8211; if channels are not normally stored in the channel variable, but are
+stored as pages (or as a mixture), then this will split neighboring
+pages into separate channels. (by default is 1 so changes nothing)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the axis order specified.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="nanshe.io.xjson.html"
+                          title="Previous page">&larr; nanshe.io.xjson module</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="nanshe.learner.html"
+                          title="Next page">&rarr; nanshe.learner module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nanshe.io.xtiff.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.learner.html" title="nanshe.learner module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.io.xjson.html" title="nanshe.io.xjson module"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

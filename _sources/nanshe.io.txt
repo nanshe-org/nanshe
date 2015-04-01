@@ -16,20 +16,8 @@ Subpackages
 Submodules
 ----------
 
-nanshe.io.xjson module
-----------------------
+.. toctree::
 
-.. automodule:: nanshe.io.xjson
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nanshe.io.xtiff module
-----------------------
-
-.. automodule:: nanshe.io.xtiff
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   nanshe.io.xjson
+   nanshe.io.xtiff
 

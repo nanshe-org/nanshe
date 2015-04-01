@@ -1,0 +1,7 @@
+nanshe.io.hdf5.search module
+============================
+
+.. automodule:: nanshe.io.hdf5.search
+    :members:
+    :undoc-members:
+    :show-inheritance:

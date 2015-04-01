@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nanshe.util.prof module &mdash; ..  documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="top" title="..  documentation" href="index.html" />
+    <link rel="next" title="nanshe.util.wrappers module" href="nanshe.util.wrappers.html" />
+    <link rel="prev" title="nanshe.util.pathHelpers module" href="nanshe.util.pathHelpers.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.wrappers.html" title="nanshe.util.wrappers module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.pathHelpers.html" title="nanshe.util.pathHelpers module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nanshe.util.prof">
+<span id="nanshe-util-prof-module"></span><h1>nanshe.util.prof module<a class="headerlink" href="#module-nanshe.util.prof" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="nanshe.util.prof.log_call">
+<code class="descclassname">nanshe.util.prof.</code><code class="descname">log_call</code><span class="sig-paren">(</span><em>logger</em>, <em>to_log_call=True</em>, <em>to_print_args=False</em>, <em>to_print_time=True</em>, <em>to_print_exception=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#log_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.log_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a given logger and uses it to log entering and leaving the decorated callable.
+Intended to be used as a decorator that takes a few arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>logger</strong> (<em>Logger</em>) &#8211; Used for logging entry, exit and possibly arguments.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>to_log_call</strong> (<em>bool</em>) &#8211;
+Whether to log call or not. This overrides all other arguments. It will be
+stored as a global variable on the function, which can be changed at runtime.</li>
+<li><strong>to_print_args</strong> (<em>bool</em>) &#8211;
+Whether to output the arguments and keyword arguments passed to the function.
+This should not automatically be true as some arguments may not be printable
+or may be expensive to print. Thus, it should be up to the developer to use
+their own discretion. Further, we don&#8217;t want to break their existing code. It
+will be stored as a global variable on the function, which can be changed at
+runtime.</li>
+<li><strong>to_print_time</strong> (<em>bool</em>) &#8211;
+Prints the time it took to run the wrapped callable.</li>
+<li><strong>to_print_exception</strong> (<em>bool</em>) &#8211;
+Whether to print the traceback when an exception is raise. It will be stored
+as a global variable on the function, which can be changed at runtime.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">log_call_decorator (for wrapping)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.prof.log_class">
+<code class="descclassname">nanshe.util.prof.</code><code class="descname">log_class</code><span class="sig-paren">(</span><em>logger</em>, <em>to_log_call=True</em>, <em>to_print_args=False</em>, <em>to_print_time=True</em>, <em>to_print_exception=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#log_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.log_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
+Intended to be used as a decorator that takes a few arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>logger</strong> (<em>Logger</em>) &#8211; Used for logging entry, exit and possibly arguments.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>to_log_call</strong> (<em>bool</em>) &#8211;
+Whether to log call or not. This overrides all other arguments. It will be
+stored as a global variable on the methods, which can be changed at runtime.</li>
+<li><strong>to_print_args</strong> (<em>bool</em>) &#8211;
+Whether to output the arguments and keyword arguments passed to the function.
+This should not automatically be true as some arguments may not be printable
+or may be expensive to print. Thus, it should be up to the developer to use
+their own discretion. Further, we don&#8217;t want to break their existing code. It
+will be stored as a global variable on the methods, which can be changed at
+runtime.</li>
+<li><strong>to_print_time</strong> (<em>bool</em>) &#8211;
+Prints the time it took to run the wrapped callable.</li>
+<li><strong>to_print_exception</strong> (<em>bool</em>) &#8211;
+Whether to print the traceback when an exception is raise. It will be stored
+as a global variable on the methods, which can be changed at runtime.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">log_call_decorator (for wrapping)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.prof.memory_profiler">
+<code class="descclassname">nanshe.util.prof.</code><code class="descname">memory_profiler</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#memory_profiler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.memory_profiler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs forever get information about memory usage and dumping it to the logger provided at the given interval.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logger</strong> (<em>Logger</em>) &#8211; Used for logging memory profiling information.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><strong>interval</strong> (<em>int or float</em>) &#8211;
+Number of seconds to wait before issuing more profile information.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.prof.qt_log_class">
+<code class="descclassname">nanshe.util.prof.</code><code class="descname">qt_log_class</code><span class="sig-paren">(</span><em>logger</em>, <em>to_log_call=True</em>, <em>to_print_args=False</em>, <em>to_print_time=True</em>, <em>to_print_exception=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#qt_log_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.qt_log_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
+Intended to be used as a decorator that takes a few arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>logger</strong> (<em>Logger</em>) &#8211; Used for logging entry, exit and possibly arguments.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>to_log_call</strong> (<em>bool</em>) &#8211;
+Whether to log call or not. This overrides all other arguments. It will be
+stored as a global variable on the methods, which can be changed at runtime.</li>
+<li><strong>to_print_args</strong> (<em>bool</em>) &#8211;
+Whether to output the arguments and keyword arguments passed to the function.
+This should not automatically be true as some arguments may not be printable
+or may be expensive to print. Thus, it should be up to the developer to use
+their own discretion. Further, we don&#8217;t want to break their existing code. It
+will be stored as a global variable on the methods, which can be changed at
+runtime.</li>
+<li><strong>to_print_time</strong> (<em>bool</em>) &#8211;
+Prints the time it took to run the wrapped callable.</li>
+<li><strong>to_print_exception</strong> (<em>bool</em>) &#8211;
+Whether to print the traceback when an exception is raise. It will be stored
+as a global variable on the methods, which can be changed at runtime.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">log_call_decorator (for wrapping)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="nanshe.util.pathHelpers.html"
+                          title="Previous page">&larr; nanshe.util.pathHelpers module</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="nanshe.util.wrappers.html"
+                          title="Next page">&rarr; nanshe.util.wrappers module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nanshe.util.prof.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.wrappers.html" title="nanshe.util.wrappers module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.util.pathHelpers.html" title="nanshe.util.pathHelpers module"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">..  documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

@@ -1,0 +1,7 @@
+nanshe.registerer module
+========================
+
+.. automodule:: nanshe.registerer
+    :members:
+    :undoc-members:
+    :show-inheritance:

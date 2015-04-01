@@ -9,12 +9,7 @@ nanshe.synthetic_data package
 Submodules
 ----------
 
-nanshe.synthetic_data.synthetic_data module
--------------------------------------------
+.. toctree::
 
-.. automodule:: nanshe.synthetic_data.synthetic_data
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   nanshe.synthetic_data.synthetic_data
 

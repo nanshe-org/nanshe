@@ -1,0 +1,7 @@
+nanshe.io.hdf5.serializers module
+=================================
+
+.. automodule:: nanshe.io.hdf5.serializers
+    :members:
+    :undoc-members:
+    :show-inheritance:

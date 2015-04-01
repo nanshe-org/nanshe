@@ -1,0 +1,7 @@
+nanshe.imp.wavelet_transform module
+===================================
+
+.. automodule:: nanshe.imp.wavelet_transform
+    :members:
+    :undoc-members:
+    :show-inheritance:

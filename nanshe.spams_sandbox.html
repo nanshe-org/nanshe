@@ -29,8 +29,8 @@
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="top" title="..  documentation" href="index.html" />
-    <link rel="next" title="nanshe.synthetic_data package" href="nanshe.synthetic_data.html" />
-    <link rel="prev" title="nanshe.io.hdf5 package" href="nanshe.io.hdf5.html" /> 
+    <link rel="next" title="nanshe.spams_sandbox.spams_sandbox module" href="nanshe.spams_sandbox.spams_sandbox.html" />
+    <link rel="prev" title="nanshe.registerer module" href="nanshe.registerer.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body role="document">
@@ -46,10 +46,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.synthetic_data.html" title="nanshe.synthetic_data package"
+          <a href="nanshe.spams_sandbox.spams_sandbox.html" title="nanshe.spams_sandbox.spams_sandbox module"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.io.hdf5.html" title="nanshe.io.hdf5 package"
+          <a href="nanshe.registerer.html" title="nanshe.registerer module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">..  documentation</a> &raquo;</li>
  
@@ -71,155 +71,11 @@ separate module that cannot see the contents of nanshe. Hopefully, this will mak
 segmentation fault.</p>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.spams_sandbox.spams_sandbox.html">nanshe.spams_sandbox.spams_sandbox module</a></li>
+</ul>
 </div>
-<div class="section" id="module-nanshe.spams_sandbox.spams_sandbox">
-<span id="nanshe-spams-sandbox-spams-sandbox-module"></span><h2>nanshe.spams_sandbox.spams_sandbox module<a class="headerlink" href="#module-nanshe.spams_sandbox.spams_sandbox" title="Permalink to this headline">¶</a></h2>
-<dl class="exception">
-<dt id="nanshe.spams_sandbox.spams_sandbox.SPAMSException">
-<em class="property">exception </em><code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">SPAMSException</code><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#SPAMSException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.SPAMSException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL">
-<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">call_multiprocessing_array_spams_trainDL</code><span class="sig-paren">(</span><em>X</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_multiprocessing_array_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_array_spams_trainDL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</p>
-<p>It is necessary to run SPAMS in a separate process as segmentation faults
-have been discovered in later parts of the Python code dependent on whether
-SPAMS has run or not. It is suspected that spams may interfere with the
-interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-so that it doesn&#8217;t damage what happens in this one.</p>
-<p>This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>X</strong> (<em>numpy.matrix</em>) &#8211; a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).</li>
-<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
-<li><strong>**kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is somewhat faster than using multiprocessing.Queue.</p>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL">
-<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">call_multiprocessing_queue_spams_trainDL</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_multiprocessing_queue_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_multiprocessing_queue_spams_trainDL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</p>
-<p>It is necessary to run SPAMS in a separate process as segmentation faults
-have been discovered in later parts of the Python code dependent on whether
-SPAMS has run or not. It is suspected that spams may interfere with the
-interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-so that it doesn&#8217;t damage what happens in this one.</p>
-<p>This particular version uses a multiprocessing.Queue to return the resulting dictionary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
-<li><strong>*kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> &#8211;
-the dictionary found</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.matrix</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL">
-<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">call_spams_trainDL</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#call_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.call_spams_trainDL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.
-Designed to be like the multiprocessing calls.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
-<li><strong>**kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For legacy.</p>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL">
-<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">run_multiprocessing_array_spams_trainDL</code><span class="sig-paren">(</span><em>result_array_type</em>, <em>result_array</em>, <em>X_array_type</em>, <em>X_array</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#run_multiprocessing_array_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_array_spams_trainDL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</p>
-<p>It is necessary to run SPAMS in a separate process as segmentation faults
-have been discovered in later parts of the Python code dependent on whether
-SPAMS has run or not. It is suspected that spams may interfere with the
-interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-so that it doesn&#8217;t damage what happens in this one.</p>
-<p>This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>result_array_type</strong> (<em>numpy.ctypeslib.ndpointer</em>) &#8211; a pointer type with properties needed by result_array.</li>
-<li><strong>result_array</strong> (<em>multiprocessing.RawArray</em>) &#8211; shared memory array to store results in.</li>
-<li><strong>X_array_type</strong> (<em>numpy.ctypeslib.ndpointer</em>) &#8211; a pointer type with properties needed by X_array.</li>
-<li><strong>X_array</strong> (<em>numpy.ndarray</em>) &#8211; currently uses numpy ndarray as input.</li>
-<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
-<li><strong>*kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is somewhat faster than using multiprocessing.Queue.</p>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL">
-<code class="descclassname">nanshe.spams_sandbox.spams_sandbox.</code><code class="descname">run_multiprocessing_queue_spams_trainDL</code><span class="sig-paren">(</span><em>out_queue</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/spams_sandbox/spams_sandbox.html#run_multiprocessing_queue_spams_trainDL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.spams_sandbox.spams_sandbox.run_multiprocessing_queue_spams_trainDL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Designed to run spams.trainDL in a separate process.</p>
-<p>It is necessary to run SPAMS in a separate process as segmentation faults
-have been discovered in later parts of the Python code dependent on whether
-SPAMS has run or not. It is suspected that spams may interfere with the
-interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-so that it doesn&#8217;t damage what happens in this one.</p>
-<p>This particular version uses a multiprocessing.Queue to return the resulting dictionary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>out_queue</strong> (<em>multiprocessing.Queue</em>) &#8211; what will take the returned dictionary from spams.trainDL.</li>
-<li><strong>*args</strong> (<em>list</em>) &#8211; a list of position arguments to pass to spams.trainDL.</li>
-<li><strong>*kwargs</strong> (<em>dict</em>) &#8211; a dictionary of keyword arguments to pass to spams.trainDL.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 </div>
 
@@ -233,7 +89,6 @@ so that it doesn&#8217;t damage what happens in this one.</p>
     <ul>
 <li><a class="reference internal" href="#">nanshe.spams_sandbox package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-nanshe.spams_sandbox.spams_sandbox">nanshe.spams_sandbox.spams_sandbox module</a></li>
 </ul>
 </li>
 </ul>
@@ -241,13 +96,13 @@ so that it doesn&#8217;t damage what happens in this one.</p>
   </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
-    <p class="topless"><a href="nanshe.io.hdf5.html"
-                          title="Previous page">&larr; nanshe.io.hdf5 package</a></p>
+    <p class="topless"><a href="nanshe.registerer.html"
+                          title="Previous page">&larr; nanshe.registerer module</a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
-    <p class="topless"><a href="nanshe.synthetic_data.html"
-                          title="Next page">&rarr; nanshe.synthetic_data package</a></p>
+    <p class="topless"><a href="nanshe.spams_sandbox.spams_sandbox.html"
+                          title="Next page">&rarr; nanshe.spams_sandbox.spams_sandbox module</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -285,10 +140,10 @@ so that it doesn&#8217;t damage what happens in this one.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.synthetic_data.html" title="nanshe.synthetic_data package"
+          <a href="nanshe.spams_sandbox.spams_sandbox.html" title="nanshe.spams_sandbox.spams_sandbox module"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.io.hdf5.html" title="nanshe.io.hdf5 package"
+          <a href="nanshe.registerer.html" title="nanshe.registerer module"
              >previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">..  documentation</a> &raquo;</li>
  
