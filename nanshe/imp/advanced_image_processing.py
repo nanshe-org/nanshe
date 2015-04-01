@@ -48,7 +48,7 @@ from nanshe.util import xnumpy
 
 # Short function to process image data.
 import filters.masks
-from simple_image_processing import zeroed_mean_images, renormalized_images
+from renorm import zeroed_mean_images, renormalized_images
 
 # Algorithms to register the data.
 import registration
