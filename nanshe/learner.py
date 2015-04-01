@@ -25,7 +25,7 @@ from nanshe.util import iters, xnumpy,\
 from nanshe.io import hdf5
 
 # Short function to process image data.
-from nanshe.imp import advanced_image_processing
+from nanshe.imp import segment
 
 # For IO. Right now, just includes read_parameters for reading a config.json file.
 from nanshe.io import xjson
@@ -527,7 +527,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
         output_group = output_file_handle[output_group_name]
 
-        new_neurons_set = advanced_image_processing.get_empty_neuron(shape=tuple(original_images_shape_array[1:]), dtype=float)
+        new_neurons_set = segment.get_empty_neuron(shape=tuple(original_images_shape_array[1:]), dtype=float)
 
         for i, i_str, (output_filename_block_i, sequential_block_i) in iters.filled_stringify_enumerate(itertools.izip(output_filename_block, original_images_pared_slices.flat)):
             windowed_slice_i = tuple([slice(_1, _2, 1) for _1, _2 in [(None, None)] + sequential_block_i["windowed_stack_selection"].tolist()[1:]])
@@ -575,8 +575,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
                             recorder_constructor = hdf5.record.HDF5EnumeratedArrayRecorder
                         )
 
-                        advanced_image_processing.merge_neuron_sets.recorders.array_debug_recorder = array_debug_recorder
-                        new_neurons_set = advanced_image_processing.merge_neuron_sets(new_neurons_set, neurons_block_i,
+                        segment.merge_neuron_sets.recorders.array_debug_recorder = array_debug_recorder
+                        new_neurons_set = segment.merge_neuron_sets(new_neurons_set, neurons_block_i,
                                                                                       **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"])
 
         hdf5.serializers.create_numpy_structured_array_in_HDF5(output_group, "neurons", new_neurons_set, overwrite = True)
@@ -624,8 +624,8 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
     new_preprocessed_images = generate_neurons.resume_logger.get("preprocessed_images", None)
     if (new_preprocessed_images is None) or (run_stage == "preprocessing") or (run_stage == "all"):
         new_preprocessed_images = original_images.copy()
-        advanced_image_processing.preprocess_data.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
-        new_preprocessed_images = advanced_image_processing.preprocess_data(new_preprocessed_images,
+        segment.preprocess_data.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
+        new_preprocessed_images = segment.preprocess_data(new_preprocessed_images,
                                                                             out = new_preprocessed_images,
                                                                             **parameters["preprocess_data"])
         generate_neurons.resume_logger["preprocessed_images"] = new_preprocessed_images
@@ -643,8 +643,8 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
     # Find the dictionary
     new_dictionary = generate_neurons.resume_logger.get("dictionary", None)
     if (new_dictionary is None) or (run_stage == "dictionary") or (run_stage == "all"):
-        advanced_image_processing.generate_dictionary.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
-        new_dictionary = advanced_image_processing.generate_dictionary(new_preprocessed_images,
+        segment.generate_dictionary.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
+        new_dictionary = segment.generate_dictionary(new_preprocessed_images,
                                                                        **parameters["generate_dictionary"])
         generate_neurons.resume_logger["dictionary"] = new_dictionary
 
@@ -662,8 +662,8 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
     new_neurons = None
     new_neurons = generate_neurons.resume_logger.get("neurons", None)
     if (new_neurons is None) or (run_stage == "postprocessing") or (run_stage == "all"):
-        advanced_image_processing.postprocess_data.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
-        new_neurons = advanced_image_processing.postprocess_data(new_dictionary,
+        segment.postprocess_data.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
+        new_neurons = segment.postprocess_data(new_dictionary,
                                                                  **parameters["postprocess_data"])
 
         if new_neurons.size:
