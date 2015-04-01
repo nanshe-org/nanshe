@@ -3,7 +3,7 @@ __date__ = "$Apr 14, 2014 20:37:08 EDT$"
 
 __all__ = [
     "advanced_image_processing", "filters",  # "neuron_matplotlib_viewer",
-    "registration", "simple_image_processing", "wavelet_transform"
+    "registration", "simple_image_processing", "wavelet"
 ]
 
 import advanced_image_processing
@@ -11,4 +11,4 @@ import filters
 # import neuron_matplotlib_viewer
 import registration
 import simple_image_processing
-import wavelet_transform
+import wavelet
