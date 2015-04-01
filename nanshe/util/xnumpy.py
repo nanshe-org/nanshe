@@ -10,6 +10,7 @@ import warnings
 import numpy
 import scipy
 
+import scipy.misc
 import scipy.spatial
 import scipy.ndimage
 import scipy.ndimage.morphology
@@ -3964,6 +3965,62 @@ def quantile(data, probs, axis = None):
     new_quantiles.set_fill_value(numpy.nan)
 
     return(new_quantiles)
+
+
+@prof.log_call(logger)
+def binomial_coefficients(n):
+    """
+        Generates a row in Pascal's triangle (binomial coefficients).
+
+        Args:
+            n(int):      which row of Pascal's triangle to return.
+
+        Returns:
+            cs(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
+
+
+        Examples:
+            >>> binomial_coefficients(-25)
+            array([], dtype=int64)
+
+            >>> binomial_coefficients(-1)
+            array([], dtype=int64)
+
+            >>> binomial_coefficients(0)
+            array([1])
+
+            >>> binomial_coefficients(1)
+            array([1, 1])
+
+            >>> binomial_coefficients(2)
+            array([1, 2, 1])
+
+            >>> binomial_coefficients(4)
+            array([1, 4, 6, 4, 1])
+
+            >>> binomial_coefficients(4.0)
+            array([1, 4, 6, 4, 1])
+    """
+
+    # Must be integer
+    n = int(n)
+
+    # Below -1 is all the same.
+    if n < -1:
+        n = -1
+
+    # Get enough repeats of n to get each coefficent
+    ns = numpy.repeat(n, n + 1)
+    # Get all relevant k's
+    ks = numpy.arange(n + 1)
+
+    # Get all the coefficents in order
+    cs = scipy.misc.comb(ns, ks)
+    cs = numpy.around(cs)
+    cs = cs.astype(int)
+
+    return(cs)
+
 
 @prof.log_call(logger)
 def line_filter(shape, dim = -1):
