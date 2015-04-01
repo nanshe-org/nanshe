@@ -521,7 +521,7 @@ class TestAdvancedImageProcessing(object):
                     3
                 ]
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : [
                     3,
                     4,
@@ -561,7 +561,7 @@ class TestAdvancedImageProcessing(object):
                     3
                 ]
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : [
                     3,
                     4,
@@ -600,7 +600,7 @@ class TestAdvancedImageProcessing(object):
                 "half_window_size" : 20,
                 "bias" : 100
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : [
                     3,
                     4,
@@ -682,7 +682,7 @@ class TestAdvancedImageProcessing(object):
                 "half_window_size" : 20,
                 "bias" : 100
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : [
                     3,
                     4,
@@ -714,7 +714,7 @@ class TestAdvancedImageProcessing(object):
                     "ord" : 2
                 }
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : [
                     3,
                     4,
@@ -1625,7 +1625,7 @@ class TestAdvancedImageProcessing(object):
             "remove_low_intensity_local_maxima" : {
                 "percentage_pixels_below_max" : 0
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : 5
             },
             "accepted_region_shape_constraints" : {
@@ -1673,7 +1673,7 @@ class TestAdvancedImageProcessing(object):
             "remove_low_intensity_local_maxima" : {
                 "percentage_pixels_below_max" : 0
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : 5
             },
             "accepted_region_shape_constraints" : {
@@ -1754,7 +1754,7 @@ class TestAdvancedImageProcessing(object):
             "remove_low_intensity_local_maxima" : {
                 "percentage_pixels_below_max" : 0
             },
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 "scale" : 5
             },
             "accepted_region_shape_constraints" : {
@@ -2123,7 +2123,7 @@ class TestAdvancedImageProcessing(object):
                 "remove_low_intensity_local_maxima" : {
                     "percentage_pixels_below_max" : 0.0
                 },
-                "wavelet_transform" : {
+                "wavelet.transform" : {
                     "scale" : 4
                 },
                 "accepted_region_shape_constraints" : {
@@ -2213,7 +2213,7 @@ class TestAdvancedImageProcessing(object):
                 "remove_low_intensity_local_maxima" : {
                     "percentage_pixels_below_max" : 0.0
                 },
-                "wavelet_transform" : {
+                "wavelet.transform" : {
                     "scale" : 4
                 },
                 "accepted_region_shape_constraints" : {
@@ -2302,7 +2302,7 @@ class TestAdvancedImageProcessing(object):
                 "remove_low_intensity_local_maxima" : {
                     "percentage_pixels_below_max" : 0.0
                 },
-                "wavelet_transform" : {
+                "wavelet.transform" : {
                     "scale" : 4
                 },
                 "accepted_region_shape_constraints" : {
@@ -2393,7 +2393,7 @@ class TestAdvancedImageProcessing(object):
                 "remove_low_intensity_local_maxima" : {
                     "percentage_pixels_below_max" : 0.0
                 },
-                "wavelet_transform" : {
+                "wavelet.transform" : {
                     "scale" : 4
                 },
                 "accepted_region_shape_constraints" : {

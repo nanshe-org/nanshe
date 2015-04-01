@@ -139,7 +139,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 
 @prof.log_call(logger)
 @hdf5.record.static_array_debug_recorder
-def wavelet_transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
+def transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
 
@@ -158,7 +158,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
 
 
         Examples:
-            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            >>> transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = True,
             ...     include_lower_scales = True) # doctest: +NORMALIZE_WHITESPACE
@@ -172,7 +172,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                      [ 0.375  ,  0.375  ,  0.375  ],
                      [ 0.34375,  0.375  ,  0.40625]]], dtype=float32))
 
-            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            >>> transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = True)
@@ -180,7 +180,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                     [-0.375  ,  0.625  , -0.375  ],
                     [-0.34375, -0.375  ,  0.59375]]], dtype=float32)
 
-            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            >>> transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = False)
@@ -189,7 +189,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                    [-0.34375, -0.375  ,  0.59375]], dtype=float32)
 
             >>> out = numpy.zeros((3, 3), dtype = numpy.float32)
-            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            >>> transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = False,
@@ -203,7 +203,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                    [-0.34375, -0.375  ,  0.59375]], dtype=float32)
 
             >>> out = numpy.eye(3, dtype = numpy.float32)
-            >>> wavelet_transform(out,
+            >>> transform(out,
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = False,
@@ -217,7 +217,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                    [-0.34375, -0.375  ,  0.59375]], dtype=float32)
 
             >>> out = numpy.empty((1, 3, 3), dtype = numpy.float32)
-            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            >>> transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = True,
@@ -231,7 +231,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                     [-0.34375, -0.375  ,  0.59375]]], dtype=float32)
 
             >>> out = numpy.empty((1, 3, 3), dtype = numpy.float64)
-            >>> wavelet_transform(numpy.eye(3, dtype = numpy.float32),
+            >>> transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = True,
@@ -245,7 +245,7 @@ def wavelet_transform(im0, scale = 5, include_intermediates = False, include_low
                     [-0.34375, -0.375  ,  0.59375]]])
 
             >>> out = numpy.eye(3, dtype = numpy.uint8)
-            >>> wavelet_transform(out,
+            >>> transform(out,
             ...     scale = 1,
             ...     include_intermediates = False,
             ...     include_lower_scales = False,

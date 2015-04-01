@@ -57,7 +57,7 @@ import registration
 from filters.noise import estimate_noise, significant_mask
 
 # Wavelet transformation operations
-from wavelet import wavelet_transform
+import wavelet
 
 from nanshe.io import hdf5
 
@@ -422,7 +422,7 @@ def normalize_data(new_data, out = None, **parameters):
 def preprocess_data(new_data, out = None, **parameters):
     """
         Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and
-        wavelet_transform).
+        wavelet.transform).
         
         Args:
             new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).
@@ -466,13 +466,13 @@ def preprocess_data(new_data, out = None, **parameters):
         )
 
     new_data_maybe_wavelet_result = new_data_maybe_f0_result
-    if "wavelet_transform" in parameters:
-        wavelet_transform.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
-        wavelet_transform(new_data_maybe_wavelet_result,
+    if "wavelet.transform" in parameters:
+        wavelet.transform.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
+        wavelet.transform(new_data_maybe_wavelet_result,
                                             include_intermediates = False,
                                             include_lower_scales = False,
                                             out = new_data_maybe_wavelet_result,
-                                            **parameters["wavelet_transform"])
+                                            **parameters["wavelet.transform"])
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed"] = new_data_maybe_wavelet_result
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = xnumpy.add_singleton_op(
             numpy.max,
@@ -1893,10 +1893,10 @@ def wavelet_denoising(new_image,
                                               **parameters["estimate_noise"])
 
     # Dictionary with wavelet transform applied. Wavelet transform is the first index.
-    new_wavelet_transformed_image = wavelet_transform(new_image,
+    new_wavelet_transformed_image = wavelet.transform(new_image,
                                                       include_intermediates = False,
                                                       include_lower_scales = True,
-                                                      **parameters["wavelet_transform"])
+                                                      **parameters["wavelet.transform"])
 
     for i in xrange(len(new_wavelet_transformed_image)):
         wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = \

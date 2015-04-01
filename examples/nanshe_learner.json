@@ -72,9 +72,9 @@
             },
             
             
-            "__comment__wavelet_transform" : "Optional. Runs a wavelet transform on the data.",
+            "__comment__wavelet.transform" : "Optional. Runs a wavelet transform on the data.",
             
-            "wavelet_transform" : {
+            "wavelet.transform" : {
                 
                 "__comment__scale" : "This can be a single value, which is then applied on all axes or it can be an array. For the array, the axis order is [t, y, x] for 2D and [t, z, y, x] for 3D.",
                 
@@ -133,16 +133,16 @@
                 },
                 
                 
-                "__comment__wavelet_transform" : "Performed on the basis image.",
+                "__comment__wavelet.transform" : "Performed on the basis image.",
                 
-                "wavelet_transform" : {
+                "wavelet.transform" : {
                     "__comment__scale" : "Scalars are applied to all dimensions. It is recommended that this be symmetric.",
                     
                     "scale" : 4
                 },
                 
                 
-                "__comment__significant_mask" : "Using the noise estimate from estimate_noise and the wavelet transformed image from wavelet_transform, anything within the noise range from before scaled up by the noise_threshold. Typical values are 2.0-4.0.",
+                "__comment__significant_mask" : "Using the noise estimate from estimate_noise and the wavelet transformed image from wavelet.transform, anything within the noise range from before scaled up by the noise_threshold. Typical values are 2.0-4.0.",
                 
                 "significant_mask" : {
                     "noise_threshold" : 3.0

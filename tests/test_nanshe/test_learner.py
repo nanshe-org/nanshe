@@ -33,7 +33,7 @@ class TestLearner(object):
                         "remove_low_intensity_local_maxima" : {
                             "percentage_pixels_below_max" : 0
                         },
-                        "wavelet_transform" : {
+                        "wavelet.transform" : {
                             "scale" : 4
                         },
                         "accepted_region_shape_constraints" : {
@@ -97,7 +97,7 @@ class TestLearner(object):
                             3
                         ]
                     },
-                    "wavelet_transform" : {
+                    "wavelet.transform" : {
                         "scale" : [
                             3,
                             4,
@@ -133,7 +133,7 @@ class TestLearner(object):
                         "remove_low_intensity_local_maxima" : {
                             "percentage_pixels_below_max" : 0
                         },
-                        "wavelet_transform" : {
+                        "wavelet.transform" : {
                             "scale" : 4
                         },
                         "accepted_region_shape_constraints" : {
@@ -187,7 +187,7 @@ class TestLearner(object):
                         "half_window_size" : 1,
                         "bias" : 100
                     },
-                    "wavelet_transform" : {
+                    "wavelet.transform" : {
                         "scale" : [
                             3,
                             4,
@@ -252,7 +252,7 @@ class TestLearner(object):
                             "spatial_smoothing_gaussian_filter_window_size" : 5.0
                         },
 
-                        "wavelet_transform" : {
+                        "wavelet.transform" : {
                             "scale" : [3, 4, 4]
                         },
 
@@ -299,7 +299,7 @@ class TestLearner(object):
                                 "noise_threshold" : 3.0
                             },
 
-                            "wavelet_transform" : {
+                            "wavelet.transform" : {
                                 "scale" : 4
                             },
 
@@ -366,7 +366,7 @@ class TestLearner(object):
                             "remove_low_intensity_local_maxima" : {
                                 "percentage_pixels_below_max" : 0
                             },
-                            "wavelet_transform" : {
+                            "wavelet.transform" : {
                                 "scale" : 4
                             },
                             "accepted_region_shape_constraints" : {
@@ -420,7 +420,7 @@ class TestLearner(object):
                             "half_window_size" : 1,
                             "bias" : 100
                         },
-                        "wavelet_transform" : {
+                        "wavelet.transform" : {
                             "scale" : [
                                 3,
                                 4,
@@ -489,7 +489,7 @@ class TestLearner(object):
                             "spatial_smoothing_gaussian_filter_window_size" : 5.0
                         },
 
-                        "wavelet_transform" : {
+                        "wavelet.transform" : {
                             "scale" : [3, 4, 4]
                         },
 
@@ -536,7 +536,7 @@ class TestLearner(object):
                                 "noise_threshold" : 3.0
                             },
 
-                            "wavelet_transform" : {
+                            "wavelet.transform" : {
                                 "scale" : 4
                             },
 
@@ -606,7 +606,7 @@ class TestLearner(object):
                             "remove_low_intensity_local_maxima" : {
                                 "percentage_pixels_below_max" : 0
                             },
-                            "wavelet_transform" : {
+                            "wavelet.transform" : {
                                 "scale" : 4
                             },
                             "accepted_region_shape_constraints" : {
@@ -660,7 +660,7 @@ class TestLearner(object):
                             "half_window_size" : 1,
                             "bias" : 100
                         },
-                        "wavelet_transform" : {
+                        "wavelet.transform" : {
                             "scale" : [
                                 3,
                                 4,
