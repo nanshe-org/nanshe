@@ -86,7 +86,17 @@ def main(*argv):
                         output_file[each_output_filename_components.internalDirectory],
                         name=each_output_filename_components.internalDatasetName
                     )
+
+                # Only remove the directory if our input or output files are
+                # not stored there.
                 os.remove(result_filename)
-                os.removedirs(os.path.dirname(result_filename))
+                in_out_filenames = set(
+                    os.path.dirname(_.filename) for _ in [
+                        input_file, output_file
+                    ]
+                )
+                result_dirname = os.path.dirname(result_filename)
+                if result_dirname not in in_out_filenames:
+                    os.removedirs(result_dirname)
 
     return(0)
