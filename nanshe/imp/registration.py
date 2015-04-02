@@ -129,8 +129,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         block_frame_length = len(frames2reg)
 
     tempdir_name = ""
-    if isinstance(frames2reg, h5py.Dataset) or \
-            (block_frame_length != len(frames2reg)):
+    if isinstance(frames2reg, h5py.Dataset):
+        tempdir_name = os.path.dirname(frames2reg.file.filename)
+    elif (block_frame_length != len(frames2reg)):
         tempdir_name = tempfile.mkdtemp()
 
     temporaries_filename = ""
