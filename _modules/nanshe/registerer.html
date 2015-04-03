@@ -157,7 +157,7 @@
                 <span class="p">)</span>
                 <span class="n">result_dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">result_filename</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">result_dirname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">in_out_filenames</span><span class="p">:</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">removedirs</span><span class="p">(</span><span class="n">result_dirname</span><span class="p">)</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">result_dirname</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 </pre></div>
