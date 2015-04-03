@@ -360,6 +360,28 @@ class TestRegisterMeanOffsets(object):
             if temp_dir:
                 shutil.rmtree(temp_dir)
 
+    def test13a(self):
+        a = numpy.zeros((20,10,11), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-6, :-6] = 1
+
+        b[10, :, :3] = numpy.ma.masked
+        b[10, :3, :] = numpy.ma.masked
+
+
+        b2 = nanshe.imp.registration.register_mean_offsets(
+            a, float_type=numpy.float32
+        )
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
+
     @nose.plugins.attrib.attr("3D")
     def test0b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
@@ -722,6 +744,30 @@ class TestRegisterMeanOffsets(object):
             os.chdir(cwd)
             if temp_dir:
                 shutil.rmtree(temp_dir)
+
+    @nose.plugins.attrib.attr("3D")
+    def test13b(self):
+        a = numpy.zeros((20,10,11,12), dtype=int)
+
+        a[:, 3:-4, 3:-4, 3:-4] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+
+        a[10] = 0
+        a[10, :-7, :-7, :-7] = 1
+
+        b[10, :3, :, :] = numpy.ma.masked
+        b[10, :, :3, :] = numpy.ma.masked
+        b[10, :, :, :3] = numpy.ma.masked
+
+
+        b2 = nanshe.imp.registration.register_mean_offsets(
+            a, float_type=numpy.float32
+        )
+
+        assert (b2.dtype == b.dtype)
+        assert (b2.data == b.data).all()
+        assert (b2.mask == b.mask).all()
 
 
 class TestFindOffsets(object):
