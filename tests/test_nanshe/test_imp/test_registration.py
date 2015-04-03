@@ -7,6 +7,8 @@ import nose.plugins
 import nose.plugins.attrib
 
 import os
+import shutil
+import tempfile
 
 import h5py
 import numpy
@@ -311,6 +313,54 @@ class TestRegisterMeanOffsets(object):
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
         assert (b2.mask == b.mask).all()
+
+    def test12a(self):
+        cwd = os.getcwd()
+        temp_dir = ""
+
+        try:
+            temp_dir = tempfile.mkdtemp()
+            os.chdir(temp_dir)
+
+            print "temp_dir = " + repr(temp_dir)
+
+            with h5py.File("in.h5", "w") as f:
+                a = f.create_dataset(
+                    "a", shape=(20, 11, 12), dtype=int, chunks=True
+                )
+                a[:, 3:-4, 3:-4] = 1
+
+                b = numpy.ma.masked_array(a[...])
+
+                a[10] = 0
+                a[10, :-7, :-7] = 1
+
+
+                b[10, :, :3] = numpy.ma.masked
+                b[10, :3, :] = numpy.ma.masked
+
+                fn = nanshe.imp.registration.register_mean_offsets(
+                    a, block_frame_length=7
+                )
+
+            assert isinstance(fn, basestring)
+            assert os.path.exists(fn)
+
+            b2 = None
+            with h5py.File(fn, "r") as f:
+                b2g = f["reg_frames"]
+                b2d = nanshe.io.hdf5.serializers.HDF5MaskedDataset(b2g)
+                b2 = b2d[...]
+
+            os.remove(fn)
+
+            assert (b2.dtype == b.dtype)
+            assert (b2.data == b.data).all()
+            assert (b2.mask == b.mask).all()
+        finally:
+            os.chdir(cwd)
+            if temp_dir:
+                shutil.rmtree(temp_dir)
 
     @nose.plugins.attrib.attr("3D")
     def test0b(self):
@@ -627,6 +677,55 @@ class TestRegisterMeanOffsets(object):
         assert (b2.dtype == b.dtype)
         assert (b2.data == b.data).all()
         assert (b2.mask == b.mask).all()
+
+    @nose.plugins.attrib.attr("3D")
+    def test12b(self):
+        cwd = os.getcwd()
+        temp_dir = ""
+
+        try:
+            temp_dir = tempfile.mkdtemp()
+            os.chdir(temp_dir)
+
+            print "temp_dir = " + repr(temp_dir)
+
+            with h5py.File("in.h5", "w") as f:
+                a = f.create_dataset(
+                    "a", shape=(20, 11, 12, 13), dtype=int, chunks=True
+                )
+                a[:, 3:-4, 3:-4, 3:-4] = 1
+
+                b = numpy.ma.masked_array(a[...])
+
+                a[10] = 0
+                a[10, :-7, :-7, :-7] = 1
+
+                b[10, :3, :, :] = numpy.ma.masked
+                b[10, :, :3, :] = numpy.ma.masked
+                b[10, :, :, :3] = numpy.ma.masked
+
+                fn = nanshe.imp.registration.register_mean_offsets(
+                    a, block_frame_length=7
+                )
+
+            assert isinstance(fn, basestring)
+            assert os.path.exists(fn)
+
+            b2 = None
+            with h5py.File(fn, "r") as f:
+                b2g = f["reg_frames"]
+                b2d = nanshe.io.hdf5.serializers.HDF5MaskedDataset(b2g)
+                b2 = b2d[...]
+
+            os.remove(fn)
+
+            assert (b2.dtype == b.dtype)
+            assert (b2.data == b.data).all()
+            assert (b2.mask == b.mask).all()
+        finally:
+            os.chdir(cwd)
+            if temp_dir:
+                shutil.rmtree(temp_dir)
 
 
 class TestFindOffsets(object):
