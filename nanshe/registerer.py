@@ -97,6 +97,6 @@ def main(*argv):
                 )
                 result_dirname = os.path.dirname(result_filename)
                 if result_dirname not in in_out_filenames:
-                    os.removedirs(result_dirname)
+                    os.rmdir(result_dirname)
 
     return(0)
