@@ -317,9 +317,16 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
             <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
 
+        <span class="n">num_iters</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s">&quot;Completed iteration, </span><span class="si">%i</span><span class="s">, &quot;</span> <span class="o">%</span>
+                <span class="n">num_iters</span>
+            <span class="o">+</span> <span class="s">&quot;where the L_2 norm squared of the relative shift was, </span><span class="si">%f</span><span class="s">.&quot;</span> <span class="o">%</span>
+                <span class="n">squared_magnitude_delta_space_shift</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">max_iters</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">num_iters</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">num_iters</span> <span class="o">&gt;=</span> <span class="n">max_iters</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hit maximum number of iterations.&quot;</span><span class="p">)</span>
                 <span class="k">break</span>
 
     <span class="n">reg_frames_shape</span> <span class="o">=</span> <span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span>
