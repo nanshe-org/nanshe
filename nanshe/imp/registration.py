@@ -30,7 +30,7 @@ logger = prof.logging.getLogger(__name__)
 
 
 @prof.log_call(logger)
-def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False, to_truncate=False):
+def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False, to_truncate=False, float_type=numpy.dtype(float).type):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -50,6 +50,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
                                                  By default all. (Default -1)
             include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
             to_truncate(bool):                   Whether to truncate the frames to remove all masked portions. (Default False)
+            float_type(type):                    Type of float to use for calculation. (Default numpy.float64).
 
         Returns:
             (numpy.ndarray):                     an array containing the translations to apply to each frame.
@@ -125,6 +126,21 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
                    [0, 0]]))
     """
 
+    float_type = numpy.dtype(float_type).type
+
+    # Must be of type float and must be at least 32-bit (smallest complex type
+    # uses two 32-bit floats).
+    assert issubclass(float_type, numpy.floating)
+    assert numpy.dtype(float_type).itemsize >= 4
+
+    # Sadly, there is no easier way to map the two types; so, this is it.
+    float_complex_mapping = {
+        numpy.float32 : numpy.complex64,
+        numpy.float64 : numpy.complex128,
+        numpy.float128 : numpy.complex256
+    }
+    complex_type = float_complex_mapping[float_type]
+
     if block_frame_length == -1:
         block_frame_length = len(frames2reg)
 
@@ -157,7 +173,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         temporaries_file = h5py.File(temporaries_filename, "w")
 
         frames2reg_fft = temporaries_file.create_dataset(
-            "frames2reg_fft", shape=frames2reg.shape, dtype=complex
+            "frames2reg_fft", shape=frames2reg.shape, dtype=complex_type
         )
         space_shift = temporaries_file.create_dataset(
             "space_shift",
@@ -170,7 +186,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
             dtype=space_shift.dtype
         )
     else:
-        frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex)
+        frames2reg_fft = numpy.empty(frames2reg.shape, dtype=complex_type)
         space_shift = numpy.zeros(
             (len(frames2reg), len(frames2reg.shape)-1), dtype=int
         )
@@ -178,9 +194,9 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
 
     for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
         frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, len(frames2reg.shape)))
-    template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex)
+    template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
 
-    negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float)
+    negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
     numpy.reciprocal(negative_wave_vector, out=negative_wave_vector)
     negative_wave_vector *= 2*numpy.pi
     numpy.negative(negative_wave_vector, out=negative_wave_vector)
@@ -215,7 +231,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift_mean = this_space_shift[i:j].sum(axis=0)
         this_space_shift_mean = numpy.round(
-            this_space_shift_mean.astype(float) / len(this_space_shift)
+            this_space_shift_mean.astype(float_type) / len(this_space_shift)
         ).astype(int)
         for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             this_space_shift[i:j] = xnumpy.find_relative_offsets(
