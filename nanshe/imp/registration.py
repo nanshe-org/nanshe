@@ -129,19 +129,31 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         block_frame_length = len(frames2reg)
 
     tempdir_name = ""
+    temporaries_filename = ""
     if isinstance(frames2reg, h5py.Dataset):
-        tempdir_name = os.path.dirname(
+        tempdir_name, temporaries_filename = os.path.split(
             os.path.abspath(frames2reg.file.filename)
+        )
+
+        temporaries_filename = os.path.splitext(temporaries_filename)[0]
+        temporaries_filename += "_".join(
+            [
+                frames2reg.name.replace("/", "_"),
+                "temporaries.h5"
+            ]
+        )
+        temporaries_filename = os.path.join(
+            tempdir_name,
+            temporaries_filename
         )
     elif (block_frame_length != len(frames2reg)):
         tempdir_name = tempfile.mkdtemp()
+        temporaries_filename = os.path.join(tempdir_name, "temporaries.h5")
 
-    temporaries_filename = ""
     frames2reg_fft = None
     space_shift = None
     this_space_shift = None
     if tempdir_name:
-        temporaries_filename = os.path.join(tempdir_name, "temporaries.h5")
         temporaries_file = h5py.File(temporaries_filename, "w")
 
         frames2reg_fft = temporaries_file.create_dataset(
