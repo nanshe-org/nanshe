@@ -322,8 +322,6 @@ class TestRegisterMeanOffsets(object):
             temp_dir = tempfile.mkdtemp()
             os.chdir(temp_dir)
 
-            print "temp_dir = " + repr(temp_dir)
-
             with h5py.File("in.h5", "w") as f:
                 a = f.create_dataset(
                     "a", shape=(20, 11, 12), dtype=int, chunks=True
@@ -686,8 +684,6 @@ class TestRegisterMeanOffsets(object):
         try:
             temp_dir = tempfile.mkdtemp()
             os.chdir(temp_dir)
-
-            print "temp_dir = " + repr(temp_dir)
 
             with h5py.File("in.h5", "w") as f:
                 a = f.create_dataset(
