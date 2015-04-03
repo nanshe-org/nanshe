@@ -257,8 +257,8 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
             space_shift[i:j] = this_space_shift[i:j]
 
+        num_iters += 1
         if max_iters != -1:
-            num_iters += 1
             if num_iters >= max_iters:
                 break
 
