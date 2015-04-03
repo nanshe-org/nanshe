@@ -146,8 +146,18 @@
                         <span class="n">output_file</span><span class="p">[</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDirectory</span><span class="p">],</span>
                         <span class="n">name</span><span class="o">=</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span>
                     <span class="p">)</span>
+
+                <span class="c"># Only remove the directory if our input or output files are</span>
+                <span class="c"># not stored there.</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">result_filename</span><span class="p">)</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">removedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">result_filename</span><span class="p">))</span>
+                <span class="n">in_out_filenames</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="p">[</span>
+                        <span class="n">input_file</span><span class="p">,</span> <span class="n">output_file</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">result_dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">result_filename</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">result_dirname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">in_out_filenames</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">removedirs</span><span class="p">(</span><span class="n">result_dirname</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 </pre></div>
