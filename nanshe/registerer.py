@@ -90,13 +90,13 @@ def main(*argv):
                 # Only remove the directory if our input or output files are
                 # not stored there.
                 os.remove(result_filename)
-                in_out_filenames = set(
+                in_out_dirnames = set(
                     os.path.dirname(_.filename) for _ in [
                         input_file, output_file
                     ]
                 )
                 result_dirname = os.path.dirname(result_filename)
-                if result_dirname not in in_out_filenames:
+                if result_dirname not in in_out_dirnames:
                     os.rmdir(result_dirname)
 
     return(0)
