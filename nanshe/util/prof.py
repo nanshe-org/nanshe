@@ -72,6 +72,29 @@ def getTraceLogger(name, *args, **kwargs):
     return(getSpecialLogger("TRACE", name, *args, **kwargs))
 
 
+def getTraceMetaLogger(name, *args, **kwargs):
+    """
+        A fancy version of ``logging.getLogger``, which adds the prefix
+        TRACE.META to the name given.
+
+        Args:
+            name(str):                  The name of the function or module
+                                        being logged.
+
+            *args:                      Other arguments to pass through to
+                                        ``getLogger``. Currently, it takes no
+                                        others.
+
+            *kwargs:                    Other keyword arguments to pass through
+                                        to ``getLogger``. Currently, it takes
+                                        no others.
+
+        Returns:
+            logging.Logger:             A logger with the given name.
+    """
+    return(getSpecialLogger("TRACE.META", name, *args, **kwargs))
+
+
 def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
     """
         Takes a given logger and uses it to log entering and leaving the decorated callable.
