@@ -67,6 +67,7 @@
 
 
 <span class="c"># Get the logger</span>
+<span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
@@ -75,7 +76,7 @@
 <span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">Slider</span><span class="p">,</span> <span class="n">Button</span>
 
 
-<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="NeuronMatplotlibViewer"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer">[docs]</a><span class="k">class</span> <span class="nc">NeuronMatplotlibViewer</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">Figure</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides a way to interact with numpy arrays pulled from neuron images.</span>
@@ -153,7 +154,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span>
 
 </div></div>
-<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="TimeNavigator"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator">[docs]</a><span class="k">class</span> <span class="nc">TimeNavigator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">max_time</span><span class="p">,</span> <span class="n">min_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">time_step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axcolor</span> <span class="o">=</span> <span class="s">&#39;lightgoldenrodyellow&#39;</span><span class="p">,</span>
                  <span class="n">hovercolor</span> <span class="o">=</span> <span class="s">&#39;0.975&#39;</span><span class="p">):</span>

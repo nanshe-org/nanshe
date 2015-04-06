@@ -70,10 +70,10 @@
 
 
 <span class="c"># Get the logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="zeroed_mean_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.zeroed_mean_images">[docs]</a><span class="k">def</span> <span class="nf">zeroed_mean_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>
@@ -167,7 +167,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">output_array</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>

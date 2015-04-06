@@ -85,6 +85,7 @@
 
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
 
+<span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -116,7 +117,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </div>
-<span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5DataSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DataSource">[docs]</a><span class="k">class</span> <span class="nc">HDF5DataSource</span><span class="p">(</span> <span class="n">QObject</span> <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.</span>
@@ -296,7 +297,7 @@
 <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">HDF5DataSource</span><span class="p">,</span> <span class="n">SourceABC</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5DataRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DataRequest">[docs]</a><span class="k">class</span> <span class="nc">HDF5DataRequest</span><span class="p">(</span> <span class="nb">object</span> <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Created by an HDF5DataSource to provide a way to request slices of the HDF5 file in a nice way.</span>
@@ -427,7 +428,7 @@
 <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">HDF5DataRequest</span><span class="p">,</span> <span class="n">RequestABC</span><span class="p">)</span>
 
 
-<span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5Viewer"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5Viewer">[docs]</a><span class="k">class</span> <span class="nc">HDF5Viewer</span><span class="p">(</span><span class="n">Viewer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.</span>
@@ -535,7 +536,7 @@
 
 </div></div>
 <span class="nd">@multimethod</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">createHDF5DataSource</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span> <span class="n">withShape</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
     <span class="c"># Get a source for the HDF5 file.</span>
     <span class="n">src</span> <span class="o">=</span> <span class="n">HDF5DataSource</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
@@ -546,7 +547,7 @@
         <span class="k">return</span> <span class="n">src</span>
 
 <span class="nd">@multimethod</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">createHDF5DataSource</span><span class="p">(</span><span class="n">full_path</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">createHDF5DataSource</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
 
@@ -557,7 +558,7 @@
 <div class="viewcode-block" id="HDF5UndefinedShapeDtypeException"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5UndefinedShapeDtypeException">[docs]</a><span class="k">class</span> <span class="nc">HDF5UndefinedShapeDtypeException</span><span class="p">(</span> <span class="ne">Exception</span> <span class="p">):</span>
     <span class="k">pass</span>
 </div>
-<span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5DataFusedSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DataFusedSource">[docs]</a><span class="k">class</span> <span class="nc">HDF5DataFusedSource</span><span class="p">(</span> <span class="n">QObject</span> <span class="p">):</span>
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span> <span class="nb">object</span> <span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -686,7 +687,7 @@
 <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">HDF5DataFusedSource</span><span class="p">,</span> <span class="n">SourceABC</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5DataFusedRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DataFusedRequest">[docs]</a><span class="k">class</span> <span class="nc">HDF5DataFusedRequest</span><span class="p">(</span> <span class="nb">object</span> <span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">fuse_axis</span><span class="p">,</span> <span class="n">data_shape</span><span class="p">,</span> <span class="n">data_dtype</span><span class="p">,</span> <span class="o">*</span><span class="n">data_requests</span> <span class="p">):</span>
         <span class="c"># TODO: Look at adding assertion check on slices.</span>
@@ -773,7 +774,7 @@
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span> <span class="nb">object</span> <span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an EnumeratedProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
@@ -804,25 +805,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.numberOfChannels"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.numberOfChannels">[docs]</a>    <span class="k">def</span> <span class="nf">numberOfChannels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.clean_up"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.clean_up">[docs]</a>    <span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Close file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="bp">None</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.dtype"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.dtype">[docs]</a>    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">dtype</span><span class="p">())</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.shape"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.shape">[docs]</a>    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.request"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;EnumeratedProjectionConstantSource: slicing is not pure&#39;</span><span class="p">)</span>
@@ -837,20 +838,20 @@
                                             <span class="n">slicing</span><span class="p">)</span>
         <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;dirty region: slicing is not pure&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">isDirty</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span> <span class="n">slicing</span> <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_path</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">full_path</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">True</span>
@@ -874,7 +875,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an EnumeratedProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
@@ -894,7 +895,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantRequest.wait"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantRequest.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># Get the result of the request needed</span>
@@ -913,25 +914,25 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantRequest.getResult"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantRequest.getResult">[docs]</a>    <span class="k">def</span> <span class="nf">getResult</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantRequest.cancel"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantRequest.cancel">[docs]</a>    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantRequest.submit"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantRequest.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="c"># callback( result = result, **kwargs )</span></div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantRequest.notify"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantRequest.notify">[docs]</a>    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_doNotify</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">))</span>
         <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_doNotify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="n">callback</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -957,7 +958,7 @@
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span> <span class="nb">object</span> <span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an ContourProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
@@ -984,25 +985,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantSource.numberOfChannels"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource.numberOfChannels">[docs]</a>    <span class="k">def</span> <span class="nf">numberOfChannels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantSource.clean_up"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource.clean_up">[docs]</a>    <span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Close file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="bp">None</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantSource.dtype"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource.dtype">[docs]</a>    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">dtype</span><span class="p">())</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantSource.shape"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource.shape">[docs]</a>    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantSource.request"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;ContourProjectionConstantSource: slicing is not pure&#39;</span><span class="p">)</span>
@@ -1012,20 +1013,20 @@
                                             <span class="n">slicing</span><span class="p">)</span>
         <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;dirty region: slicing is not pure&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">isDirty</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span> <span class="n">slicing</span> <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_path</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">full_path</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">True</span>
@@ -1049,7 +1050,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an ContourProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
@@ -1069,7 +1070,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantRequest.wait"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantRequest.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># Get the result of the request needed</span>
@@ -1082,25 +1083,25 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantRequest.getResult"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantRequest.getResult">[docs]</a>    <span class="k">def</span> <span class="nf">getResult</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantRequest.cancel"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantRequest.cancel">[docs]</a>    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantRequest.submit"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantRequest.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="c"># callback( result = result, **kwargs )</span></div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantRequest.notify"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantRequest.notify">[docs]</a>    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_doNotify</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">))</span>
         <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_doNotify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="n">callback</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1126,7 +1127,7 @@
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span> <span class="nb">object</span> <span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an FloatProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
@@ -1142,45 +1143,45 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span> <span class="o">=</span> <span class="n">constant_source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantSource.numberOfChannels"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantSource.numberOfChannels">[docs]</a>    <span class="k">def</span> <span class="nf">numberOfChannels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantSource.clean_up"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantSource.clean_up">[docs]</a>    <span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Close file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="bp">None</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantSource.dtype"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantSource.dtype">[docs]</a>    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantSource.shape"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantSource.shape">[docs]</a>    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantSource.request"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantSource.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;FloatProjectionConstantSource: slicing is not pure&#39;</span><span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">FloatProjectionConstantRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)))</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;dirty region: slicing is not pure&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">isDirty</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span> <span class="n">slicing</span> <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_path</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">full_path</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">True</span>
@@ -1204,7 +1205,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span> <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an FloatProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
@@ -1220,7 +1221,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantRequest.wait"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantRequest.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># Get the result of the request needed</span>
@@ -1233,25 +1234,25 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantRequest.getResult"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantRequest.getResult">[docs]</a>    <span class="k">def</span> <span class="nf">getResult</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantRequest.cancel"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantRequest.cancel">[docs]</a>    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantRequest.submit"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantRequest.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="c"># callback( result = result, **kwargs )</span></div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="FloatProjectionConstantRequest.notify"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantRequest.notify">[docs]</a>    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_doNotify</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">))</span>
         <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_doNotify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="n">callback</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1278,7 +1279,7 @@
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span> <span class="nb">object</span> <span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an MaxProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
@@ -1310,25 +1311,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantSource.numberOfChannels"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource.numberOfChannels">[docs]</a>    <span class="k">def</span> <span class="nf">numberOfChannels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantSource.clean_up"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource.clean_up">[docs]</a>    <span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Close file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="bp">None</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantSource.dtype"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource.dtype">[docs]</a>    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">dtype</span><span class="p">())</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantSource.shape"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource.shape">[docs]</a>    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantSource.request"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;MaxProjectionConstantSource: slicing is not pure&#39;</span><span class="p">)</span>
@@ -1343,20 +1344,20 @@
                                             <span class="n">slicing</span><span class="p">)</span>
         <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;dirty region: slicing is not pure&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">isDirty</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span> <span class="n">slicing</span> <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_path</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">full_path</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">True</span>
@@ -1380,7 +1381,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an MaxProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
@@ -1400,7 +1401,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantRequest.wait"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantRequest.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># Get the result of the request needed</span>
@@ -1419,25 +1420,25 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantRequest.getResult"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantRequest.getResult">[docs]</a>    <span class="k">def</span> <span class="nf">getResult</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantRequest.cancel"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantRequest.cancel">[docs]</a>    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantRequest.submit"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantRequest.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="c"># callback( result = result, **kwargs )</span></div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantRequest.notify"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantRequest.notify">[docs]</a>    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_doNotify</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">))</span>
         <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_doNotify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="n">callback</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1464,7 +1465,7 @@
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span> <span class="nb">object</span> <span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an MeanProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
@@ -1496,25 +1497,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantSource.numberOfChannels"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource.numberOfChannels">[docs]</a>    <span class="k">def</span> <span class="nf">numberOfChannels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantSource.clean_up"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource.clean_up">[docs]</a>    <span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Close file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="bp">None</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantSource.dtype"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource.dtype">[docs]</a>    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">dtype</span><span class="p">())</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantSource.shape"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource.shape">[docs]</a>    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantSource.request"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;MeanProjectionConstantSource: slicing is not pure&#39;</span><span class="p">)</span>
@@ -1529,20 +1530,20 @@
                                             <span class="n">slicing</span><span class="p">)</span>
         <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;dirty region: slicing is not pure&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">isDirty</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span> <span class="n">slicing</span> <span class="p">)</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_path</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">full_path</span><span class="p">)</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span> <span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">True</span>
@@ -1566,7 +1567,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span> <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs an MeanProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
@@ -1586,7 +1587,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantRequest.wait"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantRequest.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># Get the result of the request needed</span>
@@ -1605,25 +1606,25 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantRequest.getResult"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantRequest.getResult">[docs]</a>    <span class="k">def</span> <span class="nf">getResult</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantRequest.cancel"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantRequest.cancel">[docs]</a>    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantRequest.submit"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantRequest.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="c"># callback( result = result, **kwargs )</span></div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantRequest.notify"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantRequest.notify">[docs]</a>    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_doNotify</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">))</span>
         <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </div>
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_doNotify</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">kwargs</span> <span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="n">callback</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1632,7 +1633,7 @@
 
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">):</span>
     <span class="c"># TODO: Try to extract code for viewing each file with each viewer. This way multiple files generates multiple viewers.</span>
 

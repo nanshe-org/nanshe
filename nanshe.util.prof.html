@@ -66,6 +66,102 @@
   <div class="section" id="module-nanshe.util.prof">
 <span id="nanshe-util-prof-module"></span><h1>nanshe.util.prof module<a class="headerlink" href="#module-nanshe.util.prof" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
+<dt id="nanshe.util.prof.getSpecialLogger">
+<code class="descclassname">nanshe.util.prof.</code><code class="descname">getSpecialLogger</code><span class="sig-paren">(</span><em>logger_prefix</em>, <em>name</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#getSpecialLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.getSpecialLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>A fancy version of <code class="docutils literal"><span class="pre">logging.getLogger</span></code>, which takes a prefix and a
+name, which it joins together as the returned logger&#8217;s name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>logger_prefix</strong> (<em>str</em>) &#8211; Prefix name to use to describe all
+loggers of this type.</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; The name of the function or module
+being logged.</li>
+<li><strong>*args</strong> &#8211; Other arguments to pass through to
+<code class="docutils literal"><span class="pre">getLogger</span></code>. Currently, it takes no
+others.</li>
+<li><strong>*kwargs</strong> &#8211; Other keyword arguments to pass through
+to <code class="docutils literal"><span class="pre">getLogger</span></code>. Currently, it takes
+no others.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A logger with the given prefix and
+subsequent name.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">logging.Logger</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.prof.getTraceLogger">
+<code class="descclassname">nanshe.util.prof.</code><code class="descname">getTraceLogger</code><span class="sig-paren">(</span><em>name</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#getTraceLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.getTraceLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>A fancy version of <code class="docutils literal"><span class="pre">logging.getLogger</span></code>, which adds the prefix TRACE
+to the name given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; The name of the function or module
+being logged.</li>
+<li><strong>*args</strong> &#8211; Other arguments to pass through to
+<code class="docutils literal"><span class="pre">getLogger</span></code>. Currently, it takes no
+others.</li>
+<li><strong>*kwargs</strong> &#8211; Other keyword arguments to pass through
+to <code class="docutils literal"><span class="pre">getLogger</span></code>. Currently, it takes
+no others.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A logger with the given name.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">logging.Logger</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.prof.getTraceMetaLogger">
+<code class="descclassname">nanshe.util.prof.</code><code class="descname">getTraceMetaLogger</code><span class="sig-paren">(</span><em>name</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#getTraceMetaLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.getTraceMetaLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>A fancy version of <code class="docutils literal"><span class="pre">logging.getLogger</span></code>, which adds the prefix
+TRACE.META to the name given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; The name of the function or module
+being logged.</li>
+<li><strong>*args</strong> &#8211; Other arguments to pass through to
+<code class="docutils literal"><span class="pre">getLogger</span></code>. Currently, it takes no
+others.</li>
+<li><strong>*kwargs</strong> &#8211; Other keyword arguments to pass through
+to <code class="docutils literal"><span class="pre">getLogger</span></code>. Currently, it takes
+no others.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A logger with the given name.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">logging.Logger</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="nanshe.util.prof.log_call">
 <code class="descclassname">nanshe.util.prof.</code><code class="descname">log_call</code><span class="sig-paren">(</span><em>logger</em>, <em>to_log_call=True</em>, <em>to_print_args=False</em>, <em>to_print_time=True</em>, <em>to_print_exception=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#log_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.log_call" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a given logger and uses it to log entering and leaving the decorated callable.

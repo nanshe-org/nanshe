@@ -84,12 +84,13 @@
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
 
 
-<span class="c"># Get the logger</span>
+<span class="c"># Get the loggers</span>
+<span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="register_mean_offsets"><a class="viewcode-back" href="../../../nanshe.imp.registration.html#nanshe.imp.registration.register_mean_offsets">[docs]</a><span class="k">def</span> <span class="nf">register_mean_offsets</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_frame_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">include_shift</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_truncate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This algorithm registers the given image stack against its mean projection. This is done by computing</span>
@@ -422,7 +423,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="find_offsets"><a class="viewcode-back" href="../../../nanshe.imp.registration.html#nanshe.imp.registration.find_offsets">[docs]</a><span class="k">def</span> <span class="nf">find_offsets</span><span class="p">(</span><span class="n">frames2reg_fft</span><span class="p">,</span> <span class="n">template_fft</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the convolution of the template with the frames by taking advantage of their FFTs for faster</span>

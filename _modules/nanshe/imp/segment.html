@@ -123,10 +123,11 @@
 
 
 <span class="c"># Get the logger</span>
+<span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="remove_zeroed_lines"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_zeroed_lines">[docs]</a><span class="k">def</span> <span class="nf">remove_zeroed_lines</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
                         <span class="n">erosion_shape</span><span class="p">,</span>
@@ -221,7 +222,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="estimate_f0"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.estimate_f0">[docs]</a><span class="k">def</span> <span class="nf">estimate_f0</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
                 <span class="n">half_window_size</span><span class="p">,</span>
@@ -326,7 +327,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="extract_f0"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.extract_f0">[docs]</a><span class="k">def</span> <span class="nf">extract_f0</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
                <span class="n">half_window_size</span><span class="p">,</span>
@@ -409,7 +410,7 @@
         <span class="k">return</span><span class="p">(</span><span class="n">new_data_df_over_f</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="normalize_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.normalize_data">[docs]</a><span class="k">def</span> <span class="nf">normalize_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -477,7 +478,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="preprocess_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.preprocess_data">[docs]</a><span class="k">def</span> <span class="nf">preprocess_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -556,7 +557,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="generate_dictionary"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_dictionary">[docs]</a><span class="k">def</span> <span class="nf">generate_dictionary</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -624,7 +625,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="region_properties_scikit_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.region_properties_scikit_image">[docs]</a><span class="k">def</span> <span class="nf">region_properties_scikit_image</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grabs region properties from a label image.</span>
@@ -902,7 +903,7 @@
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_label_image_props_with_arrays</span><span class="p">)</span>
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="region_properties_vigra"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.region_properties_vigra">[docs]</a><span class="k">def</span> <span class="nf">region_properties_vigra</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grabs region properties from a label image.</span>
@@ -1243,7 +1244,7 @@
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_label_image_props_with_arrays</span><span class="p">)</span>
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="region_properties"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.region_properties">[docs]</a><span class="k">def</span> <span class="nf">region_properties</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grabs region properties from a label image.</span>
@@ -1282,7 +1283,7 @@
 
     <span class="k">return</span><span class="p">(</span><span class="n">region_properties_vigra</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_neuron_dtype"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_neuron_dtype">[docs]</a><span class="k">def</span> <span class="nf">get_neuron_dtype</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the type based on properties of an image.</span>
@@ -1330,7 +1331,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons_dtype</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_empty_neuron"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_empty_neuron">[docs]</a><span class="k">def</span> <span class="nf">get_empty_neuron</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that has no contents.</span>
@@ -1370,7 +1371,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_one_neuron"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_one_neuron">[docs]</a><span class="k">def</span> <span class="nf">get_one_neuron</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that has one neuron with all zeros.</span>
@@ -1430,7 +1431,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima_vigra"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima_vigra">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima_vigra</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
@@ -1455,7 +1456,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">local_maxima_mask</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima_scikit_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima_scikit_image">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima_scikit_image</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">,</span> <span class="n">local_max_neighborhood_size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
@@ -1478,7 +1479,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">local_maxima_mask</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
@@ -1494,7 +1495,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">generate_local_maxima_vigra</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">))</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="extended_region_local_maxima_properties"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.extended_region_local_maxima_properties">[docs]</a><span class="k">def</span> <span class="nf">extended_region_local_maxima_properties</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">,</span> <span class="n">new_label_image</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates local maxima along with other properties for each labeled region</span>
@@ -1574,7 +1575,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">local_maxima_props</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.class_static_array_debug_recorder</span>
 <div class="viewcode-block" id="ExtendedRegionProps"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps">[docs]</a><span class="k">class</span> <span class="nc">ExtendedRegionProps</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1820,7 +1821,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">reverse_label_mapping</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 </div></div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="remove_low_intensity_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_low_intensity_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">remove_low_intensity_local_maxima</span><span class="p">(</span><span class="n">local_maxima</span><span class="p">,</span> <span class="n">percentage_pixels_below_max</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes the local maxima for regions, which have too many pixels that are below the intensity of their local</span>
@@ -1871,7 +1872,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_local_maxima</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="remove_too_close_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_too_close_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">remove_too_close_local_maxima</span><span class="p">(</span><span class="n">local_maxima</span><span class="p">,</span> <span class="n">min_local_max_distance</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes local maxima that are too close to each other.</span>
@@ -1915,7 +1916,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_local_maxima</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="wavelet_denoising"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.wavelet_denoising">[docs]</a><span class="k">def</span> <span class="nf">wavelet_denoising</span><span class="p">(</span><span class="n">new_image</span><span class="p">,</span>
                       <span class="n">accepted_region_shape_constraints</span><span class="p">,</span>
@@ -2216,7 +2217,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="extract_neurons"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.extract_neurons">[docs]</a><span class="k">def</span> <span class="nf">extract_neurons</span><span class="p">(</span><span class="n">new_image</span><span class="p">,</span> <span class="n">neuron_masks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -2250,7 +2251,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="fuse_neurons"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.fuse_neurons">[docs]</a><span class="k">def</span> <span class="nf">fuse_neurons</span><span class="p">(</span><span class="n">neuron_1</span><span class="p">,</span>
                  <span class="n">neuron_2</span><span class="p">,</span>
@@ -2310,7 +2311,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_neuron</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="merge_neuron_sets"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.merge_neuron_sets">[docs]</a><span class="k">def</span> <span class="nf">merge_neuron_sets</span><span class="p">(</span><span class="n">new_neuron_set_1</span><span class="p">,</span>
                       <span class="n">new_neuron_set_2</span><span class="p">,</span>
@@ -2326,7 +2327,7 @@
                                         <span class="o">**</span><span class="n">parameters</span><span class="p">))</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="merge_neuron_sets_once"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.merge_neuron_sets_once">[docs]</a><span class="k">def</span> <span class="nf">merge_neuron_sets_once</span><span class="p">(</span><span class="n">new_neuron_set_1</span><span class="p">,</span>
                       <span class="n">new_neuron_set_2</span><span class="p">,</span>
@@ -2527,7 +2528,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_neuron_set</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="merge_neuron_sets_repeatedly"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.merge_neuron_sets_repeatedly">[docs]</a><span class="k">def</span> <span class="nf">merge_neuron_sets_repeatedly</span><span class="p">(</span><span class="n">new_neuron_set_1</span><span class="p">,</span>
                                  <span class="n">new_neuron_set_2</span><span class="p">,</span>
@@ -2738,7 +2739,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_neuron_set</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="expand_rois"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.expand_rois">[docs]</a><span class="k">def</span> <span class="nf">expand_rois</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">roi_masks</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="c"># Find time traces: spatial mean of activity for each ROI</span>
@@ -2779,7 +2780,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">correlation_map</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="postprocess_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.postprocess_data">[docs]</a><span class="k">def</span> <span class="nf">postprocess_data</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>

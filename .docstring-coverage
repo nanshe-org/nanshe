@@ -319,7 +319,7 @@ File nanshe/util/pathHelpers.py
 
 File nanshe/util/prof.py
  - No module dostring!
- Needed: 7; Exist: 6; Missing: 1; Coverage: 85.7%
+ Needed: 10; Exist: 9; Missing: 1; Coverage: 90.0%
 
 File nanshe/util/wrappers.py
  - No module dostring!
@@ -339,5 +339,5 @@ File nanshe/util/xnumpy.py
 
 
 Overall statistics for 34 files:
-Docstrings needed: 487; Docstrings exist: 251; Docstrings missing: 236
-Total docstring coverage: 51.5%;  Grade: not so bad
+Docstrings needed: 490; Docstrings exist: 254; Docstrings missing: 236
+Total docstring coverage: 51.8%;  Grade: not so bad

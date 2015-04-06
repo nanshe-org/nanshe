@@ -70,10 +70,10 @@
 
 
 <span class="c"># Get the logger</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="estimate_noise"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.estimate_noise">[docs]</a><span class="k">def</span> <span class="nf">estimate_noise</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">significance_threshold</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Estimates the noise in the given array.</span>
@@ -122,7 +122,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="significant_mask"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.significant_mask">[docs]</a><span class="k">def</span> <span class="nf">significant_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.</span>
@@ -175,7 +175,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">significant_mask</span><span class="p">)</span>
 
 </div>
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="noise_mask"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.noise_mask">[docs]</a><span class="k">def</span> <span class="nf">noise_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.</span>

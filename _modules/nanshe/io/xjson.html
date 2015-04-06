@@ -67,10 +67,11 @@
 
 
 <span class="c"># Get the logger</span>
+<span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../../nanshe.io.xjson.html#nanshe.io.xjson.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads the contents of a json config file and returns the parameters.</span>
@@ -97,7 +98,7 @@
         <span class="n">json_dict</span> <span class="o">=</span> <span class="nb">dict</span>
 
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_str</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the str.</span>
@@ -116,7 +117,7 @@
         <span class="k">return</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
 
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the list (and its contents).</span>
@@ -144,7 +145,7 @@
         <span class="k">return</span><span class="p">(</span><span class="n">transformed_list</span><span class="p">)</span>
 
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the dict (and its contents).</span>
