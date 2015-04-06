@@ -43,8 +43,7 @@ after_success:
    # Submit results to coveralls.io.
    - python $BUILDEM_DIR/bin/coveralls
    # Check to see if this is the right branch to build documentation from.
-   - if [ $TRAVIS_PULL_REQUEST != "false" ]; then exit 0 ; fi
-   - if [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
+   - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.
    - mv docs/_build/html ../nanshe-git-docs
    - mv .docstring-coverage ../nanshe-git-docs
