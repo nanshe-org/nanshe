@@ -28,6 +28,20 @@ class TestProf(object):
         self.logger.addHandler(self.handler)
 
 
+    def test_getSpecialLogger(self):
+        prefix = "PREFIX"
+        name = "name"
+        full_name = ".".join([prefix, name])
+
+        logger_1 = nanshe.util.prof.getSpecialLogger(prefix, name)
+
+        assert logger_1.name == full_name
+
+        logger_2 = logging.getLogger(full_name)
+
+        assert logger_1 == logger_2
+
+
     def test_log_call_1(self):
         expected_result = """DEBUG:""" + self.logger.name + """:Entering callable: "test"\.\n""" + \
         """DEBUG:""" + self.logger.name + """:Exiting callable: "test"\.\n""" + \
