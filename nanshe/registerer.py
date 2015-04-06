@@ -15,11 +15,11 @@ from nanshe.imp import registration
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def main(*argv):
     """
         Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.

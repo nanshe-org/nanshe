@@ -11,7 +11,7 @@ import nanshe.util.iters
 
 
 # Get the logger
-logger = nanshe.util.prof.logging.getLogger(__name__)
+trace_logger = nanshe.util.prof.getTraceLogger(__name__)
 
 
 

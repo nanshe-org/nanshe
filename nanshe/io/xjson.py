@@ -7,10 +7,11 @@ from nanshe.util import prof
 
 
 # Get the logger
+trace_logger = prof.getTraceLogger(__name__)
 logger = prof.logging.getLogger(__name__)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def read_parameters(config_filename, maintain_order = False):
     """
         Reads the contents of a json config file and returns the parameters.
@@ -37,7 +38,7 @@ def read_parameters(config_filename, maintain_order = False):
         json_dict = dict
 
 
-    @prof.log_call(logger)
+    @prof.log_call(trace_logger)
     def ascii_encode_str(value, json_dict = json_dict):
         """
             Encodes the str.
@@ -56,7 +57,7 @@ def read_parameters(config_filename, maintain_order = False):
         return(new_value)
 
 
-    @prof.log_call(logger)
+    @prof.log_call(trace_logger)
     def ascii_encode_list(data, json_dict = json_dict):
         """
             Encodes the list (and its contents).
@@ -84,7 +85,7 @@ def read_parameters(config_filename, maintain_order = False):
         return(transformed_list)
 
 
-    @prof.log_call(logger)
+    @prof.log_call(trace_logger)
     def ascii_encode_dict(data, json_dict = json_dict):
         """
             Encodes the dict (and its contents).

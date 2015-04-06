@@ -10,10 +10,10 @@ from nanshe.util import prof
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def zeroed_mean_images(input_array, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
@@ -107,7 +107,7 @@ def zeroed_mean_images(input_array, output_array = None):
     return(output_array)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def renormalized_images(input_array, ord = 2, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.

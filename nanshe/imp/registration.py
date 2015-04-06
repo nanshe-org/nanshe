@@ -24,12 +24,13 @@ from nanshe.io import hdf5
 from nanshe.util import prof
 
 
-# Get the logger
+# Get the loggers
+trace_logger = prof.getTraceLogger(__name__)
 logger = prof.logging.getLogger(__name__)
 
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False, to_truncate=False, float_type=numpy.dtype(float).type):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
@@ -362,7 +363,7 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
     return(result)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def find_offsets(frames2reg_fft, template_fft):
     """
         Computes the convolution of the template with the frames by taking advantage of their FFTs for faster

@@ -14,10 +14,10 @@ from nanshe.util import prof
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def get_matching_paths(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
@@ -63,7 +63,7 @@ def get_matching_paths(a_filehandle, a_path_pattern):
     return(current_pattern_group_matches)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def get_matching_paths_groups(a_filehandle, a_path_pattern):
     """
         Looks for parts of the path pattern and tries to match them in order.
@@ -132,7 +132,7 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
     return(groups)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def get_matching_grouped_paths(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
@@ -162,7 +162,7 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
     return(paths_found)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def get_matching_grouped_paths_found(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.

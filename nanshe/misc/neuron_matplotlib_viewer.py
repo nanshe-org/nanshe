@@ -7,6 +7,7 @@ from nanshe.util import prof
 
 
 # Get the logger
+trace_logger = prof.getTraceLogger(__name__)
 logger = prof.logging.getLogger(__name__)
 
 import matplotlib as mpl
@@ -15,7 +16,7 @@ import matplotlib.figure
 from matplotlib.widgets import Slider, Button
 
 
-@prof.log_class(logger)
+@prof.log_class(trace_logger)
 class NeuronMatplotlibViewer(matplotlib.figure.Figure):
     """
         Provides a way to interact with numpy arrays pulled from neuron images.
@@ -93,7 +94,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             self.canvas.draw_idle()
 
 
-@prof.log_class(logger)
+@prof.log_class(trace_logger)
 class TimeNavigator(object):
     def __init__(self, fig, max_time, min_time = 0, time_step = 1, axcolor = 'lightgoldenrodyellow',
                  hovercolor = '0.975'):

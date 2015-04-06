@@ -31,12 +31,13 @@ from nanshe.imp import segment
 from nanshe.io import xjson
 
 
-# Get the logger
+# Get the loggers
+trace_logger = prof.getTraceLogger(__name__)
 logger = prof.logging.getLogger(__name__)
 
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def generate_neurons_io_handler(input_filename, output_filename, parameters_filename):
     """
         Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
@@ -66,7 +67,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
         generate_neurons_a_block(input_filename, output_filename, **parameters)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def generate_neurons_a_block(input_filename, output_filename, debug = False, **parameters):
     """
         Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
@@ -151,7 +152,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug = False, **p
             )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def generate_neurons_blocks(input_filename, output_filename, num_processes = multiprocessing.cpu_count(), block_shape = None, num_blocks = None, half_window_shape = None, half_border_shape = None, use_drmaa = False, num_drmaa_cores = 16, debug = False, **parameters):
     #TODO: Move this function into a new module with its own command line interface.
     #TODO: Heavy refactoring required on this function.
@@ -602,7 +603,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes = mul
     logger.info("Run time for merge over all blocks is \"" + str(diff_time) + " s\".")
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 @hdf5.record.static_subgrouping_array_recorders(array_debug_recorder = hdf5.record.EmptyArrayRecorder())
 @wrappers.static_variables(resume_logger = hdf5.record.EmptyArrayRecorder())
 def generate_neurons(original_images, run_stage = "all", **parameters):
@@ -675,7 +676,7 @@ def generate_neurons(original_images, run_stage = "all", **parameters):
         logger.info("Found ," + str(len(new_neurons)) + ", neurons were found in the data.")
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def main(*argv):
     """
         Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.

@@ -16,11 +16,11 @@ from nanshe.util import iters, xglob, prof,\
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def get_multipage_tiff_shape_dtype(new_tiff_filename):
     """
         Gets the info about the shape (including page number as time) and dtype.
@@ -45,7 +45,7 @@ def get_multipage_tiff_shape_dtype(new_tiff_filename):
     return(shape_dtype_result)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order = "zyxtc", pages_to_channel = 1):
     """
         Gets the info about the shape and dtype after some transformations have been performed .
@@ -95,7 +95,7 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order = "
     return(shape_dtype_result)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_channel = 1):
     """
         Reads a tiff file and returns a standard 5D array.
@@ -174,7 +174,7 @@ def get_standard_tiff_array(new_tiff_filename, axis_order = "tzyxc", pages_to_ch
     return(new_tiff_array)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis = 0, channel = 0, z_index = 0, pages_to_channel = 1):
     """
         Convert a stack of tiffs to an HDF5 file.

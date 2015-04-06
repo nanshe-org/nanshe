@@ -17,10 +17,10 @@ from nanshe.util import prof
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def binomial_1D_array_kernel(i, n = 4):
     """
         Generates a 1D numpy array used to make the kernel for the wavelet transform.
@@ -102,7 +102,7 @@ def binomial_1D_array_kernel(i, n = 4):
     return(r)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
     """
         Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).
@@ -137,7 +137,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
     return(k)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
 def transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
     """

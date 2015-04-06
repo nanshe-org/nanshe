@@ -9,11 +9,11 @@ import prof
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def expand_pathname_list(*pathnames):
     """
         Takes each pathname in those given and expands them using regex.

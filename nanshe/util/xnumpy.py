@@ -30,10 +30,10 @@ import prof
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def to_ctype(a_type):
     """
         Takes a numpy.dtype or any type that can be converted to a numpy.dtype and returns its equivalent ctype.
@@ -65,7 +65,7 @@ def to_ctype(a_type):
 
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def renumber_label_image(new_array):
     """
         Takes a label image with non-consecutive numbering and renumbers it to be consecutive.
@@ -119,7 +119,7 @@ def renumber_label_image(new_array):
     return((new_array_relabeled, forward_label_mapping, reverse_label_mapping))
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def index_axis_at_pos(new_array, axis, pos):
     """
         Indexes an arbitrary axis to the given position, which may be an index, a slice, or any other NumPy allowed
@@ -186,7 +186,7 @@ def index_axis_at_pos(new_array, axis, pos):
     return( new_subarray )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def add_singleton_axis_pos(a_array, axis = 0):
     """
         Adds a singleton axis to the given position.
@@ -243,7 +243,7 @@ def add_singleton_axis_pos(a_array, axis = 0):
     return( new_array )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def add_singleton_axis_beginning(new_array):
     """
         Adds a singleton axis to the beginning of the array.
@@ -267,7 +267,7 @@ def add_singleton_axis_beginning(new_array):
     return( add_singleton_axis_pos(new_array, 0) )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def add_singleton_axis_end(new_array):
     """
         Adds a singleton axis to the end of the array.
@@ -291,7 +291,7 @@ def add_singleton_axis_end(new_array):
     return( add_singleton_axis_pos(new_array, new_array.ndim) )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def squish(new_array, axis=None, keepdims=False):
     """
         Moves the given axes to the last dimensions of the array and then squishes them into one dimension.
@@ -444,7 +444,7 @@ def squish(new_array, axis=None, keepdims=False):
     return(result)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def unsquish(new_array, shape, axis=None):
     """
         Inverts the squish operation given the shape and the axis/axes to extract from the last dimension.
@@ -675,7 +675,7 @@ def unsquish(new_array, shape, axis=None):
     return(result)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def add_singleton_op(op, new_array, axis):
     """
         Performs an operation on the given array on the specified axis, which otherwise would have eliminated the axis
@@ -710,7 +710,7 @@ def add_singleton_op(op, new_array, axis):
     return(add_singleton_axis_pos(op(new_array, axis), axis))
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def roll(new_array, shift, out=None, to_mask=False):
     """
         Like numpy.roll, but generalizes to include a roll for each axis of new_array.
@@ -975,7 +975,7 @@ def roll(new_array, shift, out=None, to_mask=False):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def contains(new_array, to_contain):
     """
         Gets a mask array that is true every time something from to_contain appears in new_array.
@@ -1023,7 +1023,7 @@ def contains(new_array, to_contain):
     return(numpy.in1d(new_array, to_contain).reshape(new_array.shape))
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
         Takes the min of the given array subject to the absolute value (magnitude for complex numbers).
@@ -1120,7 +1120,7 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
         return(result, result_indices)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
         Takes the min of the given array subject to the absolute value (magnitude for complex numbers).
@@ -1217,7 +1217,7 @@ def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
         return(result, result_indices)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
         Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
@@ -1314,7 +1314,7 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
         return(result, result_indices)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
         Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
@@ -1411,7 +1411,7 @@ def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
         return(result, result_indices)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def array_to_matrix(a):
     """
         Flattens an array so that the row is the only original shape kept.
@@ -1448,7 +1448,7 @@ def array_to_matrix(a):
     return(a.reshape(a.shape[0], functools.reduce(operator.mul, a.shape[1:])))
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def index_array_to_bool_array(index_array, shape):
     """
         Creates a bool array mask that has each value from the index array as True.
@@ -1482,7 +1482,7 @@ def index_array_to_bool_array(index_array, shape):
 
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
     """
         Behaves like NumPy tile except that it always returns a view and not a copy.
@@ -1956,7 +1956,7 @@ def enumerate_masks_max(new_masks, axis = 0):
     return(new_enumerated_masks_max)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def cartesian_product(arrays):
     """
         Takes the cartesian product between the elements in each array.
@@ -2061,7 +2061,7 @@ def cartesian_product(arrays):
     return(result)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def truncate_masked_frames(shifted_frames):
     """
         Takes frames that have been shifted and truncates out the portion, which is an intact rectangular shape.
@@ -2167,7 +2167,7 @@ def truncate_masked_frames(shifted_frames):
     return(truncated_shifted_frames)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
@@ -2260,7 +2260,7 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
     return( new_op(new_array_1_tiled, new_array_2_tiled) )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def all_permutations_equal(new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
@@ -2375,7 +2375,7 @@ class NotNumPyStructuredArrayType(Exception):
     pass
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def numpy_structured_array_dtype_generator(new_array):
     """
         Takes a NumPy structured array and returns a generator that goes over
@@ -2405,7 +2405,7 @@ def numpy_structured_array_dtype_generator(new_array):
         yield ( (each_name, each_dtype, each_shape) )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def numpy_structured_array_dtype_list(new_array):
     """
         Takes any NumPy array and returns either a list for a NumPy structured array
@@ -2424,7 +2424,7 @@ def numpy_structured_array_dtype_list(new_array):
     return(list(numpy_structured_array_dtype_generator(new_array)))
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def dot_product(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each set.
@@ -2471,7 +2471,7 @@ def dot_product(new_vector_set_1, new_vector_set_2):
     return(vector_pairs_dot_product)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def pair_dot_product(new_vector_set):
     """
         Determines the dot product between the vectors in the set.
@@ -2511,7 +2511,7 @@ def pair_dot_product(new_vector_set):
     return(dot_product(new_vector_set, new_vector_set))
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def norm(new_vector_set, ord = 2):
     """
         Determines the norm of a vector or a set of vectors.
@@ -2598,7 +2598,7 @@ def norm(new_vector_set, ord = 2):
     return(result)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def threshold_array(an_array, threshold, include_below=True, is_closed=True):
     """
         Given a threshold, this function compares the given array to it to see which entries match.
@@ -2664,7 +2664,7 @@ def threshold_array(an_array, threshold, include_below=True, is_closed=True):
     return(accepted)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def unique_mapping(mapping, out=None):
     """
         Take a binary mapping between two sets and excludes portions of the mapping that are not one-to-one.
@@ -2743,7 +2743,7 @@ def unique_mapping(mapping, out=None):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
     """
         Given a threshold, this function finds which entries uniquely match given the threshold.
@@ -2802,7 +2802,7 @@ def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
     return(accepted)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def compute_mapping_matches(mapping):
     """
         Given a mapping this function computes number of matches and mismatches found.
@@ -2848,7 +2848,7 @@ def compute_mapping_matches(mapping):
     return(stats)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def compute_mapping_relevance(mapping):
     """
         Given a mapping this function computes the recall and precision.
@@ -2896,7 +2896,7 @@ def compute_mapping_relevance(mapping):
     return(relevance)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def find_relative_offsets(points, center=None, out=None):
     """
         Given a series of points, find the relative points from the mean.
@@ -2975,7 +2975,7 @@ def find_relative_offsets(points, center=None, out=None):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def find_shortest_wraparound(points, shape, out=None):
     """
         Compute the smallest values for the points given periodic boundary conditions.
@@ -3110,7 +3110,7 @@ def find_shortest_wraparound(points, shape, out=None):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def matrix_reduced_op(a, b, op):
     """
         Sort of like numpy.dot. However, it will use the first axis with both arrays.
@@ -3198,7 +3198,7 @@ def matrix_reduced_op(a, b, op):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def masks_intersection(a, b):
     """
         Generates a mask that contains the points share by both masks.
@@ -3268,7 +3268,7 @@ def masks_intersection(a, b):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def masks_union(a, b):
     """
         A mask that contains point contained in either mask.
@@ -3338,7 +3338,7 @@ def masks_union(a, b):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def masks_overlap_normalized(a, b):
     """
         The area of intersection of the masks divided by the area of their union.
@@ -3413,7 +3413,7 @@ def masks_overlap_normalized(a, b):
     return(out)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
@@ -3486,7 +3486,7 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
     return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def pair_dot_product_partially_normalized(new_vector_set, ord = 2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
@@ -3551,7 +3551,7 @@ def pair_dot_product_partially_normalized(new_vector_set, ord = 2):
     return( (vector_pairs_dot_product_normalized) )
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
@@ -3619,7 +3619,7 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     return(vector_pairs_dot_product_normalized)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def pair_dot_product_normalized(new_vector_set, ord = 2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
@@ -3674,7 +3674,7 @@ def pair_dot_product_normalized(new_vector_set, ord = 2):
     return(vector_pairs_dot_product_normalized)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the L_2 norm of the two.
@@ -3967,7 +3967,7 @@ def quantile(data, probs, axis = None):
     return(new_quantiles)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def binomial_coefficients(n):
     """
         Generates a row in Pascal's triangle (binomial coefficients).
@@ -4022,7 +4022,7 @@ def binomial_coefficients(n):
     return(cs)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def line_filter(shape, dim = -1):
     """
         Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
@@ -4083,7 +4083,7 @@ def line_filter(shape, dim = -1):
     return(line)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def symmetric_line_filter(size, ndims = 2, dim = -1):
     """
         Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
@@ -4143,7 +4143,7 @@ def symmetric_line_filter(size, ndims = 2, dim = -1):
     return(line)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def tagging_reorder_array(new_array, from_axis_order = "tzyxc", to_axis_order = "tzyxc", to_copy = False):
     """
         Transforms one axis ordering to another giving a view of the array (unless otherwise specified).

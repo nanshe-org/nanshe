@@ -10,10 +10,10 @@ from nanshe.util import prof
 
 
 # Get the logger
-logger = prof.logging.getLogger(__name__)
+trace_logger = prof.getTraceLogger(__name__)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def estimate_noise(input_array, significance_threshold = 3.0):
     """
         Estimates the noise in the given array.
@@ -62,7 +62,7 @@ def estimate_noise(input_array, significance_threshold = 3.0):
     return(noise)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def significant_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
     """
         Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.
@@ -115,7 +115,7 @@ def significant_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
     return(significant_mask)
 
 
-@prof.log_call(logger)
+@prof.log_call(trace_logger)
 def noise_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
     """
         Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.
