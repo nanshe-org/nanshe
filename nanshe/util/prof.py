@@ -18,6 +18,36 @@ import wrappers
 logging.basicConfig(level = logging.DEBUG, stream=sys.stderr)
 
 
+def getSpecialLogger(logger_prefix, name, *args, **kwargs):
+    """
+        A fancy version of ``logging.getLogger``, which takes a prefix and a
+        name, which it joins together as the returned logger's name.
+
+        Args:
+            logger_prefix(str):         Prefix name to use to describe all
+                                        loggers of this type.
+
+            name(str):                  The name of the function or module
+                                        being logged.
+
+            *args:                      Other arguments to pass through to
+                                        ``getLogger``. Currently, it takes no
+                                        others.
+
+            *kwargs:                    Other keyword arguments to pass through
+                                        to ``getLogger``. Currently, it takes
+                                        no others.
+
+        Returns:
+            logging.Logger:             A logger with the given prefix and
+                                        subsequent name.
+    """
+
+    return(
+        logging.getLogger(".".join([logger_prefix, name]), *args, **kwargs)
+    )
+
+
 def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
     """
         Takes a given logger and uses it to log entering and leaving the decorated callable.
