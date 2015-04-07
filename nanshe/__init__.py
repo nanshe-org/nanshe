@@ -92,8 +92,8 @@ need only replace ``setup.cfg`` with ``setup.all.cfg``.
 -------------------------------------
 Current documentation can be found on the GitHub page
 ( http://jakirkham.github.io/nanshe/ ). A new copy is rebuilt any time there is
-a passing commit is added to the ``master`` branch. Each documentation commit is
-added to ``gh-pages`` branch with a reference to the commit ``master`` that
+a passing commit is added to the ``master`` branch. Each documentation commit
+is added to ``gh-pages`` branch with a reference to the commit ``master`` that
 triggered the build as well as version number if provided.
 
 It is also possible to build the documentation from source. This project uses
