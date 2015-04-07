@@ -64,10 +64,6 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
             Keyword Args:
                 kwargs(dict):       arguments to be passed to parent
-
-            Note:
-                Todo
-                Extract constants as parameters of constructor.
         """
 
         super(NeuronMatplotlibViewer, self).__init__(*args, **kwargs)
@@ -160,12 +156,6 @@ class TimeNavigator(object):
                 time_step   how much to increase/decrease by for each step.
                 axcolor     color to be used for all buttons and slider bar.
                 hovercolor  color turned when mouse over occurs for any button.
-
-            Note:
-                Todo
-                Extract constants as parameters of constructor.
-                Also, determine out a way to make all position relative to some
-                bounding box for all of TimeNavigator as opposed to the fig.
         """
 
         self.min_time = min_time
