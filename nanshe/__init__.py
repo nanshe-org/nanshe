@@ -152,7 +152,7 @@ __date__ = "$Dec 22, 2014 08:46:12 EST$"
 
 
 __all__ = [
-    "box", "converter", "io", "imp", "learner" "registerer", "syn", "util",
+    "box", "converter", "io", "imp", "learner", "registerer", "syn", "util",
     # "viewer"
 ]
 
