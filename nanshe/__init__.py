@@ -1,7 +1,7 @@
 """
-=====================================
+===============================================================================
  Overview
-=====================================
+===============================================================================
 
 The ```nanshe``` package is an image processing package that contains a variety
 of different techniques, which are used primarily to assemble the ADINA
@@ -19,13 +19,13 @@ applied optionally. For example, removing registration artifacts from
 a line-by-line registration algorithm, background subtraction, and a wavelet
 transform to filter objects in a particular size.
 
-=====================================
+===============================================================================
  Installation
-=====================================
+===============================================================================
 
--------------------------------------
+-------------------------------------------------------------------------------
  Dependencies
--------------------------------------
+-------------------------------------------------------------------------------
 Implementation of the algorithm has been done here in pure Python. However, a
 few dependencies are required to get started. These include NumPy_, SciPy_,
 h5py_, scikit-image_, SPAMS_, VIGRA_, and rank_filter_. The first 4 can be
@@ -36,9 +36,9 @@ used, but OpenBLAS_ or `Intel MKL`_ (if available) can be used, as well. This
 will require modifying the setup.py script. On Windows, the setup.py links to
 R_, which should be changed if another BLAS is available.
 
--------------------------------------
+-------------------------------------------------------------------------------
  Building
--------------------------------------
+-------------------------------------------------------------------------------
 As this module is pure Python, building follows through the standard method.
 Currently, we require setuptools_ for installation; so, make sure it is
 installed. Then simply issue the following command to build and install.
@@ -55,9 +55,9 @@ preferable.
     python setup.py build
     python setup.py install
 
--------------------------------------
+-------------------------------------------------------------------------------
  Testing
--------------------------------------
+-------------------------------------------------------------------------------
 Running the test suite is fairly straightforward. Testing is done using nose_;
 so, make sure you have a running copy if you wish to run the tests. Some of the
 tests require drmaa_ installed and properly configured. If that is not the
@@ -87,9 +87,9 @@ need only replace ``setup.cfg`` with ``setup.all.cfg``.
 
     python setup.py nosetests
 
--------------------------------------
+-------------------------------------------------------------------------------
  Documentation
--------------------------------------
+-------------------------------------------------------------------------------
 Current documentation can be found on the GitHub page
 ( http://jakirkham.github.io/nanshe/ ). A new copy is rebuilt any time there is
 a passing commit is added to the ``master`` branch. Each documentation commit
