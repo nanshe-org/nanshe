@@ -83,7 +83,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.</span>
 <span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># It is not needed outside of calling spams.trainDL.</span>
@@ -109,7 +109,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            result(numpy.matrix): the dictionary found</span>
@@ -150,7 +150,7 @@
 <span class="sd">            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with properties needed by X_array.</span>
 <span class="sd">            X_array(numpy.ndarray):                         currently uses numpy ndarray as input.</span>
 <span class="sd">            *args(list):                                    a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            *kwargs(dict):                                  a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            **kwargs(dict):                                 a dictionary of keyword arguments to pass to spams.trainDL.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            This is somewhat faster than using multiprocessing.Queue.</span>
