@@ -8,8 +8,6 @@ import scipy
 import scipy.ndimage
 import scipy.ndimage.filters
 
-from rank_filter import lineRankOrderFilter
-
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
