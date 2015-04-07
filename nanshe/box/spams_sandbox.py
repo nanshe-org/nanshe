@@ -23,7 +23,7 @@ def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
         Args:
             out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.
             *args(list):                            a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
+            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
     """
 
     # It is not needed outside of calling spams.trainDL.
@@ -49,7 +49,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
 
         Args:
             *args(list):                            a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                          a dictionary of keyword arguments to pass to spams.trainDL.
+            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
 
         Returns:
             result(numpy.matrix): the dictionary found
@@ -90,7 +90,7 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
             X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with properties needed by X_array.
             X_array(numpy.ndarray):                         currently uses numpy ndarray as input.
             *args(list):                                    a list of position arguments to pass to spams.trainDL.
-            *kwargs(dict):                                  a dictionary of keyword arguments to pass to spams.trainDL.
+            **kwargs(dict):                                 a dictionary of keyword arguments to pass to spams.trainDL.
 
         Note:
             This is somewhat faster than using multiprocessing.Queue.
