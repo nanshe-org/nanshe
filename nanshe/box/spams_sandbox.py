@@ -2,19 +2,11 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 20, 2014 12:07:48 EDT$"
 
 
-#import nanshe.advanced_debugging
-
-
-#logger = nanshe.advanced_debugging.logging.getLogger(__name__)
-
-
-
 
 class SPAMSException(Exception):
     pass
 
 
-#@nanshe.advanced_debugging.log_call(logger)
 def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
     """
         Designed to run spams.trainDL in a separate process.
@@ -42,7 +34,6 @@ def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
     out_queue.put(result)
 
 
-#@nanshe.advanced_debugging.log_call(logger)
 def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     """
         Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
@@ -80,7 +71,6 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     return(result)
 
 
-#@nanshe.advanced_debugging.log_call(logger)
 def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_array_type, X_array, *args, **kwargs):
     """
         Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
@@ -146,7 +136,6 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
     result[:] = spams.trainDL(X, *args, **kwargs)
 
 
-#@nanshe.advanced_debugging.log_call(logger)
 def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     """
         Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
@@ -215,7 +204,6 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     return(result)
 
 
-#@nanshe.advanced_debugging.log_call(logger)
 def call_spams_trainDL(*args, **kwargs):
     """
         Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.
