@@ -62,19 +62,11 @@
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 20, 2014 12:07:48 EDT$&quot;</span>
 
 
-<span class="c">#import nanshe.advanced_debugging</span>
-
-
-<span class="c">#logger = nanshe.advanced_debugging.logging.getLogger(__name__)</span>
-
-
-
 
 <div class="viewcode-block" id="SPAMSException"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.SPAMSException">[docs]</a><span class="k">class</span> <span class="nc">SPAMSException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span>
 
-
-<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+</div>
 <div class="viewcode-block" id="run_multiprocessing_queue_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_queue_spams_trainDL</span><span class="p">(</span><span class="n">out_queue</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Designed to run spams.trainDL in a separate process.</span>
@@ -101,8 +93,7 @@
     <span class="n">result</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">out_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-
-<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+</div>
 <div class="viewcode-block" id="call_multiprocessing_queue_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_queue_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
@@ -139,8 +130,7 @@
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-
-<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+</div>
 <div class="viewcode-block" id="run_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span> <span class="n">result_array</span><span class="p">,</span> <span class="n">X_array_type</span><span class="p">,</span> <span class="n">X_array</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
@@ -205,8 +195,7 @@
 
     <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-
-<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+</div>
 <div class="viewcode-block" id="call_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
@@ -274,8 +263,7 @@
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-
-<span class="c">#@nanshe.advanced_debugging.log_call(logger)</span></div>
+</div>
 <div class="viewcode-block" id="call_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.</span>
