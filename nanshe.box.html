@@ -65,10 +65,11 @@
             
   <div class="section" id="module-nanshe.box">
 <span id="nanshe-box-package"></span><h1>nanshe.box package<a class="headerlink" href="#module-nanshe.box" title="Permalink to this headline">¶</a></h1>
-<p>SPAMS seems to step on the interpreter. Despite our best efforts to sandbox it, in a separate thread, it manages
-to still get messed up when neuron_volumina_viewer is on the path. Therefore, we will place all access to it in a
-separate module that cannot see the contents of nanshe. Hopefully, this will make it less likely to create a
-segmentation fault.</p>
+<p>SPAMS seems to step on the interpreter. Despite our best efforts to sandbox
+it, in a separate thread, it manages to still get messed up when
+neuron_volumina_viewer is on the path. Therefore, we will place all access
+to it in a separate module that cannot see the contents of nanshe.
+Hopefully, this will make it less likely to create a segmentation fault.</p>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
