@@ -12,11 +12,13 @@ Contents:
    :glob:
 
    README <readme>
-   *
+   nanshe*
 
 
 Indices and tables
 ==================
+.. toctree::
+   todo
 
 * :ref:`genindex`
 * :ref:`modindex`
