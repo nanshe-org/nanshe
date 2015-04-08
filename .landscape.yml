@@ -29,6 +29,8 @@ pep257:
         # makes it easier on the eye to note documentation from code on
         # a quick pass. So, we suppress this constraint.
         - D208
+        # Ignore suggestion about handling backslashes in docstrings.
+        - D301
 pyflakes:
     run: true
 pylint:
