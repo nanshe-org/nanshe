@@ -77,16 +77,16 @@
 <div class="viewcode-block" id="zeroed_mean_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.zeroed_mean_images">[docs]</a><span class="k">def</span> <span class="nf">zeroed_mean_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_numpy_array(numpy.ndarray):     array images with time as the first index</span>
 <span class="sd">            output_array(numpy.ndarray):        provides a location to store the result (optional)</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            result(numpy.ndarray):              The same array with each images mean removed.</span>
 <span class="sd">                                                Where means[i] = mean(new_numpy_array[i])</span>
-<span class="sd">        </span>
-<span class="sd">        </span>
+
+
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; zeroed_mean_images(numpy.array([[0.,0.],[0.,0.]]))</span>
 <span class="sd">            array([[ 0.,  0.],</span>
@@ -171,16 +171,16 @@
 <div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_numpy_array(numpy.ndarray):     array images with time as the first index</span>
 <span class="sd">            output_array(numpy.ndarray):        provides a location to store the result (optional)</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            result(numpy.ndarray):              The same array with each images mean removed.</span>
 <span class="sd">                                                Where means[i] = mean(new_numpy_array[i])</span>
-<span class="sd">        </span>
-<span class="sd">        </span>
+
+
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; renormalized_images(numpy.array([[0.,1.],[1.,0.]]))</span>
 <span class="sd">            array([[ 0.,  1.],</span>
