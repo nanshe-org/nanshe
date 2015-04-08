@@ -1,0 +1,45 @@
+autodetect: yes
+# Documentation coverage provided by PEP257. Quite good.
+doc-warnings: yes
+# Ignore the tests directory. Seems to complain about docstrings mostly.
+# May change in the future as docstrings can provide a simple explanation.
+test-warnings: no
+strictness: veryhigh
+# Line length to conform with PEP8.
+max-line-length: 79
+# Use some standard linting tools.
+pep8:
+    full: true
+    disable:
+        # PEP8 says we shouldn't have any global variables before imports.
+        # Generally, this sounds like a good idea. However, it is nice to
+        # have our `__author__` and `__date__` lines near our module or
+        # package docstring, which technically are global variables.
+        # Hence, we ignore PEP8 here. To quote PEP8, "Consistency with
+        # this style guide is important. Consistency within a project is
+        # more important. Consistency within one module or function is
+        # most important."
+        - E402
+# Check docstring coverage and style.
+pep257:
+    run: true
+    disable:
+        # PEP257 expects the documentation to be indented the same as
+        # the code. We have prefered to indent it one time further as it
+        # makes it easier on the eye to note documentation from code on
+        # a quick pass. So, we suppress this constraint.
+        - D208
+pyflakes:
+    run: true
+pylint:
+    run: true
+# Analyze our `setup.py`.
+pyroma:
+    run: true
+# Analyze our code complexity.
+mccabe:
+    run: true
+ignore-paths:
+    - docs
+    - examples
+    - tests
