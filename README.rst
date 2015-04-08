@@ -1,4 +1,4 @@
-|Build Status| |Coverage Status| |License| |Documentation|
+|Build Status| |Coverage Status| |Code Health| |License| |Documentation|
 
 --------------
 
@@ -157,6 +157,8 @@ If only one is specified, then only an upper or lower bound exists.
    :target: https://travis-ci.org/jakirkham/nanshe
 .. |Coverage Status| image:: https://coveralls.io/repos/jakirkham/nanshe/badge.svg?branch=master
    :target: https://coveralls.io/r/jakirkham/nanshe?branch=master
+.. |Code Health| image:: https://landscape.io/github/jakirkham/nanshe/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/jakirkham/nanshe/master
 .. |License| image:: http://img.shields.io/badge/license-GPLv3-blue.svg
    :target: https://www.gnu.org/copyleft/gpl.html
 .. |Documentation| image:: https://img.shields.io/badge/docs-current-9F21E9.svg
