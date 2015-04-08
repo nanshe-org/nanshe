@@ -212,7 +212,7 @@ class TimeNavigator(object):
                 val     float position from the slider bar to correct
 
             Returns:
-		int:    the normalized value.
+                int:    the normalized value.
         """
 
         if val < self.min_time:
@@ -268,7 +268,7 @@ class TimeNavigator(object):
                 func    function call when the time is updated
 
             Returns:
-		int:    a callback ID or cid to allow pulling the callback when no longer necessary.
+                int:    a callback ID or cid to allow pulling the callback when no longer necessary.
         """
 
         logger.debug("Before connecting the caller id for time_update with value \"" + str(self.next_cid) + "\".")
