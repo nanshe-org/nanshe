@@ -33,6 +33,9 @@ pyflakes:
     run: true
 pylint:
     run: true
+    disable:
+        # Skip complaint about using backslash literals in multiline strings.
+        - W1401
 # Analyze our `setup.py`.
 pyroma:
     run: true
