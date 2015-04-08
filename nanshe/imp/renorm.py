@@ -17,16 +17,16 @@ trace_logger = prof.getTraceLogger(__name__)
 def zeroed_mean_images(input_array, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
-        
+
         Args:
             new_numpy_array(numpy.ndarray):     array images with time as the first index
             output_array(numpy.ndarray):        provides a location to store the result (optional)
-        
+
         Returns:
             result(numpy.ndarray):              The same array with each images mean removed.
                                                 Where means[i] = mean(new_numpy_array[i])
-        
-        
+
+
         Examples:
             >>> zeroed_mean_images(numpy.array([[0.,0.],[0.,0.]]))
             array([[ 0.,  0.],
@@ -111,16 +111,16 @@ def zeroed_mean_images(input_array, output_array = None):
 def renormalized_images(input_array, ord = 2, output_array = None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
-        
+
         Args:
             new_numpy_array(numpy.ndarray):     array images with time as the first index
             output_array(numpy.ndarray):        provides a location to store the result (optional)
-        
+
         Returns:
             result(numpy.ndarray):              The same array with each images mean removed.
                                                 Where means[i] = mean(new_numpy_array[i])
-        
-        
+
+
         Examples:
             >>> renormalized_images(numpy.array([[0.,1.],[1.,0.]]))
             array([[ 0.,  1.],
