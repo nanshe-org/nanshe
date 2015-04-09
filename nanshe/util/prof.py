@@ -126,7 +126,7 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
 
         Args:
             logger      (Logger):          Used for logging entry, exit and possibly arguments.
-        
+
         Keyword Args:
             to_log_call (bool):            Whether to log call or not. This overrides all other arguments. It will be
                                            stored as a global variable on the function, which can be changed at runtime.
@@ -142,7 +142,7 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
 
             to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored
                                            as a global variable on the function, which can be changed at runtime.
-        
+
         Returns:
             log_call_decorator (for wrapping)
     """
@@ -153,7 +153,7 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
 
             Args:
                 callable:    Anything that can be called function, method, functor, lambda, etc.
-        
+
             Returns:
                 log_call_callable_wrapped, which is wrapped around the function in question.
         """

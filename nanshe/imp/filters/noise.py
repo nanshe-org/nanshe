@@ -33,35 +33,35 @@ trace_logger = prof.getTraceLogger(__name__)
 def estimate_noise(input_array, significance_threshold = 3.0):
     """
         Estimates the noise in the given array.
-        
+
         Using the array finds what the standard deviation is of some values in
         the array, which are within the standard deviation of the whole array times
         the significance threshold
-        
+
         Args:
             input_array(numpy.ndarray):          the array to estimate noise of.
             significance_threshold(float):      the number of standard deviations (of the whole array), below which must be noise.
-        
+
         Returns:
             cs(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
-        
-        
+
+
         Examples:
             >>> estimate_noise(numpy.eye(2))
             0.5
-            
+
             >>> estimate_noise(numpy.eye(2), significance_threshold = 3)
             0.5
-                   
+
             >>> estimate_noise(numpy.eye(3), significance_threshold = 3)
             0.47140452079103173
-            
+
             >>> import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 1))/1000
             0.166
-            
+
             >>> import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 2))/1000
             0.288
-            
+
             >>> import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 3))/1000
             0.288
     """
@@ -82,20 +82,20 @@ def estimate_noise(input_array, significance_threshold = 3.0):
 def significant_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
     """
         Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.
-        
+
         Args:
             input_array(numpy.ndarray):          the array, which needs noise removed.
             noise_threshold(float):             the estimated noise times this value determines the max value to
                                                  consider as noise (to zero).
 
             in_place(bool):                      whether to modify input_array directly or to return a copy instead.
-        
+
         Returns:
             result(numpy.ndarray): a numpy array with noise zeroed.
-        
-        
+
+
         Examples:
-            
+
             >>> significant_mask(numpy.eye(2), noise_threshold = 6.0)
             array([[False, False],
                    [False, False]], dtype=bool)
@@ -103,16 +103,16 @@ def significant_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
             >>> significant_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)
             array([[False, False],
                    [False, False]], dtype=bool)
-            
+
             >>> significant_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)
             array([[ True,  True],
                    [ True,  True]], dtype=bool)
-                   
+
             >>> significant_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)
             array([[False, False, False],
                    [False, False, False],
                    [False, False, False]], dtype=bool)
-            
+
             >>> significant_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)
             array([[ True, False, False],
                    [False,  True, False],
@@ -147,22 +147,22 @@ def noise_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
 
         Returns:
             result(numpy.ndarray): a numpy array with noise zeroed.
-        
-        
+
+
         Examples:
             >>> noise_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)
             array([[ True,  True],
                    [ True,  True]], dtype=bool)
-            
+
             >>> noise_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)
             array([[False, False],
                    [False, False]], dtype=bool)
-                   
+
             >>> noise_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)
             array([[ True,  True,  True],
                    [ True,  True,  True],
                    [ True,  True,  True]], dtype=bool)
-            
+
             >>> noise_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)
             array([[False,  True,  True],
                    [ True, False,  True],

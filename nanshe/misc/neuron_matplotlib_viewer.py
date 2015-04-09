@@ -79,7 +79,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
     def set_images(self, new_neuron_images, cmap = mpl.cm.RdBu, use_matshow = False):
         """
             Sets the images to be viewed.
-            
+
             Args:
                 new_neuron_images(numpy.ndarray):     array of images (first index is which image)
         """
@@ -129,7 +129,7 @@ class TimeNavigator(object):
             Initializes a TimeNavigator using the given figure and a fixed number of steps.
 
             Provides a simple slider bar and buttons to navigate through time.
-            
+
             Args:
                 fig         should be a figure that has been initialized already.
                 max_time    maximum step for images.
@@ -178,7 +178,7 @@ class TimeNavigator(object):
     def begin_time(self, event):
         """
             Sets time to min_time.
-            
+
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
@@ -193,7 +193,7 @@ class TimeNavigator(object):
     def prev_time(self, event):
         """
             Sets time to one time_step prior.
-            
+
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
@@ -207,7 +207,7 @@ class TimeNavigator(object):
     def next_time(self, event):
         """
             Sets time to one time_step after.
-            
+
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
@@ -221,7 +221,7 @@ class TimeNavigator(object):
     def end_time(self, event):
         """
             Sets time to max_time.
-            
+
             Args:
                 event   Matplotlib event that caused the call to this callback.
         """
@@ -290,7 +290,7 @@ class TimeNavigator(object):
     def on_time_update(self, func):
         """
             Registers a callback function for notification when the time is updated.
-            
+
             Args:
                 func    function call when the time is updated
 

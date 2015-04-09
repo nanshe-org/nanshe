@@ -316,7 +316,7 @@ def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, ov
     """
         Generates a function used for writing arrays (structured or otherwise)
         to a group in an HDF5 file.
-        
+
         Args:
             hdf5_handle:            The HDF5 file group to place the debug contents into.
 

@@ -37,14 +37,14 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
         Also, will handle normal NumPy arrays and scalars, as well.
-        
+
         Note:
             HDF5 does not support generic Python objects. So, serialization of objects to something
             else (perhaps strs of fixed size) must be performed first.
-        
+
         Note:
             TODO: Write doctests.
-        
+
         Args:
             file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.
             internalPath(str):          an internal path for the HDF5 file.

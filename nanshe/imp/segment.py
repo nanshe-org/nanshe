@@ -459,12 +459,12 @@ def preprocess_data(new_data, out = None, **parameters):
     """
         Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and
         wavelet.transform).
-        
+
         Args:
             new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).
             out(numpy.ndarray):                 where the final result will be stored.
             **parameters(dict):                 additional parameters for each step of preprocessing.
-        
+
         Returns:
             dict:                               the dictionary found.
     """
@@ -537,11 +537,11 @@ def preprocess_data(new_data, out = None, **parameters):
 def generate_dictionary(new_data, **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
-        
+
         Args:
             new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).
             **parameters(dict):                 passed directly to spams.trainDL.
-        
+
         Returns:
             dict:                               the dictionary found.
     """
@@ -604,7 +604,7 @@ def generate_dictionary(new_data, **parameters):
 def region_properties_scikit_image(new_label_image, *args, **kwargs):
     """
         Grabs region properties from a label image.
-        
+
         Args:
             new_label_image(numpy.ndarray):      label image used for generating properties.
             args(list):                          additional position arguments to pass skimage.measure.regionprops.
@@ -613,21 +613,21 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         Note:
             Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won't be
             returned.
-        
+
         Returns:
             numpy.ndarray:                       a structured array of all the properties found for each label.
-        
-        
+
+
         Examples:
-            
+
             >>> region_properties_scikit_image(numpy.zeros((2,2), dtype=int))
             array([], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
-            
+
             >>> region_properties_scikit_image(numpy.ones((2,2), dtype=int))
             array([(1, 4.0, [0.5, 0.5])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
-            
+
             >>> region_properties_scikit_image(numpy.ones((3,3), dtype=int))
             array([(1, 9.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
@@ -1411,7 +1411,7 @@ def generate_local_maxima_vigra(new_intensity_image):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
         Uses vigra's vigra.analysis.extendedLocalMaxima for 2D and vigra's vigra.analysis.extendedLocalMaxima3D for 3D.
-        
+
         Args:
             new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are
                                                     spatial; however, it will treat all axes the same).
@@ -1436,7 +1436,7 @@ def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborho
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
         Uses scikit image's skimage.feature.peak_local_max.
-        
+
         Args:
             new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are
                                                     spatial; however, it will treat all axes the same).
@@ -1458,7 +1458,7 @@ def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborho
 def generate_local_maxima(new_intensity_image):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
-        
+
         Args:
             new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are
                                                     spatial; however, it will treat all axes the same).
@@ -1899,7 +1899,7 @@ def wavelet_denoising(new_image,
                       **parameters):
     """
         Performs wavelet denoising on the given dictionary.
-        
+
         Args:
             new_image(numpy.ndarray):                   array of data for generating a dictionary (first axis is time).
 
@@ -1912,7 +1912,7 @@ def wavelet_denoising(new_image,
                                                         contains the keys min and/or max with a value for each.
 
             **parameters(dict):                         additional parameters for various other function calls.
-        
+
         Returns:
             numpy.ndarray:                              a structured array of candidate neurons.
     """
@@ -2760,11 +2760,11 @@ def expand_rois(new_data, roi_masks, **parameters):
 def postprocess_data(new_dictionary, **parameters):
     """
         Generates neurons from the dictionary.
-        
+
         Args:
             new_dictionary(numpy.ndarray):        dictionary of basis images to analyze for neurons.
             **parameters(dict):                   dictionary of parameters
-        
+
         Returns:
             numpy.ndarray:                        structured array with relevant information for each neuron found.
     """

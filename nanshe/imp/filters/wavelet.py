@@ -162,7 +162,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 @hdf5.record.static_array_debug_recorder
 def transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
     """
-        performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then 
+        performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then
 
         Args:
             im0(numpy.ndarray):                                  the original image.

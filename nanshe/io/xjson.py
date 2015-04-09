@@ -35,11 +35,11 @@ logger = prof.logging.getLogger(__name__)
 def read_parameters(config_filename, maintain_order = False):
     """
         Reads the contents of a json config file and returns the parameters.
-        
+
         Args:
             config_filename (str):                          name of the file to read.
             maintain_order (bool):                          whether to preserve the order of keys in the json file
-        
+
         Returns:
             parameters (dict or collections.OrderedDict):   parameters read from the file.
     """

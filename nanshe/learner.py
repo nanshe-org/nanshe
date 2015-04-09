@@ -706,7 +706,7 @@ def main(*argv):
 
         Args:
             argv(list):     arguments (includes command line call).
-        
+
         Returns:
             int:            exit code (0 if success)
     """
