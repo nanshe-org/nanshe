@@ -81,6 +81,7 @@ class HDF5DatasetNotFoundException( Exception ):
     """
     pass
 
+
 @prof.qt_log_class(trace_logger)
 class HDF5DataSource( QObject ):
     """
@@ -510,6 +511,7 @@ def createHDF5DataSource(full_path, withShape=False):
     else:
         return src
 
+
 @multimethod(str)
 @prof.log_call(trace_logger)
 def createHDF5DataSource(full_path):
@@ -519,8 +521,10 @@ def createHDF5DataSource(full_path):
 class HDF5NoFusedSourceException( Exception ):
     pass
 
+
 class HDF5UndefinedShapeDtypeException( Exception ):
     pass
+
 
 @prof.qt_log_class(trace_logger)
 class HDF5DataFusedSource( QObject ):
@@ -903,6 +907,7 @@ class EnumeratedProjectionConstantRequest( object ):
 
 assert issubclass(EnumeratedProjectionConstantRequest, RequestABC)
 
+
 class ContourProjectionConstantSource( QObject ):
     """
         Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
@@ -1071,6 +1076,7 @@ class ContourProjectionConstantRequest( object ):
         callback(result, **kwargs)
 
 assert issubclass(ContourProjectionConstantRequest, RequestABC)
+
 
 class FloatProjectionConstantSource( QObject ):
     """
