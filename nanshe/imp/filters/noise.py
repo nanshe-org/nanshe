@@ -1,4 +1,13 @@
 """
+The ``noise`` module provides support for handling noise in images.
+
+===============================================================================
+Overview
+===============================================================================
+Provides a way of estimating noise based on what falls out of some multiple of
+the standard deviation and generate a mask that excludes the noise or the
+non-noise.
+
 ===============================================================================
 API
 ===============================================================================
