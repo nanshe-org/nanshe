@@ -100,7 +100,7 @@ def read_parameters(config_filename, maintain_order=False):
                 new_each_value = ascii_encode_str(new_each_value)
 
             if new_each_value is not None:
-                transformed_list.append( new_each_value )
+                transformed_list.append(new_each_value)
 
         return(transformed_list)
 
@@ -134,7 +134,7 @@ def read_parameters(config_filename, maintain_order=False):
                     new_each_value = ascii_encode_str(new_each_value)
 
                 if new_each_value is not None:
-                    transformed_dict.append( (new_each_key, new_each_value) )
+                    transformed_dict.append((new_each_key, new_each_value))
 
         transformed_dict = json_dict(transformed_dict)
 
