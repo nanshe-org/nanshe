@@ -53,7 +53,7 @@ def get_multipage_tiff_shape_dtype(new_tiff_filename):
             (collections.OrderedDict):          an ordered dictionary with "shape" first and "dtype" (type) second.
     """
 
-    shape_dtype_result = collections.OrderedDict([("shape" , None), ("dtype" , None)])
+    shape_dtype_result = collections.OrderedDict([("shape", None), ("dtype", None)])
 
     new_tiff_file_info = vigra.impex.ImageInfo(new_tiff_filename)
     new_tiff_file_number_pages = vigra.impex.numberImages(new_tiff_filename)
@@ -108,7 +108,7 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order="zy
 
         new_tiff_file_shape = tuple(new_tiff_file_shape_transposed)
 
-    shape_dtype_result = collections.OrderedDict([("shape" , None), ("dtype" , None)])
+    shape_dtype_result = collections.OrderedDict([("shape", None), ("dtype", None)])
 
     shape_dtype_result["shape"] = new_tiff_file_shape
     shape_dtype_result["dtype"] = new_tiff_file_dtype
