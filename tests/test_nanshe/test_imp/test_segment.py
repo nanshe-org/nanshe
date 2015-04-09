@@ -1719,7 +1719,7 @@ class TestSegment(object):
         neurons = nanshe.imp.segment.wavelet_denoising(neuron_images.max(axis=0), **params)
 
         # Resort neuron image order based on most similar.
-        result_neurons_distance = scipy.spatial.distance.cdist(neuron_images.reshape(neurons.shape + (-1,)) , neurons["image"].reshape(neurons.shape + (-1,)))
+        result_neurons_distance = scipy.spatial.distance.cdist(neuron_images.reshape(neurons.shape + (-1,)), neurons["image"].reshape(neurons.shape + (-1,)))
 
         neuron_centers_old = neuron_centers
         neuron_radii_old = neuron_radii
@@ -1800,7 +1800,7 @@ class TestSegment(object):
         neurons = nanshe.imp.segment.wavelet_denoising(neuron_images.max(axis=0), **params)
 
         # Resort neuron image order based on most similar.
-        result_neurons_distance = scipy.spatial.distance.cdist(neuron_images.reshape(neurons.shape + (-1,)) , neurons["image"].reshape(neurons.shape + (-1,)))
+        result_neurons_distance = scipy.spatial.distance.cdist(neuron_images.reshape(neurons.shape + (-1,)), neurons["image"].reshape(neurons.shape + (-1,)))
 
         neuron_centers_old = neuron_centers
         neuron_radii_old = neuron_radii
@@ -2177,8 +2177,8 @@ class TestSegment(object):
 
         bases_indices = [[1,3,4], [0,2], [5]]
 
-        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:] , dtype=masks.dtype)
-        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:] , dtype=images.dtype)
+        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:], dtype=masks.dtype)
+        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:], dtype=images.dtype)
 
         for i, each_basis_indices in enumerate(bases_indices):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis=0)
@@ -2265,8 +2265,8 @@ class TestSegment(object):
 
         bases_indices = [[0], [1]]
 
-        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:] , dtype=masks.dtype)
-        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:] , dtype=images.dtype)
+        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:], dtype=masks.dtype)
+        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:], dtype=images.dtype)
 
         for i, each_basis_indices in enumerate(bases_indices):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis=0)
@@ -2356,8 +2356,8 @@ class TestSegment(object):
 
         bases_indices = [[1,3,4], [0,2], [5]]
 
-        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:] , dtype=masks.dtype)
-        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:] , dtype=images.dtype)
+        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:], dtype=masks.dtype)
+        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:], dtype=images.dtype)
 
         for i, each_basis_indices in enumerate(bases_indices):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis=0)
@@ -2442,8 +2442,8 @@ class TestSegment(object):
 
         bases_indices = [[0], [1]]
 
-        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:] , dtype=masks.dtype)
-        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:] , dtype=images.dtype)
+        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:], dtype=masks.dtype)
+        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:], dtype=images.dtype)
 
         for i, each_basis_indices in enumerate(bases_indices):
             bases_masks[i] = masks[list(each_basis_indices)].max(axis=0)
