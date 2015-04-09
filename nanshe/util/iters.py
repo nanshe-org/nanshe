@@ -1,4 +1,13 @@
 """
+The module ``iters`` provides support working with and creating generators.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``iters`` provides a variety of functions targeted at working with
+or creating generators. It also contains some functions targeted at working
+with slices and tuples of slices.
+
 ===============================================================================
 API
 ===============================================================================
