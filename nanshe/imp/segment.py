@@ -878,6 +878,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
 
     return(new_label_image_props_with_arrays)
 
+
 @prof.log_call(trace_logger)
 def region_properties_vigra(new_label_image, *args, **kwargs):
     """
@@ -1219,6 +1220,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
     return(new_label_image_props_with_arrays)
 
+
 @prof.log_call(trace_logger)
 def region_properties(new_label_image, *args, **kwargs):
     """
@@ -1257,6 +1259,7 @@ def region_properties(new_label_image, *args, **kwargs):
     """
 
     return(region_properties_vigra(new_label_image, *args, **kwargs))
+
 
 @prof.log_call(trace_logger)
 def get_neuron_dtype(shape, dtype):
