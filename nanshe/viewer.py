@@ -1,4 +1,21 @@
 """
+The ``viewer`` provides a way to view the results after the algorithm is run.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``viewer`` provides the mechanism by which to view the results after
+the algorithm is run. In order to get the viewer working |PyQt4|_ is required
+and a copy of |volumina|_. The ``main`` function actually starts the algorithm
+and can be called externally. Configuration files for the viewer are provided
+in the examples_ and are entitled viewer.
+
+.. |PyQt4| replace:: ``PyQt4``
+.. _PyQt4: http://www.riverbankcomputing.com/software/pyqt
+.. |volumina| replace:: ``volumina``
+.. _volumina: http://github.com/ilastik/volumina
+.. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
+
 ===============================================================================
 API
 ===============================================================================
