@@ -1,4 +1,13 @@
 """
+The module ``serializers`` performs IO of NumPy object to an from HDF5 files.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``serializers`` provides an easy way to serialize unusual NumPy
+object to an from files. In particular, it provides support for structured
+arrays and masked arrays.
+
 ===============================================================================
 API
 ===============================================================================
