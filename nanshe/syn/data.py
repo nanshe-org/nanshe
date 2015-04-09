@@ -1,4 +1,13 @@
 """
+The module ``data`` provides a few primitives for generating synthetic data.
+
+===============================================================================
+Overview
+===============================================================================
+These include generating mask stacks, gaussian stacks, and random points. These
+are primarily used for testing the algorithm, but could be used in benchmarking
+or other applications.
+
 ===============================================================================
 API
 ===============================================================================
