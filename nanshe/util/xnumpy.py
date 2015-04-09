@@ -1,4 +1,16 @@
 """
+The module ``xnumpy`` provides useful functions in combination with ``numpy``.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``xnumpy`` provides some addition useful functions that are useful
+in conjunction with  |numpy|_. The functions provided vary from handling view,
+adding calculations, combining arrays in interesting ways, handling masks, etc.
+
+.. |numpy| replace:: ``numpy``
+.. _numpy: http://www.numpy.org/
+
 ===============================================================================
 API
 ===============================================================================
