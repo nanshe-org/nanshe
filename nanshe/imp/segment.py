@@ -1,4 +1,32 @@
 """
+The ``segment`` module has components to make an image processing workflow.
+
+===============================================================================
+Overview
+===============================================================================
+The ``segment`` (or **segment**\ ation) module contains algorithms useful in
+implementing ADINA ( doi:`10.1109/ISBI.2013.6556660`_ ), but could be reused in
+other workflows. These primary sections can be grouped as follows
+
+1. Preprocessing steps
+
+   a. registration correction (\
+      :py:func:`~nanshe.imp.segment.remove_zeroed_lines` )
+   #. background estimation and subtraction (\
+      :py:func:`~nanshe.imp.segment.estimate_f0`,\
+      :py:func:`~nanshe.imp.segment.extract_f0` )
+   #. wavelet transform ( :py:func:`~nanshe.imp.filters.wavelet.transform` )
+   #. normalization ( :py:func:`~nanshe.imp.segment.normalize_data` )
+#. Dictionary learning step (\
+    :py:func:`~nanshe.imp.segment.generate_dictionary` )
+#. Postprocessing
+
+   a. segmentation and refinement (\
+      :py:func:`~nanshe.imp.segment.wavelet_denoising` )
+   #. merging ( :py:func:`~nanshe.imp.segment.merge_neuron_sets` )
+
+.. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660
+
 ===============================================================================
 API
 ===============================================================================
