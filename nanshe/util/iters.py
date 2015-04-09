@@ -632,7 +632,7 @@ def reverse_each_element(new_iter):
     new_iter = iter(new_iter)
 
     for each in new_iter:
-        yield ( type(each)(reversed(each)) )
+        yield (type(each)(reversed(each)))
 
 
 @prof.log_call(trace_logger)
@@ -803,10 +803,10 @@ def filled_stringify_numbers(new_iter, include_numbers=False):
 
     if include_numbers:
         for each in new_list:
-            yield( (each, str(each).zfill(digits)) )
+            yield((each, str(each).zfill(digits)))
     else:
         for each in new_list:
-            yield( str(each).zfill(digits) )
+            yield(str(each).zfill(digits))
 
 
 @prof.log_call(trace_logger)
@@ -858,7 +858,7 @@ def filled_stringify_xrange(new_iter):
     new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers=True)
 
     for i, i_str in new_list_index_gen_stringified:
-        yield ( (i, i_str) )
+        yield ((i, i_str))
 
 
 @prof.log_call(trace_logger)
@@ -910,7 +910,7 @@ def filled_stringify_enumerate(new_iter):
     new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers=True)
 
     for (i, i_str), each in itertools.izip(new_list_index_gen_stringified, new_list):
-        yield ( (i, i_str, each) )
+        yield ((i, i_str, each))
 
 
 @prof.log_call(trace_logger)
