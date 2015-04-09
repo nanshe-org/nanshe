@@ -854,17 +854,20 @@
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.request"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;EnumeratedProjectionConstantSource: slicing is not pure&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s">&#39;EnumeratedProjectionConstantSource: slicing is not pure&#39;</span>
+            <span class="p">)</span>
 
         <span class="c"># Drop the slicing for the axis where the projection is being applied.</span>
         <span class="n">constant_source_slicing</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
         <span class="n">constant_source_slicing</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
         <span class="n">constant_source_slicing</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">constant_source_slicing</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">EnumeratedProjectionConstantRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
-                                            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
-                                            <span class="n">slicing</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">EnumeratedProjectionConstantRequest</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">slicing</span>
+        <span class="p">))</span>
 </div>
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
@@ -933,7 +936,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
 
             <span class="c"># Add singleton axis where max was performed</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+            <span class="p">)</span>
 
             <span class="c"># Take the slice the viewer wanted</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">slicing</span><span class="p">]</span>
@@ -1008,10 +1013,16 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">]):</span>
-            <span class="n">_constant_source_cached_i</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">index_axis_at_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-            <span class="n">_constant_source_cached_i</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_contour</span><span class="p">(</span><span class="n">_constant_source_cached_i</span><span class="p">)</span>
+            <span class="n">_constant_source_cached_i</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">index_axis_at_pos</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span> <span class="n">i</span>
+            <span class="p">)</span>
+            <span class="n">_constant_source_cached_i</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_contour</span><span class="p">(</span>
+                <span class="n">_constant_source_cached_i</span>
+            <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -1037,10 +1048,11 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pure_slicing</span><span class="p">(</span><span class="n">slicing</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;ContourProjectionConstantSource: slicing is not pure&#39;</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">ContourProjectionConstantRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
-                                            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
-                                            <span class="n">slicing</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">ContourProjectionConstantRequest</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">slicing</span>
+        <span class="p">))</span>
 </div>
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="ContourProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
@@ -1335,10 +1347,16 @@
         <span class="n">slicing</span> <span class="o">=</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+            <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+        <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -1369,10 +1387,11 @@
         <span class="n">constant_source_slicing</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
         <span class="n">constant_source_slicing</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">constant_source_slicing</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">MaxProjectionConstantRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
-                                            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
-                                            <span class="n">slicing</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">MaxProjectionConstantRequest</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">slicing</span>
+        <span class="p">))</span>
 </div>
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MaxProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
@@ -1441,7 +1460,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
 
             <span class="c"># Add singleton axis where max was performed</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+            <span class="p">)</span>
 
             <span class="c"># Take the slice the viewer wanted</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">slicing</span><span class="p">]</span>
@@ -1521,10 +1542,16 @@
         <span class="n">slicing</span> <span class="o">=</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+            <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+        <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span> <span class="o">=</span> <span class="n">ArraySource</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">slicing</span><span class="p">)</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -1555,10 +1582,11 @@
         <span class="n">constant_source_slicing</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
         <span class="n">constant_source_slicing</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">constant_source_slicing</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">MeanProjectionConstantRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
-                                            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
-                                            <span class="n">slicing</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">MeanProjectionConstantRequest</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached_array_request</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">slicing</span>
+        <span class="p">))</span>
 </div>
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="MeanProjectionConstantSource.setDirty"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource.setDirty">[docs]</a>    <span class="k">def</span> <span class="nf">setDirty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
@@ -1627,7 +1655,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
 
             <span class="c"># Add singleton axis where mean was performed</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+            <span class="p">)</span>
 
             <span class="c"># Take the slice the viewer wanted</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">slicing</span><span class="p">]</span>
@@ -1674,13 +1704,24 @@
     <span class="n">argv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
 
     <span class="c"># Creates command line parser</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line for a batch job.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line for a batch job.&quot;</span>
+    <span class="p">)</span>
 
     <span class="c"># Takes a config file and then a series of one or more HDF5 files.</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config_filename&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations.&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;input_files&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;input_files&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file.&quot;</span>
+    <span class="p">)</span>
 
     <span class="c"># Results of parsing arguments (ignore the first one as it is the command line call).</span>
     <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
@@ -1688,15 +1729,21 @@
     <span class="c"># Go ahead and stuff in parameters with the other parsed_args</span>
     <span class="c"># A little risky if parsed_args may later contain a parameters variable due to changing the main file</span>
     <span class="c"># or argparse changing behavior; however, this keeps all arguments in the same place.</span>
-    <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">xjson</span><span class="o">.</span><span class="n">read_parameters</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">xjson</span><span class="o">.</span><span class="n">read_parameters</span><span class="p">(</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
 
     <span class="c"># Open all of the files and store their handles</span>
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">)):</span>
         <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
-        <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+            <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">)</span>
 
-        <span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">&quot;r&quot;</span><span class="p">))</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="c"># Make all each_layer_source_location_dict is a dict whether they were or not before</span>
     <span class="c"># The key will be the operation to perform and the values will be what to perform the operation on.</span>
@@ -1709,7 +1756,9 @@
             <span class="n">each_layer_source_location_dict_inner</span> <span class="o">=</span> <span class="n">each_layer_source_location_dict</span>
             <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="n">each_layer_source_operation_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                <span class="n">each_layer_source_operation_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                    <span class="n">each_layer_source_location_dict_inner</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="p">)</span>
                 <span class="n">each_layer_source_location_dict_inner</span> <span class="o">=</span> <span class="n">each_layer_source_location_dict_inner</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1719,7 +1768,10 @@
 
             <span class="n">each_layer_source_location_list</span> <span class="o">=</span> <span class="n">each_layer_source_location_dict_inner</span>
 
-            <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">each_layer_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">each_layer_source_operation_names</span><span class="p">,</span> <span class="n">each_layer_source_location_list</span><span class="p">]</span>
+            <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">each_layer_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">each_layer_source_operation_names</span><span class="p">,</span>
+                <span class="n">each_layer_source_location_list</span>
+            <span class="p">]</span>
 
     <span class="c"># Find all possible matches and whether they exist or not</span>
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters_expanded</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -1770,7 +1822,7 @@
                     <span class="c"># Try to make the source. If it fails, we take no source.</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">each_layer_source_operation_names</span><span class="p">)</span> <span class="ow">and</span> <span class="p">((</span><span class="n">each_layer_source_operation_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;[</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">each_layer_source_operation_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">]&quot;</span><span class="p">))</span> <span class="ow">or</span> \
-                            <span class="p">(</span><span class="n">each_layer_source_operation_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;[&#39;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">each_layer_source_operation_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;&#39;]&quot;</span><span class="p">))):</span>
+                                                                       <span class="p">(</span><span class="n">each_layer_source_operation_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;[&#39;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">each_layer_source_operation_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;&#39;]&quot;</span><span class="p">))):</span>
                             <span class="n">each_file_source</span> <span class="o">=</span> <span class="n">HDF5DataSource</span><span class="p">(</span><span class="n">each_file</span><span class="p">,</span> <span class="n">each_layer_source_location</span><span class="p">,</span> <span class="n">each_layer_source_operation_names</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">each_file_source</span> <span class="o">=</span> <span class="n">HDF5DataSource</span><span class="p">(</span><span class="n">each_file</span><span class="p">,</span> <span class="n">each_layer_source_location</span><span class="p">)</span>
@@ -1808,11 +1860,17 @@
                     <span class="n">each_layer</span> <span class="o">=</span> <span class="bp">None</span>
                     <span class="n">each_source_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">each_source</span><span class="o">.</span><span class="n">dtype</span><span class="p">())</span><span class="o">.</span><span class="n">type</span>
                     <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">each_source_dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
-                        <span class="n">each_layer</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">addColorTableHDF5Source</span><span class="p">(</span><span class="n">each_source</span><span class="p">,</span> <span class="n">each_source</span><span class="o">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">each_layer_name</span><span class="p">)</span>
+                        <span class="n">each_layer</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">addColorTableHDF5Source</span><span class="p">(</span>
+                            <span class="n">each_source</span><span class="p">,</span> <span class="n">each_source</span><span class="o">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">each_layer_name</span>
+                        <span class="p">)</span>
                     <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">each_source_dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-                        <span class="n">each_layer</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">addGrayscaleHDF5Source</span><span class="p">(</span><span class="n">each_source</span><span class="p">,</span> <span class="n">each_source</span><span class="o">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">each_layer_name</span><span class="p">)</span>
+                        <span class="n">each_layer</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">addGrayscaleHDF5Source</span><span class="p">(</span>
+                            <span class="n">each_source</span><span class="p">,</span> <span class="n">each_source</span><span class="o">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">each_layer_name</span>
+                        <span class="p">)</span>
                     <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">each_source_dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">bool_</span><span class="p">):</span>
-                        <span class="n">each_layer</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">addColorTableHDF5Source</span><span class="p">(</span><span class="n">each_source</span><span class="p">,</span> <span class="n">each_source</span><span class="o">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">each_layer_name</span><span class="p">)</span>
+                        <span class="n">each_layer</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">addColorTableHDF5Source</span><span class="p">(</span>
+                            <span class="n">each_source</span><span class="p">,</span> <span class="n">each_source</span><span class="o">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">each_layer_name</span>
+                        <span class="p">)</span>
 
                     <span class="n">each_layer</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="bp">False</span>
 

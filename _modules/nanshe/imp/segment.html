@@ -565,10 +565,10 @@
     <span class="k">if</span> <span class="s">&quot;wavelet.transform&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
         <span class="n">wavelet</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">wavelet</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">new_data_maybe_wavelet_result</span><span class="p">,</span>
-                                            <span class="n">include_intermediates</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                            <span class="n">include_lower_scales</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                            <span class="n">out</span><span class="o">=</span><span class="n">new_data_maybe_wavelet_result</span><span class="p">,</span>
-                                            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;wavelet.transform&quot;</span><span class="p">])</span>
+                          <span class="n">include_intermediates</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                          <span class="n">include_lower_scales</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                          <span class="n">out</span><span class="o">=</span><span class="n">new_data_maybe_wavelet_result</span><span class="p">,</span>
+                          <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;wavelet.transform&quot;</span><span class="p">])</span>
         <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_wavelet_transformed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data_maybe_wavelet_result</span>
         <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_wavelet_transformed_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
             <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
@@ -649,7 +649,7 @@
     <span class="c"># Simply trains the dictionary. Does not return sparse code.</span>
     <span class="c"># Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))</span>
     <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">nanshe</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">spams_sandbox</span><span class="o">.</span><span class="n">call_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">new_data_processed</span><span class="p">,</span>
-                                                                                                 <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;spams.trainDL&quot;</span><span class="p">])</span>
+                                                                                       <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;spams.trainDL&quot;</span><span class="p">])</span>
 
     <span class="c"># Fix dictionary so that the first index will be the particular image.</span>
     <span class="c"># The rest will be the shape of an image (same as input shape).</span>
@@ -2208,7 +2208,7 @@
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> \
                 <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                               <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span><span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+                <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span><span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span>
@@ -2220,8 +2220,10 @@
                 <span class="n">neurons</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">neurons</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
                 <span class="c"># Get masks for all cells</span>
-                <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">all_permutations_equal</span><span class="p">(</span><span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s">&quot;label&quot;</span><span class="p">],</span>
-                                                                        <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">)</span>
+                <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">all_permutations_equal</span><span class="p">(</span>
+                    <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s">&quot;label&quot;</span><span class="p">],</span>
+                    <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span>
+                <span class="p">)</span>
 
                 <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_image</span> <span class="o">*</span> <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span>
 
@@ -2368,10 +2370,10 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="merge_neuron_sets_once"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.merge_neuron_sets_once">[docs]</a><span class="k">def</span> <span class="nf">merge_neuron_sets_once</span><span class="p">(</span><span class="n">new_neuron_set_1</span><span class="p">,</span>
-                      <span class="n">new_neuron_set_2</span><span class="p">,</span>
-                      <span class="n">alignment_min_threshold</span><span class="p">,</span>
-                      <span class="n">overlap_min_threshold</span><span class="p">,</span>
-                      <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+                           <span class="n">new_neuron_set_2</span><span class="p">,</span>
+                           <span class="n">alignment_min_threshold</span><span class="p">,</span>
+                           <span class="n">overlap_min_threshold</span><span class="p">,</span>
+                           <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Merges the two sets of neurons into one. Appends neurons that cannot be merged with the existing set.</span>
 
@@ -2425,9 +2427,11 @@
         <span class="n">new_neuron_set_2_flattened_mask</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">array_to_matrix</span><span class="p">(</span><span class="n">new_neuron_set_2</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">])</span>
 
         <span class="c"># Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)</span>
-        <span class="n">new_neuron_set_angle</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">dot_product_normalized</span><span class="p">(</span><span class="n">new_neuron_set_1_flattened</span><span class="p">,</span>
-                                                                     <span class="n">new_neuron_set_2_flattened</span><span class="p">,</span>
-                                                                     <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">new_neuron_set_angle</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">dot_product_normalized</span><span class="p">(</span>
+            <span class="n">new_neuron_set_1_flattened</span><span class="p">,</span>
+            <span class="n">new_neuron_set_2_flattened</span><span class="p">,</span>
+            <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>
 
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle</span>
 
@@ -2448,9 +2452,9 @@
 
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle_all_optimal_i&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_all_optimal_i</span>
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1_all_optimal_i&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span>
+            <span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span>
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2_all_optimal_i&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_2_all_optimal_i</span>
+            <span class="n">new_neuron_set_masks_overlaid_2_all_optimal_i</span>
 
         <span class="c"># Get all the j indices</span>
         <span class="n">new_neuron_set_all_j</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_neuron_set_2</span><span class="p">))</span>
@@ -2481,9 +2485,9 @@
 
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle_maxes_significant_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1_maxes_significant_0&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2_maxes_significant_0&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
 
         <span class="c"># Get masks that indicate which measurements have the best matching neuron</span>
         <span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">[</span>
@@ -2496,9 +2500,9 @@
 
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
 
         <span class="c"># Using the masks construct the best match neuron index for each case</span>
         <span class="c"># After doing these three, new_neuron_set_all_optimal_i will contain either</span>
@@ -2632,8 +2636,10 @@
         <span class="n">new_neuron_set_flattened_mask</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">array_to_matrix</span><span class="p">(</span><span class="n">new_neuron_set</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">])</span>
 
         <span class="c"># Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)</span>
-        <span class="n">new_neuron_set_angle</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_neuron_set_flattened_image</span><span class="p">,</span>
-                                                                          <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">new_neuron_set_angle</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">pair_dot_product_normalized</span><span class="p">(</span>
+            <span class="n">new_neuron_set_flattened_image</span><span class="p">,</span>
+            <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>
         <span class="n">new_neuron_set_angle</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">new_neuron_set_angle</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle</span>
@@ -2659,9 +2665,9 @@
 
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle_all_optimal_i&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_all_optimal_i</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1_all_optimal_i&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span>
+            <span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2_all_optimal_i&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_2_all_optimal_i</span>
+            <span class="n">new_neuron_set_masks_overlaid_2_all_optimal_i</span>
 
         <span class="c"># Get all the j indices</span>
         <span class="n">new_neuron_set_all_j</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_neuron_set</span><span class="p">))</span>
@@ -2692,9 +2698,9 @@
 
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle_maxes_significant_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1_maxes_significant_0&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2_maxes_significant_0&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
 
         <span class="n">already_matched</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">new_neuron_set</span><span class="p">),),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
@@ -2706,19 +2712,19 @@
         <span class="n">already_matched</span><span class="p">[</span><span class="n">new_neuron_set_angle_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">]]</span> <span class="o">|=</span> <span class="bp">True</span>
 
         <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">[</span><span class="o">~</span><span class="n">already_matched</span> <span class="o">&amp;</span>
-            <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_1_maxes</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
+                                                          <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_1_maxes</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
 
         <span class="n">already_matched</span> <span class="o">|=</span> <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
         <span class="n">already_matched</span><span class="p">[</span><span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">]]</span> <span class="o">|=</span> <span class="bp">True</span>
 
         <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span><span class="p">[</span><span class="o">~</span><span class="n">already_matched</span> <span class="o">&amp;</span>
-            <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
+                                                          <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
 
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                           <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
+            <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
 
         <span class="c"># Using the masks construct the best match neuron index for each case</span>
         <span class="c"># After doing these three, new_neuron_set_all_optimal_i will contain either</span>

@@ -232,10 +232,12 @@
             <span class="c"># Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.</span>
             <span class="c"># Exception will be thrown if value is empty or if key already exists (as intended).</span>
             <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-                <span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">,</span>
-                                                                      <span class="n">key</span><span class="p">,</span>
-                                                                      <span class="n">value</span><span class="p">,</span>
-                                                                      <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">)</span>
+                <span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">,</span>
+                    <span class="n">key</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span>
+                <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
                 <span class="k">return</span><span class="p">()</span>
@@ -362,9 +364,11 @@
 
                     <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 
-                    <span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
-                                                                           <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]),</span>
-                                                                           <span class="n">value</span><span class="p">)</span>
+                    <span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span>
+                        <span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]),</span>
+                        <span class="n">value</span>
+                    <span class="p">)</span>
 
                     <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>

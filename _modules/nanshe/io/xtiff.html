@@ -247,10 +247,12 @@
     <span class="k">if</span> <span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">pages_to_channel</span><span class="p">,</span> <span class="n">pages_to_channel</span> <span class="o">*</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],))</span>
 
-    <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">tagging_reorder_array</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="p">,</span>
-                                                          <span class="n">from_axis_order</span><span class="o">=</span><span class="s">&quot;zyxtc&quot;</span><span class="p">,</span>
-                                                          <span class="n">to_axis_order</span><span class="o">=</span><span class="n">axis_order</span><span class="p">,</span>
-                                                          <span class="n">to_copy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">tagging_reorder_array</span><span class="p">(</span>
+        <span class="n">new_tiff_array</span><span class="p">,</span>
+        <span class="n">from_axis_order</span><span class="o">=</span><span class="s">&quot;zyxtc&quot;</span><span class="p">,</span>
+        <span class="n">to_axis_order</span><span class="o">=</span><span class="n">axis_order</span><span class="p">,</span>
+        <span class="n">to_copy</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="p">)</span>
 

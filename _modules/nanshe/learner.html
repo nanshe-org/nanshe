@@ -208,7 +208,8 @@
                 <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="n">input_dataset_name</span><span class="p">)</span>
 
         <span class="c"># Get a debug logger for the HDF5 file (if needed)</span>
-        <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">output_group</span><span class="p">,</span>
+        <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
+            <span class="n">output_group</span><span class="p">,</span>
             <span class="n">group_name</span><span class="o">=</span><span class="s">&quot;debug&quot;</span><span class="p">,</span>
             <span class="n">enable</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
             <span class="n">overwrite_group</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
@@ -216,7 +217,8 @@
         <span class="p">)</span>
 
         <span class="c"># Saves intermediate result to make resuming easier</span>
-        <span class="n">resume_logger</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">output_group</span><span class="p">,</span>
+        <span class="n">resume_logger</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
+            <span class="n">output_group</span><span class="p">,</span>
             <span class="n">recorder_constructor</span><span class="o">=</span><span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">HDF5ArrayRecorder</span><span class="p">,</span>
             <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span>
         <span class="p">)</span>
@@ -652,7 +654,8 @@
                         <span class="c">#TODO: Correct centroid to larger block position.</span>
                         <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span>
 
-                        <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">output_group</span><span class="p">,</span>
+                        <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
+                            <span class="n">output_group</span><span class="p">,</span>
                             <span class="n">group_name</span><span class="o">=</span><span class="s">&quot;debug&quot;</span><span class="p">,</span>
                             <span class="n">enable</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
                             <span class="n">overwrite_group</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
@@ -660,20 +663,24 @@
                         <span class="p">)</span>
 
                         <span class="n">segment</span><span class="o">.</span><span class="n">merge_neuron_sets</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">array_debug_recorder</span>
-                        <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">merge_neuron_sets</span><span class="p">(</span><span class="n">new_neurons_set</span><span class="p">,</span> <span class="n">neurons_block_i</span><span class="p">,</span>
-                                                                                      <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;postprocess_data&quot;</span><span class="p">][</span><span class="s">&quot;merge_neuron_sets&quot;</span><span class="p">])</span>
+                        <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">merge_neuron_sets</span><span class="p">(</span>
+                            <span class="n">new_neurons_set</span><span class="p">,</span>
+                            <span class="n">neurons_block_i</span><span class="p">,</span>
+                            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;postprocess_data&quot;</span><span class="p">][</span><span class="s">&quot;merge_neuron_sets&quot;</span><span class="p">]</span>
+                        <span class="p">)</span>
 
         <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">output_group</span><span class="p">,</span> <span class="s">&quot;neurons&quot;</span><span class="p">,</span> <span class="n">new_neurons_set</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s">&quot;parameters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;neurons&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
             <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;neurons&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="o">+</span> \
-                                                                    <span class="p">[(</span><span class="s">&quot;block_shape&quot;</span><span class="p">,</span> <span class="n">block_shape</span><span class="p">),</span>
-                                                                      <span class="p">(</span><span class="s">&quot;num_blocks&quot;</span><span class="p">,</span> <span class="n">num_blocks</span><span class="p">),</span>
-                                                                      <span class="p">(</span><span class="s">&quot;half_window_shape&quot;</span><span class="p">,</span> <span class="n">half_window_shape</span><span class="p">),</span>
-                                                                      <span class="p">(</span><span class="s">&quot;half_border_shape&quot;</span><span class="p">,</span> <span class="n">half_border_shape</span><span class="p">),</span>
-                                                                      <span class="p">(</span><span class="s">&quot;use_drmaa&quot;</span><span class="p">,</span> <span class="n">use_drmaa</span><span class="p">),</span>
-                                                                      <span class="p">(</span><span class="s">&quot;num_drmaa_cores&quot;</span><span class="p">,</span> <span class="n">num_drmaa_cores</span><span class="p">),</span>
-                                                                      <span class="p">(</span><span class="s">&quot;debug&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="p">)</span>
+                                                                    <span class="p">[</span>
+                                                                        <span class="p">(</span><span class="s">&quot;block_shape&quot;</span><span class="p">,</span> <span class="n">block_shape</span><span class="p">),</span>
+                                                                        <span class="p">(</span><span class="s">&quot;num_blocks&quot;</span><span class="p">,</span> <span class="n">num_blocks</span><span class="p">),</span>
+                                                                        <span class="p">(</span><span class="s">&quot;half_window_shape&quot;</span><span class="p">,</span> <span class="n">half_window_shape</span><span class="p">),</span>
+                                                                        <span class="p">(</span><span class="s">&quot;half_border_shape&quot;</span><span class="p">,</span> <span class="n">half_border_shape</span><span class="p">),</span>
+                                                                        <span class="p">(</span><span class="s">&quot;use_drmaa&quot;</span><span class="p">,</span> <span class="n">use_drmaa</span><span class="p">),</span>
+                                                                        <span class="p">(</span><span class="s">&quot;num_drmaa_cores&quot;</span><span class="p">,</span> <span class="n">num_drmaa_cores</span><span class="p">),</span>
+                                                                        <span class="p">(</span><span class="s">&quot;debug&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="p">)</span>
                                                                     <span class="p">]</span>
                                                               <span class="p">)</span>
             <span class="p">)</span>
@@ -709,9 +716,11 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">new_preprocessed_images</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;preprocessing&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
         <span class="n">new_preprocessed_images</span> <span class="o">=</span> <span class="n">original_images</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">segment</span><span class="o">.</span><span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
-        <span class="n">new_preprocessed_images</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">preprocess_data</span><span class="p">(</span><span class="n">new_preprocessed_images</span><span class="p">,</span>
-                                                                            <span class="n">out</span><span class="o">=</span><span class="n">new_preprocessed_images</span><span class="p">,</span>
-                                                                            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">])</span>
+        <span class="n">new_preprocessed_images</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">preprocess_data</span><span class="p">(</span>
+            <span class="n">new_preprocessed_images</span><span class="p">,</span>
+            <span class="n">out</span><span class="o">=</span><span class="n">new_preprocessed_images</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s">&quot;preprocessed_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_preprocessed_images</span>
 
         <span class="k">if</span> <span class="s">&quot;preprocessed_images_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
@@ -728,8 +737,10 @@
     <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;dictionary&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">new_dictionary</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;dictionary&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
         <span class="n">segment</span><span class="o">.</span><span class="n">generate_dictionary</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
-        <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">generate_dictionary</span><span class="p">(</span><span class="n">new_preprocessed_images</span><span class="p">,</span>
-                                                                       <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_dictionary&quot;</span><span class="p">])</span>
+        <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">generate_dictionary</span><span class="p">(</span>
+            <span class="n">new_preprocessed_images</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_dictionary&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s">&quot;dictionary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_dictionary</span>
 
         <span class="k">if</span> <span class="s">&quot;dictionary_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
@@ -747,8 +758,10 @@
     <span class="n">new_neurons</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;neurons&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">new_neurons</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;postprocessing&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
         <span class="n">segment</span><span class="o">.</span><span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
-        <span class="n">new_neurons</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">postprocess_data</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">,</span>
-                                                                 <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;postprocess_data&quot;</span><span class="p">])</span>
+        <span class="n">new_neurons</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">postprocess_data</span><span class="p">(</span>
+            <span class="n">new_dictionary</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;postprocess_data&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">new_neurons</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
             <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s">&quot;neurons&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neurons</span>
@@ -775,22 +788,40 @@
     <span class="kn">import</span> <span class="nn">argparse</span>
     <span class="kn">import</span> <span class="nn">threading</span>
 
-    <span class="n">memory_profiler_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">memory_profiler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">logger</span><span class="p">,))</span>
+    <span class="n">memory_profiler_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">memory_profiler</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">logger</span><span class="p">,)</span>
+    <span class="p">)</span>
     <span class="n">memory_profiler_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="n">memory_profiler_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
     <span class="n">argv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
 
     <span class="c"># Creates command line parser</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line for a batch job.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line for a batch job.&quot;</span>
+    <span class="p">)</span>
 
     <span class="c"># Takes a config file and then a series of one or more HDF5 files.</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config_filename&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides configuration options for how to use dictionary learning on the input files.&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;input_file&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file with an array of images. A single dataset or video will be expected at the internal path. Time must be the first dimension.&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;output_file&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file(s) to write output. If a specific group is desired, that should be included in the filename.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides configuration options for how to use dictionary learning on the input files.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;input_file&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file with an array of images. A single dataset or video will be expected at the internal path. Time must be the first dimension.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;output_file&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file(s) to write output. If a specific group is desired, that should be included in the filename.&quot;</span>
+    <span class="p">)</span>
 
     <span class="c"># Results of parsing arguments (ignore the first one as it is the command line call).</span>
     <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
@@ -801,7 +832,11 @@
 
     <span class="c"># Runs the dictionary learning algorithm on each file with the given parameters</span>
     <span class="c"># and saves the results in the given files.</span>
-    <span class="n">generate_neurons_io_handler</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">)</span>
+    <span class="n">generate_neurons_io_handler</span><span class="p">(</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span>
+        <span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 </pre></div>

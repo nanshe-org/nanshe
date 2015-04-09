@@ -220,9 +220,9 @@
 
         <span class="nd">@wrappers.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
         <span class="nd">@wrappers.static_variables</span><span class="p">(</span><span class="n">to_log_call</span><span class="o">=</span><span class="n">to_log_call</span><span class="p">,</span>
-                                             <span class="n">to_print_args</span><span class="o">=</span><span class="n">to_print_args</span><span class="p">,</span>
-                                             <span class="n">to_print_time</span><span class="o">=</span><span class="n">to_print_time</span><span class="p">,</span>
-                                             <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span><span class="p">)</span>
+                                   <span class="n">to_print_args</span><span class="o">=</span><span class="n">to_print_args</span><span class="p">,</span>
+                                   <span class="n">to_print_time</span><span class="o">=</span><span class="n">to_print_time</span><span class="p">,</span>
+                                   <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">log_call_callable_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                This is what will replace the original callable. It will behave the same except it will now log its</span>
@@ -311,11 +311,13 @@
 <span class="sd">            log_call_decorator (for wrapping)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_all_methods</span><span class="p">(</span><span class="n">log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span>
-                                                                  <span class="n">to_log_call</span><span class="o">=</span><span class="n">to_log_call</span><span class="p">,</span>
-                                                                  <span class="n">to_print_args</span><span class="o">=</span><span class="n">to_print_args</span><span class="p">,</span>
-                                                                  <span class="n">to_print_time</span><span class="o">=</span><span class="n">to_print_time</span><span class="p">,</span>
-                                                                  <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span><span class="p">)))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_all_methods</span><span class="p">(</span><span class="n">log_call</span><span class="p">(</span>
+        <span class="n">logger</span><span class="p">,</span>
+        <span class="n">to_log_call</span><span class="o">=</span><span class="n">to_log_call</span><span class="p">,</span>
+        <span class="n">to_print_args</span><span class="o">=</span><span class="n">to_print_args</span><span class="p">,</span>
+        <span class="n">to_print_time</span><span class="o">=</span><span class="n">to_print_time</span><span class="p">,</span>
+        <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span>
+    <span class="p">)))</span>
 
 </div>
 <div class="viewcode-block" id="qt_log_class"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.qt_log_class">[docs]</a><span class="k">def</span> <span class="nf">qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -346,11 +348,13 @@
 <span class="sd">            log_call_decorator (for wrapping)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">wrappers</span><span class="o">.</span><span class="n">qt_class_decorate_all_methods</span><span class="p">(</span><span class="n">log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span>
-                                                                     <span class="n">to_log_call</span><span class="o">=</span><span class="n">to_log_call</span><span class="p">,</span>
-                                                                     <span class="n">to_print_args</span><span class="o">=</span><span class="n">to_print_args</span><span class="p">,</span>
-                                                                     <span class="n">to_print_time</span><span class="o">=</span><span class="n">to_print_time</span><span class="p">,</span>
-                                                                     <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span><span class="p">)))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">wrappers</span><span class="o">.</span><span class="n">qt_class_decorate_all_methods</span><span class="p">(</span><span class="n">log_call</span><span class="p">(</span>
+        <span class="n">logger</span><span class="p">,</span>
+        <span class="n">to_log_call</span><span class="o">=</span><span class="n">to_log_call</span><span class="p">,</span>
+        <span class="n">to_print_args</span><span class="o">=</span><span class="n">to_print_args</span><span class="p">,</span>
+        <span class="n">to_print_time</span><span class="o">=</span><span class="n">to_print_time</span><span class="p">,</span>
+        <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span>
+    <span class="p">)))</span>
 
 </div>
 <span class="nd">@wrappers.static_variables</span><span class="p">(</span><span class="n">to_run</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
