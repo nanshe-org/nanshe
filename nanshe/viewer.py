@@ -102,7 +102,7 @@ class HDF5DataSource( QObject ):
     isDirty = pyqtSignal( object )
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    def __init__( self, file_handle, internal_path, record_name = "", shape = None, dtype = None):
+    def __init__( self, file_handle, internal_path, record_name="", shape=None, dtype=None):
         """
             Constructs an HDF5DataSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -286,7 +286,7 @@ class HDF5DataRequest( object ):
     #TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
     #TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.
 
-    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, record_name = "", throw_on_not_found = False ):
+    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, record_name="", throw_on_not_found=False ):
         """
             Constructs an HDF5DataRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -334,7 +334,7 @@ class HDF5DataRequest( object ):
         if self._result is None:
             # Construct a result the size of the slicing
             slicing_shape = iters.len_slices(self.slicing)
-            self._result = numpy.zeros(slicing_shape, dtype = self.dataset_dtype)
+            self._result = numpy.zeros(slicing_shape, dtype=self.dataset_dtype)
 
             try:
                 dataset = self.file_handle[self.dataset_path]
@@ -501,7 +501,7 @@ class HDF5Viewer(Viewer):
 
 @multimethod(str, bool)
 @prof.log_call(trace_logger)
-def createHDF5DataSource(full_path, withShape = False):
+def createHDF5DataSource(full_path, withShape=False):
     # Get a source for the HDF5 file.
     src = HDF5DataSource(full_path)
 
@@ -549,13 +549,13 @@ class HDF5DataFusedSource( QObject ):
                 raise HDF5UndefinedShapeDtypeException("Have no defined data sources to fuse and no shape or dtype to fallback on.")
         else:
             self.data_dtype = self.data_sources_defined[0].dtype()
-            self.data_shape = -numpy.ones((5,), dtype = int)
+            self.data_shape = -numpy.ones((5,), dtype=int)
             for each in self.data_sources_defined[1:]:
                 try:
                     each_shape = each.shape()
                     each_shape = numpy.array(each_shape)
 
-                    self.data_shape = numpy.array([self.data_shape, each_shape.astype(int)]).max(axis = 0)
+                    self.data_shape = numpy.array([self.data_shape, each_shape.astype(int)]).max(axis=0)
                 except AttributeError:
                     pass
 
@@ -666,7 +666,7 @@ class HDF5DataFusedRequest( object ):
     def wait( self ):
         if self._result is None:
             if True:
-                self._result = numpy.zeros(self.data_shape, dtype = self.data_dtype)
+                self._result = numpy.zeros(self.data_shape, dtype=self.data_dtype)
 
                 for i, each_data_request in enumerate(self.data_requests):
                     if each_data_request is not None:
@@ -739,7 +739,7 @@ class EnumeratedProjectionConstantSource( QObject ):
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis = -1):
+    def __init__( self, constant_source, axis=-1):
         """
             Constructs an EnumeratedProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -764,7 +764,7 @@ class EnumeratedProjectionConstantSource( QObject ):
         slicing = ( slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
-        self._constant_source_cached = xnumpy.enumerate_masks_max(self._constant_source_cached, axis = self.axis)
+        self._constant_source_cached = xnumpy.enumerate_masks_max(self._constant_source_cached, axis=self.axis)
 
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
@@ -923,7 +923,7 @@ class ContourProjectionConstantSource( QObject ):
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis = -1):
+    def __init__( self, constant_source, axis=-1):
         """
             Constructs an ContourProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specifie            Args:
@@ -1244,7 +1244,7 @@ class MaxProjectionConstantSource( QObject ):
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis = -1):
+    def __init__( self, constant_source, axis=-1):
         """
             Constructs an MaxProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -1269,7 +1269,7 @@ class MaxProjectionConstantSource( QObject ):
         slicing = ( slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
-        self._constant_source_cached = self._constant_source_cached.max(axis = self.axis)
+        self._constant_source_cached = self._constant_source_cached.max(axis=self.axis)
         self._constant_source_cached = xnumpy.add_singleton_axis_pos(self._constant_source_cached, self.axis)
 
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
@@ -1430,7 +1430,7 @@ class MeanProjectionConstantSource( QObject ):
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis = -1):
+    def __init__( self, constant_source, axis=-1):
         """
             Constructs an MeanProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -1455,7 +1455,7 @@ class MeanProjectionConstantSource( QObject ):
         slicing = ( slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
-        self._constant_source_cached = self._constant_source_cached.mean(axis = self.axis)
+        self._constant_source_cached = self._constant_source_cached.mean(axis=self.axis)
         self._constant_source_cached = xnumpy.add_singleton_axis_pos(self._constant_source_cached, self.axis)
 
         self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
@@ -1608,13 +1608,13 @@ def main(*argv):
     argv = list(argv)
 
     # Creates command line parser
-    parser = argparse.ArgumentParser(description = "Parses input from the command line for a batch job.")
+    parser = argparse.ArgumentParser(description="Parses input from the command line for a batch job.")
 
     # Takes a config file and then a series of one or more HDF5 files.
-    parser.add_argument("config_filename", metavar = "CONFIG_FILE", type = str,
-                        help = "JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations.")
-    parser.add_argument("input_files", metavar = "INPUT_FILE", type = str, nargs = '+',
-                        help = "HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file.")
+    parser.add_argument("config_filename", metavar="CONFIG_FILE", type=str,
+                        help="JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations.")
+    parser.add_argument("input_files", metavar="INPUT_FILE", type=str, nargs='+',
+                        help="HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file.")
 
     # Results of parsing arguments (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
@@ -1622,7 +1622,7 @@ def main(*argv):
     # Go ahead and stuff in parameters with the other parsed_args
     # A little risky if parsed_args may later contain a parameters variable due to changing the main file
     # or argparse changing behavior; however, this keeps all arguments in the same place.
-    parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename, maintain_order = True)
+    parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename, maintain_order=True)
 
     # Open all of the files and store their handles
     parsed_args.file_handles = []

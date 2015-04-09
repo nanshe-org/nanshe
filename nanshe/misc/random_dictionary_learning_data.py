@@ -56,7 +56,7 @@ class MappingDiscreteUniformDistributionGenerator(object):
 
         self.args = args
 
-    def __call__(self, size = 1):
+    def __call__(self, size=1):
         """
             Draws a certain number of elements with equal likelihood and returns them in a list.
 
@@ -94,7 +94,7 @@ class NumpyRandomArrayDiscreteUniformDistributionGenerator(object):
 
         self.shape = shape
 
-    def __call__(self, size = 1):
+    def __call__(self, size=1):
         """
             Generates a numpy array.
 
@@ -106,7 +106,7 @@ class NumpyRandomArrayDiscreteUniformDistributionGenerator(object):
         """
 
         # A completely empty numpy array
-        results = numpy.zeros(self.shape, dtype = bool)
+        results = numpy.zeros(self.shape, dtype=bool)
 
         # Gets a set of random indices that need to be non-zero
         indices = tuple([numpy.random.randint(0, each_dim, size) for each_dim in self.shape])
@@ -133,7 +133,7 @@ class MappingDiscreteGeometricDistributionGenerator(object):
 
         self.args = args
 
-    def __call__(self, p, size = 1):
+    def __call__(self, p, size=1):
         """
             Generates a number of groups equal to size with each group size being distributed geometrically by p.
 
@@ -208,7 +208,7 @@ class DictionaryLearningRandomDataGenerator(object):
 
         self.object_intensity_range = self.object_max_intensity - self.object_min_intensity
 
-    def __call__(self, num_runs = 1, seed = None):
+    def __call__(self, num_runs=1, seed=None):
         """
             Constructs a series of pseudo-videos.
 
@@ -290,7 +290,7 @@ class DictionaryLearningRandomDataGenerator(object):
 
             # Creates frames that contain some background noise from a normal distribution
             each_result.frames = each_result.noiseless_frames.copy()
-            each_result.frames += numpy.random.normal(scale = self.background_noise_intensity, size = each_result.frames.shape)
+            each_result.frames += numpy.random.normal(scale=self.background_noise_intensity, size=each_result.frames.shape)
 
             # Append to our list of results
             results.append(each_result)

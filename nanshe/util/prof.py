@@ -39,7 +39,7 @@ import wrappers
 
 
 # Nothing fancy. Just the basic logging unless otherwise specified, in which case this does nothing.
-logging.basicConfig(level = logging.DEBUG, stream=sys.stderr)
+logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
 
 
 def getSpecialLogger(logger_prefix, name, *args, **kwargs):
@@ -119,7 +119,7 @@ def getTraceMetaLogger(name, *args, **kwargs):
     return(getSpecialLogger("TRACE.META", name, *args, **kwargs))
 
 
-def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
+def log_call(logger, to_log_call=True, to_print_args=False, to_print_time=True, to_print_exception=False):
     """
         Takes a given logger and uses it to log entering and leaving the decorated callable.
         Intended to be used as a decorator that takes a few arguments.
@@ -159,10 +159,10 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
         """
 
         @wrappers.wraps(callable)
-        @wrappers.static_variables(to_log_call = to_log_call,
-                                             to_print_args = to_print_args,
-                                             to_print_time = to_print_time,
-                                             to_print_exception = to_print_exception)
+        @wrappers.static_variables(to_log_call=to_log_call,
+                                             to_print_args=to_print_args,
+                                             to_print_time=to_print_time,
+                                             to_print_exception=to_print_exception)
         def log_call_callable_wrapped(*args, **kwargs):
             """
                 This is what will replace the original callable. It will behave the same except it will now log its
@@ -223,7 +223,7 @@ def log_call(logger, to_log_call = True, to_print_args = False, to_print_time = 
     return(log_call_decorator)
 
 
-def log_class(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
+def log_class(logger, to_log_call=True, to_print_args=False, to_print_time=True, to_print_exception=False):
     """
         Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
         Intended to be used as a decorator that takes a few arguments.
@@ -252,13 +252,13 @@ def log_class(logger, to_log_call = True, to_print_args = False, to_print_time =
     """
 
     return(wrappers.class_decorate_all_methods(log_call(logger,
-                                                                  to_log_call = to_log_call,
-                                                                  to_print_args = to_print_args,
-                                                                  to_print_time = to_print_time,
-                                                                  to_print_exception = to_print_exception)))
+                                                                  to_log_call=to_log_call,
+                                                                  to_print_args=to_print_args,
+                                                                  to_print_time=to_print_time,
+                                                                  to_print_exception=to_print_exception)))
 
 
-def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_time = True, to_print_exception = False):
+def qt_log_class(logger, to_log_call=True, to_print_args=False, to_print_time=True, to_print_exception=False):
     """
         Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
         Intended to be used as a decorator that takes a few arguments.
@@ -287,14 +287,14 @@ def qt_log_class(logger, to_log_call = True, to_print_args = False, to_print_tim
     """
 
     return(wrappers.qt_class_decorate_all_methods(log_call(logger,
-                                                                     to_log_call = to_log_call,
-                                                                     to_print_args = to_print_args,
-                                                                     to_print_time = to_print_time,
-                                                                     to_print_exception = to_print_exception)))
+                                                                     to_log_call=to_log_call,
+                                                                     to_print_args=to_print_args,
+                                                                     to_print_time=to_print_time,
+                                                                     to_print_exception=to_print_exception)))
 
 
-@wrappers.static_variables(to_run = True)
-def memory_profiler(logger, interval = 1, level=logging.INFO):
+@wrappers.static_variables(to_run=True)
+def memory_profiler(logger, interval=1, level=logging.INFO):
     """
         Runs forever get information about memory usage and dumping it to the logger provided at the given interval.
 

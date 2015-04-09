@@ -107,7 +107,7 @@ logger = prof.logging.getLogger(__name__)
 def remove_zeroed_lines(new_data,
                         erosion_shape,
                         dilation_shape,
-                        out = None,
+                        out=None,
                         **parameters):
     """
         Due to registration errors, there will sometimes be lines that are zero.
@@ -166,7 +166,7 @@ def remove_zeroed_lines(new_data,
                     out[i][zero_mask_i_labeled_j] = scipy.interpolate.griddata(zero_mask_i_labeled_j_outline_points,
                                                                                new_data_i[zero_mask_i_labeled_j_outline],
                                                                                zero_mask_i_labeled_j_points,
-                                                                               method = "linear")
+                                                                               method="linear")
 
                     # Only need to check for nan in our case.
                     out[i][zero_mask_i_labeled_j & numpy.isnan(out[i])] = 0
@@ -206,7 +206,7 @@ def estimate_f0(new_data,
                 temporal_smoothing_gaussian_filter_window_size,
                 spatial_smoothing_gaussian_filter_stdev,
                 spatial_smoothing_gaussian_filter_window_size,
-                out = None,
+                out=None,
                 **parameters):
     """
         Estimates F_0 using a rank order filter with some smoothing..
@@ -280,7 +280,7 @@ def estimate_f0(new_data,
                                     ctypes.c_ulong(half_window_size).value,
                                     which_quantile,
                                     ctypes.c_uint(0).value,
-                                    out = new_data_f0_estimation)
+                                    out=new_data_f0_estimation)
 
     spatial_smoothing_gaussian_filter = vigra.filters.gaussianKernel(spatial_smoothing_gaussian_filter_stdev,
                                                                      1.0,
@@ -311,9 +311,9 @@ def extract_f0(new_data,
                temporal_smoothing_gaussian_filter_window_size,
                spatial_smoothing_gaussian_filter_stdev,
                spatial_smoothing_gaussian_filter_window_size,
-               bias = None,
-               out = None,
-               return_f0 = False,
+               bias=None,
+               out=None,
+               return_f0=False,
                **parameters):
     """
         Attempts to find an estimate for dF/F.
@@ -387,7 +387,7 @@ def extract_f0(new_data,
 
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
-def normalize_data(new_data, out = None, **parameters):
+def normalize_data(new_data, out=None, **parameters):
     """
         Removes the mean from each image and normalizes each image as if they were vectors.
 
@@ -443,11 +443,11 @@ def normalize_data(new_data, out = None, **parameters):
 
     # Remove the mean of each row vector
     zeroed_mean_images(out,
-                       output_array = out)
+                       output_array=out)
 
     # Renormalize each row vector using some specified normalization
     renormalized_images(out,
-                        output_array = out,
+                        output_array=out,
                         **parameters["renormalized_images"])
 
     return(out)
@@ -455,7 +455,7 @@ def normalize_data(new_data, out = None, **parameters):
 
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
-def preprocess_data(new_data, out = None, **parameters):
+def preprocess_data(new_data, out=None, **parameters):
     """
         Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and
         wavelet.transform).
@@ -479,54 +479,54 @@ def preprocess_data(new_data, out = None, **parameters):
     if "remove_zeroed_lines" in parameters:
         remove_zeroed_lines.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         remove_zeroed_lines(new_data_maybe_lines_removed,
-                            out = new_data_maybe_lines_removed,
+                            out=new_data_maybe_lines_removed,
                             **parameters["remove_zeroed_lines"])
         preprocess_data.recorders.array_debug_recorder["images_lines_removed"] = new_data_maybe_lines_removed
         preprocess_data.recorders.array_debug_recorder["images_lines_removed_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_maybe_lines_removed,
-            axis = 0
+            axis=0
         )
 
     new_data_maybe_f0_result = new_data_maybe_lines_removed
     if "extract_f0" in parameters:
         extract_f0.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         extract_f0(new_data_maybe_f0_result,
-                   out = new_data_maybe_f0_result,
+                   out=new_data_maybe_f0_result,
                    **parameters["extract_f0"])
         preprocess_data.recorders.array_debug_recorder["images_f0"] = new_data_maybe_f0_result
         preprocess_data.recorders.array_debug_recorder["images_f0_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_maybe_f0_result,
-            axis = 0
+            axis=0
         )
 
     new_data_maybe_wavelet_result = new_data_maybe_f0_result
     if "wavelet.transform" in parameters:
         wavelet.transform.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         wavelet.transform(new_data_maybe_wavelet_result,
-                                            include_intermediates = False,
-                                            include_lower_scales = False,
-                                            out = new_data_maybe_wavelet_result,
+                                            include_intermediates=False,
+                                            include_lower_scales=False,
+                                            out=new_data_maybe_wavelet_result,
                                             **parameters["wavelet.transform"])
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed"] = new_data_maybe_wavelet_result
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_maybe_wavelet_result,
-            axis = 0
+            axis=0
         )
 
     new_data_normalized = new_data_maybe_wavelet_result
     normalize_data.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
     normalize_data(new_data_normalized,
-                   out = new_data_normalized,
+                   out=new_data_normalized,
                    **parameters["normalize_data"])
 
     preprocess_data.recorders.array_debug_recorder["images_normalized"] = new_data_normalized
     preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = xnumpy.add_singleton_op(
             numpy.max,
             new_data_normalized,
-            axis = 0
+            axis=0
     )
 
     return(out)
@@ -803,9 +803,9 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         # In future versions, the properties argument will be removed.
         # It does not need to be passed to retain functionality of this function.
         # new_label_image_props = skimage.measure.regionprops(new_label_image, intensity_image, *args, **kwargs)
-        new_label_image_props = skimage.measure.regionprops(label_image = new_label_image,
-                                                            properties = properties,
-                                                            intensity_image = intensity_image,
+        new_label_image_props = skimage.measure.regionprops(label_image=new_label_image,
+                                                            properties=properties,
+                                                            intensity_image=intensity_image,
                                                             *args, **kwargs)
 
         new_label_image_props_with_arrays = []
@@ -874,7 +874,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
 
     # Replace the properties with the structured array.
     new_label_image_props_with_arrays = numpy.array(new_label_image_props_with_arrays_values,
-                                                    dtype = new_label_image_props_with_arrays_dtype)
+                                                    dtype=new_label_image_props_with_arrays_dtype)
 
     return(new_label_image_props_with_arrays)
 
@@ -1104,7 +1104,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
 
     class VigraProperties(object):
-        def __init__(self, label_image, intensity_image = None):
+        def __init__(self, label_image, intensity_image=None):
             self.label_image = label_image
             self.intensity_image = intensity_image
 
@@ -1113,7 +1113,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
             self.props = vigra.analysis.extractRegionFeatures(self.intensity_image.astype(numpy.float32),
                                                               self.label_image.astype(numpy.uint32),
-                                                              features = ["Count", "RegionCenter", "RegionRadii"])
+                                                              features=["Count", "RegionCenter", "RegionRadii"])
 
         def __len__(self):
             return(len(self.props["Count"]) - 1)
@@ -1128,12 +1128,12 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
             elif item == "centroid":
                 result = self.props["RegionCenter"].astype(numpy.float64)
             elif item == "eccentricity":
-                result = (1 - (self.props["RegionRadii"].min(axis = 1).astype(numpy.float64) / \
-                               self.props["RegionRadii"].max(axis = 1).astype(numpy.float64))**2)**.5
+                result = (1 - (self.props["RegionRadii"].min(axis=1).astype(numpy.float64) / \
+                               self.props["RegionRadii"].max(axis=1).astype(numpy.float64))**2)**.5
             elif item == "major_axis_length":
-                result = 4 * self.props["RegionRadii"].max(axis = 1).astype(numpy.float64)
+                result = 4 * self.props["RegionRadii"].max(axis=1).astype(numpy.float64)
             elif item == "minor_axis_length":
-                result = 4 * self.props["RegionRadii"].min(axis = 1).astype(numpy.float64)
+                result = 4 * self.props["RegionRadii"].min(axis=1).astype(numpy.float64)
             else:
                 # Should have already checked and removed these.
                 assert False
@@ -1215,7 +1215,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
     # Replace the properties with the structured array.
     new_label_image_props_with_arrays = numpy.array(new_label_image_props_with_arrays_values,
-                                                    dtype = new_label_image_props_with_arrays_dtype)
+                                                    dtype=new_label_image_props_with_arrays_dtype)
 
     return(new_label_image_props_with_arrays)
 
@@ -1341,7 +1341,7 @@ def get_empty_neuron(shape, dtype):
     """
 
     neurons_dtype = get_neuron_dtype(shape=shape, dtype=dtype)
-    neurons = numpy.zeros((0,), dtype = neurons_dtype)
+    neurons = numpy.zeros((0,), dtype=neurons_dtype)
 
     return(neurons)
 
@@ -1401,7 +1401,7 @@ def get_one_neuron(shape, dtype):
     """
 
     neurons_dtype = get_neuron_dtype(shape=shape, dtype=dtype)
-    neurons = numpy.zeros((1,), dtype = neurons_dtype)
+    neurons = numpy.zeros((1,), dtype=neurons_dtype)
 
     return(neurons)
 
@@ -1432,7 +1432,7 @@ def generate_local_maxima_vigra(new_intensity_image):
 
 
 @prof.log_call(trace_logger)
-def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborhood_size = 1):
+def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborhood_size=1):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
         Uses scikit image's skimage.feature.peak_local_max.
@@ -1448,8 +1448,8 @@ def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborho
     """
 
     local_maxima_neighborhood = numpy.ones((2 * local_max_neighborhood_size + 1,) * new_intensity_image.ndim)
-    local_maxima_mask = skimage.feature.peak_local_max(new_intensity_image, footprint = local_maxima_neighborhood,
-                                                       labels = (new_intensity_image > 0).astype(int), indices = False)
+    local_maxima_mask = skimage.feature.peak_local_max(new_intensity_image, footprint=local_maxima_neighborhood,
+                                                       labels=(new_intensity_image > 0).astype(int), indices=False)
 
     return(local_maxima_mask)
 
@@ -1507,7 +1507,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     labeled_props = region_properties(new_label_image, **kwargs)
 
     # Generate the properties of the local maxima
-    local_maxima_props = region_properties(local_maxima_labeled, properties = ["label", "centroid"])
+    local_maxima_props = region_properties(local_maxima_labeled, properties=["label", "centroid"])
 
     # We want to have a few more type present in our NumPy structured array. To do this, we collect the existing types
     # into a list and then add our new types onto the end. Finally, we make the new structured array type from the list
@@ -1523,7 +1523,7 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
     props_dtype.append(("intensity", new_intensity_image.dtype))
 
     # Makes a new properties array that contains enough entries to hold the old one and has all the types we desire.
-    new_local_maxima_props = numpy.zeros(local_maxima_props.shape, dtype = numpy.dtype(props_dtype))
+    new_local_maxima_props = numpy.zeros(local_maxima_props.shape, dtype=numpy.dtype(props_dtype))
 
     # Take the centroids and old labels as the label and local max
     new_local_maxima_props["label"] = local_maxima_props["label"]
@@ -1567,7 +1567,7 @@ class ExtendedRegionProps(object):
 
     def __init__(self, new_intensity_image,
                  new_label_image,
-                 properties = ["centroid"]):
+                 properties=["centroid"]):
         """
             Construct an ExtendedRegionProps instance.
 
@@ -1598,7 +1598,7 @@ class ExtendedRegionProps(object):
 
         self.props = extended_region_local_maxima_properties(self.intensity_image,
                                                              self.label_image,
-                                                             properties = properties)
+                                                             properties=properties)
 
         logger.debug("Found the local maxima and properties.")
 
@@ -1614,11 +1614,11 @@ class ExtendedRegionProps(object):
         del background_maxima_mask
 
         # Stores the number of times a particular label maxima appears.
-        self.count = numpy.zeros((self.label_image.max(),), dtype = [("label", int), ("count", int)])
+        self.count = numpy.zeros((self.label_image.max(),), dtype=[("label", int), ("count", int)])
         # Get all the labels used in the label image
         self.count["label"] = numpy.arange(1, self.label_image.max() + 1)
         # Get the count of those labels (excluding zero as it is background)
-        self.count["count"] = numpy.bincount(self.props["label"], minlength = len(self.count) + 1)[1:]
+        self.count["count"] = numpy.bincount(self.props["label"], minlength=len(self.count) + 1)[1:]
 
         if self.count.size and numpy.any(self.count["count"] == 0):
             # All labels should have a local maximum. If they don't, this could be a problem.
@@ -1666,7 +1666,7 @@ class ExtendedRegionProps(object):
         """
 
         # Returns a label image containing each local max and its label.
-        new_local_max_mask = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
+        new_local_max_mask = numpy.zeros(self.label_image.shape, dtype=self.label_image.dtype)
 
         # Set the given local maxima to be the same as their labels
         new_local_max_mask[self.get_local_max_index_array()] = True
@@ -1684,7 +1684,7 @@ class ExtendedRegionProps(object):
         """
 
         # Returns a label image containing each local max and its labels.
-        new_local_max_label_image = numpy.zeros(self.label_image.shape, dtype = self.label_image.dtype)
+        new_local_max_label_image = numpy.zeros(self.label_image.shape, dtype=self.label_image.dtype)
 
         # Set the given local maxima to be the same as their labels
         new_local_max_label_image[self.get_local_max_index_array()] = self.props["label"]
@@ -1708,7 +1708,7 @@ class ExtendedRegionProps(object):
         # Get the labels to remove
         remove_labels = self.props["label"][remove_prop_indices_mask]
         # Get how many of each label to remove
-        label_count_to_remove = numpy.bincount(remove_labels, minlength = len(self.count) + 1)[1:]
+        label_count_to_remove = numpy.bincount(remove_labels, minlength=len(self.count) + 1)[1:]
 
         # Take a subset of the label props that does not include the removal mask
         # (copying may not be necessary as the mask may be as effective)
@@ -1746,7 +1746,7 @@ class ExtendedRegionProps(object):
         """
 
         # A mask of the indices to remove
-        remove_prop_indices_mask = numpy.zeros((len(self.props),), dtype = bool)
+        remove_prop_indices_mask = numpy.zeros((len(self.props),), dtype=bool)
         remove_prop_indices_mask[numpy.array(i)] = True
 
         self.remove_prop_mask(remove_prop_indices_mask)
@@ -1782,9 +1782,9 @@ class ExtendedRegionProps(object):
         # Skip zero as it is not necessary to check for it.
         new_labels = numpy.arange(1, len(reverse_label_mapping) + 1)
         # Expand new_labels into a view of the same size as props_reverse_mapped
-        new_labels_expanded = xnumpy.expand_view(new_labels, reps_after = self.props["label"].shape)
+        new_labels_expanded = xnumpy.expand_view(new_labels, reps_after=self.props["label"].shape)
         # Replace the labels with the matches and combine them
-        self.props["label"] = (props_reverse_mapped * new_labels_expanded).sum(axis = 0)
+        self.props["label"] = (props_reverse_mapped * new_labels_expanded).sum(axis=0)
 
         # Get a mask over the labels to find what is contained
         new_count_mask = xnumpy.contains(self.count["label"], reverse_label_mapping)
@@ -1815,7 +1815,7 @@ def remove_low_intensity_local_maxima(local_maxima, percentage_pixels_below_max,
     """
 
     # Deleting local maxima that does not exceed the 90th percentile of the pixel intensities
-    low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+    low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype=bool)
     for i in xrange(len(local_maxima.props)):
         # Get the region with the label matching the maximum
         each_region_image_wavelet_mask = (local_maxima.label_image == local_maxima.props["label"][i])
@@ -1864,11 +1864,11 @@ def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parame
     """
 
     # Deleting close local maxima below 16 pixels
-    too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype = bool)
+    too_close__local_maxima_label_mask__to_remove = numpy.zeros(local_maxima.props.shape, dtype=bool)
 
     # Find the distance between every local max (efficiently)
     local_maxima_pairs = numpy.array(list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
-    local_maxima_distances = scipy.spatial.distance.pdist(local_maxima.props["local_max"], metric = "euclidean")
+    local_maxima_distances = scipy.spatial.distance.pdist(local_maxima.props["local_max"], metric="euclidean")
 
     too_close_local_maxima_labels_mask = local_maxima_distances < min_local_max_distance
     too_close_local_maxima_pairs = local_maxima_pairs[too_close_local_maxima_labels_mask]
@@ -1930,8 +1930,8 @@ def wavelet_denoising(new_image,
 
     # Dictionary with wavelet transform applied. Wavelet transform is the first index.
     new_wavelet_transformed_image = wavelet.transform(new_image,
-                                                      include_intermediates = False,
-                                                      include_lower_scales = True,
+                                                      include_intermediates=False,
+                                                      include_lower_scales=True,
                                                       **parameters["wavelet.transform"])
 
     for i in xrange(len(new_wavelet_transformed_image)):
@@ -1940,7 +1940,7 @@ def wavelet_denoising(new_image,
 
     # Contains a bool array with significant values True and noise False for all wavelet transforms.
     new_wavelet_transformed_image_significant_mask = significant_mask(new_wavelet_transformed_image,
-                                                                      noise_estimate = new_image_noise_estimate,
+                                                                      noise_estimate=new_image_noise_estimate,
                                                                       **parameters["significant_mask"])
 
     for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
@@ -1970,13 +1970,13 @@ def wavelet_denoising(new_image,
 
         # For holding the label image properties
         new_wavelet_image_denoised_labeled_props = region_properties(new_wavelet_image_denoised_labeled,
-                                                                     properties = accepted_region_shape_constraints.keys())
+                                                                     properties=accepted_region_shape_constraints.keys())
 
         logger.debug("Determined the properties of the label image.")
 
         logger.debug("Finding regions that fail to meet some shape constraints...")
 
-        within_bound = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
+        within_bound = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype=bool)
 
         # Go through each property and make sure they are within the bounds
         for each_prop, each_prop_constraints in accepted_region_shape_constraints.items():
@@ -1986,7 +1986,7 @@ def wavelet_denoising(new_image,
                 lower_bound = each_prop_constraints["min"]
                 is_lower_bounded_maybe = (lower_bound <= new_wavelet_image_denoised_labeled_props[each_prop])
             else:
-                is_lower_bounded_maybe = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
+                is_lower_bounded_maybe = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype=bool)
 
             # If there is an upper bound, checks to see which are below it.
             is_upper_bounded_maybe = None
@@ -1994,7 +1994,7 @@ def wavelet_denoising(new_image,
                 upper_bound = each_prop_constraints["max"]
                 is_upper_bounded_maybe = (new_wavelet_image_denoised_labeled_props[each_prop] <= upper_bound)
             else:
-                is_upper_bounded_maybe = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype = bool)
+                is_upper_bounded_maybe = numpy.ones(new_wavelet_image_denoised_labeled_props.shape, dtype=bool)
 
             # See whether both or neither bound is satisfied.
             is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
@@ -2076,7 +2076,7 @@ def wavelet_denoising(new_image,
             # Also, include mask
             new_wavelet_image_denoised_segmentation = skimage.morphology.watershed(local_maxima.intensity_image,
                                                                                    new_wavelet_image_denoised_maxima,
-                                                                                   mask = (local_maxima.intensity_image > 0))
+                                                                                   mask=(local_maxima.intensity_image > 0))
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = \
                 new_wavelet_image_denoised_segmentation[None]
@@ -2085,7 +2085,7 @@ def wavelet_denoising(new_image,
 
             watershed_local_maxima = ExtendedRegionProps(local_maxima.intensity_image,
                                                          new_wavelet_image_denoised_segmentation,
-                                                         properties = ["centroid"] + accepted_neuron_shape_constraints.keys())
+                                                         properties=["centroid"] + accepted_neuron_shape_constraints.keys())
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
                 watershed_local_maxima.label_image[None]
@@ -2113,7 +2113,7 @@ def wavelet_denoising(new_image,
             if watershed_local_maxima.count.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
 
-            within_bound = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
+            within_bound = numpy.ones(watershed_local_maxima.props.shape, dtype=bool)
 
             # Go through each property and make sure they are within the bounds
             for each_prop, each_prop_constraints in accepted_neuron_shape_constraints.items():
@@ -2123,7 +2123,7 @@ def wavelet_denoising(new_image,
                     lower_bound = each_prop_constraints["min"]
                     is_lower_bounded_maybe = (lower_bound <= watershed_local_maxima.props[each_prop])
                 else:
-                    is_lower_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
+                    is_lower_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype=bool)
 
                 # If there is an upper bound, checks to see which are below it.
                 is_upper_bounded_maybe = None
@@ -2131,7 +2131,7 @@ def wavelet_denoising(new_image,
                     upper_bound = each_prop_constraints["max"]
                     is_upper_bounded_maybe = (watershed_local_maxima.props[each_prop] <= upper_bound)
                 else:
-                    is_upper_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype = bool)
+                    is_upper_bounded_maybe = numpy.ones(watershed_local_maxima.props.shape, dtype=bool)
 
                 # See whether both or neither bound is satisfied.
                 is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
@@ -2154,7 +2154,7 @@ def wavelet_denoising(new_image,
 
             if watershed_local_maxima.props.size:
                 # Creates a NumPy structure array to store
-                neurons = numpy.zeros(len(watershed_local_maxima.props), dtype = neurons.dtype)
+                neurons = numpy.zeros(len(watershed_local_maxima.props), dtype=neurons.dtype)
 
                 # Get masks for all cells
                 neurons["mask"] = xnumpy.all_permutations_equal(watershed_local_maxima.props["label"],
@@ -2164,13 +2164,13 @@ def wavelet_denoising(new_image,
 
                 neurons["area"] = watershed_local_maxima.props["area"]
 
-                neurons["max_F"] = xnumpy.array_to_matrix(neurons["image"]).max(axis = 1)
+                neurons["max_F"] = xnumpy.array_to_matrix(neurons["image"]).max(axis=1)
 
                 for i in xrange(len(neurons)):
                     neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
                     neurons["contour"][i] = xnumpy.generate_contour(neurons["mask"][i])
-                    neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
+                    neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis=1)
                     neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
                 neurons["centroid"] = watershed_local_maxima.props["centroid"]
@@ -2207,18 +2207,18 @@ def extract_neurons(new_image, neuron_masks):
             numpy.ndarray:                      a stack of neurons in the same order as the masks.
     """
 
-    neurons = numpy.zeros(len(neuron_masks), dtype = get_neuron_dtype(shape=new_image.shape, dtype=new_image.dtype))
+    neurons = numpy.zeros(len(neuron_masks), dtype=get_neuron_dtype(shape=new_image.shape, dtype=new_image.dtype))
 
     neurons["mask"] = neuron_masks
     neurons["image"] = new_image * neurons["mask"]
-    neurons["area"] = xnumpy.array_to_matrix(neurons["mask"]).sum(axis = 1)
-    neurons["max_F"] = xnumpy.array_to_matrix(neurons["image"]).max(axis = 1)
+    neurons["area"] = xnumpy.array_to_matrix(neurons["mask"]).sum(axis=1)
+    neurons["max_F"] = xnumpy.array_to_matrix(neurons["image"]).max(axis=1)
 
     for i in xrange(len(neurons)):
         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
         neurons["contour"][i] = xnumpy.generate_contour(neurons["mask"][i])
-        neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis = 1)
+        neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis=1)
         neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
     neurons["centroid"] = neurons["gaussian_mean"]
@@ -2257,13 +2257,13 @@ def fuse_neurons(neuron_1,
     assert (neuron_1.shape == neuron_2.shape == tuple())
     assert (neuron_1.dtype == neuron_2.dtype)
 
-    mean_neuron = numpy.array([neuron_1["image"], neuron_2["image"]]).mean(axis = 0)
+    mean_neuron = numpy.array([neuron_1["image"], neuron_2["image"]]).mean(axis=0)
     mean_neuron_mask = mean_neuron > (fraction_mean_neuron_max_threshold * mean_neuron.max())
 
     # Gaussian mixture model ??? Skipped this.
 
     # Creates a NumPy structure array to store
-    new_neuron = numpy.zeros(neuron_1.shape, dtype = neuron_1.dtype)
+    new_neuron = numpy.zeros(neuron_1.shape, dtype=neuron_1.dtype)
 
     new_neuron["mask"] = mean_neuron_mask
 
@@ -2276,7 +2276,7 @@ def fuse_neurons(neuron_1,
     new_neuron["max_F"] = new_neuron["image"].max()
 
     new_neuron_mask_points = numpy.array(new_neuron["mask"].nonzero())
-    new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis = 1)
+    new_neuron["gaussian_mean"] = new_neuron_mask_points.mean(axis=1)
     new_neuron["gaussian_cov"] = numpy.cov(new_neuron_mask_points)
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
@@ -2364,14 +2364,14 @@ def merge_neuron_sets_once(new_neuron_set_1,
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
         new_neuron_set_angle = xnumpy.dot_product_normalized(new_neuron_set_1_flattened,
                                                                      new_neuron_set_2_flattened,
-                                                                     ord = 2)
+                                                                     ord=2)
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_angle"] = new_neuron_set_angle
 
         # Measure the distance between the two masks
         # (note distance relative to the total mask content of each mask individually)
         new_neuron_set_masks_overlaid_1, new_neuron_set_masks_overlaid_2 = xnumpy.dot_product_partially_normalized(
-            new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask, ord = 1)
+            new_neuron_set_1_flattened_mask, new_neuron_set_2_flattened_mask, ord=1)
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1"] = new_neuron_set_masks_overlaid_1
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2"] = new_neuron_set_masks_overlaid_2
@@ -2379,9 +2379,9 @@ def merge_neuron_sets_once(new_neuron_set_1,
         # Now that the three measures for the correlation method have been found, we want to know,
         # which are the best correlated neurons between the two sets using these measures.
         # This done to find the neuron in new_neuron_set_1 that best matches each neuron in new_neuron_set_2.
-        new_neuron_set_angle_all_optimal_i = new_neuron_set_angle.argmax(axis = 0)
-        new_neuron_set_masks_overlaid_1_all_optimal_i = new_neuron_set_masks_overlaid_1.argmax(axis = 0)
-        new_neuron_set_masks_overlaid_2_all_optimal_i = new_neuron_set_masks_overlaid_2.argmax(axis = 0)
+        new_neuron_set_angle_all_optimal_i = new_neuron_set_angle.argmax(axis=0)
+        new_neuron_set_masks_overlaid_1_all_optimal_i = new_neuron_set_masks_overlaid_1.argmax(axis=0)
+        new_neuron_set_masks_overlaid_2_all_optimal_i = new_neuron_set_masks_overlaid_2.argmax(axis=0)
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_angle_all_optimal_i"] = new_neuron_set_angle_all_optimal_i
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_all_optimal_i"] = \
@@ -2406,15 +2406,15 @@ def merge_neuron_sets_once(new_neuron_set_1,
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_maxes"] = new_neuron_set_masks_overlaid_2_maxes
 
         # Store a list of the optimal neurons in the existing set to fuse with (by default set all values to -1)
-        new_neuron_set_all_optimal_i = numpy.zeros((len(new_neuron_set_2),), dtype = int)
+        new_neuron_set_all_optimal_i = numpy.zeros((len(new_neuron_set_2),), dtype=int)
         new_neuron_set_all_optimal_i -= 1
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_all_optimal_i_0"] = new_neuron_set_all_optimal_i
 
         # Create the masks to use for getting the proper indices
-        new_neuron_set_angle_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
-        new_neuron_set_masks_overlaid_1_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
-        new_neuron_set_masks_overlaid_2_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype = bool)
+        new_neuron_set_angle_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype=bool)
+        new_neuron_set_masks_overlaid_1_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype=bool)
+        new_neuron_set_masks_overlaid_2_maxes_significant = numpy.zeros((len(new_neuron_set_2),), dtype=bool)
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_angle_maxes_significant_0"] = new_neuron_set_angle_maxes_significant
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_maxes_significant_0"] = \
@@ -2570,15 +2570,15 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
         new_neuron_set_angle = xnumpy.pair_dot_product_normalized(new_neuron_set_flattened_image,
-                                                                          ord = 2)
-        new_neuron_set_angle = numpy.triu(new_neuron_set_angle, k = 1)
+                                                                          ord=2)
+        new_neuron_set_angle = numpy.triu(new_neuron_set_angle, k=1)
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle"] = new_neuron_set_angle
 
         # Measure the distance between the two masks
         # (note distance relative to the total mask content of each mask individually)
         new_neuron_set_masks_overlaid = xnumpy.pair_dot_product_partially_normalized(
-            new_neuron_set_flattened_mask, ord = 1)
+            new_neuron_set_flattened_mask, ord=1)
         numpy.fill_diagonal(new_neuron_set_masks_overlaid, 0)
 
         new_neuron_set_masks_overlaid_1 = new_neuron_set_masks_overlaid
@@ -2590,9 +2590,9 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         # Now that the three measures for the correlation method have been found, we want to know,
         # which are the best correlated neurons between the two sets using these measures.
         # This done to find the neuron in new_neuron_set_1 that best matches each neuron in new_neuron_set_2.
-        new_neuron_set_angle_all_optimal_i = new_neuron_set_angle.argmax(axis = 0)
-        new_neuron_set_masks_overlaid_1_all_optimal_i = new_neuron_set_masks_overlaid_1.argmax(axis = 0)
-        new_neuron_set_masks_overlaid_2_all_optimal_i = new_neuron_set_masks_overlaid_2.argmax(axis = 0)
+        new_neuron_set_angle_all_optimal_i = new_neuron_set_angle.argmax(axis=0)
+        new_neuron_set_masks_overlaid_1_all_optimal_i = new_neuron_set_masks_overlaid_1.argmax(axis=0)
+        new_neuron_set_masks_overlaid_2_all_optimal_i = new_neuron_set_masks_overlaid_2.argmax(axis=0)
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle_all_optimal_i"] = new_neuron_set_angle_all_optimal_i
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_all_optimal_i"] = \
@@ -2617,15 +2617,15 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_maxes"] = new_neuron_set_masks_overlaid_2_maxes
 
         # Store a list of the optimal neurons in the existing set to fuse with (by default set all values to -1)
-        new_neuron_set_all_optimal_i = numpy.zeros((len(new_neuron_set),), dtype = int)
+        new_neuron_set_all_optimal_i = numpy.zeros((len(new_neuron_set),), dtype=int)
         new_neuron_set_all_optimal_i -= 1
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_all_optimal_i_0"] = new_neuron_set_all_optimal_i
 
         # Create the masks to use for getting the proper indices
-        new_neuron_set_angle_maxes_significant = numpy.zeros((len(new_neuron_set),), dtype = bool)
-        new_neuron_set_masks_overlaid_1_maxes_significant = numpy.zeros((len(new_neuron_set),), dtype = bool)
-        new_neuron_set_masks_overlaid_2_maxes_significant = numpy.zeros((len(new_neuron_set),), dtype = bool)
+        new_neuron_set_angle_maxes_significant = numpy.zeros((len(new_neuron_set),), dtype=bool)
+        new_neuron_set_masks_overlaid_1_maxes_significant = numpy.zeros((len(new_neuron_set),), dtype=bool)
+        new_neuron_set_masks_overlaid_2_maxes_significant = numpy.zeros((len(new_neuron_set),), dtype=bool)
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle_maxes_significant_0"] = new_neuron_set_angle_maxes_significant
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_maxes_significant_0"] = \
@@ -2691,7 +2691,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         if new_neuron_set_all_optimal_i.size:
             merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_all_optimal_i_3"] = new_neuron_set_all_optimal_i
 
-        new_neuron_set_kept = numpy.ones(new_neuron_set.shape, dtype = bool)
+        new_neuron_set_kept = numpy.ones(new_neuron_set.shape, dtype=bool)
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the new_neuron_set (composed of new_neuron_set_1)
         for i, j in itertools.izip(new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse):
@@ -2806,11 +2806,11 @@ def postprocess_data(new_dictionary, **parameters):
 
         unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(numpy.uint64)
 
-        unmerged_neuron_set_contours *= xnumpy.expand_enumerate(unmerged_neuron_set_contours, start = 1)
+        unmerged_neuron_set_contours *= xnumpy.expand_enumerate(unmerged_neuron_set_contours, start=1)
         unmerged_neuron_set_contours = xnumpy.add_singleton_op(
             numpy.max,
             unmerged_neuron_set_contours,
-            axis = 0
+            axis=0
         )
 
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
@@ -2820,11 +2820,11 @@ def postprocess_data(new_dictionary, **parameters):
 
         new_neurons_set_contours = new_neurons_set["contour"].astype(numpy.uint64)
 
-        new_neurons_set_contours *= xnumpy.expand_enumerate(new_neurons_set_contours, start = 1)
+        new_neurons_set_contours *= xnumpy.expand_enumerate(new_neurons_set_contours, start=1)
         new_neurons_set_contours = xnumpy.add_singleton_op(
             numpy.max,
             new_neurons_set_contours,
-            axis = 0
+            axis=0
         )
 
         postprocess_data.recorders.array_debug_recorder["new_neurons_set_contours"] = new_neurons_set_contours

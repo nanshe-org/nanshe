@@ -74,7 +74,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g.shape == d.shape)
 
-        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
+        assert (self.g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -124,7 +124,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g3.shape == d3.shape)
 
-        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
+        assert (self.g3.astype(bool).max(axis=0) == d3.astype(bool).max(axis=0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -168,7 +168,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g.shape == d.shape)
 
-        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
+        assert (self.g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -213,7 +213,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g3.shape == d3.shape)
 
-        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
+        assert (self.g3.astype(bool).max(axis=0) == d3.astype(bool).max(axis=0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -267,7 +267,7 @@ class TestSpamsSandbox(object):
                                                                                      "mode" : 2
                                                                                }
         )
-        d = numpy.frombuffer(result_array, dtype = float_type).reshape(result_array_type._shape_).copy()
+        d = numpy.frombuffer(result_array, dtype=float_type).reshape(result_array_type._shape_).copy()
         d = (d != 0)
 
         self.g = self.g.transpose()
@@ -275,7 +275,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g.shape == d.shape)
 
-        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
+        assert (self.g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -330,7 +330,7 @@ class TestSpamsSandbox(object):
                                                                                      "mode" : 2
                                                                                }
         )
-        d3 = numpy.frombuffer(result_array, dtype = float_type).reshape(result_array_type._shape_).copy()
+        d3 = numpy.frombuffer(result_array, dtype=float_type).reshape(result_array_type._shape_).copy()
         d3 = (d3 != 0)
 
         self.g3 = self.g3.transpose()
@@ -338,7 +338,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g3.shape == d3.shape)
 
-        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
+        assert (self.g3.astype(bool).max(axis=0) == d3.astype(bool).max(axis=0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -382,7 +382,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g.shape == d.shape)
 
-        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
+        assert (self.g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -427,7 +427,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g3.shape == d3.shape)
 
-        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
+        assert (self.g3.astype(bool).max(axis=0) == d3.astype(bool).max(axis=0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()
@@ -471,7 +471,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g.shape == d.shape)
 
-        assert (self.g.astype(bool).max(axis = 0) == d.astype(bool).max(axis = 0)).all()
+        assert (self.g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
 
         unmatched_g = range(len(self.g))
         matched = dict()
@@ -516,7 +516,7 @@ class TestSpamsSandbox(object):
 
         assert (self.g3.shape == d3.shape)
 
-        assert (self.g3.astype(bool).max(axis = 0) == d3.astype(bool).max(axis = 0)).all()
+        assert (self.g3.astype(bool).max(axis=0) == d3.astype(bool).max(axis=0)).all()
 
         unmatched_g3 = range(len(self.g3))
         matched = dict()

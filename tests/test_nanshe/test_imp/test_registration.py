@@ -79,7 +79,7 @@ class TestRegisterMeanOffsets(object):
         b = numpy.ma.masked_array(a.copy())
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 10
+            a, block_frame_length=10
         )
 
         b2 = None
@@ -108,7 +108,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 10
+            a, block_frame_length=10
         )
 
         b2 = None
@@ -137,7 +137,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 10
+            a, block_frame_length=10
         )
 
         b2 = None
@@ -160,7 +160,7 @@ class TestRegisterMeanOffsets(object):
         b = numpy.ma.masked_array(a.copy())
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 7
+            a, block_frame_length=7
         )
 
         b2 = None
@@ -189,7 +189,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 7
+            a, block_frame_length=7
         )
 
         b2 = None
@@ -218,7 +218,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 7
+            a, block_frame_length=7
         )
 
         b2 = None
@@ -241,7 +241,7 @@ class TestRegisterMeanOffsets(object):
         b = numpy.ma.masked_array(a.copy())
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 30
+            a, block_frame_length=30
         )
 
         b2 = None
@@ -270,7 +270,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 30
+            a, block_frame_length=30
         )
 
         b2 = None
@@ -299,7 +299,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :3, :] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 30
+            a, block_frame_length=30
         )
 
         b2 = None
@@ -471,7 +471,7 @@ class TestRegisterMeanOffsets(object):
         b = numpy.ma.masked_array(a.copy())
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 10
+            a, block_frame_length=10
         )
 
         b2 = None
@@ -502,7 +502,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 10
+            a, block_frame_length=10
         )
 
         b2 = None
@@ -533,7 +533,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 10
+            a, block_frame_length=10
         )
 
         b2 = None
@@ -557,7 +557,7 @@ class TestRegisterMeanOffsets(object):
         b = numpy.ma.masked_array(a.copy())
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 7
+            a, block_frame_length=7
         )
 
         b2 = None
@@ -588,7 +588,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 7
+            a, block_frame_length=7
         )
 
         b2 = None
@@ -619,7 +619,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 7
+            a, block_frame_length=7
         )
 
         b2 = None
@@ -643,7 +643,7 @@ class TestRegisterMeanOffsets(object):
         b = numpy.ma.masked_array(a.copy())
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 30
+            a, block_frame_length=30
         )
 
         b2 = None
@@ -674,7 +674,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 30
+            a, block_frame_length=30
         )
 
         b2 = None
@@ -705,7 +705,7 @@ class TestRegisterMeanOffsets(object):
         b[10, :, :, :3] = numpy.ma.masked
 
         fn = nanshe.imp.registration.register_mean_offsets(
-            a, block_frame_length = 30
+            a, block_frame_length=30
         )
 
         b2 = None

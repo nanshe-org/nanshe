@@ -32,7 +32,7 @@ logger = prof.logging.getLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def read_parameters(config_filename, maintain_order = False):
+def read_parameters(config_filename, maintain_order=False):
     """
         Reads the contents of a json config file and returns the parameters.
 
@@ -59,7 +59,7 @@ def read_parameters(config_filename, maintain_order = False):
 
 
     @prof.log_call(trace_logger)
-    def ascii_encode_str(value, json_dict = json_dict):
+    def ascii_encode_str(value, json_dict=json_dict):
         """
             Encodes the str.
 
@@ -78,7 +78,7 @@ def read_parameters(config_filename, maintain_order = False):
 
 
     @prof.log_call(trace_logger)
-    def ascii_encode_list(data, json_dict = json_dict):
+    def ascii_encode_list(data, json_dict=json_dict):
         """
             Encodes the list (and its contents).
 
@@ -106,7 +106,7 @@ def read_parameters(config_filename, maintain_order = False):
 
 
     @prof.log_call(trace_logger)
-    def ascii_encode_dict(data, json_dict = json_dict):
+    def ascii_encode_dict(data, json_dict=json_dict):
         """
             Encodes the dict (and its contents).
             Also, make sure the dict is of the right type.
@@ -147,7 +147,7 @@ def read_parameters(config_filename, maintain_order = False):
         logger.debug("Opened configure file named \"" + config_filename + "\".")
 
         # will just give a dictionary. just that simple
-        parameters = json.load(fp, object_pairs_hook = ascii_encode_dict)
+        parameters = json.load(fp, object_pairs_hook=ascii_encode_dict)
 
         logger.debug("Loaded parameters from file, which are \"" + str(parameters) + "\".")
 

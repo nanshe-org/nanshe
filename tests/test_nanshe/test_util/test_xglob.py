@@ -15,16 +15,16 @@ class TestXGlob(object):
 
         self.temp_files = []
         for i in xrange(TestXGlob.num_files):
-            self.temp_files.append(tempfile.NamedTemporaryFile(suffix = ".tif", dir = self.temp_dir))
+            self.temp_files.append(tempfile.NamedTemporaryFile(suffix=".tif", dir=self.temp_dir))
 
-        self.temp_files.sort(cmp = lambda a, b: 2*(a.name > b.name) - 1)
+        self.temp_files.sort(cmp=lambda a, b: 2*(a.name > b.name) - 1)
 
 
     def test_expand_pathname_list(self):
         import itertools
 
         matched_filenames = nanshe.util.xglob.expand_pathname_list(self.temp_dir + "/*.tif")
-        matched_filenames.sort(cmp = lambda a, b: 2*(a > b) - 1)
+        matched_filenames.sort(cmp=lambda a, b: 2*(a > b) - 1)
 
         assert (len(matched_filenames) == len(self.temp_files))
 

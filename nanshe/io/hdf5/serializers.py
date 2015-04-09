@@ -33,7 +33,7 @@ trace_logger = prof.getTraceLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overwrite = False):
+def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overwrite=False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
         Also, will handle normal NumPy arrays and scalars, as well.
@@ -69,18 +69,18 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
 
     try:
         file_handle.create_dataset(internalPath,
-                                   shape = data_array.shape,
-                                   dtype = data_array.dtype,
-                                   data = data_array,
-                                   chunks = bool(data_array.ndim))
+                                   shape=data_array.shape,
+                                   dtype=data_array.dtype,
+                                   data=data_array,
+                                   chunks=bool(data_array.ndim))
     except RuntimeError:
         if overwrite:
             del file_handle[internalPath]
             file_handle.create_dataset(internalPath,
-                                       shape = data_array.shape,
-                                       dtype = data_array.dtype,
-                                       data = data_array,
-                                       chunks = True)
+                                       shape=data_array.shape,
+                                       dtype=data_array.dtype,
+                                       data=data_array,
+                                       chunks=True)
         else:
             raise
 

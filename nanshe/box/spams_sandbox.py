@@ -77,7 +77,7 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
 
     out_queue = multiprocessing.Queue()
 
-    p = multiprocessing.Process(target = run_multiprocessing_queue_spams_trainDL, args = (out_queue,) + args, kwargs = kwargs)
+    p = multiprocessing.Process(target=run_multiprocessing_queue_spams_trainDL, args=(out_queue,) + args, kwargs=kwargs)
     p.start()
     result = out_queue.get()
     result = result.copy()
@@ -130,7 +130,7 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
     X_shape = X_array_type._shape_
     X_flags = numpy.core.multiarray.flagsobj(X_array_type._flags_)
 
-    X = numpy.frombuffer(X_array, dtype = X_dtype).reshape(X_shape)
+    X = numpy.frombuffer(X_array, dtype=X_dtype).reshape(X_shape)
     X.setflags(X_flags)
 
     for order_name, as_ordered_array in as_ordered_array_dict.items():
@@ -142,7 +142,7 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
     result_shape = result_array_type._shape_
     result_flags = numpy.core.multiarray.flagsobj(result_array_type._flags_)
 
-    result = numpy.frombuffer(result_array, dtype = result_dtype).reshape(result_shape)
+    result = numpy.frombuffer(result_array, dtype=result_dtype).reshape(result_shape)
     result.setflags(result_flags)
 
     for order_name, as_ordered_array in as_ordered_array_dict.items():
@@ -207,7 +207,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
                                          lock=False)
 
 
-    p = multiprocessing.Process(target = run_multiprocessing_array_spams_trainDL, args = (result_array_type, result_array, X_array_type, X_array,) + args, kwargs = kwargs)
+    p = multiprocessing.Process(target=run_multiprocessing_array_spams_trainDL, args=(result_array_type, result_array, X_array_type, X_array,) + args, kwargs=kwargs)
     p.start()
     p.join()
 
@@ -215,7 +215,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
 
 
     # Reconstruct the result from the output array
-    result = numpy.frombuffer(result_array, dtype = result_array_type._dtype_).reshape(result_array_type._shape_)
+    result = numpy.frombuffer(result_array, dtype=result_array_type._dtype_).reshape(result_array_type._shape_)
     result = result.copy()
 
     return(result)

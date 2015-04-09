@@ -69,7 +69,7 @@ class TestWrappers(object):
             return(a + b)
 
         func_wrapped = nanshe.util.wrappers.static_variables(
-            c = 7
+            c=7
         )(
             func
         )

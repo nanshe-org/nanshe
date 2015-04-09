@@ -740,14 +740,14 @@ class TestLearner(object):
         self.bases_images = numpy.zeros((len(self.bases_indices),) + self.images.shape[1:] , dtype=self.images.dtype)
 
         for i, each_basis_indices in enumerate(self.bases_indices):
-            self.bases_masks[i] = self.masks[list(each_basis_indices)].max(axis = 0)
-            self.bases_images[i] = self.images[list(each_basis_indices)].max(axis = 0)
+            self.bases_masks[i] = self.masks[list(each_basis_indices)].max(axis=0)
+            self.bases_images[i] = self.images[list(each_basis_indices)].max(axis=0)
 
         self.image_stack = None
         ramp = numpy.concatenate([numpy.linspace(0, 1, self.linspace_length), numpy.linspace(1, 0, self.linspace_length)])
 
         self.image_stack = numpy.zeros((self.bases_images.shape[0] * len(ramp),) + self.bases_images.shape[1:],
-                                       dtype = self.bases_images.dtype)
+                                       dtype=self.bases_images.dtype)
         for i in xrange(len(self.bases_images)):
             image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
@@ -772,14 +772,14 @@ class TestLearner(object):
         self.bases_images3 = numpy.zeros((len(self.bases_indices),) + self.images3.shape[1:] , dtype=self.images3.dtype)
 
         for i, each_basis_indices in enumerate(self.bases_indices):
-            self.bases_masks3[i] = self.masks3[list(each_basis_indices)].max(axis = 0)
-            self.bases_images3[i] = self.images3[list(each_basis_indices)].max(axis = 0)
+            self.bases_masks3[i] = self.masks3[list(each_basis_indices)].max(axis=0)
+            self.bases_images3[i] = self.images3[list(each_basis_indices)].max(axis=0)
 
         self.image_stack3 = None
         ramp = numpy.concatenate([numpy.linspace(0, 1, self.linspace_length), numpy.linspace(1, 0, self.linspace_length)])
 
         self.image_stack3 = numpy.zeros((self.bases_images3.shape[0] * len(ramp),) + self.bases_images3.shape[1:],
-                                       dtype = self.bases_images3.dtype)
+                                       dtype=self.bases_images3.dtype)
         for i in xrange(len(self.bases_images3)):
             image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
@@ -840,7 +840,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -873,7 +873,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -919,7 +919,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -953,7 +953,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -987,7 +987,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1033,7 +1033,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1062,7 +1062,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -1091,7 +1091,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -1133,7 +1133,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -1163,7 +1163,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1193,7 +1193,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1235,7 +1235,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1264,7 +1264,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -1294,7 +1294,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1323,7 +1323,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -1365,7 +1365,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -1395,7 +1395,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1437,7 +1437,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))
@@ -1459,16 +1459,16 @@ class TestLearner(object):
 
             # Get a debug logger for the HDF5 file (if needed)
             array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
-                group_name = "debug",
-                enable = self.config_a_block["debug"],
-                overwrite_group = False,
-                recorder_constructor = nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
+                group_name="debug",
+                enable=self.config_a_block["debug"],
+                overwrite_group=False,
+                recorder_constructor=nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
             )
 
             # Saves intermediate result to make resuming easier
             resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
-                recorder_constructor = nanshe.io.hdf5.record.HDF5ArrayRecorder,
-                overwrite = True
+                recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
+                overwrite=True
             )
 
             nanshe.learner.generate_neurons.resume_logger = resume_logger
@@ -1485,7 +1485,7 @@ class TestLearner(object):
         assert (len(self.points) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points))
@@ -1508,16 +1508,16 @@ class TestLearner(object):
 
             # Get a debug logger for the HDF5 file (if needed)
             array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
-                group_name = "debug",
-                enable = self.config_a_block["debug"],
-                overwrite_group = False,
-                recorder_constructor = nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
+                group_name="debug",
+                enable=self.config_a_block["debug"],
+                overwrite_group=False,
+                recorder_constructor=nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
             )
 
             # Saves intermediate result to make resuming easier
             resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
-                recorder_constructor = nanshe.io.hdf5.record.HDF5ArrayRecorder,
-                overwrite = True
+                recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
+                overwrite=True
             )
 
             nanshe.learner.generate_neurons.resume_logger = resume_logger
@@ -1534,7 +1534,7 @@ class TestLearner(object):
         assert (len(self.points3) == len(neurons))
 
         neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis = 0).nonzero()).T.copy()
+        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
         matched = dict()
         unmatched_points = numpy.arange(len(self.points3))

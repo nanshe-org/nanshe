@@ -42,7 +42,7 @@ trace_logger = prof.getTraceLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def binomial_1D_array_kernel(i, n = 4):
+def binomial_1D_array_kernel(i, n=4):
     """
         Generates a 1D numpy array used to make the kernel for the wavelet transform.
 
@@ -101,7 +101,7 @@ def binomial_1D_array_kernel(i, n = 4):
     n = len(cs) - 1
 
     # Get the right number of zeros to fill in
-    zs = list(numpy.zeros(2 ** (i - 1) - 1, dtype = int))
+    zs = list(numpy.zeros(2 ** (i - 1) - 1, dtype=int))
 
     # Create the contents of the 1D kernel before normalization
     r = []
@@ -124,7 +124,7 @@ def binomial_1D_array_kernel(i, n = 4):
 
 
 @prof.log_call(trace_logger)
-def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
+def binomial_1D_vigra_kernel(i, n=4, border_treatment=vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT):
     """
         Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).
 
@@ -160,7 +160,7 @@ def binomial_1D_vigra_kernel(i, n = 4, border_treatment = vigra.filters.BorderTr
 
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
-def transform(im0, scale = 5, include_intermediates = False, include_lower_scales = False, out = None):
+def transform(im0, scale=5, include_intermediates=False, include_lower_scales=False, out=None):
     """
         performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then
 
@@ -306,8 +306,8 @@ def transform(im0, scale = 5, include_intermediates = False, include_lower_scale
     if include_intermediates:
         assert (out is None)
 
-        W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
-        imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype = numpy.float32)
+        W = numpy.zeros((scale.max(),) + im0.shape, dtype=numpy.float32)
+        imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype=numpy.float32)
         imOut[0] = im0
 
         imCur = imOut[0]
@@ -315,7 +315,7 @@ def transform(im0, scale = 5, include_intermediates = False, include_lower_scale
     else:
         if include_lower_scales:
             if out is None:
-                W = numpy.zeros((scale.max(),) + im0.shape, dtype = numpy.float32)
+                W = numpy.zeros((scale.max(),) + im0.shape, dtype=numpy.float32)
                 out = W
             else:
                 assert ( out.shape == ((scale.max(),) + im0.shape) )

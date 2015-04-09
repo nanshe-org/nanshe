@@ -34,8 +34,8 @@ import PyQt4.QtCore
 
 def update_wrapper(wrapper,
                    wrapped,
-                   assigned = functools.WRAPPER_ASSIGNMENTS,
-                   updated = functools.WRAPPER_UPDATES):
+                   assigned=functools.WRAPPER_ASSIGNMENTS,
+                   updated=functools.WRAPPER_UPDATES):
     """
         Extends functools.update_wrapper to ensure that it stores the wrapped function in the attribute __wrapped__.
 
@@ -56,7 +56,7 @@ def update_wrapper(wrapper,
             (callable):             the wrapped callable.
     """
 
-    wrapper = functools.update_wrapper(wrapper, wrapped, assigned = assigned, updated = updated)
+    wrapper = functools.update_wrapper(wrapper, wrapped, assigned=assigned, updated=updated)
 
     # Store the underlying callable. Automatic in Python 3.
     setattr(wrapper, "__wrapped__", getattr(wrapper, "__wrapped__", wrapped))
@@ -65,8 +65,8 @@ def update_wrapper(wrapper,
 
 
 def wraps(wrapped,
-          assigned = functools.WRAPPER_ASSIGNMENTS,
-          updated = functools.WRAPPER_UPDATES):
+          assigned=functools.WRAPPER_ASSIGNMENTS,
+          updated=functools.WRAPPER_UPDATES):
     """
         Builds on functools.wraps to ensure that it stores the wrapped function in the attribute __wrapped__.
 
@@ -85,7 +85,7 @@ def wraps(wrapped,
             (callable):             a decorator for callable, which will contain wrapped.
     """
 
-    return(functools.partial(update_wrapper, wrapped = wrapped, assigned = assigned, updated = updated))
+    return(functools.partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated))
 
 
 def identity_wrapper(a_callable):

@@ -71,12 +71,12 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         super(NeuronMatplotlibViewer, self).__init__(*args, **kwargs)
         # super(NeuronMatplotlibViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
 
-        self.subplots_adjust(left = 0.25, bottom = 0.25)
+        self.subplots_adjust(left=0.25, bottom=0.25)
         self.viewer = self.add_axes([0.25, 0.25, 0.7, 0.7])
 
         #self.set_images(kwargs["neuron_images"])
 
-    def set_images(self, new_neuron_images, cmap = mpl.cm.RdBu, use_matshow = False):
+    def set_images(self, new_neuron_images, cmap=mpl.cm.RdBu, use_matshow=False):
         """
             Sets the images to be viewed.
 
@@ -98,14 +98,14 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
         if (self.neuron_images.ndim == 3):
             # self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(self.neuron_images[0], cmap = self.cmap,
-                                                 vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            self.image_view = viewer_show_method(self.neuron_images[0], cmap=self.cmap,
+                                                 vmin=self.neuron_images.min(), vmax=self.neuron_images.max())
         else:
             # self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(),
-                                                 vmax = self.neuron_images.max())
+            self.image_view = viewer_show_method(self.neuron_images, cmap=self.cmap, vmin=self.neuron_images.min(),
+                                                 vmax=self.neuron_images.max())
 
-        self.image_view_colorbar = self.colorbar(self.image_view, ax = self.viewer)
+        self.image_view_colorbar = self.colorbar(self.image_view, ax=self.viewer)
 
         if (self.neuron_images.ndim == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
@@ -123,8 +123,8 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
 @prof.log_class(trace_logger)
 class TimeNavigator(object):
-    def __init__(self, fig, max_time, min_time = 0, time_step = 1, axcolor = 'lightgoldenrodyellow',
-                 hovercolor = '0.975'):
+    def __init__(self, fig, max_time, min_time=0, time_step=1, axcolor='lightgoldenrodyellow',
+                 hovercolor='0.975'):
         """
             Initializes a TimeNavigator using the given figure and a fixed number of steps.
 
@@ -152,25 +152,25 @@ class TimeNavigator(object):
 
         self.next_cid = 0
 
-        self.axtime = fig.add_axes([0.25, 0.1, 0.65, 0.03], axisbg = self.axcolor)
-        self.stime = Slider(self.axtime, 'Time', self.min_time, self.max_time, valinit = self.min_time, valfmt = '%i')
+        self.axtime = fig.add_axes([0.25, 0.1, 0.65, 0.03], axisbg=self.axcolor)
+        self.stime = Slider(self.axtime, 'Time', self.min_time, self.max_time, valinit=self.min_time, valfmt='%i')
 
         self.stime.on_changed(self.time_update)
 
         self.beginax = fig.add_axes([0.2, 0.025, 0.1, 0.04])
-        self.begin_button = Button(self.beginax, 'Begin', color = self.axcolor, hovercolor = self.hovercolor)
+        self.begin_button = Button(self.beginax, 'Begin', color=self.axcolor, hovercolor=self.hovercolor)
         self.begin_button.on_clicked(self.begin_time)
 
         self.prevax = fig.add_axes([0.3, 0.025, 0.1, 0.04])
-        self.prev_button = Button(self.prevax, 'Prev', color = self.axcolor, hovercolor = self.hovercolor)
+        self.prev_button = Button(self.prevax, 'Prev', color=self.axcolor, hovercolor=self.hovercolor)
         self.prev_button.on_clicked(self.prev_time)
 
         self.nextax = fig.add_axes([0.7, 0.025, 0.1, 0.04])
-        self.next_button = Button(self.nextax, 'Next', color = self.axcolor, hovercolor = self.hovercolor)
+        self.next_button = Button(self.nextax, 'Next', color=self.axcolor, hovercolor=self.hovercolor)
         self.next_button.on_clicked(self.next_time)
 
         self.endax = fig.add_axes([0.8, 0.025, 0.1, 0.04])
-        self.end_button = Button(self.endax, 'End', color = self.axcolor, hovercolor = self.hovercolor)
+        self.end_button = Button(self.endax, 'End', color=self.axcolor, hovercolor=self.hovercolor)
         self.end_button.on_clicked(self.end_time)
 
         self.callbacks = {}

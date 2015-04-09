@@ -76,7 +76,7 @@ class TestProf(object):
         """DEBUG:""" + self.logger.name + """:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
         @nanshe.util.prof.log_call(self.logger)
-        def test(a, b = 5):
+        def test(a, b=5):
             return(a + b)
 
         test(0)
@@ -94,8 +94,8 @@ class TestProf(object):
         """DEBUG:""" + self.logger.name + """:Exiting callable: "test"\.\n""" + \
         """DEBUG:""" + self.logger.name + """:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
-        @nanshe.util.prof.log_call(self.logger, to_log_call = True)
-        def test(a, b = 5):
+        @nanshe.util.prof.log_call(self.logger, to_log_call=True)
+        def test(a, b=5):
             return(a + b)
 
         test(0)
@@ -111,8 +111,8 @@ class TestProf(object):
     def test_log_call_3(self):
         expected_result = """"""
 
-        @nanshe.util.prof.log_call(self.logger, to_log_call = False)
-        def test(a, b = 5):
+        @nanshe.util.prof.log_call(self.logger, to_log_call=False)
+        def test(a, b=5):
             return(a + b)
 
         test(0)
@@ -128,8 +128,8 @@ class TestProf(object):
     def test_log_call_4(self):
         expected_result = """"""
 
-        @nanshe.util.prof.log_call(self.logger, to_log_call = True)
-        def test(a, b = 5):
+        @nanshe.util.prof.log_call(self.logger, to_log_call=True)
+        def test(a, b=5):
             return(a + b)
 
         test.to_log_call = False
@@ -150,8 +150,8 @@ class TestProf(object):
         """DEBUG:""" + self.logger.name + """:Exiting callable: "test"\.\n""" + \
         """DEBUG:""" + self.logger.name + """:Run time for callable: "test" is "[0-9]+\.[0-9]+(e[\+\-]{1}[0-9]+)? s"\.\n"""
 
-        @nanshe.util.prof.log_call(self.logger, to_print_args = True)
-        def test(a, b = 5):
+        @nanshe.util.prof.log_call(self.logger, to_print_args=True)
+        def test(a, b=5):
             return(a + b)
 
         test(0)
@@ -169,8 +169,8 @@ class TestProf(object):
         """DEBUG:""" + self.logger.name + """:Arguments: "('c',)\"\n""" + \
         """Keyword Arguments: "{}".\n"""
 
-        @nanshe.util.prof.log_call(self.logger, to_print_args = True)
-        def test(a, b = 5):
+        @nanshe.util.prof.log_call(self.logger, to_print_args=True)
+        def test(a, b=5):
             return(a + b)
 
         try:
@@ -192,8 +192,8 @@ class TestProf(object):
         """Keyword Arguments: "{}".\n""" + \
         """ERROR:""" + self.logger.name + """:"""
 
-        @nanshe.util.prof.log_call(self.logger, to_print_args = True, to_print_exception=True)
-        def test(a, b = 5):
+        @nanshe.util.prof.log_call(self.logger, to_print_args=True, to_print_exception=True)
+        def test(a, b=5):
             return(a + b)
 
         expected_traceback = StringIO.StringIO()
@@ -233,7 +233,7 @@ class TestProf(object):
 
         @nanshe.util.prof.log_class(self.logger)
         class Test(object):
-            def __init__(self, a, b = 5):
+            def __init__(self, a, b=5):
                 self.a = a
                 self.b = b
 
@@ -274,7 +274,7 @@ class TestProf(object):
 
         @nanshe.util.prof.log_class(self.logger)
         class Test(object):
-            def __init__(self, a, b = 5):
+            def __init__(self, a, b=5):
                 self.a = a
                 self.b = b
 
@@ -313,7 +313,7 @@ class TestProf(object):
 
         @nanshe.util.prof.log_class(self.logger)
         class Test(object):
-            def __init__(self, a, b = 5):
+            def __init__(self, a, b=5):
                 self.a = a
                 self.b = b
 

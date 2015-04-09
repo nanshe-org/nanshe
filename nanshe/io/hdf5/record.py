@@ -106,7 +106,7 @@ class EmptyArrayRecorder(object):
 
 @prof.log_class(trace_meta_logger)
 class HDF5ArrayRecorder(object):
-    def __init__(self, hdf5_handle, overwrite = False):
+    def __init__(self, hdf5_handle, overwrite=False):
         self.hdf5_handle = hdf5_handle
         self.overwrite = overwrite
 
@@ -135,7 +135,7 @@ class HDF5ArrayRecorder(object):
 
         try:
             if isinstance(self.hdf5_handle[key], h5py.Group):
-                return(HDF5ArrayRecorder(self.hdf5_handle[key], overwrite = self.overwrite))
+                return(HDF5ArrayRecorder(self.hdf5_handle[key], overwrite=self.overwrite))
             else:
                 return(serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
         except:
@@ -175,7 +175,7 @@ class HDF5ArrayRecorder(object):
                 serializers.create_numpy_structured_array_in_HDF5(self.hdf5_handle,
                                                                       key,
                                                                       value,
-                                                                      overwrite = self.overwrite)
+                                                                      overwrite=self.overwrite)
                 self.hdf5_handle.file.flush()
 
                 return()
@@ -312,7 +312,7 @@ class HDF5EnumeratedArrayRecorder(object):
 
 
 @prof.log_call(trace_meta_logger)
-def generate_HDF5_array_recorder(hdf5_handle, group_name = "", enable = True, overwrite_group = False, recorder_constructor = HDF5ArrayRecorder, **kwargs):
+def generate_HDF5_array_recorder(hdf5_handle, group_name="", enable=True, overwrite_group=False, recorder_constructor=HDF5ArrayRecorder, **kwargs):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to a group in an HDF5 file.
@@ -440,7 +440,7 @@ def static_subgrouping_array_recorders(*args, **kwargs):
                 if _k != "__dict__":
                     del self.__dict__[_k]
 
-        callable = wrappers.static_variables(recorders = SubgroupingRecorders(*args, **kwargs))(callable)
+        callable = wrappers.static_variables(recorders=SubgroupingRecorders(*args, **kwargs))(callable)
 
         @wrappers.wraps(callable)
         def static_subgrouping_array_recorders_wrapper(*args, **kwargs):
@@ -473,7 +473,7 @@ def static_array_debug_recorder(callable):
             (callable):            A decorator that adds the static variable array_debug_recorder to the given function.
     """
 
-    callable = static_subgrouping_array_recorders(array_debug_recorder = EmptyArrayRecorder())(callable)
+    callable = static_subgrouping_array_recorders(array_debug_recorder=EmptyArrayRecorder())(callable)
 
     return(callable)
 
@@ -552,7 +552,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 if _k != "__dict__":
                     del self.__dict__[_k]
 
-        a_class = wrappers.class_static_variables(recorders = ClassSubgroupingRecorders(*args, **kwargs))(a_class)
+        a_class = wrappers.class_static_variables(recorders=ClassSubgroupingRecorders(*args, **kwargs))(a_class)
 
         def class_static_subgrouping_array_recorders__init__decorator(callable):
             @wrappers.wraps(callable)
@@ -592,7 +592,7 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
             return(class_static_subgrouping_array_recorders_wrapper)
 
         # Wraps __init__ only
-        a_class = wrappers.class_decorate_methods(__init__ = class_static_subgrouping_array_recorders__init__decorator)(a_class)
+        a_class = wrappers.class_decorate_methods(__init__=class_static_subgrouping_array_recorders__init__decorator)(a_class)
 
         # Wrap everything
         a_class = wrappers.class_decorate_all_methods(class_static_subgrouping_array_recorders_decorator)(a_class)
@@ -628,6 +628,6 @@ def class_static_array_debug_recorder(a_class):
             (class):            A decorator that adds the static variable array_debug_recorder to the given function.
     """
 
-    a_class = class_static_subgrouping_array_recorders(array_debug_recorder = EmptyArrayRecorder())(a_class)
+    a_class = class_static_subgrouping_array_recorders(array_debug_recorder=EmptyArrayRecorder())(a_class)
 
     return(a_class)

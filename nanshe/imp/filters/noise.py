@@ -30,7 +30,7 @@ trace_logger = prof.getTraceLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def estimate_noise(input_array, significance_threshold = 3.0):
+def estimate_noise(input_array, significance_threshold=3.0):
     """
         Estimates the noise in the given array.
 
@@ -79,7 +79,7 @@ def estimate_noise(input_array, significance_threshold = 3.0):
 
 
 @prof.log_call(trace_logger)
-def significant_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
+def significant_mask(input_array, noise_threshold=6.0, noise_estimate=None):
     """
         Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.
 
@@ -132,7 +132,7 @@ def significant_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
 
 
 @prof.log_call(trace_logger)
-def noise_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
+def noise_mask(input_array, noise_threshold=6.0, noise_estimate=None):
     """
         Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.
 
@@ -170,7 +170,7 @@ def noise_mask(input_array, noise_threshold = 6.0, noise_estimate = None):
     """
 
     # Get all the significant points in a mask.
-    noisy_mask = significant_mask(input_array, noise_threshold = noise_threshold, noise_estimate = noise_estimate)
+    noisy_mask = significant_mask(input_array, noise_threshold=noise_threshold, noise_estimate=noise_estimate)
 
     # Invert the maske
     numpy.logical_not(noisy_mask, noisy_mask)

@@ -122,7 +122,7 @@ def renumber_label_image(new_array):
     new_labels = numpy.arange(1, len(old_labels) + 1)
 
     # Get the forward label mapping (ensure the background is included)
-    forward_label_mapping = numpy.zeros((reverse_label_mapping.max() + 1,), dtype = new_array.dtype)
+    forward_label_mapping = numpy.zeros((reverse_label_mapping.max() + 1,), dtype=new_array.dtype)
     forward_label_mapping[old_labels] = new_labels
 
     # Get masks for each old label
@@ -133,7 +133,7 @@ def renumber_label_image(new_array):
 
     # Take every mask and make sure it has the appropriate sequential label
     # Then combine each of these parts of the label image together into a new sequential label image
-    new_array_relabeled = (new_array_label_masks * new_labels_tiled_view).sum(axis = 0)
+    new_array_relabeled = (new_array_label_masks * new_labels_tiled_view).sum(axis=0)
 
     return((new_array_relabeled, forward_label_mapping, reverse_label_mapping))
 
@@ -206,7 +206,7 @@ def index_axis_at_pos(new_array, axis, pos):
 
 
 @prof.log_call(trace_logger)
-def add_singleton_axis_pos(a_array, axis = 0):
+def add_singleton_axis_pos(a_array, axis=0):
     """
         Adds a singleton axis to the given position.
         Allows negative values for axis.
@@ -1494,7 +1494,7 @@ def index_array_to_bool_array(index_array, shape):
                    [False, False,  True]], dtype=bool)
     """
 
-    bool_array = numpy.zeros(shape, dtype = bool)
+    bool_array = numpy.zeros(shape, dtype=bool)
     bool_array[index_array] = True
 
     return(bool_array)
@@ -1502,7 +1502,7 @@ def index_array_to_bool_array(index_array, shape):
 
 
 @prof.log_call(trace_logger)
-def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
+def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
     """
         Behaves like NumPy tile except that it always returns a view and not a copy.
         Though, it differs in that additional dimensions are added for repetition as
@@ -1706,7 +1706,7 @@ def expand_view(new_array, reps_after = tuple(), reps_before = tuple()):
                                                len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)) )
 
 
-def expand_arange(start, stop = None, step = 1, dtype=numpy.int64, reps_before = tuple(), reps_after = tuple()):
+def expand_arange(start, stop=None, step=1, dtype=numpy.int64, reps_before=tuple(), reps_after=tuple()):
     """
         Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a
         larger cube.
@@ -1767,14 +1767,14 @@ def expand_arange(start, stop = None, step = 1, dtype=numpy.int64, reps_before =
         stop = start
         start = 0
 
-    an_arange = numpy.arange(start = start, stop = stop, step = step, dtype = dtype)
+    an_arange = numpy.arange(start=start, stop=stop, step=step, dtype=dtype)
 
     an_arange = expand_view(an_arange, reps_before=reps_before, reps_after=reps_after)
 
     return(an_arange)
 
 
-def expand_enumerate(new_array, axis = 0, start = 0, step = 1):
+def expand_enumerate(new_array, axis=0, start=0, step=1):
     """
         Builds on expand_arange, which has the same shape as the original array. Specifies the increments to occur along
         the given axis, which by default is the zeroth axis.
@@ -1835,14 +1835,14 @@ def expand_enumerate(new_array, axis = 0, start = 0, step = 1):
 
     """
 
-    an_enumeration = expand_arange(start = start, stop = start + step * new_array.shape[axis], step = step,
-                                   dtype = numpy.uint64,
-                                   reps_before = new_array.shape[:axis], reps_after = new_array.shape[(axis+1):])
+    an_enumeration = expand_arange(start=start, stop=start + step * new_array.shape[axis], step=step,
+                                   dtype=numpy.uint64,
+                                   reps_before=new_array.shape[:axis], reps_after=new_array.shape[(axis+1):])
 
     return(an_enumeration)
 
 
-def enumerate_masks(new_masks, axis = 0):
+def enumerate_masks(new_masks, axis=0):
     """
         Takes a mask stack and replaces them by an enumerated stack. In other words, each mask is replaced by a
         consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)).
@@ -1916,7 +1916,7 @@ def enumerate_masks(new_masks, axis = 0):
     return(new_enumerated_masks)
 
 
-def enumerate_masks_max(new_masks, axis = 0):
+def enumerate_masks_max(new_masks, axis=0):
     """
         Takes a mask stack and replaces them by the max of an enumerated stack. In other words, each mask is replaced by
         a consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)). Afterwards,
@@ -2273,8 +2273,8 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
 
     """
 
-    new_array_1_tiled = expand_view(new_array_1, reps_after = new_array_2.shape)
-    new_array_2_tiled = expand_view(new_array_2, reps_before = new_array_1.shape)
+    new_array_1_tiled = expand_view(new_array_1, reps_after=new_array_2.shape)
+    new_array_2_tiled = expand_view(new_array_2, reps_before=new_array_1.shape)
 
     return( new_op(new_array_1_tiled, new_array_2_tiled) )
 
@@ -2531,7 +2531,7 @@ def pair_dot_product(new_vector_set):
 
 
 @prof.log_call(trace_logger)
-def norm(new_vector_set, ord = 2):
+def norm(new_vector_set, ord=2):
     """
         Determines the norm of a vector or a set of vectors.
 
@@ -3433,7 +3433,7 @@ def masks_overlap_normalized(a, b):
 
 
 @prof.log_call(trace_logger)
-def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
+def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord=2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
         with the dot product divided by one norm or the other.
@@ -3492,8 +3492,8 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
     new_vector_set_2_norms = norm(new_vector_set_2_float, ord)
 
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
-    new_vector_set_1_norms_expanded = expand_view(new_vector_set_1_norms, reps_after = new_vector_set_2_float.shape[0])
-    new_vector_set_2_norms_expanded = expand_view(new_vector_set_2_norms, reps_before = new_vector_set_1_float.shape[0])
+    new_vector_set_1_norms_expanded = expand_view(new_vector_set_1_norms, reps_after=new_vector_set_2_float.shape[0])
+    new_vector_set_2_norms_expanded = expand_view(new_vector_set_2_norms, reps_before=new_vector_set_1_float.shape[0])
 
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(new_vector_set_1_float, new_vector_set_2_float.T)
@@ -3506,7 +3506,7 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord = 2
 
 
 @prof.log_call(trace_logger)
-def pair_dot_product_partially_normalized(new_vector_set, ord = 2):
+def pair_dot_product_partially_normalized(new_vector_set, ord=2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
         with the dot product divided by one norm or the other.
@@ -3559,7 +3559,7 @@ def pair_dot_product_partially_normalized(new_vector_set, ord = 2):
     new_vector_set_norms = norm(new_vector_set_float, ord)
 
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
-    new_vector_set_norms_expanded = expand_view(new_vector_set_norms, reps_after = new_vector_set_float.shape[0])
+    new_vector_set_norms_expanded = expand_view(new_vector_set_norms, reps_after=new_vector_set_float.shape[0])
 
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(new_vector_set_float, new_vector_set_float.T)
@@ -3571,7 +3571,7 @@ def pair_dot_product_partially_normalized(new_vector_set, ord = 2):
 
 
 @prof.log_call(trace_logger)
-def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
+def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
 
@@ -3623,8 +3623,8 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
     new_vector_set_2_float = new_vector_set_2.astype(float)
 
     # Gets all of the norms
-    new_vector_set_1_norms = norm(new_vector_set_1_float, ord = ord)
-    new_vector_set_2_norms = norm(new_vector_set_2_float, ord = ord)
+    new_vector_set_1_norms = norm(new_vector_set_1_float, ord=ord)
+    new_vector_set_2_norms = norm(new_vector_set_2_float, ord=ord)
 
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(operator.mul, new_vector_set_1_norms, new_vector_set_2_norms)
@@ -3639,7 +3639,7 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord = 2):
 
 
 @prof.log_call(trace_logger)
-def pair_dot_product_normalized(new_vector_set, ord = 2):
+def pair_dot_product_normalized(new_vector_set, ord=2):
     """
         Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
 
@@ -3679,7 +3679,7 @@ def pair_dot_product_normalized(new_vector_set, ord = 2):
     new_vector_set_float = new_vector_set.astype(float)
 
     # Gets all of the norms
-    new_vector_set_norms = norm(new_vector_set_float, ord = ord)
+    new_vector_set_norms = norm(new_vector_set_float, ord=ord)
 
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(operator.mul, new_vector_set_norms, new_vector_set_norms)
@@ -3746,7 +3746,7 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     return(vector_pairs_cosine_angle)
 
 
-def generate_contour(a_image, separation_distance = 1.0, margin = 1.0):
+def generate_contour(a_image, separation_distance=1.0, margin=1.0):
     """
         Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge
         and some margin.
@@ -3807,7 +3807,7 @@ def generate_contour(a_image, separation_distance = 1.0, margin = 1.0):
     return(a_image_contours)
 
 
-def generate_labeled_contours(a_mask, separation_distance = 1.0, margin = 1.0):
+def generate_labeled_contours(a_mask, separation_distance=1.0, margin=1.0):
     """
         Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge
         and some margin.
@@ -3851,9 +3851,9 @@ def generate_labeled_contours(a_mask, separation_distance = 1.0, margin = 1.0):
                    [0, 3, 3, 0, 0, 0, 0]], dtype=int32)
     """
 
-    a_mask_contoured = generate_contour(a_mask, separation_distance = separation_distance, margin = margin)
+    a_mask_contoured = generate_contour(a_mask, separation_distance=separation_distance, margin=margin)
 
-    a_mask_contoured_labeled = scipy.ndimage.label(a_mask_contoured, structure = numpy.ones( (3,) * a_mask.ndim ))[0]
+    a_mask_contoured_labeled = scipy.ndimage.label(a_mask_contoured, structure=numpy.ones( (3,) * a_mask.ndim ))[0]
 
     return(a_mask_contoured_labeled)
 
@@ -3916,7 +3916,7 @@ def get_quantiles(probs):
     return(probs_array)
 
 
-def quantile(data, probs, axis = None):
+def quantile(data, probs, axis=None):
     """
         Determines the quantiles for given data much like MATLAB's function
 
@@ -4042,7 +4042,7 @@ def binomial_coefficients(n):
 
 
 @prof.log_call(trace_logger)
-def line_filter(shape, dim = -1):
+def line_filter(shape, dim=-1):
     """
         Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
         beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension
@@ -4093,7 +4093,7 @@ def line_filter(shape, dim = -1):
                     [False, False, False]]], dtype=bool)
     """
 
-    line = numpy.zeros([(2*_+1) for _ in shape], dtype = bool)
+    line = numpy.zeros([(2*_+1) for _ in shape], dtype=bool)
 
     line_loc = list(shape)
     line_loc[dim] = slice(None)
@@ -4103,7 +4103,7 @@ def line_filter(shape, dim = -1):
 
 
 @prof.log_call(trace_logger)
-def symmetric_line_filter(size, ndims = 2, dim = -1):
+def symmetric_line_filter(size, ndims=2, dim=-1):
     """
         Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
         beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension
@@ -4153,7 +4153,7 @@ def symmetric_line_filter(size, ndims = 2, dim = -1):
     assert (ndims > 0)
     assert (-ndims <= dim < ndims)
 
-    line = numpy.zeros(ndims * ( 2*size+1, ), dtype = bool)
+    line = numpy.zeros(ndims * ( 2*size+1, ), dtype=bool)
 
     line_loc = ndims * [size]
     line_loc[dim] = slice(None)
@@ -4163,7 +4163,7 @@ def symmetric_line_filter(size, ndims = 2, dim = -1):
 
 
 @prof.log_call(trace_logger)
-def tagging_reorder_array(new_array, from_axis_order = "tzyxc", to_axis_order = "tzyxc", to_copy = False):
+def tagging_reorder_array(new_array, from_axis_order="tzyxc", to_axis_order="tzyxc", to_copy=False):
     """
         Transforms one axis ordering to another giving a view of the array (unless otherwise specified).
 

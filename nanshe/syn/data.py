@@ -29,7 +29,7 @@ import scipy.ndimage.filters
 import nanshe.util.xnumpy
 
 
-def generate_hypersphere_masks(space, centers, radii, include_boundary = False):
+def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
     """
         Generate a stack of masks (first index indicates which mask); where, each contains a hypersphere constructed
         using a center and radius provided.
@@ -111,13 +111,13 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary = False):
     assert (radii.shape == centers.shape[:1])
 
     # Create a hypersphere mask using a center and a radius.
-    hypersphere_mask = numpy.zeros(radii.shape + tuple(space.tolist()), dtype = bool)
+    hypersphere_mask = numpy.zeros(radii.shape + tuple(space.tolist()), dtype=bool)
     for i, (each_center, each_radius) in enumerate(itertools.izip(centers, radii)):
         space_index = numpy.indices(space)
 
         each_point_offset = (space_index - nanshe.util.xnumpy.expand_view(each_center, tuple(space.tolist())))
 
-        each_point_offset_sqd_sum = (each_point_offset**2).sum(axis = 0)
+        each_point_offset_sqd_sum = (each_point_offset**2).sum(axis=0)
 
         each_point_offset_dist = each_point_offset_sqd_sum.astype(float)**.5
 
@@ -226,12 +226,12 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
     assert (magnitudes.shape == means.shape[:1])
 
     # Create a gaussian from a mean and a standard deviation.
-    images = numpy.zeros(magnitudes.shape + tuple(space.tolist()), dtype = float)
+    images = numpy.zeros(magnitudes.shape + tuple(space.tolist()), dtype=float)
     for i, (each_mean, each_std_dev, each_magnitude) in enumerate(itertools.izip(means, std_devs, magnitudes)):
         images[i][tuple(each_mean)] = each_magnitude
         images[i] = scipy.ndimage.filters.gaussian_filter(images[i],
                                                           each_std_dev,
-                                                          mode = "nearest")
+                                                          mode="nearest")
 
     return(images)
 
@@ -283,13 +283,13 @@ def generate_random_bound_points(space, radii):
     assert (radii.ndim == 1)
 
     # Determine the space each centroid can be within
-    bound_space = numpy.zeros(radii.shape + space.shape + (2,), dtype = int)
+    bound_space = numpy.zeros(radii.shape + space.shape + (2,), dtype=int)
     bound_space[..., 0] = nanshe.util.xnumpy.expand_view(radii, space.shape)
     bound_space[..., 1] = nanshe.util.xnumpy.expand_view(space, reps_before=radii.shape) - \
                           nanshe.util.xnumpy.expand_view(radii, space.shape)
 
     # Generate a random point for each radius.
-    points = numpy.zeros(radii.shape + space.shape, dtype = int)
+    points = numpy.zeros(radii.shape + space.shape, dtype=int)
     for i in xrange(len(radii)):
         for j in xrange(len(space)):
             points[i][j] = numpy.random.randint(bound_space[i][j][0], bound_space[i][j][1])

@@ -110,7 +110,7 @@ def binary_dilation(input_array, footprint, out=None):
 
 
 @prof.log_call(trace_logger)
-def binary_erosion(input_array, footprint, out = None):
+def binary_erosion(input_array, footprint, out=None):
     """
         Performs simple binary erosion on a bool array of arbitrary dimension.
 

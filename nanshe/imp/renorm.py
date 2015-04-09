@@ -34,7 +34,7 @@ trace_logger = prof.getTraceLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def zeroed_mean_images(input_array, output_array = None):
+def zeroed_mean_images(input_array, output_array=None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
 
@@ -116,7 +116,7 @@ def zeroed_mean_images(input_array, output_array = None):
 
     # take the mean while we haven't gotten one mean for each image.
     while means.ndim > 1:
-        means = means.mean(axis = 1)
+        means = means.mean(axis=1)
 
     # reshape means until it has the right number of dimensions to broadcast.
     means = means.reshape(means.shape + (output_array.ndim - means.ndim)*(1,))
@@ -128,7 +128,7 @@ def zeroed_mean_images(input_array, output_array = None):
 
 
 @prof.log_call(trace_logger)
-def renormalized_images(input_array, ord = 2, output_array = None):
+def renormalized_images(input_array, ord=2, output_array=None):
     """
         Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
 
@@ -202,7 +202,7 @@ def renormalized_images(input_array, ord = 2, output_array = None):
     # divide each image by this norm. (required for spams.trainDL)
     for i in xrange(output_array.shape[0]):
         output_array_i = output_array[i]
-        output_array_i_norm = numpy.linalg.norm(output_array_i.ravel(), ord = ord)
+        output_array_i_norm = numpy.linalg.norm(output_array_i.ravel(), ord=ord)
 
         if output_array_i_norm != 0:
             output_array_i /= output_array_i_norm

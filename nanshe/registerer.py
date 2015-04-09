@@ -55,25 +55,25 @@ def main(*argv):
     argv = list(argv)
 
     # Creates command line parser
-    parser = argparse.ArgumentParser(description = "Parses input from the command line for a registration job.")
+    parser = argparse.ArgumentParser(description="Parses input from the command line for a registration job.")
 
     parser.add_argument("config_filename",
-                        metavar = "CONFIG_FILE",
-                        type = str,
-                        help = "JSON file that provides configuration options for how to import TIFF(s)."
+                        metavar="CONFIG_FILE",
+                        type=str,
+                        help="JSON file that provides configuration options for how to import TIFF(s)."
     )
     parser.add_argument("input_filenames",
-                        metavar = "INPUT_FILE",
-                        type = str,
-                        nargs = "+",
-                        help = "HDF5 file to import (this should include a path to where the internal dataset should be stored)."
+                        metavar="INPUT_FILE",
+                        type=str,
+                        nargs="+",
+                        help="HDF5 file to import (this should include a path to where the internal dataset should be stored)."
     )
 
     parser.add_argument("output_filenames",
-                        metavar = "OUTPUT_FILE",
-                        type = str,
-                        nargs = 1,
-                        help = "HDF5 file to export (this should include a path to where the internal dataset should be stored)."
+                        metavar="OUTPUT_FILE",
+                        type=str,
+                        nargs=1,
+                        help="HDF5 file to export (this should include a path to where the internal dataset should be stored)."
     )
 
     # Results of parsing arguments (ignore the first one as it is the command line call).

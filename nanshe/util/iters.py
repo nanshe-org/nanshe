@@ -185,7 +185,7 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
     """
 
     # Constructs the numpy.ndarray with False everywhere
-    result = numpy.zeros(shape, dtype = bool)
+    result = numpy.zeros(shape, dtype=bool)
 
     # Gets the index array
     # Done first to make sure that if list_indices is this [], or this (), or this [()]
@@ -200,7 +200,7 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
 
 
 @prof.log_call(trace_logger)
-def repeat_generator(a_iter, n = 1):
+def repeat_generator(a_iter, n=1):
     """
         Repeats each value on an iterator given n-times before proceeding to the next value.
 
@@ -241,7 +241,7 @@ def repeat_generator(a_iter, n = 1):
 
 
 @prof.log_call(trace_logger)
-def cycle_generator(a_iter, n = 1):
+def cycle_generator(a_iter, n=1):
     """
         Cycles through an iterator n-times.
 
@@ -283,7 +283,7 @@ def cycle_generator(a_iter, n = 1):
 
 
 @prof.log_call(trace_logger)
-def iter_with_skip_indices(a_iter, to_skip = None):
+def iter_with_skip_indices(a_iter, to_skip=None):
     """
         Behaves as a normal iterator except allows for skipping arbitrary values, as well.
         These values to be skipped should be specified by their indices using some iterable.
@@ -343,7 +343,7 @@ def iter_with_skip_indices(a_iter, to_skip = None):
 
 
 @prof.log_call(trace_logger)
-def iter_with_skip_values(a_iter, to_skip = None):
+def iter_with_skip_values(a_iter, to_skip=None):
     """
         Behaves as a normal iterator except allows for skipping arbitrary values, as well.
         These values to be skipped should be specified by their indices using some iterable.
@@ -401,7 +401,7 @@ def iter_with_skip_values(a_iter, to_skip = None):
 
 
 @prof.log_call(trace_logger)
-def xrange_with_skip(start, stop = None, step = None, to_skip = None):
+def xrange_with_skip(start, stop=None, step=None, to_skip=None):
     """
         Behaves as xrange does except allows for skipping arbitrary values as well.
         These values to be skipped should be specified using some iterable.
@@ -477,7 +477,7 @@ def xrange_with_skip(start, stop = None, step = None, to_skip = None):
             next_to_skip = next(to_skip, None)
 
 
-def splitting_xrange(a, b = None):
+def splitting_xrange(a, b=None):
     """
         Similar to xrange except that it recursively proceeds through the given range in such a way that values that
         follow each other are preferably not only non-sequential, but fairly different. This does not always work with
@@ -636,7 +636,7 @@ def reverse_each_element(new_iter):
 
 
 @prof.log_call(trace_logger)
-def lagged_generators(new_iter, n = 2):
+def lagged_generators(new_iter, n=2):
     """
         Creates a tuple of generators with each next generator one step ahead of the previous generator.
 
@@ -700,7 +700,7 @@ def lagged_generators(new_iter, n = 2):
 
 
 @prof.log_call(trace_logger)
-def lagged_generators_zipped(new_iter, n = 2, longest=False, fillvalue=None):
+def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
     """
         Creates a tuple of generators with each next generator one step ahead of the previous generator.
 
@@ -748,7 +748,7 @@ def lagged_generators_zipped(new_iter, n = 2, longest=False, fillvalue=None):
 
 
 @prof.log_call(trace_logger)
-def filled_stringify_numbers(new_iter, include_numbers = False):
+def filled_stringify_numbers(new_iter, include_numbers=False):
     """
         Like enumerate except it also returns a string with the number from enumeration with left padding by zero.
 
@@ -855,7 +855,7 @@ def filled_stringify_xrange(new_iter):
         new_list = list(new_list)
         new_list_index_gen = xrange(len(new_list))
 
-    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers = True)
+    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers=True)
 
     for i, i_str in new_list_index_gen_stringified:
         yield ( (i, i_str) )
@@ -907,14 +907,14 @@ def filled_stringify_enumerate(new_iter):
         new_list = list(new_list)
         new_list_index_gen = xrange(len(new_list))
 
-    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers = True)
+    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers=True)
 
     for (i, i_str), each in itertools.izip(new_list_index_gen_stringified, new_list):
         yield ( (i, i_str, each) )
 
 
 @prof.log_call(trace_logger)
-def reformat_slice(a_slice, a_length = None):
+def reformat_slice(a_slice, a_length=None):
     """
         Takes a slice and reformats it to fill in as many undefined values as possible.
 
@@ -1069,7 +1069,7 @@ def reformat_slice(a_slice, a_length = None):
 
 
 @prof.log_call(trace_logger)
-def reformat_slices(slices, lengths = None):
+def reformat_slices(slices, lengths=None):
     """
         Takes a tuple of slices and reformats them to fill in as many undefined values as possible.
 
@@ -1129,7 +1129,7 @@ class UnknownSliceLengthException(Exception):
 
 
 @prof.log_call(trace_logger)
-def len_slice(a_slice, a_length = None):
+def len_slice(a_slice, a_length=None):
     """
         Determines how many elements a slice will contain.
 
@@ -1195,7 +1195,7 @@ def len_slice(a_slice, a_length = None):
 
 
 @prof.log_call(trace_logger)
-def len_slices(slices, lengths = None):
+def len_slices(slices, lengths=None):
     """
         Takes a tuple of slices and reformats them to fill in as many undefined values as possible.
 
