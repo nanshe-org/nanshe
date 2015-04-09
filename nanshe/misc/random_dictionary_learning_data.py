@@ -78,6 +78,7 @@ class MappingDiscreteUniformDistributionGenerator(object):
 
         return(results)
 
+
 class NumpyRandomArrayDiscreteUniformDistributionGenerator(object):
     """
         Creates a random numpy array (with type bool) generator that will set
