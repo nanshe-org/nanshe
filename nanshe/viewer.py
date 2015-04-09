@@ -75,7 +75,7 @@ from nanshe.util import iters, xnumpy
 
 
 
-class HDF5DatasetNotFoundException( Exception ):
+class HDF5DatasetNotFoundException(Exception):
     """
         An exception raised when a dataset is not found in an HDF5 file.
     """
@@ -83,7 +83,7 @@ class HDF5DatasetNotFoundException( Exception ):
 
 
 @prof.qt_log_class(trace_logger)
-class HDF5DataSource( QObject ):
+class HDF5DataSource(QObject):
     """
         Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.
 
@@ -100,10 +100,10 @@ class HDF5DataSource( QObject ):
 
     #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
-    isDirty = pyqtSignal( object )
+    isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    def __init__( self, file_handle, internal_path, record_name="", shape=None, dtype=None):
+    def __init__(self, file_handle, internal_path, record_name="", shape=None, dtype=None):
         """
             Constructs an HDF5DataSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -155,7 +155,7 @@ class HDF5DataSource( QObject ):
             raise(HDF5DatasetNotFoundException("Could not find the path \"" + self.dataset_path + "\" in filename " + "\"" + self.file_path + "\"."))
 
         # Fill in the shape and or dtype information if it doesn't already exist.
-        if ( (self.dataset_shape is None) and (self.dataset_dtype is None) ):
+        if ((self.dataset_shape is None) and (self.dataset_dtype is None)):
             dataset = self.file_handle[self.dataset_path]
 
             if self.record_name:
@@ -232,7 +232,7 @@ class HDF5DataSource( QObject ):
     def shape(self):
         return(self.dataset_shape)
 
-    def request( self, slicing ):
+    def request(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('HDF5DataSource: slicing is not pure')
 
@@ -242,18 +242,18 @@ class HDF5DataSource( QObject ):
 
         return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing, self.record_name))
 
-    def setDirty( self, slicing):
+    def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
-        self.isDirty.emit( slicing )
+        self.isDirty.emit(slicing)
 
-    def __eq__( self, other ):
+    def __eq__(self, other):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
-    def __ne__( self, other ):
+    def __ne__(self, other):
         if other is None:
             return True
 
@@ -263,7 +263,7 @@ assert issubclass(HDF5DataSource, SourceABC)
 
 
 @prof.log_class(trace_logger)
-class HDF5DataRequest( object ):
+class HDF5DataRequest(object):
     """
         Created by an HDF5DataSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -287,7 +287,7 @@ class HDF5DataRequest( object ):
     #TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
     #TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.
 
-    def __init__( self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, record_name="", throw_on_not_found=False ):
+    def __init__(self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, record_name="", throw_on_not_found=False):
         """
             Constructs an HDF5DataRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -331,7 +331,7 @@ class HDF5DataRequest( object ):
         # Convert to tuple as it is expected.
         self.actual_slicing = tuple(self.actual_slicing)
 
-    def wait( self ):
+    def wait(self):
         if self._result is None:
             # Construct a result the size of the slicing
             slicing_shape = iters.len_slices(self.slicing)
@@ -344,9 +344,9 @@ class HDF5DataRequest( object ):
                 if self.record_name:
                     # Copy out the bare minimum data.
                     # h5py does not allowing further index on the type within the compound type.
-                    a_result = dataset[ self.actual_slicing[:len(dataset.shape)] + (self.record_name,) ]
+                    a_result = dataset[self.actual_slicing[:len(dataset.shape)] + (self.record_name,)]
                     # Apply the remaining slicing to the data read.
-                    a_result = a_result[ len(dataset.shape) * (slice(None),) + self.actual_slicing[len(dataset.shape):] ]
+                    a_result = a_result[len(dataset.shape) * (slice(None),) + self.actual_slicing[len(dataset.shape):]]
                 else:
                     a_result = dataset[self.actual_slicing]
 
@@ -376,18 +376,18 @@ class HDF5DataRequest( object ):
     def getResult(self):
         return self._result
 
-    def cancel( self ):
+    def cancel(self):
         pass
 
-    def submit( self ):
+    def submit(self):
         pass
 
     # callback( result = result, **kwargs )
-    def notify( self, callback, **kwargs ):
-        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+    def notify(self, callback, **kwargs):
+        t = threading.Thread(target=self._doNotify, args=(callback, kwargs))
         t.start()
 
-    def _doNotify( self, callback, kwargs ):
+    def _doNotify(self, callback, kwargs):
         result = self.wait()
         callback(result, **kwargs)
 assert issubclass(HDF5DataRequest, RequestABC)
@@ -518,20 +518,20 @@ def createHDF5DataSource(full_path):
     return createHDF5DataSource(full_path, False)
 
 
-class HDF5NoFusedSourceException( Exception ):
+class HDF5NoFusedSourceException(Exception):
     pass
 
 
-class HDF5UndefinedShapeDtypeException( Exception ):
+class HDF5UndefinedShapeDtypeException(Exception):
     pass
 
 
 @prof.qt_log_class(trace_logger)
-class HDF5DataFusedSource( QObject ):
-    isDirty = pyqtSignal( object )
+class HDF5DataFusedSource(QObject):
+    isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
-    def __init__( self, fuse_axis, *data_sources, **kwargs):
+    def __init__(self, fuse_axis, *data_sources, **kwargs):
         super(HDF5DataFusedSource, self).__init__()
 
         if len(data_sources) == 0:
@@ -592,7 +592,7 @@ class HDF5DataFusedSource( QObject ):
     def shape(self):
         return self.data_shape
 
-    def request( self, slicing ):
+    def request(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('HDF5DataFusedSource: slicing is not pure')
 
@@ -631,22 +631,22 @@ class HDF5DataFusedSource( QObject ):
 
             selected_data_requests.append(each_data_request)
 
-        request = HDF5DataFusedRequest( self.fuse_axis, slicing_shape, self.data_dtype, *selected_data_requests )
+        request = HDF5DataFusedRequest(self.fuse_axis, slicing_shape, self.data_dtype, *selected_data_requests)
 
         return(request)
 
-    def setDirty( self, slicing):
+    def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
-        self.isDirty.emit( slicing )
+        self.isDirty.emit(slicing)
 
-    def __eq__( self, other ):
+    def __eq__(self, other):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
-    def __ne__( self, other ):
+    def __ne__(self, other):
         if other is None:
             return True
 
@@ -656,8 +656,8 @@ assert issubclass(HDF5DataFusedSource, SourceABC)
 
 
 @prof.log_class(trace_logger)
-class HDF5DataFusedRequest( object ):
-    def __init__( self, fuse_axis, data_shape, data_dtype, *data_requests ):
+class HDF5DataFusedRequest(object):
+    def __init__(self, fuse_axis, data_shape, data_dtype, *data_requests):
         # TODO: Look at adding assertion check on slices.
 
         self.fuse_axis = fuse_axis
@@ -667,7 +667,7 @@ class HDF5DataFusedRequest( object ):
 
         self._result = None
 
-    def wait( self ):
+    def wait(self):
         if self._result is None:
             if True:
                 self._result = numpy.zeros(self.data_shape, dtype=self.data_dtype)
@@ -687,18 +687,18 @@ class HDF5DataFusedRequest( object ):
     def getResult(self):
         return self._result
 
-    def cancel( self ):
+    def cancel(self):
         pass
 
-    def submit( self ):
+    def submit(self):
         pass
 
     # callback( result = result, **kwargs )
-    def notify( self, callback, **kwargs ):
-        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+    def notify(self, callback, **kwargs):
+        t = threading.Thread(target=self._doNotify, args=(callback, kwargs))
         t.start()
 
-    def _doNotify( self, callback, kwargs ):
+    def _doNotify(self, callback, kwargs):
         result = self.wait()
         callback(result, **kwargs)
 assert issubclass(HDF5DataFusedRequest, RequestABC)
@@ -723,7 +723,7 @@ class SyncedChannelLayers(object):
             self.currently_syncing_list = False
 
 
-class EnumeratedProjectionConstantSource( QObject ):
+class EnumeratedProjectionConstantSource(QObject):
     """
         Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.
 
@@ -739,11 +739,11 @@ class EnumeratedProjectionConstantSource( QObject ):
 
     #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
-    isDirty = pyqtSignal( object )
+    isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis=-1):
+    def __init__(self, constant_source, axis=-1):
         """
             Constructs an EnumeratedProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -765,7 +765,7 @@ class EnumeratedProjectionConstantSource( QObject ):
         self._shape = tuple(self._shape)
 
         # Real hacky solution for caching.
-        slicing = ( slice(None), ) * len(self._shape)
+        slicing = (slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
         self._constant_source_cached = xnumpy.enumerate_masks_max(self._constant_source_cached, axis=self.axis)
@@ -792,7 +792,7 @@ class EnumeratedProjectionConstantSource( QObject ):
         return(self._shape)
 
     @prof.log_call(trace_logger)
-    def request( self, slicing ):
+    def request(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('EnumeratedProjectionConstantSource: slicing is not pure')
 
@@ -807,20 +807,20 @@ class EnumeratedProjectionConstantSource( QObject ):
         )
 
     @prof.log_call(trace_logger)
-    def setDirty( self, slicing):
+    def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
-        self.isDirty.emit( slicing )
+        self.isDirty.emit(slicing)
 
     @prof.log_call(trace_logger)
-    def __eq__( self, other ):
+    def __eq__(self, other):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
     @prof.log_call(trace_logger)
-    def __ne__( self, other ):
+    def __ne__(self, other):
         if other is None:
             return True
 
@@ -829,7 +829,7 @@ class EnumeratedProjectionConstantSource( QObject ):
 assert issubclass(EnumeratedProjectionConstantSource, SourceABC)
 
 
-class EnumeratedProjectionConstantRequest( object ):
+class EnumeratedProjectionConstantRequest(object):
     """
         Created by an EnumeratedProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -844,7 +844,7 @@ class EnumeratedProjectionConstantRequest( object ):
     """
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_request, axis, slicing ):
+    def __init__(self, constant_request, axis, slicing):
         """
             Constructs an EnumeratedProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -864,7 +864,7 @@ class EnumeratedProjectionConstantRequest( object ):
         self._result = None
 
     @prof.log_call(trace_logger)
-    def wait( self ):
+    def wait(self):
         if self._result is None:
             # Get the result of the request needed
             self._result = self.constant_request.wait()
@@ -887,28 +887,28 @@ class EnumeratedProjectionConstantRequest( object ):
         return self._result
 
     @prof.log_call(trace_logger)
-    def cancel( self ):
+    def cancel(self):
         pass
 
     @prof.log_call(trace_logger)
-    def submit( self ):
+    def submit(self):
         pass
 
     # callback( result = result, **kwargs )
     @prof.log_call(trace_logger)
-    def notify( self, callback, **kwargs ):
-        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+    def notify(self, callback, **kwargs):
+        t = threading.Thread(target=self._doNotify, args=(callback, kwargs))
         t.start()
 
     @prof.log_call(trace_logger)
-    def _doNotify( self, callback, kwargs ):
+    def _doNotify(self, callback, kwargs):
         result = self.wait()
         callback(result, **kwargs)
 
 assert issubclass(EnumeratedProjectionConstantRequest, RequestABC)
 
 
-class ContourProjectionConstantSource( QObject ):
+class ContourProjectionConstantSource(QObject):
     """
         Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -924,11 +924,11 @@ class ContourProjectionConstantSource( QObject ):
 
     #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
-    isDirty = pyqtSignal( object )
+    isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis=-1):
+    def __init__(self, constant_source, axis=-1):
         """
             Constructs an ContourProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specifie            Args:
@@ -944,7 +944,7 @@ class ContourProjectionConstantSource( QObject ):
         self._shape = self.constant_source.shape()
 
         # Real hacky solution for caching.
-        slicing = ( slice(None), ) * len(self._shape)
+        slicing = (slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
         for i in xrange(self._constant_source_cached.shape[self.axis]):
@@ -973,7 +973,7 @@ class ContourProjectionConstantSource( QObject ):
         return(self._shape)
 
     @prof.log_call(trace_logger)
-    def request( self, slicing ):
+    def request(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('ContourProjectionConstantSource: slicing is not pure')
 
@@ -983,20 +983,20 @@ class ContourProjectionConstantSource( QObject ):
         )
 
     @prof.log_call(trace_logger)
-    def setDirty( self, slicing):
+    def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
-        self.isDirty.emit( slicing )
+        self.isDirty.emit(slicing)
 
     @prof.log_call(trace_logger)
-    def __eq__( self, other ):
+    def __eq__(self, other):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
     @prof.log_call(trace_logger)
-    def __ne__( self, other ):
+    def __ne__(self, other):
         if other is None:
             return True
 
@@ -1005,7 +1005,7 @@ class ContourProjectionConstantSource( QObject ):
 assert issubclass(ContourProjectionConstantSource, SourceABC)
 
 
-class ContourProjectionConstantRequest( object ):
+class ContourProjectionConstantRequest(object):
     """
         Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -1020,7 +1020,7 @@ class ContourProjectionConstantRequest( object ):
     """
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_request, axis, slicing ):
+    def __init__(self, constant_request, axis, slicing):
         """
             Constructs an ContourProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -1040,7 +1040,7 @@ class ContourProjectionConstantRequest( object ):
         self._result = None
 
     @prof.log_call(trace_logger)
-    def wait( self ):
+    def wait(self):
         if self._result is None:
             # Get the result of the request needed
             self._result = self.constant_request.wait()
@@ -1057,28 +1057,28 @@ class ContourProjectionConstantRequest( object ):
         return self._result
 
     @prof.log_call(trace_logger)
-    def cancel( self ):
+    def cancel(self):
         pass
 
     @prof.log_call(trace_logger)
-    def submit( self ):
+    def submit(self):
         pass
 
     # callback( result = result, **kwargs )
     @prof.log_call(trace_logger)
-    def notify( self, callback, **kwargs ):
-        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+    def notify(self, callback, **kwargs):
+        t = threading.Thread(target=self._doNotify, args=(callback, kwargs))
         t.start()
 
     @prof.log_call(trace_logger)
-    def _doNotify( self, callback, kwargs ):
+    def _doNotify(self, callback, kwargs):
         result = self.wait()
         callback(result, **kwargs)
 
 assert issubclass(ContourProjectionConstantRequest, RequestABC)
 
 
-class FloatProjectionConstantSource( QObject ):
+class FloatProjectionConstantSource(QObject):
     """
         Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -1094,11 +1094,11 @@ class FloatProjectionConstantSource( QObject ):
 
     #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
-    isDirty = pyqtSignal( object )
+    isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source):
+    def __init__(self, constant_source):
         """
             Constructs an FloatProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specific
@@ -1132,27 +1132,27 @@ class FloatProjectionConstantSource( QObject ):
         return(self._shape)
 
     @prof.log_call(trace_logger)
-    def request( self, slicing ):
+    def request(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('FloatProjectionConstantSource: slicing is not pure')
 
         return(FloatProjectionConstantRequest(self.constant_source.request(slicing)))
 
     @prof.log_call(trace_logger)
-    def setDirty( self, slicing):
+    def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
-        self.isDirty.emit( slicing )
+        self.isDirty.emit(slicing)
 
     @prof.log_call(trace_logger)
-    def __eq__( self, other ):
+    def __eq__(self, other):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
     @prof.log_call(trace_logger)
-    def __ne__( self, other ):
+    def __ne__(self, other):
         if other is None:
             return True
 
@@ -1161,7 +1161,7 @@ class FloatProjectionConstantSource( QObject ):
 assert issubclass(FloatProjectionConstantSource, SourceABC)
 
 
-class FloatProjectionConstantRequest( object ):
+class FloatProjectionConstantRequest(object):
     """
         Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -1176,7 +1176,7 @@ class FloatProjectionConstantRequest( object ):
     """
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_request ):
+    def __init__(self, constant_request):
         """
             Constructs an FloatProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -1192,7 +1192,7 @@ class FloatProjectionConstantRequest( object ):
         self._result = None
 
     @prof.log_call(trace_logger)
-    def wait( self ):
+    def wait(self):
         if self._result is None:
             # Get the result of the request needed
             self._result = self.constant_request.wait()
@@ -1209,28 +1209,28 @@ class FloatProjectionConstantRequest( object ):
         return self._result
 
     @prof.log_call(trace_logger)
-    def cancel( self ):
+    def cancel(self):
         pass
 
     @prof.log_call(trace_logger)
-    def submit( self ):
+    def submit(self):
         pass
 
     # callback( result = result, **kwargs )
     @prof.log_call(trace_logger)
-    def notify( self, callback, **kwargs ):
-        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+    def notify(self, callback, **kwargs):
+        t = threading.Thread(target=self._doNotify, args=(callback, kwargs))
         t.start()
 
     @prof.log_call(trace_logger)
-    def _doNotify( self, callback, kwargs ):
+    def _doNotify(self, callback, kwargs):
         result = self.wait()
         callback(result, **kwargs)
 
 assert issubclass(FloatProjectionConstantRequest, RequestABC)
 
 
-class MaxProjectionConstantSource( QObject ):
+class MaxProjectionConstantSource(QObject):
     """
         Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.
 
@@ -1246,11 +1246,11 @@ class MaxProjectionConstantSource( QObject ):
 
     #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
-    isDirty = pyqtSignal( object )
+    isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis=-1):
+    def __init__(self, constant_source, axis=-1):
         """
             Constructs an MaxProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -1272,7 +1272,7 @@ class MaxProjectionConstantSource( QObject ):
         self._shape = tuple(self._shape)
 
         # Real hacky solution for caching.
-        slicing = ( slice(None), ) * len(self._shape)
+        slicing = (slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
         self._constant_source_cached = self._constant_source_cached.max(axis=self.axis)
@@ -1300,7 +1300,7 @@ class MaxProjectionConstantSource( QObject ):
         return(self._shape)
 
     @prof.log_call(trace_logger)
-    def request( self, slicing ):
+    def request(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('MaxProjectionConstantSource: slicing is not pure')
 
@@ -1315,20 +1315,20 @@ class MaxProjectionConstantSource( QObject ):
         )
 
     @prof.log_call(trace_logger)
-    def setDirty( self, slicing):
+    def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
-        self.isDirty.emit( slicing )
+        self.isDirty.emit(slicing)
 
     @prof.log_call(trace_logger)
-    def __eq__( self, other ):
+    def __eq__(self, other):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
     @prof.log_call(trace_logger)
-    def __ne__( self, other ):
+    def __ne__(self, other):
         if other is None:
             return True
 
@@ -1337,7 +1337,7 @@ class MaxProjectionConstantSource( QObject ):
 assert issubclass(MaxProjectionConstantSource, SourceABC)
 
 
-class MaxProjectionConstantRequest( object ):
+class MaxProjectionConstantRequest(object):
     """
         Created by an MaxProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -1352,7 +1352,7 @@ class MaxProjectionConstantRequest( object ):
     """
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_request, axis, slicing ):
+    def __init__(self, constant_request, axis, slicing):
         """
             Constructs an MaxProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -1372,7 +1372,7 @@ class MaxProjectionConstantRequest( object ):
         self._result = None
 
     @prof.log_call(trace_logger)
-    def wait( self ):
+    def wait(self):
         if self._result is None:
             # Get the result of the request needed
             self._result = self.constant_request.wait()
@@ -1395,28 +1395,28 @@ class MaxProjectionConstantRequest( object ):
         return self._result
 
     @prof.log_call(trace_logger)
-    def cancel( self ):
+    def cancel(self):
         pass
 
     @prof.log_call(trace_logger)
-    def submit( self ):
+    def submit(self):
         pass
 
     # callback( result = result, **kwargs )
     @prof.log_call(trace_logger)
-    def notify( self, callback, **kwargs ):
-        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+    def notify(self, callback, **kwargs):
+        t = threading.Thread(target=self._doNotify, args=(callback, kwargs))
         t.start()
 
     @prof.log_call(trace_logger)
-    def _doNotify( self, callback, kwargs ):
+    def _doNotify(self, callback, kwargs):
         result = self.wait()
         callback(result, **kwargs)
 
 assert issubclass(MaxProjectionConstantRequest, RequestABC)
 
 
-class MeanProjectionConstantSource( QObject ):
+class MeanProjectionConstantSource(QObject):
     """
         Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a mean projection.
 
@@ -1432,11 +1432,11 @@ class MeanProjectionConstantSource( QObject ):
 
     #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
-    isDirty = pyqtSignal( object )
+    isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_source, axis=-1):
+    def __init__(self, constant_source, axis=-1):
         """
             Constructs an MeanProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
             can be specified.
@@ -1458,7 +1458,7 @@ class MeanProjectionConstantSource( QObject ):
         self._shape = tuple(self._shape)
 
         # Real hacky solution for caching.
-        slicing = ( slice(None), ) * len(self._shape)
+        slicing = (slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
         self._constant_source_cached = self._constant_source_cached.mean(axis=self.axis)
@@ -1486,7 +1486,7 @@ class MeanProjectionConstantSource( QObject ):
         return(self._shape)
 
     @prof.log_call(trace_logger)
-    def request( self, slicing ):
+    def request(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('MeanProjectionConstantSource: slicing is not pure')
 
@@ -1501,20 +1501,20 @@ class MeanProjectionConstantSource( QObject ):
         )
 
     @prof.log_call(trace_logger)
-    def setDirty( self, slicing):
+    def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
             raise Exception('dirty region: slicing is not pure')
-        self.isDirty.emit( slicing )
+        self.isDirty.emit(slicing)
 
     @prof.log_call(trace_logger)
-    def __eq__( self, other ):
+    def __eq__(self, other):
         if other is None:
             return False
 
         return(self.full_path == other.full_path)
 
     @prof.log_call(trace_logger)
-    def __ne__( self, other ):
+    def __ne__(self, other):
         if other is None:
             return True
 
@@ -1523,7 +1523,7 @@ class MeanProjectionConstantSource( QObject ):
 assert issubclass(MeanProjectionConstantSource, SourceABC)
 
 
-class MeanProjectionConstantRequest( object ):
+class MeanProjectionConstantRequest(object):
     """
         Created by an MeanProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
 
@@ -1538,7 +1538,7 @@ class MeanProjectionConstantRequest( object ):
     """
 
     @prof.log_call(trace_logger)
-    def __init__( self, constant_request, axis, slicing ):
+    def __init__(self, constant_request, axis, slicing):
         """
             Constructs an MeanProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
@@ -1558,7 +1558,7 @@ class MeanProjectionConstantRequest( object ):
         self._result = None
 
     @prof.log_call(trace_logger)
-    def wait( self ):
+    def wait(self):
         if self._result is None:
             # Get the result of the request needed
             self._result = self.constant_request.wait()
@@ -1581,21 +1581,21 @@ class MeanProjectionConstantRequest( object ):
         return self._result
 
     @prof.log_call(trace_logger)
-    def cancel( self ):
+    def cancel(self):
         pass
 
     @prof.log_call(trace_logger)
-    def submit( self ):
+    def submit(self):
         pass
 
     # callback( result = result, **kwargs )
     @prof.log_call(trace_logger)
-    def notify( self, callback, **kwargs ):
-        t = threading.Thread(target=self._doNotify, args=( callback, kwargs ))
+    def notify(self, callback, **kwargs):
+        t = threading.Thread(target=self._doNotify, args=(callback, kwargs))
         t.start()
 
     @prof.log_call(trace_logger)
-    def _doNotify( self, callback, kwargs ):
+    def _doNotify(self, callback, kwargs):
         result = self.wait()
         callback(result, **kwargs)
 
