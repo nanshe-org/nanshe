@@ -23,16 +23,16 @@ class TestHDF5Searchers(object):
         for _ in TestHDF5Searchers.groups_0:
             for __ in TestHDF5Searchers.groups_1:
                 if not ((_ == TestHDF5Searchers.groups_0[0]) and (__ == TestHDF5Searchers.groups_1[0])):
-                    yield( u"/" + u"/".join([u"test", _, u"group", __, u"data"]) )
+                    yield(u"/" + u"/".join([u"test", _, u"group", __, u"data"]))
                 else:
-                    yield( u"/" + u"/".join([u"test", _, u"group", __]) )
+                    yield(u"/" + u"/".join([u"test", _, u"group", __]))
 
     @staticmethod
     def get_matching_paths_generator():
         for _ in TestHDF5Searchers.groups_0:
             for __ in TestHDF5Searchers.groups_1:
                 if not ((_ == TestHDF5Searchers.groups_0[0]) and (__ == TestHDF5Searchers.groups_1[0])):
-                    yield( u"/" + u"/".join([u"test", _, u"group", __, u"data"]) )
+                    yield(u"/" + u"/".join([u"test", _, u"group", __, u"data"]))
 
     @staticmethod
     def get_matching_paths_groups_generator():
@@ -45,7 +45,7 @@ class TestHDF5Searchers(object):
     @staticmethod
     def match_path_groups_gen(group_matches):
         for _ in itertools.product(*group_matches):
-            yield( u"/" + u"/".join(_) )
+            yield(u"/" + u"/".join(_))
 
     @staticmethod
     def get_matching_grouped_paths_gen():
