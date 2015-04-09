@@ -187,10 +187,12 @@ def get_standard_tiff_array(new_tiff_filename, axis_order="tzyxc", pages_to_chan
     if pages_to_channel > 1:
         new_tiff_array = new_tiff_array.reshape(new_tiff_array.shape[:-2] + (new_tiff_array.shape[-2] / pages_to_channel, pages_to_channel * new_tiff_array.shape[-1],))
 
-    new_tiff_array = xnumpy.tagging_reorder_array(new_tiff_array,
-                                                          from_axis_order="zyxtc",
-                                                          to_axis_order=axis_order,
-                                                          to_copy=True)
+    new_tiff_array = xnumpy.tagging_reorder_array(
+        new_tiff_array,
+        from_axis_order="zyxtc",
+        to_axis_order=axis_order,
+        to_copy=True
+    )
 
     return(new_tiff_array)
 
