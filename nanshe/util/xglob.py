@@ -1,4 +1,16 @@
 """
+The module ``xglob`` extends the abilities found in Python's ``glob``.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``xglob`` extends the abilities found in |glob|_. In particular, it
+provides a function for iterating through several glob expressions and joining
+them together.
+
+.. |glob| replace:: ``glob``
+.. _glob: http://docs.python.org/2/library/glob.html
+
 ===============================================================================
 API
 ===============================================================================
