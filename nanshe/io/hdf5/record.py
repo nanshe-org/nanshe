@@ -1,4 +1,37 @@
 """
+The module ``record`` provides the equivalent of a logger for array data.
+
+===============================================================================
+Overview
+===============================================================================
+Applying the decorator ``static_subgrouping_array_recorders`` with the names of
+desired recorders as strings or keyword arguments with a given recorder
+instance initializes the ``recorders`` attribute, which contains each recorder
+as a dictionary would. Results are stored under a group named after decorated
+function. Nested function calls can be paralleled by nesting results within
+groups. All that is required is that the recorder be assigned from outer scope
+to inner (see example below).
+
+.. code:: python
+
+    @static_subgrouping_array_recorders("r")
+    def a(x):
+        a.r = x
+        return x * x.T
+
+    @static_subgrouping_array_recorders("r")
+    def b(x, y):
+        a.r = b.r
+        return a(x + y)
+
+All recorders default to an instance of ``EmptyArrayRecorder`` unless otherwise
+specified. All operations work on them exactly the same, but no recording
+occurs. This guarantees that code using recorders will not break if they don't
+have them. A similar strategy can be applied for classes and their methods by
+using ``class_static_array_debug_recorder``.
+
+.. todo:: Complete documentation with more examples.
+
 ===============================================================================
 API
 ===============================================================================
