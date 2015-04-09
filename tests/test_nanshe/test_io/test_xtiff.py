@@ -58,8 +58,10 @@ class TestXTiff(object):
 
     def test_get_multipage_tiff_shape_dtype_transformed(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_shape_dtype = nanshe.io.xtiff.get_multipage_tiff_shape_dtype_transformed(each_filename,
-                                                                                                  axis_order="tzyxc")
+            each_shape_dtype = nanshe.io.xtiff.get_multipage_tiff_shape_dtype_transformed(
+                each_filename,
+                axis_order="tzyxc"
+            )
 
             assert (each_shape_dtype["shape"] == each_filedata.shape)
             assert (each_shape_dtype["dtype"] == each_filedata.dtype.type)
