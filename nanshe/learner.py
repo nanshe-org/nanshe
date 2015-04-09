@@ -306,7 +306,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
         assert (parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] <= half_window_shape_array[0])
 
     # Estimate bounds for each slice. Uses typical python [begin, end) for the indices.
-    estimated_bounds = numpy.zeros( tuple(num_blocks_array) , dtype=(int, original_images_pared_shape_array.shape + (2,)) )
+    estimated_bounds = numpy.zeros( tuple(num_blocks_array), dtype=(int, original_images_pared_shape_array.shape + (2,)) )
 
     for each_block_indices in iters.index_generator(*num_blocks_array):
         for each_dim, each_block_dim_index in enumerate(each_block_indices):
