@@ -160,9 +160,9 @@ def log_call(logger, to_log_call=True, to_print_args=False, to_print_time=True, 
 
         @wrappers.wraps(callable)
         @wrappers.static_variables(to_log_call=to_log_call,
-                                             to_print_args=to_print_args,
-                                             to_print_time=to_print_time,
-                                             to_print_exception=to_print_exception)
+                                   to_print_args=to_print_args,
+                                   to_print_time=to_print_time,
+                                   to_print_exception=to_print_exception)
         def log_call_callable_wrapped(*args, **kwargs):
             """
                 This is what will replace the original callable. It will behave the same except it will now log its
@@ -251,11 +251,13 @@ def log_class(logger, to_log_call=True, to_print_args=False, to_print_time=True,
             log_call_decorator (for wrapping)
     """
 
-    return(wrappers.class_decorate_all_methods(log_call(logger,
-                                                                  to_log_call=to_log_call,
-                                                                  to_print_args=to_print_args,
-                                                                  to_print_time=to_print_time,
-                                                                  to_print_exception=to_print_exception)))
+    return(wrappers.class_decorate_all_methods(log_call(
+        logger,
+        to_log_call=to_log_call,
+        to_print_args=to_print_args,
+        to_print_time=to_print_time,
+        to_print_exception=to_print_exception
+    )))
 
 
 def qt_log_class(logger, to_log_call=True, to_print_args=False, to_print_time=True, to_print_exception=False):
@@ -286,11 +288,13 @@ def qt_log_class(logger, to_log_call=True, to_print_args=False, to_print_time=Tr
             log_call_decorator (for wrapping)
     """
 
-    return(wrappers.qt_class_decorate_all_methods(log_call(logger,
-                                                                     to_log_call=to_log_call,
-                                                                     to_print_args=to_print_args,
-                                                                     to_print_time=to_print_time,
-                                                                     to_print_exception=to_print_exception)))
+    return(wrappers.qt_class_decorate_all_methods(log_call(
+        logger,
+        to_log_call=to_log_call,
+        to_print_args=to_print_args,
+        to_print_time=to_print_time,
+        to_print_exception=to_print_exception
+    )))
 
 
 @wrappers.static_variables(to_run=True)
