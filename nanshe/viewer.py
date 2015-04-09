@@ -794,17 +794,20 @@ class EnumeratedProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def request(self, slicing):
         if not is_pure_slicing(slicing):
-            raise Exception('EnumeratedProjectionConstantSource: slicing is not pure')
+            raise Exception(
+                'EnumeratedProjectionConstantSource: slicing is not pure'
+            )
 
         # Drop the slicing for the axis where the projection is being applied.
         constant_source_slicing = list(slicing)
         constant_source_slicing[self.axis] = slice(None)
         constant_source_slicing = tuple(constant_source_slicing)
 
-        return(EnumeratedProjectionConstantRequest(self._constant_source_cached_array_request,
-                                            self.axis,
-                                            slicing)
-        )
+        return(EnumeratedProjectionConstantRequest(
+            self._constant_source_cached_array_request,
+            self.axis,
+            slicing
+        ))
 
     @prof.log_call(trace_logger)
     def setDirty(self, slicing):
@@ -873,7 +876,9 @@ class EnumeratedProjectionConstantRequest(object):
             self._result = numpy.max(self._result, axis=self.axis)
 
             # Add singleton axis where max was performed
-            self._result = xnumpy.add_singleton_axis_pos(self._result, self.axis)
+            self._result = xnumpy.add_singleton_axis_pos(
+                self._result, self.axis
+            )
 
             # Take the slice the viewer wanted
             self._result = self._result[self.slicing]
@@ -948,10 +953,16 @@ class ContourProjectionConstantSource(QObject):
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
         for i in xrange(self._constant_source_cached.shape[self.axis]):
-            _constant_source_cached_i = xnumpy.index_axis_at_pos(self._constant_source_cached, self.axis, i)
-            _constant_source_cached_i[:] = xnumpy.generate_contour(_constant_source_cached_i)
+            _constant_source_cached_i = xnumpy.index_axis_at_pos(
+                self._constant_source_cached, self.axis, i
+            )
+            _constant_source_cached_i[:] = xnumpy.generate_contour(
+                _constant_source_cached_i
+            )
 
-        self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
+        self._constant_source_cached_array_source = ArraySource(
+            self._constant_source_cached
+        )
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
 
     @prof.log_call(trace_logger)
@@ -977,10 +988,11 @@ class ContourProjectionConstantSource(QObject):
         if not is_pure_slicing(slicing):
             raise Exception('ContourProjectionConstantSource: slicing is not pure')
 
-        return(ContourProjectionConstantRequest(self._constant_source_cached_array_request,
-                                            self.axis,
-                                            slicing)
-        )
+        return(ContourProjectionConstantRequest(
+            self._constant_source_cached_array_request,
+            self.axis,
+            slicing
+        ))
 
     @prof.log_call(trace_logger)
     def setDirty(self, slicing):
@@ -1275,10 +1287,16 @@ class MaxProjectionConstantSource(QObject):
         slicing = (slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
-        self._constant_source_cached = self._constant_source_cached.max(axis=self.axis)
-        self._constant_source_cached = xnumpy.add_singleton_axis_pos(self._constant_source_cached, self.axis)
+        self._constant_source_cached = self._constant_source_cached.max(
+            axis=self.axis
+        )
+        self._constant_source_cached = xnumpy.add_singleton_axis_pos(
+            self._constant_source_cached, self.axis
+        )
 
-        self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
+        self._constant_source_cached_array_source = ArraySource(
+            self._constant_source_cached
+        )
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
 
     @prof.log_call(trace_logger)
@@ -1309,10 +1327,11 @@ class MaxProjectionConstantSource(QObject):
         constant_source_slicing[self.axis] = slice(None)
         constant_source_slicing = tuple(constant_source_slicing)
 
-        return(MaxProjectionConstantRequest(self._constant_source_cached_array_request,
-                                            self.axis,
-                                            slicing)
-        )
+        return(MaxProjectionConstantRequest(
+            self._constant_source_cached_array_request,
+            self.axis,
+            slicing
+        ))
 
     @prof.log_call(trace_logger)
     def setDirty(self, slicing):
@@ -1381,7 +1400,9 @@ class MaxProjectionConstantRequest(object):
             self._result = numpy.max(self._result, axis=self.axis)
 
             # Add singleton axis where max was performed
-            self._result = xnumpy.add_singleton_axis_pos(self._result, self.axis)
+            self._result = xnumpy.add_singleton_axis_pos(
+                self._result, self.axis
+            )
 
             # Take the slice the viewer wanted
             self._result = self._result[self.slicing]
@@ -1461,10 +1482,16 @@ class MeanProjectionConstantSource(QObject):
         slicing = (slice(None), ) * len(self._shape)
 
         self._constant_source_cached = self.constant_source.request(slicing).wait()
-        self._constant_source_cached = self._constant_source_cached.mean(axis=self.axis)
-        self._constant_source_cached = xnumpy.add_singleton_axis_pos(self._constant_source_cached, self.axis)
+        self._constant_source_cached = self._constant_source_cached.mean(
+            axis=self.axis
+        )
+        self._constant_source_cached = xnumpy.add_singleton_axis_pos(
+            self._constant_source_cached, self.axis
+        )
 
-        self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
+        self._constant_source_cached_array_source = ArraySource(
+            self._constant_source_cached
+        )
         self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
 
     @prof.log_call(trace_logger)
@@ -1495,10 +1522,11 @@ class MeanProjectionConstantSource(QObject):
         constant_source_slicing[self.axis] = slice(None)
         constant_source_slicing = tuple(constant_source_slicing)
 
-        return(MeanProjectionConstantRequest(self._constant_source_cached_array_request,
-                                            self.axis,
-                                            slicing)
-        )
+        return(MeanProjectionConstantRequest(
+            self._constant_source_cached_array_request,
+            self.axis,
+            slicing
+        ))
 
     @prof.log_call(trace_logger)
     def setDirty(self, slicing):
@@ -1567,7 +1595,9 @@ class MeanProjectionConstantRequest(object):
             self._result = numpy.mean(self._result, axis=self.axis)
 
             # Add singleton axis where mean was performed
-            self._result = xnumpy.add_singleton_axis_pos(self._result, self.axis)
+            self._result = xnumpy.add_singleton_axis_pos(
+                self._result, self.axis
+            )
 
             # Take the slice the viewer wanted
             self._result = self._result[self.slicing]
@@ -1614,13 +1644,24 @@ def main(*argv):
     argv = list(argv)
 
     # Creates command line parser
-    parser = argparse.ArgumentParser(description="Parses input from the command line for a batch job.")
+    parser = argparse.ArgumentParser(
+        description="Parses input from the command line for a batch job."
+    )
 
     # Takes a config file and then a series of one or more HDF5 files.
-    parser.add_argument("config_filename", metavar="CONFIG_FILE", type=str,
-                        help="JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations.")
-    parser.add_argument("input_files", metavar="INPUT_FILE", type=str, nargs='+',
-                        help="HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file.")
+    parser.add_argument(
+        "config_filename",
+        metavar="CONFIG_FILE",
+        type=str,
+        help="JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations."
+    )
+    parser.add_argument(
+        "input_files",
+        metavar="INPUT_FILE",
+        type=str,
+        nargs='+',
+        help="HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file."
+    )
 
     # Results of parsing arguments (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
@@ -1628,15 +1669,21 @@ def main(*argv):
     # Go ahead and stuff in parameters with the other parsed_args
     # A little risky if parsed_args may later contain a parameters variable due to changing the main file
     # or argparse changing behavior; however, this keeps all arguments in the same place.
-    parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename, maintain_order=True)
+    parsed_args.parameters = xjson.read_parameters(
+        parsed_args.config_filename, maintain_order=True
+    )
 
     # Open all of the files and store their handles
     parsed_args.file_handles = []
     for i in xrange(len(parsed_args.input_files)):
         parsed_args.input_files[i] = parsed_args.input_files[i].rstrip("/")
-        parsed_args.input_files[i] = os.path.abspath(parsed_args.input_files[i])
+        parsed_args.input_files[i] = os.path.abspath(
+            parsed_args.input_files[i]
+        )
 
-        parsed_args.file_handles.append(h5py.File(parsed_args.input_files[i], "r"))
+        parsed_args.file_handles.append(
+            h5py.File(parsed_args.input_files[i], "r")
+        )
 
     # Make all each_layer_source_location_dict is a dict whether they were or not before
     # The key will be the operation to perform and the values will be what to perform the operation on.
@@ -1649,7 +1696,9 @@ def main(*argv):
             each_layer_source_location_dict_inner = each_layer_source_location_dict
             while isinstance(each_layer_source_location_dict_inner, dict):
                 assert (len(each_layer_source_location_dict_inner) == 1)
-                each_layer_source_operation_names.extend(each_layer_source_location_dict_inner.keys())
+                each_layer_source_operation_names.extend(
+                    each_layer_source_location_dict_inner.keys()
+                )
                 each_layer_source_location_dict_inner = each_layer_source_location_dict_inner.values()[0]
 
             if isinstance(each_layer_source_location_dict_inner, str):
@@ -1659,7 +1708,10 @@ def main(*argv):
 
             each_layer_source_location_list = each_layer_source_location_dict_inner
 
-            parsed_args.parameters[i][each_layer_name] = [each_layer_source_operation_names, each_layer_source_location_list]
+            parsed_args.parameters[i][each_layer_name] = [
+                each_layer_source_operation_names,
+                each_layer_source_location_list
+            ]
 
     # Find all possible matches and whether they exist or not
     parsed_args.parameters_expanded = list()
@@ -1710,7 +1762,7 @@ def main(*argv):
                     # Try to make the source. If it fails, we take no source.
                     try:
                         if len(each_layer_source_operation_names) and ((each_layer_source_operation_names[-1].startswith("[\"") and each_layer_source_operation_names[-1].endswith("\"]")) or \
-                            (each_layer_source_operation_names[-1].startswith("['") and each_layer_source_operation_names[-1].endswith("']"))):
+                                                                       (each_layer_source_operation_names[-1].startswith("['") and each_layer_source_operation_names[-1].endswith("']"))):
                             each_file_source = HDF5DataSource(each_file, each_layer_source_location, each_layer_source_operation_names.pop(-1)[2:-2])
                         else:
                             each_file_source = HDF5DataSource(each_file, each_layer_source_location)
@@ -1748,11 +1800,17 @@ def main(*argv):
                     each_layer = None
                     each_source_dtype = numpy.dtype(each_source.dtype()).type
                     if issubclass(each_source_dtype, numpy.integer):
-                        each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
+                        each_layer = viewer.addColorTableHDF5Source(
+                            each_source, each_source.shape(), each_layer_name
+                        )
                     elif issubclass(each_source_dtype, numpy.floating):
-                        each_layer = viewer.addGrayscaleHDF5Source(each_source, each_source.shape(), each_layer_name)
+                        each_layer = viewer.addGrayscaleHDF5Source(
+                            each_source, each_source.shape(), each_layer_name
+                        )
                     elif issubclass(each_source_dtype, numpy.bool_):
-                        each_layer = viewer.addColorTableHDF5Source(each_source, each_source.shape(), each_layer_name)
+                        each_layer = viewer.addColorTableHDF5Source(
+                            each_source, each_source.shape(), each_layer_name
+                        )
 
                     each_layer.visible = False
 
