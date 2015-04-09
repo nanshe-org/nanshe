@@ -505,10 +505,10 @@ def preprocess_data(new_data, out=None, **parameters):
     if "wavelet.transform" in parameters:
         wavelet.transform.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
         wavelet.transform(new_data_maybe_wavelet_result,
-                                            include_intermediates=False,
-                                            include_lower_scales=False,
-                                            out=new_data_maybe_wavelet_result,
-                                            **parameters["wavelet.transform"])
+                          include_intermediates=False,
+                          include_lower_scales=False,
+                          out=new_data_maybe_wavelet_result,
+                          **parameters["wavelet.transform"])
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed"] = new_data_maybe_wavelet_result
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = xnumpy.add_singleton_op(
             numpy.max,
@@ -589,7 +589,7 @@ def generate_dictionary(new_data, **parameters):
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary, spams.nmf? (may be too slow))
     new_dictionary = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(new_data_processed,
-                                                                                                 **parameters["spams.trainDL"])
+                                                                                       **parameters["spams.trainDL"])
 
     # Fix dictionary so that the first index will be the particular image.
     # The rest will be the shape of an image (same as input shape).
@@ -2148,7 +2148,7 @@ def wavelet_denoising(new_image,
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = \
                 watershed_local_maxima.label_image[None]
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = \
-                               xnumpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
+                xnumpy.generate_labeled_contours(watershed_local_maxima.label_image > 0)[None]
 
             if watershed_local_maxima.props.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
@@ -2160,8 +2160,10 @@ def wavelet_denoising(new_image,
                 neurons = numpy.zeros(len(watershed_local_maxima.props), dtype=neurons.dtype)
 
                 # Get masks for all cells
-                neurons["mask"] = xnumpy.all_permutations_equal(watershed_local_maxima.props["label"],
-                                                                        watershed_local_maxima.label_image)
+                neurons["mask"] = xnumpy.all_permutations_equal(
+                    watershed_local_maxima.props["label"],
+                    watershed_local_maxima.label_image
+                )
 
                 neurons["image"] = new_image * neurons["mask"]
 
@@ -2308,10 +2310,10 @@ def merge_neuron_sets(new_neuron_set_1,
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
 def merge_neuron_sets_once(new_neuron_set_1,
-                      new_neuron_set_2,
-                      alignment_min_threshold,
-                      overlap_min_threshold,
-                      **parameters):
+                           new_neuron_set_2,
+                           alignment_min_threshold,
+                           overlap_min_threshold,
+                           **parameters):
     """
         Merges the two sets of neurons into one. Appends neurons that cannot be merged with the existing set.
 
@@ -2365,9 +2367,11 @@ def merge_neuron_sets_once(new_neuron_set_1,
         new_neuron_set_2_flattened_mask = xnumpy.array_to_matrix(new_neuron_set_2["mask"])
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = xnumpy.dot_product_normalized(new_neuron_set_1_flattened,
-                                                                     new_neuron_set_2_flattened,
-                                                                     ord=2)
+        new_neuron_set_angle = xnumpy.dot_product_normalized(
+            new_neuron_set_1_flattened,
+            new_neuron_set_2_flattened,
+            ord=2
+        )
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_angle"] = new_neuron_set_angle
 
@@ -2388,9 +2392,9 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_angle_all_optimal_i"] = new_neuron_set_angle_all_optimal_i
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_all_optimal_i"] = \
-                           new_neuron_set_masks_overlaid_1_all_optimal_i
+            new_neuron_set_masks_overlaid_1_all_optimal_i
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_all_optimal_i"] = \
-                           new_neuron_set_masks_overlaid_2_all_optimal_i
+            new_neuron_set_masks_overlaid_2_all_optimal_i
 
         # Get all the j indices
         new_neuron_set_all_j = numpy.arange(len(new_neuron_set_2))
@@ -2421,9 +2425,9 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_angle_maxes_significant_0"] = new_neuron_set_angle_maxes_significant
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_maxes_significant_0"] = \
-                           new_neuron_set_masks_overlaid_1_maxes_significant
+            new_neuron_set_masks_overlaid_1_maxes_significant
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_maxes_significant_0"] = \
-                           new_neuron_set_masks_overlaid_2_maxes_significant
+            new_neuron_set_masks_overlaid_2_maxes_significant
 
         # Get masks that indicate which measurements have the best matching neuron
         new_neuron_set_angle_maxes_significant[
@@ -2436,9 +2440,9 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_angle_maxes_significant_1"] = new_neuron_set_angle_maxes_significant
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_maxes_significant_1"] = \
-                           new_neuron_set_masks_overlaid_1_maxes_significant
+            new_neuron_set_masks_overlaid_1_maxes_significant
         merge_neuron_sets_once.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_maxes_significant_1"] = \
-                           new_neuron_set_masks_overlaid_2_maxes_significant
+            new_neuron_set_masks_overlaid_2_maxes_significant
 
         # Using the masks construct the best match neuron index for each case
         # After doing these three, new_neuron_set_all_optimal_i will contain either
@@ -2572,8 +2576,10 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         new_neuron_set_flattened_mask = xnumpy.array_to_matrix(new_neuron_set["mask"])
 
         # Measure the normalized dot product between any two neurons (i.e. related to the angle of separation)
-        new_neuron_set_angle = xnumpy.pair_dot_product_normalized(new_neuron_set_flattened_image,
-                                                                          ord=2)
+        new_neuron_set_angle = xnumpy.pair_dot_product_normalized(
+            new_neuron_set_flattened_image,
+            ord=2
+        )
         new_neuron_set_angle = numpy.triu(new_neuron_set_angle, k=1)
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle"] = new_neuron_set_angle
@@ -2599,9 +2605,9 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle_all_optimal_i"] = new_neuron_set_angle_all_optimal_i
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_all_optimal_i"] = \
-                           new_neuron_set_masks_overlaid_1_all_optimal_i
+            new_neuron_set_masks_overlaid_1_all_optimal_i
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_all_optimal_i"] = \
-                           new_neuron_set_masks_overlaid_2_all_optimal_i
+            new_neuron_set_masks_overlaid_2_all_optimal_i
 
         # Get all the j indices
         new_neuron_set_all_j = numpy.arange(len(new_neuron_set))
@@ -2632,9 +2638,9 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle_maxes_significant_0"] = new_neuron_set_angle_maxes_significant
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_maxes_significant_0"] = \
-                           new_neuron_set_masks_overlaid_1_maxes_significant
+            new_neuron_set_masks_overlaid_1_maxes_significant
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_maxes_significant_0"] = \
-                           new_neuron_set_masks_overlaid_2_maxes_significant
+            new_neuron_set_masks_overlaid_2_maxes_significant
 
         already_matched = numpy.zeros((len(new_neuron_set),), dtype=bool)
 
@@ -2646,19 +2652,19 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         already_matched[new_neuron_set_angle_all_optimal_i[new_neuron_set_angle_maxes_significant]] |= True
 
         new_neuron_set_masks_overlaid_1_maxes_significant[~already_matched &
-            (new_neuron_set_masks_overlaid_1_maxes > overlap_min_threshold)] = True
+                                                          (new_neuron_set_masks_overlaid_1_maxes > overlap_min_threshold)] = True
 
         already_matched |= new_neuron_set_masks_overlaid_1_maxes_significant
         already_matched[new_neuron_set_masks_overlaid_1_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant]] |= True
 
         new_neuron_set_masks_overlaid_2_maxes_significant[~already_matched &
-            (new_neuron_set_masks_overlaid_2_maxes_significant > overlap_min_threshold)] = True
+                                                          (new_neuron_set_masks_overlaid_2_maxes_significant > overlap_min_threshold)] = True
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle_maxes_significant_1"] = new_neuron_set_angle_maxes_significant
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_maxes_significant_1"] = \
-                           new_neuron_set_masks_overlaid_1_maxes_significant
+            new_neuron_set_masks_overlaid_1_maxes_significant
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_maxes_significant_1"] = \
-                           new_neuron_set_masks_overlaid_2_maxes_significant
+            new_neuron_set_masks_overlaid_2_maxes_significant
 
         # Using the masks construct the best match neuron index for each case
         # After doing these three, new_neuron_set_all_optimal_i will contain either
