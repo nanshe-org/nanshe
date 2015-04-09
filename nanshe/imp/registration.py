@@ -1,4 +1,15 @@
 """
+The ``registration`` module helps bring image stacks into alignment.
+
+===============================================================================
+Overview
+===============================================================================
+The registration algorithm developed by Wenzhi Sun. The strategy uses an
+area-based method for registration. Namely, it takes a template image (the mean
+projection) and finds the translations required for each frame to overlap
+optimally with the template image. Then a number of adjustments are made to the
+shifts to ensure that unnecessary translations are not preformed.
+
 ===============================================================================
 API
 ===============================================================================
