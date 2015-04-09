@@ -285,5 +285,5 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis=0, channel=0, z_in
 
             # Store into the current slice and go to the next one.
             new_hdf5_dataset_axis_pos_next = new_hdf5_dataset_axis_pos + len(each_new_tiff_array)
-            new_hdf5_dataset[ new_hdf5_dataset_axis_pos : new_hdf5_dataset_axis_pos_next ] = each_new_tiff_array
+            new_hdf5_dataset[new_hdf5_dataset_axis_pos : new_hdf5_dataset_axis_pos_next] = each_new_tiff_array
             new_hdf5_dataset_axis_pos = new_hdf5_dataset_axis_pos_next
