@@ -736,8 +736,8 @@ class TestLearner(object):
         self.masks = nanshe.syn.data.generate_hypersphere_masks(self.space, self.points, self.radii)
         self.images = nanshe.syn.data.generate_gaussian_images(self.space, self.points, self.radii/3.0, self.magnitudes) * self.masks
 
-        self.bases_masks = numpy.zeros((len(self.bases_indices),) + self.masks.shape[1:] , dtype=self.masks.dtype)
-        self.bases_images = numpy.zeros((len(self.bases_indices),) + self.images.shape[1:] , dtype=self.images.dtype)
+        self.bases_masks = numpy.zeros((len(self.bases_indices),) + self.masks.shape[1:], dtype=self.masks.dtype)
+        self.bases_images = numpy.zeros((len(self.bases_indices),) + self.images.shape[1:], dtype=self.images.dtype)
 
         for i, each_basis_indices in enumerate(self.bases_indices):
             self.bases_masks[i] = self.masks[list(each_basis_indices)].max(axis=0)
@@ -768,8 +768,8 @@ class TestLearner(object):
         self.masks3 = nanshe.syn.data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
         self.images3 = nanshe.syn.data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
 
-        self.bases_masks3 = numpy.zeros((len(self.bases_indices),) + self.masks3.shape[1:] , dtype=self.masks3.dtype)
-        self.bases_images3 = numpy.zeros((len(self.bases_indices),) + self.images3.shape[1:] , dtype=self.images3.dtype)
+        self.bases_masks3 = numpy.zeros((len(self.bases_indices),) + self.masks3.shape[1:], dtype=self.masks3.dtype)
+        self.bases_images3 = numpy.zeros((len(self.bases_indices),) + self.images3.shape[1:], dtype=self.images3.dtype)
 
         for i, each_basis_indices in enumerate(self.bases_indices):
             self.bases_masks3[i] = self.masks3[list(each_basis_indices)].max(axis=0)
