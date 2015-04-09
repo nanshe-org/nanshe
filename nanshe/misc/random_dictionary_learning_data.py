@@ -2,6 +2,15 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "Apr 17, 2014 11:27:08 EDT$"
 
 
+import warnings
+
+warnings.warn(
+    "The module `random_dictionary_learning_data` is deprecated." +
+    "Please consider using `data` instead." +
+    "Relevant content from this module is being refactored and moved there.",
+    DeprecationWarning
+)
+
 import numpy
 import scipy
 import scipy.ndimage
