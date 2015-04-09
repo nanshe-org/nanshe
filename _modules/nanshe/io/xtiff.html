@@ -113,7 +113,7 @@
 <span class="sd">            (collections.OrderedDict):          an ordered dictionary with &quot;shape&quot; first and &quot;dtype&quot; (type) second.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">shape_dtype_result</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&quot;shape&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;dtype&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">)])</span>
+    <span class="n">shape_dtype_result</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&quot;shape&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;dtype&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)])</span>
 
     <span class="n">new_tiff_file_info</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">ImageInfo</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span>
     <span class="n">new_tiff_file_number_pages</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">numberImages</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span>
@@ -168,7 +168,7 @@
 
         <span class="n">new_tiff_file_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_tiff_file_shape_transposed</span><span class="p">)</span>
 
-    <span class="n">shape_dtype_result</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&quot;shape&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;dtype&quot;</span> <span class="p">,</span> <span class="bp">None</span><span class="p">)])</span>
+    <span class="n">shape_dtype_result</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&quot;shape&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;dtype&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)])</span>
 
     <span class="n">shape_dtype_result</span><span class="p">[</span><span class="s">&quot;shape&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_tiff_file_shape</span>
     <span class="n">shape_dtype_result</span><span class="p">[</span><span class="s">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_tiff_file_dtype</span>
