@@ -202,7 +202,7 @@ def index_axis_at_pos(new_array, axis, pos):
         new_subarray = new_subarray.swapaxes(0, axis)
         new_subarray = numpy.squeeze(new_subarray, axis)
 
-    return( new_subarray )
+    return(new_subarray)
 
 
 @prof.log_call(trace_logger)
@@ -259,7 +259,7 @@ def add_singleton_axis_pos(a_array, axis=0):
     new_array = a_array[None]
     new_array = new_array.transpose(new_array_shape)
 
-    return( new_array )
+    return(new_array)
 
 
 @prof.log_call(trace_logger)
@@ -283,7 +283,7 @@ def add_singleton_axis_beginning(new_array):
     """
 
     # return( new_array[None] )
-    return( add_singleton_axis_pos(new_array, 0) )
+    return(add_singleton_axis_pos(new_array, 0))
 
 
 @prof.log_call(trace_logger)
@@ -307,7 +307,7 @@ def add_singleton_axis_end(new_array):
     """
 
     # return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )
-    return( add_singleton_axis_pos(new_array, new_array.ndim) )
+    return(add_singleton_axis_pos(new_array, new_array.ndim))
 
 
 @prof.log_call(trace_logger)
@@ -1703,7 +1703,7 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
         reps_before = (reps_before,)
 
     return(numpy.lib.stride_tricks.as_strided(new_array, reps_before + new_array.shape + reps_after,
-                                               len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)) )
+                                               len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)))
 
 
 def expand_arange(start, stop=None, step=1, dtype=numpy.int64, reps_before=tuple(), reps_after=tuple()):
@@ -2276,7 +2276,7 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
     new_array_1_tiled = expand_view(new_array_1, reps_after=new_array_2.shape)
     new_array_2_tiled = expand_view(new_array_2, reps_before=new_array_1.shape)
 
-    return( new_op(new_array_1_tiled, new_array_2_tiled) )
+    return(new_op(new_array_1_tiled, new_array_2_tiled))
 
 
 @prof.log_call(trace_logger)
@@ -2384,7 +2384,7 @@ def all_permutations_equal(new_array_1, new_array_2):
 
     """
 
-    return( all_permutations_operation(operator.eq, new_array_1, new_array_2) )
+    return(all_permutations_operation(operator.eq, new_array_1, new_array_2))
 
 
 class NotNumPyStructuredArrayType(Exception):
@@ -2421,7 +2421,7 @@ def numpy_structured_array_dtype_generator(new_array):
         # Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)
         each_shape = new_array.dtype[each_name].shape
 
-        yield ( (each_name, each_dtype, each_shape) )
+        yield ((each_name, each_dtype, each_shape))
 
 
 @prof.log_call(trace_logger)
@@ -3502,7 +3502,7 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord=2):
     vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / new_vector_set_1_norms_expanded
     vector_pairs_dot_product_2_normalized = vector_pairs_dot_product / new_vector_set_2_norms_expanded
 
-    return( (vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized) )
+    return((vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized))
 
 
 @prof.log_call(trace_logger)
@@ -3567,7 +3567,7 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
     # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product_normalized = vector_pairs_dot_product / new_vector_set_norms_expanded
 
-    return( (vector_pairs_dot_product_normalized) )
+    return((vector_pairs_dot_product_normalized))
 
 
 @prof.log_call(trace_logger)
@@ -3853,7 +3853,7 @@ def generate_labeled_contours(a_mask, separation_distance=1.0, margin=1.0):
 
     a_mask_contoured = generate_contour(a_mask, separation_distance=separation_distance, margin=margin)
 
-    a_mask_contoured_labeled = scipy.ndimage.label(a_mask_contoured, structure=numpy.ones( (3,) * a_mask.ndim ))[0]
+    a_mask_contoured_labeled = scipy.ndimage.label(a_mask_contoured, structure=numpy.ones((3,) * a_mask.ndim))[0]
 
     return(a_mask_contoured_labeled)
 
@@ -4153,7 +4153,7 @@ def symmetric_line_filter(size, ndims=2, dim=-1):
     assert (ndims > 0)
     assert (-ndims <= dim < ndims)
 
-    line = numpy.zeros(ndims * ( 2*size+1, ), dtype=bool)
+    line = numpy.zeros(ndims * (2*size+1, ), dtype=bool)
 
     line_loc = ndims * [size]
     line_loc[dim] = slice(None)
