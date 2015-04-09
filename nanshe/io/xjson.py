@@ -1,4 +1,17 @@
 """
+The module ``xjson`` serializes JSON with some additional features.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``xjson`` provides a mechanism of serializing JSON in a way that
+allows for a few additional constraints.
+
+- Commenting -- does not break the JSON specification (e.g. adding the prefix\
+  ``__comment__`` to any string).
+- Order dependent deserialization -- dictionary order is preserved.
+- ASCII strings -- all strings are converted to ASCII
+
 ===============================================================================
 API
 ===============================================================================
