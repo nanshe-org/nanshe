@@ -1,4 +1,17 @@
 """
+The ``renorm`` module provides ways to standardize frames of an image stack.
+
+===============================================================================
+Overview
+===============================================================================
+The ``renorm`` (or **renorm**\ alization) module provides a few simple utility
+methods for standardizing a set of images. The first is to recompute each frame
+so that its mean is 0. The second is to normalize each frame using an
+appropriate |L^p norm|_. Both have the ability of working in-place.
+
+.. |L^p norm| replace:: L\ :sup:`p` norm
+.. _`L^p norm`: http://en.wikipedia.org/wiki/Lp_space
+
 ===============================================================================
 API
 ===============================================================================
