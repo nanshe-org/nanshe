@@ -1,4 +1,18 @@
 """
+The ``wavelet`` module provides support for performing a wavelet transform.
+
+===============================================================================
+Overview
+===============================================================================
+Included are tools to aid in the computation of the wavelet transform. In
+particular, construction of the kernel at different scales and it application
+to the data. The kernel applied is based on the technique presented by
+Reichinnek, et al. ( doi:`10.1016/j.neuroimage.2011.12.018`_ ).
+
+
+.. _`10.1016/j.neuroimage.2011.12.018`: \
+    http://dx.doi.org/10.1016/j.neuroimage.2011.12.018
+
 ===============================================================================
 API
 ===============================================================================
