@@ -24,6 +24,10 @@ pep8:
 pep257:
     run: true
     disable:
+        # Ignore constraint disallowing newlines to follow docstrings.
+        # We find having a newline there makes it easier to read on a
+        # quick pass.
+        - D202
         # PEP257 expects the documentation to be indented the same as
         # the code. We have prefered to indent it one time further as it
         # makes it easier on the eye to note documentation from code on
