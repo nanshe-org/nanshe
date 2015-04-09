@@ -58,6 +58,24 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.imp.registration</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The ``registration`` module helps bring image stacks into alignment.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">The registration algorithm developed by Wenzhi Sun. The strategy uses an</span>
+<span class="sd">area-based method for registration. Namely, it takes a template image (the mean</span>
+<span class="sd">projection) and finds the translations required for each frame to overlap</span>
+<span class="sd">optimally with the template image. Then a number of adjustments are made to the</span>
+<span class="sd">shifts to ensure that unnecessary translations are not preformed.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jan 28, 2015 11:25:47 EST$&quot;</span>
 
@@ -428,7 +446,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the convolution of the template with the frames by taking advantage of their FFTs for faster</span>
 <span class="sd">        computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )</span>
-<span class="sd">        &lt; https://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html &gt;.</span>
+<span class="sd">        &lt; http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html &gt;.</span>
 <span class="sd">        Once computed the maximum of the convolution is found to determine the best overlap of each frame with the</span>
 <span class="sd">        template, which provides the needed offset. Some corrections are performed to make reasonable offsets.</span>
 

@@ -58,6 +58,27 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.imp.filters.wavelet</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The ``wavelet`` module provides support for performing a wavelet transform.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">Included are tools to aid in the computation of the wavelet transform. In</span>
+<span class="sd">particular, construction of the kernel at different scales and it application</span>
+<span class="sd">to the data. The kernel applied is based on the technique presented by</span>
+<span class="sd">Reichinnek, et al. ( doi:`10.1016/j.neuroimage.2011.12.018`_ ).</span>
+
+
+<span class="sd">.. _`10.1016/j.neuroimage.2011.12.018`: \</span>
+<span class="sd">    http://dx.doi.org/10.1016/j.neuroimage.2011.12.018</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$May 01, 2014 14:24:55 EDT$&quot;</span>
 

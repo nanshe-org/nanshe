@@ -58,6 +58,30 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.util.prof</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The module ``prof`` provides support tracing and profiling.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">The module ``prof`` provides a few primitives for tracing function calls and</span>
+<span class="sd">memory usage. In particular, it provides a trace logger that gives us feedback</span>
+<span class="sd">about arguments passed, the run time, the exception raised, etc. Decorators are</span>
+<span class="sd">available for wrapping functions and classes (all methods). The special case of</span>
+<span class="sd">``Qt`` inheriting classes is handled by a separate decorator. In addition to</span>
+<span class="sd">the trace logger, a memory profiler is also provided, which can be run in a</span>
+<span class="sd">separate thread to get information about memory usage. The memory profiler</span>
+<span class="sd">requires |psutil|_.</span>
+
+<span class="sd">.. |psutil| replace:: ``psutil``</span>
+<span class="sd">.. _psutil: http://github.com/giampaolo/psutil</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 14, 2014 17:42:07 EDT$&quot;</span>
 

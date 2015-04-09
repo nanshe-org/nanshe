@@ -65,6 +65,30 @@
             
   <div class="section" id="module-nanshe.imp.segment">
 <span id="nanshe-imp-segment-module"></span><h1>nanshe.imp.segment module<a class="headerlink" href="#module-nanshe.imp.segment" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">segment</span></code> module has components to make an image processing workflow.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">segment</span></code> (or <strong>segment</strong>ation) module contains algorithms useful in
+implementing ADINA ( doi:<a class="reference external" href="http://dx.doi.org/10.1109/ISBI.2013.6556660">10.1109/ISBI.2013.6556660</a> ), but could be reused in
+other workflows. These primary sections can be grouped as follows</p>
+<ol class="arabic simple">
+<li>Preprocessing steps<ol class="loweralpha">
+<li>registration correction (      <a class="reference internal" href="#nanshe.imp.segment.remove_zeroed_lines" title="nanshe.imp.segment.remove_zeroed_lines"><code class="xref py py-func docutils literal"><span class="pre">remove_zeroed_lines()</span></code></a> )</li>
+<li>background estimation and subtraction (      <a class="reference internal" href="#nanshe.imp.segment.estimate_f0" title="nanshe.imp.segment.estimate_f0"><code class="xref py py-func docutils literal"><span class="pre">estimate_f0()</span></code></a>,      <a class="reference internal" href="#nanshe.imp.segment.extract_f0" title="nanshe.imp.segment.extract_f0"><code class="xref py py-func docutils literal"><span class="pre">extract_f0()</span></code></a> )</li>
+<li>wavelet transform ( <a class="reference internal" href="nanshe.imp.filters.wavelet.html#nanshe.imp.filters.wavelet.transform" title="nanshe.imp.filters.wavelet.transform"><code class="xref py py-func docutils literal"><span class="pre">transform()</span></code></a> )</li>
+<li>normalization ( <a class="reference internal" href="#nanshe.imp.segment.normalize_data" title="nanshe.imp.segment.normalize_data"><code class="xref py py-func docutils literal"><span class="pre">normalize_data()</span></code></a> )</li>
+</ol>
+</li>
+<li>Dictionary learning step (    <a class="reference internal" href="#nanshe.imp.segment.generate_dictionary" title="nanshe.imp.segment.generate_dictionary"><code class="xref py py-func docutils literal"><span class="pre">generate_dictionary()</span></code></a> )</li>
+<li>Postprocessing<ol class="loweralpha">
+<li>segmentation and refinement (      <a class="reference internal" href="#nanshe.imp.segment.wavelet_denoising" title="nanshe.imp.segment.wavelet_denoising"><code class="xref py py-func docutils literal"><span class="pre">wavelet_denoising()</span></code></a> )</li>
+<li>merging ( <a class="reference internal" href="#nanshe.imp.segment.merge_neuron_sets" title="nanshe.imp.segment.merge_neuron_sets"><code class="xref py py-func docutils literal"><span class="pre">merge_neuron_sets()</span></code></a> )</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nanshe.imp.segment.ExtendedRegionProps">
 <em class="property">class </em><code class="descclassname">nanshe.imp.segment.</code><code class="descname">ExtendedRegionProps</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps" title="Permalink to this definition">¶</a></dt>
@@ -130,7 +154,7 @@ background.</td>
 
 <dl class="attribute">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.recorders">
-<code class="descname">recorders</code><em class="property"> = &lt;nanshe.io.hdf5.record.ClassSubgroupingRecorders object at 0x3c63ad0&gt;</em><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recorders</code><em class="property"> = &lt;nanshe.io.hdf5.record.ClassSubgroupingRecorders object at 0x2f9bad0&gt;</em><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1055,13 +1079,24 @@ contains the keys min and/or max with a value for each.</li>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.imp.segment module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.imp.renorm.html"

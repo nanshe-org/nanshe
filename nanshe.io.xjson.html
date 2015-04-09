@@ -65,6 +65,19 @@
             
   <div class="section" id="module-nanshe.io.xjson">
 <span id="nanshe-io-xjson-module"></span><h1>nanshe.io.xjson module<a class="headerlink" href="#module-nanshe.io.xjson" title="Permalink to this headline">¶</a></h1>
+<p>The module <code class="docutils literal"><span class="pre">xjson</span></code> serializes JSON with some additional features.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The module <code class="docutils literal"><span class="pre">xjson</span></code> provides a mechanism of serializing JSON in a way that
+allows for a few additional constraints.</p>
+<ul class="simple">
+<li>Commenting &#8211; does not break the JSON specification (e.g. adding the prefix  <code class="docutils literal"><span class="pre">__comment__</span></code> to any string).</li>
+<li>Order dependent deserialization &#8211; dictionary order is preserved.</li>
+<li>ASCII strings &#8211; all strings are converted to ASCII</li>
+</ul>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="nanshe.io.xjson.read_parameters">
 <code class="descclassname">nanshe.io.xjson.</code><code class="descname">read_parameters</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/xjson.html#read_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.xjson.read_parameters" title="Permalink to this definition">¶</a></dt>
@@ -91,13 +104,24 @@ parameters read from the file.</p>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.io.xjson module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.io.hdf5.serializers.html"

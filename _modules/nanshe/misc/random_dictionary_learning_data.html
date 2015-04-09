@@ -58,9 +58,35 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.misc.random_dictionary_learning_data</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">``random_dictionary_learning_data`` supports generating synthetic data.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">The module ``random_dictionary_learning_data`` provides a way of generating</span>
+<span class="sd">synthetic data for testing the segmentation algorithm against. Moving forward</span>
+<span class="sd">the useful content in here will be refactored and moved into the ``data``</span>
+<span class="sd">module. So, depending on this module is unwise.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;Apr 17, 2014 11:27:08 EDT$&quot;</span>
 
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+    <span class="s">&quot;The module `random_dictionary_learning_data` is deprecated.&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;Please consider using `data` instead.&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;Relevant content from this module is being refactored and moved there.&quot;</span><span class="p">,</span>
+    <span class="ne">DeprecationWarning</span>
+<span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">scipy</span>

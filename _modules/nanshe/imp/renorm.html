@@ -58,6 +58,26 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.imp.renorm</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The ``renorm`` module provides ways to standardize frames of an image stack.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">The ``renorm`` (or **renorm**\ alization) module provides a few simple utility</span>
+<span class="sd">methods for standardizing a set of images. The first is to recompute each frame</span>
+<span class="sd">so that its mean is 0. The second is to normalize each frame using an</span>
+<span class="sd">appropriate |L^p norm|_. Both have the ability of working in-place.</span>
+
+<span class="sd">.. |L^p norm| replace:: L\ :sup:`p` norm</span>
+<span class="sd">.. _`L^p norm`: http://en.wikipedia.org/wiki/Lp_space</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 30, 2014 17:14:50 EDT$&quot;</span>
 

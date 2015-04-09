@@ -65,6 +65,16 @@
             
   <div class="section" id="module-nanshe.box.spams_sandbox">
 <span id="nanshe-box-spams-sandbox-module"></span><h1>nanshe.box.spams_sandbox module<a class="headerlink" href="#module-nanshe.box.spams_sandbox" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">spams_sandbox</span></code> module provides mechanisms for sandboxing SPAMS.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>SPAMS sometimes seems to step on the interpreter. As a result, we provide a
+number of strategies to address this, by launching it in a separate process so
+that it hopefully does not mess up the main interpreter. We also try to keep
+the module space clean. This seems to help.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="exception">
 <dt id="nanshe.box.spams_sandbox.SPAMSException">
 <em class="property">exception </em><code class="descclassname">nanshe.box.spams_sandbox.</code><code class="descname">SPAMSException</code><a class="reference internal" href="_modules/nanshe/box/spams_sandbox.html#SPAMSException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.box.spams_sandbox.SPAMSException" title="Permalink to this definition">¶</a></dt>
@@ -212,13 +222,24 @@ so that it doesn&#8217;t damage what happens in this one.</p>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.box.spams_sandbox module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href=""

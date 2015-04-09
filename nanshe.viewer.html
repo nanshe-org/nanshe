@@ -61,6 +61,17 @@
             
   <div class="section" id="module-nanshe.viewer">
 <span id="nanshe-viewer-module"></span><h1>nanshe.viewer module<a class="headerlink" href="#module-nanshe.viewer" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">viewer</span></code> provides a way to view the results after the algorithm is run.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The module <code class="docutils literal"><span class="pre">viewer</span></code> provides the mechanism by which to view the results after
+the algorithm is run. In order to get the viewer working <a class="reference external" href="http://www.riverbankcomputing.com/software/pyqt"><code class="docutils literal"><span class="pre">PyQt4</span></code></a> is required
+and a copy of <a class="reference external" href="http://github.com/ilastik/volumina"><code class="docutils literal"><span class="pre">volumina</span></code></a>. The <code class="docutils literal"><span class="pre">main</span></code> function actually starts the algorithm
+and can be called externally. Configuration files for the viewer are provided
+in the <a class="reference external" href="http://github.com/jakirkham/nanshe/tree/master/examples">examples</a> and are entitled viewer.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nanshe.viewer.ContourProjectionConstantRequest">
 <em class="property">class </em><code class="descclassname">nanshe.viewer.</code><code class="descname">ContourProjectionConstantRequest</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/viewer.html#ContourProjectionConstantRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.viewer.ContourProjectionConstantRequest" title="Permalink to this definition">¶</a></dt>
@@ -1095,13 +1106,24 @@ inside the request instance. So, if this request instance is kept, this won&#821
 <dd></dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.viewer module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.util.xnumpy.html"

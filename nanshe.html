@@ -65,9 +65,10 @@
             
   <div class="section" id="module-nanshe">
 <span id="nanshe-package"></span><h1>nanshe package<a class="headerlink" href="#module-nanshe" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">nanshe</span></code> package, an image processing toolkit.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal"><span class="pre">`nanshe`</span></code> package is an image processing package that contains a variety
+<p>The <code class="docutils literal"><span class="pre">nanshe</span></code> package is an image processing package that contains a variety
 of different techniques, which are used primarily to assemble the ADINA
 algorithm proposed by Diego, et al.
 ( doi:<a class="reference external" href="http://dx.doi.org/10.1109/ISBI.2013.6556660">10.1109/ISBI.2013.6556660</a> ) to extract active neurons from
@@ -89,18 +90,18 @@ transform to filter objects in a particular size.</p>
 <h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
 <p>Implementation of the algorithm has been done here in pure Python. However, a
 few dependencies are required to get started. These include <a class="reference external" href="http://www.numpy.org/">NumPy</a>, <a class="reference external" href="http://www.scipy.org/">SciPy</a>,
-<a class="reference external" href="http://www.h5py.org/">h5py</a>, <a class="reference external" href="http://scikit-image.org/">scikit-image</a>, <a class="reference external" href="http://spams-devel.gforge.inria.fr/">SPAMS</a>, <a class="reference external" href="http://ukoethe.github.io/vigra/">VIGRA</a>, and <a class="reference external" href="https://github.com/jakirkham/rank_filter/">rank_filter</a>. The first 4 can be
-found in standard distributions like <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda</a>. Installing VIGRA and
+<a class="reference external" href="http://www.h5py.org/">h5py</a>, <a class="reference external" href="http://scikit-image.org/">scikit-image</a>, <a class="reference external" href="http://spams-devel.gforge.inria.fr/">SPAMS</a>, <a class="reference external" href="http://ukoethe.github.io/vigra/">VIGRA</a>, and <a class="reference external" href="http://github.com/jakirkham/rank_filter/">rank_filter</a>. The first 4 can be
+found in standard distributions like <a class="reference external" href="http://store.continuum.io/cshop/anaconda/">Anaconda</a>. Installing VIGRA and
 rank_filter can be done by using <a class="reference external" href="http://www.cmake.org/">CMake</a>. SPAMS requires an existing BLAS/LAPACK
 implementation. On Mac and Linux, this can be anything. Typically <a class="reference external" href="http://math-atlas.sourceforge.net/">ATLAS</a> is
-used, but <a class="reference external" href="http://www.openblas.net/">OpenBLAS</a> or <a class="reference external" href="https://software.intel.com/en-us/intel-mkl">Intel MKL</a> (if available) can be used, as well. This
+used, but <a class="reference external" href="http://www.openblas.net/">OpenBLAS</a> or <a class="reference external" href="http://software.intel.com/en-us/intel-mkl">Intel MKL</a> (if available) can be used, as well. This
 will require modifying the setup.py script. On Windows, the setup.py links to
 <a class="reference external" href="http://www.r-project.org/">R</a>, which should be changed if another BLAS is available.</p>
 </div>
 <div class="section" id="building">
 <h3>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h3>
-<p>As this module is pure Python, building follows through the standard method.
-Currently, we require <a class="reference external" href="https://pythonhosted.org/setuptools/">setuptools</a> for installation; so, make sure it is
+<p>As this package is pure Python, building follows through the standard method.
+Currently, we require <a class="reference external" href="http://pythonhosted.org/setuptools/">setuptools</a> for installation; so, make sure it is
 installed. Then simply issue the following command to build and install.</p>
 <div class="highlight-sh"><div class="highlight"><pre>python setup.py install
 </pre></div>
@@ -116,7 +117,7 @@ python setup.py install
 <h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
 <p>Running the test suite is fairly straightforward. Testing is done using <a class="reference external" href="http://nose.readthedocs.org/en/latest/">nose</a>;
 so, make sure you have a running copy if you wish to run the tests. Some of the
-tests require <a class="reference external" href="https://github.com/pygridtools/drmaa-python">drmaa</a> installed and properly configured. If that is not the
+tests require <a class="reference external" href="http://github.com/pygridtools/drmaa-python">drmaa</a> installed and properly configured. If that is not the
 case, those tests will be skipped automatically. To run the test suite, one
 must be in the source directory. Then simply run the following command. This
 will run all the tests and doctests. Depending on your machine, this will take
@@ -149,7 +150,7 @@ triggered the build as well as version number if provided.</p>
 <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> for generating documentation. Please make sure you have it installed if
 you wish to use it. The <code class="docutils literal"><span class="pre">rst</span></code> files (outside of <code class="docutils literal"><span class="pre">index.rst</span></code> are not
 distributed with the source code. This is because is trivial to generate them
-and it is to easy for module to become out of sync with documentation if they
+and it is to easy for the code to become out of sync with documentation if they
 are distributed. However, building <code class="docutils literal"><span class="pre">rst</span></code> files has been made a dependency of
 all other documentation build steps so one does not have to think about this.
 The easiest way to build documentation is to do the following. This will build
@@ -176,19 +177,38 @@ the standard <code class="docutils literal"><span class="pre">clean</span></code
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nanshe.box.html">nanshe.box package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.box.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.box.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.box.spams_sandbox.html">nanshe.box.spams_sandbox module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.box.spams_sandbox.html">nanshe.box.spams_sandbox module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.box.spams_sandbox.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.box.spams_sandbox.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nanshe.imp.html">nanshe.imp package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nanshe.imp.filters.html">nanshe.imp.filters package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.imp.filters.html#overview">Overview</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nanshe.imp.filters.html#submodules">Submodules</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="nanshe.imp.filters.masks.html">nanshe.imp.filters.masks module</a></li>
-<li class="toctree-l5"><a class="reference internal" href="nanshe.imp.filters.noise.html">nanshe.imp.filters.noise module</a></li>
-<li class="toctree-l5"><a class="reference internal" href="nanshe.imp.filters.wavelet.html">nanshe.imp.filters.wavelet module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="nanshe.imp.filters.masks.html">nanshe.imp.filters.masks module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.imp.filters.masks.html#overview">Overview</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.imp.filters.masks.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nanshe.imp.filters.noise.html">nanshe.imp.filters.noise module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.imp.filters.noise.html#overview">Overview</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.imp.filters.noise.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nanshe.imp.filters.wavelet.html">nanshe.imp.filters.wavelet module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.imp.filters.wavelet.html#overview">Overview</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.imp.filters.wavelet.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -196,20 +216,46 @@ the standard <code class="docutils literal"><span class="pre">clean</span></code
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.imp.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.imp.registration.html">nanshe.imp.registration module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.imp.renorm.html">nanshe.imp.renorm module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.imp.segment.html">nanshe.imp.segment module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.imp.registration.html">nanshe.imp.registration module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.imp.registration.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.imp.registration.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.imp.renorm.html">nanshe.imp.renorm module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.imp.renorm.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.imp.renorm.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.imp.segment.html">nanshe.imp.segment module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.imp.segment.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.imp.segment.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nanshe.io.html">nanshe.io package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.io.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.io.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nanshe.io.hdf5.html">nanshe.io.hdf5 package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.html#overview">Overview</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.html#submodules">Submodules</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="nanshe.io.hdf5.record.html">nanshe.io.hdf5.record module</a></li>
-<li class="toctree-l5"><a class="reference internal" href="nanshe.io.hdf5.search.html">nanshe.io.hdf5.search module</a></li>
-<li class="toctree-l5"><a class="reference internal" href="nanshe.io.hdf5.serializers.html">nanshe.io.hdf5.serializers module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="nanshe.io.hdf5.record.html">nanshe.io.hdf5.record module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.io.hdf5.record.html#overview">Overview</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.io.hdf5.record.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nanshe.io.hdf5.search.html">nanshe.io.hdf5.search module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.io.hdf5.search.html#overview">Overview</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.io.hdf5.search.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nanshe.io.hdf5.serializers.html">nanshe.io.hdf5.serializers module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.io.hdf5.serializers.html#overview">Overview</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nanshe.io.hdf5.serializers.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -217,35 +263,78 @@ the standard <code class="docutils literal"><span class="pre">clean</span></code
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.io.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.io.xjson.html">nanshe.io.xjson module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.io.xtiff.html">nanshe.io.xtiff module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.io.xjson.html">nanshe.io.xjson module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.xjson.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.xjson.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.io.xtiff.html">nanshe.io.xtiff module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.xtiff.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.io.xtiff.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nanshe.misc.html">nanshe.misc package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.misc.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.misc.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.misc.neuron_matplotlib_viewer.html">nanshe.misc.neuron_matplotlib_viewer module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.misc.random_dictionary_learning_data.html">nanshe.misc.random_dictionary_learning_data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.misc.neuron_matplotlib_viewer.html">nanshe.misc.neuron_matplotlib_viewer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.misc.neuron_matplotlib_viewer.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.misc.neuron_matplotlib_viewer.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.misc.random_dictionary_learning_data.html">nanshe.misc.random_dictionary_learning_data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.misc.random_dictionary_learning_data.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.misc.random_dictionary_learning_data.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nanshe.syn.html">nanshe.syn package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.syn.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.syn.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.syn.data.html">nanshe.syn.data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.syn.data.html">nanshe.syn.data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.syn.data.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.syn.data.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nanshe.util.html">nanshe.util package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nanshe.util.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.util.iters.html">nanshe.util.iters module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.util.iters.html">nanshe.util.iters module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.iters.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.iters.html#api">API</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="nanshe.util.pathHelpers.html">nanshe.util.pathHelpers module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.util.prof.html">nanshe.util.prof module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.util.wrappers.html">nanshe.util.wrappers module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.util.xglob.html">nanshe.util.xglob module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.util.xnumpy.html">nanshe.util.xnumpy module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.util.prof.html">nanshe.util.prof module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.prof.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.prof.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.util.wrappers.html">nanshe.util.wrappers module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.wrappers.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.wrappers.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.util.xglob.html">nanshe.util.xglob module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.xglob.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.xglob.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nanshe.util.xnumpy.html">nanshe.util.xnumpy module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.xnumpy.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nanshe.util.xnumpy.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -257,10 +346,26 @@ the standard <code class="docutils literal"><span class="pre">clean</span></code
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.converter.html">nanshe.converter module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.learner.html">nanshe.learner module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.registerer.html">nanshe.registerer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.viewer.html">nanshe.viewer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.converter.html">nanshe.converter module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.converter.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.converter.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.learner.html">nanshe.learner module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.learner.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.learner.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.registerer.html">nanshe.registerer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.registerer.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.registerer.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nanshe.viewer.html">nanshe.viewer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.viewer.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nanshe.viewer.html#api">API</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

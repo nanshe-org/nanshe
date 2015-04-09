@@ -58,6 +58,30 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.util.wrappers</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The module ``wrappers`` provides support decorating functions and classes.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">The module ``wrappers`` extends wrapping abilities found in |functools|_. In</span>
+<span class="sd">particular, it is ensured all wrapped functions contain an attribute</span>
+<span class="sd">``__wrapped__``, which points back to the original function before the wrapper</span>
+<span class="sd">was applied. Also, the ability to wrap classes with a decorator to apply a</span>
+<span class="sd">``metaclass`` or series of ``metaclass``es is provided. Making it much easier</span>
+<span class="sd">to transform classes without mucking in their internals. For classes inheriting</span>
+<span class="sd">from ``Qt`` objects a special decorator is provided to make sure they</span>
+<span class="sd">participate in the correct inheritance scheme.</span>
+
+<span class="sd">.. |functools| replace:: ``functools``</span>
+<span class="sd">.. _functools: http://docs.python.org/2/library/functools.html</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jul 23, 2014 16:24:36 EDT$&quot;</span>
 

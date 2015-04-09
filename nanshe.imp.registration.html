@@ -65,12 +65,23 @@
             
   <div class="section" id="module-nanshe.imp.registration">
 <span id="nanshe-imp-registration-module"></span><h1>nanshe.imp.registration module<a class="headerlink" href="#module-nanshe.imp.registration" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">registration</span></code> module helps bring image stacks into alignment.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The registration algorithm developed by Wenzhi Sun. The strategy uses an
+area-based method for registration. Namely, it takes a template image (the mean
+projection) and finds the translations required for each frame to overlap
+optimally with the template image. Then a number of adjustments are made to the
+shifts to ensure that unnecessary translations are not preformed.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="nanshe.imp.registration.find_offsets">
 <code class="descclassname">nanshe.imp.registration.</code><code class="descname">find_offsets</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/registration.html#find_offsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.registration.find_offsets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the convolution of the template with the frames by taking advantage of their FFTs for faster
 computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )
-&lt; <a class="reference external" href="https://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html">https://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html</a> &gt;.
+&lt; <a class="reference external" href="http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html">http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html</a> &gt;.
 Once computed the maximum of the convolution is found to determine the best overlap of each frame with the
 template, which provides the needed offset. Some corrections are performed to make reasonable offsets.</p>
 <p class="rubric">Notes</p>
@@ -265,13 +276,24 @@ By default all. (Default -1)</li>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.imp.registration module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.imp.filters.wavelet.html"

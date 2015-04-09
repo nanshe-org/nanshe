@@ -58,6 +58,22 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.imp.filters.noise</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The ``noise`` module provides support for handling noise in images.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">Provides a way of estimating noise based on what falls out of some multiple of</span>
+<span class="sd">the standard deviation and generate a mask that excludes the noise or the</span>
+<span class="sd">non-noise.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$May 01, 2014 14:23:45 EDT$&quot;</span>
 

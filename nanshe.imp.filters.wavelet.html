@@ -65,6 +65,16 @@
             
   <div class="section" id="module-nanshe.imp.filters.wavelet">
 <span id="nanshe-imp-filters-wavelet-module"></span><h1>nanshe.imp.filters.wavelet module<a class="headerlink" href="#module-nanshe.imp.filters.wavelet" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">wavelet</span></code> module provides support for performing a wavelet transform.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Included are tools to aid in the computation of the wavelet transform. In
+particular, construction of the kernel at different scales and it application
+to the data. The kernel applied is based on the technique presented by
+Reichinnek, et al. ( doi:<a class="reference external" href="http://dx.doi.org/10.1016/j.neuroimage.2011.12.018">10.1016/j.neuroimage.2011.12.018</a> ).</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="nanshe.imp.filters.wavelet.binomial_1D_array_kernel">
 <code class="descclassname">nanshe.imp.filters.wavelet.</code><code class="descname">binomial_1D_array_kernel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/filters/wavelet.html#binomial_1D_array_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.filters.wavelet.binomial_1D_array_kernel" title="Permalink to this definition">¶</a></dt>
@@ -306,13 +316,24 @@ a numpy array containing the row of Pascal&#8217;s triangle.</p>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.imp.filters.wavelet module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.imp.filters.noise.html"

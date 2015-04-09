@@ -65,6 +65,35 @@
             
   <div class="section" id="module-nanshe.io.hdf5.record">
 <span id="nanshe-io-hdf5-record-module"></span><h1>nanshe.io.hdf5.record module<a class="headerlink" href="#module-nanshe.io.hdf5.record" title="Permalink to this headline">¶</a></h1>
+<p>The module <code class="docutils literal"><span class="pre">record</span></code> provides the equivalent of a logger for array data.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Applying the decorator <code class="docutils literal"><span class="pre">static_subgrouping_array_recorders</span></code> with the names of
+desired recorders as strings or keyword arguments with a given recorder
+instance initializes the <code class="docutils literal"><span class="pre">recorders</span></code> attribute, which contains each recorder
+as a dictionary would. Results are stored under a group named after decorated
+function. Nested function calls can be paralleled by nesting results within
+groups. All that is required is that the recorder be assigned from outer scope
+to inner (see example below).</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="nd">@static_subgrouping_array_recorders</span><span class="p">(</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">a</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span>
+
+<span class="nd">@static_subgrouping_array_recorders</span><span class="p">(</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">r</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All recorders default to an instance of <code class="docutils literal"><span class="pre">EmptyArrayRecorder</span></code> unless otherwise
+specified. All operations work on them exactly the same, but no recording
+occurs. This guarantees that code using recorders will not break if they don&#8217;t
+have them. A similar strategy can be applied for classes and their methods by
+using <code class="docutils literal"><span class="pre">class_static_array_debug_recorder</span></code>.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nanshe.io.hdf5.record.EmptyArrayRecorder">
 <em class="property">class </em><code class="descclassname">nanshe.io.hdf5.record.</code><code class="descname">EmptyArrayRecorder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/record.html#EmptyArrayRecorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.record.EmptyArrayRecorder" title="Permalink to this definition">¶</a></dt>
@@ -213,13 +242,24 @@ given function.</td>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.io.hdf5.record module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.io.hdf5.serializers.html"

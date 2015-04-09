@@ -65,6 +65,20 @@
             
   <div class="section" id="module-nanshe.util.wrappers">
 <span id="nanshe-util-wrappers-module"></span><h1>nanshe.util.wrappers module<a class="headerlink" href="#module-nanshe.util.wrappers" title="Permalink to this headline">¶</a></h1>
+<p>The module <code class="docutils literal"><span class="pre">wrappers</span></code> provides support decorating functions and classes.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The module <code class="docutils literal"><span class="pre">wrappers</span></code> extends wrapping abilities found in <a class="reference external" href="http://docs.python.org/2/library/functools.html"><code class="docutils literal"><span class="pre">functools</span></code></a>. In
+particular, it is ensured all wrapped functions contain an attribute
+<code class="docutils literal"><span class="pre">__wrapped__</span></code>, which points back to the original function before the wrapper
+was applied. Also, the ability to wrap classes with a decorator to apply a
+<code class="docutils literal"><span class="pre">metaclass</span></code> or series of <code class="docutils literal"><span class="pre">metaclass``es</span> <span class="pre">is</span> <span class="pre">provided.</span> <span class="pre">Making</span> <span class="pre">it</span> <span class="pre">much</span> <span class="pre">easier</span>
+<span class="pre">to</span> <span class="pre">transform</span> <span class="pre">classes</span> <span class="pre">without</span> <span class="pre">mucking</span> <span class="pre">in</span> <span class="pre">their</span> <span class="pre">internals.</span> <span class="pre">For</span> <span class="pre">classes</span> <span class="pre">inheriting</span>
+<span class="pre">from</span> <span class="pre">``Qt</span></code> objects a special decorator is provided to make sure they
+participate in the correct inheritance scheme.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="nanshe.util.wrappers.class_decorate_all_methods">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">class_decorate_all_methods</code><span class="sig-paren">(</span><em>*decorators</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#class_decorate_all_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.class_decorate_all_methods" title="Permalink to this definition">¶</a></dt>
@@ -278,13 +292,24 @@ function (defaults to functools.WRAPPER_UPDATES)</li>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.util.wrappers module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.util.prof.html"

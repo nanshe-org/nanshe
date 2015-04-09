@@ -65,6 +65,20 @@
             
   <div class="section" id="module-nanshe.util.prof">
 <span id="nanshe-util-prof-module"></span><h1>nanshe.util.prof module<a class="headerlink" href="#module-nanshe.util.prof" title="Permalink to this headline">¶</a></h1>
+<p>The module <code class="docutils literal"><span class="pre">prof</span></code> provides support tracing and profiling.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The module <code class="docutils literal"><span class="pre">prof</span></code> provides a few primitives for tracing function calls and
+memory usage. In particular, it provides a trace logger that gives us feedback
+about arguments passed, the run time, the exception raised, etc. Decorators are
+available for wrapping functions and classes (all methods). The special case of
+<code class="docutils literal"><span class="pre">Qt</span></code> inheriting classes is handled by a separate decorator. In addition to
+the trace logger, a memory profiler is also provided, which can be run in a
+separate thread to get information about memory usage. The memory profiler
+requires <a class="reference external" href="http://github.com/giampaolo/psutil"><code class="docutils literal"><span class="pre">psutil</span></code></a>.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="nanshe.util.prof.getSpecialLogger">
 <code class="descclassname">nanshe.util.prof.</code><code class="descname">getSpecialLogger</code><span class="sig-paren">(</span><em>logger_prefix</em>, <em>name</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/prof.html#getSpecialLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.prof.getSpecialLogger" title="Permalink to this definition">¶</a></dt>
@@ -297,13 +311,24 @@ as a global variable on the methods, which can be changed at runtime.</li>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.util.prof module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.util.pathHelpers.html"

@@ -58,6 +58,46 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.io.hdf5.record</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The module ``record`` provides the equivalent of a logger for array data.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">Applying the decorator ``static_subgrouping_array_recorders`` with the names of</span>
+<span class="sd">desired recorders as strings or keyword arguments with a given recorder</span>
+<span class="sd">instance initializes the ``recorders`` attribute, which contains each recorder</span>
+<span class="sd">as a dictionary would. Results are stored under a group named after decorated</span>
+<span class="sd">function. Nested function calls can be paralleled by nesting results within</span>
+<span class="sd">groups. All that is required is that the recorder be assigned from outer scope</span>
+<span class="sd">to inner (see example below).</span>
+
+<span class="sd">.. code:: python</span>
+
+<span class="sd">    @static_subgrouping_array_recorders(&quot;r&quot;)</span>
+<span class="sd">    def a(x):</span>
+<span class="sd">        a.r = x</span>
+<span class="sd">        return x * x.T</span>
+
+<span class="sd">    @static_subgrouping_array_recorders(&quot;r&quot;)</span>
+<span class="sd">    def b(x, y):</span>
+<span class="sd">        a.r = b.r</span>
+<span class="sd">        return a(x + y)</span>
+
+<span class="sd">All recorders default to an instance of ``EmptyArrayRecorder`` unless otherwise</span>
+<span class="sd">specified. All operations work on them exactly the same, but no recording</span>
+<span class="sd">occurs. This guarantees that code using recorders will not break if they don&#39;t</span>
+<span class="sd">have them. A similar strategy can be applied for classes and their methods by</span>
+<span class="sd">using ``class_static_array_debug_recorder``.</span>
+
+<span class="sd">.. todo:: Complete documentation with more examples.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jun 04, 2014 11:10:55 EDT$&quot;</span>
 

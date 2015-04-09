@@ -58,6 +58,41 @@
           <div class="body" role="main">
             
   <h1>Source code for nanshe.imp.segment</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The ``segment`` module has components to make an image processing workflow.</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">Overview</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">The ``segment`` (or **segment**\ ation) module contains algorithms useful in</span>
+<span class="sd">implementing ADINA ( doi:`10.1109/ISBI.2013.6556660`_ ), but could be reused in</span>
+<span class="sd">other workflows. These primary sections can be grouped as follows</span>
+
+<span class="sd">1. Preprocessing steps</span>
+
+<span class="sd">   a. registration correction (\</span>
+<span class="sd">      :py:func:`~nanshe.imp.segment.remove_zeroed_lines` )</span>
+<span class="sd">   #. background estimation and subtraction (\</span>
+<span class="sd">      :py:func:`~nanshe.imp.segment.estimate_f0`,\</span>
+<span class="sd">      :py:func:`~nanshe.imp.segment.extract_f0` )</span>
+<span class="sd">   #. wavelet transform ( :py:func:`~nanshe.imp.filters.wavelet.transform` )</span>
+<span class="sd">   #. normalization ( :py:func:`~nanshe.imp.segment.normalize_data` )</span>
+<span class="sd">#. Dictionary learning step (\</span>
+<span class="sd">    :py:func:`~nanshe.imp.segment.generate_dictionary` )</span>
+<span class="sd">#. Postprocessing</span>
+
+<span class="sd">   a. segmentation and refinement (\</span>
+<span class="sd">      :py:func:`~nanshe.imp.segment.wavelet_denoising` )</span>
+<span class="sd">   #. merging ( :py:func:`~nanshe.imp.segment.merge_neuron_sets` )</span>
+
+<span class="sd">.. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660</span>
+
+<span class="sd">===============================================================================</span>
+<span class="sd">API</span>
+<span class="sd">===============================================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 30, 2014 17:23:37 EDT$&quot;</span>
 

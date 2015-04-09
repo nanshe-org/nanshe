@@ -65,6 +65,15 @@
             
   <div class="section" id="module-nanshe.io.hdf5.serializers">
 <span id="nanshe-io-hdf5-serializers-module"></span><h1>nanshe.io.hdf5.serializers module<a class="headerlink" href="#module-nanshe.io.hdf5.serializers" title="Permalink to this headline">¶</a></h1>
+<p>The module <code class="docutils literal"><span class="pre">serializers</span></code> performs IO of NumPy object to an from HDF5 files.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The module <code class="docutils literal"><span class="pre">serializers</span></code> provides an easy way to serialize unusual NumPy
+object to an from files. In particular, it provides support for structured
+arrays and masked arrays.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nanshe.io.hdf5.serializers.HDF5MaskedDataset">
 <em class="property">class </em><code class="descclassname">nanshe.io.hdf5.serializers.</code><code class="descname">HDF5MaskedDataset</code><span class="sig-paren">(</span><em>group</em>, <em>shape=None</em>, <em>dtype=None</em>, <em>data=None</em>, <em>chunks=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/serializers.html#HDF5MaskedDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.serializers.HDF5MaskedDataset" title="Permalink to this definition">¶</a></dt>
@@ -205,13 +214,24 @@ the NumPy structure array.</td>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">nanshe.io.hdf5.serializers module</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
     <p class="topless"><a href="nanshe.io.hdf5.search.html"
