@@ -1,4 +1,21 @@
 """
+The module ``prof`` provides support tracing and profiling.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``prof`` provides a few primitives for tracing function calls and
+memory usage. In particular, it provides a trace logger that gives us feedback
+about arguments passed, the run time, the exception raised, etc. Decorators are
+available for wrapping functions and classes (all methods). The special case of
+``Qt`` inheriting classes is handled by a separate decorator. In addition to
+the trace logger, a memory profiler is also provided, which can be run in a
+separate thread to get information about memory usage. The memory profiler
+requires |psutil|_.
+
+.. |psutil| replace:: ``psutil``
+.. _psutil: http://github.com/giampaolo/psutil
+
 ===============================================================================
 API
 ===============================================================================
