@@ -86,14 +86,14 @@
 <span class="sd">    Provides a convenient access to path components of a combined external/internal path to a dataset.</span>
 <span class="sd">    Also, each of the properties listed below is writable, in which case ALL properties are updated accordingly.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c"># Only files with these extensions are allowed to have an &#39;internal&#39; path</span>
     <span class="n">HDF5_EXTS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;.ilp&#39;</span><span class="p">,</span> <span class="s">&#39;.h5&#39;</span><span class="p">,</span> <span class="s">&#39;.hdf5&#39;</span><span class="p">]</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">totalPath</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the path components.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param totalPath: The entire path to the dataset, including any internal path (e.g. the path to an hdf5 dataset).</span>
 <span class="sd">                          For example, ``totalPath=&#39;/some/path/to/file.h5/with/internal/dataset&#39;``</span>
 
@@ -101,13 +101,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_externalPath</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_externalDirectory</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="bp">None</span>            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filenameBase</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_internalDatasetName</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_internalDirectory</span> <span class="o">=</span> <span class="bp">None</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="o">=</span> <span class="n">cwd</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span><span class="n">totalPath</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">True</span>
@@ -115,14 +115,14 @@
     <span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">totalPath</span><span class="p">,</span> <span class="n">cwd</span><span class="p">):</span>
         <span class="n">ext</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">extIndex</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        
+
         <span class="k">if</span> <span class="n">cwd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">absPath</span><span class="p">,</span> <span class="n">relPath</span> <span class="o">=</span> <span class="n">getPathVariants</span><span class="p">(</span> <span class="n">totalPath</span><span class="p">,</span> <span class="n">cwd</span> <span class="p">)</span>
             <span class="n">totalPath</span> <span class="o">=</span> <span class="n">absPath</span>
-        
+
         <span class="c">#convention for Windows: use &quot;/&quot;</span>
         <span class="n">totalPath</span> <span class="o">=</span> <span class="n">totalPath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
-        
+
         <span class="c"># For hdf5 paths, split into external, extension, and internal paths</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">HDF5_EXTS</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">totalPath</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">extIndex</span><span class="p">:</span>
@@ -134,7 +134,7 @@
         <span class="k">if</span> <span class="n">ext</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="n">ext</span>                              <span class="c"># .h5</span>
             <span class="n">parts</span> <span class="o">=</span> <span class="n">totalPath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
-            
+
             <span class="c"># Must deal with pathological filenames such as /path/to/file.h5_with_duplicate_ext.h5</span>
             <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ext</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -155,7 +155,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_externalDirectory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalPath</span> <span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c"># /some/path/to</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalPath</span> <span class="p">)[</span><span class="mi">1</span><span class="p">]</span>          <span class="c"># file.h5</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filenameBase</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>         <span class="c"># file</span>
-    
+
 <div class="viewcode-block" id="PathComponents.__setattr__"><a class="viewcode-back" href="../../../nanshe.util.pathHelpers.html#nanshe.util.pathHelpers.PathComponents.__setattr__">[docs]</a>    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This prevents us from accidentally writing to a non-existant attribute.</span>
@@ -170,15 +170,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the (reconstructed) totalPath to the dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span> 
+        <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">internalPath</span><span class="p">:</span>
             <span class="n">total</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internalPath</span>
         <span class="k">return</span> <span class="n">total</span>
-    
+
     <span class="c">#</span>
     <span class="c"># Getters</span>
     <span class="c">#</span>
-    </div>
+</div>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">externalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -245,7 +245,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span> <span class="n">new</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span> <span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="p">)</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span> <span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cwd</span> <span class="p">)</span>
 
     <span class="nd">@externalDirectory.setter</span>
     <span class="k">def</span> <span class="nf">externalDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
@@ -269,7 +269,7 @@
             <span class="s">&quot;attempting to assign a non-hdf5 extension to it ({})&quot;</span>\
             <span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internalPath</span><span class="p">,</span> <span class="n">new</span> <span class="p">)</span>
         <span class="n">new_external</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externalDirectory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenameBase</span> <span class="o">+</span> <span class="n">new</span> <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">=</span> <span class="n">new_external</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">=</span> <span class="n">new_external</span>
 
     <span class="nd">@internalPath.setter</span>
     <span class="k">def</span> <span class="nf">internalPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
@@ -337,12 +337,12 @@
     <span class="c"># urls are considered absolute</span>
     <span class="k">if</span> <span class="n">isUrl</span><span class="p">(</span><span class="n">originalPath</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">originalPath</span><span class="p">,</span> <span class="bp">None</span>
-    
+
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">originalPath</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">originalPath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;~&#39;</span><span class="p">:</span>
         <span class="n">originalPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">originalPath</span><span class="p">)</span>
-    
+
     <span class="n">relPath</span> <span class="o">=</span> <span class="n">originalPath</span>
-    
+
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">originalPath</span><span class="p">):</span>
         <span class="n">absPath</span> <span class="o">=</span> <span class="n">originalPath</span>
         <span class="k">if</span> <span class="n">areOnSameDrive</span><span class="p">(</span><span class="n">originalPath</span><span class="p">,</span><span class="n">workingDirectory</span><span class="p">):</span>
@@ -353,7 +353,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">relPath</span> <span class="o">=</span> <span class="n">originalPath</span>
         <span class="n">absPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workingDirectory</span><span class="p">,</span> <span class="n">relPath</span><span class="p">)</span> <span class="p">)</span>
-        
+
     <span class="k">return</span> <span class="p">(</span><span class="n">absPath</span><span class="p">,</span> <span class="n">relPath</span><span class="p">)</span></div>
 </pre></div>
 

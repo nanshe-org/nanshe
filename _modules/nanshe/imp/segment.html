@@ -519,12 +519,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and</span>
 <span class="sd">        wavelet.transform).</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).</span>
 <span class="sd">            out(numpy.ndarray):                 where the final result will be stored.</span>
 <span class="sd">            **parameters(dict):                 additional parameters for each step of preprocessing.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict:                               the dictionary found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -597,11 +597,11 @@
 <div class="viewcode-block" id="generate_dictionary"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_dictionary">[docs]</a><span class="k">def</span> <span class="nf">generate_dictionary</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a dictionary using the data and parameters given for trainDL.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).</span>
 <span class="sd">            **parameters(dict):                 passed directly to spams.trainDL.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict:                               the dictionary found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -664,7 +664,7 @@
 <div class="viewcode-block" id="region_properties_scikit_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.region_properties_scikit_image">[docs]</a><span class="k">def</span> <span class="nf">region_properties_scikit_image</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grabs region properties from a label image.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_label_image(numpy.ndarray):      label image used for generating properties.</span>
 <span class="sd">            args(list):                          additional position arguments to pass skimage.measure.regionprops.</span>
@@ -673,21 +673,21 @@
 <span class="sd">        Note:</span>
 <span class="sd">            Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won&#39;t be</span>
 <span class="sd">            returned.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray:                       a structured array of all the properties found for each label.</span>
-<span class="sd">        </span>
-<span class="sd">        </span>
+
+
 <span class="sd">        Examples:</span>
-<span class="sd">            </span>
+
 <span class="sd">            &gt;&gt;&gt; region_properties_scikit_image(numpy.zeros((2,2), dtype=int))</span>
 <span class="sd">            array([], </span>
 <span class="sd">                  dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
-<span class="sd">            </span>
+
 <span class="sd">            &gt;&gt;&gt; region_properties_scikit_image(numpy.ones((2,2), dtype=int))</span>
 <span class="sd">            array([(1, 4.0, [0.5, 0.5])], </span>
 <span class="sd">                  dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
-<span class="sd">            </span>
+
 <span class="sd">            &gt;&gt;&gt; region_properties_scikit_image(numpy.ones((3,3), dtype=int))</span>
 <span class="sd">            array([(1, 9.0, [1.0, 1.0])], </span>
 <span class="sd">                  dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
@@ -1471,7 +1471,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
 <span class="sd">        Uses vigra&#39;s vigra.analysis.extendedLocalMaxima for 2D and vigra&#39;s vigra.analysis.extendedLocalMaxima3D for 3D.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are</span>
 <span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
@@ -1496,7 +1496,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
 <span class="sd">        Uses scikit image&#39;s skimage.feature.peak_local_max.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are</span>
 <span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
@@ -1518,7 +1518,7 @@
 <div class="viewcode-block" id="generate_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are</span>
 <span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
@@ -1959,7 +1959,7 @@
                       <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs wavelet denoising on the given dictionary.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_image(numpy.ndarray):                   array of data for generating a dictionary (first axis is time).</span>
 
@@ -1972,7 +1972,7 @@
 <span class="sd">                                                        contains the keys min and/or max with a value for each.</span>
 
 <span class="sd">            **parameters(dict):                         additional parameters for various other function calls.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray:                              a structured array of candidate neurons.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2820,11 +2820,11 @@
 <div class="viewcode-block" id="postprocess_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.postprocess_data">[docs]</a><span class="k">def</span> <span class="nf">postprocess_data</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates neurons from the dictionary.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            new_dictionary(numpy.ndarray):        dictionary of basis images to analyze for neurons.</span>
 <span class="sd">            **parameters(dict):                   dictionary of parameters</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray:                        structured array with relevant information for each neuron found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

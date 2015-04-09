@@ -139,7 +139,7 @@
 <div class="viewcode-block" id="NeuronMatplotlibViewer.set_images"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.set_images">[docs]</a>    <span class="k">def</span> <span class="nf">set_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_neuron_images</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">,</span> <span class="n">use_matshow</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sets the images to be viewed.</span>
-<span class="sd">            </span>
+
 <span class="sd">            Args:</span>
 <span class="sd">                new_neuron_images(numpy.ndarray):     array of images (first index is which image)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -189,7 +189,7 @@
 <span class="sd">            Initializes a TimeNavigator using the given figure and a fixed number of steps.</span>
 
 <span class="sd">            Provides a simple slider bar and buttons to navigate through time.</span>
-<span class="sd">            </span>
+
 <span class="sd">            Args:</span>
 <span class="sd">                fig         should be a figure that has been initialized already.</span>
 <span class="sd">                max_time    maximum step for images.</span>
@@ -238,7 +238,7 @@
 <div class="viewcode-block" id="TimeNavigator.begin_time"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.begin_time">[docs]</a>    <span class="k">def</span> <span class="nf">begin_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sets time to min_time.</span>
-<span class="sd">            </span>
+
 <span class="sd">            Args:</span>
 <span class="sd">                event   Matplotlib event that caused the call to this callback.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -253,7 +253,7 @@
 <div class="viewcode-block" id="TimeNavigator.prev_time"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.prev_time">[docs]</a>    <span class="k">def</span> <span class="nf">prev_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sets time to one time_step prior.</span>
-<span class="sd">            </span>
+
 <span class="sd">            Args:</span>
 <span class="sd">                event   Matplotlib event that caused the call to this callback.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -267,7 +267,7 @@
 <div class="viewcode-block" id="TimeNavigator.next_time"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.next_time">[docs]</a>    <span class="k">def</span> <span class="nf">next_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sets time to one time_step after.</span>
-<span class="sd">            </span>
+
 <span class="sd">            Args:</span>
 <span class="sd">                event   Matplotlib event that caused the call to this callback.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -281,7 +281,7 @@
 <div class="viewcode-block" id="TimeNavigator.end_time"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.end_time">[docs]</a>    <span class="k">def</span> <span class="nf">end_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sets time to max_time.</span>
-<span class="sd">            </span>
+
 <span class="sd">            Args:</span>
 <span class="sd">                event   Matplotlib event that caused the call to this callback.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -350,7 +350,7 @@
 <div class="viewcode-block" id="TimeNavigator.on_time_update"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.on_time_update">[docs]</a>    <span class="k">def</span> <span class="nf">on_time_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Registers a callback function for notification when the time is updated.</span>
-<span class="sd">            </span>
+
 <span class="sd">            Args:</span>
 <span class="sd">                func    function call when the time is updated</span>
 
