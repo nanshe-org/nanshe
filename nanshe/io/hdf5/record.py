@@ -93,7 +93,7 @@ class EmptyArrayRecorder(object):
     def __setitem__(self, key, value):
         # Exception will be thrown if value is empty or if key already exists (as intended).
         if (key == "."):
-            if not ( (value is None) or (value is h5py.Group) ):
+            if not ((value is None) or (value is h5py.Group)):
                 raise ValueError("Cannot store dataset in top level group.")
         elif (value is None) or (value is h5py.Group):
             self.__recorders.add(key)
@@ -143,7 +143,7 @@ class HDF5ArrayRecorder(object):
 
     def __setitem__(self, key, value):
         if (key == "."):
-            if not ( (value is None) or (value is h5py.Group) ):
+            if not ((value is None) or (value is h5py.Group)):
                 raise ValueError("Cannot store dataset in top level group ( " + self.hdf5_handle.name + " ).")
 
             if self.overwrite:
@@ -256,10 +256,10 @@ class HDF5EnumeratedArrayRecorder(object):
 
     def __setitem__(self, key, value):
         if (key == "."):
-            if not ( (value is None) or (value is h5py.Group) ):
+            if not ((value is None) or (value is h5py.Group)):
                 raise ValueError("Cannot store dataset in top level group ( " + self.hdf5_handle.name + " ).")
 
-            self.hdf5_index_data_handles = { "." : self.hdf5_index_data_handles["."] + 1 }
+            self.hdf5_index_data_handles = {"." : self.hdf5_index_data_handles["."] + 1}
             self.hdf5_handle.create_group(str(self.hdf5_index_data_handles["."]))
             self.hdf5_handle.file.flush()
         else:
@@ -268,7 +268,7 @@ class HDF5EnumeratedArrayRecorder(object):
                 hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
             except KeyError:
                 if self.hdf5_index_data_handles["."] == -1:
-                    self.hdf5_index_data_handles = { "." : self.hdf5_index_data_handles["."] + 1 }
+                    self.hdf5_index_data_handles = {"." : self.hdf5_index_data_handles["."] + 1}
 
                 self.hdf5_handle.create_group(str(self.hdf5_index_data_handles["."]))
                 self.hdf5_handle.file.flush()
