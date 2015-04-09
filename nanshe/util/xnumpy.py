@@ -1702,8 +1702,11 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
     if not isinstance(reps_before, tuple):
         reps_before = (reps_before,)
 
-    return(numpy.lib.stride_tricks.as_strided(new_array, reps_before + new_array.shape + reps_after,
-                                               len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)))
+    return(numpy.lib.stride_tricks.as_strided(
+        new_array,
+        reps_before + new_array.shape + reps_after,
+        len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)
+    ))
 
 
 def expand_arange(start, stop=None, step=1, dtype=numpy.int64, reps_before=tuple(), reps_after=tuple()):
