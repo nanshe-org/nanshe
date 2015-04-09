@@ -1,4 +1,14 @@
 """
+``random_dictionary_learning_data`` supports generating synthetic data.
+
+===============================================================================
+Overview
+===============================================================================
+The module ``random_dictionary_learning_data`` provides a way of generating
+synthetic data for testing the segmentation algorithm against. Moving forward
+the useful content in here will be refactored and moved into the ``data``
+module. So, depending on this module is unwise.
+
 ===============================================================================
 API
 ===============================================================================
