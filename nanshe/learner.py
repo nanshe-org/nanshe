@@ -148,7 +148,8 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
                 output_group["original_images"] = h5py.ExternalLink(input_filename_details.externalPath, input_dataset_name)
 
         # Get a debug logger for the HDF5 file (if needed)
-        array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(output_group,
+        array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(
+            output_group,
             group_name="debug",
             enable=debug,
             overwrite_group=False,
@@ -156,7 +157,8 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
         )
 
         # Saves intermediate result to make resuming easier
-        resume_logger = hdf5.record.generate_HDF5_array_recorder(output_group,
+        resume_logger = hdf5.record.generate_HDF5_array_recorder(
+            output_group,
             recorder_constructor=hdf5.record.HDF5ArrayRecorder,
             overwrite=True
         )
@@ -592,7 +594,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
                         #TODO: Correct centroid to larger block position.
                         neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
 
-                        array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(output_group,
+                        array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(
+                            output_group,
                             group_name="debug",
                             enable=debug,
                             overwrite_group=False,
@@ -600,20 +603,24 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
                         )
 
                         segment.merge_neuron_sets.recorders.array_debug_recorder = array_debug_recorder
-                        new_neurons_set = segment.merge_neuron_sets(new_neurons_set, neurons_block_i,
-                                                                                      **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"])
+                        new_neurons_set = segment.merge_neuron_sets(
+                            new_neurons_set,
+                            neurons_block_i,
+                            **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"]
+                        )
 
         hdf5.serializers.create_numpy_structured_array_in_HDF5(output_group, "neurons", new_neurons_set, overwrite=True)
 
         if "parameters" not in output_group["neurons"].attrs:
             output_group["neurons"].attrs["parameters"] = repr(dict(list(parameters.items()) + \
-                                                                    [("block_shape", block_shape),
-                                                                      ("num_blocks", num_blocks),
-                                                                      ("half_window_shape", half_window_shape),
-                                                                      ("half_border_shape", half_border_shape),
-                                                                      ("use_drmaa", use_drmaa),
-                                                                      ("num_drmaa_cores", num_drmaa_cores),
-                                                                      ("debug", debug)
+                                                                    [
+                                                                        ("block_shape", block_shape),
+                                                                        ("num_blocks", num_blocks),
+                                                                        ("half_window_shape", half_window_shape),
+                                                                        ("half_border_shape", half_border_shape),
+                                                                        ("use_drmaa", use_drmaa),
+                                                                        ("num_drmaa_cores", num_drmaa_cores),
+                                                                        ("debug", debug)
                                                                     ]
                                                               )
             )
@@ -649,9 +656,11 @@ def generate_neurons(original_images, run_stage="all", **parameters):
     if (new_preprocessed_images is None) or (run_stage == "preprocessing") or (run_stage == "all"):
         new_preprocessed_images = original_images.copy()
         segment.preprocess_data.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
-        new_preprocessed_images = segment.preprocess_data(new_preprocessed_images,
-                                                                            out=new_preprocessed_images,
-                                                                            **parameters["preprocess_data"])
+        new_preprocessed_images = segment.preprocess_data(
+            new_preprocessed_images,
+            out=new_preprocessed_images,
+            **parameters["preprocess_data"]
+        )
         generate_neurons.resume_logger["preprocessed_images"] = new_preprocessed_images
 
         if "preprocessed_images_max_projection" not in generate_neurons.recorders.array_debug_recorder:
@@ -668,8 +677,10 @@ def generate_neurons(original_images, run_stage="all", **parameters):
     new_dictionary = generate_neurons.resume_logger.get("dictionary", None)
     if (new_dictionary is None) or (run_stage == "dictionary") or (run_stage == "all"):
         segment.generate_dictionary.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
-        new_dictionary = segment.generate_dictionary(new_preprocessed_images,
-                                                                       **parameters["generate_dictionary"])
+        new_dictionary = segment.generate_dictionary(
+            new_preprocessed_images,
+            **parameters["generate_dictionary"]
+        )
         generate_neurons.resume_logger["dictionary"] = new_dictionary
 
         if "dictionary_max_projection" not in generate_neurons.recorders.array_debug_recorder:
@@ -687,8 +698,10 @@ def generate_neurons(original_images, run_stage="all", **parameters):
     new_neurons = generate_neurons.resume_logger.get("neurons", None)
     if (new_neurons is None) or (run_stage == "postprocessing") or (run_stage == "all"):
         segment.postprocess_data.recorders.array_debug_recorder = generate_neurons.recorders.array_debug_recorder
-        new_neurons = segment.postprocess_data(new_dictionary,
-                                                                 **parameters["postprocess_data"])
+        new_neurons = segment.postprocess_data(
+            new_dictionary,
+            **parameters["postprocess_data"]
+        )
 
         if new_neurons.size:
             generate_neurons.resume_logger["neurons"] = new_neurons
@@ -715,22 +728,40 @@ def main(*argv):
     import argparse
     import threading
 
-    memory_profiler_thread = threading.Thread(target=prof.memory_profiler, args=(logger,))
+    memory_profiler_thread = threading.Thread(
+        target=prof.memory_profiler, args=(logger,)
+    )
     memory_profiler_thread.daemon = True
     memory_profiler_thread.start()
 
     argv = list(argv)
 
     # Creates command line parser
-    parser = argparse.ArgumentParser(description="Parses input from the command line for a batch job.")
+    parser = argparse.ArgumentParser(
+        description="Parses input from the command line for a batch job."
+    )
 
     # Takes a config file and then a series of one or more HDF5 files.
-    parser.add_argument("config_filename", metavar="CONFIG_FILE", type=str,
-                        help="JSON file that provides configuration options for how to use dictionary learning on the input files.")
-    parser.add_argument("input_file", metavar="INPUT_FILE", type=str, nargs=1,
-                        help="HDF5 file with an array of images. A single dataset or video will be expected at the internal path. Time must be the first dimension.")
-    parser.add_argument("output_file", metavar="OUTPUT_FILE", type=str, nargs=1,
-                            help="HDF5 file(s) to write output. If a specific group is desired, that should be included in the filename.")
+    parser.add_argument(
+        "config_filename",
+        metavar="CONFIG_FILE",
+        type=str,
+        help="JSON file that provides configuration options for how to use dictionary learning on the input files."
+    )
+    parser.add_argument(
+        "input_file",
+        metavar="INPUT_FILE",
+        type=str,
+        nargs=1,
+        help="HDF5 file with an array of images. A single dataset or video will be expected at the internal path. Time must be the first dimension."
+    )
+    parser.add_argument(
+        "output_file",
+        metavar="OUTPUT_FILE",
+        type=str,
+        nargs=1,
+        help="HDF5 file(s) to write output. If a specific group is desired, that should be included in the filename."
+    )
 
     # Results of parsing arguments (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
@@ -741,6 +772,10 @@ def main(*argv):
 
     # Runs the dictionary learning algorithm on each file with the given parameters
     # and saves the results in the given files.
-    generate_neurons_io_handler(parsed_args.input_file, parsed_args.output_file, parsed_args.config_filename)
+    generate_neurons_io_handler(
+        parsed_args.input_file,
+        parsed_args.output_file,
+        parsed_args.config_filename
+    )
 
     return(0)
