@@ -368,7 +368,7 @@ def find_offsets(frames2reg_fft, template_fft):
     """
         Computes the convolution of the template with the frames by taking advantage of their FFTs for faster
         computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )
-        < https://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html >.
+        < http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html >.
         Once computed the maximum of the convolution is found to determine the best overlap of each frame with the
         template, which provides the needed offset. Some corrections are performed to make reasonable offsets.
 
