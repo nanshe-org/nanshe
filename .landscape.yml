@@ -40,6 +40,10 @@ pyflakes:
 pylint:
     run: true
     disable:
+        # Skip complaint about using start args as they have a very clear
+        # and frequent use in our codebase when forwarding arguments to
+        # nested callables.
+        - W0142
         # Skip complaint about using backslash literals in multiline strings.
         - W1401
 # Analyze our `setup.py`.
