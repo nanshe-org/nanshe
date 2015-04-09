@@ -1,9 +1,13 @@
 """
-    SPAMS seems to step on the interpreter. Despite our best efforts to sandbox
-    it, in a separate thread, it manages to still get messed up when
-    neuron_volumina_viewer is on the path. Therefore, we will place all access
-    to it in a separate module that cannot see the contents of nanshe.
-    Hopefully, this will make it less likely to create a segmentation fault.
+The ``box`` package exists to hold sandboxed versions of algorithms.
+
+===============================================================================
+Overview
+===============================================================================
+In particular, SPAMS sometimes seems to step on the interpreter. In general,
+the strategy is to launch it in a separate process so that it hopefully does
+not mess up the main interpreter. More details of the strategies used for SPAMS
+can be found in :py:mod:`~nanshe.box.spams_sandbox`.
 """
 
 
