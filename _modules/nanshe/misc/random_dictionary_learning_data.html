@@ -116,7 +116,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
 
-<div class="viewcode-block" id="MappingDiscreteUniformDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="MappingDiscreteUniformDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Draws a certain number of elements with equal likelihood and returns them in a list.</span>
 
@@ -154,7 +154,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
 
-<div class="viewcode-block" id="NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Generates a numpy array.</span>
 
@@ -166,7 +166,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># A completely empty numpy array</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
         <span class="c"># Gets a set of random indices that need to be non-zero</span>
         <span class="n">indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">each_dim</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="k">for</span> <span class="n">each_dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
@@ -193,7 +193,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
 
-<div class="viewcode-block" id="MappingDiscreteGeometricDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="MappingDiscreteGeometricDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Generates a number of groups equal to size with each group size being distributed geometrically by p.</span>
 
@@ -268,7 +268,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">object_intensity_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_max_intensity</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_min_intensity</span>
 
-<div class="viewcode-block" id="DictionaryLearningRandomDataGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_runs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DictionaryLearningRandomDataGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_runs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructs a series of pseudo-videos.</span>
 
@@ -350,7 +350,7 @@
 
             <span class="c"># Creates frames that contain some background noise from a normal distribution</span>
             <span class="n">each_result</span><span class="o">.</span><span class="n">frames</span> <span class="o">=</span> <span class="n">each_result</span><span class="o">.</span><span class="n">noiseless_frames</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">each_result</span><span class="o">.</span><span class="n">frames</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_noise_intensity</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">each_result</span><span class="o">.</span><span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">each_result</span><span class="o">.</span><span class="n">frames</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">background_noise_intensity</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">each_result</span><span class="o">.</span><span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
             <span class="c"># Append to our list of results</span>
             <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_result</span><span class="p">)</span>

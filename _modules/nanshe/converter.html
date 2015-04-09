@@ -108,30 +108,30 @@
     <span class="n">argv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
 
     <span class="c"># Creates command line parser</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Parses input from the command line for a batch job.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line for a batch job.&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;format&quot;</span><span class="p">,</span>
-                        <span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;tiff&quot;</span><span class="p">],</span>
-                        <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;Format to convert from to HDF5.&quot;</span><span class="p">,</span>
+                        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;tiff&quot;</span><span class="p">],</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;Format to convert from to HDF5.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span> <span class="o">=</span> <span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
-                        <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;JSON file that provides configuration options for how to import TIFF(s).&quot;</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides configuration options for how to import TIFF(s).&quot;</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;input_files&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span> <span class="o">=</span> <span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
-                        <span class="n">nargs</span> <span class="o">=</span> <span class="s">&quot;+&quot;</span><span class="p">,</span>
-                        <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;TIFF file paths (with optional regex e.g. </span><span class="se">\&quot;</span><span class="s">./*.tif</span><span class="se">\&quot;</span><span class="s">).&quot;</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;TIFF file paths (with optional regex e.g. </span><span class="se">\&quot;</span><span class="s">./*.tif</span><span class="se">\&quot;</span><span class="s">).&quot;</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;output_file&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span> <span class="o">=</span> <span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
-                        <span class="n">nargs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                        <span class="n">help</span> <span class="o">=</span> <span class="s">&quot;HDF5 file to export (this should include a path to where the internal dataset should be stored).&quot;</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file to export (this should include a path to where the internal dataset should be stored).&quot;</span>
     <span class="p">)</span>
 
     <span class="c"># Results of parsing arguments (ignore the first one as it is the command line call).</span>

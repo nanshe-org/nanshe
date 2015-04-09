@@ -182,7 +182,7 @@
     <span class="n">new_labels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">old_labels</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="c"># Get the forward label mapping (ensure the background is included)</span>
-    <span class="n">forward_label_mapping</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">reverse_label_mapping</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">forward_label_mapping</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">reverse_label_mapping</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="n">forward_label_mapping</span><span class="p">[</span><span class="n">old_labels</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_labels</span>
 
     <span class="c"># Get masks for each old label</span>
@@ -193,7 +193,7 @@
 
     <span class="c"># Take every mask and make sure it has the appropriate sequential label</span>
     <span class="c"># Then combine each of these parts of the label image together into a new sequential label image</span>
-    <span class="n">new_array_relabeled</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_array_label_masks</span> <span class="o">*</span> <span class="n">new_labels_tiled_view</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">new_array_relabeled</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_array_label_masks</span> <span class="o">*</span> <span class="n">new_labels_tiled_view</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">((</span><span class="n">new_array_relabeled</span><span class="p">,</span> <span class="n">forward_label_mapping</span><span class="p">,</span> <span class="n">reverse_label_mapping</span><span class="p">))</span>
 
@@ -266,7 +266,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="add_singleton_axis_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_pos">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_axis_pos</span><span class="p">(</span><span class="n">a_array</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="add_singleton_axis_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_pos">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_axis_pos</span><span class="p">(</span><span class="n">a_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a singleton axis to the given position.</span>
 <span class="sd">        Allows negative values for axis.</span>
@@ -1554,7 +1554,7 @@
 <span class="sd">                   [False, False,  True]], dtype=bool)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">bool_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">bool_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="n">bool_array</span><span class="p">[</span><span class="n">index_array</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">bool_array</span><span class="p">)</span>
@@ -1562,7 +1562,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="expand_view"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_view">[docs]</a><span class="k">def</span> <span class="nf">expand_view</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">reps_after</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_before</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()):</span>
+<div class="viewcode-block" id="expand_view"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_view">[docs]</a><span class="k">def</span> <span class="nf">expand_view</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves like NumPy tile except that it always returns a view and not a copy.</span>
 <span class="sd">        Though, it differs in that additional dimensions are added for repetition as</span>
@@ -1766,7 +1766,7 @@
                                                <span class="nb">len</span><span class="p">(</span><span class="n">reps_before</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">strides</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">reps_after</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,))</span> <span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="expand_arange"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_arange">[docs]</a><span class="k">def</span> <span class="nf">expand_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">reps_before</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_after</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()):</span>
+<div class="viewcode-block" id="expand_arange"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_arange">[docs]</a><span class="k">def</span> <span class="nf">expand_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a</span>
 <span class="sd">        larger cube.</span>
@@ -1827,14 +1827,14 @@
         <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span>
         <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">an_arange</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">step</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">)</span>
+    <span class="n">an_arange</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
 
     <span class="n">an_arange</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">an_arange</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">reps_before</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">reps_after</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">an_arange</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="expand_enumerate"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_enumerate">[docs]</a><span class="k">def</span> <span class="nf">expand_enumerate</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="expand_enumerate"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_enumerate">[docs]</a><span class="k">def</span> <span class="nf">expand_enumerate</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Builds on expand_arange, which has the same shape as the original array. Specifies the increments to occur along</span>
 <span class="sd">        the given axis, which by default is the zeroth axis.</span>
@@ -1895,14 +1895,14 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">an_enumeration</span> <span class="o">=</span> <span class="n">expand_arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">],</span> <span class="n">step</span> <span class="o">=</span> <span class="n">step</span><span class="p">,</span>
-                                   <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
-                                   <span class="n">reps_before</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">],</span> <span class="n">reps_after</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[(</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">):])</span>
+    <span class="n">an_enumeration</span> <span class="o">=</span> <span class="n">expand_arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">start</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
+                                   <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
+                                   <span class="n">reps_before</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">],</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[(</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">):])</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">an_enumeration</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="enumerate_masks"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.enumerate_masks">[docs]</a><span class="k">def</span> <span class="nf">enumerate_masks</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="enumerate_masks"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.enumerate_masks">[docs]</a><span class="k">def</span> <span class="nf">enumerate_masks</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a mask stack and replaces them by an enumerated stack. In other words, each mask is replaced by a</span>
 <span class="sd">        consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)).</span>
@@ -1976,7 +1976,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_enumerated_masks</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="enumerate_masks_max"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.enumerate_masks_max">[docs]</a><span class="k">def</span> <span class="nf">enumerate_masks_max</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="enumerate_masks_max"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.enumerate_masks_max">[docs]</a><span class="k">def</span> <span class="nf">enumerate_masks_max</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a mask stack and replaces them by the max of an enumerated stack. In other words, each mask is replaced by</span>
 <span class="sd">        a consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)). Afterwards,</span>
@@ -2333,8 +2333,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">new_array_1_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">reps_after</span> <span class="o">=</span> <span class="n">new_array_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">new_array_2_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_2</span><span class="p">,</span> <span class="n">reps_before</span> <span class="o">=</span> <span class="n">new_array_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">new_array_1_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">new_array_2_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_2</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">new_array_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span> <span class="n">new_op</span><span class="p">(</span><span class="n">new_array_1_tiled</span><span class="p">,</span> <span class="n">new_array_2_tiled</span><span class="p">)</span> <span class="p">)</span>
 
@@ -2591,7 +2591,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="norm"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.norm">[docs]</a><span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="norm"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.norm">[docs]</a><span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the norm of a vector or a set of vectors.</span>
 
@@ -3493,7 +3493,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the two pairs of vectors from each set and creates a tuple</span>
 <span class="sd">        with the dot product divided by one norm or the other.</span>
@@ -3552,8 +3552,8 @@
     <span class="n">new_vector_set_2_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_2_float</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Expand the norms to have a shape equivalent to vector_pairs_dot_product</span>
-    <span class="n">new_vector_set_1_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">reps_after</span> <span class="o">=</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">new_vector_set_2_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_2_norms</span><span class="p">,</span> <span class="n">reps_before</span> <span class="o">=</span> <span class="n">new_vector_set_1_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">new_vector_set_1_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">new_vector_set_2_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_2_norms</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">new_vector_set_1_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
@@ -3566,7 +3566,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="pair_dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="pair_dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the two pairs of vectors from each set and creates a tuple</span>
 <span class="sd">        with the dot product divided by one norm or the other.</span>
@@ -3619,7 +3619,7 @@
     <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Expand the norms to have a shape equivalent to vector_pairs_dot_product</span>
-    <span class="n">new_vector_set_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">reps_after</span> <span class="o">=</span> <span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">new_vector_set_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
@@ -3631,7 +3631,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.</span>
 
@@ -3683,8 +3683,8 @@
     <span class="n">new_vector_set_2_float</span> <span class="o">=</span> <span class="n">new_vector_set_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="c"># Gets all of the norms</span>
-    <span class="n">new_vector_set_1_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
-    <span class="n">new_vector_set_2_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_2_float</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
+    <span class="n">new_vector_set_1_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
+    <span class="n">new_vector_set_2_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_2_float</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Finds the product of each combination for normalization</span>
     <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">new_vector_set_2_norms</span><span class="p">)</span>
@@ -3699,7 +3699,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="pair_dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="pair_dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.</span>
 
@@ -3739,7 +3739,7 @@
     <span class="n">new_vector_set_float</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="c"># Gets all of the norms</span>
-    <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
+    <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Finds the product of each combination for normalization</span>
     <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">)</span>
@@ -3806,7 +3806,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_cosine_angle</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="generate_contour"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.generate_contour">[docs]</a><span class="k">def</span> <span class="nf">generate_contour</span><span class="p">(</span><span class="n">a_image</span><span class="p">,</span> <span class="n">separation_distance</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">margin</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_contour"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.generate_contour">[docs]</a><span class="k">def</span> <span class="nf">generate_contour</span><span class="p">(</span><span class="n">a_image</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge</span>
 <span class="sd">        and some margin.</span>
@@ -3867,7 +3867,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">a_image_contours</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="generate_labeled_contours"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.generate_labeled_contours">[docs]</a><span class="k">def</span> <span class="nf">generate_labeled_contours</span><span class="p">(</span><span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">margin</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_labeled_contours"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.generate_labeled_contours">[docs]</a><span class="k">def</span> <span class="nf">generate_labeled_contours</span><span class="p">(</span><span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge</span>
 <span class="sd">        and some margin.</span>
@@ -3911,9 +3911,9 @@
 <span class="sd">                   [0, 3, 3, 0, 0, 0, 0]], dtype=int32)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">a_mask_contoured</span> <span class="o">=</span> <span class="n">generate_contour</span><span class="p">(</span><span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span> <span class="o">=</span> <span class="n">separation_distance</span><span class="p">,</span> <span class="n">margin</span> <span class="o">=</span> <span class="n">margin</span><span class="p">)</span>
+    <span class="n">a_mask_contoured</span> <span class="o">=</span> <span class="n">generate_contour</span><span class="p">(</span><span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="n">separation_distance</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">)</span>
 
-    <span class="n">a_mask_contoured_labeled</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">a_mask_contoured</span><span class="p">,</span> <span class="n">structure</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span> <span class="o">*</span> <span class="n">a_mask</span><span class="o">.</span><span class="n">ndim</span> <span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">a_mask_contoured_labeled</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">a_mask_contoured</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span> <span class="o">*</span> <span class="n">a_mask</span><span class="o">.</span><span class="n">ndim</span> <span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">a_mask_contoured_labeled</span><span class="p">)</span>
 
@@ -3976,7 +3976,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">probs_array</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="quantile"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.quantile">[docs]</a><span class="k">def</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="quantile"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.quantile">[docs]</a><span class="k">def</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the quantiles for given data much like MATLAB&#39;s function</span>
 
@@ -4102,7 +4102,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.line_filter">[docs]</a><span class="k">def</span> <span class="nf">line_filter</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.line_filter">[docs]</a><span class="k">def</span> <span class="nf">line_filter</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines</span>
 <span class="sd">        beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension</span>
@@ -4153,7 +4153,7 @@
 <span class="sd">                    [False, False, False]]], dtype=bool)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">line</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">([(</span><span class="mi">2</span><span class="o">*</span><span class="n">_</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">([(</span><span class="mi">2</span><span class="o">*</span><span class="n">_</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
     <span class="n">line_loc</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">line_loc</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
@@ -4163,7 +4163,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="symmetric_line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.symmetric_line_filter">[docs]</a><span class="k">def</span> <span class="nf">symmetric_line_filter</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">ndims</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="symmetric_line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.symmetric_line_filter">[docs]</a><span class="k">def</span> <span class="nf">symmetric_line_filter</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">ndims</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines</span>
 <span class="sd">        beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension</span>
@@ -4213,7 +4213,7 @@
     <span class="k">assert</span> <span class="p">(</span><span class="n">ndims</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">assert</span> <span class="p">(</span><span class="o">-</span><span class="n">ndims</span> <span class="o">&lt;=</span> <span class="n">dim</span> <span class="o">&lt;</span> <span class="n">ndims</span><span class="p">)</span>
 
-    <span class="n">line</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndims</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">2</span><span class="o">*</span><span class="n">size</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndims</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">2</span><span class="o">*</span><span class="n">size</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
     <span class="n">line_loc</span> <span class="o">=</span> <span class="n">ndims</span> <span class="o">*</span> <span class="p">[</span><span class="n">size</span><span class="p">]</span>
     <span class="n">line_loc</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
@@ -4223,7 +4223,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="tagging_reorder_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.tagging_reorder_array">[docs]</a><span class="k">def</span> <span class="nf">tagging_reorder_array</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">from_axis_order</span> <span class="o">=</span> <span class="s">&quot;tzyxc&quot;</span><span class="p">,</span> <span class="n">to_axis_order</span> <span class="o">=</span> <span class="s">&quot;tzyxc&quot;</span><span class="p">,</span> <span class="n">to_copy</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="tagging_reorder_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.tagging_reorder_array">[docs]</a><span class="k">def</span> <span class="nf">tagging_reorder_array</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">from_axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span> <span class="n">to_axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span> <span class="n">to_copy</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transforms one axis ordering to another giving a view of the array (unless otherwise specified).</span>
 

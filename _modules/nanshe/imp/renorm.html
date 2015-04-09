@@ -94,7 +94,7 @@
 
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="zeroed_mean_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.zeroed_mean_images">[docs]</a><span class="k">def</span> <span class="nf">zeroed_mean_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="zeroed_mean_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.zeroed_mean_images">[docs]</a><span class="k">def</span> <span class="nf">zeroed_mean_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>
 
@@ -176,7 +176,7 @@
 
     <span class="c"># take the mean while we haven&#39;t gotten one mean for each image.</span>
     <span class="k">while</span> <span class="n">means</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c"># reshape means until it has the right number of dimensions to broadcast.</span>
     <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">means</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="n">means</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
@@ -188,7 +188,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</span>
 
@@ -262,7 +262,7 @@
     <span class="c"># divide each image by this norm. (required for spams.trainDL)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">output_array_i</span> <span class="o">=</span> <span class="n">output_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">output_array_i_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">output_array_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="nb">ord</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">)</span>
+        <span class="n">output_array_i_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">output_array_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">output_array_i_norm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">output_array_i</span> <span class="o">/=</span> <span class="n">output_array_i_norm</span>

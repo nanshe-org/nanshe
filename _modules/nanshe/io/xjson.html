@@ -92,7 +92,7 @@
 
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../../nanshe.io.xjson.html#nanshe.io.xjson.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../../nanshe.io.xjson.html#nanshe.io.xjson.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads the contents of a json config file and returns the parameters.</span>
 
@@ -119,7 +119,7 @@
 
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">ascii_encode_str</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ascii_encode_str</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">json_dict</span><span class="o">=</span><span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the str.</span>
 
@@ -138,7 +138,7 @@
 
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">ascii_encode_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ascii_encode_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span><span class="o">=</span><span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the list (and its contents).</span>
 
@@ -166,7 +166,7 @@
 
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">ascii_encode_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ascii_encode_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span><span class="o">=</span><span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the dict (and its contents).</span>
 <span class="sd">            Also, make sure the dict is of the right type.</span>
@@ -207,7 +207,7 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Opened configure file named </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">config_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
 
         <span class="c"># will just give a dictionary. just that simple</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">object_pairs_hook</span> <span class="o">=</span> <span class="n">ascii_encode_dict</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">ascii_encode_dict</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Loaded parameters from file, which are </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
 

@@ -93,7 +93,7 @@
 
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="create_numpy_structured_array_in_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">[docs]</a><span class="k">def</span> <span class="nf">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="create_numpy_structured_array_in_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">[docs]</a><span class="k">def</span> <span class="nf">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.</span>
 <span class="sd">        Also, will handle normal NumPy arrays and scalars, as well.</span>
@@ -129,18 +129,18 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">file_handle</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">internalPath</span><span class="p">,</span>
-                                   <span class="n">shape</span> <span class="o">=</span> <span class="n">data_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                                   <span class="n">dtype</span> <span class="o">=</span> <span class="n">data_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
-                                   <span class="n">data</span> <span class="o">=</span> <span class="n">data_array</span><span class="p">,</span>
-                                   <span class="n">chunks</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data_array</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
+                                   <span class="n">shape</span><span class="o">=</span><span class="n">data_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                                   <span class="n">dtype</span><span class="o">=</span><span class="n">data_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                                   <span class="n">data</span><span class="o">=</span><span class="n">data_array</span><span class="p">,</span>
+                                   <span class="n">chunks</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">data_array</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">file_handle</span><span class="p">[</span><span class="n">internalPath</span><span class="p">]</span>
             <span class="n">file_handle</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">internalPath</span><span class="p">,</span>
-                                       <span class="n">shape</span> <span class="o">=</span> <span class="n">data_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                                       <span class="n">dtype</span> <span class="o">=</span> <span class="n">data_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
-                                       <span class="n">data</span> <span class="o">=</span> <span class="n">data_array</span><span class="p">,</span>
-                                       <span class="n">chunks</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+                                       <span class="n">shape</span><span class="o">=</span><span class="n">data_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                                       <span class="n">dtype</span><span class="o">=</span><span class="n">data_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                                       <span class="n">data</span><span class="o">=</span><span class="n">data_array</span><span class="p">,</span>
+                                       <span class="n">chunks</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span>
 
