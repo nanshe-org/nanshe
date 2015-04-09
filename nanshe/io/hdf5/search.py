@@ -129,7 +129,7 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
 
                     current_pattern_group_matches[0][each_group] = None
 
-                    while ( len(current_pattern_group_matches) - 1 ) < len(next_pattern_group_matches):
+                    while (len(current_pattern_group_matches) - 1) < len(next_pattern_group_matches):
                         current_pattern_group_matches.append(collections.OrderedDict())
 
                     for i, each_next_pattern_group_matches in enumerate(next_pattern_group_matches, start=1):
