@@ -1,9 +1,11 @@
 """
+``nanshe`` package, an image processing toolkit.
+
 ===============================================================================
- Overview
+Overview
 ===============================================================================
 
-The ```nanshe``` package is an image processing package that contains a variety
+The ``nanshe`` package is an image processing package that contains a variety
 of different techniques, which are used primarily to assemble the ADINA
 algorithm proposed by Diego, et al.
 ( doi:`10.1109/ISBI.2013.6556660`_ ) to extract active neurons from
@@ -39,7 +41,7 @@ R_, which should be changed if another BLAS is available.
 -------------------------------------------------------------------------------
  Building
 -------------------------------------------------------------------------------
-As this module is pure Python, building follows through the standard method.
+As this package is pure Python, building follows through the standard method.
 Currently, we require setuptools_ for installation; so, make sure it is
 installed. Then simply issue the following command to build and install.
 
@@ -100,7 +102,7 @@ It is also possible to build the documentation from source. This project uses
 Sphinx_ for generating documentation. Please make sure you have it installed if
 you wish to use it. The ``rst`` files (outside of ``index.rst`` are not
 distributed with the source code. This is because is trivial to generate them
-and it is to easy for module to become out of sync with documentation if they
+and it is to easy for the code to become out of sync with documentation if they
 are distributed. However, building ``rst`` files has been made a dependency of
 all other documentation build steps so one does not have to think about this.
 The easiest way to build documentation is to do the following. This will build
@@ -135,16 +137,16 @@ the standard ``clean`` command.
 .. _scikit-image: http://scikit-image.org/
 .. _SPAMS: http://spams-devel.gforge.inria.fr/
 .. _VIGRA: http://ukoethe.github.io/vigra/
-.. _rank_filter: https://github.com/jakirkham/rank_filter/
-.. _Anaconda: https://store.continuum.io/cshop/anaconda/
+.. _rank_filter: http://github.com/jakirkham/rank_filter/
+.. _Anaconda: http://store.continuum.io/cshop/anaconda/
 .. _CMake: http://www.cmake.org/
 .. _ATLAS: http://math-atlas.sourceforge.net/
 .. _OpenBLAS: http://www.openblas.net/
-.. _`Intel MKL`: https://software.intel.com/en-us/intel-mkl
+.. _`Intel MKL`: http://software.intel.com/en-us/intel-mkl
 .. _R: http://www.r-project.org/
-.. _setuptools: https://pythonhosted.org/setuptools/
+.. _setuptools: http://pythonhosted.org/setuptools/
 .. _nose: http://nose.readthedocs.org/en/latest/
-.. _drmaa: https://github.com/pygridtools/drmaa-python
+.. _drmaa: http://github.com/pygridtools/drmaa-python
 .. _Sphinx: http://sphinx-doc.org/
 """
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
