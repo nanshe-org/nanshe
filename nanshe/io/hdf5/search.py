@@ -1,4 +1,16 @@
 """
+The module ``search`` provides glob paths to search for content in a HDF5 file.
+
+===============================================================================
+Overview
+===============================================================================
+The module implements a strategy similar to Python's |glob|_ module for HDF5
+files. In short, it uses regex patterns to match as many possible paths as it
+can.
+
+.. |glob| replace:: ``glob``
+.. _glob: http://docs.python.org/2/library/glob.html
+
 ===============================================================================
 API
 ===============================================================================
