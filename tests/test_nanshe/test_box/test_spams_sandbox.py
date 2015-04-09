@@ -47,23 +47,24 @@ class TestSpamsSandbox(object):
     def test_run_multiprocessing_queue_spams_trainDL_1(self):
         out_queue = multiprocessing.Queue()
 
-        nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(out_queue,
-                                                                            self.g.astype(float),
-                                                                            **{
-                                                                                    "gamma2" : 0,
-                                                                                    "gamma1" : 0,
-                                                                                     "numThreads" : 1,
-                                                                                     "K" : self.g.shape[1],
-                                                                                     "iter" : 10,
-                                                                                     "modeD" : 0,
-                                                                                     "posAlpha" : True,
-                                                                                     "clean" : True,
-                                                                                     "posD" : True,
-                                                                                     "batchsize" : 256,
-                                                                                     "lambda1" : 0.2,
-                                                                                     "lambda2" : 0,
-                                                                                     "mode" : 2
-                                                                               }
+        nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
+            out_queue,
+            self.g.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d = out_queue.get()
 
@@ -97,23 +98,24 @@ class TestSpamsSandbox(object):
     def test_run_multiprocessing_queue_spams_trainDL_2(self):
         out_queue = multiprocessing.Queue()
 
-        nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(out_queue,
-                                                                            self.g3.astype(float),
-                                                                            **{
-                                                                                    "gamma2" : 0,
-                                                                                    "gamma1" : 0,
-                                                                                     "numThreads" : 1,
-                                                                                     "K" : self.g3.shape[1],
-                                                                                     "iter" : 10,
-                                                                                     "modeD" : 0,
-                                                                                     "posAlpha" : True,
-                                                                                     "clean" : True,
-                                                                                     "posD" : True,
-                                                                                     "batchsize" : 256,
-                                                                                     "lambda1" : 0.2,
-                                                                                     "lambda2" : 0,
-                                                                                     "mode" : 2
-                                                                               }
+        nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
+            out_queue,
+            self.g3.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g3.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d3 = out_queue.get()
 
@@ -144,22 +146,23 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_queue_spams_trainDL_1(self):
-        d = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g.astype(float),
-                                                                                 **{
-                                                                                        "gamma2" : 0,
-                                                                                        "gamma1" : 0,
-                                                                                         "numThreads" : 1,
-                                                                                         "K" : self.g.shape[1],
-                                                                                         "iter" : 10,
-                                                                                         "modeD" : 0,
-                                                                                         "posAlpha" : True,
-                                                                                         "clean" : True,
-                                                                                         "posD" : True,
-                                                                                         "batchsize" : 256,
-                                                                                         "lambda1" : 0.2,
-                                                                                         "lambda2" : 0,
-                                                                                         "mode" : 2
-                                                                                    }
+        d = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(
+            self.g.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d = (d != 0)
 
@@ -189,22 +192,23 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_queue_spams_trainDL_2(self):
-        d3 = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(self.g3.astype(float),
-                                                                                 **{
-                                                                                        "gamma2" : 0,
-                                                                                        "gamma1" : 0,
-                                                                                         "numThreads" : 1,
-                                                                                         "K" : self.g3.shape[1],
-                                                                                         "iter" : 10,
-                                                                                         "modeD" : 0,
-                                                                                         "posAlpha" : True,
-                                                                                         "clean" : True,
-                                                                                         "posD" : True,
-                                                                                         "batchsize" : 256,
-                                                                                         "lambda1" : 0.2,
-                                                                                         "lambda2" : 0,
-                                                                                         "mode" : 2
-                                                                                    }
+        d3 = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(
+            self.g3.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g3.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d3 = (d3 != 0)
 
@@ -247,25 +251,26 @@ class TestSpamsSandbox(object):
         result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(result_array_type._dtype_.type).type(0)[()]))
         result_array = multiprocessing.Array(result_array_ctype, numpy.product(result_array_type._shape_), lock=False)
 
-        nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
-                                                                            result_array,
-                                                                            g_array_type,
-                                                                            g_array,
-                                                                            **{
-                                                                                    "gamma2" : 0,
-                                                                                    "gamma1" : 0,
-                                                                                     "numThreads" : 1,
-                                                                                     "K" : self.g.shape[1],
-                                                                                     "iter" : 10,
-                                                                                     "modeD" : 0,
-                                                                                     "posAlpha" : True,
-                                                                                     "clean" : True,
-                                                                                     "posD" : True,
-                                                                                     "batchsize" : 256,
-                                                                                     "lambda1" : 0.2,
-                                                                                     "lambda2" : 0,
-                                                                                     "mode" : 2
-                                                                               }
+        nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
+            result_array_type,
+            result_array,
+            g_array_type,
+            g_array,
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d = numpy.frombuffer(result_array, dtype=float_type).reshape(result_array_type._shape_).copy()
         d = (d != 0)
@@ -310,25 +315,26 @@ class TestSpamsSandbox(object):
         result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(result_array_type._dtype_.type).type(0)[()]))
         result_array = multiprocessing.Array(result_array_ctype, numpy.product(result_array_type._shape_), lock=False)
 
-        nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(result_array_type,
-                                                                            result_array,
-                                                                            g3_array_type,
-                                                                            g3_array,
-                                                                            **{
-                                                                                    "gamma2" : 0,
-                                                                                    "gamma1" : 0,
-                                                                                     "numThreads" : 1,
-                                                                                     "K" : self.g3.shape[1],
-                                                                                     "iter" : 10,
-                                                                                     "modeD" : 0,
-                                                                                     "posAlpha" : True,
-                                                                                     "clean" : True,
-                                                                                     "posD" : True,
-                                                                                     "batchsize" : 256,
-                                                                                     "lambda1" : 0.2,
-                                                                                     "lambda2" : 0,
-                                                                                     "mode" : 2
-                                                                               }
+        nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
+            result_array_type,
+            result_array,
+            g3_array_type,
+            g3_array,
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g3.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d3 = numpy.frombuffer(result_array, dtype=float_type).reshape(result_array_type._shape_).copy()
         d3 = (d3 != 0)
@@ -358,22 +364,23 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_array_spams_trainDL_1(self):
-        d = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g.astype(float),
-                                                                                 **{
-                                                                                        "gamma2" : 0,
-                                                                                        "gamma1" : 0,
-                                                                                         "numThreads" : 1,
-                                                                                         "K" : self.g.shape[1],
-                                                                                         "iter" : 10,
-                                                                                         "modeD" : 0,
-                                                                                         "posAlpha" : True,
-                                                                                         "clean" : True,
-                                                                                         "posD" : True,
-                                                                                         "batchsize" : 256,
-                                                                                         "lambda1" : 0.2,
-                                                                                         "lambda2" : 0,
-                                                                                         "mode" : 2
-                                                                                    }
+        d = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
+            self.g.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d = (d != 0)
 
@@ -403,22 +410,23 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_array_spams_trainDL_2(self):
-        d3 = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(self.g3.astype(float),
-                                                                                 **{
-                                                                                        "gamma2" : 0,
-                                                                                        "gamma1" : 0,
-                                                                                         "numThreads" : 1,
-                                                                                         "K" : self.g3.shape[1],
-                                                                                         "iter" : 10,
-                                                                                         "modeD" : 0,
-                                                                                         "posAlpha" : True,
-                                                                                         "clean" : True,
-                                                                                         "posD" : True,
-                                                                                         "batchsize" : 256,
-                                                                                         "lambda1" : 0.2,
-                                                                                         "lambda2" : 0,
-                                                                                         "mode" : 2
-                                                                                    }
+        d3 = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
+            self.g3.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g3.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d3 = (d3 != 0)
 
@@ -447,22 +455,23 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_call_spams_trainDL_1(self):
-        d = nanshe.box.spams_sandbox.call_spams_trainDL(self.g.astype(float),
-                                                           **{
-                                                                "gamma2" : 0,
-                                                                "gamma1" : 0,
-                                                                "numThreads" : 1,
-                                                                "K" : self.g.shape[1],
-                                                                "iter" : 10,
-                                                                "modeD" : 0,
-                                                                "posAlpha" : True,
-                                                                "clean" : True,
-                                                                "posD" : True,
-                                                                "batchsize" : 256,
-                                                                "lambda1" : 0.2,
-                                                                "lambda2" : 0,
-                                                                "mode" : 2
-                                                              }
+        d = nanshe.box.spams_sandbox.call_spams_trainDL(
+            self.g.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d = (d != 0)
 
@@ -492,22 +501,23 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_spams_trainDL_2(self):
-        d3 = nanshe.box.spams_sandbox.call_spams_trainDL(self.g3.astype(float),
-                                                           **{
-                                                                "gamma2" : 0,
-                                                                "gamma1" : 0,
-                                                                "numThreads" : 1,
-                                                                "K" : self.g3.shape[1],
-                                                                "iter" : 10,
-                                                                "modeD" : 0,
-                                                                "posAlpha" : True,
-                                                                "clean" : True,
-                                                                "posD" : True,
-                                                                "batchsize" : 256,
-                                                                "lambda1" : 0.2,
-                                                                "lambda2" : 0,
-                                                                "mode" : 2
-                                                              }
+        d3 = nanshe.box.spams_sandbox.call_spams_trainDL(
+            self.g3.astype(float),
+            **{
+                "gamma2" : 0,
+                "gamma1" : 0,
+                "numThreads" : 1,
+                "K" : self.g3.shape[1],
+                "iter" : 10,
+                "modeD" : 0,
+                "posAlpha" : True,
+                "clean" : True,
+                "posD" : True,
+                "batchsize" : 256,
+                "lambda1" : 0.2,
+                "lambda2" : 0,
+                "mode" : 2
+            }
         )
         d3 = (d3 != 0)
 
