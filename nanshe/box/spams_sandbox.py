@@ -1,4 +1,14 @@
 """
+The ``spams_sandbox`` module provides mechanisms for sandboxing SPAMS.
+
+===============================================================================
+Overview
+===============================================================================
+SPAMS sometimes seems to step on the interpreter. As a result, we provide a
+number of strategies to address this, by launching it in a separate process so
+that it hopefully does not mess up the main interpreter. We also try to keep
+the module space clean. This seems to help.
+
 ===============================================================================
 API
 ===============================================================================
