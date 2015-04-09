@@ -213,13 +213,15 @@ class TestSegment(object):
 
         a = numpy.ones((100, 101, 102))
 
-        b = nanshe.imp.segment.estimate_f0(a,
+        b = nanshe.imp.segment.estimate_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
-            half_window_size=half_window_size)
+            half_window_size=half_window_size
+        )
 
         assert (b == a).all()
 
@@ -234,14 +236,16 @@ class TestSegment(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.imp.segment.estimate_f0(a,
+        nanshe.imp.segment.estimate_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
-            out=b)
+            out=b
+        )
 
         assert (b == a).all()
 
@@ -256,14 +260,16 @@ class TestSegment(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.imp.segment.estimate_f0(b,
+        nanshe.imp.segment.estimate_f0(
+            b,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
-            out=b)
+            out=b
+        )
 
         assert (b == a).all()
 
@@ -280,13 +286,15 @@ class TestSegment(object):
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102))
 
-        b = nanshe.imp.segment.estimate_f0(a,
+        b = nanshe.imp.segment.estimate_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
-            half_window_size=half_window_size)
+            half_window_size=half_window_size
+        )
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
@@ -303,13 +311,15 @@ class TestSegment(object):
 
         a = numpy.ones((100, 101, 102, 103))
 
-        b = nanshe.imp.segment.estimate_f0(a,
+        b = nanshe.imp.segment.estimate_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
-            half_window_size=half_window_size)
+            half_window_size=half_window_size
+        )
 
         assert (b == a).all()
 
@@ -327,13 +337,15 @@ class TestSegment(object):
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102, 103))
 
-        b = nanshe.imp.segment.estimate_f0(a,
+        b = nanshe.imp.segment.estimate_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
-            half_window_size=half_window_size)
+            half_window_size=half_window_size
+        )
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
@@ -350,14 +362,16 @@ class TestSegment(object):
 
         a = numpy.ones((100, 101, 102))
 
-        b = nanshe.imp.segment.extract_f0(a,
+        b = nanshe.imp.segment.extract_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
-            bias=bias)
+            bias=bias
+        )
 
         assert (b == 0).all()
 
@@ -373,7 +387,8 @@ class TestSegment(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.imp.segment.extract_f0(a,
+        nanshe.imp.segment.extract_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -381,7 +396,8 @@ class TestSegment(object):
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias,
-            out=b)
+            out=b
+        )
 
         assert (b == 0).all()
 
@@ -397,7 +413,8 @@ class TestSegment(object):
         a = numpy.ones((100, 101, 102))
 
         b = a.copy()
-        nanshe.imp.segment.extract_f0(b,
+        nanshe.imp.segment.extract_f0(
+            b,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
@@ -405,7 +422,8 @@ class TestSegment(object):
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
             bias=bias,
-            out=b)
+            out=b
+        )
 
         assert (b == 0).all()
 
@@ -422,15 +440,16 @@ class TestSegment(object):
         stdev = 1.0
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102))
-
-        b = nanshe.imp.segment.extract_f0(a,
+        b = nanshe.imp.segment.extract_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
-            bias=bias)
+            bias=bias
+        )
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
@@ -451,14 +470,16 @@ class TestSegment(object):
 
         a = numpy.ones((100, 101, 102, 103))
 
-        b = nanshe.imp.segment.extract_f0(a,
+        b = nanshe.imp.segment.extract_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
-            bias=bias)
+            bias=bias
+        )
 
         assert (b == 0).all()
 
@@ -477,14 +498,16 @@ class TestSegment(object):
 
         a = numpy.random.normal(mean, stdev, (100, 101, 102, 103))
 
-        b = nanshe.imp.segment.extract_f0(a,
+        b = nanshe.imp.segment.extract_f0(
+            a,
             spatial_smoothing_gaussian_filter_stdev=spatial_smoothing_gaussian_filter_stdev,
             spatial_smoothing_gaussian_filter_window_size=spatial_smoothing_gaussian_filter_window_size,
             which_quantile=which_quantile,
             temporal_smoothing_gaussian_filter_stdev=temporal_smoothing_gaussian_filter_stdev,
             temporal_smoothing_gaussian_filter_window_size=temporal_smoothing_gaussian_filter_window_size,
             half_window_size=half_window_size,
-            bias=bias)
+            bias=bias
+        )
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
@@ -534,7 +557,7 @@ class TestSegment(object):
         radii = numpy.array([5, 6])
         magnitudes = numpy.array([15, 16])
         points = numpy.array([[20, 30, 24],
-                           [70, 59, 65]])
+                              [70, 59, 65]])
 
         masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
         images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
@@ -574,7 +597,7 @@ class TestSegment(object):
         radii = numpy.array([5, 6])
         magnitudes = numpy.array([15, 16])
         points = numpy.array([[20, 30, 24],
-                           [70, 59, 65]])
+                              [70, 59, 65]])
 
         masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
         images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
@@ -613,10 +636,14 @@ class TestSegment(object):
         radii = numpy.array([5, 6])
         magnitudes = numpy.array([15, 16])
         points = numpy.array([[20, 30, 24],
-                           [70, 59, 65]])
+                              [70, 59, 65]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         image_stack = images.max(axis=0)
 
         nanshe.imp.segment.preprocess_data(image_stack, **config)
@@ -655,10 +682,14 @@ class TestSegment(object):
         radii = numpy.array([5, 6])
         magnitudes = numpy.array([15, 16])
         points = numpy.array([[20, 30, 24],
-                           [70, 59, 65]])
+                              [70, 59, 65]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         image_stack = images.max(axis=0)
 
         nanshe.imp.segment.preprocess_data(image_stack, **config)
@@ -698,8 +729,12 @@ class TestSegment(object):
         points = numpy.array([[20, 30, 24, 85],
                               [70, 59, 65, 17]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         image_stack = images.max(axis=0)
 
         nanshe.imp.segment.preprocess_data(image_stack, **config)
@@ -730,8 +765,12 @@ class TestSegment(object):
         points = numpy.array([[20, 30, 24, 85],
                               [70, 59, 65, 17]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         image_stack = images.max(axis=0)
 
         nanshe.imp.segment.preprocess_data(image_stack, **config)
@@ -763,8 +802,12 @@ class TestSegment(object):
         points = numpy.array([[20, 30, 24, 85],
                               [70, 59, 65, 17]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         image_stack = images.max(axis=0)
 
         nanshe.imp.segment.preprocess_data(image_stack, **config)
@@ -779,24 +822,25 @@ class TestSegment(object):
 
         g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.imp.segment.generate_dictionary(g.astype(numpy.float32),
-                                                                                    **{
-                                                                                        "spams.trainDL" : {
-                                                                                            "gamma2" : 0,
-                                                                                            "gamma1" : 0,
-                                                                                             "numThreads" : 1,
-                                                                                             "K" : len(g),
-                                                                                             "iter" : 10,
-                                                                                             "modeD" : 0,
-                                                                                             "posAlpha" : True,
-                                                                                             "clean" : True,
-                                                                                             "posD" : True,
-                                                                                             "batchsize" : 256,
-                                                                                             "lambda1" : 0.2,
-                                                                                             "lambda2" : 0,
-                                                                                             "mode" : 2
-                                                                                        }
-                                                                                    }
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(numpy.float32),
+            **{
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "K" : len(g),
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
         )
         d = (d != 0)
 
@@ -831,24 +875,25 @@ class TestSegment(object):
 
         g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.imp.segment.generate_dictionary(g.astype(float),
-                                                                                    **{
-                                                                                        "spams.trainDL" : {
-                                                                                            "gamma2" : 0,
-                                                                                            "gamma1" : 0,
-                                                                                             "numThreads" : 1,
-                                                                                             "K" : len(g),
-                                                                                             "iter" : 10,
-                                                                                             "modeD" : 0,
-                                                                                             "posAlpha" : True,
-                                                                                             "clean" : True,
-                                                                                             "posD" : True,
-                                                                                             "batchsize" : 256,
-                                                                                             "lambda1" : 0.2,
-                                                                                             "lambda2" : 0,
-                                                                                             "mode" : 2
-                                                                                        }
-                                                                                    }
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            **{
+                "spams.trainDL" : {
+                "gamma2" : 0,
+                "gamma1" : 0,
+                 "numThreads" : 1,
+                 "K" : len(g),
+                 "iter" : 10,
+                 "modeD" : 0,
+                 "posAlpha" : True,
+                 "clean" : True,
+                 "posD" : True,
+                 "batchsize" : 256,
+                 "lambda1" : 0.2,
+                 "lambda2" : 0,
+                 "mode" : 2
+                }
+            }
         )
         d = (d != 0)
 
@@ -884,24 +929,25 @@ class TestSegment(object):
 
         g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.imp.segment.generate_dictionary(g.astype(numpy.float32),
-                                                                                    **{
-                                                                                        "spams.trainDL" : {
-                                                                                            "gamma2" : 0,
-                                                                                            "gamma1" : 0,
-                                                                                             "numThreads" : 1,
-                                                                                             "K" : len(g),
-                                                                                             "iter" : 10,
-                                                                                             "modeD" : 0,
-                                                                                             "posAlpha" : True,
-                                                                                             "clean" : True,
-                                                                                             "posD" : True,
-                                                                                             "batchsize" : 256,
-                                                                                             "lambda1" : 0.2,
-                                                                                             "lambda2" : 0,
-                                                                                             "mode" : 2
-                                                                                        }
-                                                                                    }
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(numpy.float32),
+            **{
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "K" : len(g),
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
         )
         d = (d != 0)
 
@@ -937,24 +983,25 @@ class TestSegment(object):
 
         g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
 
-        d = nanshe.imp.segment.generate_dictionary(g.astype(float),
-                                                                                    **{
-                                                                                        "spams.trainDL" : {
-                                                                                            "gamma2" : 0,
-                                                                                            "gamma1" : 0,
-                                                                                             "numThreads" : 1,
-                                                                                             "K" : len(g),
-                                                                                             "iter" : 10,
-                                                                                             "modeD" : 0,
-                                                                                             "posAlpha" : True,
-                                                                                             "clean" : True,
-                                                                                             "posD" : True,
-                                                                                             "batchsize" : 256,
-                                                                                             "lambda1" : 0.2,
-                                                                                             "lambda2" : 0,
-                                                                                             "mode" : 2
-                                                                                        }
-                                                                                    }
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            **{
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "K" : len(g),
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
         )
         d = (d != 0)
 
@@ -988,7 +1035,9 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = nanshe.imp.segment.generate_local_maxima_vigra(g.max(axis=0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
@@ -1003,7 +1052,9 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = nanshe.imp.segment.generate_local_maxima_vigra(g.max(axis=0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
@@ -1017,7 +1068,9 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = nanshe.imp.segment.generate_local_maxima_scikit_image(g.max(axis=0))
 
     @nose.plugins.attrib.attr("3D")
@@ -1030,7 +1083,9 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = nanshe.imp.segment.generate_local_maxima_scikit_image(g.max(axis=0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
@@ -1044,7 +1099,9 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = nanshe.imp.segment.generate_local_maxima(g.max(axis=0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
@@ -1059,7 +1116,9 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = nanshe.imp.segment.generate_local_maxima(g.max(axis=0))
 
         assert (numpy.array(m.nonzero()) == p.T).all()
@@ -1073,12 +1132,15 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.imp.segment.extended_region_local_maxima_properties(g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+        e = nanshe.imp.segment.extended_region_local_maxima_properties(
+            g.max(axis=0),
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
         )
 
         assert (numpy.bincount(e["label"])[1:]  == 1).all()
@@ -1102,13 +1164,16 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.imp.segment.extended_region_local_maxima_properties(g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+        e = nanshe.imp.segment.extended_region_local_maxima_properties(
+            g.max(axis=0),
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
         )
 
         assert (numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all()
@@ -1139,12 +1204,15 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.imp.segment.extended_region_local_maxima_properties(g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+        e = nanshe.imp.segment.extended_region_local_maxima_properties(
+            g.max(axis=0),
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
         )
 
         assert (numpy.bincount(e["label"])[1:]  == 1).all()
@@ -1169,13 +1237,16 @@ class TestSegment(object):
         radii = numpy.array((5, 6, 7))
         magnitudes = numpy.array((1, 1, 1), dtype=float)
 
-        g = nanshe.syn.data.generate_gaussian_images(space, p, radii/3.0, magnitudes/3)
+        g = nanshe.syn.data.generate_gaussian_images(
+            space, p, radii/3.0, magnitudes/3
+        )
         g = numpy.array([g[0] + g[1], g[2]])
         m = (g > 0.00065)
         g *= m
 
-        e = nanshe.imp.segment.extended_region_local_maxima_properties(g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+        e = nanshe.imp.segment.extended_region_local_maxima_properties(
+            g.max(axis=0),
+            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
         )
 
         assert (numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all()
@@ -1201,10 +1272,14 @@ class TestSegment(object):
         radii = numpy.array((5, 10))
         magnitudes = numpy.array((1, 1), dtype=float)
         points = numpy.array([[23, 36],
-                           [58, 64]])
+                              [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1220,10 +1295,14 @@ class TestSegment(object):
         radii = numpy.array((5, 10))
         magnitudes = numpy.array((1, 1), dtype=float)
         points = numpy.array([[23, 36],
-                           [58, 64]])
+                              [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1248,10 +1327,14 @@ class TestSegment(object):
         radii = numpy.array((5, 10))
         magnitudes = numpy.array((1, 1), dtype=float)
         points = numpy.array([[23, 36],
-                           [58, 64]])
+                              [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1276,10 +1359,14 @@ class TestSegment(object):
         radii = numpy.array((5, 10))
         magnitudes = numpy.array((1, 1), dtype=float)
         points = numpy.array([[23, 36],
-                           [58, 64]])
+                              [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1294,7 +1381,7 @@ class TestSegment(object):
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
         e2 = nanshe.imp.segment.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
-                                                                                   numpy.finfo(float).eps)
+                                                                  numpy.finfo(float).eps)
 
         assert (len(points) == len(e.props))
 
@@ -1308,8 +1395,12 @@ class TestSegment(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1328,8 +1419,12 @@ class TestSegment(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1357,8 +1452,12 @@ class TestSegment(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1386,8 +1485,12 @@ class TestSegment(object):
         points = numpy.array([[23, 36, 21],
                               [58, 64, 62]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1402,7 +1505,7 @@ class TestSegment(object):
         percentage_pixels_below_max = numpy.sort(percentage_pixels_below_max)
 
         e2 = nanshe.imp.segment.remove_low_intensity_local_maxima(e, percentage_pixels_below_max[1] + \
-                                                                                   numpy.finfo(float).eps)
+                                                                  numpy.finfo(float).eps)
 
         assert (len(points) == len(e.props))
 
@@ -1415,8 +1518,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = masks.max(axis=0).astype(int)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1440,8 +1547,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1465,8 +1576,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = masks.max(axis=0).astype(int)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1492,8 +1607,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69],
                               [58, 64]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = masks.max(axis=0).astype(int)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1520,8 +1639,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = masks.max(axis=0).astype(int)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1546,8 +1669,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1572,8 +1699,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = masks.max(axis=0).astype(int)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1600,8 +1731,12 @@ class TestSegment(object):
         points = numpy.array([[63, 69, 26],
                               [58, 64, 21]])
 
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(
+            space, points, radii
+        )
+        images = nanshe.syn.data.generate_gaussian_images(
+            space, points, radii/3.0, magnitudes
+        ) * masks
         labels = masks.max(axis=0).astype(int)
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
@@ -1839,7 +1974,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25, 25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -1883,7 +2018,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25, 25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xyz, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xyz, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -1928,7 +2063,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25, 25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -1945,7 +2080,7 @@ class TestSegment(object):
         neurons = nanshe.imp.segment.extract_neurons(image, circle_masks)
 
         fused_neurons = nanshe.imp.segment.fuse_neurons(neurons[0], neurons[1],
-                                                                      fraction_mean_neuron_max_threshold)
+                                                        fraction_mean_neuron_max_threshold)
 
         assert (neurons["mask"].sum(axis=0) == fused_neurons["mask"]).all()
 
@@ -1972,7 +2107,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25, 25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -1989,7 +2124,7 @@ class TestSegment(object):
         neurons = nanshe.imp.segment.extract_neurons(image, circle_masks)
 
         fused_neurons = nanshe.imp.segment.fuse_neurons(neurons[0], neurons[1],
-                                                                      fraction_mean_neuron_max_threshold)
+                                                        fraction_mean_neuron_max_threshold)
 
         assert (neurons["mask"].sum(axis=0) == fused_neurons["mask"]).all()
 
@@ -2017,7 +2152,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25, 25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -2045,7 +2180,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xy, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -2074,7 +2209,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25, 25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xyz, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xyz, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -2103,7 +2238,7 @@ class TestSegment(object):
         circle_radii = numpy.array([25])
 
         circle_offsets = nanshe.util.xnumpy.expand_view(circle_centers, image.shape) - \
-                         nanshe.util.xnumpy.expand_view(xyz, reps_before=len(circle_centers))
+        nanshe.util.xnumpy.expand_view(xyz, reps_before=len(circle_centers))
 
         circle_offsets_squared = circle_offsets**2
 
@@ -2166,11 +2301,11 @@ class TestSegment(object):
         radii = numpy.array([7, 6, 6, 6, 7, 6])
         magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
         points = numpy.array([[30, 24],
-                           [59, 65],
-                           [21, 65],
-                           [13, 12],
-                           [72, 16],
-                           [45, 32]])
+                              [59, 65],
+                              [21, 65],
+                              [13, 12],
+                              [72, 16],
+                              [45, 32]])
 
         masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
         images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
@@ -2345,11 +2480,11 @@ class TestSegment(object):
         radii = numpy.array([7, 6, 6, 6, 7, 6])
         magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
         points = numpy.array([[30, 24, 68],
-                           [59, 65, 47],
-                           [21, 65, 21],
-                           [13, 12, 21],
-                           [72, 16, 67],
-                           [45, 32, 27]])
+                              [59, 65, 47],
+                              [21, 65, 21],
+                              [13, 12, 21],
+                              [72, 16, 67],
+                              [45, 32, 27]])
 
         masks = nanshe.syn.data.generate_hypersphere_masks(space, points, radii)
         images = nanshe.syn.data.generate_gaussian_images(space, points, radii/3.0, magnitudes) * masks
