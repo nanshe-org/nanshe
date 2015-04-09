@@ -751,9 +751,11 @@ class TestLearner(object):
         for i in xrange(len(self.bases_images)):
             image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack[image_stack_slice] = nanshe.util.xnumpy.all_permutations_operation(operator.mul,
-                                                                                                   ramp,
-                                                                                                   self.bases_images[i])
+            self.image_stack[image_stack_slice] = nanshe.util.xnumpy.all_permutations_operation(
+                operator.mul,
+                ramp,
+                self.bases_images[i]
+            )
 
         self.space3 = numpy.array([60, 60, 60])
         self.radii3 = numpy.array([4, 3, 3, 3, 4, 3])
@@ -778,14 +780,18 @@ class TestLearner(object):
         self.image_stack3 = None
         ramp = numpy.concatenate([numpy.linspace(0, 1, self.linspace_length), numpy.linspace(1, 0, self.linspace_length)])
 
-        self.image_stack3 = numpy.zeros((self.bases_images3.shape[0] * len(ramp),) + self.bases_images3.shape[1:],
-                                       dtype=self.bases_images3.dtype)
+        self.image_stack3 = numpy.zeros(
+            (self.bases_images3.shape[0] * len(ramp),) + self.bases_images3.shape[1:],
+            dtype=self.bases_images3.dtype
+        )
         for i in xrange(len(self.bases_images3)):
             image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack3[image_stack_slice3] = nanshe.util.xnumpy.all_permutations_operation(operator.mul,
-                                                                                                   ramp,
-                                                                                                   self.bases_images3[i])
+            self.image_stack3[image_stack_slice3] = nanshe.util.xnumpy.all_permutations_operation(
+                operator.mul,
+                ramp,
+                self.bases_images3[i]
+            )
 
         with h5py.File(self.hdf5_input_filename, "w") as fid:
             fid["images"] = self.image_stack
@@ -1458,7 +1464,8 @@ class TestLearner(object):
             output_group = output_file_handle["/"]
 
             # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
+            array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+                output_group,
                 group_name="debug",
                 enable=self.config_a_block["debug"],
                 overwrite_group=False,
@@ -1466,7 +1473,8 @@ class TestLearner(object):
             )
 
             # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
+            resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+                output_group,
                 recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
                 overwrite=True
             )
@@ -1507,7 +1515,8 @@ class TestLearner(object):
             output_group = output_file_handle["/"]
 
             # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
+            array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+                output_group,
                 group_name="debug",
                 enable=self.config_a_block["debug"],
                 overwrite_group=False,
@@ -1515,7 +1524,8 @@ class TestLearner(object):
             )
 
             # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(output_group,
+            resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+                output_group,
                 recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
                 overwrite=True
             )
