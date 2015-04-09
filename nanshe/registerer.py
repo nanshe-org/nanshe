@@ -1,4 +1,15 @@
 """
+The ``registerer`` module allows the registration algorithm to be run.
+
+===============================================================================
+Overview
+===============================================================================
+The ``main`` function actually starts the algorithm and can be called
+externally. Configuration files for the registerer are provided in the
+examples_ and are entitled registerer.
+
+.. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
+
 ===============================================================================
 API
 ===============================================================================
