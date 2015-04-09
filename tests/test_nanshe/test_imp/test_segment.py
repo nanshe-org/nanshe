@@ -24,8 +24,8 @@ import nanshe.syn.data
 class TestSegment(object):
     def test_remove_zeroed_lines_1(self):
         a = numpy.ones((1, 100, 101))
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0], [a.shape[1]-2, 3, 4]]).T.copy()
 
@@ -41,8 +41,8 @@ class TestSegment(object):
 
     def test_remove_zeroed_lines_2(self):
         a = numpy.ones((1, 100, 101))
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0], [1, 3, 4]]).T.copy()
 
@@ -60,8 +60,8 @@ class TestSegment(object):
     def test_remove_zeroed_lines_3(self):
         a = numpy.ones((1, 100, 101))
         p = 0.2
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         nr = numpy.random.geometric(p)
 
@@ -79,8 +79,8 @@ class TestSegment(object):
 
     def test_remove_zeroed_lines_4(self):
         a = numpy.ones((1, 100, 101))
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0], [a.shape[1], 0, 4]]).T.copy()
 
@@ -96,8 +96,8 @@ class TestSegment(object):
 
     def test_remove_zeroed_lines_5(self):
         a = numpy.ones((1, 100, 101))
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0, 0], [a.shape[1], a.shape[1]-1, 0, 1]]).T.copy()
 
@@ -113,8 +113,8 @@ class TestSegment(object):
 
     def test_remove_zeroed_lines_6(self):
         a = numpy.repeat(numpy.arange(100)[None].T, 101, axis=1)[None].astype(float)
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0], [1, 3, 4]]).T.copy()
 
@@ -133,8 +133,8 @@ class TestSegment(object):
         a[0, :, 0] = 1
         nanshe.util.xnumpy.index_axis_at_pos(nanshe.util.xnumpy.index_axis_at_pos(a, 0, 0), -1, 0)[:] = 1
 
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0, 0], [0, 2, 3, 4]]).T.copy()
 
@@ -150,8 +150,8 @@ class TestSegment(object):
 
     def test_remove_zeroed_lines_8(self):
         a = numpy.ones((1, 100, 101))
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0], [a.shape[1]-2, 3, 4]]).T.copy()
 
@@ -168,8 +168,8 @@ class TestSegment(object):
 
     def test_remove_zeroed_lines_9(self):
         a = numpy.ones((1, 100, 101))
-        erosion_shape = [ 21, 1 ]
-        dilation_shape = [ 1, 3 ]
+        erosion_shape = [21, 1]
+        dilation_shape = [1, 3]
 
         r = numpy.array([[0, 0, 0], [a.shape[1]-2, 3, 4]]).T.copy()
 
@@ -187,8 +187,8 @@ class TestSegment(object):
     @nose.plugins.attrib.attr("3D")
     def test_remove_zeroed_lines_10(self):
         a = numpy.ones((1, 100, 101, 102))
-        erosion_shape = [ 21, 1, 1 ]
-        dilation_shape = [ 1, 3, 1 ]
+        erosion_shape = [21, 1, 1]
+        dilation_shape = [1, 3, 1]
 
         r = numpy.array([[0, 0, 0], [a.shape[1]-2, 3, 4], [0, 0, 0]]).T.copy()
 
@@ -290,7 +290,7 @@ class TestSegment(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert ( (99.0*b.std()) < a.std() )
+        assert ((99.0*b.std()) < a.std())
 
     @nose.plugins.attrib.attr("3D")
     def test_estimate_f0_3(self):
@@ -337,7 +337,7 @@ class TestSegment(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert ( (99.0*b.std()) < a.std() )
+        assert ((99.0*b.std()) < a.std())
 
     def test_extract_f0_1(self):
         spatial_smoothing_gaussian_filter_stdev = 5.0
@@ -434,10 +434,10 @@ class TestSegment(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert ( (99.0*b.std()) < a.std() )
+        assert ((99.0*b.std()) < a.std())
 
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
-        assert ( ((a - 100.0*b) < 0.1).all() )
+        assert (((a - 100.0*b) < 0.1).all())
 
     @nose.plugins.attrib.attr("3D")
     def test_extract_f0_3(self):
@@ -488,10 +488,10 @@ class TestSegment(object):
 
         # Seems to be basically 2 orders of magnitude in reduction. However, it may be a little above exactly two.
         # Hence, multiplication by 99 instead of 100.
-        assert ( (99.0*b.std()) < a.std() )
+        assert ((99.0*b.std()) < a.std())
 
         # Turns out that a difference greater than 0.1 will be over 10 standard deviations away.
-        assert ( ((a - 100.0*b) < 0.1).all() )
+        assert (((a - 100.0*b) < 0.1).all())
 
     def test_preprocess_data_1(self):
         ## Does NOT test accuracy.
@@ -1745,8 +1745,8 @@ class TestSegment(object):
         neuron_masks_old = None
 
         assert (len(neuron_centers) == len(neurons))
-        assert ( numpy.abs(neurons["image"].max(axis=0) - neuron_images.max(axis=0)).max() < 1.0e-4 )
-        assert ( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-4 )
+        assert (numpy.abs(neurons["image"].max(axis=0) - neuron_images.max(axis=0)).max() < 1.0e-4)
+        assert (numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-4)
 
     @nose.plugins.attrib.attr("3D")
     def test_wavelet_denoising_3(self):
@@ -1826,8 +1826,8 @@ class TestSegment(object):
         neuron_masks_old = None
 
         assert (len(neuron_centers) == len(neurons))
-        assert ( numpy.abs(neurons["image"].max(axis=0) - neuron_images.max(axis=0)).max() < 1.0e-6 )
-        assert ( numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-6 )
+        assert (numpy.abs(neurons["image"].max(axis=0) - neuron_images.max(axis=0)).max() < 1.0e-6)
+        assert (numpy.abs(neurons["image"] - neuron_images).max() < 1.0e-6)
 
     def test_extract_neurons_1(self):
         image = 5 * numpy.ones((100, 100))
