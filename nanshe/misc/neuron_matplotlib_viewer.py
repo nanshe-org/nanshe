@@ -2,6 +2,14 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 03, 2014 20:20:39 EDT$"
 
 
+import warnings
+
+warnings.warn(
+    "The module `neuron_matplotlib_viewer` is deprecated."
+    "Please consider using `viewer` instead.",
+    DeprecationWarning
+)
+
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
