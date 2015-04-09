@@ -78,7 +78,7 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
     # Parse parameter filename and validate that the name is acceptable
     parameters_filename_details = pathHelpers.PathComponents(parameters_filename)
     # Clean up the extension so it fits the standard.
-    if ( parameters_filename_details.extension.lower().lstrip(os.extsep) not in ["json"] ):
+    if (parameters_filename_details.extension.lower().lstrip(os.extsep) not in ["json"]):
         raise Exception("Parameter file with filename: \"" + parameters_filename + "\"" + " provided with an unknown file extension: \"" + parameters_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse the parameters from the json file.
@@ -108,13 +108,13 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
     # Parse input filename and validate that the name is acceptable
     input_filename_details = pathHelpers.PathComponents(input_filename)
     # Clean up the extension so it fits the standard.
-    if ( input_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"] ):
+    if (input_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"]):
         raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse output filename and validate that the name is acceptable
     output_filename_details = pathHelpers.PathComponents(output_filename)
     # Clean up the extension so it fits the standard.
-    if ( output_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"] ):
+    if (output_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"]):
         raise Exception("Output file with filename: \"" + output_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Where the original images are.
@@ -185,13 +185,13 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
     # Parse input filename and validate that the name is acceptable
     input_filename_details = pathHelpers.PathComponents(input_filename)
     # Clean up the extension so it fits the standard.
-    if ( input_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"] ):
+    if (input_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"]):
         raise Exception("Input file with filename: \"" + input_filename + "\"" + " provided with an unknown file extension: \"" + input_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Parse output filename and validate that the name is acceptable
     output_filename_details = pathHelpers.PathComponents(output_filename)
     # Clean up the extension so it fits the standard.
-    if ( output_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"] ):
+    if (output_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"]):
         raise Exception("Output file with filename: \"" + output_filename + "\"" + " provided with an unknown file extension: \"" + output_filename_details.extension + "\". If it is a supported format, please run the given file through nanshe_converter first before proceeding.")
 
     # Where the original images are.
@@ -306,7 +306,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
         assert (parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] <= half_window_shape_array[0])
 
     # Estimate bounds for each slice. Uses typical python [begin, end) for the indices.
-    estimated_bounds = numpy.zeros( tuple(num_blocks_array), dtype=(int, original_images_pared_shape_array.shape + (2,)) )
+    estimated_bounds = numpy.zeros(tuple(num_blocks_array), dtype=(int, original_images_pared_shape_array.shape + (2,)))
 
     for each_block_indices in iters.index_generator(*num_blocks_array):
         for each_dim, each_block_dim_index in enumerate(each_block_indices):
@@ -607,7 +607,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
 
         if "parameters" not in output_group["neurons"].attrs:
             output_group["neurons"].attrs["parameters"] = repr(dict(list(parameters.items()) + \
-                                                                    [ ("block_shape", block_shape),
+                                                                    [("block_shape", block_shape),
                                                                       ("num_blocks", num_blocks),
                                                                       ("half_window_shape", half_window_shape),
                                                                       ("half_border_shape", half_border_shape),
