@@ -770,7 +770,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
     else:
         properties = ["area", "centroid"]
 
-    if ( (properties == "all") or (properties == None) ):
+    if ((properties == "all") or (properties == None)):
         properties = region_properties_type_dict.keys()
 
     intensity_image = None
@@ -1076,7 +1076,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
     else:
         properties = ["area", "centroid"]
 
-    if ( (properties == "all") or (properties == None) ):
+    if ((properties == "all") or (properties == None)):
         properties = region_properties_type_dict.keys()
 
     intensity_image = None
@@ -1497,8 +1497,8 @@ def extended_region_local_maxima_properties(new_intensity_image, new_label_image
 
     # Remove the background
     new_image_mask = (new_label_image != 0)
-    new_intensity_image_masked = ( ~new_image_mask * new_intensity_image.min() ) + (
-        new_image_mask * new_intensity_image )
+    new_intensity_image_masked = (~new_image_mask * new_intensity_image.min()) + (
+        new_image_mask * new_intensity_image)
 
     # Get a mask of the local maxima (that only includes local maxima not in the background)
     local_maxima_mask = generate_local_maxima(new_intensity_image_masked)
@@ -2015,7 +2015,7 @@ def wavelet_denoising(new_image,
         # Iterate over the unbounded ones to fix any errors.
         for each_labels_not_within_bound in labels_not_within_bound:
             # Get a mask for the current label
-            current_label_mask = ( new_wavelet_image_denoised_labeled == each_labels_not_within_bound )
+            current_label_mask = (new_wavelet_image_denoised_labeled == each_labels_not_within_bound)
 
             # Get a lower wavelet mask
             lower_wavelet_mask = new_wavelet_transformed_image_significant_mask[-2]
@@ -2643,13 +2643,13 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
             new_neuron_set_angle_maxes > alignment_min_threshold] = True
 
         already_matched |= new_neuron_set_angle_maxes_significant
-        already_matched[ new_neuron_set_angle_all_optimal_i[new_neuron_set_angle_maxes_significant] ] |= True
+        already_matched[new_neuron_set_angle_all_optimal_i[new_neuron_set_angle_maxes_significant]] |= True
 
         new_neuron_set_masks_overlaid_1_maxes_significant[~already_matched &
             (new_neuron_set_masks_overlaid_1_maxes > overlap_min_threshold)] = True
 
         already_matched |= new_neuron_set_masks_overlaid_1_maxes_significant
-        already_matched[ new_neuron_set_masks_overlaid_1_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant] ] |= True
+        already_matched[new_neuron_set_masks_overlaid_1_all_optimal_i[new_neuron_set_masks_overlaid_1_maxes_significant]] |= True
 
         new_neuron_set_masks_overlaid_2_maxes_significant[~already_matched &
             (new_neuron_set_masks_overlaid_2_maxes_significant > overlap_min_threshold)] = True
@@ -2727,7 +2727,7 @@ def expand_rois(new_data, roi_masks, **parameters):
 
     # Normalize the data
     new_data_normalized = normalize_data(new_data,
-                                         **{"renormalized_images" : { "ord" : 2 }})
+                                         **{"renormalized_images" : {"ord" : 2}})
 
     # Compute the area of each ROI in order to properly compute the average activity of each ROI.
     roi_areas = roi_masks.sum(axis=tuple(xrange(1, roi_masks.ndim)))
@@ -2746,7 +2746,7 @@ def expand_rois(new_data, roi_masks, **parameters):
 
     # Normalize the time traces
     normalized_time_traces = normalize_data(time_traces,
-                                            **{"renormalized_images" : { "ord" : 2 }})
+                                            **{"renormalized_images" : {"ord" : 2}})
 
     # Convert to matrix.
     new_data_normalized_matrix = xnumpy.array_to_matrix(new_data_normalized)
@@ -2784,7 +2784,7 @@ def postprocess_data(new_dictionary, **parameters):
 
         for i, i_str, each in iters.filled_stringify_enumerate(new_list):
             neuron_sets_array_debug_recorder[i_str] = None
-            yield ( (i, each, neuron_sets_array_debug_recorder[i_str]) )
+            yield ((i, each, neuron_sets_array_debug_recorder[i_str]))
 
     # Get all neurons for all images
     new_neurons_set = get_empty_neuron(shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype)
