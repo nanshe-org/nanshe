@@ -77,7 +77,8 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
 
     out_queue = multiprocessing.Queue()
 
-    p = multiprocessing.Process(target=run_multiprocessing_queue_spams_trainDL, args=(out_queue,) + args, kwargs=kwargs)
+    queue_args = (out_queue,) + args
+    p = multiprocessing.Process(target=run_multiprocessing_queue_spams_trainDL, args=queue_args, kwargs=kwargs)
     p.start()
     result = out_queue.get()
     result = result.copy()
