@@ -830,7 +830,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;area&quot;</span><span class="p">,</span> <span class="s">&quot;centroid&quot;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">properties</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="o">==</span> <span class="bp">None</span><span class="p">)</span> <span class="p">):</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">properties</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="o">==</span> <span class="bp">None</span><span class="p">)):</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="n">region_properties_type_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
     <span class="n">intensity_image</span> <span class="o">=</span> <span class="bp">None</span>
@@ -1136,7 +1136,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;area&quot;</span><span class="p">,</span> <span class="s">&quot;centroid&quot;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">properties</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="o">==</span> <span class="bp">None</span><span class="p">)</span> <span class="p">):</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">properties</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="o">==</span> <span class="bp">None</span><span class="p">)):</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="n">region_properties_type_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
     <span class="n">intensity_image</span> <span class="o">=</span> <span class="bp">None</span>
@@ -1557,8 +1557,8 @@
 
     <span class="c"># Remove the background</span>
     <span class="n">new_image_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_label_image</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">new_intensity_image_masked</span> <span class="o">=</span> <span class="p">(</span> <span class="o">~</span><span class="n">new_image_mask</span> <span class="o">*</span> <span class="n">new_intensity_image</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
-        <span class="n">new_image_mask</span> <span class="o">*</span> <span class="n">new_intensity_image</span> <span class="p">)</span>
+    <span class="n">new_intensity_image_masked</span> <span class="o">=</span> <span class="p">(</span><span class="o">~</span><span class="n">new_image_mask</span> <span class="o">*</span> <span class="n">new_intensity_image</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">+</span> <span class="p">(</span>
+        <span class="n">new_image_mask</span> <span class="o">*</span> <span class="n">new_intensity_image</span><span class="p">)</span>
 
     <span class="c"># Get a mask of the local maxima (that only includes local maxima not in the background)</span>
     <span class="n">local_maxima_mask</span> <span class="o">=</span> <span class="n">generate_local_maxima</span><span class="p">(</span><span class="n">new_intensity_image_masked</span><span class="p">)</span>
@@ -2075,7 +2075,7 @@
         <span class="c"># Iterate over the unbounded ones to fix any errors.</span>
         <span class="k">for</span> <span class="n">each_labels_not_within_bound</span> <span class="ow">in</span> <span class="n">labels_not_within_bound</span><span class="p">:</span>
             <span class="c"># Get a mask for the current label</span>
-            <span class="n">current_label_mask</span> <span class="o">=</span> <span class="p">(</span> <span class="n">new_wavelet_image_denoised_labeled</span> <span class="o">==</span> <span class="n">each_labels_not_within_bound</span> <span class="p">)</span>
+            <span class="n">current_label_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_wavelet_image_denoised_labeled</span> <span class="o">==</span> <span class="n">each_labels_not_within_bound</span><span class="p">)</span>
 
             <span class="c"># Get a lower wavelet mask</span>
             <span class="n">lower_wavelet_mask</span> <span class="o">=</span> <span class="n">new_wavelet_transformed_image_significant_mask</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
@@ -2703,13 +2703,13 @@
             <span class="n">new_neuron_set_angle_maxes</span> <span class="o">&gt;</span> <span class="n">alignment_min_threshold</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
 
         <span class="n">already_matched</span> <span class="o">|=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
-        <span class="n">already_matched</span><span class="p">[</span> <span class="n">new_neuron_set_angle_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">]</span> <span class="p">]</span> <span class="o">|=</span> <span class="bp">True</span>
+        <span class="n">already_matched</span><span class="p">[</span><span class="n">new_neuron_set_angle_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">]]</span> <span class="o">|=</span> <span class="bp">True</span>
 
         <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">[</span><span class="o">~</span><span class="n">already_matched</span> <span class="o">&amp;</span>
             <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_1_maxes</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
 
         <span class="n">already_matched</span> <span class="o">|=</span> <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
-        <span class="n">already_matched</span><span class="p">[</span> <span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">]</span> <span class="p">]</span> <span class="o">|=</span> <span class="bp">True</span>
+        <span class="n">already_matched</span><span class="p">[</span><span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">]]</span> <span class="o">|=</span> <span class="bp">True</span>
 
         <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span><span class="p">[</span><span class="o">~</span><span class="n">already_matched</span> <span class="o">&amp;</span>
             <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
@@ -2787,7 +2787,7 @@
 
     <span class="c"># Normalize the data</span>
     <span class="n">new_data_normalized</span> <span class="o">=</span> <span class="n">normalize_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
-                                         <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}})</span>
+                                         <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>
 
     <span class="c"># Compute the area of each ROI in order to properly compute the average activity of each ROI.</span>
     <span class="n">roi_areas</span> <span class="o">=</span> <span class="n">roi_masks</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">roi_masks</span><span class="o">.</span><span class="n">ndim</span><span class="p">)))</span>
@@ -2806,7 +2806,7 @@
 
     <span class="c"># Normalize the time traces</span>
     <span class="n">normalized_time_traces</span> <span class="o">=</span> <span class="n">normalize_data</span><span class="p">(</span><span class="n">time_traces</span><span class="p">,</span>
-                                            <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}})</span>
+                                            <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>
 
     <span class="c"># Convert to matrix.</span>
     <span class="n">new_data_normalized_matrix</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">array_to_matrix</span><span class="p">(</span><span class="n">new_data_normalized</span><span class="p">)</span>
@@ -2844,7 +2844,7 @@
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">filled_stringify_enumerate</span><span class="p">(</span><span class="n">new_list</span><span class="p">):</span>
             <span class="n">neuron_sets_array_debug_recorder</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="k">yield</span> <span class="p">(</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">each</span><span class="p">,</span> <span class="n">neuron_sets_array_debug_recorder</span><span class="p">[</span><span class="n">i_str</span><span class="p">])</span> <span class="p">)</span>
+            <span class="k">yield</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">each</span><span class="p">,</span> <span class="n">neuron_sets_array_debug_recorder</span><span class="p">[</span><span class="n">i_str</span><span class="p">]))</span>
 
     <span class="c"># Get all neurons for all images</span>
     <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>

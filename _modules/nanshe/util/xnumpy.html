@@ -262,7 +262,7 @@
         <span class="n">new_subarray</span> <span class="o">=</span> <span class="n">new_subarray</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
         <span class="n">new_subarray</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">new_subarray</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span> <span class="n">new_subarray</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">new_subarray</span><span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -319,7 +319,7 @@
     <span class="n">new_array</span> <span class="o">=</span> <span class="n">a_array</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
     <span class="n">new_array</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">new_array_shape</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span> <span class="n">new_array</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">new_array</span><span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -343,7 +343,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># return( new_array[None] )</span>
-    <span class="k">return</span><span class="p">(</span> <span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -367,7 +367,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )</span>
-    <span class="k">return</span><span class="p">(</span> <span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -1763,7 +1763,7 @@
         <span class="n">reps_before</span> <span class="o">=</span> <span class="p">(</span><span class="n">reps_before</span><span class="p">,)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">stride_tricks</span><span class="o">.</span><span class="n">as_strided</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">reps_before</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="n">reps_after</span><span class="p">,</span>
-                                               <span class="nb">len</span><span class="p">(</span><span class="n">reps_before</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">strides</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">reps_after</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,))</span> <span class="p">)</span>
+                                               <span class="nb">len</span><span class="p">(</span><span class="n">reps_before</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">strides</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">reps_after</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)))</span>
 
 </div>
 <div class="viewcode-block" id="expand_arange"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_arange">[docs]</a><span class="k">def</span> <span class="nf">expand_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
@@ -2336,7 +2336,7 @@
     <span class="n">new_array_1_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">new_array_2_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_2</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">new_array_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span> <span class="n">new_op</span><span class="p">(</span><span class="n">new_array_1_tiled</span><span class="p">,</span> <span class="n">new_array_2_tiled</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">new_op</span><span class="p">(</span><span class="n">new_array_1_tiled</span><span class="p">,</span> <span class="n">new_array_2_tiled</span><span class="p">))</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -2444,7 +2444,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span><span class="p">(</span> <span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span> <span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span> <span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">))</span>
 
 </div>
 <div class="viewcode-block" id="NotNumPyStructuredArrayType"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.NotNumPyStructuredArrayType">[docs]</a><span class="k">class</span> <span class="nc">NotNumPyStructuredArrayType</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -2481,7 +2481,7 @@
         <span class="c"># Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)</span>
         <span class="n">each_shape</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">[</span><span class="n">each_name</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 
-        <span class="k">yield</span> <span class="p">(</span> <span class="p">(</span><span class="n">each_name</span><span class="p">,</span> <span class="n">each_dtype</span><span class="p">,</span> <span class="n">each_shape</span><span class="p">)</span> <span class="p">)</span>
+        <span class="k">yield</span> <span class="p">((</span><span class="n">each_name</span><span class="p">,</span> <span class="n">each_dtype</span><span class="p">,</span> <span class="n">each_shape</span><span class="p">))</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -3562,7 +3562,7 @@
     <span class="n">vector_pairs_dot_product_1_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">new_vector_set_1_norms_expanded</span>
     <span class="n">vector_pairs_dot_product_2_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">new_vector_set_2_norms_expanded</span>
 
-    <span class="k">return</span><span class="p">(</span> <span class="p">(</span><span class="n">vector_pairs_dot_product_1_normalized</span><span class="p">,</span> <span class="n">vector_pairs_dot_product_2_normalized</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">((</span><span class="n">vector_pairs_dot_product_1_normalized</span><span class="p">,</span> <span class="n">vector_pairs_dot_product_2_normalized</span><span class="p">))</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -3627,7 +3627,7 @@
     <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_dot_product_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">new_vector_set_norms_expanded</span>
 
-    <span class="k">return</span><span class="p">(</span> <span class="p">(</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span><span class="p">((</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">))</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -3913,7 +3913,7 @@
 
     <span class="n">a_mask_contoured</span> <span class="o">=</span> <span class="n">generate_contour</span><span class="p">(</span><span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="n">separation_distance</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">)</span>
 
-    <span class="n">a_mask_contoured_labeled</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">a_mask_contoured</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span> <span class="o">*</span> <span class="n">a_mask</span><span class="o">.</span><span class="n">ndim</span> <span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">a_mask_contoured_labeled</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">a_mask_contoured</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,)</span> <span class="o">*</span> <span class="n">a_mask</span><span class="o">.</span><span class="n">ndim</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">a_mask_contoured_labeled</span><span class="p">)</span>
 
@@ -4213,7 +4213,7 @@
     <span class="k">assert</span> <span class="p">(</span><span class="n">ndims</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">assert</span> <span class="p">(</span><span class="o">-</span><span class="n">ndims</span> <span class="o">&lt;=</span> <span class="n">dim</span> <span class="o">&lt;</span> <span class="n">ndims</span><span class="p">)</span>
 
-    <span class="n">line</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndims</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">2</span><span class="o">*</span><span class="n">size</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndims</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">size</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
     <span class="n">line_loc</span> <span class="o">=</span> <span class="n">ndims</span> <span class="o">*</span> <span class="p">[</span><span class="n">size</span><span class="p">]</span>
     <span class="n">line_loc</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>

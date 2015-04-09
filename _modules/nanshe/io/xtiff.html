@@ -345,7 +345,7 @@
 
             <span class="c"># Store into the current slice and go to the next one.</span>
             <span class="n">new_hdf5_dataset_axis_pos_next</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_axis_pos</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">each_new_tiff_array</span><span class="p">)</span>
-            <span class="n">new_hdf5_dataset</span><span class="p">[</span> <span class="n">new_hdf5_dataset_axis_pos</span> <span class="p">:</span> <span class="n">new_hdf5_dataset_axis_pos_next</span> <span class="p">]</span> <span class="o">=</span> <span class="n">each_new_tiff_array</span>
+            <span class="n">new_hdf5_dataset</span><span class="p">[</span><span class="n">new_hdf5_dataset_axis_pos</span> <span class="p">:</span> <span class="n">new_hdf5_dataset_axis_pos_next</span><span class="p">]</span> <span class="o">=</span> <span class="n">each_new_tiff_array</span>
             <span class="n">new_hdf5_dataset_axis_pos</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_axis_pos_next</span></div>
 </pre></div>
 
