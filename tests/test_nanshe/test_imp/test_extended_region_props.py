@@ -241,8 +241,8 @@ class TestSegment(object):
 
         e.remove_prop_indices(*removal_mask.nonzero()[0])
 
-        print len(e.props)
-        print len(p)
+        print(len(e.props))
+        print(len(p))
 
 
         assert (len(e.props) == len(p))
@@ -501,8 +501,8 @@ class TestSegment(object):
 
         e.remove_prop_indices(*removal_mask.nonzero()[0])
 
-        print len(e.props)
-        print len(p)
+        print(len(e.props))
+        print(len(p))
 
 
         assert (len(e.props) == len(p))
