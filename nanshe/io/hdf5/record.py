@@ -88,10 +88,14 @@ class EmptyArrayRecorder(object):
         if key in self.__recorders:
             return(EmptyArrayRecorder())
         else:
-            raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + ")"))
+            raise(KeyError(
+                "unable to open object (Symbol table: Can't open object " +
+                repr(key) + ")"
+            ))
 
     def __setitem__(self, key, value):
-        # Exception will be thrown if value is empty or if key already exists (as intended).
+        # Exception will be thrown if value is empty or if key already exists
+        # (as intended).
         if (key == "."):
             if not ((value is None) or (value is h5py.Group)):
                 raise ValueError("Cannot store dataset in top level group.")
@@ -101,7 +105,10 @@ class EmptyArrayRecorder(object):
             if value.size:
                 pass
             else:
-                raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
+                raise ValueError(
+                    "The array provided for output by the name: \"" + key +
+                    "\" is empty."
+                )
 
 
 @prof.log_class(trace_meta_logger)
@@ -135,16 +142,26 @@ class HDF5ArrayRecorder(object):
 
         try:
             if isinstance(self.hdf5_handle[key], h5py.Group):
-                return(HDF5ArrayRecorder(self.hdf5_handle[key], overwrite=self.overwrite))
+                return(HDF5ArrayRecorder(
+                    self.hdf5_handle[key], overwrite=self.overwrite
+                ))
             else:
-                return(serializers.read_numpy_structured_array_from_HDF5(self.hdf5_handle, key))
+                return(serializers.read_numpy_structured_array_from_HDF5(
+                    self.hdf5_handle, key
+                ))
         except:
-            raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
+            raise(KeyError(
+                "unable to open object (Symbol table: Can't open object " +
+                repr(key) + " in " + repr(self.hdf5_handle) + ")"
+            ))
 
     def __setitem__(self, key, value):
         if (key == "."):
             if not ((value is None) or (value is h5py.Group)):
-                raise ValueError("Cannot store dataset in top level group ( " + self.hdf5_handle.name + " ).")
+                raise ValueError(
+                    "Cannot store dataset in top level group ( " +
+                    self.hdf5_handle.name + " )."
+                )
 
             if self.overwrite:
                 for each_key in self.hdf5_handle:
@@ -169,8 +186,9 @@ class HDF5ArrayRecorder(object):
 
                     self.hdf5_handle.file.flush()
         else:
-            # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
-            # Exception will be thrown if value is empty or if key already exists (as intended).
+            # Attempt to create a dataset in self.hdf5_handle named key with
+            # value and do not overwrite. Exception will be thrown if value is
+            # empty or if key already exists (as intended).
             if value.size:
                 serializers.create_numpy_structured_array_in_HDF5(
                     self.hdf5_handle,
@@ -182,7 +200,10 @@ class HDF5ArrayRecorder(object):
 
                 return()
             else:
-                raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
+                raise ValueError(
+                    "The array provided for output by the name: \"" +
+                    key + "\" is empty."
+                )
 
 
 @prof.log_class(trace_meta_logger)
@@ -199,7 +220,9 @@ class HDF5EnumeratedArrayRecorder(object):
         self.hdf5_index_data_handles = {"." : -1}
         for each_index in self.hdf5_handle:
             each_index = int(each_index)
-            self.hdf5_index_data_handles["."] = max(self.hdf5_index_data_handles["."], each_index)
+            self.hdf5_index_data_handles["."] = max(
+                self.hdf5_index_data_handles["."], each_index
+            )
 
         if self.hdf5_index_data_handles["."] != -1:
             hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
@@ -211,7 +234,9 @@ class HDF5EnumeratedArrayRecorder(object):
 
                     for each_index in hdf5_index_handle[each_key]:
                         each_index = int(each_index)
-                        self.hdf5_index_data_handles[each_key] = max(self.hdf5_index_data_handles[each_key], each_index)
+                        self.hdf5_index_data_handles[each_key] = max(
+                            self.hdf5_index_data_handles[each_key], each_index
+                        )
 
     def __nonzero__(self):
         return(True)
@@ -254,15 +279,25 @@ class HDF5EnumeratedArrayRecorder(object):
                 key_i_str = str(key_i)
                 return(serializers.read_numpy_structured_array_from_HDF5(key_handle, key_i_str))
         except:
-            raise(KeyError("unable to open object (Symbol table: Can't open object " + repr(key) + " in " + repr(self.hdf5_handle) + ")"))
+            raise(KeyError(
+                "unable to open object (Symbol table: Can't open object " +
+                repr(key) + " in " + repr(self.hdf5_handle) + ")"
+            ))
 
     def __setitem__(self, key, value):
         if (key == "."):
             if not ((value is None) or (value is h5py.Group)):
-                raise ValueError("Cannot store dataset in top level group ( " + self.hdf5_handle.name + " ).")
+                raise ValueError(
+                    "Cannot store dataset in top level group ( " +
+                    self.hdf5_handle.name + " )."
+                )
 
-            self.hdf5_index_data_handles = {"." : self.hdf5_index_data_handles["."] + 1}
-            self.hdf5_handle.create_group(str(self.hdf5_index_data_handles["."]))
+            self.hdf5_index_data_handles = {
+                "." : self.hdf5_index_data_handles["."] + 1
+            }
+            self.hdf5_handle.create_group(
+                str(self.hdf5_index_data_handles["."])
+            )
             self.hdf5_handle.file.flush()
         else:
             hdf5_index_handle = None
@@ -270,9 +305,13 @@ class HDF5EnumeratedArrayRecorder(object):
                 hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
             except KeyError:
                 if self.hdf5_index_data_handles["."] == -1:
-                    self.hdf5_index_data_handles = {"." : self.hdf5_index_data_handles["."] + 1}
+                    self.hdf5_index_data_handles = {
+                        "." : self.hdf5_index_data_handles["."] + 1
+                    }
 
-                self.hdf5_handle.create_group(str(self.hdf5_index_data_handles["."]))
+                self.hdf5_handle.create_group(
+                    str(self.hdf5_index_data_handles["."])
+                )
                 self.hdf5_handle.file.flush()
 
                 hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
@@ -284,8 +323,9 @@ class HDF5EnumeratedArrayRecorder(object):
                 hdf5_index_handle.file.flush()
                 self.hdf5_index_data_handles[key] = None
             else:
-                # Index into a NumPy structured array can return a void type even though it is a valid array, which can
-                # be stored. So, we must check.
+                # Index into a NumPy structured array can return a void type
+                # even though it is a valid array, which can be stored.
+                # So, we must check.
                 try:
                     assert isinstance(value, numpy.ndarray)
                 except AssertionError:
@@ -309,7 +349,10 @@ class HDF5EnumeratedArrayRecorder(object):
 
                     self.hdf5_handle.file.flush()
                 else:
-                    raise ValueError("The array provided for output by the name: \"" + key + "\" is empty.")
+                    raise ValueError(
+                        "The array provided for output by the name: \"" +
+                        key + "\" is empty."
+                    )
 
 
 @prof.log_call(trace_meta_logger)
@@ -441,7 +484,9 @@ def static_subgrouping_array_recorders(*args, **kwargs):
                 if _k != "__dict__":
                     del self.__dict__[_k]
 
-        callable = wrappers.static_variables(recorders=SubgroupingRecorders(*args, **kwargs))(callable)
+        callable = wrappers.static_variables(
+            recorders=SubgroupingRecorders(*args, **kwargs)
+        )(callable)
 
         @wrappers.wraps(callable)
         def static_subgrouping_array_recorders_wrapper(*args, **kwargs):
@@ -474,7 +519,9 @@ def static_array_debug_recorder(callable):
             (callable):            A decorator that adds the static variable array_debug_recorder to the given function.
     """
 
-    callable = static_subgrouping_array_recorders(array_debug_recorder=EmptyArrayRecorder())(callable)
+    callable = static_subgrouping_array_recorders(
+        array_debug_recorder=EmptyArrayRecorder()
+    )(callable)
 
     return(callable)
 
@@ -553,7 +600,9 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 if _k != "__dict__":
                     del self.__dict__[_k]
 
-        a_class = wrappers.class_static_variables(recorders=ClassSubgroupingRecorders(*args, **kwargs))(a_class)
+        a_class = wrappers.class_static_variables(
+            recorders=ClassSubgroupingRecorders(*args, **kwargs)
+        )(a_class)
 
         def class_static_subgrouping_array_recorders__init__decorator(callable):
             @wrappers.wraps(callable)
@@ -584,8 +633,11 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 # runs separate.
                 callable.recorders.__dict__ = dict()
                 for _k in self.recorders.__dict__:
-                    # setattr(callable.recorders, _k, self.recorders.__dict__[_k][callable.__name__)])
-                    setattr(callable.recorders, _k, getattr(self.recorders, _k))
+                    # setattr(callable.recorders, _k,
+                    # self.recorders.__dict__[_k][callable.__name__)])
+                    setattr(
+                        callable.recorders, _k, getattr(self.recorders, _k)
+                    )
                     # callable.recorders.__dict__[_k]["."] = None
 
                 return(callable(self, *args, **kwargs))
@@ -593,20 +645,25 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
             return(class_static_subgrouping_array_recorders_wrapper)
 
         # Wraps __init__ only
-        a_class = wrappers.class_decorate_methods(__init__=class_static_subgrouping_array_recorders__init__decorator)(a_class)
+        a_class = wrappers.class_decorate_methods(
+            __init__=class_static_subgrouping_array_recorders__init__decorator
+        )(a_class)
 
         # Wrap everything
-        a_class = wrappers.class_decorate_all_methods(class_static_subgrouping_array_recorders_decorator)(a_class)
+        a_class = wrappers.class_decorate_all_methods(
+            class_static_subgrouping_array_recorders_decorator)(a_class)
 
 
         # Must be done last.
-        # Precedes the constructor to ensure a new working directory is created.
+        # Precedes the constructor to ensure a new working directory is created
         class MetaSubgroupingRecorders(type):
             def __call__(self, *args, **kwargs):
                 for _k in self.recorders.__dict__:
                     self.recorders.__dict__[_k]["."] = None
 
-                return(super(MetaSubgroupingRecorders, self).__call__(*args, **kwargs))
+                return(super(MetaSubgroupingRecorders, self).__call__(
+                    *args, **kwargs
+                ))
 
         a_class = wrappers.metaclass(MetaSubgroupingRecorders)(a_class)
 
@@ -629,6 +686,8 @@ def class_static_array_debug_recorder(a_class):
             (class):            A decorator that adds the static variable array_debug_recorder to the given function.
     """
 
-    a_class = class_static_subgrouping_array_recorders(array_debug_recorder=EmptyArrayRecorder())(a_class)
+    a_class = class_static_subgrouping_array_recorders(
+        array_debug_recorder=EmptyArrayRecorder()
+    )(a_class)
 
     return(a_class)
