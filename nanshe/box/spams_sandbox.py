@@ -78,13 +78,19 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     out_queue = multiprocessing.Queue()
 
     queue_args = (out_queue,) + args
-    p = multiprocessing.Process(target=run_multiprocessing_queue_spams_trainDL, args=queue_args, kwargs=kwargs)
+    p = multiprocessing.Process(
+        target=run_multiprocessing_queue_spams_trainDL,
+        args=queue_args,
+        kwargs=kwargs
+    )
     p.start()
     result = out_queue.get()
     result = result.copy()
     p.join()
 
-    if p.exitcode != 0: raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
+    if p.exitcode != 0: raise SPAMSException(
+        "SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\"."
+    )
 
     return(result)
 
@@ -143,7 +149,9 @@ def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_a
     result_shape = result_array_type._shape_
     result_flags = numpy.core.multiarray.flagsobj(result_array_type._flags_)
 
-    result = numpy.frombuffer(result_array, dtype=result_dtype).reshape(result_shape)
+    result = numpy.frombuffer(
+        result_array, dtype=result_dtype
+    ).reshape(result_shape)
     result.setflags(result_flags)
 
     for order_name, as_ordered_array in as_ordered_array_dict.items():
@@ -184,8 +192,12 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
 
 
     # Types for X_array
-    X_array_type = numpy.ctypeslib.ndpointer(dtype=X.dtype, ndim=X.ndim, shape=X.shape, flags=X.flags)
-    X_array_ctype = type(numpy.ctypeslib.as_ctypes(X_array_type._dtype_.type(0)[()]))
+    X_array_type = numpy.ctypeslib.ndpointer(
+        dtype=X.dtype, ndim=X.ndim, shape=X.shape, flags=X.flags
+    )
+    X_array_ctype = type(
+        numpy.ctypeslib.as_ctypes(X_array_type._dtype_.type(0)[()])
+    )
 
     # Create a shared array to contain X
     X_array = multiprocessing.Array(X_array_ctype,
@@ -193,30 +205,46 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
                                     lock=False)
 
     # Copy over the contents of X.
-    X_array_numpy = numpy.frombuffer(X_array, dtype=X_array_type._dtype_).reshape(X_array_type._shape_)
+    X_array_numpy = numpy.frombuffer(
+        X_array, dtype=X_array_type._dtype_
+    ).reshape(X_array_type._shape_)
     X_array_numpy[:] = X
     X_array_numpy = None
 
 
     # Types for result_array
-    result_array_type = numpy.ctypeslib.ndpointer(dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], kwargs["K"]))
-    result_array_ctype = type(numpy.ctypeslib.as_ctypes(result_array_type._dtype_.type(0)[()]))
+    result_array_type = numpy.ctypeslib.ndpointer(
+        dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], kwargs["K"])
+    )
+    result_array_ctype = type(
+        numpy.ctypeslib.as_ctypes(result_array_type._dtype_.type(0)[()])
+    )
 
     # Create a shared array to contain the result
-    result_array = multiprocessing.Array(result_array_ctype,
-                                         numpy.product(result_array_type._shape_),
-                                         lock=False)
+    result_array = multiprocessing.Array(
+        result_array_ctype,
+        numpy.product(result_array_type._shape_),
+        lock=False
+    )
 
 
-    p = multiprocessing.Process(target=run_multiprocessing_array_spams_trainDL, args=(result_array_type, result_array, X_array_type, X_array,) + args, kwargs=kwargs)
+    p = multiprocessing.Process(
+        target=run_multiprocessing_array_spams_trainDL,
+        args=(result_array_type, result_array, X_array_type, X_array,) + args,
+        kwargs=kwargs
+    )
     p.start()
     p.join()
 
-    if p.exitcode != 0: raise SPAMSException("SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\".")
+    if p.exitcode != 0: raise SPAMSException(
+        "SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\"."
+    )
 
 
     # Reconstruct the result from the output array
-    result = numpy.frombuffer(result_array, dtype=result_array_type._dtype_).reshape(result_array_type._shape_)
+    result = numpy.frombuffer(
+        result_array, dtype=result_array_type._dtype_
+    ).reshape(result_array_type._shape_)
     result = result.copy()
 
     return(result)
