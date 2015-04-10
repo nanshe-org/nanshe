@@ -208,8 +208,6 @@ def log_call(logger, to_log_call=True, to_print_args=False, to_print_time=True, 
                 if log_call_callable_wrapped.to_print_time:
                     logger.debug("Run time for callable: \"" + callable.__name__ + "\" is \"" + str(diff_time) + " s\".")
             else:
-                # We don't return immediately. Why? We want to know if this succeeded or failed.
-                # So, we want the log message below to print after the function runs.
                 result = callable(*args, **kwargs)
 
 
