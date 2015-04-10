@@ -67,10 +67,12 @@ def index_generator(*sizes):
             [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]
     """
 
-    # Creates a list of xrange generator objects over each respective dimension of sizes
+    # Creates a list of xrange generator objects over each respective
+    # dimension of sizes
     gens = [xrange(_) for _ in sizes]
 
-    # Combines the generators to a single generator of indices that go throughout sizes
+    # Combines the generators to a single generator of indices that go
+    # throughout sizes
     chain_gen = itertools.product(*gens)
 
     return(chain_gen)
@@ -112,10 +114,12 @@ def index_enumerator(*sizes):
             [(0, (0, 0)), (1, (0, 1)), (2, (1, 0)), (3, (1, 1)), (4, (2, 0)), (5, (2, 1))]
     """
 
-    # Creates a list of xrange generator objects over each respective dimension of sizes
+    # Creates a list of xrange generator objects over each respective
+    # dimension of sizes
     gens = [xrange(_) for _ in sizes]
 
-    # Combines the generators to a single generator of indices that go throughout sizes
+    # Combines the generators to a single generator of indices that go
+    # throughout sizes
     chain_gen = enumerate(itertools.product(*gens))
 
     return(chain_gen)
@@ -670,12 +674,14 @@ def lagged_generators(new_iter, n=2):
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
-    assert (n >= 0), "Only a positive semi-definite number of generators can be created."
+    assert (n >= 0), \
+        "Only a positive semi-definite number of generators can be created."
 
     # Where they will be stored
     all_iters = tuple()
 
-    # If some positive definite number of generators is requested, then fill the list.
+    # If some positive definite number of generators is requested, then fill
+    # the list.
     if n > 0:
         # Convert to the same type
         next_iter = itertools.tee(new_iter, 1)[0]
@@ -855,7 +861,9 @@ def filled_stringify_xrange(new_iter):
         new_list = list(new_list)
         new_list_index_gen = xrange(len(new_list))
 
-    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers=True)
+    new_list_index_gen_stringified = filled_stringify_numbers(
+        new_list_index_gen, include_numbers=True
+    )
 
     for i, i_str in new_list_index_gen_stringified:
         yield ((i, i_str))
@@ -907,7 +915,9 @@ def filled_stringify_enumerate(new_iter):
         new_list = list(new_list)
         new_list_index_gen = xrange(len(new_list))
 
-    new_list_index_gen_stringified = filled_stringify_numbers(new_list_index_gen, include_numbers=True)
+    new_list_index_gen_stringified = filled_stringify_numbers(
+        new_list_index_gen, include_numbers=True
+    )
 
     for (i, i_str), each in itertools.izip(new_list_index_gen_stringified, new_list):
         yield ((i, i_str, each))
@@ -1185,7 +1195,10 @@ def len_slice(a_slice, a_length=None):
     new_slice = reformat_slice(a_slice, a_length)
 
     if new_slice.stop is None:
-        raise UnknownSliceLengthException("Cannot determine slice length without a defined end point. The reformatted slice was " + repr(new_slice) + ".")
+        raise UnknownSliceLengthException(
+            "Cannot determine slice length without a defined end point. " +
+            "The reformatted slice was " + repr(new_slice) + "."
+        )
 
     new_slice_diff = float(new_slice.stop - new_slice.start)
 
