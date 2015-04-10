@@ -69,14 +69,17 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         """
 
         super(NeuronMatplotlibViewer, self).__init__(*args, **kwargs)
-        # super(NeuronMatplotlibViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
+        #super(NeuronMatplotlibViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
 
         self.subplots_adjust(left=0.25, bottom=0.25)
         self.viewer = self.add_axes([0.25, 0.25, 0.7, 0.7])
 
         #self.set_images(kwargs["neuron_images"])
 
-    def set_images(self, new_neuron_images, cmap=mpl.cm.RdBu, use_matshow=False):
+    def set_images(self,
+                   new_neuron_images,
+                   cmap=mpl.cm.RdBu,
+                   use_matshow=False):
         """
             Sets the images to be viewed.
 
@@ -84,8 +87,11 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
                 new_neuron_images(numpy.ndarray):     array of images (first index is which image)
         """
         if (new_neuron_images.ndim > 3):
-            raise ValueError("Dimensions cannot be greater than 3. Was provided new_neuron_images with \"" + str(
-                new_neuron_images.ndim) + "\" dimensions.")
+            raise ValueError(
+                "Dimensions cannot be greater than 3. " +
+                "Was provided new_neuron_images with \"" +
+                str(new_neuron_images.ndim) + "\" dimensions."
+            )
 
         self.neuron_images = new_neuron_images
         self.cmap = cmap
@@ -97,15 +103,24 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             viewer_show_method = self.viewer.imshow
 
         if (self.neuron_images.ndim == 3):
-            # self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(self.neuron_images[0], cmap=self.cmap,
-                                                 vmin=self.neuron_images.min(), vmax=self.neuron_images.max())
+            #self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            self.image_view = viewer_show_method(
+                self.neuron_images[0],
+                cmap=self.cmap,
+                vmin=self.neuron_images.min(),
+                vmax=self.neuron_images.max()
+            )
         else:
-            # self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(self.neuron_images, cmap=self.cmap, vmin=self.neuron_images.min(),
-                                                 vmax=self.neuron_images.max())
+            #self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
+            self.image_view = viewer_show_method(
+                self.neuron_images,
+                cmap=self.cmap,
+                vmin=self.neuron_images.min(),
+                vmax=self.neuron_images.max()
+            )
 
-        self.image_view_colorbar = self.colorbar(self.image_view, ax=self.viewer)
+        self.image_view_colorbar = self.colorbar(
+            self.image_view, ax=self.viewer)
 
         if (self.neuron_images.ndim == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
@@ -117,7 +132,8 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             Method to be called by the TimeNavigator when the time changes. Updates image displayed.
         """
         if (self.neuron_images.ndim == 3):
-            self.image_view.set_array(self.neuron_images[self.time_nav.stime.val])
+            self.image_view.set_array(
+                self.neuron_images[self.time_nav.stime.val])
             self.canvas.draw_idle()
 
 
@@ -152,25 +168,44 @@ class TimeNavigator(object):
 
         self.next_cid = 0
 
-        self.axtime = fig.add_axes([0.25, 0.1, 0.65, 0.03], axisbg=self.axcolor)
-        self.stime = Slider(self.axtime, 'Time', self.min_time, self.max_time, valinit=self.min_time, valfmt='%i')
+        self.axtime = fig.add_axes(
+            [0.25, 0.1, 0.65, 0.03], axisbg=self.axcolor)
+        self.stime = Slider(
+            self.axtime,
+            'Time',
+            self.min_time,
+            self.max_time,
+            valinit=self.min_time,
+            valfmt='%i'
+        )
 
         self.stime.on_changed(self.time_update)
 
         self.beginax = fig.add_axes([0.2, 0.025, 0.1, 0.04])
-        self.begin_button = Button(self.beginax, 'Begin', color=self.axcolor, hovercolor=self.hovercolor)
+        self.begin_button = Button(
+            self.beginax,
+            'Begin',
+            color=self.axcolor,
+            hovercolor=self.hovercolor
+        )
         self.begin_button.on_clicked(self.begin_time)
 
         self.prevax = fig.add_axes([0.3, 0.025, 0.1, 0.04])
-        self.prev_button = Button(self.prevax, 'Prev', color=self.axcolor, hovercolor=self.hovercolor)
+        self.prev_button = Button(
+            self.prevax, 'Prev', color=self.axcolor, hovercolor=self.hovercolor
+        )
         self.prev_button.on_clicked(self.prev_time)
 
         self.nextax = fig.add_axes([0.7, 0.025, 0.1, 0.04])
-        self.next_button = Button(self.nextax, 'Next', color=self.axcolor, hovercolor=self.hovercolor)
+        self.next_button = Button(
+            self.nextax, 'Next', color=self.axcolor, hovercolor=self.hovercolor
+        )
         self.next_button.on_clicked(self.next_time)
 
         self.endax = fig.add_axes([0.8, 0.025, 0.1, 0.04])
-        self.end_button = Button(self.endax, 'End', color=self.axcolor, hovercolor=self.hovercolor)
+        self.end_button = Button(
+            self.endax, 'End', color=self.axcolor, hovercolor=self.hovercolor
+        )
         self.end_button.on_clicked(self.end_time)
 
         self.callbacks = {}
@@ -183,11 +218,17 @@ class TimeNavigator(object):
                 event   Matplotlib event that caused the call to this callback.
         """
 
-        logger.debug("Value of slider before setting to the beginning is \"" + str(self.stime.val) + "\".")
+        logger.debug(
+            "Value of slider before setting to the beginning is \"" +
+            str(self.stime.val) + "\"."
+        )
 
         self.time_update(self.min_time)
 
-        logger.debug("Value of slider after setting to the beginning is \"" + str(self.stime.val) + "\".")
+        logger.debug(
+            "Value of slider after setting to the beginning is \"" +
+            str(self.stime.val) + "\"."
+        )
         assert (self.min_time == self.stime.val)
 
     def prev_time(self, event):
@@ -198,11 +239,17 @@ class TimeNavigator(object):
                 event   Matplotlib event that caused the call to this callback.
         """
 
-        logger.debug("Value of slider before going to the previous time is \"" + str(self.stime.val) + "\".")
+        logger.debug(
+            "Value of slider before going to the previous time is \"" +
+            str(self.stime.val) + "\"."
+        )
 
         self.time_update(self.stime.val - self.time_step)
 
-        logger.debug("Value of slider after going to the previous time is \"" + str(self.stime.val) + "\".")
+        logger.debug(
+            "Value of slider after going to the previous time is \"" +
+            str(self.stime.val) + "\"."
+        )
 
     def next_time(self, event):
         """
@@ -212,11 +259,17 @@ class TimeNavigator(object):
                 event   Matplotlib event that caused the call to this callback.
         """
 
-        logger.debug("Value of slider before going to the next time is \"" + str(self.stime.val) + "\".")
+        logger.debug(
+            "Value of slider before going to the next time is \"" +
+            str(self.stime.val) + "\"."
+        )
 
         self.time_update(self.stime.val + self.time_step)
 
-        logger.debug("Value of slider after going to the next time is \"" + str(self.stime.val) + "\".")
+        logger.debug(
+            "Value of slider after going to the next time is \"" +
+            str(self.stime.val) + "\"."
+        )
 
     def end_time(self, event):
         """
@@ -263,11 +316,17 @@ class TimeNavigator(object):
             self.stime.set_val(val)
 
             for each_cid, each_callback in self.callbacks.items():
-                logger.debug("Before calling the caller id for time_update with value \"" + str(each_cid) + "\".")
+                logger.debug(
+                    "Before calling the caller id for time_update with value \"" +
+                    str(each_cid) + "\"."
+                )
 
                 each_callback()
 
-                logger.debug("After calling the caller id for time_update with value \"" + str(each_cid) + "\".")
+                logger.debug(
+                    "After calling the caller id for time_update with value \"" +
+                    str(each_cid) + "\"."
+                )
 
     def disconnect(self, cid):
         """
@@ -277,13 +336,25 @@ class TimeNavigator(object):
                 cid     ID of callback to pull
         """
 
-        logger.debug("Before disconnecting the caller id for time_update with value \"" + str(cid) + "\".")
-        logger.debug("Contents of the callback dictionary before disconnecting \"" + str(self.callbacks) + "\".")
+        logger.debug(
+            "Before disconnecting the caller id for time_update with value \"" +
+            str(cid) + "\"."
+        )
+        logger.debug(
+            "Contents of the callback dictionary before disconnecting \"" +
+            str(self.callbacks) + "\"."
+        )
 
         del self.callbacks[cid]
 
-        logger.debug("After disconnecting the caller id for time_update with value \"" + str(cid) + "\".")
-        logger.debug("Contents of the callback dictionary after disconnecting\"" + str(self.callbacks) + "\".")
+        logger.debug(
+            "After disconnecting the caller id for time_update with value \"" +
+            str(cid) + "\"."
+        )
+        logger.debug(
+            "Contents of the callback dictionary after disconnecting\"" +
+            str(self.callbacks) + "\"."
+        )
 
     def on_time_update(self, func):
         """
@@ -296,15 +367,27 @@ class TimeNavigator(object):
                 int:    a callback ID or cid to allow pulling the callback when no longer necessary.
         """
 
-        logger.debug("Before connecting the caller id for time_update with value \"" + str(self.next_cid) + "\".")
-        logger.debug("Contents of the callback dictionary before connecting \"" + str(self.callbacks) + "\".")
+        logger.debug(
+            "Before connecting the caller id for time_update with value \"" +
+            str(self.next_cid) + "\"."
+        )
+        logger.debug(
+            "Contents of the callback dictionary before connecting \"" +
+            str(self.callbacks) + "\"."
+        )
 
         cid = self.next_cid
         self.next_cid += 1
 
         self.callbacks[cid] = func
 
-        logger.debug("After connecting the caller id for time_update with value \"" + str(cid) + "\".")
-        logger.debug("Contents of the callback dictionary after connecting \"" + str(self.callbacks) + "\".")
+        logger.debug(
+            "After connecting the caller id for time_update with value \"" +
+            str(cid) + "\"."
+        )
+        logger.debug(
+            "Contents of the callback dictionary after connecting \"" +
+            str(self.callbacks) + "\"."
+        )
 
         return(cid)
