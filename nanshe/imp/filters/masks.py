@@ -104,7 +104,9 @@ def binary_dilation(input_array, footprint, out=None):
     elif id(input_array) != id(out):
         assert issubclass(out.dtype.type, (bool, numpy.bool_))
 
-    scipy.ndimage.filters.maximum_filter(input_array, footprint=footprint, output=out)
+    scipy.ndimage.filters.maximum_filter(
+        input_array, footprint=footprint, output=out
+    )
 
     return(out)
 
@@ -182,6 +184,8 @@ def binary_erosion(input_array, footprint, out=None):
     elif id(input_array) != id(out):
         assert issubclass(out.dtype.type, (bool, numpy.bool_))
 
-    scipy.ndimage.filters.minimum_filter(input_array, footprint=footprint, output=out)
+    scipy.ndimage.filters.minimum_filter(
+        input_array, footprint=footprint, output=out
+    )
 
     return(out)
