@@ -56,7 +56,9 @@ def update_wrapper(wrapper,
             (callable):             the wrapped callable.
     """
 
-    wrapper = functools.update_wrapper(wrapper, wrapped, assigned=assigned, updated=updated)
+    wrapper = functools.update_wrapper(
+        wrapper, wrapped, assigned=assigned, updated=updated
+    )
 
     # Store the underlying callable. Automatic in Python 3.
     setattr(wrapper, "__wrapped__", getattr(wrapper, "__wrapped__", wrapped))
@@ -85,7 +87,9 @@ def wraps(wrapped,
             (callable):             a decorator for callable, which will contain wrapped.
     """
 
-    return(functools.partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated))
+    return(functools.partial(
+        update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated
+    ))
 
 
 def identity_wrapper(a_callable):
@@ -258,7 +262,9 @@ def class_static_variables(**kwargs):
         def __new__(meta, name, bases, dct):
             dct.update(kwargs)
 
-            return(super(MetaStaticVariables, meta).__new__(meta, name, bases, dct))
+            return(super(MetaStaticVariables, meta).__new__(
+                meta, name, bases, dct
+            ))
 
     return(metaclass(MetaStaticVariables))
 
@@ -290,7 +296,9 @@ def class_decorate_all_methods(*decorators):
 
                 dct[_k] = _v
 
-            return(super(MetaAllMethodsDecorator, meta).__new__(meta, name, bases, dct))
+            return(super(MetaAllMethodsDecorator, meta).__new__(
+                meta, name, bases, dct
+            ))
 
     return(metaclass(MetaAllMethodsDecorator))
 
@@ -325,7 +333,9 @@ def qt_class_decorate_all_methods(*decorators):
 
                 dct[_k] = _v
 
-            return(super(MetaAllMethodsDecorator, meta).__new__(meta, name, bases, dct))
+            return(super(MetaAllMethodsDecorator, meta).__new__(
+                meta, name, bases, dct
+            ))
 
     return(metaclass(MetaAllMethodsDecorator))
 
@@ -363,6 +373,8 @@ def class_decorate_methods(**method_decorators):
 
                 dct[_k] = _v
 
-            return(super(MetaMethodsDecorator, meta).__new__(meta, name, bases, dct))
+            return(super(MetaMethodsDecorator, meta).__new__(
+                meta, name, bases, dct
+            ))
 
     return(metaclass(MetaMethodsDecorator))
