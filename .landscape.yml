@@ -46,6 +46,8 @@ pylint:
         # Skip complaint about invalid name. More often than not the names
         # are clear and if anything follow this guideline; so, it is ignored.
         - C0103
+        # Ignore complaint about superfluous parentheses after keywords.
+        - C0325
         # Skip complaint about using start args as they have a very clear
         # and frequent use in our codebase when forwarding arguments to
         # nested callables.
