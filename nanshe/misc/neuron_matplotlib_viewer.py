@@ -269,8 +269,6 @@ class TimeNavigator(object):
 
                 logger.debug("After calling the caller id for time_update with value \"" + str(each_cid) + "\".")
 
-            return
-
     def disconnect(self, cid):
         """
             Disconnects the given cid from being notified of time updates.
