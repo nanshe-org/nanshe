@@ -69,10 +69,13 @@ def estimate_noise(input_array, significance_threshold=3.0):
     mean = input_array.mean()
     stddev = input_array.std()
 
-    # Find cells that are inside an acceptable range (3 std devs from the mean by default)
-    insignificant_mask = numpy.abs(input_array - mean) < significance_threshold * stddev
+    # Find cells that are inside an acceptable range
+    # (3 std devs from the mean by default)
+    input_array_devs = numpy.abs(input_array - mean)
+    insignificant_mask = input_array_devs < significance_threshold * stddev
 
-    # Those cells have noise. Estimate the standard deviation on them. That will be our noise unit size.
+    # Those cells have noise. Estimate the standard deviation on them.
+    # That will be our noise unit size.
     noise = input_array[insignificant_mask].std()
 
     return(noise)
@@ -121,12 +124,14 @@ def significant_mask(input_array, noise_threshold=6.0, noise_estimate=None):
 
     mean = input_array.mean()
 
-    # Estimate noise with the default estimate_noise function if a value is not provided.
+    # Estimate noise with the default estimate_noise function
+    # if a value is not provided.
     if noise_estimate is None:
         noise_estimate = estimate_noise(input_array)
 
     # Get all the noisy points in a mask and toss them.
-    significant_mask = numpy.abs(input_array - mean) >= noise_threshold * noise_estimate
+    input_array_devs = numpy.abs(input_array - mean)
+    significant_mask = input_array_devs >= noise_threshold * noise_estimate
 
     return(significant_mask)
 
@@ -170,7 +175,11 @@ def noise_mask(input_array, noise_threshold=6.0, noise_estimate=None):
     """
 
     # Get all the significant points in a mask.
-    noisy_mask = significant_mask(input_array, noise_threshold=noise_threshold, noise_estimate=noise_estimate)
+    noisy_mask = significant_mask(
+        input_array,
+        noise_threshold=noise_threshold,
+        noise_estimate=noise_estimate
+    )
 
     # Invert the maske
     numpy.logical_not(noisy_mask, noisy_mask)
