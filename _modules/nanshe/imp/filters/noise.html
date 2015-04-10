@@ -129,10 +129,13 @@
     <span class="n">mean</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     <span class="n">stddev</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 
-    <span class="c"># Find cells that are inside an acceptable range (3 std devs from the mean by default)</span>
-    <span class="n">insignificant_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">input_array</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">significance_threshold</span> <span class="o">*</span> <span class="n">stddev</span>
+    <span class="c"># Find cells that are inside an acceptable range</span>
+    <span class="c"># (3 std devs from the mean by default)</span>
+    <span class="n">input_array_devs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">input_array</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span>
+    <span class="n">insignificant_mask</span> <span class="o">=</span> <span class="n">input_array_devs</span> <span class="o">&lt;</span> <span class="n">significance_threshold</span> <span class="o">*</span> <span class="n">stddev</span>
 
-    <span class="c"># Those cells have noise. Estimate the standard deviation on them. That will be our noise unit size.</span>
+    <span class="c"># Those cells have noise. Estimate the standard deviation on them.</span>
+    <span class="c"># That will be our noise unit size.</span>
     <span class="n">noise</span> <span class="o">=</span> <span class="n">input_array</span><span class="p">[</span><span class="n">insignificant_mask</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
@@ -181,12 +184,14 @@
 
     <span class="n">mean</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
-    <span class="c"># Estimate noise with the default estimate_noise function if a value is not provided.</span>
+    <span class="c"># Estimate noise with the default estimate_noise function</span>
+    <span class="c"># if a value is not provided.</span>
     <span class="k">if</span> <span class="n">noise_estimate</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">noise_estimate</span> <span class="o">=</span> <span class="n">estimate_noise</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span>
 
     <span class="c"># Get all the noisy points in a mask and toss them.</span>
-    <span class="n">significant_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">input_array</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">noise_threshold</span> <span class="o">*</span> <span class="n">noise_estimate</span>
+    <span class="n">input_array_devs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">input_array</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span>
+    <span class="n">significant_mask</span> <span class="o">=</span> <span class="n">input_array_devs</span> <span class="o">&gt;=</span> <span class="n">noise_threshold</span> <span class="o">*</span> <span class="n">noise_estimate</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">significant_mask</span><span class="p">)</span>
 
@@ -230,7 +235,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Get all the significant points in a mask.</span>
-    <span class="n">noisy_mask</span> <span class="o">=</span> <span class="n">significant_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span><span class="o">=</span><span class="n">noise_threshold</span><span class="p">,</span> <span class="n">noise_estimate</span><span class="o">=</span><span class="n">noise_estimate</span><span class="p">)</span>
+    <span class="n">noisy_mask</span> <span class="o">=</span> <span class="n">significant_mask</span><span class="p">(</span>
+        <span class="n">input_array</span><span class="p">,</span>
+        <span class="n">noise_threshold</span><span class="o">=</span><span class="n">noise_threshold</span><span class="p">,</span>
+        <span class="n">noise_estimate</span><span class="o">=</span><span class="n">noise_estimate</span>
+    <span class="p">)</span>
 
     <span class="c"># Invert the maske</span>
     <span class="n">numpy</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">noisy_mask</span><span class="p">,</span> <span class="n">noisy_mask</span><span class="p">)</span>

@@ -81,6 +81,7 @@
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$May 20, 2014 09:46:45 EDT$&quot;</span>
 
 
+<span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">operator</span>
@@ -172,8 +173,11 @@
 <span class="sd">            (array([0, 1, 2, 3]), array([0, 1, 2, 0, 3]), array([0, 1, 2, 4]))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Get the set of reverse label mapping (ensure the background is always included)</span>
-    <span class="n">reverse_label_mapping</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">new_array</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+    <span class="c"># Get the set of reverse label mapping</span>
+    <span class="c"># (ensure the background is always included)</span>
+    <span class="n">reverse_label_mapping</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">new_array</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="p">)</span>
 
     <span class="c"># Get the set of old labels excluding background</span>
     <span class="n">old_labels</span> <span class="o">=</span> <span class="n">reverse_label_mapping</span><span class="p">[</span><span class="n">reverse_label_mapping</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
@@ -182,7 +186,9 @@
     <span class="n">new_labels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">old_labels</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="c"># Get the forward label mapping (ensure the background is included)</span>
-    <span class="n">forward_label_mapping</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">reverse_label_mapping</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">forward_label_mapping</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">reverse_label_mapping</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span>
+    <span class="p">)</span>
     <span class="n">forward_label_mapping</span><span class="p">[</span><span class="n">old_labels</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_labels</span>
 
     <span class="c"># Get masks for each old label</span>
@@ -192,8 +198,11 @@
     <span class="n">new_labels_tiled_view</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_labels</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
     <span class="c"># Take every mask and make sure it has the appropriate sequential label</span>
-    <span class="c"># Then combine each of these parts of the label image together into a new sequential label image</span>
-    <span class="n">new_array_relabeled</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_array_label_masks</span> <span class="o">*</span> <span class="n">new_labels_tiled_view</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c"># Then combine each of these parts of the label image together into a new</span>
+    <span class="c"># sequential label image</span>
+    <span class="n">new_array_relabeled</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">new_array_label_masks</span> <span class="o">*</span> <span class="n">new_labels_tiled_view</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">((</span><span class="n">new_array_relabeled</span><span class="p">,</span> <span class="n">forward_label_mapping</span><span class="p">,</span> <span class="n">reverse_label_mapping</span><span class="p">))</span>
 
@@ -501,7 +510,8 @@
 
     <span class="n">axes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
 
-    <span class="c"># Put all axes not part of the group in front and stuff the rest at the back.</span>
+    <span class="c"># Put all axes not part of the group in front and</span>
+    <span class="c"># stuff the rest at the back.</span>
     <span class="n">axis_order</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span><span class="n">new_array</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="n">axes</span><span class="p">))</span> <span class="o">+</span> <span class="n">axes</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">axis_order</span><span class="p">)</span>
 
@@ -725,30 +735,40 @@
     <span class="n">result</span> <span class="o">=</span> <span class="n">new_array</span>
 
     <span class="c"># Reshape the array to get the original shape (wrong axis order).</span>
-    <span class="c"># This will also eliminate singleton axes that weren&#39;t part of the original shape (i.e. squish keepdim=True).</span>
+    <span class="c"># This will also eliminate singleton axes</span>
+    <span class="c"># that weren&#39;t part of the original shape (i.e. squish keepdim=True).</span>
     <span class="n">shape_transposed</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
     <span class="c"># Get how the axis order was changed</span>
-    <span class="n">old_axis_order_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">to_skip</span><span class="o">=</span><span class="n">axes</span><span class="p">),</span> <span class="n">axes</span><span class="p">)</span>
+    <span class="n">old_axis_order_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+        <span class="n">iters</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">to_skip</span><span class="o">=</span><span class="n">axes</span><span class="p">),</span> <span class="n">axes</span>
+    <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">old_axis_order_iter</span><span class="p">:</span>
         <span class="n">shape_transposed</span> <span class="o">+=</span> <span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_transposed</span><span class="p">)</span>
 
-    <span class="c"># Find out how the axes will need to be transposed to return to the original order.</span>
+    <span class="c"># Find out how the axes will need to be transposed</span>
+    <span class="c"># to return to the original order.</span>
     <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="c"># Get how the axis order was changed</span>
-        <span class="n">old_axis_order_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">to_skip</span><span class="o">=</span><span class="n">axes</span><span class="p">),</span> <span class="n">axes</span><span class="p">)</span>
+        <span class="n">old_axis_order_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+            <span class="n">iters</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">to_skip</span><span class="o">=</span><span class="n">axes</span><span class="p">),</span> <span class="n">axes</span>
+        <span class="p">)</span>
         <span class="c"># Get the current axis order (i.e. in order)</span>
         <span class="n">current_axis_order_iter</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
 
         <span class="c"># Find how the old order relates to the new one</span>
-        <span class="n">axis_order_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">old_axis_order_iter</span><span class="p">,</span> <span class="n">current_axis_order_iter</span><span class="p">))</span>
+        <span class="n">axis_order_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">old_axis_order_iter</span><span class="p">,</span> <span class="n">current_axis_order_iter</span><span class="p">)</span>
+        <span class="p">)</span>
 
-        <span class="c"># Export how the new order will be changed (as the old axis order will be how to transform the axes).</span>
+        <span class="c"># Export how the new order will be changed</span>
+        <span class="c"># (as the old axis order will be how to transform the axes).</span>
         <span class="n">axis_order</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">axis_order_map</span><span class="o">.</span><span class="n">itervalues</span><span class="p">())</span>
 
-        <span class="c"># Put all axes not part of the group in front and stuff the rest at the back.</span>
+        <span class="c"># Put all axes not part of the group in front and</span>
+        <span class="c"># stuff the rest at the back.</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">axis_order</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
@@ -1003,39 +1023,60 @@
 
         <span class="k">if</span> <span class="n">to_mask</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">):</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Provided an array for `out` that is not a MaskedArray when requesting to mask the result. &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;A view of `out` will be used so all changes are propagated to `out`. &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;However, the mask may not be available (i.e. if the array is a view). &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;To get the mask, either provide a MaskedArray as input or simply use the returned result.&quot;</span><span class="p">,</span>
-                              <span class="ne">RuntimeWarning</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s">&quot;Provided an array for `out` that is not a MaskedArray &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot; when requesting to mask the result. A view of `out` &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;will be used so all changes are propagated to `out`. &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;However, the mask may not be available &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;(i.e. if the array is a view). To get the mask, &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;either provide a MaskedArray as input or simply use &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;the returned result.&quot;</span><span class="p">,</span>
+                    <span class="ne">RuntimeWarning</span>
+                <span class="p">)</span>
 
                 <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">)</span>
                 <span class="n">out</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">out</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">nomask</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Provided an array for `out` that is a MaskedArray, but has a trivial mask (i.e. nomask). &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;A nontrivial mask will generated for `out` so that masking of `out` will work properly. &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;However, the mask will not be available through the array provided. To get the mask, either &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;provide a MaskedArray with a nontrivial mask as input or simply use the returned result.&quot;</span><span class="p">,</span>
-                              <span class="ne">RuntimeWarning</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s">&quot;Provided an array for `out` that is a MaskedArray, &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;but has a trivial mask (i.e. nomask). A nontrivial &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;mask will generated for `out` so that masking of `out` &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;will work properly. However, the mask will not be &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;available through the array provided. To get the mask, &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;either provide a MaskedArray with a nontrivial mask as &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;input or simply use the returned result.&quot;</span><span class="p">,</span>
+                    <span class="ne">RuntimeWarning</span>
+                <span class="p">)</span>
 
                 <span class="n">out</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">to_mask</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">):</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Provided an array for `new_array`/`out` that is not a MaskedArray when requesting to mask &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;the result. A view of `new_array`/`out` will be used so all changes are propagated to &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;`new_array`/`out`. However, the mask may not be available (i.e. if the array is a view). &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;To get the mask, either provide a MaskedArray as input or simply use the returned result.&quot;</span><span class="p">,</span>
-                              <span class="ne">RuntimeWarning</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s">&quot;Provided an array for `new_array`/`out` that is not a &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;MaskedArray when requesting to mask the result. A view &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;of `new_array`/`out` will be used so all changes are &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;propagated to `new_array`/`out`. However, the mask may &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;not be available (i.e. if the array is a view). To get &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;the mask, either provide a MaskedArray as input or &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;simply use the returned result.&quot;</span><span class="p">,</span>
+                    <span class="ne">RuntimeWarning</span>
+                <span class="p">)</span>
 
                 <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">)</span>
                 <span class="n">out</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">out</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">nomask</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Provided an array for `new_array`/`out` that is a MaskedArray, but has a trivial mask (i.e. nomask). &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;A nontrivial mask will generated for `new_array`/`out` so that masking of `new_array`/`out` will work properly. &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;However, the mask will not be available through the array provided. To get the mask, either &quot;</span> <span class="o">+</span>
-                              <span class="s">&quot;provide a MaskedArray with a nontrivial mask as input or simply use the returned result.&quot;</span><span class="p">,</span>
-                              <span class="ne">RuntimeWarning</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s">&quot;Provided an array for `new_array`/`out` that is a &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;MaskedArray, but has a trivial mask (i.e. nomask). &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;A nontrivial mask will generated for `new_array`/`out` &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;so that masking of `new_array`/`out` will work &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;properly. However, the mask will not be available &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;through the array provided. To get the mask, either &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;provide a MaskedArray with a nontrivial mask as input &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;or simply use the returned result.&quot;</span><span class="p">,</span>
+                    <span class="ne">RuntimeWarning</span>
+                <span class="p">)</span>
 
                 <span class="n">out</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
@@ -1169,10 +1210,12 @@
 <span class="sd">            nan</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Squish array to ensure all axes to be operated on are at the end in one axis.</span>
+    <span class="c"># Squish array to ensure all axes to be operated on</span>
+    <span class="c"># are at the end in one axis.</span>
     <span class="n">new_array_refolded</span> <span class="o">=</span> <span class="n">squish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span>
 
-    <span class="c"># Add singleton dimensions at the end where the axes to be operated on now is.</span>
+    <span class="c"># Add singleton dimensions at the end</span>
+    <span class="c"># where the axes to be operated on now is.</span>
     <span class="n">result_shape</span> <span class="o">=</span> <span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
 
     <span class="c"># Get indices for the result and strip off the singleton axis (last dim).</span>
@@ -1190,7 +1233,8 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_indices</span><span class="p">:</span>
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># Create a mask. This is required to remap the indices to the old array.</span>
+        <span class="c"># Create a mask.</span>
+        <span class="c"># This is required to remap the indices to the old array.</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">result_mask</span><span class="p">[</span><span class="n">result_indices</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">unsquish</span><span class="p">(</span><span class="n">result_mask</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
@@ -1266,17 +1310,22 @@
 <span class="sd">            -2.0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Squish array to ensure all axes to be operated on are at the end in one axis.</span>
+    <span class="c"># Squish array to ensure all axes to be operated on</span>
+    <span class="c"># are at the end in one axis.</span>
     <span class="n">new_array_refolded</span> <span class="o">=</span> <span class="n">squish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span>
 
-    <span class="c"># Add singleton dimensions at the end where the axes to be operated on now is.</span>
+    <span class="c"># Add singleton dimensions at the end</span>
+    <span class="c"># where the axes to be operated on now is.</span>
     <span class="n">result_shape</span> <span class="o">=</span> <span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
 
     <span class="c"># Get indices for the result and strip off the singleton axis (last dim).</span>
     <span class="n">result_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-    <span class="c"># Get the indices that correspond to argmin (ignoring nan) for the given axis.</span>
-    <span class="n">result_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">bottleneck</span><span class="o">.</span><span class="n">nanargmin</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c"># Get the indices that correspond to argmin (ignoring nan)</span>
+    <span class="c"># for the given axis.</span>
+    <span class="n">result_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">bottleneck</span><span class="o">.</span><span class="n">nanargmin</span><span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span>
 
     <span class="c"># Make into index array.</span>
     <span class="n">result_indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result_indices</span><span class="p">)</span>
@@ -1287,7 +1336,8 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_indices</span><span class="p">:</span>
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># Create a mask. This is required to remap the indices to the old array.</span>
+        <span class="c"># Create a mask.</span>
+        <span class="c"># This is required to remap the indices to the old array.</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">result_mask</span><span class="p">[</span><span class="n">result_indices</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">unsquish</span><span class="p">(</span><span class="n">result_mask</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
@@ -1363,10 +1413,12 @@
 <span class="sd">            nan</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Squish array to ensure all axes to be operated on are at the end in one axis.</span>
+    <span class="c"># Squish array to ensure all axes to be operated on</span>
+    <span class="c"># are at the end in one axis.</span>
     <span class="n">new_array_refolded</span> <span class="o">=</span> <span class="n">squish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span>
 
-    <span class="c"># Add singleton dimensions at the end where the axes to be operated on now is.</span>
+    <span class="c"># Add singleton dimensions at the end</span>
+    <span class="c"># where the axes to be operated on now is.</span>
     <span class="n">result_shape</span> <span class="o">=</span> <span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
 
     <span class="c"># Get indices for the result and strip off the singleton axis (last dim).</span>
@@ -1384,7 +1436,8 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_indices</span><span class="p">:</span>
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># Create a mask. This is required to remap the indices to the old array.</span>
+        <span class="c"># Create a mask.</span>
+        <span class="c"># This is required to remap the indices to the old array.</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">result_mask</span><span class="p">[</span><span class="n">result_indices</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">unsquish</span><span class="p">(</span><span class="n">result_mask</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
@@ -1460,17 +1513,22 @@
 <span class="sd">            3.0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Squish array to ensure all axes to be operated on are at the end in one axis.</span>
+    <span class="c"># Squish array to ensure all axes to be operated on</span>
+    <span class="c"># are at the end in one axis.</span>
     <span class="n">new_array_refolded</span> <span class="o">=</span> <span class="n">squish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span>
 
-    <span class="c"># Add singleton dimensions at the end where the axes to be operated on now is.</span>
+    <span class="c"># Add singleton dimensions at the end</span>
+    <span class="c"># where the axes to be operated on now is.</span>
     <span class="n">result_shape</span> <span class="o">=</span> <span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
 
     <span class="c"># Get indices for the result and strip off the singleton axis (last dim).</span>
     <span class="n">result_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-    <span class="c"># Get the indices that correspond to argmax (ignoring nan) for the given axis.</span>
-    <span class="n">result_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">bottleneck</span><span class="o">.</span><span class="n">nanargmax</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c"># Get the indices that correspond to argmax</span>
+    <span class="c"># (ignoring nan) for the given axis.</span>
+    <span class="n">result_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">bottleneck</span><span class="o">.</span><span class="n">nanargmax</span><span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span>
 
     <span class="c"># Make into index array.</span>
     <span class="n">result_indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result_indices</span><span class="p">)</span>
@@ -1481,7 +1539,8 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_indices</span><span class="p">:</span>
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># Create a mask. This is required to remap the indices to the old array.</span>
+        <span class="c"># Create a mask.</span>
+        <span class="c"># This is required to remap the indices to the old array.</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_array_refolded</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">result_mask</span><span class="p">[</span><span class="n">result_indices</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">result_mask</span> <span class="o">=</span> <span class="n">unsquish</span><span class="p">(</span><span class="n">result_mask</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
@@ -1769,7 +1828,12 @@
     <span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="expand_arange"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_arange">[docs]</a><span class="k">def</span> <span class="nf">expand_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
+<div class="viewcode-block" id="expand_arange"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_arange">[docs]</a><span class="k">def</span> <span class="nf">expand_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span>
+                  <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                  <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span>
+                  <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span>
+                  <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a</span>
 <span class="sd">        larger cube.</span>
@@ -1832,7 +1896,9 @@
 
     <span class="n">an_arange</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
 
-    <span class="n">an_arange</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">an_arange</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">reps_before</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">reps_after</span><span class="p">)</span>
+    <span class="n">an_arange</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span>
+        <span class="n">an_arange</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">reps_before</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">reps_after</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">an_arange</span><span class="p">)</span>
 
@@ -1898,9 +1964,14 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">an_enumeration</span> <span class="o">=</span> <span class="n">expand_arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">start</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
-                                   <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
-                                   <span class="n">reps_before</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">],</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[(</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">):])</span>
+    <span class="n">an_enumeration</span> <span class="o">=</span> <span class="n">expand_arange</span><span class="p">(</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+        <span class="n">stop</span><span class="o">=</span><span class="n">start</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">],</span>
+        <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
+        <span class="n">reps_before</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">],</span>
+        <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[(</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">an_enumeration</span><span class="p">)</span>
 
@@ -1974,7 +2045,9 @@
 <span class="sd">                    [0, 0, 0, 4]]], dtype=uint64)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">new_enumerated_masks</span> <span class="o">=</span> <span class="n">new_masks</span> <span class="o">*</span> <span class="n">expand_enumerate</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">new_enumerated_masks</span> <span class="o">=</span> <span class="n">new_masks</span> <span class="o">*</span> <span class="n">expand_enumerate</span><span class="p">(</span>
+        <span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_enumerated_masks</span><span class="p">)</span>
 
@@ -2028,12 +2101,20 @@
 
     <span class="n">axis</span> <span class="o">%=</span> <span class="n">new_masks</span><span class="o">.</span><span class="n">ndim</span>
 
-    <span class="n">new_enumerated_masks_max</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
+    <span class="n">new_enumerated_masks_max</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">new_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">new_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span>
+    <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">new_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]):</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">new_enumerated_masks_max</span><span class="p">,</span>
-                      <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">index_axis_at_pos</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">axis</span><span class="p">),</span>
-                      <span class="n">out</span><span class="o">=</span><span class="n">new_enumerated_masks_max</span><span class="p">)</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
+            <span class="n">new_enumerated_masks_max</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">add_singleton_axis_pos</span><span class="p">(</span>
+                        <span class="n">index_axis_at_pos</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span>
+                        <span class="n">axis</span>
+                    <span class="p">),</span>
+            <span class="n">out</span><span class="o">=</span><span class="n">new_enumerated_masks_max</span>
+        <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_enumerated_masks_max</span><span class="p">)</span>
 
@@ -2123,7 +2204,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">)):</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s">&quot;Must provide only 1D arrays to this function or a single 2D array.&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">arrays</span><span class="p">[</span>
+                <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s">&quot;Must provide only 1D arrays to this function or a single 2D array.&quot;</span>
 
     <span class="n">array_shapes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">)))</span>
 
@@ -2132,11 +2214,17 @@
     <span class="n">result_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span>
     <span class="n">result_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)</span>
 
-    <span class="n">result_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">find_common_type</span><span class="p">([</span><span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">result_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span> <span class="p">[])</span>
+    <span class="n">result_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">find_common_type</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">result_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span> <span class="p">[]</span>
+    <span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">result_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_dtype</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">repeated_array_i</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">array_shapes</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">array_shapes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">repeated_array_i</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span>
+            <span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">reps_before</span><span class="o">=</span><span class="n">array_shapes</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">reps_after</span><span class="o">=</span><span class="n">array_shapes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">repeated_array_i_j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">repeated_array_i</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
             <span class="n">result</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">repeated_array_i_j</span>
 
@@ -2219,31 +2307,35 @@
     <span class="n">shifted_frames_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">shifted_frames</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="c"># Find the shape</span>
-    <span class="n">shifted_frames_mask_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shifted_frames_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">_i</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">for</span> <span class="n">_i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">shifted_frames_mask</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
+    <span class="n">shifted_frames_mask_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shifted_frames_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">_i</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">for</span> <span class="n">_i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">shifted_frames_mask</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="n">shifted_frames_mask_shape</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shifted_frames</span><span class="p">),)</span> <span class="o">+</span> <span class="n">shifted_frames_mask_shape</span>
 
     <span class="c"># # Assert that this is an acceptable mask</span>
-    <span class="c"># shifted_frames_mask_upper_offset = tuple(</span>
-    <span class="c">#     (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(xrange(shifted_frames_mask.ndim))</span>
-    <span class="c"># )</span>
-    <span class="c"># shifted_frames_mask_lower_offset = tuple(</span>
-    <span class="c">#     numpy.array(shifted_frames_mask.shape) - \</span>
-    <span class="c">#     numpy.array(shifted_frames_mask_shape[1:]) - \</span>
-    <span class="c">#     numpy.array(shifted_frames_mask_upper_offset)</span>
-    <span class="c"># )</span>
+    <span class="c">#shifted_frames_mask_upper_offset = tuple(</span>
+    <span class="c">#    (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(xrange(shifted_frames_mask.ndim))</span>
+    <span class="c">#)</span>
+    <span class="c">#shifted_frames_mask_lower_offset = tuple(</span>
+    <span class="c">#    numpy.array(shifted_frames_mask.shape) - \</span>
+    <span class="c">#    numpy.array(shifted_frames_mask_shape[1:]) - \</span>
+    <span class="c">#    numpy.array(shifted_frames_mask_upper_offset)</span>
+    <span class="c">#)</span>
     <span class="c">#</span>
-    <span class="c"># shifted_frames_mask_reconstructed = numpy.pad(</span>
-    <span class="c">#     numpy.ones(shifted_frames_mask_shape[1:], dtype=bool),</span>
-    <span class="c">#     [(_d, _e) for _d, _e in itertools.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],</span>
-    <span class="c">#     &quot;constant&quot;</span>
-    <span class="c"># )</span>
-    <span class="c"># assert(</span>
-    <span class="c">#     (shifted_frames_mask_reconstructed == shifted_frames_mask).all(),</span>
-    <span class="c">#     &quot;The masked array provide has a mask that does not reduce to a square when max projected.&quot;</span>
-    <span class="c"># )</span>
+    <span class="c">#shifted_frames_mask_reconstructed = numpy.pad(</span>
+    <span class="c">#    numpy.ones(shifted_frames_mask_shape[1:], dtype=bool),</span>
+    <span class="c">#    [(_d, _e) for _d, _e in itertools.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],</span>
+    <span class="c">#    &quot;constant&quot;</span>
+    <span class="c">#)</span>
+    <span class="c">#assert(</span>
+    <span class="c">#    (shifted_frames_mask_reconstructed == shifted_frames_mask).all(),</span>
+    <span class="c">#    &quot;The masked array provide has a mask that does not reduce to a square when max projected.&quot;</span>
+    <span class="c">#)</span>
 
     <span class="c"># Slice out the relevant data from the frames</span>
-    <span class="n">truncated_shifted_frames</span> <span class="o">=</span> <span class="n">shifted_frames</span><span class="p">[:,</span> <span class="n">shifted_frames_mask</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shifted_frames_mask_shape</span><span class="p">)</span>
+    <span class="n">truncated_shifted_frames</span> <span class="o">=</span> <span class="n">shifted_frames</span><span class="p">[:,</span> <span class="n">shifted_frames_mask</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">shifted_frames_mask_shape</span>
+    <span class="p">)</span>
     <span class="n">truncated_shifted_frames</span> <span class="o">=</span> <span class="n">truncated_shifted_frames</span><span class="o">.</span><span class="n">data</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">truncated_shifted_frames</span><span class="p">)</span>
@@ -2475,13 +2567,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Test to see if this is a NumPy Structured Array</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">:</span> <span class="k">raise</span> <span class="n">NotNumPyStructuredArrayType</span><span class="p">(</span><span class="s">&quot;Not a NumPy structured array.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">:</span> <span class="k">raise</span> <span class="n">NotNumPyStructuredArrayType</span><span class="p">(</span>
+        <span class="s">&quot;Not a NumPy structured array.&quot;</span>
+    <span class="p">)</span>
 
     <span class="c"># Go through each name</span>
     <span class="k">for</span> <span class="n">each_name</span> <span class="ow">in</span> <span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
         <span class="c"># Get the type (want the actual type, not a str or dtype object)</span>
         <span class="n">each_dtype</span> <span class="o">=</span> <span class="n">new_array</span><span class="p">[</span><span class="n">each_name</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
-        <span class="c"># Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)</span>
+        <span class="c"># Get the shape (will be an empty tuple if no shape, which numpy.dtype</span>
+        <span class="c"># accepts)</span>
         <span class="n">each_shape</span> <span class="o">=</span> <span class="n">new_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">[</span><span class="n">each_name</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 
         <span class="k">yield</span> <span class="p">((</span><span class="n">each_name</span><span class="p">,</span> <span class="n">each_dtype</span><span class="p">,</span> <span class="n">each_shape</span><span class="p">))</span>
@@ -2547,8 +2642,11 @@
     <span class="n">new_vector_set_1_float</span> <span class="o">=</span> <span class="n">new_vector_set_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">new_vector_set_2_float</span> <span class="o">=</span> <span class="n">new_vector_set_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
-    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
+    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product</span><span class="p">)</span>
 
@@ -2664,7 +2762,8 @@
     <span class="c"># Wrap the order parameter so as to avoid passing through numpy.apply_along_axis</span>
     <span class="c"># and risk having it break. Also, makes sure the same function can be used in the</span>
     <span class="c"># two cases.</span>
-    <span class="n">wrapped_norm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a_vector_set</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
+    <span class="n">wrapped_norm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a_vector_set</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+        <span class="n">a_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
 
@@ -2675,7 +2774,9 @@
     <span class="k">elif</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wrapped_norm</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">wrapped_norm</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">new_vector_set_float</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
+            <span class="n">wrapped_norm</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">new_vector_set_float</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
@@ -2879,7 +2980,8 @@
 
     <span class="k">assert</span> <span class="p">(</span><span class="n">a_metric</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="n">accepted</span> <span class="o">=</span> <span class="n">unique_mapping</span><span class="p">(</span><span class="n">threshold_array</span><span class="p">(</span><span class="n">a_metric</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="n">include_below</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="n">is_closed</span><span class="p">))</span>
+    <span class="n">accepted</span> <span class="o">=</span> <span class="n">unique_mapping</span><span class="p">(</span><span class="n">threshold_array</span><span class="p">(</span>
+        <span class="n">a_metric</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="n">include_below</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="n">is_closed</span><span class="p">))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">accepted</span><span class="p">)</span>
 
@@ -3272,7 +3374,9 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="p">):</span>
         <span class="k">assert</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-    <span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">promote_types</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
+        <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">promote_types</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
         <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
@@ -3496,7 +3600,9 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span>
+                                     <span class="n">new_vector_set_2</span><span class="p">,</span>
+                                     <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the two pairs of vectors from each set and creates a tuple</span>
 <span class="sd">        with the dot product divided by one norm or the other.</span>
@@ -3555,17 +3661,25 @@
     <span class="n">new_vector_set_2_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_2_float</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Expand the norms to have a shape equivalent to vector_pairs_dot_product</span>
-    <span class="n">new_vector_set_1_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">new_vector_set_2_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_2_norms</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">new_vector_set_1_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">new_vector_set_1_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span>
+        <span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">new_vector_set_2_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span>
+        <span class="n">new_vector_set_2_norms</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">new_vector_set_1_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
-    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
+    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
-    <span class="n">vector_pairs_dot_product_1_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">new_vector_set_1_norms_expanded</span>
-    <span class="n">vector_pairs_dot_product_2_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">new_vector_set_2_norms_expanded</span>
+    <span class="n">vector_pairs_dot_product_1_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> \
+        <span class="n">new_vector_set_1_norms_expanded</span>
+    <span class="n">vector_pairs_dot_product_2_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> \
+        <span class="n">new_vector_set_2_norms_expanded</span>
 
-    <span class="k">return</span><span class="p">((</span><span class="n">vector_pairs_dot_product_1_normalized</span><span class="p">,</span> <span class="n">vector_pairs_dot_product_2_normalized</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">vector_pairs_dot_product_1_normalized</span><span class="p">,</span>
+         <span class="n">vector_pairs_dot_product_2_normalized</span><span class="p">)</span>
+    <span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -3622,12 +3736,16 @@
     <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Expand the norms to have a shape equivalent to vector_pairs_dot_product</span>
-    <span class="n">new_vector_set_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">new_vector_set_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span>
+        <span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
-    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
+    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">new_vector_set_float</span><span class="p">,</span> <span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_dot_product_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">new_vector_set_norms_expanded</span>
 
     <span class="k">return</span><span class="p">((</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">))</span>
@@ -3690,12 +3808,18 @@
     <span class="n">new_vector_set_2_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_2_float</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Finds the product of each combination for normalization</span>
-    <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">new_vector_set_2_norms</span><span class="p">)</span>
+    <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span>
+        <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_1_norms</span><span class="p">,</span> <span class="n">new_vector_set_2_norms</span>
+    <span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
-    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
+    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">new_vector_set_1_float</span><span class="p">,</span> <span class="n">new_vector_set_2_float</span><span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_dot_product_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">norm_products</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">)</span>
@@ -3745,12 +3869,18 @@
     <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Finds the product of each combination for normalization</span>
-    <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">)</span>
+    <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span>
+        <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">new_vector_set_norms</span>
+    <span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
-    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">new_vector_set_float</span><span class="p">,</span> <span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
+    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">new_vector_set_float</span><span class="p">,</span> <span class="n">new_vector_set_float</span><span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_dot_product_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">norm_products</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">)</span>
@@ -3801,7 +3931,8 @@
     <span class="n">new_vector_set_1_float</span> <span class="o">=</span> <span class="n">new_vector_set_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">new_vector_set_2_float</span> <span class="o">=</span> <span class="n">new_vector_set_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
-    <span class="c"># Measure the dot product between any two neurons (i.e. related to the angle of separation)</span>
+    <span class="c"># Measure the angle between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_cosine_angle</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">scipy</span><span class="o">.</span><span class="n">spatial</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">new_vector_set_1_float</span><span class="p">,</span>
                                                                  <span class="n">new_vector_set_2_float</span><span class="p">,</span>
                                                                  <span class="s">&quot;cosine&quot;</span><span class="p">)</span>
@@ -3858,12 +3989,16 @@
     <span class="n">lower_threshold</span> <span class="o">=</span> <span class="n">separation_distance</span> <span class="o">-</span> <span class="n">half_thickness</span>
     <span class="n">upper_threshold</span> <span class="o">=</span> <span class="n">separation_distance</span> <span class="o">+</span> <span class="n">half_thickness</span>
 
-    <span class="n">a_mask_transformed</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">distance_transform_edt</span><span class="p">(</span><span class="n">a_image</span><span class="p">)</span>
+    <span class="n">a_mask_transformed</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">distance_transform_edt</span><span class="p">(</span>
+        <span class="n">a_image</span>
+    <span class="p">)</span>
 
     <span class="n">above_lower_threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_threshold</span> <span class="o">&lt;=</span> <span class="n">a_mask_transformed</span><span class="p">)</span>
     <span class="n">below_upper_threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_mask_transformed</span> <span class="o">&lt;=</span> <span class="n">upper_threshold</span><span class="p">)</span>
 
-    <span class="n">a_mask_transformed_thresholded</span> <span class="o">=</span> <span class="p">(</span><span class="n">above_lower_threshold</span> <span class="o">&amp;</span> <span class="n">below_upper_threshold</span><span class="p">)</span>
+    <span class="n">a_mask_transformed_thresholded</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">above_lower_threshold</span> <span class="o">&amp;</span> <span class="n">below_upper_threshold</span>
+    <span class="p">)</span>
 
     <span class="n">a_image_contours</span> <span class="o">=</span> <span class="n">a_image</span> <span class="o">*</span> <span class="n">a_mask_transformed_thresholded</span>
 
@@ -3914,9 +4049,13 @@
 <span class="sd">                   [0, 3, 3, 0, 0, 0, 0]], dtype=int32)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">a_mask_contoured</span> <span class="o">=</span> <span class="n">generate_contour</span><span class="p">(</span><span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="n">separation_distance</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="n">margin</span><span class="p">)</span>
+    <span class="n">a_mask_contoured</span> <span class="o">=</span> <span class="n">generate_contour</span><span class="p">(</span>
+        <span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="n">separation_distance</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="n">margin</span>
+    <span class="p">)</span>
 
-    <span class="n">a_mask_contoured_labeled</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">a_mask_contoured</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,)</span> <span class="o">*</span> <span class="n">a_mask</span><span class="o">.</span><span class="n">ndim</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">a_mask_contoured_labeled</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">label</span><span class="p">(</span>
+        <span class="n">a_mask_contoured</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,)</span> <span class="o">*</span> <span class="n">a_mask</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+    <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">a_mask_contoured_labeled</span><span class="p">)</span>
 
@@ -3961,11 +4100,15 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">probs_type</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+        <span class="n">probs_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">probs</span><span class="p">))</span><span class="o">.</span><span class="n">type</span>
+
     <span class="n">probs_array</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int_</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">probs_type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
         <span class="n">num_quantiles</span> <span class="o">=</span> <span class="n">probs</span>
         <span class="n">probs_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_quantiles</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float_</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float128</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float16</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)):</span>
+    <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">probs_type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
         <span class="n">a_quantile</span> <span class="o">=</span> <span class="n">probs</span>
         <span class="n">probs_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a_quantile</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
@@ -3973,7 +4116,9 @@
         <span class="n">probs_array</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">probs_array</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">probs_array</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">():</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Cannot pass values that are not within the range (0, 1).&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">probs_array</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">probs_array</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">():</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+        <span class="s">&quot;Cannot pass values that are not within the range (0, 1).&quot;</span>
+    <span class="p">)</span>
 
 
     <span class="k">return</span><span class="p">(</span><span class="n">probs_array</span><span class="p">)</span>
@@ -4039,7 +4184,9 @@
 
     <span class="n">probs_array</span> <span class="o">=</span> <span class="n">get_quantiles</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
 
-    <span class="n">new_quantiles</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mstats</span><span class="o">.</span><span class="n">mquantiles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">probs_array</span><span class="p">,</span> <span class="n">alphap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">betap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">new_quantiles</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mstats</span><span class="o">.</span><span class="n">mquantiles</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">probs_array</span><span class="p">,</span> <span class="n">alphap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">betap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span>
+    <span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_quantiles</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">):</span>
         <span class="n">new_quantiles</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">(</span><span class="n">new_quantiles</span><span class="p">)</span>
@@ -4226,7 +4373,10 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="tagging_reorder_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.tagging_reorder_array">[docs]</a><span class="k">def</span> <span class="nf">tagging_reorder_array</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">from_axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span> <span class="n">to_axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span> <span class="n">to_copy</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="tagging_reorder_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.tagging_reorder_array">[docs]</a><span class="k">def</span> <span class="nf">tagging_reorder_array</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span>
+                          <span class="n">from_axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span>
+                          <span class="n">to_axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span>
+                          <span class="n">to_copy</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transforms one axis ordering to another giving a view of the array (unless otherwise specified).</span>
 

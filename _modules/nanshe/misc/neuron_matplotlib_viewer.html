@@ -129,14 +129,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">NeuronMatplotlibViewer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="c"># super(NeuronMatplotlibViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not &quot;neuron_images&quot;]))</span>
+        <span class="c">#super(NeuronMatplotlibViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not &quot;neuron_images&quot;]))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">])</span>
 
         <span class="c">#self.set_images(kwargs[&quot;neuron_images&quot;])</span>
 
-<div class="viewcode-block" id="NeuronMatplotlibViewer.set_images"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.set_images">[docs]</a>    <span class="k">def</span> <span class="nf">set_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_neuron_images</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">,</span> <span class="n">use_matshow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="NeuronMatplotlibViewer.set_images"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.set_images">[docs]</a>    <span class="k">def</span> <span class="nf">set_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                   <span class="n">new_neuron_images</span><span class="p">,</span>
+                   <span class="n">cmap</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">,</span>
+                   <span class="n">use_matshow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sets the images to be viewed.</span>
 
@@ -144,8 +147,11 @@
 <span class="sd">                new_neuron_images(numpy.ndarray):     array of images (first index is which image)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">new_neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Dimensions cannot be greater than 3. Was provided new_neuron_images with </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
-                <span class="n">new_neuron_images</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> dimensions.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s">&quot;Dimensions cannot be greater than 3. &quot;</span> <span class="o">+</span>
+                <span class="s">&quot;Was provided new_neuron_images with </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">new_neuron_images</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> dimensions.&quot;</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span> <span class="o">=</span> <span class="n">new_neuron_images</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap</span>
@@ -157,15 +163,24 @@
             <span class="n">viewer_show_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">imshow</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
-            <span class="c"># self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span> <span class="o">=</span> <span class="n">viewer_show_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span>
-                                                 <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="c">#self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span> <span class="o">=</span> <span class="n">viewer_show_method</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span>
+                <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c"># self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span> <span class="o">=</span> <span class="n">viewer_show_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
-                                                 <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="c">#self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span> <span class="o">=</span> <span class="n">viewer_show_method</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">,</span>
+                <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span>
+                <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_view_colorbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_view</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_view_colorbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time_nav</span> <span class="o">=</span> <span class="n">TimeNavigator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -177,7 +192,8 @@
 <span class="sd">            Method to be called by the TimeNavigator when the time changes. Updates image displayed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">time_nav</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">time_nav</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span>
 
 </div></div>
@@ -212,25 +228,44 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">next_cid</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">axtime</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">],</span> <span class="n">axisbg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stime</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axtime</span><span class="p">,</span> <span class="s">&#39;Time&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span><span class="p">,</span> <span class="n">valinit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">,</span> <span class="n">valfmt</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%i</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axtime</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">],</span> <span class="n">axisbg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stime</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axtime</span><span class="p">,</span>
+            <span class="s">&#39;Time&#39;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span><span class="p">,</span>
+            <span class="n">valinit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">,</span>
+            <span class="n">valfmt</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%i</span><span class="s">&#39;</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_update</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">beginax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">begin_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beginax</span><span class="p">,</span> <span class="s">&#39;Begin&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span> <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">beginax</span><span class="p">,</span>
+            <span class="s">&#39;Begin&#39;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span>
+            <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">begin_button</span><span class="o">.</span><span class="n">on_clicked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">begin_time</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">prevax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prev_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prevax</span><span class="p">,</span> <span class="s">&#39;Prev&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span> <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prev_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prevax</span><span class="p">,</span> <span class="s">&#39;Prev&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span> <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_button</span><span class="o">.</span><span class="n">on_clicked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prev_time</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">nextax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">next_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nextax</span><span class="p">,</span> <span class="s">&#39;Next&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span> <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nextax</span><span class="p">,</span> <span class="s">&#39;Next&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span> <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">next_button</span><span class="o">.</span><span class="n">on_clicked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_time</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">endax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">end_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endax</span><span class="p">,</span> <span class="s">&#39;End&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span> <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endax</span><span class="p">,</span> <span class="s">&#39;End&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axcolor</span><span class="p">,</span> <span class="n">hovercolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hovercolor</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_button</span><span class="o">.</span><span class="n">on_clicked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">{}</span>
@@ -243,11 +278,17 @@
 <span class="sd">                event   Matplotlib event that caused the call to this callback.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Value of slider before setting to the beginning is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Value of slider before setting to the beginning is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">time_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Value of slider after setting to the beginning is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Value of slider after setting to the beginning is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
         <span class="k">assert</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TimeNavigator.prev_time"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.prev_time">[docs]</a>    <span class="k">def</span> <span class="nf">prev_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
@@ -258,11 +299,17 @@
 <span class="sd">                event   Matplotlib event that caused the call to this callback.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Value of slider before going to the previous time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Value of slider before going to the previous time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">time_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_step</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Value of slider after going to the previous time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Value of slider after going to the previous time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TimeNavigator.next_time"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.next_time">[docs]</a>    <span class="k">def</span> <span class="nf">next_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -272,11 +319,17 @@
 <span class="sd">                event   Matplotlib event that caused the call to this callback.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Value of slider before going to the next time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Value of slider before going to the next time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">time_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_step</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Value of slider after going to the next time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Value of slider after going to the next time is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TimeNavigator.end_time"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.end_time">[docs]</a>    <span class="k">def</span> <span class="nf">end_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -323,13 +376,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">set_val</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">each_cid</span><span class="p">,</span> <span class="n">each_callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Before calling the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">each_cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s">&quot;Before calling the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">each_cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+                <span class="p">)</span>
 
                 <span class="n">each_callback</span><span class="p">()</span>
 
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;After calling the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">each_cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
-
-            <span class="k">return</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s">&quot;After calling the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">each_cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+                <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TimeNavigator.disconnect"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -339,13 +396,25 @@
 <span class="sd">                cid     ID of callback to pull</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Before disconnecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Contents of the callback dictionary before disconnecting </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Before disconnecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Contents of the callback dictionary before disconnecting </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;After disconnecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Contents of the callback dictionary after disconnecting</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;After disconnecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Contents of the callback dictionary after disconnecting</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TimeNavigator.on_time_update"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.on_time_update">[docs]</a>    <span class="k">def</span> <span class="nf">on_time_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -358,16 +427,28 @@
 <span class="sd">                int:    a callback ID or cid to allow pulling the callback when no longer necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Before connecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Contents of the callback dictionary before connecting </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Before connecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Contents of the callback dictionary before connecting </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
         <span class="n">cid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_cid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">next_cid</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;After connecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Contents of the callback dictionary after connecting </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;After connecting the caller id for time_update with value </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Contents of the callback dictionary after connecting </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span></div></div>
 </pre></div>

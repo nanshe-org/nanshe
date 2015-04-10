@@ -181,7 +181,7 @@
     <span class="c"># reshape means until it has the right number of dimensions to broadcast.</span>
     <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">means</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="n">means</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
 
-    <span class="c"># broadcast and subtract the means so that the mean of all values in result[i] is zero</span>
+    <span class="c"># broadcast and subtract the means so that the mean of all values is zero</span>
     <span class="n">output_array</span><span class="p">[:]</span> <span class="o">-=</span> <span class="n">means</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">output_array</span><span class="p">)</span>
@@ -256,13 +256,15 @@
 
         <span class="n">output_array</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_array</span>
 
-    <span class="c"># Unfortunately our version of numpy&#39;s function numpy.linalg.norm does not support the axis keyword.</span>
-    <span class="c"># So, we must use a for loop.</span>
-    <span class="c"># take each image at each time turn the image into a vector and find the norm.</span>
-    <span class="c"># divide each image by this norm. (required for spams.trainDL)</span>
+    <span class="c"># Unfortunately, our version of numpy&#39;s function numpy.linalg.norm</span>
+    <span class="c"># does not support the axis keyword. So, we must use a for loop.</span>
+    <span class="c"># Take each image at each time and turn the image into a vector.</span>
+    <span class="c"># Then, find the norm and divide each image by this norm.</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">output_array_i</span> <span class="o">=</span> <span class="n">output_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">output_array_i_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">output_array_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
+        <span class="n">output_array_i_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">output_array_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">output_array_i_norm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">output_array_i</span> <span class="o">/=</span> <span class="n">output_array_i_norm</span>

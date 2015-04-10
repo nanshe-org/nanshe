@@ -109,7 +109,12 @@
 
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="register_mean_offsets"><a class="viewcode-back" href="../../../nanshe.imp.registration.html#nanshe.imp.registration.register_mean_offsets">[docs]</a><span class="k">def</span> <span class="nf">register_mean_offsets</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_frame_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">include_shift</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_truncate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">):</span>
+<div class="viewcode-block" id="register_mean_offsets"><a class="viewcode-back" href="../../../nanshe.imp.registration.html#nanshe.imp.registration.register_mean_offsets">[docs]</a><span class="k">def</span> <span class="nf">register_mean_offsets</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">,</span>
+                          <span class="n">max_iters</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                          <span class="n">block_frame_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                          <span class="n">include_shift</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                          <span class="n">to_truncate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                          <span class="n">float_type</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This algorithm registers the given image stack against its mean projection. This is done by computing</span>
 <span class="sd">        translations needed to put each frame in alignment. Then the translation is performed and new translations are</span>
@@ -271,8 +276,14 @@
         <span class="p">)</span>
         <span class="n">this_space_shift</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">space_shift</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
-        <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+            <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+            <span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span>
+            <span class="n">frames2reg</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
     <span class="n">template_fft</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">complex_type</span><span class="p">)</span>
 
     <span class="n">negative_wave_vector</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
@@ -280,11 +291,13 @@
     <span class="n">negative_wave_vector</span> <span class="o">*=</span> <span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span>
     <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">negative_wave_vector</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">negative_wave_vector</span><span class="p">)</span>
 
-    <span class="n">template_fft_indices</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">cartesian_product</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
+    <span class="n">template_fft_indices</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">cartesian_product</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
 
     <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">template_fft_indices</span> <span class="o">*</span> <span class="n">negative_wave_vector</span>
     <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">unit_space_shift_fft</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">unit_space_shift_fft</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">template_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">,)</span> <span class="o">+</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">unit_space_shift_fft</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">template_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">,)</span> <span class="o">+</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
     <span class="n">negative_wave_vector</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">template_fft_indices</span> <span class="o">=</span> <span class="bp">None</span>
@@ -296,52 +309,98 @@
         <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="n">template_fft</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
-            <span class="n">frames2reg_shifted_fft_ij</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1j</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">unit_space_shift_fft</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                        <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                        <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">frames2reg_shifted_fft_ij</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                <span class="mi">1j</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span>
+                        <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>
+                        <span class="n">unit_space_shift_fft</span><span class="p">,</span>
+                        <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                     <span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">frames2reg_shifted_fft_ij</span> <span class="o">*=</span> <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
             <span class="n">template_fft</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">frames2reg_shifted_fft_ij</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">template_fft</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
-            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_offsets</span><span class="p">(</span><span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">template_fft</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_offsets</span><span class="p">(</span>
+                <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">template_fft</span>
+            <span class="p">)</span>
 
         <span class="c"># Remove global shifts.</span>
-        <span class="n">this_space_shift_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">this_space_shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">this_space_shift</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+        <span class="n">this_space_shift_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">this_space_shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">this_space_shift</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
             <span class="n">this_space_shift_mean</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">this_space_shift_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
             <span class="n">this_space_shift_mean</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">this_space_shift</span><span class="p">)</span>
         <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
             <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">find_relative_offsets</span><span class="p">(</span>
                 <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>
                 <span class="n">this_space_shift_mean</span>
             <span class="p">)</span>
 
-        <span class="c"># Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).</span>
-        <span class="c"># Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make</span>
-        <span class="c"># them bound by the half shape, but with either sign.</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+        <span class="c"># Find the shortest roll possible (i.e. if it is going over halfway</span>
+        <span class="c"># switch direction so it will go less than half).</span>
+        <span class="c"># Note all indices by definition were positive semi-definite and upper</span>
+        <span class="c"># bounded by the shape. This change will make them bound by</span>
+        <span class="c"># the half shape, but with either sign.</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
             <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">find_shortest_wraparound</span><span class="p">(</span>
                 <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>
                 <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
             <span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
             <span class="n">delta_space_shift_ij</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
             <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
                 <span class="n">delta_space_shift_ij</span><span class="p">,</span> <span class="n">delta_space_shift_ij</span><span class="o">.</span><span class="n">T</span>
             <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
             <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
 
         <span class="n">num_iters</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="s">&quot;Completed iteration, </span><span class="si">%i</span><span class="s">, &quot;</span> <span class="o">%</span>
-                <span class="n">num_iters</span>
+            <span class="n">num_iters</span>
             <span class="o">+</span> <span class="s">&quot;where the L_2 norm squared of the relative shift was, </span><span class="si">%f</span><span class="s">.&quot;</span> <span class="o">%</span>
-                <span class="n">squared_magnitude_delta_space_shift</span>
+            <span class="n">squared_magnitude_delta_space_shift</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">max_iters</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">num_iters</span> <span class="o">&gt;=</span> <span class="n">max_iters</span><span class="p">:</span>
@@ -356,7 +415,12 @@
         <span class="n">space_shift_min</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
             <span class="n">space_shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">space_shift</span><span class="o">.</span><span class="n">dtype</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
             <span class="n">numpy</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
                 <span class="n">space_shift_max</span><span class="p">,</span>
                 <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
@@ -376,7 +440,11 @@
         <span class="n">space_shift_min</span> <span class="o">=</span> <span class="n">space_shift_min</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
         <span class="n">space_shift_min</span><span class="p">[</span><span class="n">space_shift_min</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">space_shift_min</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">space_shift_min</span><span class="p">)</span>
-        <span class="n">reg_frames_slice</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">space_shift_max</span><span class="p">,</span> <span class="n">space_shift_min</span><span class="p">))</span>
+        <span class="n">reg_frames_slice</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span>
+                <span class="n">space_shift_max</span><span class="p">,</span> <span class="n">space_shift_min</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="c"># Adjust the registered frames using the translations found.</span>
     <span class="c"># Mask rolled values.</span>
@@ -402,12 +470,19 @@
             <span class="n">reg_frames</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
             <span class="n">reg_frames</span><span class="o">.</span><span class="n">set_fill_value</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)])):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
+            <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
+                <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
+                <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
+            <span class="p">)</span>
+    <span class="p">):</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">to_truncate</span><span class="p">:</span>
-                <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">])[</span><span class="n">reg_frames_slice</span><span class="p">]</span>
+                <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span>
+                    <span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">])[</span><span class="n">reg_frames_slice</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span>
+                    <span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">results_filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
@@ -523,25 +598,38 @@
     <span class="k">if</span> <span class="n">frames2reg_fft_added_singleton</span><span class="p">:</span>
         <span class="n">frames2reg_fft</span> <span class="o">=</span> <span class="n">frames2reg_fft</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
-    <span class="c"># Compute the product of the two FFTs (i.e. the convolution of the regular versions).</span>
+    <span class="c"># Compute the product of the two FFTs (i.e. the convolution of the regular</span>
+    <span class="c"># versions).</span>
     <span class="n">frames2reg_template_conv_fft</span> <span class="o">=</span> <span class="n">frames2reg_fft</span> <span class="o">*</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">conj</span><span class="p">()[</span><span class="bp">None</span><span class="p">]</span>
 
-    <span class="c"># Find the FFT inverse (over all spatial dimensions) to return to the convolution.</span>
-    <span class="n">frames2reg_template_conv</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">frames2reg_template_conv_fft</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
+    <span class="c"># Find the FFT inverse (over all spatial dimensions) to return to the</span>
+    <span class="c"># convolution.</span>
+    <span class="n">frames2reg_template_conv</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span>
+        <span class="n">frames2reg_template_conv_fft</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
 
-    <span class="c"># Find where the convolution is maximal. Will have the most things in common between the template and frames.</span>
+    <span class="c"># Find where the convolution is maximal. Will have the most things in</span>
+    <span class="c"># common between the template and frames.</span>
     <span class="n">frames2reg_template_conv_max</span><span class="p">,</span> <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">max_abs</span><span class="p">(</span>
-        <span class="n">frames2reg_template_conv</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">),</span> <span class="n">return_indices</span><span class="o">=</span><span class="bp">True</span>
+        <span class="n">frames2reg_template_conv</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">),</span>
+        <span class="n">return_indices</span><span class="o">=</span><span class="bp">True</span>
     <span class="p">)</span>
 
-    <span class="c"># First index is just the frame, which will be in sequential order. We don&#39;t need this so we drop it.</span>
+    <span class="c"># First index is just the frame, which will be in sequential order. We</span>
+    <span class="c"># don&#39;t need this so we drop it.</span>
     <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">=</span> <span class="n">frames2reg_template_conv_max_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
     <span class="c"># Convert indices into an array for easy manipulation.</span>
-    <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">frames2reg_template_conv_max_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="n">frames2reg_template_conv_max_indices</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="c"># Shift will have to be in the opposite direction to bring everything to the center.</span>
-    <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span>
+    <span class="c"># Shift will have to be in the opposite direction to bring everything to</span>
+    <span class="c"># the center.</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span>
+        <span class="n">frames2reg_template_conv_max_indices</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">frames2reg_template_conv_max_indices</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">frames2reg_template_conv_max_indices</span><span class="p">)</span></div>
 </pre></div>

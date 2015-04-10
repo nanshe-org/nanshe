@@ -156,7 +156,8 @@
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_dict</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_list</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)</span> <span class="ow">or</span> \
+                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_str</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">new_each_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -190,7 +191,8 @@
                     <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_dict</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                     <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_list</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)</span> <span class="ow">or</span> \
+                        <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                     <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_str</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">new_each_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -201,15 +203,21 @@
         <span class="k">return</span><span class="p">(</span><span class="n">transformed_dict</span><span class="p">)</span>
 
 
-    <span class="c"># gets parameters out of the file and dumps them in the dictionary. just that simple.</span>
+    <span class="c"># gets parameters out of the file and dumps them in the dictionary. just</span>
+    <span class="c"># that simple.</span>
     <span class="n">parameters</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Opened configure file named </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">config_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Opened configure file named </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">config_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
         <span class="c"># will just give a dictionary. just that simple</span>
         <span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">ascii_encode_dict</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Loaded parameters from file, which are </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s">&quot;Loaded parameters from file, which are </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 </pre></div>

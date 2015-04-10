@@ -148,10 +148,14 @@
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__recorders</span><span class="p">:</span>
             <span class="k">return</span><span class="p">(</span><span class="n">EmptyArrayRecorder</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span>
+                <span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span>
+                <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+            <span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="c"># Exception will be thrown if value is empty or if key already exists (as intended).</span>
+        <span class="c"># Exception will be thrown if value is empty or if key already exists</span>
+        <span class="c"># (as intended).</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s">&quot;.&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot store dataset in top level group.&quot;</span><span class="p">)</span>
@@ -161,7 +165,10 @@
             <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="k">pass</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span>
+                    <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span>
+                <span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
@@ -195,16 +202,26 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
-                <span class="k">return</span><span class="p">(</span><span class="n">HDF5ArrayRecorder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">))</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">HDF5ArrayRecorder</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span>
+                <span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="n">key</span>
+                <span class="p">))</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; in &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span>
+                <span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span>
+                <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; in &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+            <span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s">&quot;.&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot store dataset in top level group ( &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ).&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s">&quot;Cannot store dataset in top level group ( &quot;</span> <span class="o">+</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ).&quot;</span>
+                <span class="p">)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">each_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">:</span>
@@ -229,8 +246,9 @@
 
                     <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c"># Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.</span>
-            <span class="c"># Exception will be thrown if value is empty or if key already exists (as intended).</span>
+            <span class="c"># Attempt to create a dataset in self.hdf5_handle named key with</span>
+            <span class="c"># value and do not overwrite. Exception will be thrown if value is</span>
+            <span class="c"># empty or if key already exists (as intended).</span>
             <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">,</span>
@@ -242,7 +260,10 @@
 
                 <span class="k">return</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+                    <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span>
+                <span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
@@ -259,7 +280,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
         <span class="k">for</span> <span class="n">each_index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">:</span>
             <span class="n">each_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">each_index</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">],</span> <span class="n">each_index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">],</span> <span class="n">each_index</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
@@ -271,7 +294,9 @@
 
                     <span class="k">for</span> <span class="n">each_index</span> <span class="ow">in</span> <span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">each_key</span><span class="p">]:</span>
                         <span class="n">each_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">each_index</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">],</span> <span class="n">each_index</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">],</span> <span class="n">each_index</span>
+                        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
@@ -314,15 +339,25 @@
                 <span class="n">key_i_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key_i</span><span class="p">)</span>
                 <span class="k">return</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">key_handle</span><span class="p">,</span> <span class="n">key_i_str</span><span class="p">))</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; in &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span>
+                <span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span>
+                <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; in &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+            <span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s">&quot;.&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">)):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot store dataset in top level group ( &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ).&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s">&quot;Cannot store dataset in top level group ( &quot;</span> <span class="o">+</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ).&quot;</span>
+                <span class="p">)</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">None</span>
@@ -330,9 +365,13 @@
                 <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s">&quot;.&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="p">}</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])</span>
+                <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
                 <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
@@ -344,11 +383,9 @@
                 <span class="n">hdf5_index_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c"># Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.</span>
-                <span class="c"># Exception will be thrown if value is empty or if key already exists (as intended).</span>
-
-                <span class="c"># Index into a NumPy structured array can return a void type even though it is a valid array, which can</span>
-                <span class="c"># be stored. So, we must check.</span>
+                <span class="c"># Index into a NumPy structured array can return a void type</span>
+                <span class="c"># even though it is a valid array, which can be stored.</span>
+                <span class="c"># So, we must check.</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
@@ -372,7 +409,10 @@
 
                     <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s">&quot;The array provided for output by the name: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+                        <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> is empty.&quot;</span>
+                    <span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
@@ -504,7 +544,9 @@
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
                     <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
 
-        <span class="nb">callable</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">static_variables</span><span class="p">(</span><span class="n">recorders</span><span class="o">=</span><span class="n">SubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))(</span><span class="nb">callable</span><span class="p">)</span>
+        <span class="nb">callable</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">static_variables</span><span class="p">(</span>
+            <span class="n">recorders</span><span class="o">=</span><span class="n">SubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="p">)(</span><span class="nb">callable</span><span class="p">)</span>
 
         <span class="nd">@wrappers.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">static_subgrouping_array_recorders_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -537,7 +579,9 @@
 <span class="sd">            (callable):            A decorator that adds the static variable array_debug_recorder to the given function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nb">callable</span> <span class="o">=</span> <span class="n">static_subgrouping_array_recorders</span><span class="p">(</span><span class="n">array_debug_recorder</span><span class="o">=</span><span class="n">EmptyArrayRecorder</span><span class="p">())(</span><span class="nb">callable</span><span class="p">)</span>
+    <span class="nb">callable</span> <span class="o">=</span> <span class="n">static_subgrouping_array_recorders</span><span class="p">(</span>
+        <span class="n">array_debug_recorder</span><span class="o">=</span><span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+    <span class="p">)(</span><span class="nb">callable</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
 
@@ -616,7 +660,9 @@
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s">&quot;__dict__&quot;</span><span class="p">:</span>
                     <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
 
-        <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_static_variables</span><span class="p">(</span><span class="n">recorders</span><span class="o">=</span><span class="n">ClassSubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))(</span><span class="n">a_class</span><span class="p">)</span>
+        <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_static_variables</span><span class="p">(</span>
+            <span class="n">recorders</span><span class="o">=</span><span class="n">ClassSubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders__init__decorator</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
             <span class="nd">@wrappers.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
@@ -647,8 +693,11 @@
                 <span class="c"># runs separate.</span>
                 <span class="nb">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
-                    <span class="c"># setattr(callable.recorders, _k, self.recorders.__dict__[_k][callable.__name__)])</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="nb">callable</span><span class="o">.</span><span class="n">recorders</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="p">,</span> <span class="n">_k</span><span class="p">))</span>
+                    <span class="c"># setattr(callable.recorders, _k,</span>
+                    <span class="c"># self.recorders.__dict__[_k][callable.__name__)])</span>
+                    <span class="nb">setattr</span><span class="p">(</span>
+                        <span class="nb">callable</span><span class="o">.</span><span class="n">recorders</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="p">,</span> <span class="n">_k</span><span class="p">)</span>
+                    <span class="p">)</span>
                     <span class="c"># callable.recorders.__dict__[_k][&quot;.&quot;] = None</span>
 
                 <span class="k">return</span><span class="p">(</span><span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
@@ -656,20 +705,25 @@
             <span class="k">return</span><span class="p">(</span><span class="n">class_static_subgrouping_array_recorders_wrapper</span><span class="p">)</span>
 
         <span class="c"># Wraps __init__ only</span>
-        <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_methods</span><span class="p">(</span><span class="n">__init__</span><span class="o">=</span><span class="n">class_static_subgrouping_array_recorders__init__decorator</span><span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
+        <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_methods</span><span class="p">(</span>
+            <span class="n">__init__</span><span class="o">=</span><span class="n">class_static_subgrouping_array_recorders__init__decorator</span>
+        <span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
 
         <span class="c"># Wrap everything</span>
-        <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_all_methods</span><span class="p">(</span><span class="n">class_static_subgrouping_array_recorders_decorator</span><span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
+        <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_all_methods</span><span class="p">(</span>
+            <span class="n">class_static_subgrouping_array_recorders_decorator</span><span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
 
 
         <span class="c"># Must be done last.</span>
-        <span class="c"># Precedes the constructor to ensure a new working directory is created.</span>
+        <span class="c"># Precedes the constructor to ensure a new working directory is created</span>
         <span class="k">class</span> <span class="nc">MetaSubgroupingRecorders</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
             <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">][</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
 
-                <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaSubgroupingRecorders</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+                <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaSubgroupingRecorders</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span>
+                    <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                <span class="p">))</span>
 
         <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaSubgroupingRecorders</span><span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
 
@@ -692,7 +746,9 @@
 <span class="sd">            (class):            A decorator that adds the static variable array_debug_recorder to the given function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">a_class</span> <span class="o">=</span> <span class="n">class_static_subgrouping_array_recorders</span><span class="p">(</span><span class="n">array_debug_recorder</span><span class="o">=</span><span class="n">EmptyArrayRecorder</span><span class="p">())(</span><span class="n">a_class</span><span class="p">)</span>
+    <span class="n">a_class</span> <span class="o">=</span> <span class="n">class_static_subgrouping_array_recorders</span><span class="p">(</span>
+        <span class="n">array_debug_recorder</span><span class="o">=</span><span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+    <span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">a_class</span><span class="p">)</span></div>
 </pre></div>

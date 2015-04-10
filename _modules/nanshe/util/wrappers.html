@@ -116,7 +116,9 @@
 <span class="sd">            (callable):             the wrapped callable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">wrapper</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span><span class="o">=</span><span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span><span class="o">=</span><span class="n">updated</span><span class="p">)</span>
+    <span class="n">wrapper</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span>
+        <span class="n">wrapper</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span><span class="o">=</span><span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span><span class="o">=</span><span class="n">updated</span>
+    <span class="p">)</span>
 
     <span class="c"># Store the underlying callable. Automatic in Python 3.</span>
     <span class="nb">setattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="s">&quot;__wrapped__&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="s">&quot;__wrapped__&quot;</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">))</span>
@@ -145,7 +147,9 @@
 <span class="sd">            (callable):             a decorator for callable, which will contain wrapped.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">update_wrapper</span><span class="p">,</span> <span class="n">wrapped</span><span class="o">=</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span><span class="o">=</span><span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span><span class="o">=</span><span class="n">updated</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">update_wrapper</span><span class="p">,</span> <span class="n">wrapped</span><span class="o">=</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span><span class="o">=</span><span class="n">assigned</span><span class="p">,</span> <span class="n">updated</span><span class="o">=</span><span class="n">updated</span>
+    <span class="p">))</span>
 
 </div>
 <div class="viewcode-block" id="identity_wrapper"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.identity_wrapper">[docs]</a><span class="k">def</span> <span class="nf">identity_wrapper</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
@@ -318,7 +322,9 @@
         <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
             <span class="n">dct</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
 
-            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaStaticVariables</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaStaticVariables</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span>
+                <span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span>
+            <span class="p">))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaStaticVariables</span><span class="p">))</span>
 
@@ -350,7 +356,9 @@
 
                 <span class="n">dct</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span>
 
-            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span>
+                <span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span>
+            <span class="p">))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span>
 
@@ -385,7 +393,9 @@
 
                 <span class="n">dct</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span>
 
-            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span>
+                <span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span>
+            <span class="p">))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span>
 
@@ -423,7 +433,9 @@
 
                 <span class="n">dct</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span>
 
-            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">))</span>
+            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span>
+                <span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span>
+            <span class="p">))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaMethodsDecorator</span><span class="p">))</span></div>
 </pre></div>

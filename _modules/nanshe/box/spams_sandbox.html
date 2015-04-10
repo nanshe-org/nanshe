@@ -138,13 +138,19 @@
     <span class="n">out_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
 
     <span class="n">queue_args</span> <span class="o">=</span> <span class="p">(</span><span class="n">out_queue</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">run_multiprocessing_queue_spams_trainDL</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">queue_args</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">run_multiprocessing_queue_spams_trainDL</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="n">queue_args</span><span class="p">,</span>
+        <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span>
+    <span class="p">)</span>
     <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">out_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span>
+        <span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+    <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
@@ -203,7 +209,9 @@
     <span class="n">result_shape</span> <span class="o">=</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span>
     <span class="n">result_flags</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">multiarray</span><span class="o">.</span><span class="n">flagsobj</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_flags_</span><span class="p">)</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
+        <span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_dtype</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)</span>
     <span class="n">result</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">result_flags</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -244,8 +252,12 @@
 
 
     <span class="c"># Types for X_array</span>
-    <span class="n">X_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
-    <span class="n">X_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()]))</span>
+    <span class="n">X_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">flags</span>
+    <span class="p">)</span>
+    <span class="n">X_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()])</span>
+    <span class="p">)</span>
 
     <span class="c"># Create a shared array to contain X</span>
     <span class="n">X_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">X_array_ctype</span><span class="p">,</span>
@@ -253,30 +265,46 @@
                                     <span class="n">lock</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
     <span class="c"># Copy over the contents of X.</span>
-    <span class="n">X_array_numpy</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">X_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
+    <span class="n">X_array_numpy</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
+        <span class="n">X_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
     <span class="n">X_array_numpy</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">X</span>
     <span class="n">X_array_numpy</span> <span class="o">=</span> <span class="bp">None</span>
 
 
     <span class="c"># Types for result_array</span>
-    <span class="n">result_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;K&quot;</span><span class="p">]))</span>
-    <span class="n">result_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()]))</span>
+    <span class="n">result_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;K&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">result_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()])</span>
+    <span class="p">)</span>
 
     <span class="c"># Create a shared array to contain the result</span>
-    <span class="n">result_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">result_array_ctype</span><span class="p">,</span>
-                                         <span class="n">numpy</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">),</span>
-                                         <span class="n">lock</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">result_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span>
+        <span class="n">result_array_ctype</span><span class="p">,</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">),</span>
+        <span class="n">lock</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
 
 
-    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">run_multiprocessing_array_spams_trainDL</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span> <span class="n">result_array</span><span class="p">,</span> <span class="n">X_array_type</span><span class="p">,</span> <span class="n">X_array</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">run_multiprocessing_array_spams_trainDL</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span> <span class="n">result_array</span><span class="p">,</span> <span class="n">X_array_type</span><span class="p">,</span> <span class="n">X_array</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">,</span>
+        <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span>
+    <span class="p">)</span>
     <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span><span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span>
+        <span class="s">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+    <span class="p">)</span>
 
 
     <span class="c"># Reconstruct the result from the output array</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
+        <span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
