@@ -90,7 +90,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g = new_unmatched_g
 
-        print unmatched_g
+        print(unmatched_g)
 
         assert (len(unmatched_g) == 0)
 
@@ -141,7 +141,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g3 = new_unmatched_g3
 
-        print unmatched_g3
+        print(unmatched_g3)
 
         assert (len(unmatched_g3) == 0)
 
@@ -186,7 +186,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g = new_unmatched_g
 
-        print unmatched_g
+        print(unmatched_g)
 
         assert (len(unmatched_g) == 0)
 
@@ -232,7 +232,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g3 = new_unmatched_g3
 
-        print unmatched_g3
+        print(unmatched_g3)
 
         assert (len(unmatched_g3) == 0)
 
@@ -295,7 +295,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g = new_unmatched_g
 
-        print unmatched_g
+        print(unmatched_g)
 
         assert (len(unmatched_g) == 0)
 
@@ -359,7 +359,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g3 = new_unmatched_g3
 
-        print unmatched_g3
+        print(unmatched_g3)
 
         assert (len(unmatched_g3) == 0)
 
@@ -404,7 +404,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g = new_unmatched_g
 
-        print unmatched_g
+        print(unmatched_g)
 
         assert (len(unmatched_g) == 0)
 
@@ -450,7 +450,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g3 = new_unmatched_g3
 
-        print unmatched_g3
+        print(unmatched_g3)
 
         assert (len(unmatched_g3) == 0)
 
@@ -495,7 +495,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g = new_unmatched_g
 
-        print unmatched_g
+        print(unmatched_g)
 
         assert (len(unmatched_g) == 0)
 
@@ -541,7 +541,7 @@ class TestSpamsSandbox(object):
 
             unmatched_g3 = new_unmatched_g3
 
-        print unmatched_g3
+        print(unmatched_g3)
 
         assert (len(unmatched_g3) == 0)
 
