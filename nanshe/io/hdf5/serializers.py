@@ -33,7 +33,10 @@ trace_logger = prof.getTraceLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overwrite=False):
+def create_numpy_structured_array_in_HDF5(file_handle,
+                                          internalPath,
+                                          data,
+                                          overwrite=False):
     """
         Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
         Also, will handle normal NumPy arrays and scalars, as well.
@@ -64,23 +67,31 @@ def create_numpy_structured_array_in_HDF5(file_handle, internalPath, data, overw
             data_array = numpy.array(data_array)
         except:
             if not data_array.dtype.names:
-                raise TypeError("The argument provided for data is type: \"" + repr(type(data)) + "\" is not convertible to type \"" + repr(numpy.ndarray) + "\".")
+                raise TypeError(
+                    "The argument provided for data is type: \"" +
+                    repr(type(data)) + "\" is not convertible to type \"" +
+                    repr(numpy.ndarray) + "\"."
+                )
 
 
     try:
-        file_handle.create_dataset(internalPath,
-                                   shape=data_array.shape,
-                                   dtype=data_array.dtype,
-                                   data=data_array,
-                                   chunks=bool(data_array.ndim))
+        file_handle.create_dataset(
+            internalPath,
+            shape=data_array.shape,
+            dtype=data_array.dtype,
+            data=data_array,
+            chunks=bool(data_array.ndim)
+        )
     except RuntimeError:
         if overwrite:
             del file_handle[internalPath]
-            file_handle.create_dataset(internalPath,
-                                       shape=data_array.shape,
-                                       dtype=data_array.dtype,
-                                       data=data_array,
-                                       chunks=True)
+            file_handle.create_dataset(
+                internalPath,
+                shape=data_array.shape,
+                dtype=data_array.dtype,
+                data=data_array,
+                chunks=True
+            )
         else:
             raise
 
@@ -144,11 +155,13 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
             with h5py.File(data_object.attrs["filename"], "r") as external_file_handle:
                 # assert isinstance(new_dataset_name, h5py.Dataset)
 
-                if ("field" in data_object.attrs) and ("slice" in data_object.attrs):
+                if ("field" in data_object.attrs) and \
+                        ("slice" in data_object.attrs):
                     new_field = data_object.attrs["field"]
                     new_slicing = eval(data_object.attrs["slice"])
 
-                    data = external_file_handle[new_dataset_name][new_field][new_slicing]
+                    data = external_file_handle[
+                        new_dataset_name][new_field][new_slicing]
                 elif ("field" in data_object.attrs):
                     new_field = data_object.attrs["field"]
 
@@ -246,7 +259,8 @@ class HDF5MaskedDataset(object):
                 self._group["data"][...] = data
                 self._group["mask"][...] = numpy.ma.getmaskarray(data)
                 if isinstance(data, numpy.ma.masked_array):
-                    self._group["fill_value"][...] = dtype.type(data.fill_value)
+                    self._group["fill_value"][...] = dtype.type(
+                        data.fill_value)
 
     @property
     def group(self):
