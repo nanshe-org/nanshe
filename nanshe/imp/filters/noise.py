@@ -35,15 +35,19 @@ def estimate_noise(input_array, significance_threshold=3.0):
         Estimates the noise in the given array.
 
         Using the array finds what the standard deviation is of some values in
-        the array, which are within the standard deviation of the whole array times
-        the significance threshold
+        the array, which are within the standard deviation of the whole array
+        times the significance threshold.
 
         Args:
-            input_array(numpy.ndarray):          the array to estimate noise of.
-            significance_threshold(float):      the number of standard deviations (of the whole array), below which must be noise.
+            input_array(numpy.ndarray):         the array to estimate noise of.
+            significance_threshold(float):      the number of standard
+                                                deviations (of the whole
+                                                array), below which must be
+                                                noise.
 
         Returns:
-            cs(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
+            noise(float):                       The standard deviation of the
+                                                noise.
 
 
         Examples:
@@ -84,14 +88,20 @@ def estimate_noise(input_array, significance_threshold=3.0):
 @prof.log_call(trace_logger)
 def significant_mask(input_array, noise_threshold=6.0, noise_estimate=None):
     """
-        Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.
+        Using estimate_noise, creates a mask that selects the non-noise and
+        suppresses noise.
 
         Args:
-            input_array(numpy.ndarray):          the array, which needs noise removed.
-            noise_threshold(float):             the estimated noise times this value determines the max value to
-                                                 consider as noise (to zero).
+            input_array(numpy.ndarray):         the array, which needs noise
+                                                removed.
 
-            in_place(bool):                      whether to modify input_array directly or to return a copy instead.
+            noise_threshold(float):             the estimated noise times this
+                                                value determines the max value
+                                                to consider as noise (to zero).
+
+            in_place(bool):                     whether to modify input_array
+                                                directly or to return a copy
+                                                instead.
 
         Returns:
             result(numpy.ndarray): a numpy array with noise zeroed.
@@ -139,19 +149,25 @@ def significant_mask(input_array, noise_threshold=6.0, noise_estimate=None):
 @prof.log_call(trace_logger)
 def noise_mask(input_array, noise_threshold=6.0, noise_estimate=None):
     """
-        Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.
+        Using estimate_noise, creates a mask that selects the noise and
+        suppresses non-noise.
 
         Args:
-            input_array(numpy.ndarray):          the array to use for generating the noise mask.
+            input_array(numpy.ndarray):         the array to use for generating
+                                                the noise mask.
 
-            significance_threshold(float):      the number of standard deviations (of the whole array),
-                                                 below which must be noise.
+            significance_threshold(float):      the number of standard
+                                                deviations (of the whole
+                                                array), below which must be
+                                                noise.
 
-            noise_threshold(float):             the estimated noise times this value determines the max value
-                                                 to consider as noise (to zero).
+            noise_threshold(float):             the estimated noise times this
+                                                value determines the max value
+                                                to consider as noise (to zero).
 
         Returns:
-            result(numpy.ndarray): a numpy array with noise zeroed.
+            result(numpy.ndarray):              a numpy array with noise
+                                                zeroed.
 
 
         Examples:
