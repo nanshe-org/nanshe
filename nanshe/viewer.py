@@ -98,7 +98,7 @@ class HDF5DataSource(QObject):
 
     """
 
-    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -115,7 +115,7 @@ class HDF5DataSource(QObject):
                 shape(tuple of ints):                   shape of underlying dataset if not specified defaults to that of the dataset.
                 dtype(numpy.dtype or type):             type of underlying dataset if not specified defaults to that of the dataset.
         """
-        #TODO: Get rid of shape and dtype as arguments.
+        # TODO: Get rid of shape and dtype as arguments.
 
         super(HDF5DataSource, self).__init__()
 
@@ -284,8 +284,8 @@ class HDF5DataRequest(object):
 
     """
 
-    #TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
-    #TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.
+    # TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
+    # TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.
 
     def __init__(self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, record_name="", throw_on_not_found=False):
         """
@@ -737,7 +737,7 @@ class EnumeratedProjectionConstantSource(QObject):
 
     """
 
-    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -752,7 +752,7 @@ class EnumeratedProjectionConstantSource(QObject):
                 constant_source(a constant SourceABC):      Source to take the max projection of.
                 axis(int):                                  The axis to take compute the max along.
         """
-        #TODO: Get rid of shape and dtype as arguments.
+        # TODO: Get rid of shape and dtype as arguments.
 
         super(EnumeratedProjectionConstantSource, self).__init__()
 
@@ -927,7 +927,7 @@ class ContourProjectionConstantSource(QObject):
 
     """
 
-    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -940,7 +940,7 @@ class ContourProjectionConstantSource(QObject):
                 constant_source(a constant SourceABC):      Source to take the max projection of.
                 axis(int):                                  The axis to take compute the max along.
         """
-        #TODO: Get rid of shape and dtype as arguments.
+        # TODO: Get rid of shape and dtype as arguments.
 
         super(ContourProjectionConstantSource, self).__init__()
 
@@ -1104,7 +1104,7 @@ class FloatProjectionConstantSource(QObject):
 
     """
 
-    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -1118,7 +1118,7 @@ class FloatProjectionConstantSource(QObject):
             Args:
                 constant_source(a constant SourceABC):      Source to make float.
         """
-        #TODO: Get rid of shape and dtype as arguments.
+        # TODO: Get rid of shape and dtype as arguments.
 
         super(FloatProjectionConstantSource, self).__init__()
 
@@ -1256,7 +1256,7 @@ class MaxProjectionConstantSource(QObject):
 
     """
 
-    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -1271,7 +1271,7 @@ class MaxProjectionConstantSource(QObject):
                 constant_source(a constant SourceABC):      Source to take the max projection of.
                 axis(int):                                  The axis to take compute the max along.
         """
-        #TODO: Get rid of shape and dtype as arguments.
+        # TODO: Get rid of shape and dtype as arguments.
 
         super(MaxProjectionConstantSource, self).__init__()
 
@@ -1451,7 +1451,7 @@ class MeanProjectionConstantSource(QObject):
 
     """
 
-    #TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -1466,7 +1466,7 @@ class MeanProjectionConstantSource(QObject):
                 constant_source(a constant SourceABC):      Source to take the mean projection of.
                 axis(int):                                  The axis to take compute the mean along.
         """
-        #TODO: Get rid of shape and dtype as arguments.
+        # TODO: Get rid of shape and dtype as arguments.
 
         super(MeanProjectionConstantSource, self).__init__()
 
