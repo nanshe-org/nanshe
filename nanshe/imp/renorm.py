@@ -36,15 +36,20 @@ trace_logger = prof.getTraceLogger(__name__)
 @prof.log_call(trace_logger)
 def zeroed_mean_images(input_array, output_array=None):
     """
-        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
+        Takes and finds the mean for each image. Where each image is
+        new_numpy_array[i] with some index i.
 
         Args:
-            new_numpy_array(numpy.ndarray):     array images with time as the first index
-            output_array(numpy.ndarray):        provides a location to store the result (optional)
+            new_numpy_array(numpy.ndarray):     array images with time as the
+                                                first index
+
+            output_array(numpy.ndarray):        provides a location to store
+                                                the result (optional)
 
         Returns:
-            result(numpy.ndarray):              The same array with each images mean removed.
-                                                Where means[i] = mean(new_numpy_array[i])
+            result(numpy.ndarray):              The same array with each images
+                                                mean removed. Where
+                                                means[i] = mean(new_numpy_array[i])
 
 
         Examples:
@@ -130,15 +135,22 @@ def zeroed_mean_images(input_array, output_array=None):
 @prof.log_call(trace_logger)
 def renormalized_images(input_array, ord=2, output_array=None):
     """
-        Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.
+        Takes and divide each image by its norm. Where each image is
+        new_numpy_array[i] with some index i.
 
         Args:
-            new_numpy_array(numpy.ndarray):     array images with time as the first index
-            output_array(numpy.ndarray):        provides a location to store the result (optional)
+            new_numpy_array(numpy.ndarray):     array images with time as the
+                                                first index
+
+            ord(int):                           Which norm to use. (L_2 or
+                                                Euclidean is default)
+
+            output_array(numpy.ndarray):        provides a location to store
+                                                the result (optional)
 
         Returns:
-            result(numpy.ndarray):              The same array with each images mean removed.
-                                                Where means[i] = mean(new_numpy_array[i])
+            result(numpy.ndarray):              The same array with each images
+                                                normalized.
 
 
         Examples:
