@@ -21,6 +21,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 20, 2014 09:46:45 EDT$"
 
 
+import collections
 import functools
 import itertools
 import operator
@@ -3901,11 +3902,15 @@ def get_quantiles(probs):
 
     """
 
+    probs_type = collections.Sequence
+    if not isinstance(probs, collections.Sequence):
+        probs_type = numpy.dtype(type(probs)).type
+
     probs_array = None
-    if isinstance(probs, (numpy.int, numpy.int_, numpy.int8, numpy.int16, numpy.int32, numpy.int64)):
+    if issubclass(probs_type, numpy.integer):
         num_quantiles = probs
         probs_array = numpy.linspace(0, 1, num_quantiles + 2)[1:-1]
-    elif isinstance(probs, (numpy.float, numpy.float_, numpy.float128, numpy.float16, numpy.float32, numpy.float64)):
+    elif issubclass(probs_type, numpy.floating):
         a_quantile = probs
         probs_array = numpy.array([a_quantile])
     else:
