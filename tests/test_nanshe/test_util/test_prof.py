@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jul 30, 2014 16:57:43 EDT$"
 
@@ -203,11 +205,11 @@ class TestProf(object):
         except:
             exc_type, exc_value, exc_traceback = sys.exc_info()
 
-            print >>expected_traceback, "Traceback (most recent call last):"
+            print("Traceback (most recent call last):", file=expected_traceback)
             traceback.print_tb(exc_traceback.tb_next.tb_next, file=expected_traceback)
-            print >>expected_traceback, exc_type.__name__ + ":", exc_value
+            print(exc_type.__name__ + ":", exc_value, file=expected_traceback)
 
-            print >>expected_traceback
+            print(file=expected_traceback)
             expected_traceback.flush()
 
         expected_result += expected_traceback.getvalue()
