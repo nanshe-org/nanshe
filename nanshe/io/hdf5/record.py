@@ -284,9 +284,6 @@ class HDF5EnumeratedArrayRecorder(object):
                 hdf5_index_handle.file.flush()
                 self.hdf5_index_data_handles[key] = None
             else:
-                # Attempt to create a dataset in self.hdf5_handle named key with value and do not overwrite.
-                # Exception will be thrown if value is empty or if key already exists (as intended).
-
                 # Index into a NumPy structured array can return a void type even though it is a valid array, which can
                 # be stored. So, we must check.
                 try:
