@@ -179,8 +179,8 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
 
 @prof.log_call(trace_logger)
 def generate_neurons_blocks(input_filename, output_filename, num_processes=multiprocessing.cpu_count(), block_shape=None, num_blocks=None, half_window_shape=None, half_border_shape=None, use_drmaa=False, num_drmaa_cores=16, debug=False, **parameters):
-    #TODO: Move this function into a new module with its own command line interface.
-    #TODO: Heavy refactoring required on this function.
+    # TODO: Move this function into a new module with its own command line interface.
+    # TODO: Heavy refactoring required on this function.
 
     # Extract and validate file extensions.
 
@@ -591,7 +591,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
                         neurons_block_i["max_F"] = neurons_block_i_accepted["max_F"]
                         neurons_block_i["gaussian_mean"] = neurons_block_i_accepted["gaussian_mean"]
                         neurons_block_i["gaussian_cov"] = neurons_block_i_accepted["gaussian_cov"]
-                        #TODO: Correct centroid to larger block position.
+                        # TODO: Correct centroid to larger block position.
                         neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
 
                         array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(
