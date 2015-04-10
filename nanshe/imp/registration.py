@@ -56,9 +56,11 @@ def register_mean_offsets(frames2reg,
                           to_truncate=False,
                           float_type=numpy.dtype(float).type):
     """
-        This algorithm registers the given image stack against its mean projection. This is done by computing
-        translations needed to put each frame in alignment. Then the translation is performed and new translations are
-        computed. This is repeated until no further improvement can be made.
+        This algorithm registers the given image stack against its mean
+        projection. This is done by computing translations needed to put each
+        frame in alignment. Then the translation is performed and new
+        translations are computed. This is repeated until no further
+        improvement can be made.
 
         The code for translations can be found in find_mean_offsets.
 
@@ -66,18 +68,35 @@ def register_mean_offsets(frames2reg,
             Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.
 
         Args:
-            frames2reg(numpy.ndarray):           Image stack to register (time is the first dimension uses C-order tyx
-                                                 or tzyx).
-            max_iters(int):                      Number of iterations to allow before forcing termination if stable
-                                                 point is not found yet. Set to -1 if no limit. (Default -1)
-            block_frame_length(int):             Number of frames to work with at a time.
-                                                 By default all. (Default -1)
-            include_shift(bool):                 Whether to return the shifts used, as well. (Default False)
-            to_truncate(bool):                   Whether to truncate the frames to remove all masked portions. (Default False)
-            float_type(type):                    Type of float to use for calculation. (Default numpy.float64).
+            frames2reg(numpy.ndarray):           Image stack to register (time
+                                                 is the first dimension uses
+                                                 C-order tyx or tzyx).
+
+            max_iters(int):                      Number of iterations to allow
+                                                 before forcing termination if
+                                                 stable point is not found yet.
+                                                 Set to -1 if no limit.
+                                                 (Default -1)
+
+            block_frame_length(int):             Number of frames to work with
+                                                 at a time. By default all.
+                                                 (Default -1)
+
+            include_shift(bool):                 Whether to return the shifts
+                                                 used, as well. (Default False)
+
+            to_truncate(bool):                   Whether to truncate the frames
+                                                 to remove all masked portions.
+                                                 (Default False)
+
+            float_type(type):                    Type of float to use for
+                                                 calculation. (Default
+                                                 numpy.float64).
 
         Returns:
-            (numpy.ndarray):                     an array containing the translations to apply to each frame.
+            (numpy.ndarray):                     an array containing the
+                                                 translations to apply to each
+                                                 frame.
 
         Examples:
             >>> a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1; a
@@ -459,23 +478,31 @@ def register_mean_offsets(frames2reg,
 @prof.log_call(trace_logger)
 def find_offsets(frames2reg_fft, template_fft):
     """
-        Computes the convolution of the template with the frames by taking advantage of their FFTs for faster
-        computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )
+        Computes the convolution of the template with the frames by taking
+        advantage of their FFTs for faster computation that an ordinary
+        convolution ( O(N*lg(N)) vs O(N^2) )
         < http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html >.
-        Once computed the maximum of the convolution is found to determine the best overlap of each frame with the
-        template, which provides the needed offset. Some corrections are performed to make reasonable offsets.
+        Once computed the maximum of the convolution is found to determine the
+        best overlap of each frame with the template, which provides the needed
+        offset. Some corrections are performed to make reasonable offsets.
 
         Notes:
-            Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.
+            Adapted from code provided by Wenzhi Sun with speed improvements
+            provided by Uri Dubin.
 
         Args:
-            frames2reg(numpy.ndarray):           image stack to register (time is the first dimension uses C-order tyx
-                                                 or tzyx).
-            template_fft(numpy.ndarray):         what to register the image stack against (single frame using C-order
-                                                 yx or zyx).
+            frames2reg(numpy.ndarray):           image stack to register (time
+                                                 is the first dimension uses
+                                                 C-order tyx or tzyx).
+
+            template_fft(numpy.ndarray):         what to register the image
+                                                 stack against (single frame
+                                                 using C-order yx or zyx).
 
         Returns:
-            (numpy.ndarray):                     an array containing the translations to apply to each frame.
+            (numpy.ndarray):                     an array containing the
+                                                 translations to apply to each
+                                                 frame.
 
         Examples:
             >>> a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1; a
