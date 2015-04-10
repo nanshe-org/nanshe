@@ -49,7 +49,12 @@ logger = prof.logging.getLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, include_shift=False, to_truncate=False, float_type=numpy.dtype(float).type):
+def register_mean_offsets(frames2reg,
+                          max_iters=-1,
+                          block_frame_length=-1,
+                          include_shift=False,
+                          to_truncate=False,
+                          float_type=numpy.dtype(float).type):
     """
         This algorithm registers the given image stack against its mean projection. This is done by computing
         translations needed to put each frame in alignment. Then the translation is performed and new translations are
@@ -211,8 +216,14 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         )
         this_space_shift = numpy.empty_like(space_shift)
 
-    for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-        frames2reg_fft[i:j] = fft.fftn(frames2reg[i:j], axes=range(1, len(frames2reg.shape)))
+    for i, j in iters.lagged_generators_zipped(
+            itertools.chain(
+                xrange(0, len(frames2reg), block_frame_length),
+                [len(frames2reg)]
+            )
+    ):
+        frames2reg_fft[i:j] = fft.fftn(
+            frames2reg[i:j], axes=range(1, len(frames2reg.shape)))
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
@@ -220,11 +231,13 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
     negative_wave_vector *= 2*numpy.pi
     numpy.negative(negative_wave_vector, out=negative_wave_vector)
 
-    template_fft_indices = xnumpy.cartesian_product([numpy.arange(_) for _ in template_fft.shape])
+    template_fft_indices = xnumpy.cartesian_product(
+        [numpy.arange(_) for _ in template_fft.shape])
 
     unit_space_shift_fft = template_fft_indices * negative_wave_vector
     unit_space_shift_fft = unit_space_shift_fft.T.copy()
-    unit_space_shift_fft = unit_space_shift_fft.reshape((template_fft.ndim,) + template_fft.shape)
+    unit_space_shift_fft = unit_space_shift_fft.reshape(
+        (template_fft.ndim,) + template_fft.shape)
 
     negative_wave_vector = None
     template_fft_indices = None
@@ -236,52 +249,98 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = 0
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            frames2reg_shifted_fft_ij = numpy.exp(1j * numpy.tensordot(space_shift[i:j], unit_space_shift_fft, axes=[-1, 0]))
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                        xrange(0, len(frames2reg), block_frame_length),
+                        [len(frames2reg)]
+                )
+        ):
+            frames2reg_shifted_fft_ij = numpy.exp(
+                1j * numpy.tensordot(
+                        space_shift[i:j],
+                        unit_space_shift_fft,
+                        axes=[-1, 0]
+                     )
+            )
             frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
             template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
         template_fft /= len(frames2reg)
 
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
-            this_space_shift[i:j] = find_offsets(frames2reg_fft[i:j], template_fft)
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                    xrange(0, len(frames2reg), block_frame_length),
+                    [len(frames2reg)]
+                )
+        ):
+            this_space_shift[i:j] = find_offsets(
+                frames2reg_fft[i:j], template_fft
+            )
 
         # Remove global shifts.
-        this_space_shift_mean = numpy.zeros(this_space_shift.shape[1:], dtype=this_space_shift.dtype)
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        this_space_shift_mean = numpy.zeros(
+            this_space_shift.shape[1:], dtype=this_space_shift.dtype)
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                    xrange(0, len(frames2reg), block_frame_length),
+                    [len(frames2reg)]
+                )
+        ):
             this_space_shift_mean = this_space_shift[i:j].sum(axis=0)
         this_space_shift_mean = numpy.round(
             this_space_shift_mean.astype(float_type) / len(this_space_shift)
         ).astype(int)
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                    xrange(0, len(frames2reg), block_frame_length),
+                    [len(frames2reg)]
+                )
+        ):
             this_space_shift[i:j] = xnumpy.find_relative_offsets(
                 this_space_shift[i:j],
                 this_space_shift_mean
             )
 
-        # Find the shortest roll possible (i.e. if it is going over halfway switch direction so it will go less than half).
-        # Note all indices by definition were positive semi-definite and upper bounded by the shape. This change will make
-        # them bound by the half shape, but with either sign.
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        # Find the shortest roll possible (i.e. if it is going over halfway
+        # switch direction so it will go less than half).
+        # Note all indices by definition were positive semi-definite and upper
+        # bounded by the shape. This change will make them bound by
+        # the half shape, but with either sign.
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                    xrange(0, len(frames2reg), block_frame_length),
+                    [len(frames2reg)]
+                )
+        ):
             this_space_shift[i:j] = xnumpy.find_shortest_wraparound(
                 this_space_shift[i:j],
                 frames2reg_fft.shape[1:]
             )
 
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                    xrange(0, len(frames2reg), block_frame_length),
+                    [len(frames2reg)]
+                )
+        ):
             delta_space_shift_ij = this_space_shift[i:j] - space_shift[i:j]
             squared_magnitude_delta_space_shift += numpy.dot(
                 delta_space_shift_ij, delta_space_shift_ij.T
             ).sum()
 
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                    xrange(0, len(frames2reg), block_frame_length),
+                    [len(frames2reg)]
+                )
+        ):
             space_shift[i:j] = this_space_shift[i:j]
 
         num_iters += 1
         logger.info(
             "Completed iteration, %i, " %
-                num_iters
+            num_iters
             + "where the L_2 norm squared of the relative shift was, %f." %
-                squared_magnitude_delta_space_shift
+            squared_magnitude_delta_space_shift
         )
         if max_iters != -1:
             if num_iters >= max_iters:
@@ -296,7 +355,12 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         space_shift_min = numpy.zeros(
             space_shift.shape[1:], dtype=space_shift.dtype
         )
-        for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+        for i, j in iters.lagged_generators_zipped(
+                itertools.chain(
+                    xrange(0, len(frames2reg), block_frame_length),
+                    [len(frames2reg)]
+                )
+        ):
             numpy.maximum(
                 space_shift_max,
                 space_shift[i:j].max(axis=0),
@@ -316,7 +380,11 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
         space_shift_min = space_shift_min.astype(object)
         space_shift_min[space_shift_min == 0] = None
         space_shift_min = tuple(space_shift_min)
-        reg_frames_slice = tuple(slice(_1, _2) for _1, _2 in itertools.izip(space_shift_max, space_shift_min))
+        reg_frames_slice = tuple(
+            slice(_1, _2) for _1, _2 in itertools.izip(
+                space_shift_max, space_shift_min
+            )
+        )
 
     # Adjust the registered frames using the translations found.
     # Mask rolled values.
@@ -342,12 +410,19 @@ def register_mean_offsets(frames2reg, max_iters=-1, block_frame_length=-1, inclu
             reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
             reg_frames.set_fill_value(reg_frames.dtype.type(0))
 
-    for i, j in iters.lagged_generators_zipped(itertools.chain(xrange(0, len(frames2reg), block_frame_length), [len(frames2reg)])):
+    for i, j in iters.lagged_generators_zipped(
+            itertools.chain(
+                xrange(0, len(frames2reg), block_frame_length),
+                [len(frames2reg)]
+            )
+    ):
         for k in xrange(i, j):
             if to_truncate:
-                reg_frames[k] = xnumpy.roll(frames2reg[k], space_shift[k])[reg_frames_slice]
+                reg_frames[k] = xnumpy.roll(
+                    frames2reg[k], space_shift[k])[reg_frames_slice]
             else:
-                reg_frames[k] = xnumpy.roll(frames2reg[k], space_shift[k], to_mask=True)
+                reg_frames[k] = xnumpy.roll(
+                    frames2reg[k], space_shift[k], to_mask=True)
 
     result = None
     results_filename = ""
@@ -463,24 +538,37 @@ def find_offsets(frames2reg_fft, template_fft):
     if frames2reg_fft_added_singleton:
         frames2reg_fft = frames2reg_fft[None]
 
-    # Compute the product of the two FFTs (i.e. the convolution of the regular versions).
+    # Compute the product of the two FFTs (i.e. the convolution of the regular
+    # versions).
     frames2reg_template_conv_fft = frames2reg_fft * template_fft.conj()[None]
 
-    # Find the FFT inverse (over all spatial dimensions) to return to the convolution.
-    frames2reg_template_conv = fft.ifftn(frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
+    # Find the FFT inverse (over all spatial dimensions) to return to the
+    # convolution.
+    frames2reg_template_conv = fft.ifftn(
+        frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
 
-    # Find where the convolution is maximal. Will have the most things in common between the template and frames.
+    # Find where the convolution is maximal. Will have the most things in
+    # common between the template and frames.
     frames2reg_template_conv_max, frames2reg_template_conv_max_indices = xnumpy.max_abs(
-        frames2reg_template_conv, axis=range(1, frames2reg_fft.ndim), return_indices=True
+        frames2reg_template_conv,
+        axis=range(1, frames2reg_fft.ndim),
+        return_indices=True
     )
 
-    # First index is just the frame, which will be in sequential order. We don't need this so we drop it.
+    # First index is just the frame, which will be in sequential order. We
+    # don't need this so we drop it.
     frames2reg_template_conv_max_indices = frames2reg_template_conv_max_indices[1:]
 
     # Convert indices into an array for easy manipulation.
-    frames2reg_template_conv_max_indices = numpy.array(frames2reg_template_conv_max_indices).T.copy()
+    frames2reg_template_conv_max_indices = numpy.array(
+        frames2reg_template_conv_max_indices
+    ).T.copy()
 
-    # Shift will have to be in the opposite direction to bring everything to the center.
-    numpy.negative(frames2reg_template_conv_max_indices, out=frames2reg_template_conv_max_indices)
+    # Shift will have to be in the opposite direction to bring everything to
+    # the center.
+    numpy.negative(
+        frames2reg_template_conv_max_indices,
+        out=frames2reg_template_conv_max_indices
+    )
 
     return(frames2reg_template_conv_max_indices)
