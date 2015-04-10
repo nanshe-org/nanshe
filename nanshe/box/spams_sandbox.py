@@ -95,7 +95,12 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     return(result)
 
 
-def run_multiprocessing_array_spams_trainDL(result_array_type, result_array, X_array_type, X_array, *args, **kwargs):
+def run_multiprocessing_array_spams_trainDL(result_array_type,
+                                            result_array,
+                                            X_array_type,
+                                            X_array,
+                                            *args,
+                                            **kwargs):
     """
         Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
 
