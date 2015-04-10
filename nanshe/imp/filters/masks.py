@@ -37,12 +37,18 @@ def binary_dilation(input_array, footprint, out=None):
         Performs simple binary dilation on a bool array of arbitrary dimension.
 
         Args:
-            input_array(numpy.ndarray):         the bool array to perform dilation on.
-            footprint(numpy.ndarray):           the footprint to use for the kernel.
-            out(numpy.ndarray):                 a place to store the result if provided. (optional)
+            input_array(numpy.ndarray):         the bool array to perform
+                                                dilation on.
+
+            footprint(numpy.ndarray):           the footprint to use for the
+                                                kernel.
+
+            out(numpy.ndarray):                 a place to store the result if
+                                                provided. (optional)
 
         Returns:
-            out(numpy.ndarray):                 Same as out if out was provided.
+            out(numpy.ndarray):                 Same as out if out was
+                                                provided.
 
         >>> a = numpy.array([[ True,  True, False, False, False, False, False],
         ...                  [False, False, False, False, False, False, False],
@@ -117,12 +123,18 @@ def binary_erosion(input_array, footprint, out=None):
         Performs simple binary erosion on a bool array of arbitrary dimension.
 
         Args:
-            input_array(numpy.ndarray):         the bool array to perform erosion on.
-            footprint(numpy.ndarray):           the footprint to use for the kernel.
-            out(numpy.ndarray):                 a place to store the result if provided. (optional)
+            input_array(numpy.ndarray):         the bool array to perform
+                                                erosion on.
+
+            footprint(numpy.ndarray):           the footprint to use for the
+                                                kernel.
+
+            out(numpy.ndarray):                 a place to store the result if
+                                                provided. (optional)
 
         Returns:
-            out(numpy.ndarray):                 Same as out if out was provided.
+            out(numpy.ndarray):                 Same as out if out was
+                                                provided.
 
         >>> a = numpy.array([[ True,  True,  True, False, False, False,  True],
         ...                  [ True,  True,  True, False, False,  True,  True],
