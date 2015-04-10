@@ -62,7 +62,8 @@ def get_matching_paths(a_filehandle, a_path_pattern):
 
         to_split = a_path_pattern.find("/")
         if to_split != -1:
-            current_path, next_path = a_path_pattern[:to_split], a_path_pattern[1 + to_split:]
+            current_path = a_path_pattern[:to_split]
+            next_path = a_path_pattern[1 + to_split:]
         else:
             current_path, next_path = a_path_pattern, ""
 
@@ -72,10 +73,14 @@ def get_matching_paths(a_filehandle, a_path_pattern):
             if current_pattern_group_regex.match("/" + each_group + "/") is not None:
                 next_group = current_group[each_group]
 
-                next_pattern_group_matches = get_matching_paths(next_group, next_path)
+                next_pattern_group_matches = get_matching_paths(
+                    next_group, next_path
+                )
 
                 for each_next_pattern_group_match in next_pattern_group_matches:
-                    current_pattern_group_matches.append("/" + each_group + each_next_pattern_group_match)
+                    current_pattern_group_matches.append(
+                        "/" + each_group + each_next_pattern_group_match
+                    )
     else:
         current_pattern_group_matches = [""]
 
@@ -115,7 +120,8 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
 
             to_split = a_path_pattern.find("/")
             if to_split != -1:
-                current_path, next_path = a_path_pattern[:to_split], a_path_pattern[1 + to_split:]
+                current_path = a_path_pattern[:to_split]
+                next_path = a_path_pattern[1 + to_split:]
             else:
                 current_path, next_path = a_path_pattern, ""
 
@@ -125,14 +131,20 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
                 if current_pattern_group_regex.match("/" + each_group + "/") is not None:
                     next_group = current_group[each_group]
 
-                    next_pattern_group_matches = get_matching_paths_groups_recursive(next_group, next_path)
+                    next_pattern_group_matches = get_matching_paths_groups_recursive(
+                        next_group, next_path
+                    )
 
                     current_pattern_group_matches[0][each_group] = None
 
                     while (len(current_pattern_group_matches) - 1) < len(next_pattern_group_matches):
-                        current_pattern_group_matches.append(collections.OrderedDict())
+                        current_pattern_group_matches.append(
+                            collections.OrderedDict()
+                        )
 
-                    for i, each_next_pattern_group_matches in enumerate(next_pattern_group_matches, start=1):
+                    for i, each_next_pattern_group_matches in enumerate(
+                            next_pattern_group_matches, start=1
+                    ):
                         for each_next_pattern_group_match in each_next_pattern_group_matches:
                             current_pattern_group_matches[i][each_next_pattern_group_match] = None
         else:
@@ -171,7 +183,9 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
 
     paths_found = collections.OrderedDict()
 
-    for each_path_components in itertools.product(*get_matching_paths_groups(a_filehandle, a_path_pattern)):
+    for each_path_components in itertools.product(
+            *get_matching_paths_groups(a_filehandle, a_path_pattern)
+    ):
         each_path = "/" + "/".join([_ for _ in each_path_components])
 
         paths_found[each_path] = None
@@ -201,7 +215,9 @@ def get_matching_grouped_paths_found(a_filehandle, a_path_pattern):
 
     paths_found = collections.OrderedDict()
 
-    for each_path_components in itertools.product(*get_matching_paths_groups(a_filehandle, a_path_pattern)):
+    for each_path_components in itertools.product(
+            *get_matching_paths_groups(a_filehandle, a_path_pattern)
+    ):
         each_path = "/" + "/".join([_ for _ in each_path_components])
 
         paths_found[each_path] = (each_path in a_filehandle)
