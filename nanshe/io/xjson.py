@@ -96,7 +96,8 @@ def read_parameters(config_filename, maintain_order=False):
                 new_each_value = ascii_encode_dict(new_each_value)
             elif isinstance(new_each_value, list):
                 new_each_value = ascii_encode_list(new_each_value)
-            elif isinstance(new_each_value, unicode) or isinstance(new_each_value, str):
+            elif isinstance(new_each_value, unicode) or \
+                    isinstance(new_each_value, str):
                 new_each_value = ascii_encode_str(new_each_value)
 
             if new_each_value is not None:
@@ -130,7 +131,8 @@ def read_parameters(config_filename, maintain_order=False):
                     new_each_value = ascii_encode_dict(new_each_value)
                 elif isinstance(new_each_value, list):
                     new_each_value = ascii_encode_list(new_each_value)
-                elif isinstance(new_each_value, unicode) or isinstance(new_each_value, str):
+                elif isinstance(new_each_value, unicode) or \
+                        isinstance(new_each_value, str):
                     new_each_value = ascii_encode_str(new_each_value)
 
                 if new_each_value is not None:
@@ -141,14 +143,20 @@ def read_parameters(config_filename, maintain_order=False):
         return(transformed_dict)
 
 
-    # gets parameters out of the file and dumps them in the dictionary. just that simple.
+    # gets parameters out of the file and dumps them in the dictionary. just
+    # that simple.
     parameters = None
     with open(config_filename, 'r') as fp:
-        logger.debug("Opened configure file named \"" + config_filename + "\".")
+        logger.debug(
+            "Opened configure file named \"" + config_filename + "\"."
+        )
 
         # will just give a dictionary. just that simple
         parameters = json.load(fp, object_pairs_hook=ascii_encode_dict)
 
-        logger.debug("Loaded parameters from file, which are \"" + str(parameters) + "\".")
+        logger.debug(
+            "Loaded parameters from file, which are \"" +
+            str(parameters) + "\"."
+        )
 
     return(parameters)
