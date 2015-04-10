@@ -42,13 +42,16 @@ def main(*argv):
             int:            exit code (0 if success)
     """
 
-    # Only necessary if running main (normally if calling command line). No point in importing otherwise.
+    # Only necessary if running main (normally if calling command line).
+    # No point in importing otherwise.
     import argparse
 
     argv = list(argv)
 
     # Creates command line parser
-    parser = argparse.ArgumentParser(description="Parses input from the command line for a batch job.")
+    parser = argparse.ArgumentParser(
+        description="Parses input from the command line for a batch job."
+    )
 
     parser.add_argument("format",
                         choices=["tiff"],
@@ -74,13 +77,18 @@ def main(*argv):
                         help="HDF5 file to export (this should include a path to where the internal dataset should be stored)."
     )
 
-    # Results of parsing arguments (ignore the first one as it is the command line call).
+    # Results of parsing arguments
+    # (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
 
     # Go ahead and stuff in parameters with the other parsed_args
     parsed_args.parameters = xjson.read_parameters(parsed_args.config_filename)
 
     if parsed_args.format == "tiff":
-        xtiff.convert_tiffs(parsed_args.input_files, parsed_args.output_file[0], **parsed_args.parameters)
+        xtiff.convert_tiffs(
+            parsed_args.input_files,
+            parsed_args.output_file[0],
+            **parsed_args.parameters
+        )
 
     return(0)
