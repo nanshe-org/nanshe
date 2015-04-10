@@ -53,13 +53,15 @@ def get_multipage_tiff_shape_dtype(new_tiff_filename):
             (collections.OrderedDict):          an ordered dictionary with "shape" first and "dtype" (type) second.
     """
 
-    shape_dtype_result = collections.OrderedDict([("shape", None), ("dtype", None)])
+    shape_dtype_result = collections.OrderedDict(
+        [("shape", None), ("dtype", None)])
 
     new_tiff_file_info = vigra.impex.ImageInfo(new_tiff_filename)
     new_tiff_file_number_pages = vigra.impex.numberImages(new_tiff_filename)
 
     new_tiff_file_shape = new_tiff_file_info.getShape()
-    shape_dtype_result["shape"] = new_tiff_file_shape[:-1] + (new_tiff_file_number_pages,) + new_tiff_file_shape[-1:]
+    shape_dtype_result["shape"] = new_tiff_file_shape[
+        :-1] + (new_tiff_file_number_pages,) + new_tiff_file_shape[-1:]
 
     shape_dtype_result["dtype"] = new_tiff_file_info.getDtype()
 
@@ -67,7 +69,9 @@ def get_multipage_tiff_shape_dtype(new_tiff_filename):
 
 
 @prof.log_call(trace_logger)
-def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order="zyxtc", pages_to_channel=1):
+def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
+                                               axis_order="zyxtc",
+                                               pages_to_channel=1):
     """
         Gets the info about the shape and dtype after some transformations have been performed .
 
@@ -84,7 +88,9 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order="zy
     assert (len(axis_order) == 5)
     assert all([_ in axis_order for _ in "zyxtc"])
 
-    new_tiff_file_shape, new_tiff_file_dtype = get_multipage_tiff_shape_dtype(new_tiff_filename).values()
+    new_tiff_file_shape, new_tiff_file_dtype = get_multipage_tiff_shape_dtype(
+        new_tiff_filename
+    ).values()
 
     # Correct if the tiff is missing dims by adding singletons
     if (len(new_tiff_file_shape) == 5):
@@ -92,11 +98,16 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order="zy
     elif (len(new_tiff_file_shape) == 4):
         new_tiff_file_shape = (1,) + new_tiff_file_shape
     else:
-        raise Exception("Invalid dimensionality for TIFF. Found shape to be \"" + repr(new_tiff_file_shape) + "\".")
+        raise Exception(
+            "Invalid dimensionality for TIFF. Found shape to be \"" +
+            repr(new_tiff_file_shape) + "\"."
+        )
 
     # Correct if some pages are for different channels
     if (pages_to_channel != 1):
-        new_tiff_file_shape = new_tiff_file_shape[:-2] + (new_tiff_file_shape[-2] / pages_to_channel, pages_to_channel * new_tiff_file_shape[-1],)
+        new_tiff_file_shape = new_tiff_file_shape[:-2] + \
+                              (new_tiff_file_shape[-2] / pages_to_channel,
+                               pages_to_channel * new_tiff_file_shape[-1],)
 
     # Correct the axis order
     if (axis_order != "zyxtc"):
@@ -104,11 +115,14 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename, axis_order="zy
 
         new_tiff_file_shape_transposed = []
         for each_axis_label in axis_order:
-            new_tiff_file_shape_transposed.append(new_tiff_file_shape[vigra_ordering[each_axis_label]])
+            new_tiff_file_shape_transposed.append(
+                new_tiff_file_shape[vigra_ordering[each_axis_label]]
+            )
 
         new_tiff_file_shape = tuple(new_tiff_file_shape_transposed)
 
-    shape_dtype_result = collections.OrderedDict([("shape", None), ("dtype", None)])
+    shape_dtype_result = collections.OrderedDict(
+        [("shape", None), ("dtype", None)])
 
     shape_dtype_result["shape"] = new_tiff_file_shape
     shape_dtype_result["dtype"] = new_tiff_file_dtype
@@ -162,12 +176,15 @@ def get_standard_tiff_array(new_tiff_filename, axis_order="tzyxc", pages_to_chan
 
     if shape[-2] > 1:
         # Our algorithm expect double precision
-        new_tiff_array = vigra.impex.readVolume(new_tiff_filename, dtype=dtype_str)
+        new_tiff_array = vigra.impex.readVolume(
+            new_tiff_filename, dtype=dtype_str
+        )
         # Convert to normal array
         new_tiff_array = new_tiff_array.view(numpy.ndarray)
     else:
         # Our algorithm expect double precision
-        new_tiff_array = vigra.impex.readImage(new_tiff_filename, dtype=dtype_str)
+        new_tiff_array = vigra.impex.readImage(
+            new_tiff_filename, dtype=dtype_str)
         # Convert to normal array
         new_tiff_array = new_tiff_array.view(numpy.ndarray)
         # Need to add singleton time dimension before channel
@@ -180,12 +197,20 @@ def get_standard_tiff_array(new_tiff_filename, axis_order="tzyxc", pages_to_chan
         # Has no z. So, add this.
         new_tiff_array = xnumpy.add_singleton_axis_beginning(new_tiff_array)
     else:
-        raise Exception("Invalid dimensionality for TIFF. Found shape to be \"" + repr(new_tiff_array.shape) + "\".")
+        raise Exception(
+            "Invalid dimensionality for TIFF. Found shape to be \"" +
+            repr(new_tiff_array.shape) + "\"."
+        )
 
     # Some people use pages to hold time and channel data. So, we need to restructure it.
-    # However, if they are properly structuring their TIFF file, then they shouldn't incur a penalty.
+    # However, if they are properly structuring their TIFF file, then they
+    # shouldn't incur a penalty.
     if pages_to_channel > 1:
-        new_tiff_array = new_tiff_array.reshape(new_tiff_array.shape[:-2] + (new_tiff_array.shape[-2] / pages_to_channel, pages_to_channel * new_tiff_array.shape[-1],))
+        new_tiff_array = new_tiff_array.reshape(
+            new_tiff_array.shape[:-2] +
+            (new_tiff_array.shape[-2] / pages_to_channel,
+             pages_to_channel * new_tiff_array.shape[-1],)
+        )
 
     new_tiff_array = xnumpy.tagging_reorder_array(
         new_tiff_array,
@@ -198,7 +223,12 @@ def get_standard_tiff_array(new_tiff_filename, axis_order="tzyxc", pages_to_chan
 
 
 @prof.log_call(trace_logger)
-def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis=0, channel=0, z_index=0, pages_to_channel=1):
+def convert_tiffs(new_tiff_filenames,
+                  new_hdf5_pathname,
+                  axis=0,
+                  channel=0,
+                  z_index=0,
+                  pages_to_channel=1):
     """
         Convert a stack of tiffs to an HDF5 file.
 
@@ -231,26 +261,41 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis=0, channel=0, z_in
     # Expand any regex in path names
     new_tiff_filenames = xglob.expand_pathname_list(*new_tiff_filenames)
 
-    # Determine the shape and dtype to use for the dataset (so that everything will fit).
+    # Determine the shape and dtype to use for the dataset (so that everything
+    # will fit).
     new_hdf5_dataset_shape = numpy.zeros((3,), dtype=int)
     new_hdf5_dataset_dtype = bool
     for each_new_tiff_filename in new_tiff_filenames:
-        each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(each_new_tiff_filename,
-                                                                                                        axis_order="cztyx",
-                                                                                                        pages_to_channel=pages_to_channel).values()
+        each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(
+            each_new_tiff_filename,
+            axis_order="cztyx",
+            pages_to_channel=pages_to_channel
+        ).values()
         each_new_tiff_file_shape = each_new_tiff_file_shape[2:]
 
-        # Find the increase on the merge axis. Find the largest shape for the rest.
+        # Find the increase on the merge axis. Find the largest shape for the
+        # rest.
         each_new_tiff_file_shape = numpy.array(each_new_tiff_file_shape)
         new_hdf5_dataset_shape[axis] += each_new_tiff_file_shape[axis]
-        new_hdf5_dataset_shape[static_axes] = numpy.array([new_hdf5_dataset_shape[static_axes], each_new_tiff_file_shape[static_axes]]).max(axis=0)
+        new_hdf5_dataset_shape[static_axes] = numpy.array(
+            [
+                new_hdf5_dataset_shape[static_axes],
+                each_new_tiff_file_shape[static_axes]
+            ]
+        ).max(axis=0)
 
-        # Finds the best type that everything can be cast to without loss of precision.
+        # Finds the best type that everything can be cast to without loss of
+        # precision.
         if not numpy.can_cast(each_new_tiff_file_dtype, new_hdf5_dataset_dtype):
             if numpy.can_cast(new_hdf5_dataset_dtype, each_new_tiff_file_dtype):
                 new_hdf5_dataset_dtype = each_new_tiff_file_dtype
             else:
-                raise Exception("Cannot find safe conversion between new_hdf5_dataset_dtype = " + repr(new_hdf5_dataset_dtype) + " and each_new_tiff_file_dtype = " + repr(each_new_tiff_file_dtype) + ".")
+                raise Exception(
+                    "Cannot find safe conversion between new_hdf5_dataset_dtype = " +
+                    repr(new_hdf5_dataset_dtype) +
+                    " and each_new_tiff_file_dtype = " +
+                    repr(each_new_tiff_file_dtype) + "."
+                )
 
     # Convert to standard forms
     new_hdf5_dataset_shape = tuple(new_hdf5_dataset_shape)
@@ -268,17 +313,21 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis=0, channel=0, z_in
             new_hdf5_file.create_group(new_hdf5_groupname)
 
         new_hdf5_group = new_hdf5_file[new_hdf5_groupname]
-        new_hdf5_dataset = new_hdf5_group.create_dataset(new_hdf5_dataset_name,
-                                                         new_hdf5_dataset_shape,
-                                                         new_hdf5_dataset_dtype,
-                                                         chunks=True)
+        new_hdf5_dataset = new_hdf5_group.create_dataset(
+            new_hdf5_dataset_name,
+            new_hdf5_dataset_shape,
+            new_hdf5_dataset_dtype,
+            chunks=True
+        )
 
         new_hdf5_dataset_axis_pos = 0
         for each_new_tiff_filename in new_tiff_filenames:
             # Read the data in the format specified.
-            each_new_tiff_array = get_standard_tiff_array(each_new_tiff_filename,
-                                                          axis_order="cztyx",
-                                                          pages_to_channel=pages_to_channel)
+            each_new_tiff_array = get_standard_tiff_array(
+                each_new_tiff_filename,
+                axis_order="cztyx",
+                pages_to_channel=pages_to_channel
+            )
 
             # Take channel and z selection
             # TODO: Could we drop the channel constraint by saving different channels to different arrays? Need to think about it.
@@ -286,6 +335,7 @@ def convert_tiffs(new_tiff_filenames, new_hdf5_pathname, axis=0, channel=0, z_in
             each_new_tiff_array = each_new_tiff_array[channel, z_index]
 
             # Store into the current slice and go to the next one.
-            new_hdf5_dataset_axis_pos_next = new_hdf5_dataset_axis_pos + len(each_new_tiff_array)
-            new_hdf5_dataset[new_hdf5_dataset_axis_pos : new_hdf5_dataset_axis_pos_next] = each_new_tiff_array
+            new_hdf5_dataset_axis_pos_next = new_hdf5_dataset_axis_pos + \
+                                             len(each_new_tiff_array)
+            new_hdf5_dataset[new_hdf5_dataset_axis_pos:new_hdf5_dataset_axis_pos_next] = each_new_tiff_array
             new_hdf5_dataset_axis_pos = new_hdf5_dataset_axis_pos_next
