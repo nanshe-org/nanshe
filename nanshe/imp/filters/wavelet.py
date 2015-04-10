@@ -281,8 +281,11 @@ def transform(im0, scale=5, include_intermediates=False, include_lower_scales=Fa
     """
 
     if not issubclass(im0.dtype.type, numpy.float32):
-        warnings.warn("Provided im0 with type \"" + repr(im0.dtype.type) + "\". " +
-                      "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+        warnings.warn(
+            "Provided im0 with type \"" + repr(im0.dtype.type) + "\". " +
+            "Will be cast to type \"" + repr(numpy.float32) + "\"",
+            RuntimeWarning
+        )
 
         im0 = im0.astype(numpy.float32)
 
@@ -292,10 +295,13 @@ def transform(im0, scale=5, include_intermediates=False, include_lower_scales=Fa
         scale = numpy.array(list(scale))
 
         assert (scale.ndim == 1), \
-            "Scale should only have 1 dimension. Instead, got scale.ndim = \"" + str(scale.ndim) + "\"."
+            "Scale should only have 1 dimension. " + \
+            "Instead, got scale.ndim = \"" + str(scale.ndim) + "\"."
 
         assert (len(scale) == im0.ndim), \
-            "Scale should have a value of each dimension of im0. Instead, got len(scale) = \"" + str(len(scale)) + "\" and im0.ndim = \"" + str(im0.ndim) + "\"."
+            "Scale should have a value of each dimension of im0. " + \
+            "Instead, got len(scale) = \"" + str(len(scale)) + "\" and " + \
+            "im0.ndim = \"" + str(im0.ndim) + "\"."
 
     except TypeError:
         scale = numpy.repeat([scale], im0.ndim)
@@ -307,7 +313,9 @@ def transform(im0, scale=5, include_intermediates=False, include_lower_scales=Fa
         assert (out is None)
 
         W = numpy.zeros((scale.max(),) + im0.shape, dtype=numpy.float32)
-        imOut = numpy.zeros((scale.max() + 1,) + im0.shape, dtype=numpy.float32)
+        imOut = numpy.zeros(
+            (scale.max() + 1,) + im0.shape, dtype=numpy.float32
+        )
         imOut[0] = im0
 
         imCur = imOut[0]
@@ -315,14 +323,19 @@ def transform(im0, scale=5, include_intermediates=False, include_lower_scales=Fa
     else:
         if include_lower_scales:
             if out is None:
-                W = numpy.zeros((scale.max(),) + im0.shape, dtype=numpy.float32)
+                W = numpy.zeros(
+                    (scale.max(),) + im0.shape, dtype=numpy.float32
+                )
                 out = W
             else:
                 assert (out.shape == ((scale.max(),) + im0.shape))
 
                 if not issubclass(out.dtype.type, numpy.float32):
-                    warnings.warn("Provided out with type \"" + repr(out.dtype.type) + "\". " +
-                                  "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+                    warnings.warn(
+                        "Provided out with type \"" + repr(out.dtype.type) + "\". " +
+                        "Will be cast to type \"" + repr(numpy.float32) + "\"",
+                        RuntimeWarning
+                    )
 
                 W = out
 
@@ -332,8 +345,11 @@ def transform(im0, scale=5, include_intermediates=False, include_lower_scales=Fa
                 assert (out.shape == im0.shape)
 
                 if not issubclass(out.dtype.type, numpy.float32):
-                    warnings.warn("Provided out with type \"" + repr(out.dtype.type) + "\". " +
-                                  "Will be cast to type \"" + repr(numpy.float32) + "\"", RuntimeWarning)
+                    warnings.warn(
+                        "Provided out with type \"" + repr(out.dtype.type) + "\". " +
+                        "Will be cast to type \"" + repr(numpy.float32) + "\"",
+                        RuntimeWarning
+                    )
 
                     out = im0.astype(numpy.float32)
 
@@ -367,6 +383,7 @@ def transform(im0, scale=5, include_intermediates=False, include_lower_scales=Fa
     elif include_lower_scales:
         return(W)
     else:
-        # Same as returning imPrev - imCur. Except, it avoids generating another array to hold the result.
+        # Same as returning imPrev - imCur.
+        # Except, it avoids generating another array to hold the result.
         out -= imCur
         return(out)
