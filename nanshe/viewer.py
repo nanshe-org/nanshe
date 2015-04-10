@@ -150,18 +150,24 @@ class HDF5DataSource(QObject):
 
         self.full_path = self.file_path + self.dataset_path
 
-        # Check to see if the dataset exists in the file. Otherwise throw an Exception for it.
+        # Check to see if the dataset exists in the file.
+        # Otherwise throw an exception for it.
         if self.dataset_path not in self.file_handle:
-            raise(HDF5DatasetNotFoundException("Could not find the path \"" + self.dataset_path + "\" in filename " + "\"" + self.file_path + "\"."))
+            raise(HDF5DatasetNotFoundException(
+                "Could not find the path \"" + self.dataset_path +
+                "\" in filename " + "\"" + self.file_path + "\".")
+            )
 
-        # Fill in the shape and or dtype information if it doesn't already exist.
-        if ((self.dataset_shape is None) and (self.dataset_dtype is None)):
+        # Fill in the shape and or dtype information
+        # if it doesn't already exist.
+        if (self.dataset_shape is None) and (self.dataset_dtype is None):
             dataset = self.file_handle[self.dataset_path]
 
             if self.record_name:
                 self.dataset_shape = dataset.shape + dataset.dtype[self.record_name].shape
 
-                # If the member has a shape than subdtype must be used if not type can be used.
+                # If the member has a shape
+                # then subdtype must be used if not type can be used.
                 if dataset.dtype[self.record_name].subdtype is None:
                     self.dataset_dtype = dataset.dtype[self.record_name].type
                 else:
@@ -179,7 +185,8 @@ class HDF5DataSource(QObject):
             dataset = self.file_handle[self.dataset_path]
             if self.record_name:
 
-                # If the member has a shape than subdtype must be used if not type can be used.
+                # If the member has a shape then
+                # subdtype must be used if not type can be used.
                 if dataset.dtype[self.record_name].subdtype is None:
                     self.dataset_dtype = dataset.dtype[self.record_name].type
                 else:
@@ -187,7 +194,8 @@ class HDF5DataSource(QObject):
             else:
                 self.dataset_dtype = dataset.dtype.type
 
-        # Using the shape information, determine how to reshape the axes to present the data as we wish.
+        # Using the shape information,
+        # determine how to reshape the axes to present the data as we wish.
         if len(self.dataset_shape) == 1:
             self.axis_order = [-1, 0, -1, -1, -1]
         if len(self.dataset_shape) == 2:
@@ -206,10 +214,16 @@ class HDF5DataSource(QObject):
             # self.axis_order = [0, 1, 2, 3, 4]
             self.axis_order = [0, 3, 2, 1, 4]
         else:
-            raise Exception("Unacceptable shape provided for display. Found shape to be \"" + str(self.dataset_shape) + "\".")
+            raise Exception(
+                "Unacceptable shape provided for display. " +
+                "Found shape to be \"" + str(self.dataset_shape) + "\"."
+            )
 
-        # Construct the shape to be singleton if the axis order is irrelevant or the appropriate shape for the reordered axis.
-        self.dataset_shape = tuple([1 if _ == -1 else self.dataset_shape[_] for _ in self.axis_order])
+        # Construct the shape to be singleton if the axis order is irrelevant
+        # or the appropriate shape for the reordered axis.
+        self.dataset_shape = tuple(
+            1 if _ == -1 else self.dataset_shape[_] for _ in self.axis_order
+        )
 
     def numberOfChannels(self):
         return(self.dataset_shape[-1])
@@ -236,11 +250,19 @@ class HDF5DataSource(QObject):
         if not is_pure_slicing(slicing):
             raise Exception('HDF5DataSource: slicing is not pure')
 
-        assert (len(slicing) == len(self.dataset_shape)), "Expect a slicing for a txyzc array."
+        assert (len(slicing) == len(self.dataset_shape)),\
+            "Expect a slicing for a txyzc array."
 
         slicing = iters.reformat_slices(slicing, self.dataset_shape)
 
-        return(HDF5DataRequest(self.file_handle, self.dataset_path, self.axis_order, self.dataset_dtype, slicing, self.record_name))
+        return(
+            HDF5DataRequest(self.file_handle,
+                            self.dataset_path,
+                            self.axis_order,
+                            self.dataset_dtype,
+                            slicing,
+                            self.record_name)
+        )
 
     def setDirty(self, slicing):
         if not is_pure_slicing(slicing):
@@ -325,7 +347,8 @@ class HDF5DataRequest(object):
 
         self.slicing = tuple(self.slicing)
 
-        # As the dictionary sorts by keys, we are ensured to have the slices in the order of the axes.
+        # As the dictionary sorts by keys,
+        # we are ensured to have the slices in the order of the axes.
         self.actual_slicing = actual_slicing_dict.values()
 
         # Convert to tuple as it is expected.
@@ -343,8 +366,10 @@ class HDF5DataRequest(object):
                 a_result = None
                 if self.record_name:
                     # Copy out the bare minimum data.
-                    # h5py does not allowing further index on the type within the compound type.
-                    a_result = dataset[self.actual_slicing[:len(dataset.shape)] + (self.record_name,)]
+                    # h5py does not allowing further index on the type
+                    # within the compound type.
+                    a_result = dataset[
+                        self.actual_slicing[:len(dataset.shape)] + (self.record_name,)]
                     # Apply the remaining slicing to the data read.
                     a_result = a_result[len(dataset.shape) * (slice(None),) + self.actual_slicing[len(dataset.shape):]]
                 else:
@@ -456,12 +481,20 @@ class HDF5Viewer(Viewer):
         return layer
 
     def addRandomColorsHDF5Layer(self, a, name=None, direct=False):
-        layer = self.addColorTableLayer(a, name, colortable=None, direct=direct)
+        layer = self.addColorTableLayer(
+            a, name, colortable=None, direct=direct
+        )
         layer.colortableIsRandom = True
         layer.zeroIsTransparent = True
         return layer
 
-    def addColorTableHDF5Source(self, source, shape, name=None, colortable=None, direct=False, clickFunctor=None):
+    def addColorTableHDF5Source(self,
+                                source,
+                                shape,
+                                name=None,
+                                colortable=None,
+                                direct=False,
+                                clickFunctor=None):
         self.dataShape = shape
 
         if colortable is None:
@@ -471,7 +504,9 @@ class HDF5Viewer(Viewer):
         if clickFunctor is None:
             layer = ColortableLayer(source, colortable, direct=direct)
         else:
-            layer = ClickableColortableLayer(self.editor, clickFunctor, source, colortable, direct=direct)
+            layer = ClickableColortableLayer(
+                self.editor, clickFunctor, source, colortable, direct=direct
+            )
         if name:
             layer.name = name
 
@@ -479,7 +514,12 @@ class HDF5Viewer(Viewer):
         self.layerstack.append(layer)
         return layer
 
-    def addColorTableHDF5Layer(self, a, name=None, colortable=None, direct=False, clickFunctor=None):
+    def addColorTableHDF5Layer(self,
+                               a,
+                               name=None,
+                               colortable=None,
+                               direct=False,
+                               clickFunctor=None):
         source, self.dataShape = createHDF5DataSource(a,True)
 
         if colortable is None:
@@ -489,7 +529,9 @@ class HDF5Viewer(Viewer):
         if clickFunctor is None:
             layer = ColortableLayer(source, colortable, direct=direct)
         else:
-            layer = ClickableColortableLayer(self.editor, clickFunctor, source, colortable, direct=direct)
+            layer = ClickableColortableLayer(
+                self.editor, clickFunctor, source, colortable, direct=direct
+            )
         if name:
             layer.name = name
 
@@ -546,11 +588,14 @@ class HDF5DataFusedSource(QObject):
         self.data_sources_defined = list(self.data_sources_defined)
 
         if len(self.data_sources_defined) == 0:
-            if (("dtype" in kwargs) and ("shape" in kwargs)):
+            if ("dtype" in kwargs) and ("shape" in kwargs):
                 self.data_dtype = kwargs["dtype"]
                 self.data_shape = kwargs["shape"]
             else:
-                raise HDF5UndefinedShapeDtypeException("Have no defined data sources to fuse and no shape or dtype to fallback on.")
+                raise HDF5UndefinedShapeDtypeException(
+                    "Have no defined data sources to fuse and " +
+                    "no shape or dtype to fallback on."
+                )
         else:
             self.data_dtype = self.data_sources_defined[0].dtype()
             self.data_shape = -numpy.ones((5,), dtype=int)
@@ -559,7 +604,8 @@ class HDF5DataFusedSource(QObject):
                     each_shape = each.shape()
                     each_shape = numpy.array(each_shape)
 
-                    self.data_shape = numpy.array([self.data_shape, each_shape.astype(int)]).max(axis=0)
+                    self.data_shape = numpy.array(
+                        [self.data_shape, each_shape.astype(int)]).max(axis=0)
                 except AttributeError:
                     pass
 
@@ -568,7 +614,12 @@ class HDF5DataFusedSource(QObject):
                     if numpy.can_cast(self.data_dtype, each_dtype):
                         self.data_dtype = each_dtype
                     else:
-                        raise Exception("Cannot find safe conversion between self.data_dtype = " + repr(self.data_dtype) + " and each_dtype = " + repr(each_dtype) + ".")
+                        raise Exception(
+                            "Cannot find safe conversion " +
+                            "between self.data_dtype = " +
+                            repr(self.data_dtype) + " and each_dtype = " +
+                            repr(each_dtype) + "."
+                        )
 
         self.data_shape[self.fuse_axis] = len(self.data_sources)
         self.data_shape = tuple(self.data_shape)
@@ -606,13 +657,19 @@ class HDF5DataFusedSource(QObject):
             each_slicing_formatted = None
             if i == self.fuse_axis:
                 each_len = len(self.data_sources)
-                fuse_slicing = each_slicing_formatted = iters.reformat_slice(each_slicing, each_len)
+                fuse_slicing = each_slicing_formatted = iters.reformat_slice(
+                    each_slicing, each_len
+                )
                 non_fuse_slicing.append(slice(0, 1, 1))
             else:
-                each_slicing_formatted = iters.reformat_slice(each_slicing, each_len)
+                each_slicing_formatted = iters.reformat_slice(
+                    each_slicing, each_len
+                )
                 non_fuse_slicing.append(each_slicing_formatted)
 
-            each_slicing_len = iters.len_slice(each_slicing_formatted, each_len)
+            each_slicing_len = iters.len_slice(
+                each_slicing_formatted, each_len
+            )
 
             slicing_formatted.append(each_slicing_formatted)
             slicing_shape.append(each_slicing_len)
@@ -631,7 +688,12 @@ class HDF5DataFusedSource(QObject):
 
             selected_data_requests.append(each_data_request)
 
-        request = HDF5DataFusedRequest(self.fuse_axis, slicing_shape, self.data_dtype, *selected_data_requests)
+        request = HDF5DataFusedRequest(
+            self.fuse_axis,
+            slicing_shape,
+            self.data_dtype,
+            *selected_data_requests
+        )
 
         return(request)
 
@@ -670,14 +732,20 @@ class HDF5DataFusedRequest(object):
     def wait(self):
         if self._result is None:
             if True:
-                self._result = numpy.zeros(self.data_shape, dtype=self.data_dtype)
+                self._result = numpy.zeros(
+                    self.data_shape, dtype=self.data_dtype
+                )
 
                 for i, each_data_request in enumerate(self.data_requests):
                     if each_data_request is not None:
                         each_result = each_data_request.wait()
 
-                        result_view = xnumpy.index_axis_at_pos(self._result, self.fuse_axis, i)
-                        each_result_view = xnumpy.index_axis_at_pos(each_result, self.fuse_axis, i)
+                        result_view = xnumpy.index_axis_at_pos(
+                            self._result, self.fuse_axis, i
+                        )
+                        each_result_view = xnumpy.index_axis_at_pos(
+                            each_result, self.fuse_axis, i
+                        )
                         result_view[:] = each_result_view
 
                 logger.debug("Found the result.")
@@ -767,11 +835,19 @@ class EnumeratedProjectionConstantSource(QObject):
         # Real hacky solution for caching.
         slicing = (slice(None), ) * len(self._shape)
 
-        self._constant_source_cached = self.constant_source.request(slicing).wait()
-        self._constant_source_cached = xnumpy.enumerate_masks_max(self._constant_source_cached, axis=self.axis)
+        self._constant_source_cached = self.constant_source.request(
+            slicing
+        ).wait()
+        self._constant_source_cached = xnumpy.enumerate_masks_max(
+            self._constant_source_cached, axis=self.axis
+        )
 
-        self._constant_source_cached_array_source = ArraySource(self._constant_source_cached)
-        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
+        self._constant_source_cached_array_source = ArraySource(
+            self._constant_source_cached
+        )
+        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(
+            slicing
+        )
 
     @prof.log_call(trace_logger)
     def numberOfChannels(self):
@@ -927,7 +1003,8 @@ class ContourProjectionConstantSource(QObject):
 
     """
 
-    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and
+    # thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -951,7 +1028,9 @@ class ContourProjectionConstantSource(QObject):
         # Real hacky solution for caching.
         slicing = (slice(None), ) * len(self._shape)
 
-        self._constant_source_cached = self.constant_source.request(slicing).wait()
+        self._constant_source_cached = self.constant_source.request(
+            slicing
+        ).wait()
         for i in xrange(self._constant_source_cached.shape[self.axis]):
             _constant_source_cached_i = xnumpy.index_axis_at_pos(
                 self._constant_source_cached, self.axis, i
@@ -963,7 +1042,9 @@ class ContourProjectionConstantSource(QObject):
         self._constant_source_cached_array_source = ArraySource(
             self._constant_source_cached
         )
-        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
+        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(
+            slicing
+        )
 
     @prof.log_call(trace_logger)
     def numberOfChannels(self):
@@ -986,7 +1067,9 @@ class ContourProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def request(self, slicing):
         if not is_pure_slicing(slicing):
-            raise Exception('ContourProjectionConstantSource: slicing is not pure')
+            raise Exception(
+                'ContourProjectionConstantSource: slicing is not pure'
+            )
 
         return(ContourProjectionConstantRequest(
             self._constant_source_cached_array_request,
@@ -1104,7 +1187,8 @@ class FloatProjectionConstantSource(QObject):
 
     """
 
-    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and
+    # thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -1146,9 +1230,13 @@ class FloatProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def request(self, slicing):
         if not is_pure_slicing(slicing):
-            raise Exception('FloatProjectionConstantSource: slicing is not pure')
+            raise Exception(
+                'FloatProjectionConstantSource: slicing is not pure'
+            )
 
-        return(FloatProjectionConstantRequest(self.constant_source.request(slicing)))
+        return(FloatProjectionConstantRequest(
+            self.constant_source.request(slicing)
+        ))
 
     @prof.log_call(trace_logger)
     def setDirty(self, slicing):
@@ -1286,7 +1374,9 @@ class MaxProjectionConstantSource(QObject):
         # Real hacky solution for caching.
         slicing = (slice(None), ) * len(self._shape)
 
-        self._constant_source_cached = self.constant_source.request(slicing).wait()
+        self._constant_source_cached = self.constant_source.request(
+            slicing
+        ).wait()
         self._constant_source_cached = self._constant_source_cached.max(
             axis=self.axis
         )
@@ -1297,7 +1387,9 @@ class MaxProjectionConstantSource(QObject):
         self._constant_source_cached_array_source = ArraySource(
             self._constant_source_cached
         )
-        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
+        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(
+            slicing
+        )
 
     @prof.log_call(trace_logger)
     def numberOfChannels(self):
@@ -1451,7 +1543,8 @@ class MeanProjectionConstantSource(QObject):
 
     """
 
-    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and
+    # thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
@@ -1481,7 +1574,9 @@ class MeanProjectionConstantSource(QObject):
         # Real hacky solution for caching.
         slicing = (slice(None), ) * len(self._shape)
 
-        self._constant_source_cached = self.constant_source.request(slicing).wait()
+        self._constant_source_cached = self.constant_source.request(
+            slicing
+        ).wait()
         self._constant_source_cached = self._constant_source_cached.mean(
             axis=self.axis
         )
@@ -1492,7 +1587,9 @@ class MeanProjectionConstantSource(QObject):
         self._constant_source_cached_array_source = ArraySource(
             self._constant_source_cached
         )
-        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(slicing)
+        self._constant_source_cached_array_request = self._constant_source_cached_array_source.request(
+            slicing
+        )
 
     @prof.log_call(trace_logger)
     def numberOfChannels(self):
@@ -1515,7 +1612,9 @@ class MeanProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def request(self, slicing):
         if not is_pure_slicing(slicing):
-            raise Exception('MeanProjectionConstantSource: slicing is not pure')
+            raise Exception(
+                'MeanProjectionConstantSource: slicing is not pure'
+            )
 
         # Drop the slicing for the axis where the projection is being applied.
         constant_source_slicing = list(slicing)
@@ -1637,7 +1736,8 @@ assert issubclass(MeanProjectionConstantRequest, RequestABC)
 def main(*argv):
     # TODO: Try to extract code for viewing each file with each viewer. This way multiple files generates multiple viewers.
 
-    # Only necessary if running main (normally if calling command line). No point in importing otherwise.
+    # Only necessary if running main (normally if calling command line).
+    # No point in importing otherwise.
     from nanshe.io import xjson
     import argparse
 
@@ -1653,22 +1753,28 @@ def main(*argv):
         "config_filename",
         metavar="CONFIG_FILE",
         type=str,
-        help="JSON file that provides groups of items to be displayed together with the groups to keep in sync, layer names, and data locations."
+        help="JSON file that provides groups of items to be displayed " +
+             "together with the groups to keep in sync, layer names, " +
+             "and data locations."
     )
     parser.add_argument(
         "input_files",
         metavar="INPUT_FILE",
         type=str,
         nargs='+',
-        help="HDF5 file(s) to use for viewing. Must all have the same internal structure as specified by the JSON file."
+        help="HDF5 file(s) to use for viewing. " +
+             "Must all have the same internal structure " +
+             "as specified by the JSON file."
     )
 
-    # Results of parsing arguments (ignore the first one as it is the command line call).
+    # Results of parsing arguments
+    # (ignore the first one as it is the command line call).
     parsed_args = parser.parse_args(argv[1:])
 
     # Go ahead and stuff in parameters with the other parsed_args
-    # A little risky if parsed_args may later contain a parameters variable due to changing the main file
-    # or argparse changing behavior; however, this keeps all arguments in the same place.
+    # A little risky if parsed_args may later contain a parameters variable
+    # due to changing the main file or argparse changing behavior;
+    # however, this keeps all arguments in the same place.
     parsed_args.parameters = xjson.read_parameters(
         parsed_args.config_filename, maintain_order=True
     )
@@ -1685,8 +1791,9 @@ def main(*argv):
             h5py.File(parsed_args.input_files[i], "r")
         )
 
-    # Make all each_layer_source_location_dict is a dict whether they were or not before
-    # The key will be the operation to perform and the values will be what to perform the operation on.
+    # Make all each_layer_source_location_dict is a dict
+    # whether they were or not before. The key will be the operation to
+    # perform and the values will be what to perform the operation on.
     # If the key is a null string, no operation is performed.
     for i in xrange(len(parsed_args.parameters)):
         for (each_layer_name, each_layer_source_location_dict) in parsed_args.parameters[i].items():
@@ -1702,7 +1809,9 @@ def main(*argv):
                 each_layer_source_location_dict_inner = each_layer_source_location_dict_inner.values()[0]
 
             if isinstance(each_layer_source_location_dict_inner, str):
-                each_layer_source_location_dict_inner = [each_layer_source_location_dict_inner]
+                each_layer_source_location_dict_inner = [
+                    each_layer_source_location_dict_inner
+                ]
 
             assert isinstance(each_layer_source_location_dict_inner, list)
 
@@ -1717,7 +1826,8 @@ def main(*argv):
     parsed_args.parameters_expanded = list()
     for each_layer_names_locations_group in parsed_args.parameters:
 
-        # As we go through all files, we don't want to include the same layer more than once.
+        # As we go through all files,
+        # we don't want to include the same layer more than once.
         # Also, we want to preserve the layer order in the configure file.
         parsed_args.parameters_expanded.append(collections.OrderedDict())
         for (each_layer_name, each_layer_source_location_dict) in each_layer_names_locations_group.items():
@@ -1725,15 +1835,21 @@ def main(*argv):
             # Fetch out the operation that we will use.
             [each_layer_source_operation_names, each_layer_source_location_list] = each_layer_source_location_dict
 
-            # Ensure the order of files is preserved (probably not an issue if they were sorted) and each is unique.
-            # This way we know they get fused in the right sequential order if necessary.
-            parsed_args.parameters_expanded[-1][each_layer_name] = [each_layer_source_operation_names, collections.OrderedDict()]
+            # Ensure the order of files is preserved
+            # (probably not an issue if they were sorted) and each is unique.
+            # This way we know they get fused in the right sequential order.
+            parsed_args.parameters_expanded[-1][each_layer_name] = [
+                each_layer_source_operation_names, collections.OrderedDict()]
             for each_layer_source_location in each_layer_source_location_list:
 
                 # TODO: See if we can't move this loop out. (Could change this parsed_args.parameters_expanded to an collections.OrderedDict and store none for values (ordered set).)
                 for each_file in parsed_args.file_handles:
-                    new_matches = hdf5.search.get_matching_grouped_paths(each_file, each_layer_source_location)
-                    new_matches_ldict = itertools.izip(new_matches, itertools.repeat(None))
+                    new_matches = hdf5.search.get_matching_grouped_paths(
+                        each_file, each_layer_source_location
+                    )
+                    new_matches_ldict = itertools.izip(
+                        new_matches, itertools.repeat(None)
+                    )
                     parsed_args.parameters_expanded[-1][each_layer_name][-1].update(new_matches_ldict)
 
 
@@ -1748,24 +1864,35 @@ def main(*argv):
         for each_layer_names_locations_group in reversed(layer_names_locations_groups):
             layer_sync_list = []
 
-            for (each_layer_name, each_layer_source_location_dict) in reversed(each_layer_names_locations_group.items()):
+            for (each_layer_name, each_layer_source_location_dict) in reversed(
+                    each_layer_names_locations_group.items()):
                 [each_layer_source_operation_names, each_layer_source_location_list] = each_layer_source_location_dict
 
                 each_source = []
 
-                # Ignore whether the file exists as that may differ for different files
+                # Ignore whether the file exists as that may differ for
+                # different files
                 for each_layer_source_location in each_layer_source_location_list.keys():
-                    each_layer_source_location = each_layer_source_location.lstrip("/")
+                    each_layer_source_location = each_layer_source_location.lstrip(
+                        "/")
 
                     each_file_source = None
 
                     # Try to make the source. If it fails, we take no source.
                     try:
-                        if len(each_layer_source_operation_names) and ((each_layer_source_operation_names[-1].startswith("[\"") and each_layer_source_operation_names[-1].endswith("\"]")) or \
-                                                                       (each_layer_source_operation_names[-1].startswith("['") and each_layer_source_operation_names[-1].endswith("']"))):
-                            each_file_source = HDF5DataSource(each_file, each_layer_source_location, each_layer_source_operation_names.pop(-1)[2:-2])
+                        if len(each_layer_source_operation_names) and\
+                                ((each_layer_source_operation_names[-1].startswith("[\"") and
+                                      each_layer_source_operation_names[-1].endswith("\"]")) or
+                                     (each_layer_source_operation_names[-1].startswith("['") and
+                                          each_layer_source_operation_names[-1].endswith("']"))):
+                            each_file_source = HDF5DataSource(
+                                each_file,
+                                each_layer_source_location,
+                                each_layer_source_operation_names.pop(-1)[2:-2]
+                            )
                         else:
-                            each_file_source = HDF5DataSource(each_file, each_layer_source_location)
+                            each_file_source = HDF5DataSource(
+                                each_file, each_layer_source_location)
                     except HDF5DatasetNotFoundException:
                         each_file_source = None
 
@@ -1781,20 +1908,35 @@ def main(*argv):
                 else:
                     each_source = None
 
-                for a_layer_source_operation_name in reversed(each_layer_source_operation_names):
-                    if (each_source is not None) and (a_layer_source_operation_name):
-                        if (a_layer_source_operation_name == "max"):
-                            each_source = MaxProjectionConstantSource(each_source)
-                        elif (a_layer_source_operation_name == "mean"):
-                            each_source = MeanProjectionConstantSource(each_source)
-                        elif (a_layer_source_operation_name == "enumerate"):
-                            each_source = EnumeratedProjectionConstantSource(each_source)
-                        elif (a_layer_source_operation_name == "contour"):
-                            each_source = ContourProjectionConstantSource(each_source)
-                        elif (a_layer_source_operation_name == "float"):
-                            each_source = FloatProjectionConstantSource(each_source)
+                for a_layer_source_operation_name in reversed(
+                        each_layer_source_operation_names):
+                    if (each_source is not None) and \
+                            (a_layer_source_operation_name):
+                        if a_layer_source_operation_name == "max":
+                            each_source = MaxProjectionConstantSource(
+                                each_source
+                            )
+                        elif a_layer_source_operation_name == "mean":
+                            each_source = MeanProjectionConstantSource(
+                                each_source
+                            )
+                        elif a_layer_source_operation_name == "enumerate":
+                            each_source = EnumeratedProjectionConstantSource(
+                                each_source
+                            )
+                        elif a_layer_source_operation_name == "contour":
+                            each_source = ContourProjectionConstantSource(
+                                each_source
+                            )
+                        elif a_layer_source_operation_name == "float":
+                            each_source = FloatProjectionConstantSource(
+                                each_source
+                            )
                         else:
-                            raise Exception("Unknown operation to perform on source \"" + repr(a_layer_source_operation_name) + "\".")
+                            raise Exception(
+                                "Unknown operation to perform on source \"" +
+                                repr(a_layer_source_operation_name) + "\"."
+                            )
 
                 if each_source is not None:
                     each_layer = None
