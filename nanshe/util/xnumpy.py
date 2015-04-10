@@ -113,8 +113,11 @@ def renumber_label_image(new_array):
             (array([0, 1, 2, 3]), array([0, 1, 2, 0, 3]), array([0, 1, 2, 4]))
     """
 
-    # Get the set of reverse label mapping (ensure the background is always included)
-    reverse_label_mapping = numpy.unique(numpy.array([0] + numpy.unique(new_array).tolist()))
+    # Get the set of reverse label mapping
+    # (ensure the background is always included)
+    reverse_label_mapping = numpy.unique(
+        numpy.array([0] + numpy.unique(new_array).tolist())
+    )
 
     # Get the set of old labels excluding background
     old_labels = reverse_label_mapping[reverse_label_mapping != 0]
@@ -123,7 +126,9 @@ def renumber_label_image(new_array):
     new_labels = numpy.arange(1, len(old_labels) + 1)
 
     # Get the forward label mapping (ensure the background is included)
-    forward_label_mapping = numpy.zeros((reverse_label_mapping.max() + 1,), dtype=new_array.dtype)
+    forward_label_mapping = numpy.zeros(
+        (reverse_label_mapping.max() + 1,), dtype=new_array.dtype
+    )
     forward_label_mapping[old_labels] = new_labels
 
     # Get masks for each old label
@@ -133,8 +138,11 @@ def renumber_label_image(new_array):
     new_labels_tiled_view = expand_view(new_labels, new_array.shape)
 
     # Take every mask and make sure it has the appropriate sequential label
-    # Then combine each of these parts of the label image together into a new sequential label image
-    new_array_relabeled = (new_array_label_masks * new_labels_tiled_view).sum(axis=0)
+    # Then combine each of these parts of the label image together into a new
+    # sequential label image
+    new_array_relabeled = (
+        new_array_label_masks * new_labels_tiled_view
+    ).sum(axis=0)
 
     return((new_array_relabeled, forward_label_mapping, reverse_label_mapping))
 
@@ -442,7 +450,8 @@ def squish(new_array, axis=None, keepdims=False):
 
     axes = tuple(axes)
 
-    # Put all axes not part of the group in front and stuff the rest at the back.
+    # Put all axes not part of the group in front and
+    # stuff the rest at the back.
     axis_order = tuple(iters.xrange_with_skip(new_array.ndim, to_skip=axes)) + axes
     result = new_array.transpose(axis_order)
 
@@ -666,30 +675,40 @@ def unsquish(new_array, shape, axis=None):
     result = new_array
 
     # Reshape the array to get the original shape (wrong axis order).
-    # This will also eliminate singleton axes that weren't part of the original shape (i.e. squish keepdim=True).
+    # This will also eliminate singleton axes
+    # that weren't part of the original shape (i.e. squish keepdim=True).
     shape_transposed = tuple()
     # Get how the axis order was changed
-    old_axis_order_iter = itertools.chain(iters.xrange_with_skip(len(shape), to_skip=axes), axes)
+    old_axis_order_iter = itertools.chain(
+        iters.xrange_with_skip(len(shape), to_skip=axes), axes
+    )
 
     for i in old_axis_order_iter:
         shape_transposed += shape[i:i+1]
 
     result = result.reshape(shape_transposed)
 
-    # Find out how the axes will need to be transposed to return to the original order.
+    # Find out how the axes will need to be transposed
+    # to return to the original order.
     if axis is not None:
         # Get how the axis order was changed
-        old_axis_order_iter = itertools.chain(iters.xrange_with_skip(len(shape), to_skip=axes), axes)
+        old_axis_order_iter = itertools.chain(
+            iters.xrange_with_skip(len(shape), to_skip=axes), axes
+        )
         # Get the current axis order (i.e. in order)
         current_axis_order_iter = xrange(len(shape))
 
         # Find how the old order relates to the new one
-        axis_order_map = dict(itertools.izip(old_axis_order_iter, current_axis_order_iter))
+        axis_order_map = dict(
+            itertools.izip(old_axis_order_iter, current_axis_order_iter)
+        )
 
-        # Export how the new order will be changed (as the old axis order will be how to transform the axes).
+        # Export how the new order will be changed
+        # (as the old axis order will be how to transform the axes).
         axis_order = tuple(axis_order_map.itervalues())
 
-        # Put all axes not part of the group in front and stuff the rest at the back.
+        # Put all axes not part of the group in front and
+        # stuff the rest at the back.
         result = result.transpose(axis_order)
 
     return(result)
@@ -944,39 +963,60 @@ def roll(new_array, shift, out=None, to_mask=False):
 
         if to_mask:
             if not isinstance(out, numpy.ma.MaskedArray):
-                warnings.warn("Provided an array for `out` that is not a MaskedArray when requesting to mask the result. " +
-                              "A view of `out` will be used so all changes are propagated to `out`. " +
-                              "However, the mask may not be available (i.e. if the array is a view). " +
-                              "To get the mask, either provide a MaskedArray as input or simply use the returned result.",
-                              RuntimeWarning)
+                warnings.warn(
+                    "Provided an array for `out` that is not a MaskedArray " +
+                    " when requesting to mask the result. A view of `out` " +
+                    "will be used so all changes are propagated to `out`. " +
+                    "However, the mask may not be available " +
+                    "(i.e. if the array is a view). To get the mask, " +
+                    "either provide a MaskedArray as input or simply use " +
+                    "the returned result.",
+                    RuntimeWarning
+                )
 
                 out = out.view(numpy.ma.MaskedArray)
                 out.mask = numpy.ma.getmaskarray(out)
             elif out.mask is numpy.ma.nomask:
-                warnings.warn("Provided an array for `out` that is a MaskedArray, but has a trivial mask (i.e. nomask). " +
-                              "A nontrivial mask will generated for `out` so that masking of `out` will work properly. " +
-                              "However, the mask will not be available through the array provided. To get the mask, either " +
-                              "provide a MaskedArray with a nontrivial mask as input or simply use the returned result.",
-                              RuntimeWarning)
+                warnings.warn(
+                    "Provided an array for `out` that is a MaskedArray, " +
+                    "but has a trivial mask (i.e. nomask). A nontrivial " +
+                    "mask will generated for `out` so that masking of `out` " +
+                    "will work properly. However, the mask will not be " +
+                    "available through the array provided. To get the mask, " +
+                    "either provide a MaskedArray with a nontrivial mask as " +
+                    "input or simply use the returned result.",
+                    RuntimeWarning
+                )
 
                 out.mask = numpy.ma.getmaskarray(out)
     else:
         if to_mask:
             if not isinstance(out, numpy.ma.MaskedArray):
-                warnings.warn("Provided an array for `new_array`/`out` that is not a MaskedArray when requesting to mask " +
-                              "the result. A view of `new_array`/`out` will be used so all changes are propagated to " +
-                              "`new_array`/`out`. However, the mask may not be available (i.e. if the array is a view). " +
-                              "To get the mask, either provide a MaskedArray as input or simply use the returned result.",
-                              RuntimeWarning)
+                warnings.warn(
+                    "Provided an array for `new_array`/`out` that is not a " +
+                    "MaskedArray when requesting to mask the result. A view " +
+                    "of `new_array`/`out` will be used so all changes are " +
+                    "propagated to `new_array`/`out`. However, the mask may " +
+                    "not be available (i.e. if the array is a view). To get " +
+                    "the mask, either provide a MaskedArray as input or " +
+                    "simply use the returned result.",
+                    RuntimeWarning
+                )
 
                 out = out.view(numpy.ma.MaskedArray)
                 out.mask = numpy.ma.getmaskarray(out)
             elif out.mask is numpy.ma.nomask:
-                warnings.warn("Provided an array for `new_array`/`out` that is a MaskedArray, but has a trivial mask (i.e. nomask). " +
-                              "A nontrivial mask will generated for `new_array`/`out` so that masking of `new_array`/`out` will work properly. " +
-                              "However, the mask will not be available through the array provided. To get the mask, either " +
-                              "provide a MaskedArray with a nontrivial mask as input or simply use the returned result.",
-                              RuntimeWarning)
+                warnings.warn(
+                    "Provided an array for `new_array`/`out` that is a " +
+                    "MaskedArray, but has a trivial mask (i.e. nomask). " +
+                    "A nontrivial mask will generated for `new_array`/`out` " +
+                    "so that masking of `new_array`/`out` will work " +
+                    "properly. However, the mask will not be available " +
+                    "through the array provided. To get the mask, either " +
+                    "provide a MaskedArray with a nontrivial mask as input " +
+                    "or simply use the returned result.",
+                    RuntimeWarning
+                )
 
                 out.mask = numpy.ma.getmaskarray(out)
 
@@ -1110,10 +1150,12 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
             nan
     """
 
-    # Squish array to ensure all axes to be operated on are at the end in one axis.
+    # Squish array to ensure all axes to be operated on
+    # are at the end in one axis.
     new_array_refolded = squish(new_array, axis=axis, keepdims=keepdims)
 
-    # Add singleton dimensions at the end where the axes to be operated on now is.
+    # Add singleton dimensions at the end
+    # where the axes to be operated on now is.
     result_shape = new_array_refolded.shape[:-1] + (1,)
 
     # Get indices for the result and strip off the singleton axis (last dim).
@@ -1131,7 +1173,8 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
     if not return_indices:
         return(result)
     else:
-        # Create a mask. This is required to remap the indices to the old array.
+        # Create a mask.
+        # This is required to remap the indices to the old array.
         result_mask = numpy.zeros(new_array_refolded.shape, dtype=bool)
         result_mask[result_indices] = True
         result_mask = unsquish(result_mask, new_array.shape, axis)
@@ -1207,17 +1250,22 @@ def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
             -2.0
     """
 
-    # Squish array to ensure all axes to be operated on are at the end in one axis.
+    # Squish array to ensure all axes to be operated on
+    # are at the end in one axis.
     new_array_refolded = squish(new_array, axis=axis, keepdims=keepdims)
 
-    # Add singleton dimensions at the end where the axes to be operated on now is.
+    # Add singleton dimensions at the end
+    # where the axes to be operated on now is.
     result_shape = new_array_refolded.shape[:-1] + (1,)
 
     # Get indices for the result and strip off the singleton axis (last dim).
     result_indices = numpy.indices(result_shape)[..., 0]
 
-    # Get the indices that correspond to argmin (ignoring nan) for the given axis.
-    result_indices[-1] = bottleneck.nanargmin(numpy.abs(new_array_refolded), axis=-1)
+    # Get the indices that correspond to argmin (ignoring nan)
+    # for the given axis.
+    result_indices[-1] = bottleneck.nanargmin(
+        numpy.abs(new_array_refolded), axis=-1
+    )
 
     # Make into index array.
     result_indices = tuple(result_indices)
@@ -1228,7 +1276,8 @@ def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
     if not return_indices:
         return(result)
     else:
-        # Create a mask. This is required to remap the indices to the old array.
+        # Create a mask.
+        # This is required to remap the indices to the old array.
         result_mask = numpy.zeros(new_array_refolded.shape, dtype=bool)
         result_mask[result_indices] = True
         result_mask = unsquish(result_mask, new_array.shape, axis)
@@ -1304,10 +1353,12 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
             nan
     """
 
-    # Squish array to ensure all axes to be operated on are at the end in one axis.
+    # Squish array to ensure all axes to be operated on
+    # are at the end in one axis.
     new_array_refolded = squish(new_array, axis=axis, keepdims=keepdims)
 
-    # Add singleton dimensions at the end where the axes to be operated on now is.
+    # Add singleton dimensions at the end
+    # where the axes to be operated on now is.
     result_shape = new_array_refolded.shape[:-1] + (1,)
 
     # Get indices for the result and strip off the singleton axis (last dim).
@@ -1325,7 +1376,8 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
     if not return_indices:
         return(result)
     else:
-        # Create a mask. This is required to remap the indices to the old array.
+        # Create a mask.
+        # This is required to remap the indices to the old array.
         result_mask = numpy.zeros(new_array_refolded.shape, dtype=bool)
         result_mask[result_indices] = True
         result_mask = unsquish(result_mask, new_array.shape, axis)
@@ -1401,17 +1453,22 @@ def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
             3.0
     """
 
-    # Squish array to ensure all axes to be operated on are at the end in one axis.
+    # Squish array to ensure all axes to be operated on
+    # are at the end in one axis.
     new_array_refolded = squish(new_array, axis=axis, keepdims=keepdims)
 
-    # Add singleton dimensions at the end where the axes to be operated on now is.
+    # Add singleton dimensions at the end
+    # where the axes to be operated on now is.
     result_shape = new_array_refolded.shape[:-1] + (1,)
 
     # Get indices for the result and strip off the singleton axis (last dim).
     result_indices = numpy.indices(result_shape)[..., 0]
 
-    # Get the indices that correspond to argmax (ignoring nan) for the given axis.
-    result_indices[-1] = bottleneck.nanargmax(numpy.abs(new_array_refolded), axis=-1)
+    # Get the indices that correspond to argmax
+    # (ignoring nan) for the given axis.
+    result_indices[-1] = bottleneck.nanargmax(
+        numpy.abs(new_array_refolded), axis=-1
+    )
 
     # Make into index array.
     result_indices = tuple(result_indices)
@@ -1422,7 +1479,8 @@ def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
     if not return_indices:
         return(result)
     else:
-        # Create a mask. This is required to remap the indices to the old array.
+        # Create a mask.
+        # This is required to remap the indices to the old array.
         result_mask = numpy.zeros(new_array_refolded.shape, dtype=bool)
         result_mask[result_indices] = True
         result_mask = unsquish(result_mask, new_array.shape, axis)
@@ -1710,7 +1768,12 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
     ))
 
 
-def expand_arange(start, stop=None, step=1, dtype=numpy.int64, reps_before=tuple(), reps_after=tuple()):
+def expand_arange(start,
+                  stop=None,
+                  step=1,
+                  dtype=numpy.int64,
+                  reps_before=tuple(),
+                  reps_after=tuple()):
     """
         Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a
         larger cube.
@@ -1773,7 +1836,9 @@ def expand_arange(start, stop=None, step=1, dtype=numpy.int64, reps_before=tuple
 
     an_arange = numpy.arange(start=start, stop=stop, step=step, dtype=dtype)
 
-    an_arange = expand_view(an_arange, reps_before=reps_before, reps_after=reps_after)
+    an_arange = expand_view(
+        an_arange, reps_before=reps_before, reps_after=reps_after
+    )
 
     return(an_arange)
 
@@ -1839,9 +1904,14 @@ def expand_enumerate(new_array, axis=0, start=0, step=1):
 
     """
 
-    an_enumeration = expand_arange(start=start, stop=start + step * new_array.shape[axis], step=step,
-                                   dtype=numpy.uint64,
-                                   reps_before=new_array.shape[:axis], reps_after=new_array.shape[(axis+1):])
+    an_enumeration = expand_arange(
+        start=start,
+        stop=start + step * new_array.shape[axis],
+        step=step,
+        dtype=numpy.uint64,
+        reps_before=new_array.shape[:axis],
+        reps_after=new_array.shape[(axis+1):]
+    )
 
     return(an_enumeration)
 
@@ -1915,7 +1985,9 @@ def enumerate_masks(new_masks, axis=0):
                     [0, 0, 0, 4]]], dtype=uint64)
     """
 
-    new_enumerated_masks = new_masks * expand_enumerate(new_masks, axis=axis, start=1, step=1)
+    new_enumerated_masks = new_masks * expand_enumerate(
+        new_masks, axis=axis, start=1, step=1
+    )
 
     return(new_enumerated_masks)
 
@@ -1969,12 +2041,20 @@ def enumerate_masks_max(new_masks, axis=0):
 
     axis %= new_masks.ndim
 
-    new_enumerated_masks_max = numpy.zeros(new_masks.shape[:axis] + (1,) + new_masks.shape[axis+1:], dtype=numpy.uint64)
+    new_enumerated_masks_max = numpy.zeros(
+        new_masks.shape[:axis] + (1,) + new_masks.shape[axis+1:],
+        dtype=numpy.uint64
+    )
 
     for i in xrange(new_masks.shape[axis]):
-        numpy.maximum(new_enumerated_masks_max,
-                      (i+1) * add_singleton_axis_pos(index_axis_at_pos(new_masks, axis, i), axis),
-                      out=new_enumerated_masks_max)
+        numpy.maximum(
+            new_enumerated_masks_max,
+            (i+1) * add_singleton_axis_pos(
+                        index_axis_at_pos(new_masks, axis, i),
+                        axis
+                    ),
+            out=new_enumerated_masks_max
+        )
 
     return(new_enumerated_masks_max)
 
@@ -2064,7 +2144,8 @@ def cartesian_product(arrays):
     """
 
     for i in xrange(len(arrays)):
-        assert (arrays[i].ndim == 1), "Must provide only 1D arrays to this function or a single 2D array."
+        assert (arrays[
+                i].ndim == 1), "Must provide only 1D arrays to this function or a single 2D array."
 
     array_shapes = tuple(len(arrays[i]) for i in xrange(len(arrays)))
 
@@ -2073,11 +2154,17 @@ def cartesian_product(arrays):
     result_shape[1] = len(arrays)
     result_shape = tuple(result_shape)
 
-    result_dtype = numpy.find_common_type([arrays[i].dtype for i in xrange(result_shape[1])], [])
+    result_dtype = numpy.find_common_type(
+        [arrays[i].dtype for i in xrange(result_shape[1])], []
+    )
 
     result = numpy.empty(result_shape, dtype=result_dtype)
     for i in xrange(result.shape[1]):
-        repeated_array_i = expand_view(arrays[i], reps_before=array_shapes[:i], reps_after=array_shapes[i+1:])
+        repeated_array_i = expand_view(
+            arrays[i],
+            reps_before=array_shapes[:i],
+            reps_after=array_shapes[i+1:]
+        )
         for j, repeated_array_i_j in enumerate(repeated_array_i.flat):
             result[j, i] = repeated_array_i_j
 
@@ -2160,31 +2247,35 @@ def truncate_masked_frames(shifted_frames):
     shifted_frames_mask = ~numpy.ma.getmaskarray(shifted_frames).max(axis=0)
 
     # Find the shape
-    shifted_frames_mask_shape = tuple(shifted_frames_mask.sum(axis=_i).max() for _i in xrange(shifted_frames_mask.ndim))
+    shifted_frames_mask_shape = tuple(shifted_frames_mask.sum(
+        axis=_i).max() for _i in xrange(shifted_frames_mask.ndim)
+    )
     shifted_frames_mask_shape = (len(shifted_frames),) + shifted_frames_mask_shape
 
     # # Assert that this is an acceptable mask
-    # shifted_frames_mask_upper_offset = tuple(
-    #     (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(xrange(shifted_frames_mask.ndim))
-    # )
-    # shifted_frames_mask_lower_offset = tuple(
-    #     numpy.array(shifted_frames_mask.shape) - \
-    #     numpy.array(shifted_frames_mask_shape[1:]) - \
-    #     numpy.array(shifted_frames_mask_upper_offset)
-    # )
+    #shifted_frames_mask_upper_offset = tuple(
+    #    (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(xrange(shifted_frames_mask.ndim))
+    #)
+    #shifted_frames_mask_lower_offset = tuple(
+    #    numpy.array(shifted_frames_mask.shape) - \
+    #    numpy.array(shifted_frames_mask_shape[1:]) - \
+    #    numpy.array(shifted_frames_mask_upper_offset)
+    #)
     #
-    # shifted_frames_mask_reconstructed = numpy.pad(
-    #     numpy.ones(shifted_frames_mask_shape[1:], dtype=bool),
-    #     [(_d, _e) for _d, _e in itertools.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],
-    #     "constant"
-    # )
-    # assert(
-    #     (shifted_frames_mask_reconstructed == shifted_frames_mask).all(),
-    #     "The masked array provide has a mask that does not reduce to a square when max projected."
-    # )
+    #shifted_frames_mask_reconstructed = numpy.pad(
+    #    numpy.ones(shifted_frames_mask_shape[1:], dtype=bool),
+    #    [(_d, _e) for _d, _e in itertools.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],
+    #    "constant"
+    #)
+    #assert(
+    #    (shifted_frames_mask_reconstructed == shifted_frames_mask).all(),
+    #    "The masked array provide has a mask that does not reduce to a square when max projected."
+    #)
 
     # Slice out the relevant data from the frames
-    truncated_shifted_frames = shifted_frames[:, shifted_frames_mask].reshape(shifted_frames_mask_shape)
+    truncated_shifted_frames = shifted_frames[:, shifted_frames_mask].reshape(
+        shifted_frames_mask_shape
+    )
     truncated_shifted_frames = truncated_shifted_frames.data
 
     return(truncated_shifted_frames)
@@ -2416,13 +2507,16 @@ def numpy_structured_array_dtype_generator(new_array):
     """
 
     # Test to see if this is a NumPy Structured Array
-    if not new_array.dtype.names: raise NotNumPyStructuredArrayType("Not a NumPy structured array.")
+    if not new_array.dtype.names: raise NotNumPyStructuredArrayType(
+        "Not a NumPy structured array."
+    )
 
     # Go through each name
     for each_name in new_array.dtype.names:
         # Get the type (want the actual type, not a str or dtype object)
         each_dtype = new_array[each_name].dtype.type
-        # Get the shape (will be an empty tuple if no shape, which numpy.dtype accepts)
+        # Get the shape (will be an empty tuple if no shape, which numpy.dtype
+        # accepts)
         each_shape = new_array.dtype[each_name].shape
 
         yield ((each_name, each_dtype, each_shape))
@@ -2488,8 +2582,11 @@ def dot_product(new_vector_set_1, new_vector_set_2):
     new_vector_set_1_float = new_vector_set_1.astype(float)
     new_vector_set_2_float = new_vector_set_2.astype(float)
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-    vector_pairs_dot_product = numpy.dot(new_vector_set_1_float, new_vector_set_2_float.T)
+    # Measure the dot product between any two neurons
+    # (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(
+        new_vector_set_1_float, new_vector_set_2_float.T
+    )
 
     return(vector_pairs_dot_product)
 
@@ -2605,7 +2702,8 @@ def norm(new_vector_set, ord=2):
     # Wrap the order parameter so as to avoid passing through numpy.apply_along_axis
     # and risk having it break. Also, makes sure the same function can be used in the
     # two cases.
-    wrapped_norm = lambda a_vector_set: numpy.linalg.norm(a_vector_set, ord=ord)
+    wrapped_norm = lambda a_vector_set: numpy.linalg.norm(
+        a_vector_set, ord=ord)
 
     result = None
 
@@ -2616,7 +2714,9 @@ def norm(new_vector_set, ord=2):
     elif new_vector_set.ndim == 1:
         result = numpy.array(wrapped_norm(new_vector_set_float)).astype(float)
     else:
-        result = numpy.apply_along_axis(wrapped_norm, 1, new_vector_set_float).astype(float)
+        result = numpy.apply_along_axis(
+            wrapped_norm, 1, new_vector_set_float
+        ).astype(float)
 
     return(result)
 
@@ -2820,7 +2920,8 @@ def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
 
     assert (a_metric.ndim == 2)
 
-    accepted = unique_mapping(threshold_array(a_metric, threshold, include_below=include_below, is_closed=is_closed))
+    accepted = unique_mapping(threshold_array(
+        a_metric, threshold, include_below=include_below, is_closed=is_closed))
 
     return(accepted)
 
@@ -3213,7 +3314,9 @@ def matrix_reduced_op(a, b, op):
     for i in xrange(1, a.ndim):
         assert (a.shape[i] == b.shape[i])
 
-    out = numpy.empty((len(a), len(b)), dtype=numpy.promote_types(a.dtype, b.dtype))
+    out = numpy.empty(
+        (len(a), len(b)), dtype=numpy.promote_types(a.dtype, b.dtype)
+    )
 
     for i, j in itertools.product(xrange(out.shape[0]), xrange(out.shape[1])):
         out[i, j] = op(a[i], b[j])
@@ -3437,7 +3540,9 @@ def masks_overlap_normalized(a, b):
 
 
 @prof.log_call(trace_logger)
-def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord=2):
+def dot_product_partially_normalized(new_vector_set_1,
+                                     new_vector_set_2,
+                                     ord=2):
     """
         Determines the dot product between the two pairs of vectors from each set and creates a tuple
         with the dot product divided by one norm or the other.
@@ -3496,17 +3601,25 @@ def dot_product_partially_normalized(new_vector_set_1, new_vector_set_2, ord=2):
     new_vector_set_2_norms = norm(new_vector_set_2_float, ord)
 
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
-    new_vector_set_1_norms_expanded = expand_view(new_vector_set_1_norms, reps_after=new_vector_set_2_float.shape[0])
-    new_vector_set_2_norms_expanded = expand_view(new_vector_set_2_norms, reps_before=new_vector_set_1_float.shape[0])
+    new_vector_set_1_norms_expanded = expand_view(
+        new_vector_set_1_norms, reps_after=new_vector_set_2_float.shape[0])
+    new_vector_set_2_norms_expanded = expand_view(
+        new_vector_set_2_norms, reps_before=new_vector_set_1_float.shape[0])
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-    vector_pairs_dot_product = numpy.dot(new_vector_set_1_float, new_vector_set_2_float.T)
+    # Measure the dot product between any two neurons
+    # (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(
+        new_vector_set_1_float, new_vector_set_2_float.T)
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-    vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / new_vector_set_1_norms_expanded
-    vector_pairs_dot_product_2_normalized = vector_pairs_dot_product / new_vector_set_2_norms_expanded
+    vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / \
+        new_vector_set_1_norms_expanded
+    vector_pairs_dot_product_2_normalized = vector_pairs_dot_product / \
+        new_vector_set_2_norms_expanded
 
-    return((vector_pairs_dot_product_1_normalized, vector_pairs_dot_product_2_normalized))
+    return(
+        (vector_pairs_dot_product_1_normalized,
+         vector_pairs_dot_product_2_normalized)
+    )
 
 
 @prof.log_call(trace_logger)
@@ -3563,12 +3676,16 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
     new_vector_set_norms = norm(new_vector_set_float, ord)
 
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
-    new_vector_set_norms_expanded = expand_view(new_vector_set_norms, reps_after=new_vector_set_float.shape[0])
+    new_vector_set_norms_expanded = expand_view(
+        new_vector_set_norms, reps_after=new_vector_set_float.shape[0]
+    )
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-    vector_pairs_dot_product = numpy.dot(new_vector_set_float, new_vector_set_float.T)
+    # Measure the dot product between any two neurons
+    # (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(
+        new_vector_set_float, new_vector_set_float.T
+    )
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
     vector_pairs_dot_product_normalized = vector_pairs_dot_product / new_vector_set_norms_expanded
 
     return((vector_pairs_dot_product_normalized))
@@ -3631,12 +3748,18 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
     new_vector_set_2_norms = norm(new_vector_set_2_float, ord=ord)
 
     # Finds the product of each combination for normalization
-    norm_products = all_permutations_operation(operator.mul, new_vector_set_1_norms, new_vector_set_2_norms)
+    norm_products = all_permutations_operation(
+        operator.mul, new_vector_set_1_norms, new_vector_set_2_norms
+    )
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-    vector_pairs_dot_product = numpy.dot(new_vector_set_1_float, new_vector_set_2_float.T)
+    # Measure the dot product between any two neurons
+    # (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(
+        new_vector_set_1_float, new_vector_set_2_float.T
+    )
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    # Measure the dot product between any two neurons
+    # (i.e. related to the angle of separation)
     vector_pairs_dot_product_normalized = vector_pairs_dot_product / norm_products
 
     return(vector_pairs_dot_product_normalized)
@@ -3686,12 +3809,18 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
     new_vector_set_norms = norm(new_vector_set_float, ord=ord)
 
     # Finds the product of each combination for normalization
-    norm_products = all_permutations_operation(operator.mul, new_vector_set_norms, new_vector_set_norms)
+    norm_products = all_permutations_operation(
+        operator.mul, new_vector_set_norms, new_vector_set_norms
+    )
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
-    vector_pairs_dot_product = numpy.dot(new_vector_set_float, new_vector_set_float.T)
+    # Measure the dot product between any two neurons
+    # (i.e. related to the angle of separation)
+    vector_pairs_dot_product = numpy.dot(
+        new_vector_set_float, new_vector_set_float.T
+    )
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    # Measure the dot product between any two neurons
+    # (i.e. related to the angle of separation)
     vector_pairs_dot_product_normalized = vector_pairs_dot_product / norm_products
 
     return(vector_pairs_dot_product_normalized)
@@ -3742,7 +3871,8 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     new_vector_set_1_float = new_vector_set_1.astype(float)
     new_vector_set_2_float = new_vector_set_2.astype(float)
 
-    # Measure the dot product between any two neurons (i.e. related to the angle of separation)
+    # Measure the angle between any two neurons
+    # (i.e. related to the angle of separation)
     vector_pairs_cosine_angle = 1 - scipy.spatial.distance.cdist(new_vector_set_1_float,
                                                                  new_vector_set_2_float,
                                                                  "cosine")
@@ -3799,12 +3929,16 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
     lower_threshold = separation_distance - half_thickness
     upper_threshold = separation_distance + half_thickness
 
-    a_mask_transformed = scipy.ndimage.morphology.distance_transform_edt(a_image)
+    a_mask_transformed = scipy.ndimage.morphology.distance_transform_edt(
+        a_image
+    )
 
     above_lower_threshold = (lower_threshold <= a_mask_transformed)
     below_upper_threshold = (a_mask_transformed <= upper_threshold)
 
-    a_mask_transformed_thresholded = (above_lower_threshold & below_upper_threshold)
+    a_mask_transformed_thresholded = (
+        above_lower_threshold & below_upper_threshold
+    )
 
     a_image_contours = a_image * a_mask_transformed_thresholded
 
@@ -3855,9 +3989,13 @@ def generate_labeled_contours(a_mask, separation_distance=1.0, margin=1.0):
                    [0, 3, 3, 0, 0, 0, 0]], dtype=int32)
     """
 
-    a_mask_contoured = generate_contour(a_mask, separation_distance=separation_distance, margin=margin)
+    a_mask_contoured = generate_contour(
+        a_mask, separation_distance=separation_distance, margin=margin
+    )
 
-    a_mask_contoured_labeled = scipy.ndimage.label(a_mask_contoured, structure=numpy.ones((3,) * a_mask.ndim))[0]
+    a_mask_contoured_labeled = scipy.ndimage.label(
+        a_mask_contoured, structure=numpy.ones((3,) * a_mask.ndim)
+    )[0]
 
     return(a_mask_contoured_labeled)
 
@@ -3918,7 +4056,9 @@ def get_quantiles(probs):
         probs_array.sort()
 
 
-    if not ((0 < probs_array) & (probs_array < 1)).all(): raise Exception("Cannot pass values that are not within the range (0, 1).")
+    if not ((0 < probs_array) & (probs_array < 1)).all(): raise Exception(
+        "Cannot pass values that are not within the range (0, 1)."
+    )
 
 
     return(probs_array)
@@ -3984,7 +4124,9 @@ def quantile(data, probs, axis=None):
 
     probs_array = get_quantiles(probs)
 
-    new_quantiles = scipy.stats.mstats.mquantiles(data, probs_array, alphap=0.5, betap=0.5, axis=axis)
+    new_quantiles = scipy.stats.mstats.mquantiles(
+        data, probs_array, alphap=0.5, betap=0.5, axis=axis
+    )
 
     if not isinstance(new_quantiles, numpy.ma.MaskedArray):
         new_quantiles = numpy.ma.MaskedArray(new_quantiles)
@@ -4171,7 +4313,10 @@ def symmetric_line_filter(size, ndims=2, dim=-1):
 
 
 @prof.log_call(trace_logger)
-def tagging_reorder_array(new_array, from_axis_order="tzyxc", to_axis_order="tzyxc", to_copy=False):
+def tagging_reorder_array(new_array,
+                          from_axis_order="tzyxc",
+                          to_axis_order="tzyxc",
+                          to_copy=False):
     """
         Transforms one axis ordering to another giving a view of the array (unless otherwise specified).
 
