@@ -158,7 +158,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c">#TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
+    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
 
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -175,7 +175,7 @@
 <span class="sd">                shape(tuple of ints):                   shape of underlying dataset if not specified defaults to that of the dataset.</span>
 <span class="sd">                dtype(numpy.dtype or type):             type of underlying dataset if not specified defaults to that of the dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#TODO: Get rid of shape and dtype as arguments.</span>
+        <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">HDF5DataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
@@ -344,8 +344,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c">#TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.</span>
-    <span class="c">#TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.</span>
+    <span class="c"># TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.</span>
+    <span class="c"># TODO: Try to remove dataset_dtype as this should be readily available information from the dataset.</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_handle</span><span class="p">,</span> <span class="n">dataset_path</span><span class="p">,</span> <span class="n">axis_order</span><span class="p">,</span> <span class="n">dataset_dtype</span><span class="p">,</span> <span class="n">slicing</span><span class="p">,</span> <span class="n">record_name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">throw_on_not_found</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -797,7 +797,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c">#TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
+    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
 
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -812,7 +812,7 @@
 <span class="sd">                constant_source(a constant SourceABC):      Source to take the max projection of.</span>
 <span class="sd">                axis(int):                                  The axis to take compute the max along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#TODO: Get rid of shape and dtype as arguments.</span>
+        <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">EnumeratedProjectionConstantSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
@@ -987,7 +987,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c">#TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
+    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
 
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -1000,7 +1000,7 @@
 <span class="sd">                constant_source(a constant SourceABC):      Source to take the max projection of.</span>
 <span class="sd">                axis(int):                                  The axis to take compute the max along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#TODO: Get rid of shape and dtype as arguments.</span>
+        <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ContourProjectionConstantSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
@@ -1164,7 +1164,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c">#TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
+    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
 
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -1178,7 +1178,7 @@
 <span class="sd">            Args:</span>
 <span class="sd">                constant_source(a constant SourceABC):      Source to make float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#TODO: Get rid of shape and dtype as arguments.</span>
+        <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">FloatProjectionConstantSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
@@ -1316,7 +1316,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c">#TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
+    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
 
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -1331,7 +1331,7 @@
 <span class="sd">                constant_source(a constant SourceABC):      Source to take the max projection of.</span>
 <span class="sd">                axis(int):                                  The axis to take compute the max along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#TODO: Get rid of shape and dtype as arguments.</span>
+        <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">MaxProjectionConstantSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
@@ -1511,7 +1511,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c">#TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
+    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
 
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -1526,7 +1526,7 @@
 <span class="sd">                constant_source(a constant SourceABC):      Source to take the mean projection of.</span>
 <span class="sd">                axis(int):                                  The axis to take compute the mean along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#TODO: Get rid of shape and dtype as arguments.</span>
+        <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">MeanProjectionConstantSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 

@@ -239,8 +239,8 @@
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_neurons_blocks"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_blocks">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_blocks</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">(),</span> <span class="n">block_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">num_blocks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">half_window_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">half_border_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_drmaa</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">num_drmaa_cores</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
-    <span class="c">#TODO: Move this function into a new module with its own command line interface.</span>
-    <span class="c">#TODO: Heavy refactoring required on this function.</span>
+    <span class="c"># TODO: Move this function into a new module with its own command line interface.</span>
+    <span class="c"># TODO: Heavy refactoring required on this function.</span>
 
     <span class="c"># Extract and validate file extensions.</span>
 
@@ -651,7 +651,7 @@
                         <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;max_F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;max_F&quot;</span><span class="p">]</span>
                         <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;gaussian_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;gaussian_mean&quot;</span><span class="p">]</span>
                         <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;gaussian_cov&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;gaussian_cov&quot;</span><span class="p">]</span>
-                        <span class="c">#TODO: Correct centroid to larger block position.</span>
+                        <span class="c"># TODO: Correct centroid to larger block position.</span>
                         <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span>
 
                         <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
