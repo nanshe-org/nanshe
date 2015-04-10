@@ -44,14 +44,16 @@ trace_logger = prof.getTraceLogger(__name__)
 @prof.log_call(trace_logger)
 def binomial_1D_array_kernel(i, n=4):
     """
-        Generates a 1D numpy array used to make the kernel for the wavelet transform.
+        Generates a 1D numpy array used to make the kernel for the wavelet
+        transform.
 
         Args:
-            i(int):      which scaling to use.
-            n(int):      which row of Pascal's triangle to return.
+            i(int):               which scaling to use.
+            n(int):               which row of Pascal's triangle to return.
 
         Returns:
-            r(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
+            r(numpy.ndarray):     a 1D numpy array to use as the wavelet
+                                  transform kernel.
 
 
         Examples:
@@ -129,12 +131,27 @@ def binomial_1D_vigra_kernel(i, n=4, border_treatment=vigra.filters.BorderTreatm
         Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).
 
         Args:
-            i(int):                                                 which scaling to use.
-            n(int):                                                 which row of Pascal's triangle to return.
-            border_treatment(vigra.filters.BorderTreatmentMode):    determines how to deal with the borders.
+            i(int):                                                 which
+                                                                    scaling to
+                                                                    use.
+
+            n(int):                                                 which row
+                                                                    of Pascal's
+                                                                    triangle to
+                                                                    return.
+
+            border_treatment(vigra.filters.BorderTreatmentMode):    determines
+                                                                    how to deal
+                                                                    with the
+                                                                    borders.
 
         Returns:
-            k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
+            k(vigra.filters.Kernel1D):                              a 1D vigra
+                                                                    kernel to
+                                                                    aid in
+                                                                    computing
+                                                                    the wavelet
+                                                                    transform.
 
 
         Examples:
@@ -162,20 +179,33 @@ def binomial_1D_vigra_kernel(i, n=4, border_treatment=vigra.filters.BorderTreatm
 @hdf5.record.static_array_debug_recorder
 def transform(im0, scale=5, include_intermediates=False, include_lower_scales=False, out=None):
     """
-        performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then
+        Performs integral steps of the wavelet transform on im0 up to the given
+        scale. If scale is an iterable, then
 
         Args:
-            im0(numpy.ndarray):                                  the original image.
-            scale(int):                                          the scale of wavelet transform to apply.
-            include_intermediates(bool):                         whether to return intermediates or not (default False).
-            include_lower_scales(bool):                          whether to include lower scales or not (default False)
-                                                                 (ignored if include_intermediates is True).
-            out(numpy.ndarray):                                  holds final result (cannot use unless
-                                                                 include_intermediates is False or an AssertionError
-                                                                 will be raised.)
+            im0(numpy.ndarray):                  the original image.
+            scale(int):                          the scale of wavelet transform
+                                                 to apply.
+
+            include_intermediates(bool):         whether to return
+                                                 intermediates or not
+                                                 (default False).
+
+            include_lower_scales(bool):          whether to include lower
+                                                 scales or not (default False)
+                                                 (ignored if
+                                                 include_intermediates is True)
+
+            out(numpy.ndarray):                  holds final result (cannot use
+                                                 unless include_intermediates
+                                                 is False or an AssertionError
+                                                 will be raised.)
 
         Returns:
-            k(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
+            W, out(tuple of numpy.ndarrays):     returns the final result of
+                                                 the wavelet transform and
+                                                 possibly other scales. Also,
+                                                 may return the intermediates.
 
 
         Examples:
