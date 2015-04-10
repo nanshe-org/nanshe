@@ -28,19 +28,29 @@ def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
     """
         Designed to run spams.trainDL in a separate process.
 
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
+        It is necessary to run SPAMS in a separate process as segmentation
+        faults have been discovered in later parts of the Python code dependent
+        on whether SPAMS has run or not. It is suspected that spams may
+        interfere with the interpreter. Thus, it should be sandboxed (run in a
+        different Python interpreter) so that it doesn't damage what happens in
+        this one.
 
-        This particular version uses a multiprocessing.Queue to return the resulting dictionary.
+        This particular version uses a multiprocessing.Queue to return the
+        resulting dictionary.
 
 
         Args:
-            out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
+            out_queue(multiprocessing.Queue):       what will take the returned
+                                                    dictionary from
+                                                    spams.trainDL.
+
+            *args(list):                            a list of position
+                                                    arguments to pass to
+                                                    spams.trainDL.
+
+            **kwargs(dict):                         a dictionary of keyword
+                                                    arguments to pass to
+                                                    spams.trainDL.
     """
 
     # It is not needed outside of calling spams.trainDL.
@@ -53,20 +63,28 @@ def run_multiprocessing_queue_spams_trainDL(out_queue, *args, **kwargs):
 
 def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     """
-        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
+        Designed to start spams.trainDL in a separate process and handle the
+        result in an unnoticeably different way.
 
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
+        It is necessary to run SPAMS in a separate process as segmentation
+        faults have been discovered in later parts of the Python code dependent
+        on whether SPAMS has run or not. It is suspected that spams may
+        interfere with the interpreter. Thus, it should be sandboxed (run in a
+        different Python interpreter) so that it doesn't damage what happens in
+        this one.
 
-        This particular version uses a multiprocessing.Queue to return the resulting dictionary.
+        This particular version uses a multiprocessing.Queue to return the
+        resulting dictionary.
 
 
         Args:
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
+            *args(list):                            a list of position
+                                                    arguments to pass to
+                                                    spams.trainDL.
+
+            **kwargs(dict):                         a dictionary of keyword
+                                                    arguments to pass to
+                                                    spams.trainDL.
 
         Returns:
             result(numpy.matrix): the dictionary found
@@ -102,24 +120,45 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
                                             *args,
                                             **kwargs):
     """
-        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
+        Designed to start spams.trainDL in a separate process and handle the
+        result in an unnoticeably different way.
 
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
+        It is necessary to run SPAMS in a separate process as segmentation
+        faults have been discovered in later parts of the Python code dependent
+        on whether SPAMS has run or not. It is suspected that spams may
+        interfere with the interpreter. Thus, it should be sandboxed (run in a
+        different Python interpreter) so that it doesn't damage what happens in
+        this one.
 
-        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.
+        This particular version uses a multiprocessing.Array to share memory to
+        return the resulting dictionary.
 
 
         Args:
-            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with properties needed by result_array.
-            result_array(multiprocessing.RawArray):         shared memory array to store results in.
-            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with properties needed by X_array.
-            X_array(numpy.ndarray):                         currently uses numpy ndarray as input.
-            *args(list):                                    a list of position arguments to pass to spams.trainDL.
-            **kwargs(dict):                                 a dictionary of keyword arguments to pass to spams.trainDL.
+            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with
+                                                            properties needed
+                                                            by result_array.
+
+            result_array(multiprocessing.RawArray):         shared memory array
+                                                            to store results
+                                                            in.
+
+            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with
+                                                            properties needed
+                                                            by X_array.
+
+            X_array(numpy.ndarray):                         currently uses
+                                                            numpy ndarray as
+                                                            input.
+
+            *args(list):                                    a list of position
+                                                            arguments to pass
+                                                            to spams.trainDL.
+
+            **kwargs(dict):                                 a dictionary of
+                                                            keyword arguments
+                                                            to pass to
+                                                            spams.trainDL.
 
         Note:
             This is somewhat faster than using multiprocessing.Queue.
@@ -169,21 +208,35 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
 
 def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     """
-        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.
+        Designed to start spams.trainDL in a separate process and handle
+        result in an unnoticeably different way.
 
-        It is necessary to run SPAMS in a separate process as segmentation faults
-        have been discovered in later parts of the Python code dependent on whether
-        SPAMS has run or not. It is suspected that spams may interfere with the
-        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)
-        so that it doesn't damage what happens in this one.
+        It is necessary to run SPAMS in a separate process as segmentation
+        faults have been discovered in later parts of the Python code dependent
+        on whether SPAMS has run or not. It is suspected that spams may
+        interfere with the interpreter. Thus, it should be sandboxed (run in a
+        different Python interpreter) so that it doesn't damage what happens in
+        this one.
 
-        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.
+        This particular version uses a multiprocessing.Array to share memory to
+        return the resulting dictionary.
 
 
         Args:
-            X(numpy.matrix):                        a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
+            X(numpy.matrix):                        a Fortran order NumPy
+                                                    Matrix with the same name
+                                                    as used by spams.trainDL
+                                                    (so if someone tries to use
+                                                    it as a keyword
+                                                    argument...).
+
+            *args(list):                            a list of position
+                                                    arguments to pass to
+                                                    spams.trainDL.
+
+            **kwargs(dict):                         a dictionary of keyword
+                                                    arguments to pass to
+                                                    spams.trainDL.
 
         Note:
             This is somewhat faster than using multiprocessing.Queue.
@@ -257,12 +310,17 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
 
 def call_spams_trainDL(*args, **kwargs):
     """
-        Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.
-        Designed to be like the multiprocessing calls.
+        Encapsulates call to spams.trainDL. Ensures copy of results occur just
+        in case. Designed to be like the multiprocessing calls.
 
         Args:
-            *args(list):                            a list of position arguments to pass to spams.trainDL.
-            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.
+            *args(list):                            a list of position
+                                                    arguments to pass to
+                                                    spams.trainDL.
+
+            **kwargs(dict):                         a dictionary of keyword
+                                                    arguments to pass to
+                                                    spams.trainDL.
 
         Note:
             For legacy.
