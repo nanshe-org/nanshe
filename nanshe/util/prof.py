@@ -38,7 +38,8 @@ import wrappers
 
 
 
-# Nothing fancy. Just the basic logging unless otherwise specified, in which case this does nothing.
+# Nothing fancy. Just the basic logging
+# unless otherwise specified, in which case this does nothing.
 logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
 
 
@@ -179,18 +180,25 @@ def log_call(logger, to_log_call=True, to_print_args=False, to_print_time=True, 
             # This allows keyword arguments to be turned on or off at runtime.
             if log_call_callable_wrapped.to_log_call:
                 # Log that we have entered the callable in question.
-                logger.debug("Entering callable: \"" + callable.__name__ + "\".")
+                logger.debug(
+                    "Entering callable: \"" + callable.__name__ + "\"."
+                )
 
                 # Output arguments and keyword arguments if acceptable.
                 # This allows keyword arguments to be turned on or off at runtime.
                 #
                 # Note: We have used log_call_callable_wrapped.to_print_args.
-                #       However, we cannot define this until after as wrapping will lose this variable.
+                # However, we cannot define this until after as wrapping will
+                # lose this variable.
                 if (log_call_callable_wrapped.to_print_args):
-                    logger.debug("Arguments: \"" + str(args) + "\"" + os.linesep + "Keyword Arguments: \"" + str(kwargs) + "\".")
+                    logger.debug(
+                        "Arguments: \"" + str(args) + "\"" + os.linesep +
+                        "Keyword Arguments: \"" + str(kwargs) + "\"."
+                    )
 
                 # We don't return immediately. Why? We want to know if this succeeded or failed.
-                # So, we want the log message below to print after the function runs.
+                # So, we want the log message below to print after the function
+                # runs.
                 diff_time = 0.0
                 start_time = time.time()
                 try:
@@ -203,10 +211,15 @@ def log_call(logger, to_log_call=True, to_print_args=False, to_print_time=True, 
                 diff_time += (end_time - start_time)
 
                 # Log that we have exited the callable in question.
-                logger.debug("Exiting callable: \"" + callable.__name__ + "\".")
+                logger.debug(
+                    "Exiting callable: \"" + callable.__name__ + "\"."
+                )
 
                 if log_call_callable_wrapped.to_print_time:
-                    logger.debug("Run time for callable: \"" + callable.__name__ + "\" is \"" + str(diff_time) + " s\".")
+                    logger.debug(
+                        "Run time for callable: \"" + callable.__name__ +
+                        "\" is \"" + str(diff_time) + " s\"."
+                    )
             else:
                 result = callable(*args, **kwargs)
 
@@ -221,7 +234,11 @@ def log_call(logger, to_log_call=True, to_print_args=False, to_print_time=True, 
     return(log_call_decorator)
 
 
-def log_class(logger, to_log_call=True, to_print_args=False, to_print_time=True, to_print_exception=False):
+def log_class(logger,
+              to_log_call=True,
+              to_print_args=False,
+              to_print_time=True,
+              to_print_exception=False):
     """
         Takes a given logger and uses it to log entering and leaving all methods of the decorated class.
         Intended to be used as a decorator that takes a few arguments.
@@ -310,5 +327,7 @@ def memory_profiler(logger, interval=1, level=logging.INFO):
     current_process = psutil.Process(os.getpid())
 
     while memory_profiler.to_run:
-        logger.log(level, "Memory info = " + repr(current_process.memory_info_ex()))
+        logger.log(
+            level, "Memory info = " + repr(current_process.memory_info_ex())
+        )
         time.sleep(interval)
