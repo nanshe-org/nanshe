@@ -110,7 +110,9 @@ class NumpyRandomArrayDiscreteUniformDistributionGenerator(object):
         results = numpy.zeros(self.shape, dtype=bool)
 
         # Gets a set of random indices that need to be non-zero
-        indices = tuple([numpy.random.randint(0, each_dim, size) for each_dim in self.shape])
+        indices = tuple([
+            numpy.random.randint(0, each_dim, size) for each_dim in self.shape
+        ])
 
         # Makes them non-zero
         results[indices] = True
@@ -231,24 +233,38 @@ class DictionaryLearningRandomDataGenerator(object):
             # Where the result will be stored
             each_result = DictionaryLearningRandomDataSample()
 
-            # Generates a numpy array that has a shape of self.frame_shape with a fixed number of randomly selected (equally likely) non-zero entries
-            each_result.points = NumpyRandomArrayDiscreteUniformDistributionGenerator(self.frame_shape)(self.num_objects).astype(float)
+            # Generates a numpy array that has a shape of self.frame_shape with
+            # a fixed number of randomly selected (equally likely) non-zero
+            # entries
+            each_result.points = NumpyRandomArrayDiscreteUniformDistributionGenerator(
+                self.frame_shape)(self.num_objects).astype(float)
 
-            # Creates a point generator that selects from the non-zero points generated for activation to create groups
-            selected_points = each_result.points.nonzero()  # as an index array (tuple of 1D numpy.ndarrays)
-            selected_points = numpy.array(selected_points)  # convert to a single numpy.ndarrays
-            selected_points = selected_points.T             # simpler, lightweight way of doing zip(*selected_points)
+            # Creates a point generator that selects from the non-zero points
+            # generated for activation to create groups
+            # as an index array (tuple of 1D numpy.ndarrays)
+            selected_points = each_result.points.nonzero()
+            # convert to a single numpy.ndarrays
+            selected_points = numpy.array(selected_points)
+            # simpler, lightweight way of doing zip(*selected_points)
+            selected_points = selected_points.T
             selected_points = selected_points.tolist()
-            point_groups_gen = MappingDiscreteGeometricDistributionGenerator(*selected_points)
+            point_groups_gen = MappingDiscreteGeometricDistributionGenerator(
+                *selected_points
+            )
 
-            # Using a mean group size and the number of groups creates point groups (these should in someway relate to the basis images)
-            point_groups = point_groups_gen(1.0 / float(self.mean_group_size), self.num_groups)
+            # Using a mean group size and the number of groups creates point
+            # groups (these should in someway relate to the basis images)
+            point_groups = point_groups_gen(
+                1.0 / float(self.mean_group_size), self.num_groups)
 
-            # Will store the essential frames that indicate which points will be active in each frame
+            # Will store the essential frames that indicate which points will
+            # be active in each frame
             each_result.centroid_activation_frames = []
             for each_point_group in point_groups:
                 # Get an index array
-                each_point_group_index_array = nanshe.util.iters.list_indices_to_index_array(each_point_group)
+                each_point_group_index_array = nanshe.util.iters.list_indices_to_index_array(
+                    each_point_group
+                )
 
                 # Create an empty activation frame
                 each_centroid_activation_frame = numpy.zeros(self.frame_shape)
@@ -257,7 +273,9 @@ class DictionaryLearningRandomDataGenerator(object):
                 each_centroid_activation_frame_points_shape = each_centroid_activation_frame[each_point_group_index_array].shape
 
                 # Set the active points to be randomly distributed
-                each_centroid_activation_frame[each_point_group_index_array] = numpy.random.random(each_centroid_activation_frame_points_shape)
+                each_centroid_activation_frame[each_point_group_index_array] = numpy.random.random(
+                    each_centroid_activation_frame_points_shape
+                )
 
                 # Rescale the active points
                 each_centroid_activation_frame[each_point_group_index_array] *= self.object_intensity_range
@@ -266,32 +284,50 @@ class DictionaryLearningRandomDataGenerator(object):
                 each_centroid_activation_frame[each_point_group_index_array] += self.object_min_intensity
 
                 # add to the stack of centroid activations
-                each_result.centroid_activation_frames.append(each_centroid_activation_frame)
+                each_result.centroid_activation_frames.append(
+                    each_centroid_activation_frame
+                )
 
             # convert to numpy array
-            each_result.centroid_activation_frames = numpy.array(each_result.centroid_activation_frames)
+            each_result.centroid_activation_frames = numpy.array(
+                each_result.centroid_activation_frames
+            )
 
             # Holds the frames without noise
             each_result.noiseless_frames = []
 
-            # Takes each centroid activation frame and creates objects that dim over time
+            # Takes each centroid activation frame and creates objects that dim
+            # over time
             for each_centroid_activation_frame in each_result.centroid_activation_frames:
-                # Determines how much to spread each active point (self.object_spread is like the average spread)
+                # Determines how much to spread each active point
+                # (self.object_spread is like the average spread)
                 sigma = 2 * self.object_spread * numpy.random.random()
                 for each_frame_num in xrange(self.num_frames):
-                    # Determines a linear rescaling of each image (where they slowly become dimmer)
-                    rescale = float(self.num_frames - each_frame_num) / float(self.num_frames)
-                    # Convolves each frame to generate a frame with objects (uses the same spread for each simply dims over time)
-                    each_matrix_convolved = scipy.ndimage.filters.gaussian_filter(rescale * each_centroid_activation_frame, sigma)
+                    # Determines a linear rescaling of each image (where they
+                    # slowly become dimmer)
+                    rescale = float(
+                        self.num_frames - each_frame_num
+                    ) / float(self.num_frames)
+                    # Convolves each frame to generate a frame with objects
+                    # (uses the same spread for each simply dims over time)
+                    each_matrix_convolved = scipy.ndimage.filters.gaussian_filter(
+                        rescale * each_centroid_activation_frame, sigma
+                    )
                     # Adds to the stack of frames
                     each_result.noiseless_frames.append(each_matrix_convolved)
 
             # Converts the form of the noiseless frames
-            each_result.noiseless_frames = numpy.array(each_result.noiseless_frames)
+            each_result.noiseless_frames = numpy.array(
+                each_result.noiseless_frames
+            )
 
-            # Creates frames that contain some background noise from a normal distribution
+            # Creates frames that contain some background noise from a normal
+            # distribution
             each_result.frames = each_result.noiseless_frames.copy()
-            each_result.frames += numpy.random.normal(scale=self.background_noise_intensity, size=each_result.frames.shape)
+            each_result.frames += numpy.random.normal(
+                scale=self.background_noise_intensity,
+                size=each_result.frames.shape
+            )
 
             # Append to our list of results
             results.append(each_result)
