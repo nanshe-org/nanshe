@@ -121,7 +121,7 @@ def zeroed_mean_images(input_array, output_array=None):
     # reshape means until it has the right number of dimensions to broadcast.
     means = means.reshape(means.shape + (output_array.ndim - means.ndim)*(1,))
 
-    # broadcast and subtract the means so that the mean of all values in result[i] is zero
+    # broadcast and subtract the means so that the mean of all values is zero
     output_array[:] -= means
 
     return(output_array)
@@ -196,13 +196,15 @@ def renormalized_images(input_array, ord=2, output_array=None):
 
         output_array[:] = input_array
 
-    # Unfortunately our version of numpy's function numpy.linalg.norm does not support the axis keyword.
-    # So, we must use a for loop.
-    # take each image at each time turn the image into a vector and find the norm.
-    # divide each image by this norm. (required for spams.trainDL)
+    # Unfortunately, our version of numpy's function numpy.linalg.norm
+    # does not support the axis keyword. So, we must use a for loop.
+    # Take each image at each time and turn the image into a vector.
+    # Then, find the norm and divide each image by this norm.
     for i in xrange(output_array.shape[0]):
         output_array_i = output_array[i]
-        output_array_i_norm = numpy.linalg.norm(output_array_i.ravel(), ord=ord)
+        output_array_i_norm = numpy.linalg.norm(
+            output_array_i.ravel(), ord=ord
+        )
 
         if output_array_i_norm != 0:
             output_array_i /= output_array_i_norm
