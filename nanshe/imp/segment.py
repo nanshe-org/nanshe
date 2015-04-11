@@ -1313,7 +1313,6 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
                 # Add all values in order of keys from the dictionary.
                 new_label_image_props_with_arrays_values.append([])
                 for each_new_label_image_props_with_arrays_dtype in new_label_image_props_with_arrays_dtype:
-
                     each_name, each_type, each_shape = each_new_label_image_props_with_arrays_dtype
 
                     if each_shape:
