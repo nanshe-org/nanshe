@@ -1569,7 +1569,8 @@ def generate_local_maxima_vigra(new_intensity_image):
 
 
 @prof.log_call(trace_logger)
-def generate_local_maxima_scikit_image(new_intensity_image, local_max_neighborhood_size=1):
+def generate_local_maxima_scikit_image(new_intensity_image,
+                                       local_max_neighborhood_size=1):
     """
         Creates a mask the same size as the intensity image with local maxima as True and background False.
         Uses scikit image's skimage.feature.peak_local_max.
@@ -2052,7 +2053,9 @@ def remove_low_intensity_local_maxima(local_maxima,
 
 
 @prof.log_call(trace_logger)
-def remove_too_close_local_maxima(local_maxima, min_local_max_distance, **parameters):
+def remove_too_close_local_maxima(local_maxima,
+                                  min_local_max_distance,
+                                  **parameters):
     """
         Removes local maxima that are too close to each other.
 
