@@ -375,22 +375,29 @@ def generate_HDF5_array_recorder(hdf5_handle,
         to a group in an HDF5 file.
 
         Args:
-            hdf5_handle:            The HDF5 file group to place the debug contents into.
+            hdf5_handle:            The HDF5 file group to place the debug
+                                    contents into.
 
-            group_name:             The name of the group within hdf5_handle to save the contents to.
-                                    (If set to the empty string, data will be saved to hdf5_handle directly)
+            group_name:             The name of the group within hdf5_handle to
+                                    save the contents to. (If set to the empty
+                                    string, data will be saved to
+                                    hdf5_handle directly)
 
-            enable:                 Whether to generate a real logger or a fake one.
+            enable:                 Whether to generate a real recorder or a
+                                    fake one.
 
-            overwrite_group:        Whether to overwrite the group where data is stored.
+            overwrite_group:        Whether to overwrite the group where data
+                                    is stored.
 
             recorder_constructor:   Type of recorder to use if enable is True.
 
-            **kwargs:               Other arguments to pass through to the recorder_constructor (won't pass through if
+            **kwargs:               Other arguments to pass through to the
+                                    recorder_constructor (won't pass through if
                                     enable is false).
 
         Returns:
-            A function, which will take a given array name and value and write them out.
+            ArrayRecorder:          A function, which will take a given array
+                                    name and value and write them out.
     """
 
     if isinstance(hdf5_handle, str):
@@ -426,47 +433,69 @@ def generate_HDF5_array_recorder(hdf5_handle,
 @prof.log_call(trace_meta_logger)
 def static_subgrouping_array_recorders(*args, **kwargs):
     """
-        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.
+        Creates a decorator that adds a static variable, recorders, that holds
+        as many recorders as are supplied.
 
         Args:
-            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).
+            args(tuple of strs):                        All variables to be
+                                                        named (set to
+                                                        EmptyArrayRecorder()).
 
         Keyword Args:
-            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.
+            kwargs(dict of strs and ArrayRecorders):    All variables to be
+                                                        named with values of
+                                                        type ArrayRecorder.
 
         Returns:
-            (callable):                                 A decorator that adds the static variable, recorders, to the
-                                                        given function.
+            (callable):                                 A decorator that adds
+                                                        the static variable,
+                                                        recorders, to the given
+                                                        function.
     """
 
     @prof.log_call(trace_meta_logger)
     def static_subgrouping_array_recorders_tie(callable):
         """
-            Creates a decorator that adds a static variable recorders to the function it decorates.
+            Creates a decorator that adds a static variable recorders to the
+            function it decorates.
 
             Args:
-                callable(callable):     All variables to be named (set to EmptyArrayRecorder()).
+                callable(callable):     All variables to be named (set to
+                                        EmptyArrayRecorder()).
 
             Returns:
-                (callable):             A function with the static variable, recorders, added.
+                (callable):             A function with the static variable,
+                                        recorders, added.
         """
 
         class SubgroupingRecorders(object):
             # """
-            #     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
+            #     Hold recorders. Automatically, moves instances of
+            #     ArrayRecorder to a subgroup with the same name as the
             #     callable on assignment.
             # """
             def __init__(self, *args, **kwargs):
                 # """
-                #     Contains ArrayRecorders that write to a subgroup of the same name as the callable.
+                #     Contains ArrayRecorders that write to a subgroup of the
+                #     same name as the callable.
                 #
                 #     Args:
-                #         args(tuple of strs):                        All variables to be named (set to
+                #         args(tuple of strs):                        All
+                #                                                     variables
+                #                                                     to be
+                #                                                     named
+                #                                                     (set to
                 #                                                     EmptyArrayRecorder()).
                 #
                 #     Keyword Args:
-                #         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
-                #                                                     type ArrayRecorder.
+                #         kwargs(dict of strs and ArrayRecorders):    All
+                #                                                     variables
+                #                                                     to be
+                #                                                     named
+                #                                                     with
+                #                                                     values of
+                #                                                     type
+                #                                                     ArrayRecorder.
                 # """
 
                 for _k in args:
@@ -521,15 +550,20 @@ def static_subgrouping_array_recorders(*args, **kwargs):
 @prof.log_call(trace_meta_logger)
 def static_array_debug_recorder(callable):
     """
-        Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the
-        function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on
-        assignment it automatically creates a subgroup with the same name as the function.
+        Creates a decorator that adds a static variable recorders that contains
+        the variable array_debug_recorder to the function it decorates.
+        By
+        default, array_debug_recorder is set to an EmptyArrayRecorder instance.
+        Also, on assignment it automatically creates a subgroup with the same
+        name as the function.
 
         Args:
-            callable(callable):    All variables to be named (set to EmptyArrayRecorder()).
+            callable(callable):    All variables to be named (set to
+                                   EmptyArrayRecorder()).
 
         Returns:
-            (callable):            A decorator that adds the static variable array_debug_recorder to the given function.
+            (callable):            A decorator that adds the static variable
+                                   array_debug_recorder to the given function.
     """
 
     callable = static_subgrouping_array_recorders(
@@ -542,47 +576,64 @@ def static_array_debug_recorder(callable):
 @prof.log_call(trace_meta_logger)
 def class_static_subgrouping_array_recorders(*args, **kwargs):
     """
-        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.
+        Creates a decorator that adds a static variable, recorders, that holds
+        as many recorders as are supplied.
 
         Args:
-            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).
+            args(tuple of strs):                        All variables to be
+                                                        named (set to
+                                                        EmptyArrayRecorder()).
 
         Keyword Args:
-            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.
+            kwargs(dict of strs and ArrayRecorders):    All variables to be
+                                                        named with values of
+                                                        type ArrayRecorder.
 
         Returns:
-            (callable):                                 A decorator that adds the static variable, recorders, to the
-                                                        given function.
+            (callable):                                 A decorator that adds
+                                                        the static variable,
+                                                        recorders, to the given
+                                                        function.
     """
 
     @prof.log_call(trace_meta_logger)
     def class_static_subgrouping_array_recorders_tie(a_class):
         """
-            Creates a decorator that adds a static variable recorders to the function it decorates.
+            Creates a decorator that adds a static variable recorders to the
+            function it decorates.
 
             Args:
-                a_class(class):     All variables to be named (set to EmptyArrayRecorder()).
+                a_class(class):      All variables to be named (set to
+                                     EmptyArrayRecorder()).
 
             Returns:
-                (class):             A function with the static variable, recorders, added.
+                (class):             A function with the static variable,
+                                     recorders, added.
         """
 
         class ClassSubgroupingRecorders(object):
             # """
-            #     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the
-            #     a_class on assignment.
+            #     Hold recorders. Automatically, moves instances of
+            #     ArrayRecorder to a subgroup with the same name as the a_class
+            #     on assignment.
             # """
             def __init__(self, *args, **kwargs):
                 # """
-                #     Contains ArrayRecorders that write to a subgroup of the same name as the a_class.
+                #     Contains ArrayRecorders that write to a subgroup of the
+                #     same name as the a_class.
                 #
                 #     Args:
-                #         args(tuple of strs):                        All variables to be named (set to
-                #                                                     EmptyArrayRecorder()).
+                #         args(tuple of strs):                       All
+                #                                                    variables
+                #                                                    to be named
+                #                                                    (set to
+                #                                                    EmptyArrayRecorder()).
                 #
                 #     Keyword Args:
-                #         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of
-                #                                                     type ArrayRecorder.
+                #         kwargs(dict of strs and ArrayRecorders):   All variables
+                #                                                    to be named
+                #                                                    with values of
+                #                                                    type ArrayRecorder.
                 # """
 
                 for _k in args:
@@ -692,15 +743,19 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
 @prof.log_call(trace_meta_logger)
 def class_static_array_debug_recorder(a_class):
     """
-        Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the
-        function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on
-        assignment it automatically creates a subgroup with the same name as the function.
+        Creates a decorator that adds a static variable recorders that contains
+        the variable array_debug_recorder to the function it decorates. By
+        default, array_debug_recorder is set to an EmptyArrayRecorder instance.
+        Also, on assignment it automatically creates a subgroup with the same
+        name as the function.
 
         Args:
-            a_class(class):    All variables to be named (set to EmptyArrayRecorder()).
+            a_class(class):    All variables to be named
+                               (set to EmptyArrayRecorder()).
 
         Returns:
-            (class):            A decorator that adds the static variable array_debug_recorder to the given function.
+            (class):           A decorator that adds the static variable
+                               array_debug_recorder to the given function.
     """
 
     a_class = class_static_subgrouping_array_recorders(
