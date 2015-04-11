@@ -890,7 +890,6 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         # So, we will convert this to a structured NumPy array.
         # In future versions, the properties argument will be removed.
         # It does not need to be passed to retain functionality of this function.
-        #new_label_image_props = skimage.measure.regionprops(new_label_image, intensity_image, *args, **kwargs)
         new_label_image_props = skimage.measure.regionprops(
             label_image=new_label_image,
             properties=properties,
@@ -1954,9 +1953,6 @@ class ExtendedRegionProps(object):
         self.label_image[:], forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(
             self.label_image
         )
-        #new_label_image, forward_label_mapping, reverse_label_mapping = advanced_numpy.renumber_label_image(
-        #  self.label_image
-        #)
 
         # Remove zero from the mappings as it is background and remains the
         # same
