@@ -2319,7 +2319,9 @@ def wavelet_denoising(new_image,
 
             # First perform disc opening on the image.
             # (Actually, we don't do this according to Ferran.)
-            #new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised.astype(numpy.float32), radius = 1)
+            #new_wavelet_image_denoised_opened = vigra.filters.discOpening(
+            #    new_wavelet_image_denoised.astype(numpy.float32), radius=1
+            #)
 
             # We could look for seeds using local maxima.
             # However, we already know what these should be as these are the
