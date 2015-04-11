@@ -44,7 +44,8 @@ def get_matching_paths(a_filehandle, a_path_pattern):
 
         Args:
             a_filehandle(h5py.File):        an HDF5 file.
-            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
+            a_path_pattern(str):            an internal path (with patterns for
+                                            each group) for the HDF5 file.
 
         Returns:
             (list):                         a list of matching paths.
@@ -88,15 +89,18 @@ def get_matching_paths(a_filehandle, a_path_pattern):
 def get_matching_paths_groups(a_filehandle, a_path_pattern):
     """
         Looks for parts of the path pattern and tries to match them in order.
-        Returns a list of matches that can be combined to yield acceptable matches for the given file handle.
+        Returns a list of matches that can be combined to yield acceptable
+        matches for the given file handle.
 
         Note:
-            This works best when a tree structure is created systematically in HDF5. Then, this will recreate
-            what the tree structure could and may contain.
+            This works best when a tree structure is created systematically in
+            HDF5. Then, this will recreate what the tree structure could and
+            may contain.
 
         Args:
             a_filehandle(h5py.File):        an HDF5 file.
-            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
+            a_path_pattern(str):            an internal path (with patterns for
+                                            each group) for the HDF5 file.
 
         Returns:
             (list):                         a list of matching paths.
@@ -161,15 +165,18 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
 def get_matching_grouped_paths(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
-        Returns a list of matches as keys and whether they are found in the HDF5 file or not.
+        Returns a list of matches as keys and whether they are found in the
+        HDF5 file or not.
 
         Args:
             a_filehandle(h5py.File):        an HDF5 file.
-            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
+            a_path_pattern(str):            an internal path (with patterns for
+                                            each group) for the HDF5 file.
 
         Returns:
-            (list):                         an ordered dictionary with possible paths that fit the pattern and whether
-                                            they are found.
+            (list):                         an ordered dictionary with possible
+                                            paths that fit the pattern and
+                                            whether they are found.
     """
 
     paths_found = collections.OrderedDict()
@@ -190,15 +197,18 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
 def get_matching_grouped_paths_found(a_filehandle, a_path_pattern):
     """
         Looks for existing paths that match the full provide pattern path.
-        Returns a list of matches as keys and whether they are found in the HDF5 file or not.
+        Returns a list of matches as keys and whether they are found in the
+        HDF5 file or not.
 
         Args:
             a_filehandle(h5py.File):        an HDF5 file.
-            a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
+            a_path_pattern(str):            an internal path (with patterns for
+                                            each group) for the HDF5 file.
 
         Returns:
-            (collections.OrderedDict):      an ordered dictionary with possible paths that fit the pattern
-                                            and whether they are found.
+            (collections.OrderedDict):      an ordered dictionary with possible
+                                            paths that fit the pattern and
+                                            whether they are found.
     """
 
     paths_found = collections.OrderedDict()
