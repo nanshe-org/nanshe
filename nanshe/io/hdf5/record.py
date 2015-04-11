@@ -364,7 +364,12 @@ class HDF5EnumeratedArrayRecorder(object):
 
 
 @prof.log_call(trace_meta_logger)
-def generate_HDF5_array_recorder(hdf5_handle, group_name="", enable=True, overwrite_group=False, recorder_constructor=HDF5ArrayRecorder, **kwargs):
+def generate_HDF5_array_recorder(hdf5_handle,
+                                 group_name="",
+                                 enable=True,
+                                 overwrite_group=False,
+                                 recorder_constructor=HDF5ArrayRecorder,
+                                 **kwargs):
     """
         Generates a function used for writing arrays (structured or otherwise)
         to a group in an HDF5 file.
@@ -614,7 +619,9 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
 
         def class_static_subgrouping_array_recorders__init__decorator(callable):
             @wrappers.wraps(callable)
-            def class_static_subgrouping_array_recorders__init__wrapper(self, *args, **kwargs):
+            def class_static_subgrouping_array_recorders__init__wrapper(self,
+                                                                        *args,
+                                                                        **kwargs):
                 # Force all recorders to ensure their output Group exists.
                 # All of them actually make the directory.
                 # However, HDF5EnumeratedArrayRecorder needs a clue as to
@@ -633,7 +640,9 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
             callable = static_subgrouping_array_recorders()(callable)
 
             @wrappers.wraps(callable)
-            def class_static_subgrouping_array_recorders_wrapper(self, *args, **kwargs):
+            def class_static_subgrouping_array_recorders_wrapper(self,
+                                                                 *args,
+                                                                 **kwargs):
                 # Force all recorders to ensure their output Group exists.
                 # All of them actually make the directory.
                 # However, HDF5EnumeratedArrayRecorder needs a clue as to
