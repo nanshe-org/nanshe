@@ -38,21 +38,23 @@ def create_numpy_structured_array_in_HDF5(file_handle,
                                           data,
                                           overwrite=False):
     """
-        Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
-        Also, will handle normal NumPy arrays and scalars, as well.
+        Serializes a NumPy structure array to an HDF5 file by using the HDF5
+        compound data type. Also, will handle normal NumPy arrays and scalars,
+        as well.
 
         Note:
-            HDF5 does not support generic Python objects. So, serialization of objects to something
-            else (perhaps strs of fixed size) must be performed first.
-
-        Note:
-            TODO: Write doctests.
+            HDF5 does not support generic Python objects. So, serialization of
+            objects to something else (perhaps strs of fixed size) must be
+            performed first.
 
         Args:
             file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.
             internalPath(str):          an internal path for the HDF5 file.
-            data(numpy.ndarray):        the NumPy structure array to save (or normal NumPy array).
-            overwrite(bool):            whether to overwrite what is already there (defaults to False).
+            data(numpy.ndarray):        the NumPy structure array to save (or
+                                        normal NumPy array).
+
+            overwrite(bool):            whether to overwrite what is already
+                                        there (defaults to False).
     """
 
     close_file_handle = False
@@ -102,12 +104,14 @@ def create_numpy_structured_array_in_HDF5(file_handle,
 @prof.log_call(trace_logger)
 def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
     """
-        Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.
-        Also, it will handle normal NumPy arrays and scalars, as well.
+        Serializes a NumPy structure array from an HDF5 file by using the HDF5
+        compound data type. Also, it will handle normal NumPy arrays and
+        scalars, as well.
 
         Note:
-            HDF5 does not support generic Python objects. So, serialization of objects to something
-            else (perhaps strs of fixed size) must be performed first.
+            HDF5 does not support generic Python objects. So, serialization of
+            objects to something else (perhaps strs of fixed size) must be
+            performed first.
 
         Args:
             file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.
@@ -183,8 +187,8 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
 
 class HDF5MaskedDataset(object):
     """
-        Provides an abstraction of the masked array the HDF5 Group where the contents of a
-        masked array are serialized.
+        Provides an abstraction of the masked array the HDF5 Group where the
+        contents of a masked array are serialized.
 
         Note:
                 This behaves roughly like an `h5py.Dataset` and roughly like a
