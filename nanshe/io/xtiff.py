@@ -202,9 +202,9 @@ def get_standard_tiff_array(new_tiff_filename, axis_order="tzyxc", pages_to_chan
             repr(new_tiff_array.shape) + "\"."
         )
 
-    # Some people use pages to hold time and channel data. So, we need to restructure it.
-    # However, if they are properly structuring their TIFF file, then they
-    # shouldn't incur a penalty.
+    # Some people use pages to hold time and channel data. So, we need to
+    # restructure it. However, if they are properly structuring their TIFF
+    # file, then they shouldn't incur a penalty.
     if pages_to_channel > 1:
         new_tiff_array = new_tiff_array.reshape(
             new_tiff_array.shape[:-2] +
