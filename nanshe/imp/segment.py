@@ -258,8 +258,8 @@ def estimate_f0(new_data,
 
     if not issubclass(new_data.dtype.type, numpy.float32):
         warnings.warn(
-            "Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
-            "Will be cast to type \"" + repr(numpy.float32) + "\"",
+            "Provided new_data with type \"" + repr(new_data.dtype.type) +
+            "\". " + "Will be cast to type \"" + repr(numpy.float32) + "\"",
             RuntimeWarning
         )
 
@@ -276,8 +276,9 @@ def estimate_f0(new_data,
 
         if (not issubclass(out.dtype.type, numpy.float32)):
             warnings.warn(
-                "Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
-                "Will be cast to type \"" + repr(numpy.float32) + "\"",
+                "Provided new_data with type \"" + repr(new_data.dtype.type)
+                + "\". " + "Will be cast to type \"" + repr(numpy.float32) +
+                "\"",
                 RuntimeWarning
             )
 
@@ -388,8 +389,8 @@ def extract_f0(new_data,
 
     if not issubclass(new_data.dtype.type, numpy.float32):
         warnings.warn(
-            "Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
-            "Will be cast to type \"" + repr(numpy.float32) + "\"",
+            "Provided new_data with type \"" + repr(new_data.dtype.type) +
+            "\". " + "Will be cast to type \"" + repr(numpy.float32) + "\"",
             RuntimeWarning
         )
 
@@ -402,8 +403,9 @@ def extract_f0(new_data,
 
         if (not issubclass(out.dtype.type, numpy.float32)):
             warnings.warn(
-                "Provided new_data with type \"" + repr(new_data.dtype.type) + "\". " +
-                "Will be cast to type \"" + repr(numpy.float32) + "\"",
+                "Provided new_data with type \"" + repr(new_data.dtype.type) +
+                "\". " + "Will be cast to type \"" + repr(numpy.float32) +
+                "\"",
                 RuntimeWarning
             )
 
@@ -1316,17 +1318,20 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
                     if each_shape:
                         new_label_image_props_with_arrays_values[j].append(
-                            new_label_image_props_with_arrays[j][each_name].tolist())
+                            new_label_image_props_with_arrays[j][each_name].tolist()
+                        )
                     else:
                         new_label_image_props_with_arrays_values[j].append(
-                            new_label_image_props_with_arrays[j][each_name])
+                            new_label_image_props_with_arrays[j][each_name]
+                        )
 
                 # NumPy will expect a tuple for each set of values.
                 new_label_image_props_with_arrays_values[j] = tuple(
                     new_label_image_props_with_arrays_values[j]
                 )
 
-    if (not new_label_image.size) or (not len(new_label_image_props_with_arrays)):
+    if (not new_label_image.size) or \
+            (not len(new_label_image_props_with_arrays)):
         new_label_image_props_with_arrays_dtype = []
         for each_key in properties:
             each_type = region_properties_type_dict[each_key]
