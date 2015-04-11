@@ -636,8 +636,9 @@ def generate_dictionary(new_data, **parameters):
         float_dtype = numpy.dtype(numpy.float32)
         float_ctype = ctypes.c_float
 
-    # Want to support NumPy types in parameters. However, SPAMS expects normal C types. So, we convert them in advance.
-    # This was needed for the Ilastik based GUI.
+    # Want to support NumPy types in parameters. However, SPAMS expects normal
+    # C types. So, we convert them in advance. This was needed for the
+    # Ilastik-based GUI.
     for _k, _v in parameters["spams.trainDL"].items():
         _v = numpy.array(_v)[()] # Convert to NumPy type
         if isinstance(_v, numpy.integer):
@@ -889,7 +890,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         # So, we will convert this to a structured NumPy array.
         # In future versions, the properties argument will be removed.
         # It does not need to be passed to retain functionality of this function.
-        # new_label_image_props = skimage.measure.regionprops(new_label_image, intensity_image, *args, **kwargs)
+        #new_label_image_props = skimage.measure.regionprops(new_label_image, intensity_image, *args, **kwargs)
         new_label_image_props = skimage.measure.regionprops(
             label_image=new_label_image,
             properties=properties,
@@ -1892,8 +1893,8 @@ class ExtendedRegionProps(object):
             remove_labels, minlength=len(self.count) + 1
         )[1:]
 
-        # Take a subset of the label props that does not include the removal mask
-        # (copying may not be necessary as the mask may be as effective)
+        # Take a subset of the label props that does not include the removal
+        # mask (copying may not be necessary as the mask may be as effective).
         self.props = self.props[~remove_prop_indices_mask].copy()
         # Reduce the count by the number of each label
         self.count["count"] -= label_count_to_remove
@@ -1953,9 +1954,9 @@ class ExtendedRegionProps(object):
         self.label_image[:], forward_label_mapping, reverse_label_mapping = skimage.segmentation.relabel_sequential(
             self.label_image
         )
-        # new_label_image, forward_label_mapping, reverse_label_mapping = advanced_numpy.renumber_label_image(
-        #   self.label_image
-        # )
+        #new_label_image, forward_label_mapping, reverse_label_mapping = advanced_numpy.renumber_label_image(
+        #  self.label_image
+        #)
 
         # Remove zero from the mappings as it is background and remains the
         # same
@@ -1966,8 +1967,9 @@ class ExtendedRegionProps(object):
         props_reverse_mapped = xnumpy.all_permutations_equal(
             reverse_label_mapping, self.props["label"]
         )
-        # Get the new labels by noting they must range from 0 to the length of reverse_label_mapping.
-        # Skip zero as it is not necessary to check for it.
+        # Get the new labels by noting they must range from 0 to the length of
+        # reverse_label_mapping. Skip zero as it is not necessary to check
+        # for it.
         new_labels = numpy.arange(1, len(reverse_label_mapping) + 1)
         # Expand new_labels into a view of the same size as
         # props_reverse_mapped
@@ -2284,9 +2286,9 @@ def wavelet_denoising(new_image,
 
         logger.debug("Found new label image.")
 
-        # ExtendedRegionProps.recorders.array_debug_recorder = hdf5.record.HDF5EnumeratedArrayRecorder(
-        #     wavelet_denoising.recorders.array_debug_recorder.hdf5_handle
-        # )
+        #ExtendedRegionProps.recorders.array_debug_recorder = hdf5.record.HDF5EnumeratedArrayRecorder(
+        #    wavelet_denoising.recorders.array_debug_recorder.hdf5_handle
+        #)
         ExtendedRegionProps.recorders.array_debug_recorder = wavelet_denoising.recorders.array_debug_recorder
         local_maxima = ExtendedRegionProps(
             new_wavelet_image_denoised, new_wavelet_image_denoised_label_image
@@ -2935,7 +2937,8 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_angle"] = new_neuron_set_angle
 
         # Measure the distance between the two masks
-        # (note distance relative to the total mask content of each mask individually)
+        # (note distance relative to the total mask content of each mask
+        # individually)
         new_neuron_set_masks_overlaid = xnumpy.pair_dot_product_partially_normalized(
             new_neuron_set_flattened_mask, ord=1
         )
@@ -2947,10 +2950,10 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1"] = new_neuron_set_masks_overlaid_1
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2"] = new_neuron_set_masks_overlaid_2
 
-        # Now that the three measures for the correlation method have been found, we want to know,
-        # which are the best correlated neurons between the two sets using these measures.
-        # This done to find the neuron in new_neuron_set_1 that best matches
-        # each neuron in new_neuron_set_2.
+        # Now that the three measures for the correlation method have been
+        # found, we want to know, which are the best correlated neurons between
+        # the two sets using these measures. This done to find the neuron in
+        # new_neuron_set_1 that best matches each neuron in new_neuron_set_2.
         new_neuron_set_angle_all_optimal_i = new_neuron_set_angle.argmax(
             axis=0
         )
@@ -3043,9 +3046,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_1_maxes_significant_1"] = new_neuron_set_masks_overlaid_1_maxes_significant
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_masks_overlaid_2_maxes_significant_1"] = new_neuron_set_masks_overlaid_2_maxes_significant
 
-        # Using the masks construct the best match neuron index for each case
-        # After doing these three, new_neuron_set_all_optimal_i will contain either
-        # the index of the neuron to fuse with in new_neuron_set for each
+        # Using the masks construct the best match neuron index for each case.
         new_neuron_set_all_optimal_i[new_neuron_set_angle_maxes_significant] = new_neuron_set_angle_all_optimal_i[new_neuron_set_angle_maxes_significant]
 
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_all_optimal_i_1"] = new_neuron_set_all_optimal_i
@@ -3059,8 +3060,8 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         merge_neuron_sets_repeatedly.recorders.array_debug_recorder["new_neuron_set_all_optimal_i_3"] = new_neuron_set_all_optimal_i
 
 
-        # Separate all the best matches that were found from those that were not.
-        # Also, remove the -1 as they have served their purpose.
+        # Separate all the best matches that were found from those that were
+        # not. Also, remove the -1 as they have served their purpose.
         new_neuron_set_all_optimal_i_found = (
             new_neuron_set_all_optimal_i != -1
         )
