@@ -46,9 +46,6 @@ def get_matching_paths(a_filehandle, a_path_pattern):
             a_filehandle(h5py.File):        an HDF5 file.
             a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
 
-        Note:
-            TODO: Write doctests.
-
         Returns:
             (list):                         a list of matching paths.
     """
@@ -100,9 +97,6 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
         Args:
             a_filehandle(h5py.File):        an HDF5 file.
             a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
-
-        Note:
-            TODO: Write doctests.
 
         Returns:
             (list):                         a list of matching paths.
@@ -173,9 +167,6 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
             a_filehandle(h5py.File):        an HDF5 file.
             a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
 
-        Note:
-            TODO: Write doctests.
-
         Returns:
             (list):                         an ordered dictionary with possible paths that fit the pattern and whether
                                             they are found.
@@ -204,9 +195,6 @@ def get_matching_grouped_paths_found(a_filehandle, a_path_pattern):
         Args:
             a_filehandle(h5py.File):        an HDF5 file.
             a_path_pattern(str):            an internal path (with patterns for each group) for the HDF5 file.
-
-        Note:
-            TODO: Write doctests.
 
         Returns:
             (collections.OrderedDict):      an ordered dictionary with possible paths that fit the pattern
