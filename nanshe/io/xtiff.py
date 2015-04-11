@@ -131,7 +131,9 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
 
 
 @prof.log_call(trace_logger)
-def get_standard_tiff_array(new_tiff_filename, axis_order="tzyxc", pages_to_channel=1):
+def get_standard_tiff_array(new_tiff_filename,
+                            axis_order="tzyxc",
+                            pages_to_channel=1):
     """
         Reads a tiff file and returns a standard 5D array.
 
