@@ -44,13 +44,16 @@ trace_logger = prof.getTraceLogger(__name__)
 @prof.log_call(trace_logger)
 def get_multipage_tiff_shape_dtype(new_tiff_filename):
     """
-        Gets the info about the shape (including page number as time) and dtype.
+        Gets the info about the shape (including page number as time)
+        and dtype.
 
         Args:
             new_tiff_filename(str):             the TIFF file to get info about
 
         Returns:
-            (collections.OrderedDict):          an ordered dictionary with "shape" first and "dtype" (type) second.
+            (collections.OrderedDict):          an ordered dictionary with
+                                                "shape" first and "dtype"
+                                                (type) second.
     """
 
     shape_dtype_result = collections.OrderedDict(
@@ -73,15 +76,21 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
                                                axis_order="zyxtc",
                                                pages_to_channel=1):
     """
-        Gets the info about the shape and dtype after some transformations have been performed .
+        Gets the info about the shape and dtype after some transformations
+        have been performed.
 
         Args:
             new_tiff_filename(str):             the TIFF file to get info about
-            axis_order(str):                    the desired axis order when reshaped
-            pages_to_channel(int):              number of channels to divide from the pages
+            axis_order(str):                    the desired axis order
+                                                when reshaped
+
+            pages_to_channel(int):              number of channels to divide
+                                                from the pages
 
         Returns:
-            (collections.OrderedDict):          an ordered dictionary with "shape" first and "dtype" (type) second.
+            (collections.OrderedDict):          an ordered dictionary with
+                                                "shape" first and "dtype"
+                                                (type) second.
     """
 
     assert (pages_to_channel > 0)
@@ -140,14 +149,20 @@ def get_standard_tiff_array(new_tiff_filename,
         Args:
             new_tiff_filename(str):             the TIFF file to read in
 
-            axis_order(int):                    how to order the axes (by default returns "tzyxc").
+            axis_order(int):                    how to order the axes (by
+                                                default returns "tzyxc").
 
-            pages_to_channel(int):              if channels are not normally stored in the channel variable, but are
-                                                stored as pages (or as a mixture), then this will split neighboring
-                                                pages into separate channels. (by default is 1 so changes nothing)
+            pages_to_channel(int):              if channels are not normally
+                                                stored in the channel variable,
+                                                but are stored as pages (or as
+                                                a mixture), then this will
+                                                split neighboring pages into
+                                                separate channels. (by default
+                                                is 1 so changes nothing)
 
         Returns:
-            (numpy.ndarray):                    an array with the axis order specified.
+            (numpy.ndarray):                    an array with the axis order
+                                                specified.
     """
 
     assert (pages_to_channel > 0)
@@ -235,20 +250,29 @@ def convert_tiffs(new_tiff_filenames,
         Convert a stack of tiffs to an HDF5 file.
 
         Args:
-            new_tiff_filenames(list or str):    takes a str for a single file or a list of strs for filenames to combine
-                                                (allows regex).
+            new_tiff_filenames(list or str):    takes a str for a single file
+                                                or a list of strs for
+                                                filenames to combine (allows
+                                                regex).
 
-            new_hdf5_pathname(str):             the HDF5 file and location to store the dataset.
+            new_hdf5_pathname(str):             the HDF5 file and location to
+                                                store the dataset.
 
-            axis(int):                          which axis to concatenate along.
+            axis(int):                          which axis to concatenate
+                                                along.
 
-            channel(int):                       which channel to select for the HDF5 (can only keep one).
+            channel(int):                       which channel to select for the
+                                                HDF5 (can only keep one).
 
-            z_index(int):                       which z value to take (the algorithm is not setup for 3D data yet)
+            z_index(int):                       which z value to take (the
+                                                algorithm is not setup for 3D
+                                                data yet)
 
-            pages_to_channel(int):              if channels are not normally stored in the channel variable, but are
-                                                stored as pages, then this will split neighboring pages into separate
-                                                channels.
+            pages_to_channel(int):              if channels are not normally
+                                                stored in the channel variable,
+                                                but are stored as pages, then
+                                                this will split neighboring
+                                                pages into separate channels.
     """
 
     assert (pages_to_channel > 0)
