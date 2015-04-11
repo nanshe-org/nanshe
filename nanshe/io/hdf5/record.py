@@ -225,7 +225,9 @@ class HDF5EnumeratedArrayRecorder(object):
             )
 
         if self.hdf5_index_data_handles["."] != -1:
-            hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
+            hdf5_index_handle = self.hdf5_handle[str(
+                self.hdf5_index_data_handles["."]
+            )]
             for each_key in hdf5_index_handle:
                 if hdf5_index_handle[each_key].attrs.get("is_logger", False):
                     self.hdf5_index_data_handles[each_key] = None
@@ -277,7 +279,9 @@ class HDF5EnumeratedArrayRecorder(object):
                 return(HDF5EnumeratedArrayRecorder(key_handle))
             else:
                 key_i_str = str(key_i)
-                return(serializers.read_numpy_structured_array_from_HDF5(key_handle, key_i_str))
+                return(serializers.read_numpy_structured_array_from_HDF5(
+                    key_handle, key_i_str
+                ))
         except:
             raise(KeyError(
                 "unable to open object (Symbol table: Can't open object " +
@@ -302,7 +306,9 @@ class HDF5EnumeratedArrayRecorder(object):
         else:
             hdf5_index_handle = None
             try:
-                hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
+                hdf5_index_handle = self.hdf5_handle[str(
+                    self.hdf5_index_data_handles["."]
+                )]
             except KeyError:
                 if self.hdf5_index_data_handles["."] == -1:
                     self.hdf5_index_data_handles = {
@@ -314,7 +320,9 @@ class HDF5EnumeratedArrayRecorder(object):
                 )
                 self.hdf5_handle.file.flush()
 
-                hdf5_index_handle = self.hdf5_handle[str(self.hdf5_index_data_handles["."])]
+                hdf5_index_handle = self.hdf5_handle[str(
+                    self.hdf5_index_data_handles["."]
+                )]
 
             if (value is None) or (value is h5py.Group):
                 # Create a group if it doesn't already exist.
