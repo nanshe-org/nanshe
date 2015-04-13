@@ -258,7 +258,6 @@
 <span class="sd">            array([[ True, False,  True, False],</span>
 <span class="sd">                   [False,  True, False, False],</span>
 <span class="sd">                   [False, False, False,  True]], dtype=bool)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Constructs the numpy.ndarray with False everywhere</span>
@@ -310,7 +309,6 @@
 
 <span class="sd">            &gt;&gt;&gt; list(repeat_generator(xrange(5), 3))</span>
 <span class="sd">            [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;n must be positive, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -352,7 +350,6 @@
 
 <span class="sd">            &gt;&gt;&gt; list(cycle_generator(xrange(5), 3))</span>
 <span class="sd">            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;n must be positive, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -405,7 +402,6 @@
 
 <span class="sd">            &gt;&gt;&gt; list(iter_with_skip_indices(xrange(10), to_skip = [9]))</span>
 <span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">a_iter</span><span class="p">)</span>
@@ -472,7 +468,6 @@
 
 <span class="sd">            &gt;&gt;&gt; list(iter_with_skip_values(xrange(0, 10, 2), to_skip = [2,6]))</span>
 <span class="sd">            [0, 4, 8]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">a_iter</span><span class="p">)</span>
@@ -545,7 +540,6 @@
 
 <span class="sd">            &gt;&gt;&gt; list(xrange_with_skip(10, to_skip = [9]))</span>
 <span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">full</span> <span class="o">=</span> <span class="bp">None</span>
@@ -692,7 +686,6 @@
 
 <span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.mul, xrange(1,5)))</span>
 <span class="sd">            [1, 2, 6, 24]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">new_iter</span><span class="p">)</span>
@@ -963,7 +956,6 @@
 
 <span class="sd">            &gt;&gt;&gt; list(filled_stringify_xrange(range(11)))</span>
 <span class="sd">            [(0, &#39;00&#39;), (1, &#39;01&#39;), (2, &#39;02&#39;), (3, &#39;03&#39;), (4, &#39;04&#39;), (5, &#39;05&#39;), (6, &#39;06&#39;), (7, &#39;07&#39;), (8, &#39;08&#39;), (9, &#39;09&#39;), (10, &#39;10&#39;)]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
@@ -1017,7 +1009,6 @@
 
 <span class="sd">            &gt;&gt;&gt; list(filled_stringify_enumerate(range(11)))</span>
 <span class="sd">            [(0, &#39;00&#39;, 0), (1, &#39;01&#39;, 1), (2, &#39;02&#39;, 2), (3, &#39;03&#39;, 3), (4, &#39;04&#39;, 4), (5, &#39;05&#39;, 5), (6, &#39;06&#39;, 6), (7, &#39;07&#39;, 7), (8, &#39;08&#39;, 8), (9, &#39;09&#39;, 9), (10, &#39;10&#39;, 10)]</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
