@@ -31,21 +31,29 @@ import nanshe.util.xnumpy
 
 def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
     """
-        Generate a stack of masks (first index indicates which mask); where, each contains a hypersphere constructed
-        using a center and radius provided.
+        Generate a stack of masks (first index indicates which mask); where,
+        each contains a hypersphere constructed using a center and radius
+        provided.
 
         Args:
             space(tuple of ints):                The size of the mask.
 
-            centers(list of tuples of numbers):  List of centers with one per hypersphere.
+            centers(list of tuples of numbers):  List of centers with one per
+                                                 hypersphere.
 
-            radii(list of numbers):              List of radii with one per hypersphere.
+            radii(list of numbers):              List of radii with one per
+                                                 hypersphere.
 
-            include_boundary(bool):              Whether the mask should contain the boundary of the hypersphere or not.
+            include_boundary(bool):              Whether the mask should
+                                                 contain the boundary of the
+                                                 hypersphere or not.
 
         Returns:
-            numpy.ndarray:                       A stack of masks (first index indicates which mask) with a filled
-                                                 hypersphere using a center and radius for each mask.
+            numpy.ndarray:                       A stack of masks (first index
+                                                 indicates which mask) with a
+                                                 filled hypersphere using a
+                                                 center and radius for each
+                                                 mask.
 
         Examples:
             >>> generate_hypersphere_masks((3, 3), (1, 1), 1.25)
@@ -139,25 +147,31 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
 
 def generate_gaussian_images(space, means, std_devs, magnitudes):
     """
-        Generate a stack of gaussians (first index indicates which image); where, each contains a gaussian
-        using a center and radius provided.
+        Generate a stack of gaussians (first index indicates which image);
+        where, each contains a gaussian using a center and radius provided.
 
         Note:
-            This uses a normalized gaussian filter to create the gaussians. So, the sum over any image in the stack will
-            be the magnitude given (with some small error).
+            This uses a normalized gaussian filter to create the gaussians. So,
+            the sum over any image in the stack will be the magnitude given
+            (with some small error).
 
         Args:
             space(tuple of ints):                The size of the mask.
 
-            means(list of tuples of numbers):    List of means with one per gaussian.
+            means(list of tuples of numbers):    List of means with one per
+                                                 gaussian.
 
-            std_devs(list of numbers):           List of standard deviations with one per gaussian.
+            std_devs(list of numbers):           List of standard deviations
+                                                 with one per gaussian.
 
-            magnitudes(list of numbers):         List of magnitudes for each gaussian.
+            magnitudes(list of numbers):         List of magnitudes for each
+                                                 gaussian.
 
         Returns:
-            numpy.ndarray:                       A stack of masks (first index indicates which mask) with a gaussian
-                                                 using a center and radius for each mask.
+            numpy.ndarray:                       A stack of masks (first index
+                                                 indicates which mask) with a
+                                                 gaussian using a center and
+                                                 radius for each mask.
 
         Examples:
             >>> generate_gaussian_images((5, 5), (2, 2), 0.5, 1) #doctest: +NORMALIZE_WHITESPACE
@@ -252,20 +266,28 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
 
 def generate_random_bound_points(space, radii):
     """
-        Generate a collection of random points that are the center of a  hypersphere contained within the space.
+        Generate a collection of random points that are the center of a
+        hypersphere contained within the space.
 
         Note:
-            Uses the typical convention [0, space_i) for all space_i from space.
-            Applies the additional constraint [radius_i, space_i - radius_i).
+            Uses the typical convention [0, space_i) for all space_i from
+            space. Applies the additional constraint
+            [radius_i, space_i - radius_i).
 
         Args:
-            space(tuple of ints):                The size of the space where the points will lie.
+            space(tuple of ints):                The size of the space where
+                                                 the points will lie.
 
-            radii(list of numbers):              Additional radius for each point to remain away from the boundary.
+            radii(list of numbers):              Additional radius for each
+                                                 point to remain away from the
+                                                 boundary.
 
         Returns:
-            numpy.ndarray:                       An array with the random points each using a radius from radii to
-                                                 constrain itself. First index is which point. Second is which
+            numpy.ndarray:                       An array with the random
+                                                 points each using a radius
+                                                 from radii to constrain
+                                                 itself. First index is which
+                                                 point. Second is which
                                                  coordinate.
 
         Examples:
