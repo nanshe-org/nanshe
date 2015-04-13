@@ -1026,7 +1026,6 @@ class EnumeratedProjectionConstantRequest(object):
 
             slicing(tuple of slices):                        Slicing to be
                                                              returned.
-
     """
 
     @prof.log_call(trace_logger)
@@ -1749,7 +1748,6 @@ class MeanProjectionConstantSource(QObject):
 
             _shape(tuple of ints):                      The shape of the
                                                         source.
-
     """
 
     # TODO: Reshaping should probably be some sort of lazyflow operator and
@@ -1884,7 +1882,6 @@ class MeanProjectionConstantRequest(object):
 
             slicing(tuple of slices):                        Slicing to be
                                                              returned.
-
     """
 
     @prof.log_call(trace_logger)
