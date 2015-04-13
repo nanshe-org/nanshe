@@ -63,12 +63,16 @@ logger = prof.logging.getLogger(__name__)
 @prof.log_call(trace_logger)
 def generate_neurons_io_handler(input_filename, output_filename, parameters_filename):
     """
-        Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
-        dataset). Also,
+        Uses generate_neurons to process a input_filename (HDF5 dataset) and
+        outputs results to an output_filename (HDF5 dataset). Also,
 
         Args:
-            input_filename          HDF5 filename to read from (should be a path to a h5py.Dataset)
-            output_filename         HDF5 filename to write to (should be a path to a h5py.Group)
+            input_filename          HDF5 filename to read from (should be a
+                                    path to a h5py.Dataset)
+
+            output_filename         HDF5 filename to write to (should be a path
+                                    to a h5py.Group)
+
             parameters_filename     JSON filename with parameters.
     """
 
@@ -105,12 +109,16 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
 @prof.log_call(trace_logger)
 def generate_neurons_a_block(input_filename, output_filename, debug=False, **parameters):
     """
-        Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5
-        dataset). Also,
+        Uses generate_neurons to process a input_filename (HDF5 dataset) and
+        outputs results to an output_filename (HDF5 dataset).
 
         Args:
-            input_filename          HDF5 filename to read from (should be a path to a h5py.Dataset)
-            output_filename         HDF5 filename to write to (should be a path to a h5py.Group)
+            input_filename          HDF5 filename to read from (should be a
+                                    path to a h5py.Dataset)
+
+            output_filename         HDF5 filename to write to (should be a path
+                                    to a h5py.Group)
+
             parameters              how the run should be configured.
     """
 
@@ -920,7 +928,8 @@ def generate_neurons(original_images, run_stage="all", **parameters):
 @prof.log_call(trace_logger)
 def main(*argv):
     """
-        Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.
+        Simple main function (like in C). Takes all arguments (as from
+        sys.argv) and returns an exit status.
 
         Args:
             argv(list):     arguments (includes command line call).
