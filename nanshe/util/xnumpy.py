@@ -56,7 +56,8 @@ trace_logger = prof.getTraceLogger(__name__)
 @prof.log_call(trace_logger)
 def to_ctype(a_type):
     """
-        Takes a numpy.dtype or any type that can be converted to a numpy.dtype and returns its equivalent ctype.
+        Takes a numpy.dtype or any type that can be converted to a numpy.dtype
+        and returns its equivalent ctype.
 
         Args:
             a_type(type):      the type to find an equivalent ctype to.
@@ -88,16 +89,27 @@ def to_ctype(a_type):
 @prof.log_call(trace_logger)
 def renumber_label_image(new_array):
     """
-        Takes a label image with non-consecutive numbering and renumbers it to be consecutive.
-        Returns the relabeled image, a mapping from the old labels (by index) to the new ones,
-        and a mapping from the new labels back to the old labels.
+        Takes a label image with non-consecutive numbering and renumbers it to
+        be consecutive. Returns the relabeled image, a mapping from the old
+        labels (by index) to the new ones, and a mapping from the new labels
+        back to the old labels.
 
         Args:
-            new_array(numpy.ndarray):                               the label image.
+            new_array(numpy.ndarray):                               the label
+                                                                    image.
 
         Returns:
-            (numpy.ndarray, numpy.ndarray, numpy.ndarray):          the relabeled label image, the forward label mapping
-                                                                    and the reverse label mapping
+            (numpy.ndarray, numpy.ndarray, numpy.ndarray):          the
+                                                                    relabeled
+                                                                    label
+                                                                    image,
+                                                                    the
+                                                                    forward
+                                                                    label
+                                                                    mapping and
+                                                                    the reverse
+                                                                    label
+                                                                    mapping
 
         Examples:
             >>> renumber_label_image(numpy.array([1, 2, 3]))
@@ -150,16 +162,22 @@ def renumber_label_image(new_array):
 @prof.log_call(trace_logger)
 def index_axis_at_pos(new_array, axis, pos):
     """
-        Indexes an arbitrary axis to the given position, which may be an index, a slice, or any other NumPy allowed
-        indexing type. This will return a view.
+        Indexes an arbitrary axis to the given position, which may be an index,
+        a slice, or any other NumPy allowed indexing type. This will return a
+        view.
 
         Args:
-            new_array(numpy.ndarray):            array to add the singleton axis to.
-            axis(int):                           position for the axis to be in the final array.
-            pos(int or slice):                   how to index at the given axis.
+            new_array(numpy.ndarray):            array to add the singleton
+                                                 axis to.
+
+            axis(int):                           position for the axis to be in
+                                                 the final array.
+            pos(int or slice):                   how to index at the given
+                                                 axis.
 
         Returns:
-            (numpy.ndarray):                     a numpy array view of the original array.
+            (numpy.ndarray):                     a numpy array view of the
+                                                 original array.
 
         Examples:
             >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 0, 0).shape
@@ -191,7 +209,6 @@ def index_axis_at_pos(new_array, axis, pos):
 
             >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 2, 2)[0, 1, 3] = 19; a[0, 1, 2, 3] == 19
             True
-
     """
 
     # Rescale axis inside the bounds
@@ -218,15 +235,20 @@ def index_axis_at_pos(new_array, axis, pos):
 def add_singleton_axis_pos(a_array, axis=0):
     """
         Adds a singleton axis to the given position.
-        Allows negative values for axis.
-        Also, automatically bounds axis in an acceptable regime if it is not already.
+
+        Allows negative values for axis. Also, automatically bounds axis in an
+        acceptable regime if it is not already.
 
         Args:
-            a_array(numpy.ndarray):            array to add the singleton axis to.
-            axis(int):                         position for the axis to be in the final array (defaults to zero).
+            a_array(numpy.ndarray):            array to add the singleton axis
+                                               to.
+            axis(int):                         position for the axis to be in
+                                               the final array (defaults to
+                                               zero).
 
         Returns:
-            (numpy.ndarray):                   a numpy array with the singleton axis added (should be a view).
+            (numpy.ndarray):                   a numpy array with the singleton
+                                               axis added (should be a view).
 
         Examples:
             >>> add_singleton_axis_pos(numpy.ones((7,9,6))).shape
@@ -252,7 +274,6 @@ def add_singleton_axis_pos(a_array, axis=0):
 
             >>> add_singleton_axis_pos(numpy.ones((7,9,6)), -2).shape
             (7, 9, 1, 6)
-
     """
 
     # Clean up axis to be within the allowable range.
@@ -277,10 +298,13 @@ def add_singleton_axis_beginning(new_array):
         Adds a singleton axis to the beginning of the array.
 
         Args:
-            new_array(numpy.ndarray):            array to add the singleton axis to.
+            new_array(numpy.ndarray):            array to add the singleton
+                                                 axis to.
 
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be view)
+            (numpy.ndarray):                     a numpy array with the
+                                                 singleton axis added at the
+                                                 end (should be view)
 
         Examples:
             >>> add_singleton_axis_beginning(numpy.ones((7,9,6))).shape
@@ -288,7 +312,6 @@ def add_singleton_axis_beginning(new_array):
 
             >>> add_singleton_axis_beginning(numpy.eye(3)).shape
             (1, 3, 3)
-
     """
 
     # return( new_array[None] )
@@ -301,10 +324,13 @@ def add_singleton_axis_end(new_array):
         Adds a singleton axis to the end of the array.
 
         Args:
-            new_array(numpy.ndarray):            array to add the singleton axis to.
+            new_array(numpy.ndarray):            array to add the singleton
+                                                 axis to.
 
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be view)
+            (numpy.ndarray):                     a numpy array with the
+                                                 singleton axis added at the
+                                                 end (should be view)
 
         Examples:
             >>> add_singleton_axis_end(numpy.ones((7,9,6))).shape
@@ -312,7 +338,6 @@ def add_singleton_axis_end(new_array):
 
             >>> add_singleton_axis_end(numpy.eye(3)).shape
             (3, 3, 1)
-
     """
 
     # return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )
@@ -322,20 +347,28 @@ def add_singleton_axis_end(new_array):
 @prof.log_call(trace_logger)
 def squish(new_array, axis=None, keepdims=False):
     """
-        Moves the given axes to the last dimensions of the array and then squishes them into one dimension.
+        Moves the given axes to the last dimensions of the array and then
+        squishes them into one dimension.
 
         Note:
-            Returns a view if possible. However, if the axes provided are not consecutive integers when placed in the
-            range [0, new_array.ndim), due to reshaping, the returned array will be a copy.
+            Returns a view if possible. However, if the axes provided are not
+            consecutive integers when placed in the range [0, new_array.ndim),
+            due to reshaping, the returned array will be a copy.
 
         Args:
-            new_array(numpy.ndarray):           array to find the max (subject to the absolute value).
+            new_array(numpy.ndarray):           array to find the max (subject
+                                                to the absolute value).
+
             axis(int or collection of ints):    desired axes to squish.
-            keepdims(bool):                     ensure the number of dimensions is the same plus one by inserting
-                                                singleton dimensions at all the axes squished.
+            keepdims(bool):                     ensure the number of dimensions
+                                                is the same plus one by
+                                                inserting singleton dimensions
+                                                at all the axes squished.
 
         Returns:
-            (numpy.ndarray):                    an array with one dimension at the end containing all the given axes.
+            (numpy.ndarray):                    an array with one dimension at
+                                                the end containing all the
+                                                given axes.
 
         Examples:
             >>> a = numpy.arange(24).reshape(2,3,4).copy(); a
@@ -476,15 +509,24 @@ def squish(new_array, axis=None, keepdims=False):
 @prof.log_call(trace_logger)
 def unsquish(new_array, shape, axis=None):
     """
-        Inverts the squish operation given the shape and the axis/axes to extract from the last dimension.
+        Inverts the squish operation given the shape and the axis/axes to
+        extract from the last dimension.
 
         Args:
-            new_array(numpy.ndarray):           array to find the max (subject to the absolute value).
-            shape(collection of ints):          should be the shape of the result array (or the array before squishing).
-            axis(int or collection of ints):    desired axes to remove from the last axis.
+            new_array(numpy.ndarray):           array to find the max (subject
+                                                to the absolute value).
+
+            shape(collection of ints):          should be the shape of the
+                                                result array (or the array
+                                                before squishing).
+
+            axis(int or collection of ints):    desired axes to remove from the
+                                                last axis.
 
         Returns:
-            (numpy.ndarray):                    an array with the shape provided and the axes removed from the end.
+            (numpy.ndarray):                    an array with the shape
+                                                provided and the axes removed
+                                                from the end.
 
         Examples:
             >>> a = numpy.arange(24).reshape(2,3,4).copy(); a
@@ -717,20 +759,29 @@ def unsquish(new_array, shape, axis=None):
 @prof.log_call(trace_logger)
 def add_singleton_op(op, new_array, axis):
     """
-        Performs an operation on the given array on the specified axis, which otherwise would have eliminated the axis
-        in question. This function will instead ensure that the given axis remains after the operation as a singleton.
+        Performs an operation on the given array on the specified axis, which
+        otherwise would have eliminated the axis in question. This function
+        will instead ensure that the given axis remains after the operation as
+        a singleton.
 
         Note:
-            The operation must be able to take only two arguments where the first is the array and the second is the
-            axis to apply the operation along.
+            The operation must be able to take only two arguments where the
+            first is the array and the second is the axis to apply the
+            operation along.
 
         Args:
-            op(callable):                 callable that takes a numpy.ndarray and an int in order.
-            new_array(numpy.ndarray):     array to perform operation on and add singleton axis too.
-            axis(int):                    the axis to apply the operation along and turn into a singleton.
+            op(callable):                 callable that takes a numpy.ndarray
+                                          and an int in order.
+
+            new_array(numpy.ndarray):     array to perform operation on and add
+                                          singleton axis too.
+
+            axis(int):                    the axis to apply the operation along
+                                          and turn into a singleton.
 
         Returns:
-            (numpy.ndarray):              the array with the operation performed.
+            (numpy.ndarray):              the array with the operation
+                                          performed.
 
         Examples:
             >>> add_singleton_op(numpy.max, numpy.ones((7,9,6)), 0).shape
@@ -752,17 +803,22 @@ def add_singleton_op(op, new_array, axis):
 @prof.log_call(trace_logger)
 def roll(new_array, shift, out=None, to_mask=False):
     """
-        Like numpy.roll, but generalizes to include a roll for each axis of new_array.
+        Like numpy.roll, but generalizes to include a roll for each axis of
+        new_array.
 
         Note:
             Right shift occurs with a positive and left occurs with a negative.
 
         Args:
             new_array(numpy.ndarray):     array to roll axes of.
-            shift(container of ints):     some sort of container (list, tuple, array) of ints specifying how much to
+            shift(container of ints):     some sort of container (list, tuple,
+                                          array) of ints specifying how much to
                                           roll each axis.
+
             out(numpy.ndarray):           array to store the results in.
-            to_mask(bool):                Makes the result a masked array with the portion that rolled off masked.
+
+            to_mask(bool):                Makes the result a masked array with
+                                          the portion that rolled off masked.
 
         Returns:
             out(numpy.ndarray):           result of the roll.
@@ -1038,14 +1094,17 @@ def roll(new_array, shift, out=None, to_mask=False):
 @prof.log_call(trace_logger)
 def contains(new_array, to_contain):
     """
-        Gets a mask array that is true every time something from to_contain appears in new_array.
+        Gets a mask array that is true every time something from to_contain
+        appears in new_array.
 
         Args:
             new_array(numpy.ndarray):            array to check for matches.
             to_contain(array_like):              desired matches to find.
 
         Returns:
-            (numpy.ndarray):                     a mask for new_array that selects values from to_contain.
+            (numpy.ndarray):                     a mask for new_array that
+                                                 selects values from
+                                                 ``to_contain``.
 
         Examples:
             >>> contains(numpy.zeros((2,2)), 0)
@@ -1086,18 +1145,31 @@ def contains(new_array, to_contain):
 @prof.log_call(trace_logger)
 def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
-        Takes the min of the given array subject to the absolute value (magnitude for complex numbers).
+        Takes the min of the given array subject to the absolute value
+        (magnitude for complex numbers).
 
         Args:
-            new_array(numpy.ndarray):            array to find the min (subject to the absolute value).
+            new_array(numpy.ndarray):            array to find the min (subject
+                                                 to the absolute value).
+
             axis(int):                           desired matches to find.
-            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton
-                                                 dimensions at all the axes squished (excepting the last one).
-            return_indices(bool):                whether to return the indices of the mins in addition to the mins.
+
+            keepdims(bool):                      ensure the number of
+                                                 dimensions is the same by
+                                                 inserting singleton dimensions
+                                                 at all the axes squished
+                                                 (excepting the last one).
+
+            return_indices(bool):                whether to return the indices
+                                                 of the mins in addition to the
+                                                 mins.
 
         Returns:
-            (tuple of numpy.ndarray):            an array or value that is the smallest (subject to the absolute value)
-                                                 or if `return_indices` the indices corresponding to the smallest
+            (tuple of numpy.ndarray):            an array or value that is the
+                                                 smallest (subject to the
+                                                 absolute value) or if
+                                                 ``return_indices`` the indices
+                                                 corresponding to the smallest
                                                  value(s), as well.
 
         Examples:
@@ -1186,18 +1258,30 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
 @prof.log_call(trace_logger)
 def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
-        Takes the min of the given array subject to the absolute value (magnitude for complex numbers).
+        Takes the min of the given array subject to the absolute value
+        (magnitude for complex numbers).
 
         Args:
-            new_array(numpy.ndarray):            array to find the min (subject to the absolute value).
+            new_array(numpy.ndarray):            array to find the min (subject
+                                                 to the absolute value).
+
             axis(int):                           desired matches to find.
-            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton
-                                                 dimensions at all the axes squished (excepting the last one).
-            return_indices(bool):                whether to return the indices of the mins in addition to the mins.
+            keepdims(bool):                      ensure the number of
+                                                 dimensions is the same by
+                                                 inserting singleton dimensions
+                                                 at all the axes squished
+                                                 (excepting the last one).
+
+            return_indices(bool):                whether to return the indices
+                                                 of the mins in addition to the
+                                                 mins.
 
         Returns:
-            (tuple of numpy.ndarray):            an array or value that is the smallest (subject to the absolute value)
-                                                 or if `return_indices` the indices corresponding to the smallest
+            (tuple of numpy.ndarray):            an array or value that is the
+                                                 smallest (subject to the
+                                                 absolute value) or if
+                                                 ``return_indices`` the indices
+                                                 corresponding to the smallest
                                                  value(s), as well.
 
         Examples:
@@ -1289,18 +1373,32 @@ def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
 @prof.log_call(trace_logger)
 def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
-        Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
+        Takes the max of the given array subject to the absolute value
+        (magnitude for complex numbers).
 
         Args:
-            new_array(numpy.ndarray):            array to find the max (subject to the absolute value).
+            new_array(numpy.ndarray):            array to find the max (subject
+                                                 to the absolute value).
+
             axis(int):                           desired matches to find.
-            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton
-                                                 dimensions at all the axes squished (excepting the last one).
-            return_indices(bool):                whether to return the indices of the maxes in addition to the maxes.
+
+            keepdims(bool):                      ensure the number of
+                                                 dimensions is the same by
+                                                 inserting singleton
+                                                 dimensions at all the axes
+                                                 squished (excepting the last
+                                                 one).
+
+            return_indices(bool):                whether to return the indices
+                                                 of the maxes in addition to
+                                                 the maxes.
 
         Returns:
-            (tuple of numpy.ndarray):            an array or value that is the largest (subject to the absolute value)
-                                                 or if `return_indices` the indices corresponding to the largest
+            (tuple of numpy.ndarray):            an array or value that is the
+                                                 largest (subject to the
+                                                 absolute value) or if
+                                                 ``return_indices`` the indices
+                                                 corresponding to the largest
                                                  value(s), as well.
 
         Examples:
@@ -1389,18 +1487,31 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
 @prof.log_call(trace_logger)
 def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
     """
-        Takes the max of the given array subject to the absolute value (magnitude for complex numbers).
+        Takes the max of the given array subject to the absolute value
+        (magnitude for complex numbers).
 
         Args:
-            new_array(numpy.ndarray):            array to find the max (subject to the absolute value).
+            new_array(numpy.ndarray):            array to find the max (subject
+                                                 to the absolute value).
+
             axis(int):                           desired matches to find.
-            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton
-                                                 dimensions at all the axes squished (excepting the last one).
-            return_indices(bool):                whether to return the indices of the maxes in addition to the maxes.
+
+            keepdims(bool):                      ensure the number of
+                                                 dimensions is the same by
+                                                 inserting singleton dimensions
+                                                 at all the axes squished
+                                                 (excepting the last one).
+
+            return_indices(bool):                whether to return the indices
+                                                 of the maxes in addition to
+                                                 the maxes.
 
         Returns:
-            (tuple of numpy.ndarray):            an array or value that is the largest (subject to the absolute value)
-                                                 or if `return_indices` the indices corresponding to the largest
+            (tuple of numpy.ndarray):            an array or value that is the
+                                                 largest (subject to the
+                                                 absolute value) or if
+                                                 ``return_indices`` the indices
+                                                 corresponding to the largest
                                                  value(s), as well.
 
         Examples:
@@ -1495,10 +1606,11 @@ def array_to_matrix(a):
         Flattens an array so that the row is the only original shape kept.
 
         Args:
-            a(numpy.ndarray):                The array to flatten partially
+            a(numpy.ndarray):                The array to flatten, partially.
 
         Returns:
-            (numpy.ndarray):                 The matrix version of the array after flattening.
+            (numpy.ndarray):                 The matrix version of the array
+                                             after flattening.
 
         Examples:
             >>> array_to_matrix(numpy.eye(3))
@@ -1520,7 +1632,6 @@ def array_to_matrix(a):
 
             >>> array_to_matrix(numpy.zeros((0, 4, 3, 2)))
             array([], shape=(0, 24), dtype=float64)
-
     """
 
     return(a.reshape(a.shape[0], functools.reduce(operator.mul, a.shape[1:])))
@@ -1529,16 +1640,21 @@ def array_to_matrix(a):
 @prof.log_call(trace_logger)
 def index_array_to_bool_array(index_array, shape):
     """
-        Creates a bool array mask that has each value from the index array as True.
-        All other values are False. Requires a shape be specified to create the
-        bool array.
+        Creates a bool array mask that has each value from the index array as
+        True. All other values are False. Requires a shape be specified to
+        create the bool array.
 
         Args:
-            index_array(numpy.ndarray of ints):     The index array with the indices to use
-            shape(tuple of ints):                   The shape to give the bool_array
+            index_array(numpy.ndarray of ints):     The index array with the
+                                                    indices to use.
+
+            shape(tuple of ints):                   The shape to give the bool
+                                                    array.
 
         Returns:
-            (numpy.ndarray):                        The bool array with selected indices as True rest are False.
+            (numpy.ndarray):                        The bool array with
+                                                    selected indices as True
+                                                    and the rest are False.
 
         Examples:
             >>> index_array_to_bool_array((numpy.arange(5),), (5,))
@@ -1563,21 +1679,28 @@ def index_array_to_bool_array(index_array, shape):
 @prof.log_call(trace_logger)
 def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
     """
-        Behaves like NumPy tile except that it always returns a view and not a copy.
-        Though, it differs in that additional dimensions are added for repetition as
-        opposed to repeating in the same one. Also, it allows repetitions to be
-        specified before or after unlike tile. Though, will behave identical to
-        tile if the keyword is not specified.
+        Behaves like NumPy tile except that it always returns a view and not a
+        copy. Though, it differs in that additional dimensions are added for
+        repetition as opposed to repeating in the same one. Also, it allows
+        repetitions to be specified before or after unlike tile. Though, will
+        behave identical to tile if the keyword is not specified.
 
         Uses strides to trick NumPy into providing a view.
 
         Args:
             new_array(numpy.ndarray):            array to tile.
-            reps_after(tuple):                   repetitions dimension size to add before (if int will turn into tuple).
-            reps_before(tuple):                  repetitions dimension size to add after (if int will turn into tuple).
+
+            reps_after(tuple):                   repetitions dimension size to
+                                                 add before (if int will turn
+                                                 into tuple).
+
+            reps_before(tuple):                  repetitions dimension size to
+                                                 add after (if int will turn
+                                                 into tuple).
 
         Returns:
-            (numpy.ndarray):                     a view of a numpy array with tiling in various dimension.
+            (numpy.ndarray):                     a view of a numpy array with
+                                                 tiling in various dimension.
 
         Examples:
             >>> numpy.arange(6).reshape(2,3)
@@ -1752,7 +1875,6 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
             <BLANKLINE>
                     [[0, 1, 2],
                      [3, 4, 5]]]])
-
     """
 
     if not isinstance(reps_after, tuple):
@@ -1775,20 +1897,34 @@ def expand_arange(start,
                   reps_before=tuple(),
                   reps_after=tuple()):
     """
-        Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a
-        larger cube.
+        Much like ``numpy.arange`` except that it applies expand_view
+        afterwards to get a view of the same range in a larger hyperrectangle.
 
         This is very useful for situations where broadcasting is desired.
 
         Args:
-            start(int):                          starting point (or stopping point if only one is specified).
-            stop(int):                           stopping point (if the starting point is specified) (0 by default).
-            step(int):                           size of steps to take between value (1 by default).
-            reps_after(tuple):                   repetitions dimension size to add before (if int will turn into tuple).
-            reps_before(tuple):                  repetitions dimension size to add after (if int will turn into tuple).
+            start(int):                          starting point (or stopping
+                                                 point if only one is
+                                                 specified).
+
+            stop(int):                           stopping point (if the
+                                                 starting point is specified)
+                                                 (0 by default).
+
+            step(int):                           size of steps to take between
+                                                 value (1 by default).
+
+            reps_after(tuple):                   repetitions dimension size to
+                                                 add before (if int will turn
+                                                 into tuple).
+
+            reps_before(tuple):                  repetitions dimension size to
+                                                 add after (if int will turn
+                                                 into tuple).
 
         Returns:
-            (numpy.ndarray):                     a view of a numpy arange with tiling in various dimension.
+            (numpy.ndarray):                     a view of a numpy arange with
+                                                 tiling in various dimension.
 
         Examples:
             >>> expand_arange(3, reps_before=3)
@@ -1827,7 +1963,6 @@ def expand_arange(start,
                     [1, 1],
                     [2, 2],
                     [3, 3]]])
-
     """
 
     if (stop is None):
@@ -1845,19 +1980,26 @@ def expand_arange(start,
 
 def expand_enumerate(new_array, axis=0, start=0, step=1):
     """
-        Builds on expand_arange, which has the same shape as the original array. Specifies the increments to occur along
-        the given axis, which by default is the zeroth axis.
+        Builds on expand_arange, which has the same shape as the original
+        array. Specifies the increments to occur along the given axis, which by
+        default is the zeroth axis.
 
-        Provides mechanisms for changing the starting value and also the increment.
+        Provides mechanisms for changing the starting value and also the
+        increment.
 
         Args:
             new_array(numpy.ndarray):            array to enumerate
-            axis(int):                           axis to enumerate along (0 by default).
+
+            axis(int):                           axis to enumerate along (0 by
+                                                 default).
             start(int):                          starting point (0 by default).
-            step(int):                           size of steps to take between value (1 by default).
+
+            step(int):                           size of steps to take between
+                                                 value (1 by default).
 
         Returns:
-            (numpy.ndarray):                     a view of a numpy arange with tiling in various dimension.
+            (numpy.ndarray):                     a view of a numpy arange with
+                                                 tiling in various dimension.
 
         Examples:
             >>> expand_enumerate(numpy.ones((4,5)))
@@ -1901,7 +2043,6 @@ def expand_enumerate(new_array, axis=0, start=0, step=1):
                    [1, 3, 5, 7, 9],
                    [1, 3, 5, 7, 9],
                    [1, 3, 5, 7, 9]], dtype=uint64)
-
     """
 
     an_enumeration = expand_arange(
@@ -1918,15 +2059,18 @@ def expand_enumerate(new_array, axis=0, start=0, step=1):
 
 def enumerate_masks(new_masks, axis=0):
     """
-        Takes a mask stack and replaces them by an enumerated stack. In other words, each mask is replaced by a
-        consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)).
+        Takes a mask stack and replaces them by an enumerated stack. In other
+        words, each mask is replaced by a consecutive integer (starts with 1
+        and proceeds to the length of the given axis (0 by default)).
 
         Note:
-            The masks could be recreated by finding the values not equal to zero.
+            The masks could be recreated by finding the values not equal to
+            zero.
 
         Args:
             new_masks(numpy.ndarray):            masks to enumerate
-            axis(int):                           axis to enumerate along (0 by default).
+            axis(int):                           axis to enumerate along (0 by
+                                                 default).
 
         Returns:
             (numpy.ndarray):                     an enumerated stack.
@@ -1994,16 +2138,21 @@ def enumerate_masks(new_masks, axis=0):
 
 def enumerate_masks_max(new_masks, axis=0):
     """
-        Takes a mask stack and replaces them by the max of an enumerated stack. In other words, each mask is replaced by
-        a consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)). Afterwards,
-        the max is taken along the given axis. However, a singleton dimension is left on the original axis.
+        Takes a mask stack and replaces them by the max of an enumerated stack.
+        In other words, each mask is replaced by a consecutive integer (starts
+        with 1 and proceeds to the length of the given axis (0 by default)).
+        Afterwards, the max is taken along the given axis. However, a singleton
+        dimension is left on the original axis.
 
         Note:
-            The masks could be recreated by finding the values not equal to zero.
+            The masks could be recreated by finding the values not equal to
+            zero.
 
         Args:
             new_masks(numpy.ndarray):            masks to enumerate
-            axis(int):                           axis to enumerate along (0 by default).
+
+            axis(int):                           axis to enumerate along (0 by
+                                                 default).
 
         Returns:
             (numpy.ndarray):                     an enumerated stack.
@@ -2065,10 +2214,17 @@ def cartesian_product(arrays):
         Takes the cartesian product between the elements in each array.
 
         Args:
-            arrays(collections.Sequence of numpy.ndarrays):     A sequence of 1-D arrays or a 2-D array.
+            arrays(collections.Sequence of numpy.ndarrays):     A sequence of
+                                                                1-D arrays or a
+                                                                2-D array.
 
         Returns:
-            (numpy.ndarray):                                    an array containing the result of the cartesian product of each array.
+            (numpy.ndarray):                                    an array
+                                                                containing the
+                                                                result of the
+                                                                cartesian
+                                                                product of each
+                                                                array.
 
         Examples:
             >>> cartesian_product([numpy.arange(2), numpy.arange(3)])
@@ -2174,14 +2330,19 @@ def cartesian_product(arrays):
 @prof.log_call(trace_logger)
 def truncate_masked_frames(shifted_frames):
     """
-        Takes frames that have been shifted and truncates out the portion, which is an intact rectangular shape.
+        Takes frames that have been shifted and truncates out the portion,
+        which is an intact rectangular shape.
 
         Args:
-            shifted_frames(numpy.ma.masked_array):      Image stack to register (time is the first dimension uses
-                                                        C-order tyx or tzyx).
+            shifted_frames(numpy.ma.masked_array):      Image stack to register
+                                                        (time is the first
+                                                        dimension uses C-order
+                                                        tyx or tzyx).
 
         Returns:
-            (numpy.ndarray):                            an array containing a subsection of the stack that has no mask.
+            (numpy.ndarray):                            an array containing a
+                                                        subsection of the stack
+                                                        that has no mask.
 
         Examples:
             >>> a = numpy.arange(60).reshape(3,5,4);
@@ -2285,12 +2446,14 @@ def truncate_masked_frames(shifted_frames):
 def all_permutations_operation(new_op, new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
-        of new_op on every permutation of elements in each array (like broadcasting).
+        of new_op on every permutation of elements in each array (like
+        broadcasting).
 
         Suppose that new_result contained the result, then one would find that
-        the result of the following operation on the specific indicies
+        the result of the following operation on the specific indices.
 
-        new_op( new_array_1[ i_1_1, i_1_2, ... ], new_array_2[ i_2_1, i_2_2, ... ] )
+        new_op( new_array_1[ i_1_1, i_1_2, ... ],
+        new_array_2[ i_2_1, i_2_2, ... ] )
 
         would be found in new_result as shown
 
@@ -2298,10 +2461,13 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
 
 
         Args:
-            new_array(numpy.ndarray):            array to add the singleton axis to.
+            new_array(numpy.ndarray):            array to add the singleton
+                                                 axis to.
 
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end.
+            (numpy.ndarray):                     a numpy array with the
+                                                 singleton axis added at the
+                                                 end.
 
         Examples:
             >>> all_permutations_operation(operator.add, numpy.ones((1,3)), numpy.eye(2)).shape
@@ -2365,7 +2531,6 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
             <BLANKLINE>
                     [[-1.,  0.],
                      [ 0., -1.]]]])
-
     """
 
     new_array_1_tiled = expand_view(new_array_1, reps_after=new_array_2.shape)
@@ -2378,12 +2543,14 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
 def all_permutations_equal(new_array_1, new_array_2):
     """
         Takes two arrays and constructs a new array that contains the result
-        of equality comparison on every permutation of elements in each array (like broadcasting).
+        of equality comparison on every permutation of elements in each array
+        (like broadcasting).
 
         Suppose that new_result contained the result, then one would find that
-        the result of the following operation on the specific indicies
+        the result of the following operation on the specific indices
 
-        new_op( new_array_1[ i_1_1, i_1_2, ... ], new_array_2[ i_2_1, i_2_2, ... ] )
+        new_op( new_array_1[ i_1_1, i_1_2, ... ],
+        new_array_2[ i_2_1, i_2_2, ... ] )
 
         would be found in new_result as shown
 
@@ -2391,10 +2558,13 @@ def all_permutations_equal(new_array_1, new_array_2):
 
 
         Args:
-            new_array(numpy.ndarray):            array to add the singleton axis to.
+            new_array(numpy.ndarray):            array to add the singleton
+                                                 axis to.
 
         Returns:
-            (numpy.ndarray):                     a numpy array with the singleton axis added at the end.
+            (numpy.ndarray):                     a numpy array with the
+                                                 singleton axis added at the
+                                                 end.
 
         Examples:
             >>> all_permutations_equal(numpy.ones((1,3)), numpy.eye(2)).shape
@@ -2476,7 +2646,6 @@ def all_permutations_equal(new_array_1, new_array_2):
             <BLANKLINE>
                     [[False,  True],
                      [False, False]]]], dtype=bool)
-
     """
 
     return(all_permutations_operation(operator.eq, new_array_1, new_array_2))
@@ -2484,7 +2653,7 @@ def all_permutations_equal(new_array_1, new_array_2):
 
 class NotNumPyStructuredArrayType(Exception):
     """
-        Designed for being thrown if a NumPy Structured Array is recieved.
+        Designed for being thrown if a NumPy Structured Array is received.
     """
     pass
 
@@ -2497,7 +2666,8 @@ def numpy_structured_array_dtype_generator(new_array):
         (for the given name).
 
         Args:
-            new_array(numpy.ndarray):       the array to get the info dtype from.
+            new_array(numpy.ndarray):       the array to get the info dtype
+                                            from.
 
         Raises:
             (NotNumPyStructuredArrayType):  if it is a normal NumPy array.
@@ -2525,16 +2695,18 @@ def numpy_structured_array_dtype_generator(new_array):
 @prof.log_call(trace_logger)
 def numpy_structured_array_dtype_list(new_array):
     """
-        Takes any NumPy array and returns either a list for a NumPy structured array
-        via numpy_structured_array_dtype_generator or if it is a normal NumPy array
-        it returns the type used.
+        Takes any NumPy array and returns either a list for a NumPy structured
+        array via numpy_structured_array_dtype_generator or if it is a normal
+        NumPy array it returns the type used.
 
         Args:
-            new_array(numpy.ndarray):       the array to get the dtype info from.
+            new_array(numpy.ndarray):       the array to get the dtype info
+                                            from.
 
         Returns:
-            (list or type):                 something that can be given to numpy.dtype
-                                            to obtain the new_array.dtype, but is more
+            (list or type):                 something that can be given to
+                                            numpy.dtype to obtain the
+                                            new_array.dtype, but is more
                                             malleable than a numpy.dtype.
     """
 
@@ -2544,14 +2716,16 @@ def numpy_structured_array_dtype_list(new_array):
 @prof.log_call(trace_logger)
 def dot_product(new_vector_set_1, new_vector_set_2):
     """
-        Determines the dot product between the two pairs of vectors from each set.
+        Determines the dot product between the two pairs of vectors from each
+        set.
 
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
             new_vector_set_2(numpy.ndarray):      second set of vectors.
 
         Returns:
-            (numpy.ndarray):                      an array with the distances between each pair of vectors.
+            (numpy.ndarray):                      an array with the distances
+                                                  between each pair of vectors.
 
         Examples:
             >>> (dot_product(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
@@ -2600,7 +2774,8 @@ def pair_dot_product(new_vector_set):
             new_vector_set(numpy.ndarray):        set of vectors.
 
         Returns:
-            (numpy.ndarray):                      an array with the distances between each pair of vectors.
+            (numpy.ndarray):                      an array with the distances
+                                                  between each pair of vectors.
 
         Examples:
             >>> (pair_dot_product(numpy.eye(2)) == numpy.eye(2)).all()
@@ -2637,12 +2812,17 @@ def norm(new_vector_set, ord=2):
         Determines the norm of a vector or a set of vectors.
 
         Args:
-            new_vector_set(numpy.ndarray):        either a single vector or a set of vectors (matrix).
-            ord(optional):                        basically the same arguments as numpy.linalg.norm
-                                                  (though some are redundant here).
+            new_vector_set(numpy.ndarray):        either a single vector or a
+                                                  set of vectors (matrix).
+
+            ord(optional):                        basically the same arguments
+                                                  as numpy.linalg.norm
+                                                  (though some are redundant
+                                                  here).
 
         Returns:
-            (numpy.ndarray):                      an array with the norms of all vectors in the set.
+            (numpy.ndarray):                      an array with the norms of
+                                                  all vectors in the set.
 
         Examples:
             >>> norm(numpy.array([ 1,  0]), 2).ndim
@@ -2724,16 +2904,30 @@ def norm(new_vector_set, ord=2):
 @prof.log_call(trace_logger)
 def threshold_array(an_array, threshold, include_below=True, is_closed=True):
     """
-        Given a threshold, this function compares the given array to it to see which entries match.
+        Given a threshold, this function compares the given array to it to see
+        which entries match.
 
         Args:
-            an_array(numpy.ndarray):                          an array to threshold.
-            threshold(int or float or numpy.ndarray):         something to compare to.
-            include_below(bool):                              whether values below the threshold count or ones above it.
-            is_closed(bool):                                  whether to include values equal to the threshold
+            an_array(numpy.ndarray):                          an array to
+                                                              threshold.
+
+            threshold(int or float or numpy.ndarray):         something to
+                                                              compare to.
+
+            include_below(bool):                              whether values
+                                                              below the
+                                                              threshold count
+                                                              or ones above it.
+
+            is_closed(bool):                                  whether to
+                                                              include values
+                                                              equal to the
+                                                              threshold
 
         Returns:
-            out(numpy.ndarray):                               a mask of entries reflecting the threshold.
+            out(numpy.ndarray):                               a mask of entries
+                                                              reflecting the
+                                                              threshold.
 
         Examples:
             >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)
@@ -2790,7 +2984,8 @@ def threshold_array(an_array, threshold, include_below=True, is_closed=True):
 @prof.log_call(trace_logger)
 def unique_mapping(mapping, out=None):
     """
-        Take a binary mapping between two sets and excludes portions of the mapping that are not one-to-one.
+        Take a binary mapping between two sets and excludes portions of the
+        mapping that are not one-to-one.
 
         Args:
             mapping(numpy.ndarray):      bool array mapping between to sets.
@@ -2869,16 +3064,29 @@ def unique_mapping(mapping, out=None):
 @prof.log_call(trace_logger)
 def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
     """
-        Given a threshold, this function finds which entries uniquely match given the threshold.
+        Given a threshold, this function finds which entries uniquely match
+        given the threshold.
 
         Args:
-            a_metric(numpy.ndarray):                          an array to threshold.
-            threshold(int or float or numpy.ndarray):         something to compare to.
-            include_below(bool):                              whether values below the threshold count or ones above it.
-            is_closed(bool):                                  whether to include values equal to the threshold
+            a_metric(numpy.ndarray):                          an array to
+                                                              threshold.
+
+            threshold(int or float or numpy.ndarray):         something to
+                                                              compare to.
+
+            include_below(bool):                              whether values
+                                                              below the
+                                                              threshold count
+                                                              or ones above it.
+
+            is_closed(bool):                                  whether to
+                                                              include values
+                                                              equal to the
+                                                              threshold
 
         Returns:
-            out(numpy.ndarray):                               a mapping of unique matches.
+            out(numpy.ndarray):                               a mapping of
+                                                              unique matches.
 
         Examples:
             >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)
@@ -2929,19 +3137,27 @@ def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
 @prof.log_call(trace_logger)
 def compute_mapping_matches(mapping):
     """
-        Given a mapping this function computes number of matches and mismatches found.
+        Given a mapping this function computes number of matches and mismatches
+        found.
 
-        In the array returned, first value is the number of true positives (or matches) and then mismatches along each
-        dimension of the mapping in order.
+        In the array returned, first value is the number of true positives (or
+        matches) and then mismatches along each dimension of the mapping in
+        order.
 
-        If axis 0 is the ground truth, then the second and third values are the number of false negatives (or misses)
-        and false positives (or false alarm)
+        If axis 0 is the ground truth, then the second and third values are the
+        number of false negatives (or misses) and false positives (or false
+        alarm)
 
         Args:
-            mapping(numpy.ndarray):                           a 2D bool array mapping intersections between 2 groups.
+            mapping(numpy.ndarray):                           a 2D bool array
+                                                              mapping
+                                                              intersections
+                                                              between 2 groups.
 
         Returns:
-            out(numpy.ndarray):                               Counts of the number of matches and mismatches.
+            out(numpy.ndarray):                               Counts of the
+                                                              number of matches
+                                                              and mismatches.
 
         Examples:
             >>> compute_mapping_matches(numpy.arange(6).reshape(2,3) < 0)
@@ -2977,18 +3193,29 @@ def compute_mapping_relevance(mapping):
     """
         Given a mapping this function computes the recall and precision.
 
-        If axis 0 is the ground truth, then the returned values are the recall and precision in order.
-        If axis 1 is the ground truth, then they are flipped.
+        If axis 0 is the ground truth, then the returned values are the recall
+        and precision in order. If axis 1 is the ground truth, then they are
+        flipped.
 
         Args:
-            mapping(numpy.ndarray):                       a 2D bool array mapping intersections between 2 groups.
+            mapping(numpy.ndarray):            a 2D bool array mapping
+                                               intersections between 2 groups.
 
         Returns:
-            relevance(tuple of floats):                   relevance - a combination of recall and precision
-                                                              recall    -   the ratio of relevant predicted positives
-                                                                            out of all relevant positives.
-                                                              precision -   the ratio of relevant predicted positives
-                                                                            out of all predicted positives.
+            relevance(tuple of floats):        relevance - a combination of
+                                                           recall and precision
+                                                   recall    - the ratio of
+                                                               relevant
+                                                               predicted
+                                                               positives out of
+                                                               all relevant
+                                                               positives.
+                                                   precision - the ratio of
+                                                               relevant
+                                                               predicted
+                                                               positives out of
+                                                               all predicted
+                                                               positives.
 
         Examples:
             >>> compute_mapping_relevance(numpy.arange(6).reshape(2,3) < 0)
@@ -3102,7 +3329,8 @@ def find_relative_offsets(points, center=None, out=None):
 @prof.log_call(trace_logger)
 def find_shortest_wraparound(points, shape, out=None):
     """
-        Compute the smallest values for the points given periodic boundary conditions.
+        Compute the smallest values for the points given periodic boundary
+        conditions.
 
         Args:
             points(numpy.ndarray):       a set of integer points (NxD) where N
@@ -3237,18 +3465,21 @@ def find_shortest_wraparound(points, shape, out=None):
 @prof.log_call(trace_logger)
 def matrix_reduced_op(a, b, op):
     """
-        Sort of like numpy.dot. However, it will use the first axis with both arrays.
-        This means they may not need to be matrices. However, they must have the same number of dimensions. Generally,
-        though not explicitly required, the operator will likely expect every dimension other than the first to be the
-        same shape.
+        Sort of like numpy.dot. However, it will use the first axis with both
+        arrays. This means they may not need to be matrices. However, they must
+        have the same number of dimensions. Generally, though not explicitly
+        required, the operator will likely expect every dimension other than
+        the first to be the same shape.
 
         Args:
             a(numpy.ndarray):      first array.
             b(numpy.ndarray):      second array.
-            op(callable):          an operator that will take a[i] and b[j] as arguments and return a scalar.
+            op(callable):          an operator that will take a[i] and b[j] as
+                                   arguments and return a scalar.
 
         Returns:
-            out(numpy.ndarray):    an array (matrix) with the shape (len(a), len(b)) with each element out[i, j] the
+            out(numpy.ndarray):    an array (matrix) with the shape (len(a),
+                                   len(b)) with each element out[i, j] the
                                    result of op(a[i], b[j]).
 
         Examples:
@@ -3334,7 +3565,8 @@ def masks_intersection(a, b):
             b(numpy.ndarray):      second mask.
 
         Returns:
-            out(numpy.ndarray):    a mask that is only True where both masks are.
+            out(numpy.ndarray):    a mask that is only True where both masks
+                                   are.
 
         Examples:
             >>> masks_intersection(numpy.eye(2).astype(bool),
@@ -3467,14 +3699,16 @@ def masks_union(a, b):
 @prof.log_call(trace_logger)
 def masks_overlap_normalized(a, b):
     """
-        The area of intersection of the masks divided by the area of their union.
+        The area of intersection of the masks divided by the area of their
+        union.
 
         Args:
             a(numpy.ndarray):      first mask.
             b(numpy.ndarray):      second mask.
 
         Returns:
-            out(numpy.ndarray):    ratio of the areas of the masks' intersection and union.
+            out(numpy.ndarray):    ratio of the areas of the masks'
+                                   intersection and union.
 
         Examples:
             >>> masks_overlap_normalized(numpy.eye(2).astype(bool),
@@ -3544,16 +3778,22 @@ def dot_product_partially_normalized(new_vector_set_1,
                                      new_vector_set_2,
                                      ord=2):
     """
-        Determines the dot product between the two pairs of vectors from each set and creates a tuple
-        with the dot product divided by one norm or the other.
+        Determines the dot product between the two pairs of vectors from each
+        set and creates a tuple with the dot product divided by one norm or the
+        other.
 
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
+
             new_vector_set_2(numpy.ndarray):      second set of vectors.
-            ord(optional):                        basically the same arguments as numpy.linalg.norm
+
+            ord(optional):                        basically the same arguments
+                                                  as numpy.linalg.norm
 
         Returns:
-            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
+            (numpy.ndarray):                      an array with the normalized
+                                                  distances between each pair
+                                                  of vectors.
 
         Examples:
             >>> (numpy.array(dot_product_partially_normalized(numpy.eye(2), numpy.eye(2), 2)) == numpy.array((numpy.eye(2), numpy.eye(2),))).all()
@@ -3625,15 +3865,20 @@ def dot_product_partially_normalized(new_vector_set_1,
 @prof.log_call(trace_logger)
 def pair_dot_product_partially_normalized(new_vector_set, ord=2):
     """
-        Determines the dot product between the two pairs of vectors from each set and creates a tuple
-        with the dot product divided by one norm or the other.
+        Determines the dot product between the two pairs of vectors from each
+        set and creates a tuple with the dot product divided by one norm or the
+        other.
 
         Args:
             new_vector_set(numpy.ndarray):        set of vectors.
-            ord(optional):                        basically the same arguments as numpy.linalg.norm
+
+            ord(optional):                        basically the same argument
+                                                  as numpy.linalg.norm
 
         Returns:
-            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
+            (numpy.ndarray):                      an array with the normalized
+                                                  distances between each pair
+                                                  of vectors.
 
         Examples:
             >>> (pair_dot_product_partially_normalized(numpy.eye(2), 2) == numpy.eye(2)).all()
@@ -3694,15 +3939,21 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
 @prof.log_call(trace_logger)
 def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
     """
-        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
+        Determines the dot product between a pair of vectors from each set and
+        divides them by the norm of the two.
 
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
+
             new_vector_set_2(numpy.ndarray):      second set of vectors.
-            ord(optional):                        basically the same arguments as numpy.linalg.norm.
+
+            ord(optional):                        basically the same arguments
+                                                  as numpy.linalg.norm.
 
         Returns:
-            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
+            (numpy.ndarray):                      an array with the normalized
+                                                  distances between each pair
+                                                  of vectors.
 
         Examples:
             >>> (dot_product_normalized(numpy.eye(2), numpy.eye(2), 2) == numpy.eye(2)).all()
@@ -3768,14 +4019,19 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
 @prof.log_call(trace_logger)
 def pair_dot_product_normalized(new_vector_set, ord=2):
     """
-        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.
+        Determines the dot product between a pair of vectors from each set and
+        divides them by the norm of the two.
 
         Args:
-            new_vector_set(numpy.ndarray):      set of vectors.
-            ord(optional):                        basically the same arguments as numpy.linalg.norm.
+            new_vector_set(numpy.ndarray):        set of vectors.
+
+            ord(optional):                        basically the same arguments
+                                                  as numpy.linalg.norm.
 
         Returns:
-            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.
+            (numpy.ndarray):                      an array with the normalized
+                                                  distances between each pair
+                                                  of vectors.
 
         Examples:
             >>> (pair_dot_product_normalized(numpy.eye(2)) == numpy.eye(2)).all()
@@ -3829,14 +4085,16 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
 @prof.log_call(trace_logger)
 def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     """
-        Determines the dot product between a pair of vectors from each set and divides them by the L_2 norm of the two.
+        Determines the dot product between a pair of vectors from each set and
+        divides them by the L_2 norm of the two.
 
         Args:
             new_vector_set_1(numpy.ndarray):      first set of vectors.
             new_vector_set_2(numpy.ndarray):      second set of vectors.
 
         Returns:
-            (numpy.ndarray):                      an array with the distances between each pair of vectors.
+            (numpy.ndarray):                      an array with the distances
+                                                  between each pair of vectors.
 
         Examples:
             >>> (dot_product_L2_normalized(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()
@@ -3882,16 +4140,21 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
 
 def generate_contour(a_image, separation_distance=1.0, margin=1.0):
     """
-        Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge
-        and some margin.
+        Takes an image and extracts labeled contours from the mask using some
+        minimum distance from the mask edge and some margin.
 
         Args:
             a_image(numpy.ndarray):            takes an image.
-            separation_distance(float):        a separation distance from the edge of the mask for the center of the contour.
+
+            separation_distance(float):        a separation distance from the
+                                               edge of the mask for the center
+                                               of the contour.
+
             margin(float):                     the width of contour.
 
         Returns:
-            (numpy.ndarray):                   an array with the labeled contours.
+            (numpy.ndarray):                   an array with the labeled
+                                               contours.
 
         Examples:
             >>> a = numpy.array([[ True,  True, False],
@@ -3947,16 +4210,21 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
 
 def generate_labeled_contours(a_mask, separation_distance=1.0, margin=1.0):
     """
-        Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge
-        and some margin.
+        Takes a bool mask and extracts labeled contours from the mask using
+        some minimum distance from the mask edge and some margin.
 
         Args:
             a_mask(numpy.ndarray):             takes a bool mask.
-            separation_distance(float):        a separation distance from the edge of the mask for the center of the contour.
+
+            separation_distance(float):        a separation distance from the
+                                               edge of the mask for the center
+                                               of the contour.
+
             margin(float):                     the width of contour.
 
         Returns:
-            (numpy.ndarray):                   an array with the labeled contours.
+            (numpy.ndarray):                   an array with the labeled
+                                               contours.
 
         Examples:
             >>> a = numpy.array([[ True,  True, False],
@@ -4002,22 +4270,34 @@ def generate_labeled_contours(a_mask, separation_distance=1.0, margin=1.0):
 
 def get_quantiles(probs):
     """
-        Determines the probabilites for quantiles for given data much like MATLAB's function
+        Determines the probabilites for quantiles for given data much like
+        MATLAB's function
 
         Args:
-            data(numpy.ndarray):                        to find the quantiles of.
+            data(numpy.ndarray):                        to find the quantiles
+                                                        of.
 
-            probs(int or float or numpy.ndarray):       either some sort of integer for the number of quantiles
-                                                            or a single float specifying which quantile to get
-                                                            or an array of floats specifying the division for
-                                                            each quantile in the the range (0, 1).
+            probs(int or float or numpy.ndarray):       either some sort of
+                                                        integer for the number
+                                                        of quantiles or a
+                                                        single float specifying
+                                                        which quantile to get
+                                                        or an array of floats
+                                                        specifying the division
+                                                        for each quantile in
+                                                        the the range (0, 1).
 
-            axis(int or None):                          the axis to perform the calculation on (if default (None) then
-                                                            all, otherwise only on a particular axis.
+            axis(int or None):                          the axis to perform the
+                                                        calculation on (if
+                                                        default (None) then
+                                                        all, otherwise only on
+                                                        a particular axis.
 
         Returns:
-            (numpy.ma.MaskedArray):                     an array with the quantiles (the first dimension will be
-                                                        the same length as probs).
+            (numpy.ma.MaskedArray):                     an array with the
+                                                        quantiles (the first
+                                                        dimension will be the
+                                                        same length as probs).
 
         Examples:
             >>> get_quantiles(0)
@@ -4037,7 +4317,6 @@ def get_quantiles(probs):
 
             >>> get_quantiles(numpy.array([0.25, 0.75]))
             array([ 0.25,  0.75])
-
     """
 
     probs_type = collections.Sequence
@@ -4066,21 +4345,32 @@ def get_quantiles(probs):
 
 def quantile(data, probs, axis=None):
     """
-        Determines the quantiles for given data much like MATLAB's function
+        Determines the quantiles for given data much like MATLAB's function.
 
         Args:
-            data(numpy.ndarray):                        to find the quantiles of.
+            data(numpy.ndarray):                        to find the quantiles
+                                                        of.
 
-            probs(int or float or numpy.ndarray):       either some sort of integer for the number of quantiles
-                                                            or a single float specifying which quantile to get
-                                                            or an array of floats specifying the division for
-                                                            each quantile in the the range (0, 1).
+            probs(int or float or numpy.ndarray):       either some sort of
+                                                        integer for the number
+                                                        of quantiles or a
+                                                        single float specifying
+                                                        which quantile to get
+                                                        or an array of floats
+                                                        specifying the division
+                                                        for each quantile in
+                                                        the range (0, 1).
 
-            axis(int or None):                          the axis to perform the calculation on (if default (None) then
-                                                            all, otherwise only on a particular axis.
+            axis(int or None):                          the axis to perform the
+                                                        calculation on (if
+                                                        default (None) then
+                                                        all, otherwise only on
+                                                        a particular axis.
 
         Returns:
-            (numpy.ma.MaskedArray):                     an array with the quantiles (the first dimension will be the
+            (numpy.ma.MaskedArray):                     an array with the
+                                                        quantiles (the first
+                                                        dimension will be the
                                                         same length as probs).
 
         Examples:
@@ -4119,7 +4409,6 @@ def quantile(data, probs, axis=None):
              False,
                    fill_value = nan)
             <BLANKLINE>
-
     """
 
     probs_array = get_quantiles(probs)
@@ -4142,10 +4431,11 @@ def binomial_coefficients(n):
         Generates a row in Pascal's triangle (binomial coefficients).
 
         Args:
-            n(int):      which row of Pascal's triangle to return.
+            n(int):                 which row of Pascal's triangle to return.
 
         Returns:
-            cs(numpy.ndarray): a numpy array containing the row of Pascal's triangle.
+            cs(numpy.ndarray):      a numpy array containing the row of
+                                    Pascal's triangle.
 
 
         Examples:
@@ -4194,17 +4484,19 @@ def binomial_coefficients(n):
 @prof.log_call(trace_logger)
 def line_filter(shape, dim=-1):
     """
-        Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
-        beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension
-        dim.
+        Creates a boolean array mask for a line. This mask has size for the
+        length of the line and number of empty lines beside it in any
+        orthogonal direction. The mask has dimensions equal to ndims and the
+        line is placed along dimension ``dim``.
 
         Args:
-            shape(tuple of ints):   the distance from the center of the filter to the nearest edge for each dimension.
+            shape(tuple of ints):   the distance from the center of the filter
+                                    to the nearest edge for each dimension.
 
             dim(int):               the dimension to put the line along.
 
         Returns:
-            (numpy.ndarray):    a boolean array to use as the filter.
+            (numpy.ndarray):        a boolean array to use as the filter.
 
         Examples:
             >>> line_filter((1,1))
@@ -4255,12 +4547,14 @@ def line_filter(shape, dim=-1):
 @prof.log_call(trace_logger)
 def symmetric_line_filter(size, ndims=2, dim=-1):
     """
-        Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
-        beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension
-        dim.
+        Creates a boolean array mask for a line. This mask has size for the
+        length of the line and number of empty lines beside it in any
+        orthogonal direction. The mask has dimensions equal to ndims and the
+        line is placed along dimension dim.
 
         Args:
-            size(int):          the distance from the center of the filter to the nearest edge.
+            size(int):          the distance from the center of the filter to
+                                the nearest edge.
 
             ndims(int):         the number of dimensions for the filter.
 
@@ -4318,19 +4612,24 @@ def tagging_reorder_array(new_array,
                           to_axis_order="tzyxc",
                           to_copy=False):
     """
-        Transforms one axis ordering to another giving a view of the array (unless otherwise specified).
+        Transforms one axis ordering to another giving a view of the array
+        (unless otherwise specified).
 
         Args:
             new_array(numpy.ndarray):                   the array to reorder
 
-            from_axis_order(str or list of str):        current labeled axis order.
+            from_axis_order(str or list of str):        current labeled axis
+                                                        order.
 
-            to_axis_order(str or list of str):          desired labeled axis order
+            to_axis_order(str or list of str):          desired labeled axis
+                                                        order
 
-            to_copy(bool):                              whether to return a view or a copy
+            to_copy(bool):                              whether to return a
+                                                        view or a copy
 
         Returns:
-            (numpy.ndarray):                            an array with the axis order specified (view).
+            (numpy.ndarray):                            an array with the axis
+                                                        order specified (view).
 
         Examples:
             >>> tagging_reorder_array(numpy.ones((1,2,3,4,5))).shape
@@ -4359,7 +4658,6 @@ def tagging_reorder_array(new_array,
 
             >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = ["t","x","y","z","c"]).shape
             (1, 4, 3, 2, 5)
-
     """
 
     from_axis_order = "".join(from_axis_order)
