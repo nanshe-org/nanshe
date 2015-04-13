@@ -79,23 +79,30 @@ non-noise.</p>
 <code class="descclassname">nanshe.imp.filters.noise.</code><code class="descname">estimate_noise</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/filters/noise.html#estimate_noise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.filters.noise.estimate_noise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Estimates the noise in the given array.</p>
 <p>Using the array finds what the standard deviation is of some values in
-the array, which are within the standard deviation of the whole array times
-the significance threshold</p>
+the array, which are within the standard deviation of the whole array
+times the significance threshold.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>input_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to estimate noise of.</li>
-<li><strong>significance_threshold</strong> (<em>float</em>) &#8211; the number of standard deviations (of the whole array), below which must be noise.</li>
+<li><strong>significance_threshold</strong> (<em>float</em>) &#8211; the number of standard
+deviations (of the whole
+array), below which must be
+noise.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>cs</strong> &#8211;
-a numpy array containing the row of Pascal&#8217;s triangle.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>noise</strong> &#8211;
+The standard deviation of the</p>
+<blockquote>
+<div><p>noise.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
 </td>
 </tr>
 </tbody>
@@ -130,22 +137,31 @@ a numpy array containing the row of Pascal&#8217;s triangle.</p>
 <dl class="function">
 <dt id="nanshe.imp.filters.noise.noise_mask">
 <code class="descclassname">nanshe.imp.filters.noise.</code><code class="descname">noise_mask</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/filters/noise.html#noise_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.filters.noise.noise_mask" title="Permalink to this definition">¶</a></dt>
-<dd><p>Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.</p>
+<dd><p>Using estimate_noise, creates a mask that selects the noise and
+suppresses non-noise.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>input_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to use for generating the noise mask.</li>
-<li><strong>significance_threshold</strong> (<em>float</em>) &#8211; the number of standard deviations (of the whole array),
-below which must be noise.</li>
-<li><strong>noise_threshold</strong> (<em>float</em>) &#8211; the estimated noise times this value determines the max value
+<li><strong>input_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to use for generating
+the noise mask.</li>
+<li><strong>significance_threshold</strong> (<em>float</em>) &#8211; the number of standard
+deviations (of the whole
+array), below which must be
+noise.</li>
+<li><strong>noise_threshold</strong> (<em>float</em>) &#8211; the estimated noise times this
+value determines the max value
 to consider as noise (to zero).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> &#8211;
-a numpy array with noise zeroed.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>result</strong> &#8211;
+a numpy array with noise</p>
+<blockquote>
+<div><p>zeroed.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -181,16 +197,21 @@ a numpy array with noise zeroed.</p>
 <dl class="function">
 <dt id="nanshe.imp.filters.noise.significant_mask">
 <code class="descclassname">nanshe.imp.filters.noise.</code><code class="descname">significant_mask</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/filters/noise.html#significant_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.filters.noise.significant_mask" title="Permalink to this definition">¶</a></dt>
-<dd><p>Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.</p>
+<dd><p>Using estimate_noise, creates a mask that selects the non-noise and
+suppresses noise.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>input_array</strong> (<em>numpy.ndarray</em>) &#8211; the array, which needs noise removed.</li>
-<li><strong>noise_threshold</strong> (<em>float</em>) &#8211; the estimated noise times this value determines the max value to
-consider as noise (to zero).</li>
-<li><strong>in_place</strong> (<em>bool</em>) &#8211; whether to modify input_array directly or to return a copy instead.</li>
+<li><strong>input_array</strong> (<em>numpy.ndarray</em>) &#8211; the array, which needs noise
+removed.</li>
+<li><strong>noise_threshold</strong> (<em>float</em>) &#8211; the estimated noise times this
+value determines the max value
+to consider as noise (to zero).</li>
+<li><strong>in_place</strong> (<em>bool</em>) &#8211; whether to modify input_array
+directly or to return a copy
+instead.</li>
 </ul>
 </td>
 </tr>

@@ -88,19 +88,29 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Designed to run spams.trainDL in a separate process.</span>
 
-<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
-<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
-<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
-<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
-<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation</span>
+<span class="sd">        faults have been discovered in later parts of the Python code dependent</span>
+<span class="sd">        on whether SPAMS has run or not. It is suspected that spams may</span>
+<span class="sd">        interfere with the interpreter. Thus, it should be sandboxed (run in a</span>
+<span class="sd">        different Python interpreter) so that it doesn&#39;t damage what happens in</span>
+<span class="sd">        this one.</span>
 
-<span class="sd">        This particular version uses a multiprocessing.Queue to return the resulting dictionary.</span>
+<span class="sd">        This particular version uses a multiprocessing.Queue to return the</span>
+<span class="sd">        resulting dictionary.</span>
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            out_queue(multiprocessing.Queue):       what will take the returned dictionary from spams.trainDL.</span>
-<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            out_queue(multiprocessing.Queue):       what will take the returned</span>
+<span class="sd">                                                    dictionary from</span>
+<span class="sd">                                                    spams.trainDL.</span>
+
+<span class="sd">            *args(list):                            a list of position</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
+
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># It is not needed outside of calling spams.trainDL.</span>
@@ -113,20 +123,28 @@
 </div>
 <div class="viewcode-block" id="call_multiprocessing_queue_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_queue_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
+<span class="sd">        Designed to start spams.trainDL in a separate process and handle the</span>
+<span class="sd">        result in an unnoticeably different way.</span>
 
-<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
-<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
-<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
-<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
-<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation</span>
+<span class="sd">        faults have been discovered in later parts of the Python code dependent</span>
+<span class="sd">        on whether SPAMS has run or not. It is suspected that spams may</span>
+<span class="sd">        interfere with the interpreter. Thus, it should be sandboxed (run in a</span>
+<span class="sd">        different Python interpreter) so that it doesn&#39;t damage what happens in</span>
+<span class="sd">        this one.</span>
 
-<span class="sd">        This particular version uses a multiprocessing.Queue to return the resulting dictionary.</span>
+<span class="sd">        This particular version uses a multiprocessing.Queue to return the</span>
+<span class="sd">        resulting dictionary.</span>
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            *args(list):                            a list of position</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
+
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            result(numpy.matrix): the dictionary found</span>
@@ -155,26 +173,52 @@
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="run_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span> <span class="n">result_array</span><span class="p">,</span> <span class="n">X_array_type</span><span class="p">,</span> <span class="n">X_array</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="run_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span>
+                                            <span class="n">result_array</span><span class="p">,</span>
+                                            <span class="n">X_array_type</span><span class="p">,</span>
+                                            <span class="n">X_array</span><span class="p">,</span>
+                                            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                            <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
+<span class="sd">        Designed to start spams.trainDL in a separate process and handle the</span>
+<span class="sd">        result in an unnoticeably different way.</span>
 
-<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
-<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
-<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
-<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
-<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation</span>
+<span class="sd">        faults have been discovered in later parts of the Python code dependent</span>
+<span class="sd">        on whether SPAMS has run or not. It is suspected that spams may</span>
+<span class="sd">        interfere with the interpreter. Thus, it should be sandboxed (run in a</span>
+<span class="sd">        different Python interpreter) so that it doesn&#39;t damage what happens in</span>
+<span class="sd">        this one.</span>
 
-<span class="sd">        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.</span>
+<span class="sd">        This particular version uses a multiprocessing.Array to share memory to</span>
+<span class="sd">        return the resulting dictionary.</span>
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with properties needed by result_array.</span>
-<span class="sd">            result_array(multiprocessing.RawArray):         shared memory array to store results in.</span>
-<span class="sd">            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with properties needed by X_array.</span>
-<span class="sd">            X_array(numpy.ndarray):                         currently uses numpy ndarray as input.</span>
-<span class="sd">            *args(list):                                    a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            **kwargs(dict):                                 a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with</span>
+<span class="sd">                                                            properties needed</span>
+<span class="sd">                                                            by result_array.</span>
+
+<span class="sd">            result_array(multiprocessing.RawArray):         shared memory array</span>
+<span class="sd">                                                            to store results</span>
+<span class="sd">                                                            in.</span>
+
+<span class="sd">            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with</span>
+<span class="sd">                                                            properties needed</span>
+<span class="sd">                                                            by X_array.</span>
+
+<span class="sd">            X_array(numpy.ndarray):                         currently uses</span>
+<span class="sd">                                                            numpy ndarray as</span>
+<span class="sd">                                                            input.</span>
+
+<span class="sd">            *args(list):                                    a list of position</span>
+<span class="sd">                                                            arguments to pass</span>
+<span class="sd">                                                            to spams.trainDL.</span>
+
+<span class="sd">            **kwargs(dict):                                 a dictionary of</span>
+<span class="sd">                                                            keyword arguments</span>
+<span class="sd">                                                            to pass to</span>
+<span class="sd">                                                            spams.trainDL.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            This is somewhat faster than using multiprocessing.Queue.</span>
@@ -224,21 +268,35 @@
 </div>
 <div class="viewcode-block" id="call_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Designed to start spams.trainDL in a separate process and handle the result in an unnoticeably different way.</span>
+<span class="sd">        Designed to start spams.trainDL in a separate process and handle</span>
+<span class="sd">        result in an unnoticeably different way.</span>
 
-<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation faults</span>
-<span class="sd">        have been discovered in later parts of the Python code dependent on whether</span>
-<span class="sd">        SPAMS has run or not. It is suspected that spams may interfere with the</span>
-<span class="sd">        interpreter. Thus, it should be sandboxed (run in a different Python interpreter)</span>
-<span class="sd">        so that it doesn&#39;t damage what happens in this one.</span>
+<span class="sd">        It is necessary to run SPAMS in a separate process as segmentation</span>
+<span class="sd">        faults have been discovered in later parts of the Python code dependent</span>
+<span class="sd">        on whether SPAMS has run or not. It is suspected that spams may</span>
+<span class="sd">        interfere with the interpreter. Thus, it should be sandboxed (run in a</span>
+<span class="sd">        different Python interpreter) so that it doesn&#39;t damage what happens in</span>
+<span class="sd">        this one.</span>
 
-<span class="sd">        This particular version uses a multiprocessing.Array to share memory to return the resulting dictionary.</span>
+<span class="sd">        This particular version uses a multiprocessing.Array to share memory to</span>
+<span class="sd">        return the resulting dictionary.</span>
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            X(numpy.matrix):                        a Fortran order NumPy Matrix with the same name as used by spams.trainDL (so if someone tries to use it as a keyword argument...).</span>
-<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            X(numpy.matrix):                        a Fortran order NumPy</span>
+<span class="sd">                                                    Matrix with the same name</span>
+<span class="sd">                                                    as used by spams.trainDL</span>
+<span class="sd">                                                    (so if someone tries to use</span>
+<span class="sd">                                                    it as a keyword</span>
+<span class="sd">                                                    argument...).</span>
+
+<span class="sd">            *args(list):                            a list of position</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
+
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            This is somewhat faster than using multiprocessing.Queue.</span>
@@ -312,12 +370,17 @@
 </div>
 <div class="viewcode-block" id="call_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Encapsulates call to spams.trainDL. Ensures copy of results occur just in case.</span>
-<span class="sd">        Designed to be like the multiprocessing calls.</span>
+<span class="sd">        Encapsulates call to spams.trainDL. Ensures copy of results occur just</span>
+<span class="sd">        in case. Designed to be like the multiprocessing calls.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            *args(list):                            a list of position arguments to pass to spams.trainDL.</span>
-<span class="sd">            **kwargs(dict):                         a dictionary of keyword arguments to pass to spams.trainDL.</span>
+<span class="sd">            *args(list):                            a list of position</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
+
+<span class="sd">            **kwargs(dict):                         a dictionary of keyword</span>
+<span class="sd">                                                    arguments to pass to</span>
+<span class="sd">                                                    spams.trainDL.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            For legacy.</span>

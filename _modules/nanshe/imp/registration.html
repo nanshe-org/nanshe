@@ -116,9 +116,11 @@
                           <span class="n">to_truncate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                           <span class="n">float_type</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This algorithm registers the given image stack against its mean projection. This is done by computing</span>
-<span class="sd">        translations needed to put each frame in alignment. Then the translation is performed and new translations are</span>
-<span class="sd">        computed. This is repeated until no further improvement can be made.</span>
+<span class="sd">        This algorithm registers the given image stack against its mean</span>
+<span class="sd">        projection. This is done by computing translations needed to put each</span>
+<span class="sd">        frame in alignment. Then the translation is performed and new</span>
+<span class="sd">        translations are computed. This is repeated until no further</span>
+<span class="sd">        improvement can be made.</span>
 
 <span class="sd">        The code for translations can be found in find_mean_offsets.</span>
 
@@ -126,18 +128,35 @@
 <span class="sd">            Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            frames2reg(numpy.ndarray):           Image stack to register (time is the first dimension uses C-order tyx</span>
-<span class="sd">                                                 or tzyx).</span>
-<span class="sd">            max_iters(int):                      Number of iterations to allow before forcing termination if stable</span>
-<span class="sd">                                                 point is not found yet. Set to -1 if no limit. (Default -1)</span>
-<span class="sd">            block_frame_length(int):             Number of frames to work with at a time.</span>
-<span class="sd">                                                 By default all. (Default -1)</span>
-<span class="sd">            include_shift(bool):                 Whether to return the shifts used, as well. (Default False)</span>
-<span class="sd">            to_truncate(bool):                   Whether to truncate the frames to remove all masked portions. (Default False)</span>
-<span class="sd">            float_type(type):                    Type of float to use for calculation. (Default numpy.float64).</span>
+<span class="sd">            frames2reg(numpy.ndarray):           Image stack to register (time</span>
+<span class="sd">                                                 is the first dimension uses</span>
+<span class="sd">                                                 C-order tyx or tzyx).</span>
+
+<span class="sd">            max_iters(int):                      Number of iterations to allow</span>
+<span class="sd">                                                 before forcing termination if</span>
+<span class="sd">                                                 stable point is not found yet.</span>
+<span class="sd">                                                 Set to -1 if no limit.</span>
+<span class="sd">                                                 (Default -1)</span>
+
+<span class="sd">            block_frame_length(int):             Number of frames to work with</span>
+<span class="sd">                                                 at a time. By default all.</span>
+<span class="sd">                                                 (Default -1)</span>
+
+<span class="sd">            include_shift(bool):                 Whether to return the shifts</span>
+<span class="sd">                                                 used, as well. (Default False)</span>
+
+<span class="sd">            to_truncate(bool):                   Whether to truncate the frames</span>
+<span class="sd">                                                 to remove all masked portions.</span>
+<span class="sd">                                                 (Default False)</span>
+
+<span class="sd">            float_type(type):                    Type of float to use for</span>
+<span class="sd">                                                 calculation. (Default</span>
+<span class="sd">                                                 numpy.float64).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     an array containing the translations to apply to each frame.</span>
+<span class="sd">            (numpy.ndarray):                     an array containing the</span>
+<span class="sd">                                                 translations to apply to each</span>
+<span class="sd">                                                 frame.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1; a</span>
@@ -519,23 +538,31 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="find_offsets"><a class="viewcode-back" href="../../../nanshe.imp.registration.html#nanshe.imp.registration.find_offsets">[docs]</a><span class="k">def</span> <span class="nf">find_offsets</span><span class="p">(</span><span class="n">frames2reg_fft</span><span class="p">,</span> <span class="n">template_fft</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Computes the convolution of the template with the frames by taking advantage of their FFTs for faster</span>
-<span class="sd">        computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )</span>
+<span class="sd">        Computes the convolution of the template with the frames by taking</span>
+<span class="sd">        advantage of their FFTs for faster computation that an ordinary</span>
+<span class="sd">        convolution ( O(N*lg(N)) vs O(N^2) )</span>
 <span class="sd">        &lt; http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html &gt;.</span>
-<span class="sd">        Once computed the maximum of the convolution is found to determine the best overlap of each frame with the</span>
-<span class="sd">        template, which provides the needed offset. Some corrections are performed to make reasonable offsets.</span>
+<span class="sd">        Once computed the maximum of the convolution is found to determine the</span>
+<span class="sd">        best overlap of each frame with the template, which provides the needed</span>
+<span class="sd">        offset. Some corrections are performed to make reasonable offsets.</span>
 
 <span class="sd">        Notes:</span>
-<span class="sd">            Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.</span>
+<span class="sd">            Adapted from code provided by Wenzhi Sun with speed improvements</span>
+<span class="sd">            provided by Uri Dubin.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            frames2reg(numpy.ndarray):           image stack to register (time is the first dimension uses C-order tyx</span>
-<span class="sd">                                                 or tzyx).</span>
-<span class="sd">            template_fft(numpy.ndarray):         what to register the image stack against (single frame using C-order</span>
-<span class="sd">                                                 yx or zyx).</span>
+<span class="sd">            frames2reg(numpy.ndarray):           image stack to register (time</span>
+<span class="sd">                                                 is the first dimension uses</span>
+<span class="sd">                                                 C-order tyx or tzyx).</span>
+
+<span class="sd">            template_fft(numpy.ndarray):         what to register the image</span>
+<span class="sd">                                                 stack against (single frame</span>
+<span class="sd">                                                 using C-order yx or zyx).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     an array containing the translations to apply to each frame.</span>
+<span class="sd">            (numpy.ndarray):                     an array containing the</span>
+<span class="sd">                                                 translations to apply to each</span>
+<span class="sd">                                                 frame.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1; a</span>

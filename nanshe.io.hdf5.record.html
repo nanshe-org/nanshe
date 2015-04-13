@@ -130,16 +130,20 @@ using <code class="docutils literal"><span class="pre">class_static_array_debug_
 <dl class="function">
 <dt id="nanshe.io.hdf5.record.class_static_array_debug_recorder">
 <code class="descclassname">nanshe.io.hdf5.record.</code><code class="descname">class_static_array_debug_recorder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/record.html#class_static_array_debug_recorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.record.class_static_array_debug_recorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the
-function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on
-assignment it automatically creates a subgroup with the same name as the function.</p>
+<dd><p>Creates a decorator that adds a static variable recorders that contains
+the variable array_debug_recorder to the function it decorates. By
+default, array_debug_recorder is set to an EmptyArrayRecorder instance.
+Also, on assignment it automatically creates a subgroup with the same
+name as the function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a_class</strong> (<em>class</em>) &#8211; All variables to be named (set to EmptyArrayRecorder()).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a_class</strong> (<em>class</em>) &#8211; All variables to be named
+(set to EmptyArrayRecorder()).</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds the static variable array_debug_recorder to the given function.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds the static variable
+array_debug_recorder to the given function.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(class)</td>
 </tr>
@@ -150,19 +154,26 @@ assignment it automatically creates a subgroup with the same name as the functio
 <dl class="function">
 <dt id="nanshe.io.hdf5.record.class_static_subgrouping_array_recorders">
 <code class="descclassname">nanshe.io.hdf5.record.</code><code class="descname">class_static_subgrouping_array_recorders</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/record.html#class_static_subgrouping_array_recorders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.record.class_static_subgrouping_array_recorders" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.</p>
+<dd><p>Creates a decorator that adds a static variable, recorders, that holds
+as many recorders as are supplied.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<em>tuple of strs</em>) &#8211; All variables to be named (set to EmptyArrayRecorder()).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<em>tuple of strs</em>) &#8211; All variables to be
+named (set to
+EmptyArrayRecorder()).</td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
 <tr class="field-even field"><td>&nbsp;</td><td class="field-body"><strong>kwargs</strong> (<em>dict of strs and ArrayRecorders</em>) &#8211;
-All variables to be named with values of type ArrayRecorder.</td>
+All variables to be
+named with values of
+type ArrayRecorder.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds the static variable, recorders, to the
-given function.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds
+the static variable,
+recorders, to the given
+function.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(callable)</td>
 </tr>
@@ -180,18 +191,28 @@ to a group in an HDF5 file.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>hdf5_handle</strong> &#8211; The HDF5 file group to place the debug contents into.</li>
-<li><strong>group_name</strong> &#8211; The name of the group within hdf5_handle to save the contents to.
-(If set to the empty string, data will be saved to hdf5_handle directly)</li>
-<li><strong>enable</strong> &#8211; Whether to generate a real logger or a fake one.</li>
-<li><strong>overwrite_group</strong> &#8211; Whether to overwrite the group where data is stored.</li>
+<li><strong>hdf5_handle</strong> &#8211; The HDF5 file group to place the debug
+contents into.</li>
+<li><strong>group_name</strong> &#8211; The name of the group within hdf5_handle to
+save the contents to. (If set to the empty
+string, data will be saved to
+hdf5_handle directly)</li>
+<li><strong>enable</strong> &#8211; Whether to generate a real recorder or a
+fake one.</li>
+<li><strong>overwrite_group</strong> &#8211; Whether to overwrite the group where data
+is stored.</li>
 <li><strong>recorder_constructor</strong> &#8211; Type of recorder to use if enable is True.</li>
-<li><strong>**kwargs</strong> &#8211; Other arguments to pass through to the recorder_constructor (won&#8217;t pass through if
+<li><strong>**kwargs</strong> &#8211; Other arguments to pass through to the
+recorder_constructor (won&#8217;t pass through if
 enable is false).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A function, which will take a given array name and value and write them out.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A function, which will take a given array
+name and value and write them out.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ArrayRecorder</p>
 </td>
 </tr>
 </tbody>
@@ -201,16 +222,21 @@ enable is false).</li>
 <dl class="function">
 <dt id="nanshe.io.hdf5.record.static_array_debug_recorder">
 <code class="descclassname">nanshe.io.hdf5.record.</code><code class="descname">static_array_debug_recorder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/record.html#static_array_debug_recorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.record.static_array_debug_recorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the
-function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on
-assignment it automatically creates a subgroup with the same name as the function.</p>
+<dd><p>Creates a decorator that adds a static variable recorders that contains
+the variable array_debug_recorder to the function it decorates.
+By
+default, array_debug_recorder is set to an EmptyArrayRecorder instance.
+Also, on assignment it automatically creates a subgroup with the same
+name as the function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>callable</strong> (<em>callable</em>) &#8211; All variables to be named (set to EmptyArrayRecorder()).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>callable</strong> (<em>callable</em>) &#8211; All variables to be named (set to
+EmptyArrayRecorder()).</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds the static variable array_debug_recorder to the given function.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds the static variable
+array_debug_recorder to the given function.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(callable)</td>
 </tr>
@@ -221,19 +247,26 @@ assignment it automatically creates a subgroup with the same name as the functio
 <dl class="function">
 <dt id="nanshe.io.hdf5.record.static_subgrouping_array_recorders">
 <code class="descclassname">nanshe.io.hdf5.record.</code><code class="descname">static_subgrouping_array_recorders</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/record.html#static_subgrouping_array_recorders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.record.static_subgrouping_array_recorders" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.</p>
+<dd><p>Creates a decorator that adds a static variable, recorders, that holds
+as many recorders as are supplied.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<em>tuple of strs</em>) &#8211; All variables to be named (set to EmptyArrayRecorder()).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<em>tuple of strs</em>) &#8211; All variables to be
+named (set to
+EmptyArrayRecorder()).</td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
 <tr class="field-even field"><td>&nbsp;</td><td class="field-body"><strong>kwargs</strong> (<em>dict of strs and ArrayRecorders</em>) &#8211;
-All variables to be named with values of type ArrayRecorder.</td>
+All variables to be
+named with values of
+type ArrayRecorder.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds the static variable, recorders, to the
-given function.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A decorator that adds
+the static variable,
+recorders, to the given
+function.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(callable)</td>
 </tr>

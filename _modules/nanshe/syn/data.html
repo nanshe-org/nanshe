@@ -91,21 +91,29 @@
 
 <div class="viewcode-block" id="generate_hypersphere_masks"><a class="viewcode-back" href="../../../nanshe.syn.data.html#nanshe.syn.data.generate_hypersphere_masks">[docs]</a><span class="k">def</span> <span class="nf">generate_hypersphere_masks</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">include_boundary</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate a stack of masks (first index indicates which mask); where, each contains a hypersphere constructed</span>
-<span class="sd">        using a center and radius provided.</span>
+<span class="sd">        Generate a stack of masks (first index indicates which mask); where,</span>
+<span class="sd">        each contains a hypersphere constructed using a center and radius</span>
+<span class="sd">        provided.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            space(tuple of ints):                The size of the mask.</span>
 
-<span class="sd">            centers(list of tuples of numbers):  List of centers with one per hypersphere.</span>
+<span class="sd">            centers(list of tuples of numbers):  List of centers with one per</span>
+<span class="sd">                                                 hypersphere.</span>
 
-<span class="sd">            radii(list of numbers):              List of radii with one per hypersphere.</span>
+<span class="sd">            radii(list of numbers):              List of radii with one per</span>
+<span class="sd">                                                 hypersphere.</span>
 
-<span class="sd">            include_boundary(bool):              Whether the mask should contain the boundary of the hypersphere or not.</span>
+<span class="sd">            include_boundary(bool):              Whether the mask should</span>
+<span class="sd">                                                 contain the boundary of the</span>
+<span class="sd">                                                 hypersphere or not.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                       A stack of masks (first index indicates which mask) with a filled</span>
-<span class="sd">                                                 hypersphere using a center and radius for each mask.</span>
+<span class="sd">            numpy.ndarray:                       A stack of masks (first index</span>
+<span class="sd">                                                 indicates which mask) with a</span>
+<span class="sd">                                                 filled hypersphere using a</span>
+<span class="sd">                                                 center and radius for each</span>
+<span class="sd">                                                 mask.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; generate_hypersphere_masks((3, 3), (1, 1), 1.25)</span>
@@ -199,25 +207,31 @@
 </div>
 <div class="viewcode-block" id="generate_gaussian_images"><a class="viewcode-back" href="../../../nanshe.syn.data.html#nanshe.syn.data.generate_gaussian_images">[docs]</a><span class="k">def</span> <span class="nf">generate_gaussian_images</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">means</span><span class="p">,</span> <span class="n">std_devs</span><span class="p">,</span> <span class="n">magnitudes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate a stack of gaussians (first index indicates which image); where, each contains a gaussian</span>
-<span class="sd">        using a center and radius provided.</span>
+<span class="sd">        Generate a stack of gaussians (first index indicates which image);</span>
+<span class="sd">        where, each contains a gaussian using a center and radius provided.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This uses a normalized gaussian filter to create the gaussians. So, the sum over any image in the stack will</span>
-<span class="sd">            be the magnitude given (with some small error).</span>
+<span class="sd">            This uses a normalized gaussian filter to create the gaussians. So,</span>
+<span class="sd">            the sum over any image in the stack will be the magnitude given</span>
+<span class="sd">            (with some small error).</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            space(tuple of ints):                The size of the mask.</span>
 
-<span class="sd">            means(list of tuples of numbers):    List of means with one per gaussian.</span>
+<span class="sd">            means(list of tuples of numbers):    List of means with one per</span>
+<span class="sd">                                                 gaussian.</span>
 
-<span class="sd">            std_devs(list of numbers):           List of standard deviations with one per gaussian.</span>
+<span class="sd">            std_devs(list of numbers):           List of standard deviations</span>
+<span class="sd">                                                 with one per gaussian.</span>
 
-<span class="sd">            magnitudes(list of numbers):         List of magnitudes for each gaussian.</span>
+<span class="sd">            magnitudes(list of numbers):         List of magnitudes for each</span>
+<span class="sd">                                                 gaussian.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                       A stack of masks (first index indicates which mask) with a gaussian</span>
-<span class="sd">                                                 using a center and radius for each mask.</span>
+<span class="sd">            numpy.ndarray:                       A stack of masks (first index</span>
+<span class="sd">                                                 indicates which mask) with a</span>
+<span class="sd">                                                 gaussian using a center and</span>
+<span class="sd">                                                 radius for each mask.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; generate_gaussian_images((5, 5), (2, 2), 0.5, 1) #doctest: +NORMALIZE_WHITESPACE</span>
@@ -312,20 +326,28 @@
 </div>
 <div class="viewcode-block" id="generate_random_bound_points"><a class="viewcode-back" href="../../../nanshe.syn.data.html#nanshe.syn.data.generate_random_bound_points">[docs]</a><span class="k">def</span> <span class="nf">generate_random_bound_points</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate a collection of random points that are the center of a  hypersphere contained within the space.</span>
+<span class="sd">        Generate a collection of random points that are the center of a</span>
+<span class="sd">        hypersphere contained within the space.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            Uses the typical convention [0, space_i) for all space_i from space.</span>
-<span class="sd">            Applies the additional constraint [radius_i, space_i - radius_i).</span>
+<span class="sd">            Uses the typical convention [0, space_i) for all space_i from</span>
+<span class="sd">            space. Applies the additional constraint</span>
+<span class="sd">            [radius_i, space_i - radius_i).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            space(tuple of ints):                The size of the space where the points will lie.</span>
+<span class="sd">            space(tuple of ints):                The size of the space where</span>
+<span class="sd">                                                 the points will lie.</span>
 
-<span class="sd">            radii(list of numbers):              Additional radius for each point to remain away from the boundary.</span>
+<span class="sd">            radii(list of numbers):              Additional radius for each</span>
+<span class="sd">                                                 point to remain away from the</span>
+<span class="sd">                                                 boundary.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                       An array with the random points each using a radius from radii to</span>
-<span class="sd">                                                 constrain itself. First index is which point. Second is which</span>
+<span class="sd">            numpy.ndarray:                       An array with the random</span>
+<span class="sd">                                                 points each using a radius</span>
+<span class="sd">                                                 from radii to constrain</span>
+<span class="sd">                                                 itself. First index is which</span>
+<span class="sd">                                                 point. Second is which</span>
 <span class="sd">                                                 coordinate.</span>
 
 <span class="sd">        Examples:</span>

@@ -77,12 +77,13 @@ or other applications.</p>
 <dl class="function">
 <dt id="nanshe.syn.data.generate_gaussian_images">
 <code class="descclassname">nanshe.syn.data.</code><code class="descname">generate_gaussian_images</code><span class="sig-paren">(</span><em>space</em>, <em>means</em>, <em>std_devs</em>, <em>magnitudes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/syn/data.html#generate_gaussian_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.syn.data.generate_gaussian_images" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a stack of gaussians (first index indicates which image); where, each contains a gaussian
-using a center and radius provided.</p>
+<dd><p>Generate a stack of gaussians (first index indicates which image);
+where, each contains a gaussian using a center and radius provided.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This uses a normalized gaussian filter to create the gaussians. So, the sum over any image in the stack will
-be the magnitude given (with some small error).</p>
+<p class="last">This uses a normalized gaussian filter to create the gaussians. So,
+the sum over any image in the stack will be the magnitude given
+(with some small error).</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -90,14 +91,19 @@ be the magnitude given (with some small error).</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the mask.</li>
-<li><strong>means</strong> (<em>list of tuples of numbers</em>) &#8211; List of means with one per gaussian.</li>
-<li><strong>std_devs</strong> (<em>list of numbers</em>) &#8211; List of standard deviations with one per gaussian.</li>
-<li><strong>magnitudes</strong> (<em>list of numbers</em>) &#8211; List of magnitudes for each gaussian.</li>
+<li><strong>means</strong> (<em>list of tuples of numbers</em>) &#8211; List of means with one per
+gaussian.</li>
+<li><strong>std_devs</strong> (<em>list of numbers</em>) &#8211; List of standard deviations
+with one per gaussian.</li>
+<li><strong>magnitudes</strong> (<em>list of numbers</em>) &#8211; List of magnitudes for each
+gaussian.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A stack of masks (first index indicates which mask) with a gaussian
-using a center and radius for each mask.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A stack of masks (first index
+indicates which mask) with a
+gaussian using a center and
+radius for each mask.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -165,22 +171,30 @@ using a center and radius for each mask.</p>
 <dl class="function">
 <dt id="nanshe.syn.data.generate_hypersphere_masks">
 <code class="descclassname">nanshe.syn.data.</code><code class="descname">generate_hypersphere_masks</code><span class="sig-paren">(</span><em>space</em>, <em>centers</em>, <em>radii</em>, <em>include_boundary=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/syn/data.html#generate_hypersphere_masks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.syn.data.generate_hypersphere_masks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a stack of masks (first index indicates which mask); where, each contains a hypersphere constructed
-using a center and radius provided.</p>
+<dd><p>Generate a stack of masks (first index indicates which mask); where,
+each contains a hypersphere constructed using a center and radius
+provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the mask.</li>
-<li><strong>centers</strong> (<em>list of tuples of numbers</em>) &#8211; List of centers with one per hypersphere.</li>
-<li><strong>radii</strong> (<em>list of numbers</em>) &#8211; List of radii with one per hypersphere.</li>
-<li><strong>include_boundary</strong> (<em>bool</em>) &#8211; Whether the mask should contain the boundary of the hypersphere or not.</li>
+<li><strong>centers</strong> (<em>list of tuples of numbers</em>) &#8211; List of centers with one per
+hypersphere.</li>
+<li><strong>radii</strong> (<em>list of numbers</em>) &#8211; List of radii with one per
+hypersphere.</li>
+<li><strong>include_boundary</strong> (<em>bool</em>) &#8211; Whether the mask should
+contain the boundary of the
+hypersphere or not.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A stack of masks (first index indicates which mask) with a filled
-hypersphere using a center and radius for each mask.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A stack of masks (first index
+indicates which mask) with a
+filled hypersphere using a
+center and radius for each
+mask.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -238,24 +252,32 @@ hypersphere using a center and radius for each mask.</p>
 <dl class="function">
 <dt id="nanshe.syn.data.generate_random_bound_points">
 <code class="descclassname">nanshe.syn.data.</code><code class="descname">generate_random_bound_points</code><span class="sig-paren">(</span><em>space</em>, <em>radii</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/syn/data.html#generate_random_bound_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.syn.data.generate_random_bound_points" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a collection of random points that are the center of a  hypersphere contained within the space.</p>
+<dd><p>Generate a collection of random points that are the center of a
+hypersphere contained within the space.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Uses the typical convention [0, space_i) for all space_i from space.
-Applies the additional constraint [radius_i, space_i - radius_i).</p>
+<p class="last">Uses the typical convention [0, space_i) for all space_i from
+space. Applies the additional constraint
+[radius_i, space_i - radius_i).</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the space where the points will lie.</li>
-<li><strong>radii</strong> (<em>list of numbers</em>) &#8211; Additional radius for each point to remain away from the boundary.</li>
+<li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the space where
+the points will lie.</li>
+<li><strong>radii</strong> (<em>list of numbers</em>) &#8211; Additional radius for each
+point to remain away from the
+boundary.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array with the random points each using a radius from radii to
-constrain itself. First index is which point. Second is which
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array with the random
+points each using a radius
+from radii to constrain
+itself. First index is which
+point. Second is which
 coordinate.</p>
 </td>
 </tr>

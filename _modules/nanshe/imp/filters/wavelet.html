@@ -104,14 +104,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="binomial_1D_array_kernel"><a class="viewcode-back" href="../../../../nanshe.imp.filters.wavelet.html#nanshe.imp.filters.wavelet.binomial_1D_array_kernel">[docs]</a><span class="k">def</span> <span class="nf">binomial_1D_array_kernel</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates a 1D numpy array used to make the kernel for the wavelet transform.</span>
+<span class="sd">        Generates a 1D numpy array used to make the kernel for the wavelet</span>
+<span class="sd">        transform.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            i(int):      which scaling to use.</span>
-<span class="sd">            n(int):      which row of Pascal&#39;s triangle to return.</span>
+<span class="sd">            i(int):               which scaling to use.</span>
+<span class="sd">            n(int):               which row of Pascal&#39;s triangle to return.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            r(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">            r(numpy.ndarray):     a 1D numpy array to use as the wavelet</span>
+<span class="sd">                                  transform kernel.</span>
 
 
 <span class="sd">        Examples:</span>
@@ -189,12 +191,27 @@
 <span class="sd">        Generates a vigra.filters.Kernel1D using binomial_1D_array_kernel(i).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            i(int):                                                 which scaling to use.</span>
-<span class="sd">            n(int):                                                 which row of Pascal&#39;s triangle to return.</span>
-<span class="sd">            border_treatment(vigra.filters.BorderTreatmentMode):    determines how to deal with the borders.</span>
+<span class="sd">            i(int):                                                 which</span>
+<span class="sd">                                                                    scaling to</span>
+<span class="sd">                                                                    use.</span>
+
+<span class="sd">            n(int):                                                 which row</span>
+<span class="sd">                                                                    of Pascal&#39;s</span>
+<span class="sd">                                                                    triangle to</span>
+<span class="sd">                                                                    return.</span>
+
+<span class="sd">            border_treatment(vigra.filters.BorderTreatmentMode):    determines</span>
+<span class="sd">                                                                    how to deal</span>
+<span class="sd">                                                                    with the</span>
+<span class="sd">                                                                    borders.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            k(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">            k(vigra.filters.Kernel1D):                              a 1D vigra</span>
+<span class="sd">                                                                    kernel to</span>
+<span class="sd">                                                                    aid in</span>
+<span class="sd">                                                                    computing</span>
+<span class="sd">                                                                    the wavelet</span>
+<span class="sd">                                                                    transform.</span>
 
 
 <span class="sd">        Examples:</span>
@@ -222,20 +239,33 @@
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="transform"><a class="viewcode-back" href="../../../../nanshe.imp.filters.wavelet.html#nanshe.imp.filters.wavelet.transform">[docs]</a><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">include_intermediates</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">include_lower_scales</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        performs integral steps of the wavelet transform on im0 up to the given scale. If scale is an iterable, then</span>
+<span class="sd">        Performs integral steps of the wavelet transform on im0 up to the given</span>
+<span class="sd">        scale. If scale is an iterable, then</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            im0(numpy.ndarray):                                  the original image.</span>
-<span class="sd">            scale(int):                                          the scale of wavelet transform to apply.</span>
-<span class="sd">            include_intermediates(bool):                         whether to return intermediates or not (default False).</span>
-<span class="sd">            include_lower_scales(bool):                          whether to include lower scales or not (default False)</span>
-<span class="sd">                                                                 (ignored if include_intermediates is True).</span>
-<span class="sd">            out(numpy.ndarray):                                  holds final result (cannot use unless</span>
-<span class="sd">                                                                 include_intermediates is False or an AssertionError</span>
-<span class="sd">                                                                 will be raised.)</span>
+<span class="sd">            im0(numpy.ndarray):                  the original image.</span>
+<span class="sd">            scale(int):                          the scale of wavelet transform</span>
+<span class="sd">                                                 to apply.</span>
+
+<span class="sd">            include_intermediates(bool):         whether to return</span>
+<span class="sd">                                                 intermediates or not</span>
+<span class="sd">                                                 (default False).</span>
+
+<span class="sd">            include_lower_scales(bool):          whether to include lower</span>
+<span class="sd">                                                 scales or not (default False)</span>
+<span class="sd">                                                 (ignored if</span>
+<span class="sd">                                                 include_intermediates is True)</span>
+
+<span class="sd">            out(numpy.ndarray):                  holds final result (cannot use</span>
+<span class="sd">                                                 unless include_intermediates</span>
+<span class="sd">                                                 is False or an AssertionError</span>
+<span class="sd">                                                 will be raised.)</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            k(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">            W, out(tuple of numpy.ndarrays):     returns the final result of</span>
+<span class="sd">                                                 the wavelet transform and</span>
+<span class="sd">                                                 possibly other scales. Also,</span>
+<span class="sd">                                                 may return the intermediates.</span>
 
 
 <span class="sd">        Examples:</span>

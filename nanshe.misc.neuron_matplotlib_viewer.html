@@ -88,7 +88,8 @@ be Z, as well. This has been deprecated in favor of the <code class="docutils li
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_neuron_images</strong> (<em>numpy.ndarray</em>) &#8211; array of images (first index is which image)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_neuron_images</strong> (<em>numpy.ndarray</em>) &#8211; array of images (first
+index is which image)</td>
 </tr>
 </tbody>
 </table>
@@ -97,7 +98,8 @@ be Z, as well. This has been deprecated in favor of the <code class="docutils li
 <dl class="method">
 <dt id="nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.time_update">
 <code class="descname">time_update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/neuron_matplotlib_viewer.html#NeuronMatplotlibViewer.time_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.time_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to be called by the TimeNavigator when the time changes. Updates image displayed.</p>
+<dd><p>Method to be called by the TimeNavigator when the time changes.
+Updates image displayed.</p>
 </dd></dl>
 
 </dd></dl>
@@ -166,7 +168,8 @@ be Z, as well. This has been deprecated in favor of the <code class="docutils li
 <dt id="nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.normalize_val">
 <code class="descname">normalize_val</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/neuron_matplotlib_viewer.html#TimeNavigator.normalize_val"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.normalize_val" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes the time value and normalizes it to fit within the range.
-Then, makes sure it is a discrete number of steps from the min_time.</p>
+Then, makes sure it is a discrete number of steps from the
+min_time.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -184,14 +187,16 @@ Then, makes sure it is a discrete number of steps from the min_time.</p>
 <dl class="method">
 <dt id="nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.on_time_update">
 <code class="descname">on_time_update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/neuron_matplotlib_viewer.html#TimeNavigator.on_time_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.on_time_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Registers a callback function for notification when the time is updated.</p>
+<dd><p>Registers a callback function for notification when the time is
+updated.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function call when the time is updated</strong> (<em>func</em>) &#8211; </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>callable</em>) &#8211; function call when the time is updated</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a callback ID or cid to allow pulling the callback when no longer necessary.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a callback ID or cid to allow pulling the
+callback when no longer necessary.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
@@ -216,7 +221,8 @@ Then, makes sure it is a discrete number of steps from the min_time.</p>
 <dl class="method">
 <dt id="nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.time_update">
 <code class="descname">time_update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/neuron_matplotlib_viewer.html#TimeNavigator.time_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.neuron_matplotlib_viewer.TimeNavigator.time_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes the time value and normalizes it within the range if it does not fit.</p>
+<dd><p>Takes the time value and normalizes it within the range if it does
+not fit.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

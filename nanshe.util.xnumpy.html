@@ -78,7 +78,7 @@ adding calculations, combining arrays in interesting ways, handling masks, etc.<
 <dt id="nanshe.util.xnumpy.NotNumPyStructuredArrayType">
 <em class="property">exception </em><code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">NotNumPyStructuredArrayType</code><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#NotNumPyStructuredArrayType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.NotNumPyStructuredArrayType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
-<p>Designed for being thrown if a NumPy Structured Array is recieved.</p>
+<p>Designed for being thrown if a NumPy Structured Array is received.</p>
 </dd></dl>
 
 <dl class="function">
@@ -89,9 +89,12 @@ adding calculations, combining arrays in interesting ways, handling masks, etc.<
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis to.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+axis to.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the singleton axis added at the end (should be view)</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the
+singleton axis added at the
+end (should be view)</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -116,9 +119,12 @@ adding calculations, combining arrays in interesting ways, handling masks, etc.<
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis to.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+axis to.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the singleton axis added at the end (should be view)</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the
+singleton axis added at the
+end (should be view)</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -138,20 +144,24 @@ adding calculations, combining arrays in interesting ways, handling masks, etc.<
 <dl class="function">
 <dt id="nanshe.util.xnumpy.add_singleton_axis_pos">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">add_singleton_axis_pos</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#add_singleton_axis_pos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.add_singleton_axis_pos" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a singleton axis to the given position.
-Allows negative values for axis.
-Also, automatically bounds axis in an acceptable regime if it is not already.</p>
+<dd><p>Adds a singleton axis to the given position.</p>
+<p>Allows negative values for axis. Also, automatically bounds axis in an
+acceptable regime if it is not already.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis to.</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; position for the axis to be in the final array (defaults to zero).</li>
+<li><strong>a_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis
+to.</li>
+<li><strong>axis</strong> (<em>int</em>) &#8211; position for the axis to be in
+the final array (defaults to
+zero).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a numpy array with the singleton axis added (should be a view).</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a numpy array with the singleton
+axis added (should be a view).</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -197,25 +207,32 @@ Also, automatically bounds axis in an acceptable regime if it is not already.</p
 <dl class="function">
 <dt id="nanshe.util.xnumpy.add_singleton_op">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">add_singleton_op</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#add_singleton_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.add_singleton_op" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs an operation on the given array on the specified axis, which otherwise would have eliminated the axis
-in question. This function will instead ensure that the given axis remains after the operation as a singleton.</p>
+<dd><p>Performs an operation on the given array on the specified axis, which
+otherwise would have eliminated the axis in question. This function
+will instead ensure that the given axis remains after the operation as
+a singleton.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The operation must be able to take only two arguments where the first is the array and the second is the
-axis to apply the operation along.</p>
+<p class="last">The operation must be able to take only two arguments where the
+first is the array and the second is the axis to apply the
+operation along.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>op</strong> (<em>callable</em>) &#8211; callable that takes a numpy.ndarray and an int in order.</li>
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to perform operation on and add singleton axis too.</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; the axis to apply the operation along and turn into a singleton.</li>
+<li><strong>op</strong> (<em>callable</em>) &#8211; callable that takes a numpy.ndarray
+and an int in order.</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to perform operation on and add
+singleton axis too.</li>
+<li><strong>axis</strong> (<em>int</em>) &#8211; the axis to apply the operation along
+and turn into a singleton.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the array with the operation performed.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the array with the operation
+performed.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -246,19 +263,24 @@ axis to apply the operation along.</p>
 <dt id="nanshe.util.xnumpy.all_permutations_equal">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">all_permutations_equal</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#all_permutations_equal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.all_permutations_equal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes two arrays and constructs a new array that contains the result
-of equality comparison on every permutation of elements in each array (like broadcasting).</p>
+of equality comparison on every permutation of elements in each array
+(like broadcasting).</p>
 <p>Suppose that new_result contained the result, then one would find that
-the result of the following operation on the specific indicies</p>
-<p>new_op( new_array_1[ i_1_1, i_1_2, ... ], new_array_2[ i_2_1, i_2_2, ... ] )</p>
+the result of the following operation on the specific indices</p>
+<p>new_op( new_array_1[ i_1_1, i_1_2, ... ],
+new_array_2[ i_2_1, i_2_2, ... ] )</p>
 <p>would be found in new_result as shown</p>
 <p>new_result[ i_1_1, i_1_2, ..., i_2_1, i_2_2, ... ]</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis to.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+axis to.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the singleton axis added at the end.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the
+singleton axis added at the
+end.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -358,19 +380,24 @@ the result of the following operation on the specific indicies</p>
 <dt id="nanshe.util.xnumpy.all_permutations_operation">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">all_permutations_operation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#all_permutations_operation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.all_permutations_operation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes two arrays and constructs a new array that contains the result
-of new_op on every permutation of elements in each array (like broadcasting).</p>
+of new_op on every permutation of elements in each array (like
+broadcasting).</p>
 <p>Suppose that new_result contained the result, then one would find that
-the result of the following operation on the specific indicies</p>
-<p>new_op( new_array_1[ i_1_1, i_1_2, ... ], new_array_2[ i_2_1, i_2_2, ... ] )</p>
+the result of the following operation on the specific indices.</p>
+<p>new_op( new_array_1[ i_1_1, i_1_2, ... ],
+new_array_2[ i_2_1, i_2_2, ... ] )</p>
 <p>would be found in new_result as shown</p>
 <p>new_result[ i_1_1, i_1_2, ..., i_2_1, i_2_2, ... ]</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis to.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+axis to.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the singleton axis added at the end.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with the
+singleton axis added at the
+end.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -455,9 +482,10 @@ the result of the following operation on the specific indicies</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; The array to flatten partially</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; The array to flatten, partially.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The matrix version of the array after flattening.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The matrix version of the array
+after flattening.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -501,7 +529,9 @@ the result of the following operation on the specific indicies</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) &#8211; which row of Pascal&#8217;s triangle to return.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>cs</strong> &#8211;
-a numpy array containing the row of Pascal&#8217;s triangle.</td>
+a numpy array containing the row of<blockquote>
+<div>Pascal&#8217;s triangle.</div></blockquote>
+</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
 </tr>
@@ -546,9 +576,16 @@ a numpy array containing the row of Pascal&#8217;s triangle.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arrays</strong> (<em>collections.Sequence of numpy.ndarrays</em>) &#8211; A sequence of 1-D arrays or a 2-D array.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arrays</strong> (<em>collections.Sequence of numpy.ndarrays</em>) &#8211; A sequence of
+1-D arrays or a
+2-D array.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an array containing the result of the cartesian product of each array.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an array
+containing the
+result of the
+cartesian
+product of each
+array.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -635,19 +672,28 @@ a numpy array containing the row of Pascal&#8217;s triangle.</td>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.compute_mapping_matches">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">compute_mapping_matches</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#compute_mapping_matches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.compute_mapping_matches" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a mapping this function computes number of matches and mismatches found.</p>
-<p>In the array returned, first value is the number of true positives (or matches) and then mismatches along each
-dimension of the mapping in order.</p>
-<p>If axis 0 is the ground truth, then the second and third values are the number of false negatives (or misses)
-and false positives (or false alarm)</p>
+<dd><p>Given a mapping this function computes number of matches and mismatches
+found.</p>
+<p>In the array returned, first value is the number of true positives (or
+matches) and then mismatches along each dimension of the mapping in
+order.</p>
+<p>If axis 0 is the ground truth, then the second and third values are the
+number of false negatives (or misses) and false positives (or false
+alarm)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; a 2D bool array mapping intersections between 2 groups.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; a 2D bool array
+mapping
+intersections
+between 2 groups.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>out</strong> &#8211;
-Counts of the number of matches and mismatches.</td>
+Counts of the<blockquote>
+<div>number of matches
+and mismatches.</div></blockquote>
+</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
 </tr>
@@ -680,21 +726,33 @@ Counts of the number of matches and mismatches.</td>
 <dt id="nanshe.util.xnumpy.compute_mapping_relevance">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">compute_mapping_relevance</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#compute_mapping_relevance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.compute_mapping_relevance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a mapping this function computes the recall and precision.</p>
-<p>If axis 0 is the ground truth, then the returned values are the recall and precision in order.
-If axis 1 is the ground truth, then they are flipped.</p>
+<p>If axis 0 is the ground truth, then the returned values are the recall
+and precision in order. If axis 1 is the ground truth, then they are
+flipped.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; a 2D bool array mapping intersections between 2 groups.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; a 2D bool array mapping
+intersections between 2 groups.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>relevance</strong> &#8211;
-relevance - a combination of recall and precision<blockquote>
-<div><dl class="docutils">
-<dt>recall    -   the ratio of relevant predicted positives</dt>
-<dd>out of all relevant positives.</dd>
-<dt>precision -   the ratio of relevant predicted positives</dt>
-<dd>out of all predicted positives.</dd>
+relevance - a combination of<blockquote>
+<div><blockquote>
+<div>recall and precision</div></blockquote>
+<dl class="docutils">
+<dt>recall    - the ratio of</dt>
+<dd>relevant
+predicted
+positives out of
+all relevant
+positives.</dd>
+<dt>precision - the ratio of</dt>
+<dd>relevant
+predicted
+positives out of
+all predicted
+positives.</dd>
 </dl>
 </div></blockquote>
 </td>
@@ -729,7 +787,8 @@ relevance - a combination of recall and precision<blockquote>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.contains">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">contains</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#contains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.contains" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a mask array that is true every time something from to_contain appears in new_array.</p>
+<dd><p>Gets a mask array that is true every time something from to_contain
+appears in new_array.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -740,7 +799,9 @@ relevance - a combination of recall and precision<blockquote>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a mask for new_array that selects values from to_contain.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a mask for new_array that
+selects values from
+<code class="docutils literal"><span class="pre">to_contain</span></code>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -794,7 +855,8 @@ relevance - a combination of recall and precision<blockquote>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.dot_product">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">dot_product</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#dot_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.dot_product" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the dot product between the two pairs of vectors from each set.</p>
+<dd><p>Determines the dot product between the two pairs of vectors from each
+set.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -805,7 +867,8 @@ relevance - a combination of recall and precision<blockquote>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the distances between each pair of vectors.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the distances
+between each pair of vectors.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -851,7 +914,8 @@ relevance - a combination of recall and precision<blockquote>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.dot_product_L2_normalized">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">dot_product_L2_normalized</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#dot_product_L2_normalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.dot_product_L2_normalized" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the dot product between a pair of vectors from each set and divides them by the L_2 norm of the two.</p>
+<dd><p>Determines the dot product between a pair of vectors from each set and
+divides them by the L_2 norm of the two.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -862,7 +926,8 @@ relevance - a combination of recall and precision<blockquote>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the distances between each pair of vectors.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the distances
+between each pair of vectors.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -913,7 +978,8 @@ relevance - a combination of recall and precision<blockquote>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.dot_product_normalized">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">dot_product_normalized</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#dot_product_normalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.dot_product_normalized" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.</p>
+<dd><p>Determines the dot product between a pair of vectors from each set and
+divides them by the norm of the two.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -921,11 +987,14 @@ relevance - a combination of recall and precision<blockquote>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) &#8211; first set of vectors.</li>
 <li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) &#8211; second set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments as numpy.linalg.norm.</li>
+<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+as numpy.linalg.norm.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized distances between each pair of vectors.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized
+distances between each pair
+of vectors.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -984,8 +1053,9 @@ relevance - a combination of recall and precision<blockquote>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.dot_product_partially_normalized">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">dot_product_partially_normalized</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#dot_product_partially_normalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.dot_product_partially_normalized" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the dot product between the two pairs of vectors from each set and creates a tuple
-with the dot product divided by one norm or the other.</p>
+<dd><p>Determines the dot product between the two pairs of vectors from each
+set and creates a tuple with the dot product divided by one norm or the
+other.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -993,11 +1063,14 @@ with the dot product divided by one norm or the other.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) &#8211; first set of vectors.</li>
 <li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) &#8211; second set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments as numpy.linalg.norm</li>
+<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+as numpy.linalg.norm</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized distances between each pair of vectors.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized
+distances between each pair
+of vectors.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -1058,11 +1131,13 @@ with the dot product divided by one norm or the other.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.enumerate_masks">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">enumerate_masks</code><span class="sig-paren">(</span><em>new_masks</em>, <em>axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#enumerate_masks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.enumerate_masks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a mask stack and replaces them by an enumerated stack. In other words, each mask is replaced by a
-consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)).</p>
+<dd><p>Takes a mask stack and replaces them by an enumerated stack. In other
+words, each mask is replaced by a consecutive integer (starts with 1
+and proceeds to the length of the given axis (0 by default)).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The masks could be recreated by finding the values not equal to zero.</p>
+<p class="last">The masks could be recreated by finding the values not equal to
+zero.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1070,7 +1145,8 @@ consecutive integer (starts with 1 and proceeds to the length of the given axis 
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_masks</strong> (<em>numpy.ndarray</em>) &#8211; masks to enumerate</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by default).</li>
+<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by
+default).</li>
 </ul>
 </td>
 </tr>
@@ -1142,12 +1218,15 @@ consecutive integer (starts with 1 and proceeds to the length of the given axis 
 <dl class="function">
 <dt id="nanshe.util.xnumpy.enumerate_masks_max">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">enumerate_masks_max</code><span class="sig-paren">(</span><em>new_masks</em>, <em>axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#enumerate_masks_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.enumerate_masks_max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a mask stack and replaces them by the max of an enumerated stack. In other words, each mask is replaced by
-a consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)). Afterwards,
-the max is taken along the given axis. However, a singleton dimension is left on the original axis.</p>
+<dd><p>Takes a mask stack and replaces them by the max of an enumerated stack.
+In other words, each mask is replaced by a consecutive integer (starts
+with 1 and proceeds to the length of the given axis (0 by default)).
+Afterwards, the max is taken along the given axis. However, a singleton
+dimension is left on the original axis.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The masks could be recreated by finding the values not equal to zero.</p>
+<p class="last">The masks could be recreated by finding the values not equal to
+zero.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1155,7 +1234,8 @@ the max is taken along the given axis. However, a singleton dimension is left on
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_masks</strong> (<em>numpy.ndarray</em>) &#8211; masks to enumerate</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by default).</li>
+<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by
+default).</li>
 </ul>
 </td>
 </tr>
@@ -1204,23 +1284,33 @@ the max is taken along the given axis. However, a singleton dimension is left on
 <dl class="function">
 <dt id="nanshe.util.xnumpy.expand_arange">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">expand_arange</code><span class="sig-paren">(</span><em>start</em>, <em>stop=None</em>, <em>step=1</em>, <em>dtype=&lt;type 'numpy.int64'&gt;</em>, <em>reps_before=()</em>, <em>reps_after=()</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#expand_arange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.expand_arange" title="Permalink to this definition">¶</a></dt>
-<dd><p>Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a
-larger cube.</p>
+<dd><p>Much like <code class="docutils literal"><span class="pre">numpy.arange</span></code> except that it applies expand_view
+afterwards to get a view of the same range in a larger hyperrectangle.</p>
 <p>This is very useful for situations where broadcasting is desired.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> (<em>int</em>) &#8211; starting point (or stopping point if only one is specified).</li>
-<li><strong>stop</strong> (<em>int</em>) &#8211; stopping point (if the starting point is specified) (0 by default).</li>
-<li><strong>step</strong> (<em>int</em>) &#8211; size of steps to take between value (1 by default).</li>
-<li><strong>reps_after</strong> (<em>tuple</em>) &#8211; repetitions dimension size to add before (if int will turn into tuple).</li>
-<li><strong>reps_before</strong> (<em>tuple</em>) &#8211; repetitions dimension size to add after (if int will turn into tuple).</li>
+<li><strong>start</strong> (<em>int</em>) &#8211; starting point (or stopping
+point if only one is
+specified).</li>
+<li><strong>stop</strong> (<em>int</em>) &#8211; stopping point (if the
+starting point is specified)
+(0 by default).</li>
+<li><strong>step</strong> (<em>int</em>) &#8211; size of steps to take between
+value (1 by default).</li>
+<li><strong>reps_after</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+add before (if int will turn
+into tuple).</li>
+<li><strong>reps_before</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+add after (if int will turn
+into tuple).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a view of a numpy arange with tiling in various dimension.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a view of a numpy arange with
+tiling in various dimension.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -1276,22 +1366,27 @@ larger cube.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.expand_enumerate">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">expand_enumerate</code><span class="sig-paren">(</span><em>new_array</em>, <em>axis=0</em>, <em>start=0</em>, <em>step=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#expand_enumerate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.expand_enumerate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Builds on expand_arange, which has the same shape as the original array. Specifies the increments to occur along
-the given axis, which by default is the zeroth axis.</p>
-<p>Provides mechanisms for changing the starting value and also the increment.</p>
+<dd><p>Builds on expand_arange, which has the same shape as the original
+array. Specifies the increments to occur along the given axis, which by
+default is the zeroth axis.</p>
+<p>Provides mechanisms for changing the starting value and also the
+increment.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to enumerate</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by default).</li>
+<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by
+default).</li>
 <li><strong>start</strong> (<em>int</em>) &#8211; starting point (0 by default).</li>
-<li><strong>step</strong> (<em>int</em>) &#8211; size of steps to take between value (1 by default).</li>
+<li><strong>step</strong> (<em>int</em>) &#8211; size of steps to take between
+value (1 by default).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a view of a numpy arange with tiling in various dimension.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a view of a numpy arange with
+tiling in various dimension.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -1354,11 +1449,11 @@ the given axis, which by default is the zeroth axis.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.expand_view">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">expand_view</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#expand_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.expand_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Behaves like NumPy tile except that it always returns a view and not a copy.
-Though, it differs in that additional dimensions are added for repetition as
-opposed to repeating in the same one. Also, it allows repetitions to be
-specified before or after unlike tile. Though, will behave identical to
-tile if the keyword is not specified.</p>
+<dd><p>Behaves like NumPy tile except that it always returns a view and not a
+copy. Though, it differs in that additional dimensions are added for
+repetition as opposed to repeating in the same one. Also, it allows
+repetitions to be specified before or after unlike tile. Though, will
+behave identical to tile if the keyword is not specified.</p>
 <p>Uses strides to trick NumPy into providing a view.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1366,12 +1461,17 @@ tile if the keyword is not specified.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to tile.</li>
-<li><strong>reps_after</strong> (<em>tuple</em>) &#8211; repetitions dimension size to add before (if int will turn into tuple).</li>
-<li><strong>reps_before</strong> (<em>tuple</em>) &#8211; repetitions dimension size to add after (if int will turn into tuple).</li>
+<li><strong>reps_after</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+add before (if int will turn
+into tuple).</li>
+<li><strong>reps_before</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+add after (if int will turn
+into tuple).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a view of a numpy array with tiling in various dimension.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a view of a numpy array with
+tiling in various dimension.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -1652,7 +1752,8 @@ the results returned.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.find_shortest_wraparound">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">find_shortest_wraparound</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#find_shortest_wraparound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.find_shortest_wraparound" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the smallest values for the points given periodic boundary conditions.</p>
+<dd><p>Compute the smallest values for the points given periodic boundary
+conditions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1785,20 +1886,23 @@ the results returned.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.generate_contour">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">generate_contour</code><span class="sig-paren">(</span><em>a_image</em>, <em>separation_distance=1.0</em>, <em>margin=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#generate_contour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.generate_contour" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge
-and some margin.</p>
+<dd><p>Takes an image and extracts labeled contours from the mask using some
+minimum distance from the mask edge and some margin.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_image</strong> (<em>numpy.ndarray</em>) &#8211; takes an image.</li>
-<li><strong>separation_distance</strong> (<em>float</em>) &#8211; a separation distance from the edge of the mask for the center of the contour.</li>
+<li><strong>separation_distance</strong> (<em>float</em>) &#8211; a separation distance from the
+edge of the mask for the center
+of the contour.</li>
 <li><strong>margin</strong> (<em>float</em>) &#8211; the width of contour.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the labeled contours.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the labeled
+contours.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -1844,20 +1948,23 @@ and some margin.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.generate_labeled_contours">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">generate_labeled_contours</code><span class="sig-paren">(</span><em>a_mask</em>, <em>separation_distance=1.0</em>, <em>margin=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#generate_labeled_contours"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.generate_labeled_contours" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge
-and some margin.</p>
+<dd><p>Takes a bool mask and extracts labeled contours from the mask using
+some minimum distance from the mask edge and some margin.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_mask</strong> (<em>numpy.ndarray</em>) &#8211; takes a bool mask.</li>
-<li><strong>separation_distance</strong> (<em>float</em>) &#8211; a separation distance from the edge of the mask for the center of the contour.</li>
+<li><strong>separation_distance</strong> (<em>float</em>) &#8211; a separation distance from the
+edge of the mask for the center
+of the contour.</li>
 <li><strong>margin</strong> (<em>float</em>) &#8211; the width of contour.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the labeled contours.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the labeled
+contours.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -1903,24 +2010,36 @@ and some margin.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.get_quantiles">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">get_quantiles</code><span class="sig-paren">(</span><em>probs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#get_quantiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.get_quantiles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the probabilites for quantiles for given data much like MATLAB&#8217;s function</p>
+<dd><p>Determines the probabilites for quantiles for given data much like
+MATLAB&#8217;s function</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles of.</li>
-<li><strong>probs</strong> (<em>int or float or numpy.ndarray</em>) &#8211; either some sort of integer for the number of quantiles
-or a single float specifying which quantile to get
-or an array of floats specifying the division for
-each quantile in the the range (0, 1).</li>
-<li><strong>axis</strong> (<em>int or None</em>) &#8211; the axis to perform the calculation on (if default (None) then
-all, otherwise only on a particular axis.</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles
+of.</li>
+<li><strong>probs</strong> (<em>int or float or numpy.ndarray</em>) &#8211; either some sort of
+integer for the number
+of quantiles or a
+single float specifying
+which quantile to get
+or an array of floats
+specifying the division
+for each quantile in
+the the range (0, 1).</li>
+<li><strong>axis</strong> (<em>int or None</em>) &#8211; the axis to perform the
+calculation on (if
+default (None) then
+all, otherwise only on
+a particular axis.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the quantiles (the first dimension will be
-the same length as probs).</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the
+quantiles (the first
+dimension will be the
+same length as probs).</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ma.MaskedArray)</p>
@@ -1958,20 +2077,24 @@ the same length as probs).</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.index_array_to_bool_array">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">index_array_to_bool_array</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#index_array_to_bool_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.index_array_to_bool_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a bool array mask that has each value from the index array as True.
-All other values are False. Requires a shape be specified to create the
-bool array.</p>
+<dd><p>Creates a bool array mask that has each value from the index array as
+True. All other values are False. Requires a shape be specified to
+create the bool array.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>index_array</strong> (<em>numpy.ndarray of ints</em>) &#8211; The index array with the indices to use</li>
-<li><strong>shape</strong> (<em>tuple of ints</em>) &#8211; The shape to give the bool_array</li>
+<li><strong>index_array</strong> (<em>numpy.ndarray of ints</em>) &#8211; The index array with the
+indices to use.</li>
+<li><strong>shape</strong> (<em>tuple of ints</em>) &#8211; The shape to give the bool
+array.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The bool array with selected indices as True rest are False.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The bool array with
+selected indices as True
+and the rest are False.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -1999,20 +2122,25 @@ bool array.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.index_axis_at_pos">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">index_axis_at_pos</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#index_axis_at_pos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.index_axis_at_pos" title="Permalink to this definition">¶</a></dt>
-<dd><p>Indexes an arbitrary axis to the given position, which may be an index, a slice, or any other NumPy allowed
-indexing type. This will return a view.</p>
+<dd><p>Indexes an arbitrary axis to the given position, which may be an index,
+a slice, or any other NumPy allowed indexing type. This will return a
+view.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis to.</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; position for the axis to be in the final array.</li>
-<li><strong>pos</strong> (<em>int or slice</em>) &#8211; how to index at the given axis.</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+axis to.</li>
+<li><strong>axis</strong> (<em>int</em>) &#8211; position for the axis to be in
+the final array.</li>
+<li><strong>pos</strong> (<em>int or slice</em>) &#8211; how to index at the given
+axis.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a numpy array view of the original array.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a numpy array view of the
+original array.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -2066,15 +2194,17 @@ indexing type. This will return a view.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.line_filter">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">line_filter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#line_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.line_filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
-beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension
-dim.</p>
+<dd><p>Creates a boolean array mask for a line. This mask has size for the
+length of the line and number of empty lines beside it in any
+orthogonal direction. The mask has dimensions equal to ndims and the
+line is placed along dimension <code class="docutils literal"><span class="pre">dim</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>shape</strong> (<em>tuple of ints</em>) &#8211; the distance from the center of the filter to the nearest edge for each dimension.</li>
+<li><strong>shape</strong> (<em>tuple of ints</em>) &#8211; the distance from the center of the filter
+to the nearest edge for each dimension.</li>
 <li><strong>dim</strong> (<em>int</em>) &#8211; the dimension to put the line along.</li>
 </ul>
 </td>
@@ -2144,8 +2274,12 @@ dim.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211;
-a mask that is only True where both masks are.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;
+a mask that is only True where both masks</p>
+<blockquote>
+<div><p>are.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -2203,7 +2337,8 @@ a mask that is only True where both masks are.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.masks_overlap_normalized">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">masks_overlap_normalized</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#masks_overlap_normalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.masks_overlap_normalized" title="Permalink to this definition">¶</a></dt>
-<dd><p>The area of intersection of the masks divided by the area of their union.</p>
+<dd><p>The area of intersection of the masks divided by the area of their
+union.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2214,8 +2349,12 @@ a mask that is only True where both masks are.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211;
-ratio of the areas of the masks&#8217; intersection and union.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;
+ratio of the areas of the masks&#8217;</p>
+<blockquote>
+<div><p>intersection and union.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -2349,10 +2488,11 @@ a mask that is True where either mask is.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.matrix_reduced_op">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">matrix_reduced_op</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#matrix_reduced_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.matrix_reduced_op" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sort of like numpy.dot. However, it will use the first axis with both arrays.
-This means they may not need to be matrices. However, they must have the same number of dimensions. Generally,
-though not explicitly required, the operator will likely expect every dimension other than the first to be the
-same shape.</p>
+<dd><p>Sort of like numpy.dot. However, it will use the first axis with both
+arrays. This means they may not need to be matrices. However, they must
+have the same number of dimensions. Generally, though not explicitly
+required, the operator will likely expect every dimension other than
+the first to be the same shape.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2360,14 +2500,16 @@ same shape.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; first array.</li>
 <li><strong>b</strong> (<em>numpy.ndarray</em>) &#8211; second array.</li>
-<li><strong>op</strong> (<em>callable</em>) &#8211; an operator that will take a[i] and b[j] as arguments and return a scalar.</li>
+<li><strong>op</strong> (<em>callable</em>) &#8211; an operator that will take a[i] and b[j] as
+arguments and return a scalar.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;
-an array (matrix) with the shape (len(a), len(b)) with each element out[i, j] the</p>
+an array (matrix) with the shape (len(a),</p>
 <blockquote>
-<div><p>result of op(a[i], b[j]).</p>
+<div><p>len(b)) with each element out[i, j] the
+result of op(a[i], b[j]).</p>
 </div></blockquote>
 </p>
 </td>
@@ -2443,22 +2585,33 @@ an array (matrix) with the shape (len(a), len(b)) with each element out[i, j] th
 <dl class="function">
 <dt id="nanshe.util.xnumpy.max_abs">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">max_abs</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#max_abs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.max_abs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes the max of the given array subject to the absolute value (magnitude for complex numbers).</p>
+<dd><p>Takes the max of the given array subject to the absolute value
+(magnitude for complex numbers).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject to the absolute value).</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+to the absolute value).</li>
 <li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions is the same by inserting singleton
-dimensions at all the axes squished (excepting the last one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices of the maxes in addition to the maxes.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+dimensions is the same by
+inserting singleton
+dimensions at all the axes
+squished (excepting the last
+one).</li>
+<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+of the maxes in addition to
+the maxes.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the largest (subject to the absolute value)
-or if <cite>return_indices</cite> the indices corresponding to the largest
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the
+largest (subject to the
+absolute value) or if
+<code class="docutils literal"><span class="pre">return_indices</span></code> the indices
+corresponding to the largest
 value(s), as well.</p>
 </td>
 </tr>
@@ -2536,22 +2689,32 @@ value(s), as well.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.min_abs">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">min_abs</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#min_abs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.min_abs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes the min of the given array subject to the absolute value (magnitude for complex numbers).</p>
+<dd><p>Takes the min of the given array subject to the absolute value
+(magnitude for complex numbers).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the min (subject to the absolute value).</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the min (subject
+to the absolute value).</li>
 <li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions is the same by inserting singleton
-dimensions at all the axes squished (excepting the last one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices of the mins in addition to the mins.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+dimensions is the same by
+inserting singleton dimensions
+at all the axes squished
+(excepting the last one).</li>
+<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+of the mins in addition to the
+mins.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the smallest (subject to the absolute value)
-or if <cite>return_indices</cite> the indices corresponding to the smallest
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the
+smallest (subject to the
+absolute value) or if
+<code class="docutils literal"><span class="pre">return_indices</span></code> the indices
+corresponding to the smallest
 value(s), as well.</p>
 </td>
 </tr>
@@ -2629,22 +2792,32 @@ value(s), as well.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.nanmax_abs">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">nanmax_abs</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#nanmax_abs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.nanmax_abs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes the max of the given array subject to the absolute value (magnitude for complex numbers).</p>
+<dd><p>Takes the max of the given array subject to the absolute value
+(magnitude for complex numbers).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject to the absolute value).</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+to the absolute value).</li>
 <li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions is the same by inserting singleton
-dimensions at all the axes squished (excepting the last one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices of the maxes in addition to the maxes.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+dimensions is the same by
+inserting singleton dimensions
+at all the axes squished
+(excepting the last one).</li>
+<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+of the maxes in addition to
+the maxes.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the largest (subject to the absolute value)
-or if <cite>return_indices</cite> the indices corresponding to the largest
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the
+largest (subject to the
+absolute value) or if
+<code class="docutils literal"><span class="pre">return_indices</span></code> the indices
+corresponding to the largest
 value(s), as well.</p>
 </td>
 </tr>
@@ -2722,22 +2895,32 @@ value(s), as well.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.nanmin_abs">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">nanmin_abs</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#nanmin_abs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.nanmin_abs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes the min of the given array subject to the absolute value (magnitude for complex numbers).</p>
+<dd><p>Takes the min of the given array subject to the absolute value
+(magnitude for complex numbers).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the min (subject to the absolute value).</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the min (subject
+to the absolute value).</li>
 <li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions is the same by inserting singleton
-dimensions at all the axes squished (excepting the last one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices of the mins in addition to the mins.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+dimensions is the same by
+inserting singleton dimensions
+at all the axes squished
+(excepting the last one).</li>
+<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+of the mins in addition to the
+mins.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the smallest (subject to the absolute value)
-or if <cite>return_indices</cite> the indices corresponding to the smallest
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array or value that is the
+smallest (subject to the
+absolute value) or if
+<code class="docutils literal"><span class="pre">return_indices</span></code> the indices
+corresponding to the smallest
 value(s), as well.</p>
 </td>
 </tr>
@@ -2821,13 +3004,17 @@ value(s), as well.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; either a single vector or a set of vectors (matrix).</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments as numpy.linalg.norm
-(though some are redundant here).</li>
+<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; either a single vector or a
+set of vectors (matrix).</li>
+<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+as numpy.linalg.norm
+(though some are redundant
+here).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the norms of all vectors in the set.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the norms of
+all vectors in the set.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -2912,7 +3099,8 @@ each name in the structured array and yields the name, type, and shape
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the info dtype from.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the info dtype
+from.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">** ** (<em>NotNumPyStructuredArrayType</em>) &#8211;
 if it is a normal NumPy array.</td>
@@ -2928,17 +3116,19 @@ if it is a normal NumPy array.</td>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.numpy_structured_array_dtype_list">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">numpy_structured_array_dtype_list</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#numpy_structured_array_dtype_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.numpy_structured_array_dtype_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes any NumPy array and returns either a list for a NumPy structured array
-via numpy_structured_array_dtype_generator or if it is a normal NumPy array
-it returns the type used.</p>
+<dd><p>Takes any NumPy array and returns either a list for a NumPy structured
+array via numpy_structured_array_dtype_generator or if it is a normal
+NumPy array it returns the type used.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the dtype info from.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the dtype info
+from.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">something that can be given to numpy.dtype
-to obtain the new_array.dtype, but is more
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">something that can be given to
+numpy.dtype to obtain the
+new_array.dtype, but is more
 malleable than a numpy.dtype.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(list or type)</td>
@@ -2957,7 +3147,8 @@ malleable than a numpy.dtype.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an array with the distances between each pair of vectors.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an array with the distances
+between each pair of vectors.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -3001,18 +3192,22 @@ malleable than a numpy.dtype.</td>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.pair_dot_product_normalized">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">pair_dot_product_normalized</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#pair_dot_product_normalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.pair_dot_product_normalized" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.</p>
+<dd><p>Determines the dot product between a pair of vectors from each set and
+divides them by the norm of the two.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments as numpy.linalg.norm.</li>
+<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+as numpy.linalg.norm.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized distances between each pair of vectors.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized
+distances between each pair
+of vectors.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -3058,19 +3253,23 @@ malleable than a numpy.dtype.</td>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.pair_dot_product_partially_normalized">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">pair_dot_product_partially_normalized</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#pair_dot_product_partially_normalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.pair_dot_product_partially_normalized" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the dot product between the two pairs of vectors from each set and creates a tuple
-with the dot product divided by one norm or the other.</p>
+<dd><p>Determines the dot product between the two pairs of vectors from each
+set and creates a tuple with the dot product divided by one norm or the
+other.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments as numpy.linalg.norm</li>
+<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same argument
+as numpy.linalg.norm</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized distances between each pair of vectors.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the normalized
+distances between each pair
+of vectors.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -3125,23 +3324,34 @@ with the dot product divided by one norm or the other.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.quantile">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">quantile</code><span class="sig-paren">(</span><em>data</em>, <em>probs</em>, <em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#quantile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.quantile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the quantiles for given data much like MATLAB&#8217;s function</p>
+<dd><p>Determines the quantiles for given data much like MATLAB&#8217;s function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles of.</li>
-<li><strong>probs</strong> (<em>int or float or numpy.ndarray</em>) &#8211; either some sort of integer for the number of quantiles
-or a single float specifying which quantile to get
-or an array of floats specifying the division for
-each quantile in the the range (0, 1).</li>
-<li><strong>axis</strong> (<em>int or None</em>) &#8211; the axis to perform the calculation on (if default (None) then
-all, otherwise only on a particular axis.</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles
+of.</li>
+<li><strong>probs</strong> (<em>int or float or numpy.ndarray</em>) &#8211; either some sort of
+integer for the number
+of quantiles or a
+single float specifying
+which quantile to get
+or an array of floats
+specifying the division
+for each quantile in
+the range (0, 1).</li>
+<li><strong>axis</strong> (<em>int or None</em>) &#8211; the axis to perform the
+calculation on (if
+default (None) then
+all, otherwise only on
+a particular axis.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the quantiles (the first dimension will be the
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the
+quantiles (the first
+dimension will be the
 same length as probs).</p>
 </td>
 </tr>
@@ -3192,17 +3402,28 @@ same length as probs).</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.renumber_label_image">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">renumber_label_image</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#renumber_label_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.renumber_label_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a label image with non-consecutive numbering and renumbers it to be consecutive.
-Returns the relabeled image, a mapping from the old labels (by index) to the new ones,
-and a mapping from the new labels back to the old labels.</p>
+<dd><p>Takes a label image with non-consecutive numbering and renumbers it to
+be consecutive. Returns the relabeled image, a mapping from the old
+labels (by index) to the new ones, and a mapping from the new labels
+back to the old labels.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the label image.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the label
+image.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the relabeled label image, the forward label mapping
-and the reverse label mapping</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the
+relabeled
+label
+image,
+the
+forward
+label
+mapping and
+the reverse
+label
+mapping</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray, numpy.ndarray, numpy.ndarray)</td>
 </tr>
@@ -3230,7 +3451,8 @@ and the reverse label mapping</td>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.roll">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">roll</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#roll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.roll" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like numpy.roll, but generalizes to include a roll for each axis of new_array.</p>
+<dd><p>Like numpy.roll, but generalizes to include a roll for each axis of
+new_array.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Right shift occurs with a positive and left occurs with a negative.</p>
@@ -3241,10 +3463,12 @@ and the reverse label mapping</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to roll axes of.</li>
-<li><strong>shift</strong> (<em>container of ints</em>) &#8211; some sort of container (list, tuple, array) of ints specifying how much to
+<li><strong>shift</strong> (<em>container of ints</em>) &#8211; some sort of container (list, tuple,
+array) of ints specifying how much to
 roll each axis.</li>
 <li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; array to store the results in.</li>
-<li><strong>to_mask</strong> (<em>bool</em>) &#8211; Makes the result a masked array with the portion that rolled off masked.</li>
+<li><strong>to_mask</strong> (<em>bool</em>) &#8211; Makes the result a masked array with
+the portion that rolled off masked.</li>
 </ul>
 </td>
 </tr>
@@ -3458,25 +3682,32 @@ result of the roll.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.squish">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">squish</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#squish"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.squish" title="Permalink to this definition">¶</a></dt>
-<dd><p>Moves the given axes to the last dimensions of the array and then squishes them into one dimension.</p>
+<dd><p>Moves the given axes to the last dimensions of the array and then
+squishes them into one dimension.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Returns a view if possible. However, if the axes provided are not consecutive integers when placed in the
-range [0, new_array.ndim), due to reshaping, the returned array will be a copy.</p>
+<p class="last">Returns a view if possible. However, if the axes provided are not
+consecutive integers when placed in the range [0, new_array.ndim),
+due to reshaping, the returned array will be a copy.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject to the absolute value).</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+to the absolute value).</li>
 <li><strong>axis</strong> (<em>int or collection of ints</em>) &#8211; desired axes to squish.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions is the same plus one by inserting
-singleton dimensions at all the axes squished.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions
+is the same plus one by
+inserting singleton dimensions
+at all the axes squished.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with one dimension at the end containing all the given axes.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with one dimension at
+the end containing all the
+given axes.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -3593,15 +3824,17 @@ singleton dimensions at all the axes squished.</li>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.symmetric_line_filter">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">symmetric_line_filter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#symmetric_line_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.symmetric_line_filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines
-beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension
-dim.</p>
+<dd><p>Creates a boolean array mask for a line. This mask has size for the
+length of the line and number of empty lines beside it in any
+orthogonal direction. The mask has dimensions equal to ndims and the
+line is placed along dimension dim.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>size</strong> (<em>int</em>) &#8211; the distance from the center of the filter to the nearest edge.</li>
+<li><strong>size</strong> (<em>int</em>) &#8211; the distance from the center of the filter to
+the nearest edge.</li>
 <li><strong>ndims</strong> (<em>int</em>) &#8211; the number of dimensions for the filter.</li>
 <li><strong>dim</strong> (<em>int</em>) &#8211; the dimension to put the line along.</li>
 </ul>
@@ -3653,20 +3886,25 @@ dim.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.tagging_reorder_array">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">tagging_reorder_array</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#tagging_reorder_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.tagging_reorder_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms one axis ordering to another giving a view of the array (unless otherwise specified).</p>
+<dd><p>Transforms one axis ordering to another giving a view of the array
+(unless otherwise specified).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to reorder</li>
-<li><strong>from_axis_order</strong> (<em>str or list of str</em>) &#8211; current labeled axis order.</li>
-<li><strong>to_axis_order</strong> (<em>str or list of str</em>) &#8211; desired labeled axis order</li>
-<li><strong>to_copy</strong> (<em>bool</em>) &#8211; whether to return a view or a copy</li>
+<li><strong>from_axis_order</strong> (<em>str or list of str</em>) &#8211; current labeled axis
+order.</li>
+<li><strong>to_axis_order</strong> (<em>str or list of str</em>) &#8211; desired labeled axis
+order</li>
+<li><strong>to_copy</strong> (<em>bool</em>) &#8211; whether to return a
+view or a copy</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the axis order specified (view).</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the axis
+order specified (view).</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -3716,21 +3954,35 @@ dim.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.threshold_array">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">threshold_array</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#threshold_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.threshold_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a threshold, this function compares the given array to it to see which entries match.</p>
+<dd><p>Given a threshold, this function compares the given array to it to see
+which entries match.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>an_array</strong> (<em>numpy.ndarray</em>) &#8211; an array to threshold.</li>
-<li><strong>threshold</strong> (<em>int or float or numpy.ndarray</em>) &#8211; something to compare to.</li>
-<li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values below the threshold count or ones above it.</li>
-<li><strong>is_closed</strong> (<em>bool</em>) &#8211; whether to include values equal to the threshold</li>
+<li><strong>an_array</strong> (<em>numpy.ndarray</em>) &#8211; an array to
+threshold.</li>
+<li><strong>threshold</strong> (<em>int or float or numpy.ndarray</em>) &#8211; something to
+compare to.</li>
+<li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values
+below the
+threshold count
+or ones above it.</li>
+<li><strong>is_closed</strong> (<em>bool</em>) &#8211; whether to
+include values
+equal to the
+threshold</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211;
-a mask of entries reflecting the threshold.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;
+a mask of entries</p>
+<blockquote>
+<div><p>reflecting the
+threshold.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -3789,21 +4041,34 @@ a mask of entries reflecting the threshold.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.threshold_metric">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">threshold_metric</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#threshold_metric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.threshold_metric" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a threshold, this function finds which entries uniquely match given the threshold.</p>
+<dd><p>Given a threshold, this function finds which entries uniquely match
+given the threshold.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_metric</strong> (<em>numpy.ndarray</em>) &#8211; an array to threshold.</li>
-<li><strong>threshold</strong> (<em>int or float or numpy.ndarray</em>) &#8211; something to compare to.</li>
-<li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values below the threshold count or ones above it.</li>
-<li><strong>is_closed</strong> (<em>bool</em>) &#8211; whether to include values equal to the threshold</li>
+<li><strong>a_metric</strong> (<em>numpy.ndarray</em>) &#8211; an array to
+threshold.</li>
+<li><strong>threshold</strong> (<em>int or float or numpy.ndarray</em>) &#8211; something to
+compare to.</li>
+<li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values
+below the
+threshold count
+or ones above it.</li>
+<li><strong>is_closed</strong> (<em>bool</em>) &#8211; whether to
+include values
+equal to the
+threshold</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211;
-a mapping of unique matches.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;
+a mapping of</p>
+<blockquote>
+<div><p>unique matches.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -3862,7 +4127,8 @@ a mapping of unique matches.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.to_ctype">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">to_ctype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#to_ctype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.to_ctype" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a numpy.dtype or any type that can be converted to a numpy.dtype and returns its equivalent ctype.</p>
+<dd><p>Takes a numpy.dtype or any type that can be converted to a numpy.dtype
+and returns its equivalent ctype.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3901,15 +4167,20 @@ a mapping of unique matches.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.truncate_masked_frames">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">truncate_masked_frames</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#truncate_masked_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.truncate_masked_frames" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes frames that have been shifted and truncates out the portion, which is an intact rectangular shape.</p>
+<dd><p>Takes frames that have been shifted and truncates out the portion,
+which is an intact rectangular shape.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shifted_frames</strong> (<em>numpy.ma.masked_array</em>) &#8211; Image stack to register (time is the first dimension uses
-C-order tyx or tzyx).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shifted_frames</strong> (<em>numpy.ma.masked_array</em>) &#8211; Image stack to register
+(time is the first
+dimension uses C-order
+tyx or tzyx).</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an array containing a subsection of the stack that has no mask.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an array containing a
+subsection of the stack
+that has no mask.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
 </tr>
@@ -3980,7 +4251,8 @@ C-order tyx or tzyx).</td>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.unique_mapping">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">unique_mapping</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#unique_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.unique_mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a binary mapping between two sets and excludes portions of the mapping that are not one-to-one.</p>
+<dd><p>Take a binary mapping between two sets and excludes portions of the
+mapping that are not one-to-one.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -4062,19 +4334,26 @@ the results returned.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.unsquish">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">unsquish</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#unsquish"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.unsquish" title="Permalink to this definition">¶</a></dt>
-<dd><p>Inverts the squish operation given the shape and the axis/axes to extract from the last dimension.</p>
+<dd><p>Inverts the squish operation given the shape and the axis/axes to
+extract from the last dimension.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject to the absolute value).</li>
-<li><strong>shape</strong> (<em>collection of ints</em>) &#8211; should be the shape of the result array (or the array before squishing).</li>
-<li><strong>axis</strong> (<em>int or collection of ints</em>) &#8211; desired axes to remove from the last axis.</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+to the absolute value).</li>
+<li><strong>shape</strong> (<em>collection of ints</em>) &#8211; should be the shape of the
+result array (or the array
+before squishing).</li>
+<li><strong>axis</strong> (<em>int or collection of ints</em>) &#8211; desired axes to remove from the
+last axis.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the shape provided and the axes removed from the end.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the shape
+provided and the axes removed
+from the end.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>

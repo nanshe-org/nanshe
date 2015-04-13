@@ -78,31 +78,26 @@ can.</p>
 <dt id="nanshe.io.hdf5.search.get_matching_grouped_paths">
 <code class="descclassname">nanshe.io.hdf5.search.</code><code class="descname">get_matching_grouped_paths</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/search.html#get_matching_grouped_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.search.get_matching_grouped_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks for existing paths that match the full provide pattern path.
-Returns a list of matches as keys and whether they are found in the HDF5 file or not.</p>
+Returns a list of matches as keys and whether they are found in the
+HDF5 file or not.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for each group) for the HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+each group) for the HDF5 file.</li>
 </ul>
 </td>
 </tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">TODO: Write doctests.</p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an ordered dictionary with possible paths that fit the pattern and whether
-they are found.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an ordered dictionary with possible
+paths that fit the pattern and
+whether they are found.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(list)</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -112,31 +107,26 @@ they are found.</td>
 <dt id="nanshe.io.hdf5.search.get_matching_grouped_paths_found">
 <code class="descclassname">nanshe.io.hdf5.search.</code><code class="descname">get_matching_grouped_paths_found</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/search.html#get_matching_grouped_paths_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.search.get_matching_grouped_paths_found" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks for existing paths that match the full provide pattern path.
-Returns a list of matches as keys and whether they are found in the HDF5 file or not.</p>
+Returns a list of matches as keys and whether they are found in the
+HDF5 file or not.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for each group) for the HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+each group) for the HDF5 file.</li>
 </ul>
 </td>
 </tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">TODO: Write doctests.</p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an ordered dictionary with possible paths that fit the pattern
-and whether they are found.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an ordered dictionary with possible
+paths that fit the pattern and
+whether they are found.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(collections.OrderedDict)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(collections.OrderedDict)</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -151,25 +141,18 @@ Returns a list of matches for the given file handle.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for each group) for the HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+each group) for the HDF5 file.</li>
 </ul>
 </td>
 </tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">TODO: Write doctests.</p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of matching paths.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of matching paths.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(list)</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -179,35 +162,30 @@ Returns a list of matches for the given file handle.</p>
 <dt id="nanshe.io.hdf5.search.get_matching_paths_groups">
 <code class="descclassname">nanshe.io.hdf5.search.</code><code class="descname">get_matching_paths_groups</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/search.html#get_matching_paths_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.search.get_matching_paths_groups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks for parts of the path pattern and tries to match them in order.
-Returns a list of matches that can be combined to yield acceptable matches for the given file handle.</p>
+Returns a list of matches that can be combined to yield acceptable
+matches for the given file handle.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This works best when a tree structure is created systematically in HDF5. Then, this will recreate
-what the tree structure could and may contain.</p>
+<p class="last">This works best when a tree structure is created systematically in
+HDF5. Then, this will recreate what the tree structure could and
+may contain.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for each group) for the HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+each group) for the HDF5 file.</li>
 </ul>
 </td>
 </tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">TODO: Write doctests.</p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of matching paths.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of matching paths.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(list)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(list)</p>
+</td>
 </tr>
 </tbody>
 </table>

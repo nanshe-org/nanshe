@@ -98,21 +98,23 @@
                                           <span class="n">data</span><span class="p">,</span>
                                           <span class="n">overwrite</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.</span>
-<span class="sd">        Also, will handle normal NumPy arrays and scalars, as well.</span>
+<span class="sd">        Serializes a NumPy structure array to an HDF5 file by using the HDF5</span>
+<span class="sd">        compound data type. Also, will handle normal NumPy arrays and scalars,</span>
+<span class="sd">        as well.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            HDF5 does not support generic Python objects. So, serialization of objects to something</span>
-<span class="sd">            else (perhaps strs of fixed size) must be performed first.</span>
-
-<span class="sd">        Note:</span>
-<span class="sd">            TODO: Write doctests.</span>
+<span class="sd">            HDF5 does not support generic Python objects. So, serialization of</span>
+<span class="sd">            objects to something else (perhaps strs of fixed size) must be</span>
+<span class="sd">            performed first.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.</span>
 <span class="sd">            internalPath(str):          an internal path for the HDF5 file.</span>
-<span class="sd">            data(numpy.ndarray):        the NumPy structure array to save (or normal NumPy array).</span>
-<span class="sd">            overwrite(bool):            whether to overwrite what is already there (defaults to False).</span>
+<span class="sd">            data(numpy.ndarray):        the NumPy structure array to save (or</span>
+<span class="sd">                                        normal NumPy array).</span>
+
+<span class="sd">            overwrite(bool):            whether to overwrite what is already</span>
+<span class="sd">                                        there (defaults to False).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">close_file_handle</span> <span class="o">=</span> <span class="bp">False</span>
@@ -162,12 +164,14 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="read_numpy_structured_array_from_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">[docs]</a><span class="k">def</span> <span class="nf">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.</span>
-<span class="sd">        Also, it will handle normal NumPy arrays and scalars, as well.</span>
+<span class="sd">        Serializes a NumPy structure array from an HDF5 file by using the HDF5</span>
+<span class="sd">        compound data type. Also, it will handle normal NumPy arrays and</span>
+<span class="sd">        scalars, as well.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            HDF5 does not support generic Python objects. So, serialization of objects to something</span>
-<span class="sd">            else (perhaps strs of fixed size) must be performed first.</span>
+<span class="sd">            HDF5 does not support generic Python objects. So, serialization of</span>
+<span class="sd">            objects to something else (perhaps strs of fixed size) must be</span>
+<span class="sd">            performed first.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.</span>
@@ -243,8 +247,8 @@
 </div>
 <div class="viewcode-block" id="HDF5MaskedDataset"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset">[docs]</a><span class="k">class</span> <span class="nc">HDF5MaskedDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Provides an abstraction of the masked array the HDF5 Group where the contents of a</span>
-<span class="sd">        masked array are serialized.</span>
+<span class="sd">        Provides an abstraction of the masked array the HDF5 Group where the</span>
+<span class="sd">        contents of a masked array are serialized.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">                This behaves roughly like an `h5py.Dataset` and roughly like a</span>

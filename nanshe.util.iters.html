@@ -93,9 +93,11 @@ factorials up to and including the factorial of 4 (24).</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_op</strong> (<em>callabel</em>) &#8211; something that can be called on two values and return a result with a type that is a
+<li><strong>new_op</strong> (<em>callabel</em>) &#8211; something that can be called on two values
+and return a result with a type that is a
 permissible argument.</li>
-<li><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can be turned into an iterator.</li>
+<li><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can be turned
+into an iterator.</li>
 </ul>
 </td>
 </tr>
@@ -144,7 +146,8 @@ permissible argument.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that repeats the given iterator a certain number of times.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that repeats the given iterator
+a certain number of times.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(generator object)</p>
@@ -187,7 +190,7 @@ permissible argument.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; a list or an iterator to use for enumeration over.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator to use for enumeration over.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an iterator over the reversed elements.</td>
 </tr>
@@ -233,12 +236,13 @@ permissible argument.</li>
 <dl class="function">
 <dt id="nanshe.util.iters.filled_stringify_numbers">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">filled_stringify_numbers</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#filled_stringify_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.filled_stringify_numbers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like enumerate except it also returns a string with the number from enumeration with left padding by zero.</p>
+<dd><p>Like enumerate except it also returns a string with the number from
+enumeration with left padding by zero.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; a list or an iterator to use for enumeration over.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator to use for enumeration over.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an iterator over the reversed elements.</td>
 </tr>
@@ -289,7 +293,7 @@ permissible argument.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; a list or an iterator to use for enumeration over.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator to use for enumeration over.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an iterator over the reversed elements.</td>
 </tr>
@@ -335,13 +339,16 @@ permissible argument.</li>
 <dl class="function">
 <dt id="nanshe.util.iters.index_enumerator">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">index_enumerator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#index_enumerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.index_enumerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size (i.e. like
-index_generator). However, also included is an index corresponding to how many elements have been seen.</p>
+<dd><p>Takes an argument list of sizes and iterates through them from 0 up to
+(but not including) each size (i.e. like index_generator). However,
+also included is an index corresponding to how many elements have been
+seen.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*sizes</strong> (<em>int</em>) &#8211; an argument list of ints for the max sizes in each index.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*sizes</strong> (<em>int</em>) &#8211; an argument list of ints for the max sizes
+in each index.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>chain_gen</strong> &#8211;
 a generator over every possible coordinated</td>
@@ -384,12 +391,14 @@ a generator over every possible coordinated</td>
 <dl class="function">
 <dt id="nanshe.util.iters.index_generator">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">index_generator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#index_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.index_generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size.</p>
+<dd><p>Takes an argument list of sizes and iterates through them from 0 up to
+(but not including) each size.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*sizes</strong> (<em>int</em>) &#8211; an argument list of ints for the max sizes in each index.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*sizes</strong> (<em>int</em>) &#8211; an argument list of ints for the max sizes
+in each index.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>chain_gen</strong> &#8211;
 a generator over every possible coordinated</td>
@@ -432,19 +441,22 @@ a generator over every possible coordinated</td>
 <dl class="function">
 <dt id="nanshe.util.iters.iter_with_skip_indices">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">iter_with_skip_indices</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#iter_with_skip_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.iter_with_skip_indices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Behaves as a normal iterator except allows for skipping arbitrary values, as well.
-These values to be skipped should be specified by their indices using some iterable.</p>
+<dd><p>Behaves as a normal iterator except allows for skipping arbitrary
+values, as well. These values to be skipped should be specified by
+their indices using some iterable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_iter</strong> (<em>iter</em>) &#8211; an iterator that will skip some values</li>
-<li><strong>to_skip</strong> (<em>iter</em>) &#8211; some form of iterable or list of indices to skip (can be a single value as well).</li>
+<li><strong>to_skip</strong> (<em>iter</em>) &#8211; some form of iterable or list of indices to
+skip (can be a single value as well).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that skips some values with indices in to_skip.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that skips some values with
+indices in to_skip.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(generator object)</p>
@@ -490,19 +502,22 @@ These values to be skipped should be specified by their indices using some itera
 <dl class="function">
 <dt id="nanshe.util.iters.iter_with_skip_values">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">iter_with_skip_values</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#iter_with_skip_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.iter_with_skip_values" title="Permalink to this definition">¶</a></dt>
-<dd><p>Behaves as a normal iterator except allows for skipping arbitrary values, as well.
-These values to be skipped should be specified by their indices using some iterable.</p>
+<dd><p>Behaves as a normal iterator except allows for skipping arbitrary
+values, as well. These values to be skipped should be specified by
+their indices using some iterable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_iter</strong> (<em>iter</em>) &#8211; an iterator that will skip some values</li>
-<li><strong>to_skip</strong> (<em>iter</em>) &#8211; some form of iterable or list of indices to skip (can be a single value as well).</li>
+<li><strong>to_skip</strong> (<em>iter</em>) &#8211; some form of iterable or list of indices to
+skip (can be a single value as well).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that skips some values with indices in to_skip.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that skips some values with
+indices in to_skip.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(generator object)</p>
@@ -552,18 +567,22 @@ These values to be skipped should be specified by their indices using some itera
 <dl class="function">
 <dt id="nanshe.util.iters.lagged_generators">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">lagged_generators</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#lagged_generators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.lagged_generators" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a tuple of generators with each next generator one step ahead of the previous generator.</p>
+<dd><p>Creates a tuple of generators with each next generator one step ahead
+of the previous generator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can be turned into an iterator</li>
-<li><strong>n</strong> (<em>int</em>) &#8211; number of generators to create as lagged</li>
+<li><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can
+be turned into an iterator</li>
+<li><strong>n</strong> (<em>int</em>) &#8211; number of generators to create as
+lagged</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of iterators with each one step in front of the others.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of iterators with each one
+step in front of the others.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(tuple of generator objects)</p>
@@ -605,20 +624,26 @@ These values to be skipped should be specified by their indices using some itera
 <dl class="function">
 <dt id="nanshe.util.iters.lagged_generators_zipped">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">lagged_generators_zipped</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#lagged_generators_zipped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.lagged_generators_zipped" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a tuple of generators with each next generator one step ahead of the previous generator.</p>
+<dd><p>Creates a tuple of generators with each next generator one step ahead
+of the previous generator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can be turned into an iterator</li>
-<li><strong>n</strong> (<em>int</em>) &#8211; number of generators to create as lagged</li>
-<li><strong>longest</strong> (<em>bool</em>) &#8211; whether to continue zipping along the longest generator</li>
-<li><strong>fillvalue</strong> &#8211; value to use to fill generators shorter than the longest.</li>
+<li><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can
+be turned into an iterator</li>
+<li><strong>n</strong> (<em>int</em>) &#8211; number of generators to create as
+lagged</li>
+<li><strong>longest</strong> (<em>bool</em>) &#8211; whether to continue zipping along
+the longest generator</li>
+<li><strong>fillvalue</strong> &#8211; value to use to fill generators
+shorter than the longest.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator object that will return values from each iterator.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator object that will return
+values from each iterator.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator object</p>
@@ -665,17 +690,22 @@ These values to be skipped should be specified by their indices using some itera
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><a class="reference internal" href="#nanshe.util.iters.UnknownSliceLengthException" title="nanshe.util.iters.UnknownSliceLengthException"><code class="xref py py-exc docutils literal"><span class="pre">UnknownSliceLengthException</span></code></a> &#8211;
-Will raise an exception if a_slice.stop and a_length is None.</p>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference internal" href="#nanshe.util.iters.UnknownSliceLengthException" title="nanshe.util.iters.UnknownSliceLengthException"><code class="xref py py-exc docutils literal"><span class="pre">UnknownSliceLengthException</span></code></a> &#8211;
+Will raise an exception if</li>
+<li><strong>a_slice.stop and a_length is None.</strong> &#8211;</li>
+</ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_slice</strong> (<em>slice</em>) &#8211; a slice to reformat.</li>
-<li><strong>a_length</strong> (<em>int</em>) &#8211; a length to fill for stopping if not provided.</li>
+<li><strong>a_length</strong> (<em>int</em>) &#8211; a length to fill for stopping if not
+provided.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a new slice with as many values filled in as possible.</p>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a new slice with as many values filled in as
+possible.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
@@ -738,7 +768,8 @@ Will raise an exception if a_slice.stop and a_length is None.</p>
 <dl class="function">
 <dt id="nanshe.util.iters.len_slices">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">len_slices</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#len_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.len_slices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</p>
+<dd><p>Takes a tuple of slices and reformats them to fill in as many undefined
+values as possible.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -749,7 +780,8 @@ Will raise an exception if a_slice.stop and a_length is None.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of slices with all default values filled if possible.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of slices with all default
+values filled if possible.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
@@ -777,10 +809,13 @@ Will raise an exception if a_slice.stop and a_length is None.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list_indices</strong> (<em>list</em>) &#8211; a list of indices corresponding to some array object</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>list_indices</strong> (<em>list</em>) &#8211; a list of indices corresponding to some
+array object</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>chain_gen</strong> &#8211;
-a tuple containing a numpy array in for each index</td>
+a tuple containing a numpy array for each<blockquote>
+<div>index</div></blockquote>
+</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
 </tr>
@@ -804,20 +839,28 @@ a tuple containing a numpy array in for each index</td>
 <dl class="function">
 <dt id="nanshe.util.iters.list_indices_to_numpy_bool_array">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">list_indices_to_numpy_bool_array</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#list_indices_to_numpy_bool_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.list_indices_to_numpy_bool_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.
-All indices in list_indices are set to True in the numpy.ndarray. The rest are False by default.</p>
+<dd><p>Much like list_indices_to_index_array except that it constructs
+numpy.ndarray with dtype of bool. All indices in list_indices are set
+to True in the numpy.ndarray. The rest are False by default.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>list_indices</strong> (<em>list</em>) &#8211; a list of indices corresponding to some numpy.ndarray object</li>
-<li><strong>shape</strong> (<em>tuple</em>) &#8211; a tuple used to set the shape of the numpy.ndarray to return</li>
+<li><strong>list_indices</strong> (<em>list</em>) &#8211; a list of indices corresponding to some
+numpy.ndarray object</li>
+<li><strong>shape</strong> (<em>tuple</em>) &#8211; a tuple used to set the shape of the
+numpy.ndarray to return</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> &#8211;
-a numpy.ndarray with dtype bool (True for indices in list_indices and False otherwise).</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>result</strong> &#8211;
+a numpy.ndarray with dtype bool (True for</p>
+<blockquote>
+<div><p>indices in list_indices and False
+otherwise).</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -857,18 +900,21 @@ a numpy.ndarray with dtype bool (True for indices in list_indices and False othe
 <dl class="function">
 <dt id="nanshe.util.iters.reformat_slice">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">reformat_slice</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#reformat_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.reformat_slice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a slice and reformats it to fill in as many undefined values as possible.</p>
+<dd><p>Takes a slice and reformats it to fill in as many undefined values as
+possible.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_slice</strong> (<em>slice</em>) &#8211; a slice to reformat.</li>
-<li><strong>a_length</strong> (<em>int</em>) &#8211; a length to fill for stopping if not provided.</li>
+<li><strong>a_length</strong> (<em>int</em>) &#8211; a length to fill for stopping if not
+provided.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a new slice with as many values filled in as possible.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a new slice with as many values filled in as
+possible.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
@@ -978,7 +1024,8 @@ a numpy.ndarray with dtype bool (True for indices in list_indices and False othe
 <dl class="function">
 <dt id="nanshe.util.iters.reformat_slices">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">reformat_slices</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#reformat_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.reformat_slices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</p>
+<dd><p>Takes a tuple of slices and reformats them to fill in as many undefined
+values as possible.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -989,7 +1036,8 @@ a numpy.ndarray with dtype bool (True for indices in list_indices and False othe
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of slices with all default values filled if possible.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of slices with all default
+values filled if possible.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
@@ -1019,18 +1067,21 @@ a numpy.ndarray with dtype bool (True for indices in list_indices and False othe
 <dl class="function">
 <dt id="nanshe.util.iters.repeat_generator">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">repeat_generator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#repeat_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.repeat_generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Repeats each value on an iterator given n-times before proceeding to the next value.</p>
+<dd><p>Repeats each value on an iterator given n-times before proceeding to
+the next value.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_iter</strong> (<em>iter</em>) &#8211; an iterator that will have its values repeated contiguously</li>
+<li><strong>a_iter</strong> (<em>iter</em>) &#8211; an iterator that will have its values
+repeated contiguously</li>
 <li><strong>n</strong> (<em>int</em>) &#8211; number of times to repeat each value</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that contiguously repeats value from the given iterator.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that contiguously repeats value
+from the given iterator.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(generator object)</p>
@@ -1073,7 +1124,8 @@ a numpy.ndarray with dtype bool (True for indices in list_indices and False othe
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can be turned into an iterator.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can be turned
+into an iterator.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an iterator over the reversed elements.</td>
 </tr>
@@ -1103,9 +1155,10 @@ a numpy.ndarray with dtype bool (True for indices in list_indices and False othe
 <dl class="function">
 <dt id="nanshe.util.iters.splitting_xrange">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">splitting_xrange</code><span class="sig-paren">(</span><em>a</em>, <em>b=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#splitting_xrange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.splitting_xrange" title="Permalink to this definition">¶</a></dt>
-<dd><p>Similar to xrange except that it recursively proceeds through the given range in such a way that values that
-follow each other are preferably not only non-sequential, but fairly different. This does not always work with
-small ranges, but works nicely with large ranges</p>
+<dd><p>Similar to xrange except that it recursively proceeds through the given
+range in such a way that values that follow each other are preferably
+not only non-sequential, but fairly different. This does not always
+work with small ranges, but works nicely with large ranges.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1116,8 +1169,12 @@ small ranges, but works nicely with large ranges</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> &#8211;
-a generator that can be used to iterate through the sequence.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>result</strong> &#8211;
+a generator that can be used to iterate</p>
+<blockquote>
+<div><p>through the sequence.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>
@@ -1167,21 +1224,25 @@ a generator that can be used to iterate through the sequence.</p>
 <dl class="function">
 <dt id="nanshe.util.iters.xrange_with_skip">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">xrange_with_skip</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#xrange_with_skip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.xrange_with_skip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Behaves as xrange does except allows for skipping arbitrary values as well.
-These values to be skipped should be specified using some iterable.</p>
+<dd><p>Behaves as xrange does except allows for skipping arbitrary values, as
+well. These values to be skipped should be specified using some
+iterable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> (<em>int</em>) &#8211; start for xrange or if stop is not specified this will be stop.</li>
+<li><strong>start</strong> (<em>int</em>) &#8211; start for xrange or if stop is not specified
+this will be stop.</li>
 <li><strong>stop</strong> (<em>int</em>) &#8211; stop for xrange.</li>
 <li><strong>stop</strong> &#8211; step for xrange.</li>
-<li><strong>to_skip</strong> (<em>iter</em>) &#8211; some form of iterable or list of elements to skip (can be a single value as well).</li>
+<li><strong>to_skip</strong> (<em>iter</em>) &#8211; some form of iterable or list of elements to
+skip (can be a single value as well).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an xrange-like generator that skips some values.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an xrange-like generator that skips some
+values.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(generator object)</p>

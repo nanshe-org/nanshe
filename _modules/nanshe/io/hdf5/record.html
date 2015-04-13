@@ -285,7 +285,9 @@
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
+            <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span>
+            <span class="p">)]</span>
             <span class="k">for</span> <span class="n">each_key</span> <span class="ow">in</span> <span class="n">hdf5_index_handle</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">hdf5_index_handle</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;is_logger&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
@@ -337,7 +339,9 @@
                 <span class="k">return</span><span class="p">(</span><span class="n">HDF5EnumeratedArrayRecorder</span><span class="p">(</span><span class="n">key_handle</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">key_i_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key_i</span><span class="p">)</span>
-                <span class="k">return</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">key_handle</span><span class="p">,</span> <span class="n">key_i_str</span><span class="p">))</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span>
+                    <span class="n">key_handle</span><span class="p">,</span> <span class="n">key_i_str</span>
+                <span class="p">))</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span>
                 <span class="s">&quot;unable to open object (Symbol table: Can&#39;t open object &quot;</span> <span class="o">+</span>
@@ -362,7 +366,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
+                <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span>
+                <span class="p">)]</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span> <span class="o">=</span> <span class="p">{</span>
@@ -374,7 +380,9 @@
                 <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
-                <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">])]</span>
+                <span class="n">hdf5_index_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_index_data_handles</span><span class="p">[</span><span class="s">&quot;.&quot;</span><span class="p">]</span>
+                <span class="p">)]</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
                 <span class="c"># Create a group if it doesn&#39;t already exist.</span>
@@ -416,28 +424,40 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="generate_HDF5_array_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.generate_HDF5_array_recorder">[docs]</a><span class="k">def</span> <span class="nf">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">overwrite_group</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">recorder_constructor</span><span class="o">=</span><span class="n">HDF5ArrayRecorder</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_HDF5_array_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.generate_HDF5_array_recorder">[docs]</a><span class="k">def</span> <span class="nf">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span>
+                                 <span class="n">group_name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span>
+                                 <span class="n">enable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">overwrite_group</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                                 <span class="n">recorder_constructor</span><span class="o">=</span><span class="n">HDF5ArrayRecorder</span><span class="p">,</span>
+                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a function used for writing arrays (structured or otherwise)</span>
 <span class="sd">        to a group in an HDF5 file.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            hdf5_handle:            The HDF5 file group to place the debug contents into.</span>
+<span class="sd">            hdf5_handle:            The HDF5 file group to place the debug</span>
+<span class="sd">                                    contents into.</span>
 
-<span class="sd">            group_name:             The name of the group within hdf5_handle to save the contents to.</span>
-<span class="sd">                                    (If set to the empty string, data will be saved to hdf5_handle directly)</span>
+<span class="sd">            group_name:             The name of the group within hdf5_handle to</span>
+<span class="sd">                                    save the contents to. (If set to the empty</span>
+<span class="sd">                                    string, data will be saved to</span>
+<span class="sd">                                    hdf5_handle directly)</span>
 
-<span class="sd">            enable:                 Whether to generate a real logger or a fake one.</span>
+<span class="sd">            enable:                 Whether to generate a real recorder or a</span>
+<span class="sd">                                    fake one.</span>
 
-<span class="sd">            overwrite_group:        Whether to overwrite the group where data is stored.</span>
+<span class="sd">            overwrite_group:        Whether to overwrite the group where data</span>
+<span class="sd">                                    is stored.</span>
 
 <span class="sd">            recorder_constructor:   Type of recorder to use if enable is True.</span>
 
-<span class="sd">            **kwargs:               Other arguments to pass through to the recorder_constructor (won&#39;t pass through if</span>
+<span class="sd">            **kwargs:               Other arguments to pass through to the</span>
+<span class="sd">                                    recorder_constructor (won&#39;t pass through if</span>
 <span class="sd">                                    enable is false).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A function, which will take a given array name and value and write them out.</span>
+<span class="sd">            ArrayRecorder:          A function, which will take a given array</span>
+<span class="sd">                                    name and value and write them out.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -473,47 +493,69 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.static_subgrouping_array_recorders">[docs]</a><span class="k">def</span> <span class="nf">static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.</span>
+<span class="sd">        Creates a decorator that adds a static variable, recorders, that holds</span>
+<span class="sd">        as many recorders as are supplied.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).</span>
+<span class="sd">            args(tuple of strs):                        All variables to be</span>
+<span class="sd">                                                        named (set to</span>
+<span class="sd">                                                        EmptyArrayRecorder()).</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.</span>
+<span class="sd">            kwargs(dict of strs and ArrayRecorders):    All variables to be</span>
+<span class="sd">                                                        named with values of</span>
+<span class="sd">                                                        type ArrayRecorder.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (callable):                                 A decorator that adds the static variable, recorders, to the</span>
-<span class="sd">                                                        given function.</span>
+<span class="sd">            (callable):                                 A decorator that adds</span>
+<span class="sd">                                                        the static variable,</span>
+<span class="sd">                                                        recorders, to the given</span>
+<span class="sd">                                                        function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">static_subgrouping_array_recorders_tie</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Creates a decorator that adds a static variable recorders to the function it decorates.</span>
+<span class="sd">            Creates a decorator that adds a static variable recorders to the</span>
+<span class="sd">            function it decorates.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                callable(callable):     All variables to be named (set to EmptyArrayRecorder()).</span>
+<span class="sd">                callable(callable):     All variables to be named (set to</span>
+<span class="sd">                                        EmptyArrayRecorder()).</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                (callable):             A function with the static variable, recorders, added.</span>
+<span class="sd">                (callable):             A function with the static variable,</span>
+<span class="sd">                                        recorders, added.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">class</span> <span class="nc">SubgroupingRecorders</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
             <span class="c"># &quot;&quot;&quot;</span>
-            <span class="c">#     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the</span>
+            <span class="c">#     Hold recorders. Automatically, moves instances of</span>
+            <span class="c">#     ArrayRecorder to a subgroup with the same name as the</span>
             <span class="c">#     callable on assignment.</span>
             <span class="c"># &quot;&quot;&quot;</span>
             <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="c"># &quot;&quot;&quot;</span>
-                <span class="c">#     Contains ArrayRecorders that write to a subgroup of the same name as the callable.</span>
+                <span class="c">#     Contains ArrayRecorders that write to a subgroup of the</span>
+                <span class="c">#     same name as the callable.</span>
                 <span class="c">#</span>
                 <span class="c">#     Args:</span>
-                <span class="c">#         args(tuple of strs):                        All variables to be named (set to</span>
+                <span class="c">#         args(tuple of strs):                        All</span>
+                <span class="c">#                                                     variables</span>
+                <span class="c">#                                                     to be</span>
+                <span class="c">#                                                     named</span>
+                <span class="c">#                                                     (set to</span>
                 <span class="c">#                                                     EmptyArrayRecorder()).</span>
                 <span class="c">#</span>
                 <span class="c">#     Keyword Args:</span>
-                <span class="c">#         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of</span>
-                <span class="c">#                                                     type ArrayRecorder.</span>
+                <span class="c">#         kwargs(dict of strs and ArrayRecorders):    All</span>
+                <span class="c">#                                                     variables</span>
+                <span class="c">#                                                     to be</span>
+                <span class="c">#                                                     named</span>
+                <span class="c">#                                                     with</span>
+                <span class="c">#                                                     values of</span>
+                <span class="c">#                                                     type</span>
+                <span class="c">#                                                     ArrayRecorder.</span>
                 <span class="c"># &quot;&quot;&quot;</span>
 
                 <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
@@ -568,15 +610,20 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="static_array_debug_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.static_array_debug_recorder">[docs]</a><span class="k">def</span> <span class="nf">static_array_debug_recorder</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the</span>
-<span class="sd">        function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on</span>
-<span class="sd">        assignment it automatically creates a subgroup with the same name as the function.</span>
+<span class="sd">        Creates a decorator that adds a static variable recorders that contains</span>
+<span class="sd">        the variable array_debug_recorder to the function it decorates.</span>
+<span class="sd">        By</span>
+<span class="sd">        default, array_debug_recorder is set to an EmptyArrayRecorder instance.</span>
+<span class="sd">        Also, on assignment it automatically creates a subgroup with the same</span>
+<span class="sd">        name as the function.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            callable(callable):    All variables to be named (set to EmptyArrayRecorder()).</span>
+<span class="sd">            callable(callable):    All variables to be named (set to</span>
+<span class="sd">                                   EmptyArrayRecorder()).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (callable):            A decorator that adds the static variable array_debug_recorder to the given function.</span>
+<span class="sd">            (callable):            A decorator that adds the static variable</span>
+<span class="sd">                                   array_debug_recorder to the given function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">callable</span> <span class="o">=</span> <span class="n">static_subgrouping_array_recorders</span><span class="p">(</span>
@@ -589,47 +636,64 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="class_static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.class_static_subgrouping_array_recorders">[docs]</a><span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a decorator that adds a static variable, recorders, that holds as many recorders as are supplied.</span>
+<span class="sd">        Creates a decorator that adds a static variable, recorders, that holds</span>
+<span class="sd">        as many recorders as are supplied.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            args(tuple of strs):                        All variables to be named (set to EmptyArrayRecorder()).</span>
+<span class="sd">            args(tuple of strs):                        All variables to be</span>
+<span class="sd">                                                        named (set to</span>
+<span class="sd">                                                        EmptyArrayRecorder()).</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of type ArrayRecorder.</span>
+<span class="sd">            kwargs(dict of strs and ArrayRecorders):    All variables to be</span>
+<span class="sd">                                                        named with values of</span>
+<span class="sd">                                                        type ArrayRecorder.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (callable):                                 A decorator that adds the static variable, recorders, to the</span>
-<span class="sd">                                                        given function.</span>
+<span class="sd">            (callable):                                 A decorator that adds</span>
+<span class="sd">                                                        the static variable,</span>
+<span class="sd">                                                        recorders, to the given</span>
+<span class="sd">                                                        function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders_tie</span><span class="p">(</span><span class="n">a_class</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Creates a decorator that adds a static variable recorders to the function it decorates.</span>
+<span class="sd">            Creates a decorator that adds a static variable recorders to the</span>
+<span class="sd">            function it decorates.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                a_class(class):     All variables to be named (set to EmptyArrayRecorder()).</span>
+<span class="sd">                a_class(class):      All variables to be named (set to</span>
+<span class="sd">                                     EmptyArrayRecorder()).</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                (class):             A function with the static variable, recorders, added.</span>
+<span class="sd">                (class):             A function with the static variable,</span>
+<span class="sd">                                     recorders, added.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">class</span> <span class="nc">ClassSubgroupingRecorders</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
             <span class="c"># &quot;&quot;&quot;</span>
-            <span class="c">#     Hold recorders. Automatically, moves instances of ArrayRecorder to a subgroup with the same name as the</span>
-            <span class="c">#     a_class on assignment.</span>
+            <span class="c">#     Hold recorders. Automatically, moves instances of</span>
+            <span class="c">#     ArrayRecorder to a subgroup with the same name as the a_class</span>
+            <span class="c">#     on assignment.</span>
             <span class="c"># &quot;&quot;&quot;</span>
             <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="c"># &quot;&quot;&quot;</span>
-                <span class="c">#     Contains ArrayRecorders that write to a subgroup of the same name as the a_class.</span>
+                <span class="c">#     Contains ArrayRecorders that write to a subgroup of the</span>
+                <span class="c">#     same name as the a_class.</span>
                 <span class="c">#</span>
                 <span class="c">#     Args:</span>
-                <span class="c">#         args(tuple of strs):                        All variables to be named (set to</span>
-                <span class="c">#                                                     EmptyArrayRecorder()).</span>
+                <span class="c">#         args(tuple of strs):                       All</span>
+                <span class="c">#                                                    variables</span>
+                <span class="c">#                                                    to be named</span>
+                <span class="c">#                                                    (set to</span>
+                <span class="c">#                                                    EmptyArrayRecorder()).</span>
                 <span class="c">#</span>
                 <span class="c">#     Keyword Args:</span>
-                <span class="c">#         kwargs(dict of strs and ArrayRecorders):    All variables to be named with values of</span>
-                <span class="c">#                                                     type ArrayRecorder.</span>
+                <span class="c">#         kwargs(dict of strs and ArrayRecorders):   All variables</span>
+                <span class="c">#                                                    to be named</span>
+                <span class="c">#                                                    with values of</span>
+                <span class="c">#                                                    type ArrayRecorder.</span>
                 <span class="c"># &quot;&quot;&quot;</span>
 
                 <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
@@ -666,7 +730,9 @@
 
         <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders__init__decorator</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
             <span class="nd">@wrappers.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
-            <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders__init__wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders__init__wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                                                        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                                                        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="c"># Force all recorders to ensure their output Group exists.</span>
                 <span class="c"># All of them actually make the directory.</span>
                 <span class="c"># However, HDF5EnumeratedArrayRecorder needs a clue as to</span>
@@ -685,7 +751,9 @@
             <span class="nb">callable</span> <span class="o">=</span> <span class="n">static_subgrouping_array_recorders</span><span class="p">()(</span><span class="nb">callable</span><span class="p">)</span>
 
             <span class="nd">@wrappers.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
-            <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                                                 <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="c"># Force all recorders to ensure their output Group exists.</span>
                 <span class="c"># All of them actually make the directory.</span>
                 <span class="c"># However, HDF5EnumeratedArrayRecorder needs a clue as to</span>
@@ -735,15 +803,19 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="class_static_array_debug_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.class_static_array_debug_recorder">[docs]</a><span class="k">def</span> <span class="nf">class_static_array_debug_recorder</span><span class="p">(</span><span class="n">a_class</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a decorator that adds a static variable recorders that contains the variable array_debug_recorder to the</span>
-<span class="sd">        function it decorates. By default, array_debug_recorder is set to an EmptyArrayRecorder instance. Also, on</span>
-<span class="sd">        assignment it automatically creates a subgroup with the same name as the function.</span>
+<span class="sd">        Creates a decorator that adds a static variable recorders that contains</span>
+<span class="sd">        the variable array_debug_recorder to the function it decorates. By</span>
+<span class="sd">        default, array_debug_recorder is set to an EmptyArrayRecorder instance.</span>
+<span class="sd">        Also, on assignment it automatically creates a subgroup with the same</span>
+<span class="sd">        name as the function.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            a_class(class):    All variables to be named (set to EmptyArrayRecorder()).</span>
+<span class="sd">            a_class(class):    All variables to be named</span>
+<span class="sd">                               (set to EmptyArrayRecorder()).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (class):            A decorator that adds the static variable array_debug_recorder to the given function.</span>
+<span class="sd">            (class):           A decorator that adds the static variable</span>
+<span class="sd">                               array_debug_recorder to the given function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">a_class</span> <span class="o">=</span> <span class="n">class_static_subgrouping_array_recorders</span><span class="p">(</span>

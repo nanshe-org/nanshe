@@ -78,8 +78,8 @@ arrays and masked arrays.</p>
 <dt id="nanshe.io.hdf5.serializers.HDF5MaskedDataset">
 <em class="property">class </em><code class="descclassname">nanshe.io.hdf5.serializers.</code><code class="descname">HDF5MaskedDataset</code><span class="sig-paren">(</span><em>group</em>, <em>shape=None</em>, <em>dtype=None</em>, <em>data=None</em>, <em>chunks=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/serializers.html#HDF5MaskedDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.serializers.HDF5MaskedDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Provides an abstraction of the masked array the HDF5 Group where the contents of a
-masked array are serialized.</p>
+<p>Provides an abstraction of the masked array the HDF5 Group where the
+contents of a masked array are serialized.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This behaves roughly like an <cite>h5py.Dataset</cite> and roughly like a
@@ -147,16 +147,14 @@ interaction with them.</p>
 <dl class="function">
 <dt id="nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">
 <code class="descclassname">nanshe.io.hdf5.serializers.</code><code class="descname">create_numpy_structured_array_in_HDF5</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/serializers.html#create_numpy_structured_array_in_HDF5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5" title="Permalink to this definition">¶</a></dt>
-<dd><p>Serializes a NumPy structure array to an HDF5 file by using the HDF5 compound data type.
-Also, will handle normal NumPy arrays and scalars, as well.</p>
+<dd><p>Serializes a NumPy structure array to an HDF5 file by using the HDF5
+compound data type. Also, will handle normal NumPy arrays and scalars,
+as well.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">HDF5 does not support generic Python objects. So, serialization of objects to something
-else (perhaps strs of fixed size) must be performed first.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">TODO: Write doctests.</p>
+<p class="last">HDF5 does not support generic Python objects. So, serialization of
+objects to something else (perhaps strs of fixed size) must be
+performed first.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -165,8 +163,10 @@ else (perhaps strs of fixed size) must be performed first.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>file_handle</strong> (<em>HDF5 file</em>) &#8211; either an HDF5 file or an HDF5 filename.</li>
 <li><strong>internalPath</strong> (<em>str</em>) &#8211; an internal path for the HDF5 file.</li>
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the NumPy structure array to save (or normal NumPy array).</li>
-<li><strong>overwrite</strong> (<em>bool</em>) &#8211; whether to overwrite what is already there (defaults to False).</li>
+<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; the NumPy structure array to save (or
+normal NumPy array).</li>
+<li><strong>overwrite</strong> (<em>bool</em>) &#8211; whether to overwrite what is already
+there (defaults to False).</li>
 </ul>
 </td>
 </tr>
@@ -177,12 +177,14 @@ else (perhaps strs of fixed size) must be performed first.</p>
 <dl class="function">
 <dt id="nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">
 <code class="descclassname">nanshe.io.hdf5.serializers.</code><code class="descname">read_numpy_structured_array_from_HDF5</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/serializers.html#read_numpy_structured_array_from_HDF5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5" title="Permalink to this definition">¶</a></dt>
-<dd><p>Serializes a NumPy structure array from an HDF5 file by using the HDF5 compound data type.
-Also, it will handle normal NumPy arrays and scalars, as well.</p>
+<dd><p>Serializes a NumPy structure array from an HDF5 file by using the HDF5
+compound data type. Also, it will handle normal NumPy arrays and
+scalars, as well.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">HDF5 does not support generic Python objects. So, serialization of objects to something
-else (perhaps strs of fixed size) must be performed first.</p>
+<p class="last">HDF5 does not support generic Python objects. So, serialization of
+objects to something else (perhaps strs of fixed size) must be
+performed first.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

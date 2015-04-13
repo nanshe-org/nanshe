@@ -182,27 +182,42 @@
 </div>
 <div class="viewcode-block" id="log_call"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.log_call">[docs]</a><span class="k">def</span> <span class="nf">log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a given logger and uses it to log entering and leaving the decorated callable.</span>
-<span class="sd">        Intended to be used as a decorator that takes a few arguments.</span>
+<span class="sd">        Takes a given logger and uses it to log entering and leaving the</span>
+<span class="sd">        decorated callable. Intended to be used as a decorator that takes a few</span>
+<span class="sd">        arguments.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            logger      (Logger):          Used for logging entry, exit and possibly arguments.</span>
+<span class="sd">            logger(Logger):                Used for logging entry, exit and</span>
+<span class="sd">                                           possibly arguments.</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            to_log_call (bool):            Whether to log call or not. This overrides all other arguments. It will be</span>
-<span class="sd">                                           stored as a global variable on the function, which can be changed at runtime.</span>
+<span class="sd">            to_log_call(bool):             Whether to log call or not. This</span>
+<span class="sd">                                           overrides all other arguments. It</span>
+<span class="sd">                                           will be stored as a global variable</span>
+<span class="sd">                                           on the function, which can be</span>
+<span class="sd">                                           changed at runtime.</span>
 
-<span class="sd">            to_print_args  (bool):         Whether to output the arguments and keyword arguments passed to the function.</span>
-<span class="sd">                                           This should not automatically be true as some arguments may not be printable</span>
-<span class="sd">                                           or may be expensive to print. Thus, it should be up to the developer to use</span>
-<span class="sd">                                           their own discretion. Further, we don&#39;t want to break their existing code. It</span>
-<span class="sd">                                           will be stored as a global variable on the function, which can be changed at</span>
+<span class="sd">            to_print_args(bool):           Whether to output the arguments and</span>
+<span class="sd">                                           keyword arguments passed to the</span>
+<span class="sd">                                           function. This should not</span>
+<span class="sd">                                           automatically be true as some</span>
+<span class="sd">                                           arguments may not be printable or</span>
+<span class="sd">                                           may be expensive to print. Thus, it</span>
+<span class="sd">                                           should be up to the developer to use</span>
+<span class="sd">                                           their own discretion. Further, we</span>
+<span class="sd">                                           don&#39;t want to break their existing</span>
+<span class="sd">                                           code. It will be stored as a global</span>
+<span class="sd">                                           variable on the function, which can</span>
+<span class="sd">                                           be changed at runtime.</span>
+
+<span class="sd">            to_print_time(bool):           Prints the time it took to run the</span>
+<span class="sd">                                           wrapped callable.</span>
+
+<span class="sd">            to_print_exception  (bool):    Whether to print the traceback when</span>
+<span class="sd">                                           an exception is raise. It will be</span>
+<span class="sd">                                           stored as a global variable on the</span>
+<span class="sd">                                           function, which can be changed at</span>
 <span class="sd">                                           runtime.</span>
-
-<span class="sd">            to_print_time(bool):           Prints the time it took to run the wrapped callable.</span>
-
-<span class="sd">            to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored</span>
-<span class="sd">                                           as a global variable on the function, which can be changed at runtime.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            log_call_decorator (for wrapping)</span>
@@ -210,13 +225,18 @@
 
     <span class="k">def</span> <span class="nf">log_call_decorator</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            The actual decorator, which is what is returned to decorate the callable in question.</span>
+<span class="sd">            The actual decorator, which is what is returned to decorate the</span>
+<span class="sd">            callable in question.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                callable:    Anything that can be called function, method, functor, lambda, etc.</span>
+<span class="sd">                callable:                              Anything that can be</span>
+<span class="sd">                                                       called function, method,</span>
+<span class="sd">                                                       functor, lambda, etc.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                log_call_callable_wrapped, which is wrapped around the function in question.</span>
+<span class="sd">                log_call_callable_wrapped(callable):   which is wrapped around</span>
+<span class="sd">                                                       the function in</span>
+<span class="sd">                                                       question.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nd">@wrappers.wraps</span><span class="p">(</span><span class="nb">callable</span><span class="p">)</span>
@@ -226,14 +246,20 @@
                                    <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">log_call_callable_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">                This is what will replace the original callable. It will behave the same except it will now log its</span>
-<span class="sd">                entrance and exit. If set, it will log its parameters too.</span>
+<span class="sd">                This is what will replace the original callable. It will behave</span>
+<span class="sd">                the same except it will now log its entrance and exit. If set,</span>
+<span class="sd">                it will log its parameters too.</span>
 
 <span class="sd">                Args:</span>
-<span class="sd">                    callable:    Anything that can be called function, method, functor, lambda, etc.</span>
+<span class="sd">                    callable:                               Anything that can</span>
+<span class="sd">                                                            be called function,</span>
+<span class="sd">                                                            method, functor,</span>
+<span class="sd">                                                            lambda, etc.</span>
 
 <span class="sd">                Returns:</span>
-<span class="sd">                    log_call_callable_wrapped, which is wrapped around the function in question.</span>
+<span class="sd">                    log_call_callable_wrapped (callable):   which is wrapped</span>
+<span class="sd">                                                            around the function</span>
+<span class="sd">                                                            in question.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
@@ -300,30 +326,45 @@
               <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
               <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a given logger and uses it to log entering and leaving all methods of the decorated class.</span>
-<span class="sd">        Intended to be used as a decorator that takes a few arguments.</span>
+<span class="sd">        Takes a given logger and uses it to log entering and leaving all</span>
+<span class="sd">        methods of the decorated class. Intended to be used as a decorator that</span>
+<span class="sd">        takes a few arguments.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            logger      (Logger):          Used for logging entry, exit and possibly arguments.</span>
+<span class="sd">            logger(Logger):                Used for logging entry, exit and</span>
+<span class="sd">                                           possibly arguments.</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            to_log_call (bool):            Whether to log call or not. This overrides all other arguments. It will be</span>
-<span class="sd">                                           stored as a global variable on the methods, which can be changed at runtime.</span>
+<span class="sd">            to_log_call(bool):             Whether to log call or not. This</span>
+<span class="sd">                                           overrides all other arguments. It</span>
+<span class="sd">                                           will be stored as a global variable</span>
+<span class="sd">                                           on the methods, which can be changed</span>
+<span class="sd">                                           at runtime.</span>
 
-<span class="sd">            to_print_args  (bool):         Whether to output the arguments and keyword arguments passed to the function.</span>
-<span class="sd">                                           This should not automatically be true as some arguments may not be printable</span>
-<span class="sd">                                           or may be expensive to print. Thus, it should be up to the developer to use</span>
-<span class="sd">                                           their own discretion. Further, we don&#39;t want to break their existing code. It</span>
-<span class="sd">                                           will be stored as a global variable on the methods, which can be changed at</span>
+<span class="sd">            to_print_args(bool):           Whether to output the arguments and</span>
+<span class="sd">                                           keyword arguments passed to the</span>
+<span class="sd">                                           function. This should not</span>
+<span class="sd">                                           automatically be true as some</span>
+<span class="sd">                                           arguments may not be printable or</span>
+<span class="sd">                                           may be expensive to print. Thus, it</span>
+<span class="sd">                                           should be up to the developer to use</span>
+<span class="sd">                                           their own discretion. Further, we</span>
+<span class="sd">                                           don&#39;t want to break their existing</span>
+<span class="sd">                                           code. It will be stored as a global</span>
+<span class="sd">                                           variable on the methods, which can</span>
+<span class="sd">                                           be changed at runtime.</span>
+
+<span class="sd">            to_print_time(bool):           Prints the time it took to run the</span>
+<span class="sd">                                           wrapped callable.</span>
+
+<span class="sd">            to_print_exception(bool):      Whether to print the traceback when</span>
+<span class="sd">                                           an exception is raise. It will be</span>
+<span class="sd">                                           stored as a global variable on the</span>
+<span class="sd">                                           methods, which can be changed at</span>
 <span class="sd">                                           runtime.</span>
 
-<span class="sd">            to_print_time(bool):           Prints the time it took to run the wrapped callable.</span>
-
-<span class="sd">            to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored</span>
-<span class="sd">                                           as a global variable on the methods, which can be changed at runtime.</span>
-
 <span class="sd">        Returns:</span>
-<span class="sd">            log_call_decorator (for wrapping)</span>
+<span class="sd">            log_call_decorator(for wrapping)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_all_methods</span><span class="p">(</span><span class="n">log_call</span><span class="p">(</span>
@@ -337,30 +378,45 @@
 </div>
 <div class="viewcode-block" id="qt_log_class"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.qt_log_class">[docs]</a><span class="k">def</span> <span class="nf">qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a given logger and uses it to log entering and leaving all methods of the decorated class.</span>
-<span class="sd">        Intended to be used as a decorator that takes a few arguments.</span>
+<span class="sd">        Takes a given logger and uses it to log entering and leaving all</span>
+<span class="sd">        methods of the decorated class. Intended to be used as a decorator that</span>
+<span class="sd">        takes a few arguments.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            logger      (Logger):          Used for logging entry, exit and possibly arguments.</span>
+<span class="sd">            logger(Logger):                Used for logging entry, exit and</span>
+<span class="sd">                                           possibly arguments.</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            to_log_call (bool):            Whether to log call or not. This overrides all other arguments. It will be</span>
-<span class="sd">                                           stored as a global variable on the methods, which can be changed at runtime.</span>
+<span class="sd">            to_log_call(bool):             Whether to log call or not. This</span>
+<span class="sd">                                           overrides all other arguments. It</span>
+<span class="sd">                                           will be stored as a global variable</span>
+<span class="sd">                                           on the methods, which can be changed</span>
+<span class="sd">                                           at runtime.</span>
 
-<span class="sd">            to_print_args  (bool):         Whether to output the arguments and keyword arguments passed to the function.</span>
-<span class="sd">                                           This should not automatically be true as some arguments may not be printable</span>
-<span class="sd">                                           or may be expensive to print. Thus, it should be up to the developer to use</span>
-<span class="sd">                                           their own discretion. Further, we don&#39;t want to break their existing code. It</span>
-<span class="sd">                                           will be stored as a global variable on the methods, which can be changed at</span>
+<span class="sd">            to_print_args(bool):           Whether to output the arguments and</span>
+<span class="sd">                                           keyword arguments passed to the</span>
+<span class="sd">                                           function. This should not</span>
+<span class="sd">                                           automatically be true as some</span>
+<span class="sd">                                           arguments may not be printable or</span>
+<span class="sd">                                           may be expensive to print. Thus, it</span>
+<span class="sd">                                           should be up to the developer to use</span>
+<span class="sd">                                           their own discretion. Further, we</span>
+<span class="sd">                                           don&#39;t want to break their existing</span>
+<span class="sd">                                           code. It will be stored as a global</span>
+<span class="sd">                                           variable on the methods, which can</span>
+<span class="sd">                                           be changed at runtime.</span>
+
+<span class="sd">            to_print_time(bool):           Prints the time it took to run the</span>
+<span class="sd">                                           wrapped callable.</span>
+
+<span class="sd">            to_print_exception(bool):      Whether to print the traceback when</span>
+<span class="sd">                                           an exception is raise. It will be</span>
+<span class="sd">                                           stored as a global variable on the</span>
+<span class="sd">                                           methods, which can be changed at</span>
 <span class="sd">                                           runtime.</span>
 
-<span class="sd">            to_print_time(bool):           Prints the time it took to run the wrapped callable.</span>
-
-<span class="sd">            to_print_exception  (bool):    Whether to print the traceback when an exception is raise. It will be stored</span>
-<span class="sd">                                           as a global variable on the methods, which can be changed at runtime.</span>
-
 <span class="sd">        Returns:</span>
-<span class="sd">            log_call_decorator (for wrapping)</span>
+<span class="sd">            log_call_decorator(for wrapping)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">wrappers</span><span class="o">.</span><span class="n">qt_class_decorate_all_methods</span><span class="p">(</span><span class="n">log_call</span><span class="p">(</span>
@@ -375,13 +431,16 @@
 <span class="nd">@wrappers.static_variables</span><span class="p">(</span><span class="n">to_run</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="memory_profiler"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.memory_profiler">[docs]</a><span class="k">def</span> <span class="nf">memory_profiler</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Runs forever get information about memory usage and dumping it to the logger provided at the given interval.</span>
+<span class="sd">        Runs forever get information about memory usage and dumping it to the</span>
+<span class="sd">        logger provided at the given interval.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            logger (Logger):               Used for logging memory profiling information.</span>
+<span class="sd">            logger(Logger):               Used for logging memory profiling</span>
+<span class="sd">                                          information.</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            interval (int or float):       Number of seconds to wait before issuing more profile information.</span>
+<span class="sd">            interval(int or float):       Number of seconds to wait before</span>
+<span class="sd">                                          issuing more profile information.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">current_process</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>

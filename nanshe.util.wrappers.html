@@ -82,7 +82,8 @@ participate in the correct inheritance scheme.</p>
 <dl class="function">
 <dt id="nanshe.util.wrappers.class_decorate_all_methods">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">class_decorate_all_methods</code><span class="sig-paren">(</span><em>*decorators</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#class_decorate_all_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.class_decorate_all_methods" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</p>
+<dd><p>Returns a decorator that decorates a class such that all its methods
+are decorated by the decorators provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -100,12 +101,14 @@ participate in the correct inheritance scheme.</p>
 <dl class="function">
 <dt id="nanshe.util.wrappers.class_decorate_methods">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">class_decorate_methods</code><span class="sig-paren">(</span><em>**method_decorators</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#class_decorate_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.class_decorate_methods" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a class such that specified methods are decorated by the decorators provided.</p>
+<dd><p>Returns a decorator that decorates a class such that specified methods
+are decorated by the decorators provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**method_decorators</strong> (<em>tuple</em>) &#8211; method names with a single decorator or a list of decorators.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**method_decorators</strong> (<em>tuple</em>) &#8211; method names with a single
+decorator or a list of decorators.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a decorator for the class.</td>
 </tr>
@@ -118,12 +121,14 @@ participate in the correct inheritance scheme.</p>
 <dl class="function">
 <dt id="nanshe.util.wrappers.class_static_variables">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">class_static_variables</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#class_static_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.class_static_variables" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a class such that it has the given static variables set.</p>
+<dd><p>Returns a decorator that decorates a class such that it has the given
+static variables set.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> (<em>tuple</em>) &#8211; keyword args will be set to the value provided.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> (<em>tuple</em>) &#8211; keyword args will be set to the value
+provided.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a decorator for the class.</td>
 </tr>
@@ -154,11 +159,13 @@ participate in the correct inheritance scheme.</p>
 <dl class="function">
 <dt id="nanshe.util.wrappers.metaclass">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">metaclass</code><span class="sig-paren">(</span><em>meta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#metaclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.metaclass" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a class such that the given metaclass is applied.</p>
+<dd><p>Returns a decorator that decorates a class such that the given
+metaclass is applied.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Decorator will add the __metaclass__ attribute so the last metaclass applied is known.
-Also, decorator will add the __wrapped__ attribute so that the unwrapped class can be retrieved.</p>
+<p class="last">Decorator will add the __metaclass__ attribute so the last
+metaclass applied is known. Also, decorator will add the
+__wrapped__ attribute so that the unwrapped class can be retrieved.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -177,7 +184,8 @@ Also, decorator will add the __wrapped__ attribute so that the unwrapped class c
 <dl class="function">
 <dt id="nanshe.util.wrappers.metaclasses">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">metaclasses</code><span class="sig-paren">(</span><em>*metas</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#metaclasses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.metaclasses" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a class such that the given metaclasses are applied.</p>
+<dd><p>Returns a decorator that decorates a class such that the given
+metaclasses are applied.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Shorthand for repeated application of metaclass.</p>
@@ -199,7 +207,8 @@ Also, decorator will add the __wrapped__ attribute so that the unwrapped class c
 <dl class="function">
 <dt id="nanshe.util.wrappers.qt_class_decorate_all_methods">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">qt_class_decorate_all_methods</code><span class="sig-paren">(</span><em>*decorators</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#qt_class_decorate_all_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.qt_class_decorate_all_methods" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</p>
+<dd><p>Returns a decorator that decorates a class such that all its methods
+are decorated by the decorators provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -217,7 +226,8 @@ Also, decorator will add the __wrapped__ attribute so that the unwrapped class c
 <dl class="function">
 <dt id="nanshe.util.wrappers.static_variables">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">static_variables</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#static_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.static_variables" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a callable such that it has the given static variables set.</p>
+<dd><p>Returns a decorator that decorates a callable such that it has the
+given static variables set.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -235,7 +245,8 @@ Also, decorator will add the __wrapped__ attribute so that the unwrapped class c
 <dl class="function">
 <dt id="nanshe.util.wrappers.update_wrapper">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">update_wrapper</code><span class="sig-paren">(</span><em>wrapper</em>, <em>wrapped</em>, <em>assigned=('__module__'</em>, <em>'__name__'</em>, <em>'__doc__')</em>, <em>updated=('__dict__'</em>, <em>)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#update_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.update_wrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extends functools.update_wrapper to ensure that it stores the wrapped function in the attribute __wrapped__.</p>
+<dd><p>Extends functools.update_wrapper to ensure that it stores the wrapped
+function in the attribute __wrapped__.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -243,12 +254,15 @@ Also, decorator will add the __wrapped__ attribute so that the unwrapped class c
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>wrapper</strong> (<em>callable</em>) &#8211; the replacement callable.</li>
 <li><strong>wrapped</strong> (<em>callable</em>) &#8211; the callable that is being wrapped.</li>
-<li><strong>assigned</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes assigned directly
-from the wrapped function to the wrapper function (defaults to
+<li><strong>assigned</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes assigned
+directly from the wrapped function to the
+wrapper function (defaults to
 functools.WRAPPER_ASSIGNMENTS)</li>
-<li><strong>updated</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes of the wrapper that
-are updated with the corresponding attribute from the wrapped
-function (defaults to functools.WRAPPER_UPDATES)</li>
+<li><strong>updated</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes of the
+wrapper that are updated with the
+corresponding attribute from the wrapped
+function (defaults to
+functools.WRAPPER_UPDATES)</li>
 </ul>
 </td>
 </tr>
@@ -265,23 +279,28 @@ function (defaults to functools.WRAPPER_UPDATES)</li>
 <dl class="function">
 <dt id="nanshe.util.wrappers.wraps">
 <code class="descclassname">nanshe.util.wrappers.</code><code class="descname">wraps</code><span class="sig-paren">(</span><em>wrapped</em>, <em>assigned=('__module__'</em>, <em>'__name__'</em>, <em>'__doc__')</em>, <em>updated=('__dict__'</em>, <em>)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#wraps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.wraps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Builds on functools.wraps to ensure that it stores the wrapped function in the attribute __wrapped__.</p>
+<dd><p>Builds on functools.wraps to ensure that it stores the wrapped function
+in the attribute __wrapped__.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>wrapped</strong> (<em>callable</em>) &#8211; the callable that is being wrapped.</li>
-<li><strong>assigned</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes assigned directly
-from the wrapped function to the wrapper function (defaults to
+<li><strong>assigned</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes assigned
+directly from the wrapped function to the
+wrapper function (defaults to
 functools.WRAPPER_ASSIGNMENTS)</li>
-<li><strong>updated</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes of the wrapper that
-are updated with the corresponding attribute from the wrapped
-function (defaults to functools.WRAPPER_UPDATES)</li>
+<li><strong>updated</strong> (<em>tuple</em>) &#8211; is a tuple naming the attributes of the
+wrapper that are updated with the
+corresponding attribute from the wrapped
+function (defaults to
+functools.WRAPPER_UPDATES)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a decorator for callable, which will contain wrapped.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a decorator for callable, which will
+contain wrapped.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(callable)</p>

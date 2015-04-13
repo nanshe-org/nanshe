@@ -123,12 +123,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_neurons_io_handler"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_io_handler">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_io_handler</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">parameters_filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5</span>
-<span class="sd">        dataset). Also,</span>
+<span class="sd">        Uses generate_neurons to process a input_filename (HDF5 dataset) and</span>
+<span class="sd">        outputs results to an output_filename (HDF5 dataset). Also,</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            input_filename          HDF5 filename to read from (should be a path to a h5py.Dataset)</span>
-<span class="sd">            output_filename         HDF5 filename to write to (should be a path to a h5py.Group)</span>
+<span class="sd">            input_filename          HDF5 filename to read from (should be a</span>
+<span class="sd">                                    path to a h5py.Dataset)</span>
+
+<span class="sd">            output_filename         HDF5 filename to write to (should be a path</span>
+<span class="sd">                                    to a h5py.Group)</span>
+
 <span class="sd">            parameters_filename     JSON filename with parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -165,12 +169,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_neurons_a_block"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_a_block">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_a_block</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Uses generate_neurons to process a input_filename (HDF5 dataset) and outputs results to an output_filename (HDF5</span>
-<span class="sd">        dataset). Also,</span>
+<span class="sd">        Uses generate_neurons to process a input_filename (HDF5 dataset) and</span>
+<span class="sd">        outputs results to an output_filename (HDF5 dataset).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            input_filename          HDF5 filename to read from (should be a path to a h5py.Dataset)</span>
-<span class="sd">            output_filename         HDF5 filename to write to (should be a path to a h5py.Group)</span>
+<span class="sd">            input_filename          HDF5 filename to read from (should be a</span>
+<span class="sd">                                    path to a h5py.Dataset)</span>
+
+<span class="sd">            output_filename         HDF5 filename to write to (should be a path</span>
+<span class="sd">                                    to a h5py.Group)</span>
+
 <span class="sd">            parameters              how the run should be configured.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -980,7 +988,8 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.</span>
+<span class="sd">        Simple main function (like in C). Takes all arguments (as from</span>
+<span class="sd">        sys.argv) and returns an exit status.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            argv(list):     arguments (includes command line call).</span>

@@ -97,20 +97,24 @@
                    <span class="n">assigned</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_ASSIGNMENTS</span><span class="p">,</span>
                    <span class="n">updated</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_UPDATES</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extends functools.update_wrapper to ensure that it stores the wrapped function in the attribute __wrapped__.</span>
+<span class="sd">        Extends functools.update_wrapper to ensure that it stores the wrapped</span>
+<span class="sd">        function in the attribute __wrapped__.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            wrapper(callable):      the replacement callable.</span>
 
 <span class="sd">            wrapped(callable):      the callable that is being wrapped.</span>
 
-<span class="sd">            assigned(tuple):        is a tuple naming the attributes assigned directly</span>
-<span class="sd">                                    from the wrapped function to the wrapper function (defaults to</span>
+<span class="sd">            assigned(tuple):        is a tuple naming the attributes assigned</span>
+<span class="sd">                                    directly from the wrapped function to the</span>
+<span class="sd">                                    wrapper function (defaults to</span>
 <span class="sd">                                    functools.WRAPPER_ASSIGNMENTS)</span>
 
-<span class="sd">            updated(tuple):         is a tuple naming the attributes of the wrapper that</span>
-<span class="sd">                                    are updated with the corresponding attribute from the wrapped</span>
-<span class="sd">                                    function (defaults to functools.WRAPPER_UPDATES)</span>
+<span class="sd">            updated(tuple):         is a tuple naming the attributes of the</span>
+<span class="sd">                                    wrapper that are updated with the</span>
+<span class="sd">                                    corresponding attribute from the wrapped</span>
+<span class="sd">                                    function (defaults to</span>
+<span class="sd">                                    functools.WRAPPER_UPDATES)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (callable):             the wrapped callable.</span>
@@ -130,21 +134,26 @@
           <span class="n">assigned</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_ASSIGNMENTS</span><span class="p">,</span>
           <span class="n">updated</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">WRAPPER_UPDATES</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Builds on functools.wraps to ensure that it stores the wrapped function in the attribute __wrapped__.</span>
+<span class="sd">        Builds on functools.wraps to ensure that it stores the wrapped function</span>
+<span class="sd">        in the attribute __wrapped__.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            wrapped(callable):      the callable that is being wrapped.</span>
 
-<span class="sd">            assigned(tuple):        is a tuple naming the attributes assigned directly</span>
-<span class="sd">                                    from the wrapped function to the wrapper function (defaults to</span>
+<span class="sd">            assigned(tuple):        is a tuple naming the attributes assigned</span>
+<span class="sd">                                    directly from the wrapped function to the</span>
+<span class="sd">                                    wrapper function (defaults to</span>
 <span class="sd">                                    functools.WRAPPER_ASSIGNMENTS)</span>
 
-<span class="sd">            updated(tuple):         is a tuple naming the attributes of the wrapper that</span>
-<span class="sd">                                    are updated with the corresponding attribute from the wrapped</span>
-<span class="sd">                                    function (defaults to functools.WRAPPER_UPDATES)</span>
+<span class="sd">            updated(tuple):         is a tuple naming the attributes of the</span>
+<span class="sd">                                    wrapper that are updated with the</span>
+<span class="sd">                                    corresponding attribute from the wrapped</span>
+<span class="sd">                                    function (defaults to</span>
+<span class="sd">                                    functools.WRAPPER_UPDATES)</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (callable):             a decorator for callable, which will contain wrapped.</span>
+<span class="sd">            (callable):             a decorator for callable, which will</span>
+<span class="sd">                                    contain wrapped.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
@@ -183,7 +192,8 @@
 </div>
 <div class="viewcode-block" id="static_variables"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.static_variables">[docs]</a><span class="k">def</span> <span class="nf">static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a callable such that it has the given static variables set.</span>
+<span class="sd">        Returns a decorator that decorates a callable such that it has the</span>
+<span class="sd">        given static variables set.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            *kwargs(tuple):     keyword args will be set to the value provided.</span>
@@ -195,7 +205,8 @@
 
     <span class="k">def</span> <span class="nf">static_variables_tie</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Decorates a function such that it has the given static variables set.</span>
+<span class="sd">            Decorates a function such that it has the given static variables</span>
+<span class="sd">            set.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                a_callable(callable):     the callable to decorate.</span>
@@ -217,11 +228,13 @@
 </div>
 <div class="viewcode-block" id="metaclass"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.metaclass">[docs]</a><span class="k">def</span> <span class="nf">metaclass</span><span class="p">(</span><span class="n">meta</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a class such that the given metaclass is applied.</span>
+<span class="sd">        Returns a decorator that decorates a class such that the given</span>
+<span class="sd">        metaclass is applied.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            Decorator will add the __metaclass__ attribute so the last metaclass applied is known.</span>
-<span class="sd">            Also, decorator will add the __wrapped__ attribute so that the unwrapped class can be retrieved.</span>
+<span class="sd">            Decorator will add the __metaclass__ attribute so the last</span>
+<span class="sd">            metaclass applied is known. Also, decorator will add the</span>
+<span class="sd">            __wrapped__ attribute so that the unwrapped class can be retrieved.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            meta(metaclass):     metaclass to apply to a given class.</span>
@@ -236,8 +249,9 @@
 <span class="sd">            Returns a decorated class such that the given metaclass is applied.</span>
 
 <span class="sd">            Note:</span>
-<span class="sd">                Adds the __metaclass__ attribute so the last metaclass used is known.</span>
-<span class="sd">                Also, adds the __wrapped__ attribute so that the unwrapped class can be retrieved.</span>
+<span class="sd">                Adds the __metaclass__ attribute so the last metaclass used is</span>
+<span class="sd">                known. Also, adds the __wrapped__ attribute so that the</span>
+<span class="sd">                unwrapped class can be retrieved.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                cls(class):          class to decorate.</span>
@@ -267,7 +281,8 @@
 </div>
 <div class="viewcode-block" id="metaclasses"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.metaclasses">[docs]</a><span class="k">def</span> <span class="nf">metaclasses</span><span class="p">(</span><span class="o">*</span><span class="n">metas</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a class such that the given metaclasses are applied.</span>
+<span class="sd">        Returns a decorator that decorates a class such that the given</span>
+<span class="sd">        metaclasses are applied.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            Shorthand for repeated application of metaclass.</span>
@@ -282,7 +297,8 @@
 
     <span class="k">def</span> <span class="nf">metaclasses_wrapper</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Returns a decorated class such that the given metaclasses are applied.</span>
+<span class="sd">            Returns a decorated class such that the given metaclasses are</span>
+<span class="sd">            applied.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                cls(class):          class to decorate.</span>
@@ -304,10 +320,12 @@
 </div>
 <div class="viewcode-block" id="class_static_variables"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.class_static_variables">[docs]</a><span class="k">def</span> <span class="nf">class_static_variables</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a class such that it has the given static variables set.</span>
+<span class="sd">        Returns a decorator that decorates a class such that it has the given</span>
+<span class="sd">        static variables set.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **kwargs(tuple):     keyword args will be set to the value provided.</span>
+<span class="sd">            **kwargs(tuple):     keyword args will be set to the value</span>
+<span class="sd">                                 provided.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (decorator):         a decorator for the class.</span>
@@ -316,7 +334,8 @@
 
     <span class="k">class</span> <span class="nc">MetaStaticVariables</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Metaclass, which adds static variable with the given value to a class.</span>
+<span class="sd">            Metaclass, which adds static variable with the given value to a</span>
+<span class="sd">            class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
@@ -331,7 +350,8 @@
 </div>
 <div class="viewcode-block" id="class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</span>
+<span class="sd">        Returns a decorator that decorates a class such that all its methods</span>
+<span class="sd">        are decorated by the decorators provided.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            *decorators(tuple):     decorators to decorate all methods with.</span>
@@ -343,7 +363,8 @@
 
     <span class="k">class</span> <span class="nc">MetaAllMethodsDecorator</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Metaclass, which decorates all methods with the list of decorators in order.</span>
+<span class="sd">            Metaclass, which decorates all methods with the list of decorators</span>
+<span class="sd">            in order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
@@ -365,7 +386,8 @@
 </div>
 <div class="viewcode-block" id="qt_class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.qt_class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">qt_class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.</span>
+<span class="sd">        Returns a decorator that decorates a class such that all its methods</span>
+<span class="sd">        are decorated by the decorators provided.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            *decorators(tuple):     decorators to decorate all methods with.</span>
@@ -377,7 +399,8 @@
 
     <span class="k">class</span> <span class="nc">MetaAllMethodsDecorator</span><span class="p">(</span><span class="n">PyQt4</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtWrapperType</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Metaclass, which decorates all methods with the list of decorators in order.</span>
+<span class="sd">            Metaclass, which decorates all methods with the list of decorators</span>
+<span class="sd">            in order.</span>
 
 <span class="sd">            Inherits from PyQt4.QtCore.pyqtWrapperType based on this</span>
 <span class="sd">            ( http://www.gulon.co.uk/2012/12/28/pyqt4-qobjects-and-metaclasses/ ).</span>
@@ -402,10 +425,12 @@
 </div>
 <div class="viewcode-block" id="class_decorate_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.class_decorate_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_methods</span><span class="p">(</span><span class="o">**</span><span class="n">method_decorators</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a class such that specified methods are decorated by the decorators provided.</span>
+<span class="sd">        Returns a decorator that decorates a class such that specified methods</span>
+<span class="sd">        are decorated by the decorators provided.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **method_decorators(tuple):     method names with a single decorator or a list of decorators.</span>
+<span class="sd">            **method_decorators(tuple):     method names with a single</span>
+<span class="sd">                                            decorator or a list of decorators.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (decorator):                    a decorator for the class.</span>
@@ -414,8 +439,9 @@
 
     <span class="k">class</span> <span class="nc">MetaMethodsDecorator</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Metaclass, which decorates some methods based on the keys given. Uses the decorator(s) provided for each</span>
-<span class="sd">            method to decorator in order.</span>
+<span class="sd">            Metaclass, which decorates some methods based on the keys given.</span>
+<span class="sd">            Uses the decorator(s) provided for each method to decorator in</span>
+<span class="sd">            order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>

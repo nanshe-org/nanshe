@@ -79,26 +79,33 @@ shifts to ensure that unnecessary translations are not preformed.</p>
 <dl class="function">
 <dt id="nanshe.imp.registration.find_offsets">
 <code class="descclassname">nanshe.imp.registration.</code><code class="descname">find_offsets</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/registration.html#find_offsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.registration.find_offsets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the convolution of the template with the frames by taking advantage of their FFTs for faster
-computation that an ordinary convolution ( O(N*lg(N)) vs O(N^2) )
+<dd><p>Computes the convolution of the template with the frames by taking
+advantage of their FFTs for faster computation that an ordinary
+convolution ( O(N*lg(N)) vs O(N^2) )
 &lt; <a class="reference external" href="http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html">http://ccrma.stanford.edu/~jos/ReviewFourier/FFT_Convolution_vs_Direct.html</a> &gt;.
-Once computed the maximum of the convolution is found to determine the best overlap of each frame with the
-template, which provides the needed offset. Some corrections are performed to make reasonable offsets.</p>
+Once computed the maximum of the convolution is found to determine the
+best overlap of each frame with the template, which provides the needed
+offset. Some corrections are performed to make reasonable offsets.</p>
 <p class="rubric">Notes</p>
-<p>Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.</p>
+<p>Adapted from code provided by Wenzhi Sun with speed improvements
+provided by Uri Dubin.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) &#8211; image stack to register (time is the first dimension uses C-order tyx
-or tzyx).</li>
-<li><strong>template_fft</strong> (<em>numpy.ndarray</em>) &#8211; what to register the image stack against (single frame using C-order
-yx or zyx).</li>
+<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) &#8211; image stack to register (time
+is the first dimension uses
+C-order tyx or tzyx).</li>
+<li><strong>template_fft</strong> (<em>numpy.ndarray</em>) &#8211; what to register the image
+stack against (single frame
+using C-order yx or zyx).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array containing the translations to apply to each frame.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array containing the
+translations to apply to each
+frame.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
@@ -170,9 +177,11 @@ yx or zyx).</li>
 <dl class="function">
 <dt id="nanshe.imp.registration.register_mean_offsets">
 <code class="descclassname">nanshe.imp.registration.</code><code class="descname">register_mean_offsets</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/registration.html#register_mean_offsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.registration.register_mean_offsets" title="Permalink to this definition">¶</a></dt>
-<dd><p>This algorithm registers the given image stack against its mean projection. This is done by computing
-translations needed to put each frame in alignment. Then the translation is performed and new translations are
-computed. This is repeated until no further improvement can be made.</p>
+<dd><p>This algorithm registers the given image stack against its mean
+projection. This is done by computing translations needed to put each
+frame in alignment. Then the translation is performed and new
+translations are computed. This is repeated until no further
+improvement can be made.</p>
 <p>The code for translations can be found in find_mean_offsets.</p>
 <p class="rubric">Notes</p>
 <p>Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.</p>
@@ -181,19 +190,31 @@ computed. This is repeated until no further improvement can be made.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) &#8211; Image stack to register (time is the first dimension uses C-order tyx
-or tzyx).</li>
-<li><strong>max_iters</strong> (<em>int</em>) &#8211; Number of iterations to allow before forcing termination if stable
-point is not found yet. Set to -1 if no limit. (Default -1)</li>
-<li><strong>block_frame_length</strong> (<em>int</em>) &#8211; Number of frames to work with at a time.
-By default all. (Default -1)</li>
-<li><strong>include_shift</strong> (<em>bool</em>) &#8211; Whether to return the shifts used, as well. (Default False)</li>
-<li><strong>to_truncate</strong> (<em>bool</em>) &#8211; Whether to truncate the frames to remove all masked portions. (Default False)</li>
-<li><strong>float_type</strong> (<em>type</em>) &#8211; Type of float to use for calculation. (Default numpy.float64).</li>
+<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) &#8211; Image stack to register (time
+is the first dimension uses
+C-order tyx or tzyx).</li>
+<li><strong>max_iters</strong> (<em>int</em>) &#8211; Number of iterations to allow
+before forcing termination if
+stable point is not found yet.
+Set to -1 if no limit.
+(Default -1)</li>
+<li><strong>block_frame_length</strong> (<em>int</em>) &#8211; Number of frames to work with
+at a time. By default all.
+(Default -1)</li>
+<li><strong>include_shift</strong> (<em>bool</em>) &#8211; Whether to return the shifts
+used, as well. (Default False)</li>
+<li><strong>to_truncate</strong> (<em>bool</em>) &#8211; Whether to truncate the frames
+to remove all masked portions.
+(Default False)</li>
+<li><strong>float_type</strong> (<em>type</em>) &#8211; Type of float to use for
+calculation. (Default
+numpy.float64).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array containing the translations to apply to each frame.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array containing the
+translations to apply to each
+frame.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>

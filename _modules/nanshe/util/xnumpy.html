@@ -116,7 +116,8 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="to_ctype"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.to_ctype">[docs]</a><span class="k">def</span> <span class="nf">to_ctype</span><span class="p">(</span><span class="n">a_type</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a numpy.dtype or any type that can be converted to a numpy.dtype and returns its equivalent ctype.</span>
+<span class="sd">        Takes a numpy.dtype or any type that can be converted to a numpy.dtype</span>
+<span class="sd">        and returns its equivalent ctype.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a_type(type):      the type to find an equivalent ctype to.</span>
@@ -148,16 +149,27 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="renumber_label_image"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.renumber_label_image">[docs]</a><span class="k">def</span> <span class="nf">renumber_label_image</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a label image with non-consecutive numbering and renumbers it to be consecutive.</span>
-<span class="sd">        Returns the relabeled image, a mapping from the old labels (by index) to the new ones,</span>
-<span class="sd">        and a mapping from the new labels back to the old labels.</span>
+<span class="sd">        Takes a label image with non-consecutive numbering and renumbers it to</span>
+<span class="sd">        be consecutive. Returns the relabeled image, a mapping from the old</span>
+<span class="sd">        labels (by index) to the new ones, and a mapping from the new labels</span>
+<span class="sd">        back to the old labels.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):                               the label image.</span>
+<span class="sd">            new_array(numpy.ndarray):                               the label</span>
+<span class="sd">                                                                    image.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray, numpy.ndarray, numpy.ndarray):          the relabeled label image, the forward label mapping</span>
-<span class="sd">                                                                    and the reverse label mapping</span>
+<span class="sd">            (numpy.ndarray, numpy.ndarray, numpy.ndarray):          the</span>
+<span class="sd">                                                                    relabeled</span>
+<span class="sd">                                                                    label</span>
+<span class="sd">                                                                    image,</span>
+<span class="sd">                                                                    the</span>
+<span class="sd">                                                                    forward</span>
+<span class="sd">                                                                    label</span>
+<span class="sd">                                                                    mapping and</span>
+<span class="sd">                                                                    the reverse</span>
+<span class="sd">                                                                    label</span>
+<span class="sd">                                                                    mapping</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; renumber_label_image(numpy.array([1, 2, 3]))</span>
@@ -210,16 +222,22 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="index_axis_at_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.index_axis_at_pos">[docs]</a><span class="k">def</span> <span class="nf">index_axis_at_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Indexes an arbitrary axis to the given position, which may be an index, a slice, or any other NumPy allowed</span>
-<span class="sd">        indexing type. This will return a view.</span>
+<span class="sd">        Indexes an arbitrary axis to the given position, which may be an index,</span>
+<span class="sd">        a slice, or any other NumPy allowed indexing type. This will return a</span>
+<span class="sd">        view.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to add the singleton axis to.</span>
-<span class="sd">            axis(int):                           position for the axis to be in the final array.</span>
-<span class="sd">            pos(int or slice):                   how to index at the given axis.</span>
+<span class="sd">            new_array(numpy.ndarray):            array to add the singleton</span>
+<span class="sd">                                                 axis to.</span>
+
+<span class="sd">            axis(int):                           position for the axis to be in</span>
+<span class="sd">                                                 the final array.</span>
+<span class="sd">            pos(int or slice):                   how to index at the given</span>
+<span class="sd">                                                 axis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a numpy array view of the original array.</span>
+<span class="sd">            (numpy.ndarray):                     a numpy array view of the</span>
+<span class="sd">                                                 original array.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 0, 0).shape</span>
@@ -251,7 +269,6 @@
 
 <span class="sd">            &gt;&gt;&gt; a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 2, 2)[0, 1, 3] = 19; a[0, 1, 2, 3] == 19</span>
 <span class="sd">            True</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Rescale axis inside the bounds</span>
@@ -278,15 +295,20 @@
 <div class="viewcode-block" id="add_singleton_axis_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_pos">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_axis_pos</span><span class="p">(</span><span class="n">a_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a singleton axis to the given position.</span>
-<span class="sd">        Allows negative values for axis.</span>
-<span class="sd">        Also, automatically bounds axis in an acceptable regime if it is not already.</span>
+
+<span class="sd">        Allows negative values for axis. Also, automatically bounds axis in an</span>
+<span class="sd">        acceptable regime if it is not already.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            a_array(numpy.ndarray):            array to add the singleton axis to.</span>
-<span class="sd">            axis(int):                         position for the axis to be in the final array (defaults to zero).</span>
+<span class="sd">            a_array(numpy.ndarray):            array to add the singleton axis</span>
+<span class="sd">                                               to.</span>
+<span class="sd">            axis(int):                         position for the axis to be in</span>
+<span class="sd">                                               the final array (defaults to</span>
+<span class="sd">                                               zero).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                   a numpy array with the singleton axis added (should be a view).</span>
+<span class="sd">            (numpy.ndarray):                   a numpy array with the singleton</span>
+<span class="sd">                                               axis added (should be a view).</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; add_singleton_axis_pos(numpy.ones((7,9,6))).shape</span>
@@ -312,7 +334,6 @@
 
 <span class="sd">            &gt;&gt;&gt; add_singleton_axis_pos(numpy.ones((7,9,6)), -2).shape</span>
 <span class="sd">            (7, 9, 1, 6)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Clean up axis to be within the allowable range.</span>
@@ -337,10 +358,13 @@
 <span class="sd">        Adds a singleton axis to the beginning of the array.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to add the singleton axis to.</span>
+<span class="sd">            new_array(numpy.ndarray):            array to add the singleton</span>
+<span class="sd">                                                 axis to.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be view)</span>
+<span class="sd">            (numpy.ndarray):                     a numpy array with the</span>
+<span class="sd">                                                 singleton axis added at the</span>
+<span class="sd">                                                 end (should be view)</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; add_singleton_axis_beginning(numpy.ones((7,9,6))).shape</span>
@@ -348,7 +372,6 @@
 
 <span class="sd">            &gt;&gt;&gt; add_singleton_axis_beginning(numpy.eye(3)).shape</span>
 <span class="sd">            (1, 3, 3)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># return( new_array[None] )</span>
@@ -361,10 +384,13 @@
 <span class="sd">        Adds a singleton axis to the end of the array.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to add the singleton axis to.</span>
+<span class="sd">            new_array(numpy.ndarray):            array to add the singleton</span>
+<span class="sd">                                                 axis to.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a numpy array with the singleton axis added at the end (should be view)</span>
+<span class="sd">            (numpy.ndarray):                     a numpy array with the</span>
+<span class="sd">                                                 singleton axis added at the</span>
+<span class="sd">                                                 end (should be view)</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; add_singleton_axis_end(numpy.ones((7,9,6))).shape</span>
@@ -372,7 +398,6 @@
 
 <span class="sd">            &gt;&gt;&gt; add_singleton_axis_end(numpy.eye(3)).shape</span>
 <span class="sd">            (3, 3, 1)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># return( numpy.rollaxis(new_array[None], 0, new_array.ndim + 1) )</span>
@@ -382,20 +407,28 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="squish"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.squish">[docs]</a><span class="k">def</span> <span class="nf">squish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Moves the given axes to the last dimensions of the array and then squishes them into one dimension.</span>
+<span class="sd">        Moves the given axes to the last dimensions of the array and then</span>
+<span class="sd">        squishes them into one dimension.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            Returns a view if possible. However, if the axes provided are not consecutive integers when placed in the</span>
-<span class="sd">            range [0, new_array.ndim), due to reshaping, the returned array will be a copy.</span>
+<span class="sd">            Returns a view if possible. However, if the axes provided are not</span>
+<span class="sd">            consecutive integers when placed in the range [0, new_array.ndim),</span>
+<span class="sd">            due to reshaping, the returned array will be a copy.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):           array to find the max (subject to the absolute value).</span>
+<span class="sd">            new_array(numpy.ndarray):           array to find the max (subject</span>
+<span class="sd">                                                to the absolute value).</span>
+
 <span class="sd">            axis(int or collection of ints):    desired axes to squish.</span>
-<span class="sd">            keepdims(bool):                     ensure the number of dimensions is the same plus one by inserting</span>
-<span class="sd">                                                singleton dimensions at all the axes squished.</span>
+<span class="sd">            keepdims(bool):                     ensure the number of dimensions</span>
+<span class="sd">                                                is the same plus one by</span>
+<span class="sd">                                                inserting singleton dimensions</span>
+<span class="sd">                                                at all the axes squished.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                    an array with one dimension at the end containing all the given axes.</span>
+<span class="sd">            (numpy.ndarray):                    an array with one dimension at</span>
+<span class="sd">                                                the end containing all the</span>
+<span class="sd">                                                given axes.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.arange(24).reshape(2,3,4).copy(); a</span>
@@ -536,15 +569,24 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="unsquish"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.unsquish">[docs]</a><span class="k">def</span> <span class="nf">unsquish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Inverts the squish operation given the shape and the axis/axes to extract from the last dimension.</span>
+<span class="sd">        Inverts the squish operation given the shape and the axis/axes to</span>
+<span class="sd">        extract from the last dimension.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):           array to find the max (subject to the absolute value).</span>
-<span class="sd">            shape(collection of ints):          should be the shape of the result array (or the array before squishing).</span>
-<span class="sd">            axis(int or collection of ints):    desired axes to remove from the last axis.</span>
+<span class="sd">            new_array(numpy.ndarray):           array to find the max (subject</span>
+<span class="sd">                                                to the absolute value).</span>
+
+<span class="sd">            shape(collection of ints):          should be the shape of the</span>
+<span class="sd">                                                result array (or the array</span>
+<span class="sd">                                                before squishing).</span>
+
+<span class="sd">            axis(int or collection of ints):    desired axes to remove from the</span>
+<span class="sd">                                                last axis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                    an array with the shape provided and the axes removed from the end.</span>
+<span class="sd">            (numpy.ndarray):                    an array with the shape</span>
+<span class="sd">                                                provided and the axes removed</span>
+<span class="sd">                                                from the end.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.arange(24).reshape(2,3,4).copy(); a</span>
@@ -777,20 +819,29 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="add_singleton_op"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_op">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Performs an operation on the given array on the specified axis, which otherwise would have eliminated the axis</span>
-<span class="sd">        in question. This function will instead ensure that the given axis remains after the operation as a singleton.</span>
+<span class="sd">        Performs an operation on the given array on the specified axis, which</span>
+<span class="sd">        otherwise would have eliminated the axis in question. This function</span>
+<span class="sd">        will instead ensure that the given axis remains after the operation as</span>
+<span class="sd">        a singleton.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            The operation must be able to take only two arguments where the first is the array and the second is the</span>
-<span class="sd">            axis to apply the operation along.</span>
+<span class="sd">            The operation must be able to take only two arguments where the</span>
+<span class="sd">            first is the array and the second is the axis to apply the</span>
+<span class="sd">            operation along.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            op(callable):                 callable that takes a numpy.ndarray and an int in order.</span>
-<span class="sd">            new_array(numpy.ndarray):     array to perform operation on and add singleton axis too.</span>
-<span class="sd">            axis(int):                    the axis to apply the operation along and turn into a singleton.</span>
+<span class="sd">            op(callable):                 callable that takes a numpy.ndarray</span>
+<span class="sd">                                          and an int in order.</span>
+
+<span class="sd">            new_array(numpy.ndarray):     array to perform operation on and add</span>
+<span class="sd">                                          singleton axis too.</span>
+
+<span class="sd">            axis(int):                    the axis to apply the operation along</span>
+<span class="sd">                                          and turn into a singleton.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):              the array with the operation performed.</span>
+<span class="sd">            (numpy.ndarray):              the array with the operation</span>
+<span class="sd">                                          performed.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; add_singleton_op(numpy.max, numpy.ones((7,9,6)), 0).shape</span>
@@ -812,17 +863,22 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="roll"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.roll">[docs]</a><span class="k">def</span> <span class="nf">roll</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">shift</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">to_mask</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Like numpy.roll, but generalizes to include a roll for each axis of new_array.</span>
+<span class="sd">        Like numpy.roll, but generalizes to include a roll for each axis of</span>
+<span class="sd">        new_array.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            Right shift occurs with a positive and left occurs with a negative.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_array(numpy.ndarray):     array to roll axes of.</span>
-<span class="sd">            shift(container of ints):     some sort of container (list, tuple, array) of ints specifying how much to</span>
+<span class="sd">            shift(container of ints):     some sort of container (list, tuple,</span>
+<span class="sd">                                          array) of ints specifying how much to</span>
 <span class="sd">                                          roll each axis.</span>
+
 <span class="sd">            out(numpy.ndarray):           array to store the results in.</span>
-<span class="sd">            to_mask(bool):                Makes the result a masked array with the portion that rolled off masked.</span>
+
+<span class="sd">            to_mask(bool):                Makes the result a masked array with</span>
+<span class="sd">                                          the portion that rolled off masked.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            out(numpy.ndarray):           result of the roll.</span>
@@ -1098,14 +1154,17 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="contains"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.contains">[docs]</a><span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">to_contain</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a mask array that is true every time something from to_contain appears in new_array.</span>
+<span class="sd">        Gets a mask array that is true every time something from to_contain</span>
+<span class="sd">        appears in new_array.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_array(numpy.ndarray):            array to check for matches.</span>
 <span class="sd">            to_contain(array_like):              desired matches to find.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a mask for new_array that selects values from to_contain.</span>
+<span class="sd">            (numpy.ndarray):                     a mask for new_array that</span>
+<span class="sd">                                                 selects values from</span>
+<span class="sd">                                                 ``to_contain``.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; contains(numpy.zeros((2,2)), 0)</span>
@@ -1146,18 +1205,31 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="min_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.min_abs">[docs]</a><span class="k">def</span> <span class="nf">min_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes the min of the given array subject to the absolute value (magnitude for complex numbers).</span>
+<span class="sd">        Takes the min of the given array subject to the absolute value</span>
+<span class="sd">        (magnitude for complex numbers).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to find the min (subject to the absolute value).</span>
+<span class="sd">            new_array(numpy.ndarray):            array to find the min (subject</span>
+<span class="sd">                                                 to the absolute value).</span>
+
 <span class="sd">            axis(int):                           desired matches to find.</span>
-<span class="sd">            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton</span>
-<span class="sd">                                                 dimensions at all the axes squished (excepting the last one).</span>
-<span class="sd">            return_indices(bool):                whether to return the indices of the mins in addition to the mins.</span>
+
+<span class="sd">            keepdims(bool):                      ensure the number of</span>
+<span class="sd">                                                 dimensions is the same by</span>
+<span class="sd">                                                 inserting singleton dimensions</span>
+<span class="sd">                                                 at all the axes squished</span>
+<span class="sd">                                                 (excepting the last one).</span>
+
+<span class="sd">            return_indices(bool):                whether to return the indices</span>
+<span class="sd">                                                 of the mins in addition to the</span>
+<span class="sd">                                                 mins.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the smallest (subject to the absolute value)</span>
-<span class="sd">                                                 or if `return_indices` the indices corresponding to the smallest</span>
+<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the</span>
+<span class="sd">                                                 smallest (subject to the</span>
+<span class="sd">                                                 absolute value) or if</span>
+<span class="sd">                                                 ``return_indices`` the indices</span>
+<span class="sd">                                                 corresponding to the smallest</span>
 <span class="sd">                                                 value(s), as well.</span>
 
 <span class="sd">        Examples:</span>
@@ -1246,18 +1318,30 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="nanmin_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.nanmin_abs">[docs]</a><span class="k">def</span> <span class="nf">nanmin_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes the min of the given array subject to the absolute value (magnitude for complex numbers).</span>
+<span class="sd">        Takes the min of the given array subject to the absolute value</span>
+<span class="sd">        (magnitude for complex numbers).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to find the min (subject to the absolute value).</span>
+<span class="sd">            new_array(numpy.ndarray):            array to find the min (subject</span>
+<span class="sd">                                                 to the absolute value).</span>
+
 <span class="sd">            axis(int):                           desired matches to find.</span>
-<span class="sd">            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton</span>
-<span class="sd">                                                 dimensions at all the axes squished (excepting the last one).</span>
-<span class="sd">            return_indices(bool):                whether to return the indices of the mins in addition to the mins.</span>
+<span class="sd">            keepdims(bool):                      ensure the number of</span>
+<span class="sd">                                                 dimensions is the same by</span>
+<span class="sd">                                                 inserting singleton dimensions</span>
+<span class="sd">                                                 at all the axes squished</span>
+<span class="sd">                                                 (excepting the last one).</span>
+
+<span class="sd">            return_indices(bool):                whether to return the indices</span>
+<span class="sd">                                                 of the mins in addition to the</span>
+<span class="sd">                                                 mins.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the smallest (subject to the absolute value)</span>
-<span class="sd">                                                 or if `return_indices` the indices corresponding to the smallest</span>
+<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the</span>
+<span class="sd">                                                 smallest (subject to the</span>
+<span class="sd">                                                 absolute value) or if</span>
+<span class="sd">                                                 ``return_indices`` the indices</span>
+<span class="sd">                                                 corresponding to the smallest</span>
 <span class="sd">                                                 value(s), as well.</span>
 
 <span class="sd">        Examples:</span>
@@ -1349,18 +1433,32 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="max_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.max_abs">[docs]</a><span class="k">def</span> <span class="nf">max_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes the max of the given array subject to the absolute value (magnitude for complex numbers).</span>
+<span class="sd">        Takes the max of the given array subject to the absolute value</span>
+<span class="sd">        (magnitude for complex numbers).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to find the max (subject to the absolute value).</span>
+<span class="sd">            new_array(numpy.ndarray):            array to find the max (subject</span>
+<span class="sd">                                                 to the absolute value).</span>
+
 <span class="sd">            axis(int):                           desired matches to find.</span>
-<span class="sd">            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton</span>
-<span class="sd">                                                 dimensions at all the axes squished (excepting the last one).</span>
-<span class="sd">            return_indices(bool):                whether to return the indices of the maxes in addition to the maxes.</span>
+
+<span class="sd">            keepdims(bool):                      ensure the number of</span>
+<span class="sd">                                                 dimensions is the same by</span>
+<span class="sd">                                                 inserting singleton</span>
+<span class="sd">                                                 dimensions at all the axes</span>
+<span class="sd">                                                 squished (excepting the last</span>
+<span class="sd">                                                 one).</span>
+
+<span class="sd">            return_indices(bool):                whether to return the indices</span>
+<span class="sd">                                                 of the maxes in addition to</span>
+<span class="sd">                                                 the maxes.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the largest (subject to the absolute value)</span>
-<span class="sd">                                                 or if `return_indices` the indices corresponding to the largest</span>
+<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the</span>
+<span class="sd">                                                 largest (subject to the</span>
+<span class="sd">                                                 absolute value) or if</span>
+<span class="sd">                                                 ``return_indices`` the indices</span>
+<span class="sd">                                                 corresponding to the largest</span>
 <span class="sd">                                                 value(s), as well.</span>
 
 <span class="sd">        Examples:</span>
@@ -1449,18 +1547,31 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="nanmax_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.nanmax_abs">[docs]</a><span class="k">def</span> <span class="nf">nanmax_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes the max of the given array subject to the absolute value (magnitude for complex numbers).</span>
+<span class="sd">        Takes the max of the given array subject to the absolute value</span>
+<span class="sd">        (magnitude for complex numbers).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to find the max (subject to the absolute value).</span>
+<span class="sd">            new_array(numpy.ndarray):            array to find the max (subject</span>
+<span class="sd">                                                 to the absolute value).</span>
+
 <span class="sd">            axis(int):                           desired matches to find.</span>
-<span class="sd">            keepdims(bool):                      ensure the number of dimensions is the same by inserting singleton</span>
-<span class="sd">                                                 dimensions at all the axes squished (excepting the last one).</span>
-<span class="sd">            return_indices(bool):                whether to return the indices of the maxes in addition to the maxes.</span>
+
+<span class="sd">            keepdims(bool):                      ensure the number of</span>
+<span class="sd">                                                 dimensions is the same by</span>
+<span class="sd">                                                 inserting singleton dimensions</span>
+<span class="sd">                                                 at all the axes squished</span>
+<span class="sd">                                                 (excepting the last one).</span>
+
+<span class="sd">            return_indices(bool):                whether to return the indices</span>
+<span class="sd">                                                 of the maxes in addition to</span>
+<span class="sd">                                                 the maxes.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the largest (subject to the absolute value)</span>
-<span class="sd">                                                 or if `return_indices` the indices corresponding to the largest</span>
+<span class="sd">            (tuple of numpy.ndarray):            an array or value that is the</span>
+<span class="sd">                                                 largest (subject to the</span>
+<span class="sd">                                                 absolute value) or if</span>
+<span class="sd">                                                 ``return_indices`` the indices</span>
+<span class="sd">                                                 corresponding to the largest</span>
 <span class="sd">                                                 value(s), as well.</span>
 
 <span class="sd">        Examples:</span>
@@ -1555,10 +1666,11 @@
 <span class="sd">        Flattens an array so that the row is the only original shape kept.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            a(numpy.ndarray):                The array to flatten partially</span>
+<span class="sd">            a(numpy.ndarray):                The array to flatten, partially.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                 The matrix version of the array after flattening.</span>
+<span class="sd">            (numpy.ndarray):                 The matrix version of the array</span>
+<span class="sd">                                             after flattening.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; array_to_matrix(numpy.eye(3))</span>
@@ -1580,7 +1692,6 @@
 
 <span class="sd">            &gt;&gt;&gt; array_to_matrix(numpy.zeros((0, 4, 3, 2)))</span>
 <span class="sd">            array([], shape=(0, 24), dtype=float64)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span>
@@ -1589,16 +1700,21 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="index_array_to_bool_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.index_array_to_bool_array">[docs]</a><span class="k">def</span> <span class="nf">index_array_to_bool_array</span><span class="p">(</span><span class="n">index_array</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a bool array mask that has each value from the index array as True.</span>
-<span class="sd">        All other values are False. Requires a shape be specified to create the</span>
-<span class="sd">        bool array.</span>
+<span class="sd">        Creates a bool array mask that has each value from the index array as</span>
+<span class="sd">        True. All other values are False. Requires a shape be specified to</span>
+<span class="sd">        create the bool array.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            index_array(numpy.ndarray of ints):     The index array with the indices to use</span>
-<span class="sd">            shape(tuple of ints):                   The shape to give the bool_array</span>
+<span class="sd">            index_array(numpy.ndarray of ints):     The index array with the</span>
+<span class="sd">                                                    indices to use.</span>
+
+<span class="sd">            shape(tuple of ints):                   The shape to give the bool</span>
+<span class="sd">                                                    array.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                        The bool array with selected indices as True rest are False.</span>
+<span class="sd">            (numpy.ndarray):                        The bool array with</span>
+<span class="sd">                                                    selected indices as True</span>
+<span class="sd">                                                    and the rest are False.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; index_array_to_bool_array((numpy.arange(5),), (5,))</span>
@@ -1623,21 +1739,28 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="expand_view"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_view">[docs]</a><span class="k">def</span> <span class="nf">expand_view</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Behaves like NumPy tile except that it always returns a view and not a copy.</span>
-<span class="sd">        Though, it differs in that additional dimensions are added for repetition as</span>
-<span class="sd">        opposed to repeating in the same one. Also, it allows repetitions to be</span>
-<span class="sd">        specified before or after unlike tile. Though, will behave identical to</span>
-<span class="sd">        tile if the keyword is not specified.</span>
+<span class="sd">        Behaves like NumPy tile except that it always returns a view and not a</span>
+<span class="sd">        copy. Though, it differs in that additional dimensions are added for</span>
+<span class="sd">        repetition as opposed to repeating in the same one. Also, it allows</span>
+<span class="sd">        repetitions to be specified before or after unlike tile. Though, will</span>
+<span class="sd">        behave identical to tile if the keyword is not specified.</span>
 
 <span class="sd">        Uses strides to trick NumPy into providing a view.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_array(numpy.ndarray):            array to tile.</span>
-<span class="sd">            reps_after(tuple):                   repetitions dimension size to add before (if int will turn into tuple).</span>
-<span class="sd">            reps_before(tuple):                  repetitions dimension size to add after (if int will turn into tuple).</span>
+
+<span class="sd">            reps_after(tuple):                   repetitions dimension size to</span>
+<span class="sd">                                                 add before (if int will turn</span>
+<span class="sd">                                                 into tuple).</span>
+
+<span class="sd">            reps_before(tuple):                  repetitions dimension size to</span>
+<span class="sd">                                                 add after (if int will turn</span>
+<span class="sd">                                                 into tuple).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a view of a numpy array with tiling in various dimension.</span>
+<span class="sd">            (numpy.ndarray):                     a view of a numpy array with</span>
+<span class="sd">                                                 tiling in various dimension.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; numpy.arange(6).reshape(2,3)</span>
@@ -1812,7 +1935,6 @@
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">                    [[0, 1, 2],</span>
 <span class="sd">                     [3, 4, 5]]]])</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reps_after</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -1835,20 +1957,34 @@
                   <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span>
                   <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Much like numpy.arange except that it applies expand_view afterwards to get a view of the same arange in a</span>
-<span class="sd">        larger cube.</span>
+<span class="sd">        Much like ``numpy.arange`` except that it applies expand_view</span>
+<span class="sd">        afterwards to get a view of the same range in a larger hyperrectangle.</span>
 
 <span class="sd">        This is very useful for situations where broadcasting is desired.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            start(int):                          starting point (or stopping point if only one is specified).</span>
-<span class="sd">            stop(int):                           stopping point (if the starting point is specified) (0 by default).</span>
-<span class="sd">            step(int):                           size of steps to take between value (1 by default).</span>
-<span class="sd">            reps_after(tuple):                   repetitions dimension size to add before (if int will turn into tuple).</span>
-<span class="sd">            reps_before(tuple):                  repetitions dimension size to add after (if int will turn into tuple).</span>
+<span class="sd">            start(int):                          starting point (or stopping</span>
+<span class="sd">                                                 point if only one is</span>
+<span class="sd">                                                 specified).</span>
+
+<span class="sd">            stop(int):                           stopping point (if the</span>
+<span class="sd">                                                 starting point is specified)</span>
+<span class="sd">                                                 (0 by default).</span>
+
+<span class="sd">            step(int):                           size of steps to take between</span>
+<span class="sd">                                                 value (1 by default).</span>
+
+<span class="sd">            reps_after(tuple):                   repetitions dimension size to</span>
+<span class="sd">                                                 add before (if int will turn</span>
+<span class="sd">                                                 into tuple).</span>
+
+<span class="sd">            reps_before(tuple):                  repetitions dimension size to</span>
+<span class="sd">                                                 add after (if int will turn</span>
+<span class="sd">                                                 into tuple).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a view of a numpy arange with tiling in various dimension.</span>
+<span class="sd">            (numpy.ndarray):                     a view of a numpy arange with</span>
+<span class="sd">                                                 tiling in various dimension.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; expand_arange(3, reps_before=3)</span>
@@ -1887,7 +2023,6 @@
 <span class="sd">                    [1, 1],</span>
 <span class="sd">                    [2, 2],</span>
 <span class="sd">                    [3, 3]]])</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
@@ -1905,19 +2040,26 @@
 </div>
 <div class="viewcode-block" id="expand_enumerate"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_enumerate">[docs]</a><span class="k">def</span> <span class="nf">expand_enumerate</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Builds on expand_arange, which has the same shape as the original array. Specifies the increments to occur along</span>
-<span class="sd">        the given axis, which by default is the zeroth axis.</span>
+<span class="sd">        Builds on expand_arange, which has the same shape as the original</span>
+<span class="sd">        array. Specifies the increments to occur along the given axis, which by</span>
+<span class="sd">        default is the zeroth axis.</span>
 
-<span class="sd">        Provides mechanisms for changing the starting value and also the increment.</span>
+<span class="sd">        Provides mechanisms for changing the starting value and also the</span>
+<span class="sd">        increment.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_array(numpy.ndarray):            array to enumerate</span>
-<span class="sd">            axis(int):                           axis to enumerate along (0 by default).</span>
+
+<span class="sd">            axis(int):                           axis to enumerate along (0 by</span>
+<span class="sd">                                                 default).</span>
 <span class="sd">            start(int):                          starting point (0 by default).</span>
-<span class="sd">            step(int):                           size of steps to take between value (1 by default).</span>
+
+<span class="sd">            step(int):                           size of steps to take between</span>
+<span class="sd">                                                 value (1 by default).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a view of a numpy arange with tiling in various dimension.</span>
+<span class="sd">            (numpy.ndarray):                     a view of a numpy arange with</span>
+<span class="sd">                                                 tiling in various dimension.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)))</span>
@@ -1961,7 +2103,6 @@
 <span class="sd">                   [1, 3, 5, 7, 9],</span>
 <span class="sd">                   [1, 3, 5, 7, 9],</span>
 <span class="sd">                   [1, 3, 5, 7, 9]], dtype=uint64)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">an_enumeration</span> <span class="o">=</span> <span class="n">expand_arange</span><span class="p">(</span>
@@ -1978,15 +2119,18 @@
 </div>
 <div class="viewcode-block" id="enumerate_masks"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.enumerate_masks">[docs]</a><span class="k">def</span> <span class="nf">enumerate_masks</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a mask stack and replaces them by an enumerated stack. In other words, each mask is replaced by a</span>
-<span class="sd">        consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)).</span>
+<span class="sd">        Takes a mask stack and replaces them by an enumerated stack. In other</span>
+<span class="sd">        words, each mask is replaced by a consecutive integer (starts with 1</span>
+<span class="sd">        and proceeds to the length of the given axis (0 by default)).</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            The masks could be recreated by finding the values not equal to zero.</span>
+<span class="sd">            The masks could be recreated by finding the values not equal to</span>
+<span class="sd">            zero.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_masks(numpy.ndarray):            masks to enumerate</span>
-<span class="sd">            axis(int):                           axis to enumerate along (0 by default).</span>
+<span class="sd">            axis(int):                           axis to enumerate along (0 by</span>
+<span class="sd">                                                 default).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (numpy.ndarray):                     an enumerated stack.</span>
@@ -2054,16 +2198,21 @@
 </div>
 <div class="viewcode-block" id="enumerate_masks_max"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.enumerate_masks_max">[docs]</a><span class="k">def</span> <span class="nf">enumerate_masks_max</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a mask stack and replaces them by the max of an enumerated stack. In other words, each mask is replaced by</span>
-<span class="sd">        a consecutive integer (starts with 1 and proceeds to the length of the given axis (0 by default)). Afterwards,</span>
-<span class="sd">        the max is taken along the given axis. However, a singleton dimension is left on the original axis.</span>
+<span class="sd">        Takes a mask stack and replaces them by the max of an enumerated stack.</span>
+<span class="sd">        In other words, each mask is replaced by a consecutive integer (starts</span>
+<span class="sd">        with 1 and proceeds to the length of the given axis (0 by default)).</span>
+<span class="sd">        Afterwards, the max is taken along the given axis. However, a singleton</span>
+<span class="sd">        dimension is left on the original axis.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            The masks could be recreated by finding the values not equal to zero.</span>
+<span class="sd">            The masks could be recreated by finding the values not equal to</span>
+<span class="sd">            zero.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_masks(numpy.ndarray):            masks to enumerate</span>
-<span class="sd">            axis(int):                           axis to enumerate along (0 by default).</span>
+
+<span class="sd">            axis(int):                           axis to enumerate along (0 by</span>
+<span class="sd">                                                 default).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (numpy.ndarray):                     an enumerated stack.</span>
@@ -2125,10 +2274,17 @@
 <span class="sd">        Takes the cartesian product between the elements in each array.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            arrays(collections.Sequence of numpy.ndarrays):     A sequence of 1-D arrays or a 2-D array.</span>
+<span class="sd">            arrays(collections.Sequence of numpy.ndarrays):     A sequence of</span>
+<span class="sd">                                                                1-D arrays or a</span>
+<span class="sd">                                                                2-D array.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                                    an array containing the result of the cartesian product of each array.</span>
+<span class="sd">            (numpy.ndarray):                                    an array</span>
+<span class="sd">                                                                containing the</span>
+<span class="sd">                                                                result of the</span>
+<span class="sd">                                                                cartesian</span>
+<span class="sd">                                                                product of each</span>
+<span class="sd">                                                                array.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; cartesian_product([numpy.arange(2), numpy.arange(3)])</span>
@@ -2234,14 +2390,19 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="truncate_masked_frames"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.truncate_masked_frames">[docs]</a><span class="k">def</span> <span class="nf">truncate_masked_frames</span><span class="p">(</span><span class="n">shifted_frames</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes frames that have been shifted and truncates out the portion, which is an intact rectangular shape.</span>
+<span class="sd">        Takes frames that have been shifted and truncates out the portion,</span>
+<span class="sd">        which is an intact rectangular shape.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            shifted_frames(numpy.ma.masked_array):      Image stack to register (time is the first dimension uses</span>
-<span class="sd">                                                        C-order tyx or tzyx).</span>
+<span class="sd">            shifted_frames(numpy.ma.masked_array):      Image stack to register</span>
+<span class="sd">                                                        (time is the first</span>
+<span class="sd">                                                        dimension uses C-order</span>
+<span class="sd">                                                        tyx or tzyx).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                            an array containing a subsection of the stack that has no mask.</span>
+<span class="sd">            (numpy.ndarray):                            an array containing a</span>
+<span class="sd">                                                        subsection of the stack</span>
+<span class="sd">                                                        that has no mask.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.arange(60).reshape(3,5,4);</span>
@@ -2345,12 +2506,14 @@
 <div class="viewcode-block" id="all_permutations_operation"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.all_permutations_operation">[docs]</a><span class="k">def</span> <span class="nf">all_permutations_operation</span><span class="p">(</span><span class="n">new_op</span><span class="p">,</span> <span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes two arrays and constructs a new array that contains the result</span>
-<span class="sd">        of new_op on every permutation of elements in each array (like broadcasting).</span>
+<span class="sd">        of new_op on every permutation of elements in each array (like</span>
+<span class="sd">        broadcasting).</span>
 
 <span class="sd">        Suppose that new_result contained the result, then one would find that</span>
-<span class="sd">        the result of the following operation on the specific indicies</span>
+<span class="sd">        the result of the following operation on the specific indices.</span>
 
-<span class="sd">        new_op( new_array_1[ i_1_1, i_1_2, ... ], new_array_2[ i_2_1, i_2_2, ... ] )</span>
+<span class="sd">        new_op( new_array_1[ i_1_1, i_1_2, ... ],</span>
+<span class="sd">        new_array_2[ i_2_1, i_2_2, ... ] )</span>
 
 <span class="sd">        would be found in new_result as shown</span>
 
@@ -2358,10 +2521,13 @@
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to add the singleton axis to.</span>
+<span class="sd">            new_array(numpy.ndarray):            array to add the singleton</span>
+<span class="sd">                                                 axis to.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a numpy array with the singleton axis added at the end.</span>
+<span class="sd">            (numpy.ndarray):                     a numpy array with the</span>
+<span class="sd">                                                 singleton axis added at the</span>
+<span class="sd">                                                 end.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; all_permutations_operation(operator.add, numpy.ones((1,3)), numpy.eye(2)).shape</span>
@@ -2425,7 +2591,6 @@
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">                    [[-1.,  0.],</span>
 <span class="sd">                     [ 0., -1.]]]])</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_array_1_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -2438,12 +2603,14 @@
 <div class="viewcode-block" id="all_permutations_equal"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.all_permutations_equal">[docs]</a><span class="k">def</span> <span class="nf">all_permutations_equal</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes two arrays and constructs a new array that contains the result</span>
-<span class="sd">        of equality comparison on every permutation of elements in each array (like broadcasting).</span>
+<span class="sd">        of equality comparison on every permutation of elements in each array</span>
+<span class="sd">        (like broadcasting).</span>
 
 <span class="sd">        Suppose that new_result contained the result, then one would find that</span>
-<span class="sd">        the result of the following operation on the specific indicies</span>
+<span class="sd">        the result of the following operation on the specific indices</span>
 
-<span class="sd">        new_op( new_array_1[ i_1_1, i_1_2, ... ], new_array_2[ i_2_1, i_2_2, ... ] )</span>
+<span class="sd">        new_op( new_array_1[ i_1_1, i_1_2, ... ],</span>
+<span class="sd">        new_array_2[ i_2_1, i_2_2, ... ] )</span>
 
 <span class="sd">        would be found in new_result as shown</span>
 
@@ -2451,10 +2618,13 @@
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to add the singleton axis to.</span>
+<span class="sd">            new_array(numpy.ndarray):            array to add the singleton</span>
+<span class="sd">                                                 axis to.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a numpy array with the singleton axis added at the end.</span>
+<span class="sd">            (numpy.ndarray):                     a numpy array with the</span>
+<span class="sd">                                                 singleton axis added at the</span>
+<span class="sd">                                                 end.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; all_permutations_equal(numpy.ones((1,3)), numpy.eye(2)).shape</span>
@@ -2536,7 +2706,6 @@
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">                    [[False,  True],</span>
 <span class="sd">                     [False, False]]]], dtype=bool)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">all_permutations_operation</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span> <span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">))</span>
@@ -2544,7 +2713,7 @@
 </div>
 <div class="viewcode-block" id="NotNumPyStructuredArrayType"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.NotNumPyStructuredArrayType">[docs]</a><span class="k">class</span> <span class="nc">NotNumPyStructuredArrayType</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Designed for being thrown if a NumPy Structured Array is recieved.</span>
+<span class="sd">        Designed for being thrown if a NumPy Structured Array is received.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 
@@ -2557,7 +2726,8 @@
 <span class="sd">        (for the given name).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):       the array to get the info dtype from.</span>
+<span class="sd">            new_array(numpy.ndarray):       the array to get the info dtype</span>
+<span class="sd">                                            from.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            (NotNumPyStructuredArrayType):  if it is a normal NumPy array.</span>
@@ -2585,16 +2755,18 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="numpy_structured_array_dtype_list"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.numpy_structured_array_dtype_list">[docs]</a><span class="k">def</span> <span class="nf">numpy_structured_array_dtype_list</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes any NumPy array and returns either a list for a NumPy structured array</span>
-<span class="sd">        via numpy_structured_array_dtype_generator or if it is a normal NumPy array</span>
-<span class="sd">        it returns the type used.</span>
+<span class="sd">        Takes any NumPy array and returns either a list for a NumPy structured</span>
+<span class="sd">        array via numpy_structured_array_dtype_generator or if it is a normal</span>
+<span class="sd">        NumPy array it returns the type used.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):       the array to get the dtype info from.</span>
+<span class="sd">            new_array(numpy.ndarray):       the array to get the dtype info</span>
+<span class="sd">                                            from.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (list or type):                 something that can be given to numpy.dtype</span>
-<span class="sd">                                            to obtain the new_array.dtype, but is more</span>
+<span class="sd">            (list or type):                 something that can be given to</span>
+<span class="sd">                                            numpy.dtype to obtain the</span>
+<span class="sd">                                            new_array.dtype, but is more</span>
 <span class="sd">                                            malleable than a numpy.dtype.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2604,14 +2776,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="dot_product"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product">[docs]</a><span class="k">def</span> <span class="nf">dot_product</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the dot product between the two pairs of vectors from each set.</span>
+<span class="sd">        Determines the dot product between the two pairs of vectors from each</span>
+<span class="sd">        set.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_vector_set_1(numpy.ndarray):      first set of vectors.</span>
 <span class="sd">            new_vector_set_2(numpy.ndarray):      second set of vectors.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the distances between each pair of vectors.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the distances</span>
+<span class="sd">                                                  between each pair of vectors.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; (dot_product(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()</span>
@@ -2660,7 +2834,8 @@
 <span class="sd">            new_vector_set(numpy.ndarray):        set of vectors.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the distances between each pair of vectors.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the distances</span>
+<span class="sd">                                                  between each pair of vectors.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; (pair_dot_product(numpy.eye(2)) == numpy.eye(2)).all()</span>
@@ -2697,12 +2872,17 @@
 <span class="sd">        Determines the norm of a vector or a set of vectors.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_vector_set(numpy.ndarray):        either a single vector or a set of vectors (matrix).</span>
-<span class="sd">            ord(optional):                        basically the same arguments as numpy.linalg.norm</span>
-<span class="sd">                                                  (though some are redundant here).</span>
+<span class="sd">            new_vector_set(numpy.ndarray):        either a single vector or a</span>
+<span class="sd">                                                  set of vectors (matrix).</span>
+
+<span class="sd">            ord(optional):                        basically the same arguments</span>
+<span class="sd">                                                  as numpy.linalg.norm</span>
+<span class="sd">                                                  (though some are redundant</span>
+<span class="sd">                                                  here).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the norms of all vectors in the set.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the norms of</span>
+<span class="sd">                                                  all vectors in the set.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; norm(numpy.array([ 1,  0]), 2).ndim</span>
@@ -2759,9 +2939,9 @@
 
     <span class="n">new_vector_set_float</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
-    <span class="c"># Wrap the order parameter so as to avoid passing through numpy.apply_along_axis</span>
-    <span class="c"># and risk having it break. Also, makes sure the same function can be used in the</span>
-    <span class="c"># two cases.</span>
+    <span class="c"># Wrap the order parameter so as to avoid passing through</span>
+    <span class="c"># numpy.apply_along_axis and risk having it break. Also, makes sure the</span>
+    <span class="c"># same function can be used in the two cases.</span>
     <span class="n">wrapped_norm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a_vector_set</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
         <span class="n">a_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
@@ -2784,16 +2964,30 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="threshold_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.threshold_array">[docs]</a><span class="k">def</span> <span class="nf">threshold_array</span><span class="p">(</span><span class="n">an_array</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Given a threshold, this function compares the given array to it to see which entries match.</span>
+<span class="sd">        Given a threshold, this function compares the given array to it to see</span>
+<span class="sd">        which entries match.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            an_array(numpy.ndarray):                          an array to threshold.</span>
-<span class="sd">            threshold(int or float or numpy.ndarray):         something to compare to.</span>
-<span class="sd">            include_below(bool):                              whether values below the threshold count or ones above it.</span>
-<span class="sd">            is_closed(bool):                                  whether to include values equal to the threshold</span>
+<span class="sd">            an_array(numpy.ndarray):                          an array to</span>
+<span class="sd">                                                              threshold.</span>
+
+<span class="sd">            threshold(int or float or numpy.ndarray):         something to</span>
+<span class="sd">                                                              compare to.</span>
+
+<span class="sd">            include_below(bool):                              whether values</span>
+<span class="sd">                                                              below the</span>
+<span class="sd">                                                              threshold count</span>
+<span class="sd">                                                              or ones above it.</span>
+
+<span class="sd">            is_closed(bool):                                  whether to</span>
+<span class="sd">                                                              include values</span>
+<span class="sd">                                                              equal to the</span>
+<span class="sd">                                                              threshold</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            out(numpy.ndarray):                               a mask of entries reflecting the threshold.</span>
+<span class="sd">            out(numpy.ndarray):                               a mask of entries</span>
+<span class="sd">                                                              reflecting the</span>
+<span class="sd">                                                              threshold.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)</span>
@@ -2850,7 +3044,8 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="unique_mapping"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.unique_mapping">[docs]</a><span class="k">def</span> <span class="nf">unique_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Take a binary mapping between two sets and excludes portions of the mapping that are not one-to-one.</span>
+<span class="sd">        Take a binary mapping between two sets and excludes portions of the</span>
+<span class="sd">        mapping that are not one-to-one.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            mapping(numpy.ndarray):      bool array mapping between to sets.</span>
@@ -2929,16 +3124,29 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="threshold_metric"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.threshold_metric">[docs]</a><span class="k">def</span> <span class="nf">threshold_metric</span><span class="p">(</span><span class="n">a_metric</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Given a threshold, this function finds which entries uniquely match given the threshold.</span>
+<span class="sd">        Given a threshold, this function finds which entries uniquely match</span>
+<span class="sd">        given the threshold.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            a_metric(numpy.ndarray):                          an array to threshold.</span>
-<span class="sd">            threshold(int or float or numpy.ndarray):         something to compare to.</span>
-<span class="sd">            include_below(bool):                              whether values below the threshold count or ones above it.</span>
-<span class="sd">            is_closed(bool):                                  whether to include values equal to the threshold</span>
+<span class="sd">            a_metric(numpy.ndarray):                          an array to</span>
+<span class="sd">                                                              threshold.</span>
+
+<span class="sd">            threshold(int or float or numpy.ndarray):         something to</span>
+<span class="sd">                                                              compare to.</span>
+
+<span class="sd">            include_below(bool):                              whether values</span>
+<span class="sd">                                                              below the</span>
+<span class="sd">                                                              threshold count</span>
+<span class="sd">                                                              or ones above it.</span>
+
+<span class="sd">            is_closed(bool):                                  whether to</span>
+<span class="sd">                                                              include values</span>
+<span class="sd">                                                              equal to the</span>
+<span class="sd">                                                              threshold</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            out(numpy.ndarray):                               a mapping of unique matches.</span>
+<span class="sd">            out(numpy.ndarray):                               a mapping of</span>
+<span class="sd">                                                              unique matches.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)</span>
@@ -2989,19 +3197,27 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="compute_mapping_matches"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.compute_mapping_matches">[docs]</a><span class="k">def</span> <span class="nf">compute_mapping_matches</span><span class="p">(</span><span class="n">mapping</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Given a mapping this function computes number of matches and mismatches found.</span>
+<span class="sd">        Given a mapping this function computes number of matches and mismatches</span>
+<span class="sd">        found.</span>
 
-<span class="sd">        In the array returned, first value is the number of true positives (or matches) and then mismatches along each</span>
-<span class="sd">        dimension of the mapping in order.</span>
+<span class="sd">        In the array returned, first value is the number of true positives (or</span>
+<span class="sd">        matches) and then mismatches along each dimension of the mapping in</span>
+<span class="sd">        order.</span>
 
-<span class="sd">        If axis 0 is the ground truth, then the second and third values are the number of false negatives (or misses)</span>
-<span class="sd">        and false positives (or false alarm)</span>
+<span class="sd">        If axis 0 is the ground truth, then the second and third values are the</span>
+<span class="sd">        number of false negatives (or misses) and false positives (or false</span>
+<span class="sd">        alarm)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            mapping(numpy.ndarray):                           a 2D bool array mapping intersections between 2 groups.</span>
+<span class="sd">            mapping(numpy.ndarray):                           a 2D bool array</span>
+<span class="sd">                                                              mapping</span>
+<span class="sd">                                                              intersections</span>
+<span class="sd">                                                              between 2 groups.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            out(numpy.ndarray):                               Counts of the number of matches and mismatches.</span>
+<span class="sd">            out(numpy.ndarray):                               Counts of the</span>
+<span class="sd">                                                              number of matches</span>
+<span class="sd">                                                              and mismatches.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; compute_mapping_matches(numpy.arange(6).reshape(2,3) &lt; 0)</span>
@@ -3037,18 +3253,29 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a mapping this function computes the recall and precision.</span>
 
-<span class="sd">        If axis 0 is the ground truth, then the returned values are the recall and precision in order.</span>
-<span class="sd">        If axis 1 is the ground truth, then they are flipped.</span>
+<span class="sd">        If axis 0 is the ground truth, then the returned values are the recall</span>
+<span class="sd">        and precision in order. If axis 1 is the ground truth, then they are</span>
+<span class="sd">        flipped.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            mapping(numpy.ndarray):                       a 2D bool array mapping intersections between 2 groups.</span>
+<span class="sd">            mapping(numpy.ndarray):            a 2D bool array mapping</span>
+<span class="sd">                                               intersections between 2 groups.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            relevance(tuple of floats):                   relevance - a combination of recall and precision</span>
-<span class="sd">                                                              recall    -   the ratio of relevant predicted positives</span>
-<span class="sd">                                                                            out of all relevant positives.</span>
-<span class="sd">                                                              precision -   the ratio of relevant predicted positives</span>
-<span class="sd">                                                                            out of all predicted positives.</span>
+<span class="sd">            relevance(tuple of floats):        relevance - a combination of</span>
+<span class="sd">                                                           recall and precision</span>
+<span class="sd">                                                   recall    - the ratio of</span>
+<span class="sd">                                                               relevant</span>
+<span class="sd">                                                               predicted</span>
+<span class="sd">                                                               positives out of</span>
+<span class="sd">                                                               all relevant</span>
+<span class="sd">                                                               positives.</span>
+<span class="sd">                                                   precision - the ratio of</span>
+<span class="sd">                                                               relevant</span>
+<span class="sd">                                                               predicted</span>
+<span class="sd">                                                               positives out of</span>
+<span class="sd">                                                               all predicted</span>
+<span class="sd">                                                               positives.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; compute_mapping_relevance(numpy.arange(6).reshape(2,3) &lt; 0)</span>
@@ -3162,7 +3389,8 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="find_shortest_wraparound"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.find_shortest_wraparound">[docs]</a><span class="k">def</span> <span class="nf">find_shortest_wraparound</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the smallest values for the points given periodic boundary conditions.</span>
+<span class="sd">        Compute the smallest values for the points given periodic boundary</span>
+<span class="sd">        conditions.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            points(numpy.ndarray):       a set of integer points (NxD) where N</span>
@@ -3297,18 +3525,21 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="matrix_reduced_op"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.matrix_reduced_op">[docs]</a><span class="k">def</span> <span class="nf">matrix_reduced_op</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sort of like numpy.dot. However, it will use the first axis with both arrays.</span>
-<span class="sd">        This means they may not need to be matrices. However, they must have the same number of dimensions. Generally,</span>
-<span class="sd">        though not explicitly required, the operator will likely expect every dimension other than the first to be the</span>
-<span class="sd">        same shape.</span>
+<span class="sd">        Sort of like numpy.dot. However, it will use the first axis with both</span>
+<span class="sd">        arrays. This means they may not need to be matrices. However, they must</span>
+<span class="sd">        have the same number of dimensions. Generally, though not explicitly</span>
+<span class="sd">        required, the operator will likely expect every dimension other than</span>
+<span class="sd">        the first to be the same shape.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a(numpy.ndarray):      first array.</span>
 <span class="sd">            b(numpy.ndarray):      second array.</span>
-<span class="sd">            op(callable):          an operator that will take a[i] and b[j] as arguments and return a scalar.</span>
+<span class="sd">            op(callable):          an operator that will take a[i] and b[j] as</span>
+<span class="sd">                                   arguments and return a scalar.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            out(numpy.ndarray):    an array (matrix) with the shape (len(a), len(b)) with each element out[i, j] the</span>
+<span class="sd">            out(numpy.ndarray):    an array (matrix) with the shape (len(a),</span>
+<span class="sd">                                   len(b)) with each element out[i, j] the</span>
 <span class="sd">                                   result of op(a[i], b[j]).</span>
 
 <span class="sd">        Examples:</span>
@@ -3394,7 +3625,8 @@
 <span class="sd">            b(numpy.ndarray):      second mask.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            out(numpy.ndarray):    a mask that is only True where both masks are.</span>
+<span class="sd">            out(numpy.ndarray):    a mask that is only True where both masks</span>
+<span class="sd">                                   are.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; masks_intersection(numpy.eye(2).astype(bool),</span>
@@ -3527,14 +3759,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="masks_overlap_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.masks_overlap_normalized">[docs]</a><span class="k">def</span> <span class="nf">masks_overlap_normalized</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The area of intersection of the masks divided by the area of their union.</span>
+<span class="sd">        The area of intersection of the masks divided by the area of their</span>
+<span class="sd">        union.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a(numpy.ndarray):      first mask.</span>
 <span class="sd">            b(numpy.ndarray):      second mask.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            out(numpy.ndarray):    ratio of the areas of the masks&#39; intersection and union.</span>
+<span class="sd">            out(numpy.ndarray):    ratio of the areas of the masks&#39;</span>
+<span class="sd">                                   intersection and union.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; masks_overlap_normalized(numpy.eye(2).astype(bool),</span>
@@ -3604,16 +3838,22 @@
                                      <span class="n">new_vector_set_2</span><span class="p">,</span>
                                      <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the dot product between the two pairs of vectors from each set and creates a tuple</span>
-<span class="sd">        with the dot product divided by one norm or the other.</span>
+<span class="sd">        Determines the dot product between the two pairs of vectors from each</span>
+<span class="sd">        set and creates a tuple with the dot product divided by one norm or the</span>
+<span class="sd">        other.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_vector_set_1(numpy.ndarray):      first set of vectors.</span>
+
 <span class="sd">            new_vector_set_2(numpy.ndarray):      second set of vectors.</span>
-<span class="sd">            ord(optional):                        basically the same arguments as numpy.linalg.norm</span>
+
+<span class="sd">            ord(optional):                        basically the same arguments</span>
+<span class="sd">                                                  as numpy.linalg.norm</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the normalized</span>
+<span class="sd">                                                  distances between each pair</span>
+<span class="sd">                                                  of vectors.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; (numpy.array(dot_product_partially_normalized(numpy.eye(2), numpy.eye(2), 2)) == numpy.array((numpy.eye(2), numpy.eye(2),))).all()</span>
@@ -3685,15 +3925,20 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="pair_dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the dot product between the two pairs of vectors from each set and creates a tuple</span>
-<span class="sd">        with the dot product divided by one norm or the other.</span>
+<span class="sd">        Determines the dot product between the two pairs of vectors from each</span>
+<span class="sd">        set and creates a tuple with the dot product divided by one norm or the</span>
+<span class="sd">        other.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_vector_set(numpy.ndarray):        set of vectors.</span>
-<span class="sd">            ord(optional):                        basically the same arguments as numpy.linalg.norm</span>
+
+<span class="sd">            ord(optional):                        basically the same argument</span>
+<span class="sd">                                                  as numpy.linalg.norm</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the normalized</span>
+<span class="sd">                                                  distances between each pair</span>
+<span class="sd">                                                  of vectors.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; (pair_dot_product_partially_normalized(numpy.eye(2), 2) == numpy.eye(2)).all()</span>
@@ -3754,15 +3999,21 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.</span>
+<span class="sd">        Determines the dot product between a pair of vectors from each set and</span>
+<span class="sd">        divides them by the norm of the two.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_vector_set_1(numpy.ndarray):      first set of vectors.</span>
+
 <span class="sd">            new_vector_set_2(numpy.ndarray):      second set of vectors.</span>
-<span class="sd">            ord(optional):                        basically the same arguments as numpy.linalg.norm.</span>
+
+<span class="sd">            ord(optional):                        basically the same arguments</span>
+<span class="sd">                                                  as numpy.linalg.norm.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the normalized</span>
+<span class="sd">                                                  distances between each pair</span>
+<span class="sd">                                                  of vectors.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; (dot_product_normalized(numpy.eye(2), numpy.eye(2), 2) == numpy.eye(2)).all()</span>
@@ -3828,14 +4079,19 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="pair_dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the dot product between a pair of vectors from each set and divides them by the norm of the two.</span>
+<span class="sd">        Determines the dot product between a pair of vectors from each set and</span>
+<span class="sd">        divides them by the norm of the two.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_vector_set(numpy.ndarray):      set of vectors.</span>
-<span class="sd">            ord(optional):                        basically the same arguments as numpy.linalg.norm.</span>
+<span class="sd">            new_vector_set(numpy.ndarray):        set of vectors.</span>
+
+<span class="sd">            ord(optional):                        basically the same arguments</span>
+<span class="sd">                                                  as numpy.linalg.norm.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the normalized distances between each pair of vectors.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the normalized</span>
+<span class="sd">                                                  distances between each pair</span>
+<span class="sd">                                                  of vectors.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; (pair_dot_product_normalized(numpy.eye(2)) == numpy.eye(2)).all()</span>
@@ -3889,14 +4145,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="dot_product_L2_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_L2_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_L2_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the dot product between a pair of vectors from each set and divides them by the L_2 norm of the two.</span>
+<span class="sd">        Determines the dot product between a pair of vectors from each set and</span>
+<span class="sd">        divides them by the L_2 norm of the two.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_vector_set_1(numpy.ndarray):      first set of vectors.</span>
 <span class="sd">            new_vector_set_2(numpy.ndarray):      second set of vectors.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                      an array with the distances between each pair of vectors.</span>
+<span class="sd">            (numpy.ndarray):                      an array with the distances</span>
+<span class="sd">                                                  between each pair of vectors.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; (dot_product_L2_normalized(numpy.eye(2), numpy.eye(2)) == numpy.eye(2)).all()</span>
@@ -3942,16 +4200,21 @@
 </div>
 <div class="viewcode-block" id="generate_contour"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.generate_contour">[docs]</a><span class="k">def</span> <span class="nf">generate_contour</span><span class="p">(</span><span class="n">a_image</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes an image and extracts labeled contours from the mask using some minimum distance from the mask edge</span>
-<span class="sd">        and some margin.</span>
+<span class="sd">        Takes an image and extracts labeled contours from the mask using some</span>
+<span class="sd">        minimum distance from the mask edge and some margin.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a_image(numpy.ndarray):            takes an image.</span>
-<span class="sd">            separation_distance(float):        a separation distance from the edge of the mask for the center of the contour.</span>
+
+<span class="sd">            separation_distance(float):        a separation distance from the</span>
+<span class="sd">                                               edge of the mask for the center</span>
+<span class="sd">                                               of the contour.</span>
+
 <span class="sd">            margin(float):                     the width of contour.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                   an array with the labeled contours.</span>
+<span class="sd">            (numpy.ndarray):                   an array with the labeled</span>
+<span class="sd">                                               contours.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.array([[ True,  True, False],</span>
@@ -4007,16 +4270,21 @@
 </div>
 <div class="viewcode-block" id="generate_labeled_contours"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.generate_labeled_contours">[docs]</a><span class="k">def</span> <span class="nf">generate_labeled_contours</span><span class="p">(</span><span class="n">a_mask</span><span class="p">,</span> <span class="n">separation_distance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a bool mask and extracts labeled contours from the mask using some minimum distance from the mask edge</span>
-<span class="sd">        and some margin.</span>
+<span class="sd">        Takes a bool mask and extracts labeled contours from the mask using</span>
+<span class="sd">        some minimum distance from the mask edge and some margin.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a_mask(numpy.ndarray):             takes a bool mask.</span>
-<span class="sd">            separation_distance(float):        a separation distance from the edge of the mask for the center of the contour.</span>
+
+<span class="sd">            separation_distance(float):        a separation distance from the</span>
+<span class="sd">                                               edge of the mask for the center</span>
+<span class="sd">                                               of the contour.</span>
+
 <span class="sd">            margin(float):                     the width of contour.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                   an array with the labeled contours.</span>
+<span class="sd">            (numpy.ndarray):                   an array with the labeled</span>
+<span class="sd">                                               contours.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.array([[ True,  True, False],</span>
@@ -4062,22 +4330,34 @@
 </div>
 <div class="viewcode-block" id="get_quantiles"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.get_quantiles">[docs]</a><span class="k">def</span> <span class="nf">get_quantiles</span><span class="p">(</span><span class="n">probs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the probabilites for quantiles for given data much like MATLAB&#39;s function</span>
+<span class="sd">        Determines the probabilites for quantiles for given data much like</span>
+<span class="sd">        MATLAB&#39;s function</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            data(numpy.ndarray):                        to find the quantiles of.</span>
+<span class="sd">            data(numpy.ndarray):                        to find the quantiles</span>
+<span class="sd">                                                        of.</span>
 
-<span class="sd">            probs(int or float or numpy.ndarray):       either some sort of integer for the number of quantiles</span>
-<span class="sd">                                                            or a single float specifying which quantile to get</span>
-<span class="sd">                                                            or an array of floats specifying the division for</span>
-<span class="sd">                                                            each quantile in the the range (0, 1).</span>
+<span class="sd">            probs(int or float or numpy.ndarray):       either some sort of</span>
+<span class="sd">                                                        integer for the number</span>
+<span class="sd">                                                        of quantiles or a</span>
+<span class="sd">                                                        single float specifying</span>
+<span class="sd">                                                        which quantile to get</span>
+<span class="sd">                                                        or an array of floats</span>
+<span class="sd">                                                        specifying the division</span>
+<span class="sd">                                                        for each quantile in</span>
+<span class="sd">                                                        the the range (0, 1).</span>
 
-<span class="sd">            axis(int or None):                          the axis to perform the calculation on (if default (None) then</span>
-<span class="sd">                                                            all, otherwise only on a particular axis.</span>
+<span class="sd">            axis(int or None):                          the axis to perform the</span>
+<span class="sd">                                                        calculation on (if</span>
+<span class="sd">                                                        default (None) then</span>
+<span class="sd">                                                        all, otherwise only on</span>
+<span class="sd">                                                        a particular axis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ma.MaskedArray):                     an array with the quantiles (the first dimension will be</span>
-<span class="sd">                                                        the same length as probs).</span>
+<span class="sd">            (numpy.ma.MaskedArray):                     an array with the</span>
+<span class="sd">                                                        quantiles (the first</span>
+<span class="sd">                                                        dimension will be the</span>
+<span class="sd">                                                        same length as probs).</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; get_quantiles(0)</span>
@@ -4097,7 +4377,6 @@
 
 <span class="sd">            &gt;&gt;&gt; get_quantiles(numpy.array([0.25, 0.75]))</span>
 <span class="sd">            array([ 0.25,  0.75])</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">probs_type</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span>
@@ -4126,21 +4405,32 @@
 </div>
 <div class="viewcode-block" id="quantile"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.quantile">[docs]</a><span class="k">def</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines the quantiles for given data much like MATLAB&#39;s function</span>
+<span class="sd">        Determines the quantiles for given data much like MATLAB&#39;s function.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            data(numpy.ndarray):                        to find the quantiles of.</span>
+<span class="sd">            data(numpy.ndarray):                        to find the quantiles</span>
+<span class="sd">                                                        of.</span>
 
-<span class="sd">            probs(int or float or numpy.ndarray):       either some sort of integer for the number of quantiles</span>
-<span class="sd">                                                            or a single float specifying which quantile to get</span>
-<span class="sd">                                                            or an array of floats specifying the division for</span>
-<span class="sd">                                                            each quantile in the the range (0, 1).</span>
+<span class="sd">            probs(int or float or numpy.ndarray):       either some sort of</span>
+<span class="sd">                                                        integer for the number</span>
+<span class="sd">                                                        of quantiles or a</span>
+<span class="sd">                                                        single float specifying</span>
+<span class="sd">                                                        which quantile to get</span>
+<span class="sd">                                                        or an array of floats</span>
+<span class="sd">                                                        specifying the division</span>
+<span class="sd">                                                        for each quantile in</span>
+<span class="sd">                                                        the range (0, 1).</span>
 
-<span class="sd">            axis(int or None):                          the axis to perform the calculation on (if default (None) then</span>
-<span class="sd">                                                            all, otherwise only on a particular axis.</span>
+<span class="sd">            axis(int or None):                          the axis to perform the</span>
+<span class="sd">                                                        calculation on (if</span>
+<span class="sd">                                                        default (None) then</span>
+<span class="sd">                                                        all, otherwise only on</span>
+<span class="sd">                                                        a particular axis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ma.MaskedArray):                     an array with the quantiles (the first dimension will be the</span>
+<span class="sd">            (numpy.ma.MaskedArray):                     an array with the</span>
+<span class="sd">                                                        quantiles (the first</span>
+<span class="sd">                                                        dimension will be the</span>
 <span class="sd">                                                        same length as probs).</span>
 
 <span class="sd">        Examples:</span>
@@ -4179,7 +4469,6 @@
 <span class="sd">             False,</span>
 <span class="sd">                   fill_value = nan)</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">probs_array</span> <span class="o">=</span> <span class="n">get_quantiles</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
@@ -4202,10 +4491,11 @@
 <span class="sd">        Generates a row in Pascal&#39;s triangle (binomial coefficients).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            n(int):      which row of Pascal&#39;s triangle to return.</span>
+<span class="sd">            n(int):                 which row of Pascal&#39;s triangle to return.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            cs(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">            cs(numpy.ndarray):      a numpy array containing the row of</span>
+<span class="sd">                                    Pascal&#39;s triangle.</span>
 
 
 <span class="sd">        Examples:</span>
@@ -4254,17 +4544,19 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.line_filter">[docs]</a><span class="k">def</span> <span class="nf">line_filter</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines</span>
-<span class="sd">        beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension</span>
-<span class="sd">        dim.</span>
+<span class="sd">        Creates a boolean array mask for a line. This mask has size for the</span>
+<span class="sd">        length of the line and number of empty lines beside it in any</span>
+<span class="sd">        orthogonal direction. The mask has dimensions equal to ndims and the</span>
+<span class="sd">        line is placed along dimension ``dim``.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            shape(tuple of ints):   the distance from the center of the filter to the nearest edge for each dimension.</span>
+<span class="sd">            shape(tuple of ints):   the distance from the center of the filter</span>
+<span class="sd">                                    to the nearest edge for each dimension.</span>
 
 <span class="sd">            dim(int):               the dimension to put the line along.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):    a boolean array to use as the filter.</span>
+<span class="sd">            (numpy.ndarray):        a boolean array to use as the filter.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; line_filter((1,1))</span>
@@ -4315,12 +4607,14 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="symmetric_line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.symmetric_line_filter">[docs]</a><span class="k">def</span> <span class="nf">symmetric_line_filter</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">ndims</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a boolean array mask for a line. This mask has size for the length of the line and number of empty lines</span>
-<span class="sd">        beside it in any orthogonal direction. The mask has dimensions equal to ndims and the line is placed along dimension</span>
-<span class="sd">        dim.</span>
+<span class="sd">        Creates a boolean array mask for a line. This mask has size for the</span>
+<span class="sd">        length of the line and number of empty lines beside it in any</span>
+<span class="sd">        orthogonal direction. The mask has dimensions equal to ndims and the</span>
+<span class="sd">        line is placed along dimension dim.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            size(int):          the distance from the center of the filter to the nearest edge.</span>
+<span class="sd">            size(int):          the distance from the center of the filter to</span>
+<span class="sd">                                the nearest edge.</span>
 
 <span class="sd">            ndims(int):         the number of dimensions for the filter.</span>
 
@@ -4378,19 +4672,24 @@
                           <span class="n">to_axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span>
                           <span class="n">to_copy</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Transforms one axis ordering to another giving a view of the array (unless otherwise specified).</span>
+<span class="sd">        Transforms one axis ordering to another giving a view of the array</span>
+<span class="sd">        (unless otherwise specified).</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            new_array(numpy.ndarray):                   the array to reorder</span>
 
-<span class="sd">            from_axis_order(str or list of str):        current labeled axis order.</span>
+<span class="sd">            from_axis_order(str or list of str):        current labeled axis</span>
+<span class="sd">                                                        order.</span>
 
-<span class="sd">            to_axis_order(str or list of str):          desired labeled axis order</span>
+<span class="sd">            to_axis_order(str or list of str):          desired labeled axis</span>
+<span class="sd">                                                        order</span>
 
-<span class="sd">            to_copy(bool):                              whether to return a view or a copy</span>
+<span class="sd">            to_copy(bool):                              whether to return a</span>
+<span class="sd">                                                        view or a copy</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                            an array with the axis order specified (view).</span>
+<span class="sd">            (numpy.ndarray):                            an array with the axis</span>
+<span class="sd">                                                        order specified (view).</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; tagging_reorder_array(numpy.ones((1,2,3,4,5))).shape</span>
@@ -4419,7 +4718,6 @@
 
 <span class="sd">            &gt;&gt;&gt; tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = [&quot;t&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot;,&quot;c&quot;]).shape</span>
 <span class="sd">            (1, 4, 3, 2, 5)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">from_axis_order</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">from_axis_order</span><span class="p">)</span>

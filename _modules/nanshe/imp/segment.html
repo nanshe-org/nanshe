@@ -170,18 +170,29 @@
                         <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                         <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Due to registration errors, there will sometimes be lines that are zero.</span>
-<span class="sd">        To correct this, we find an interpolated value and</span>
+<span class="sd">        Due to registration errors, there will sometimes be lines that are</span>
+<span class="sd">        zero. To correct this, we find an interpolated value to replace the</span>
+<span class="sd">        zeros with. If that fails, we copy nearby values over.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_data(numpy.ndarray):            data to remove lines from (first axis is time).</span>
-<span class="sd">            erosion_shape(numpy.ndarray):       shape of the erosion element (will be filled with 1).</span>
-<span class="sd">            dilation_shape(numpy.ndarray):      shape of the dilation element (will be filled with 1).</span>
-<span class="sd">            out(numpy.ndarray):                 where the final results will be stored.</span>
-<span class="sd">            **parameters(dict):                 essentially unused (catches unneeded arguments).</span>
+<span class="sd">            new_data(numpy.ndarray):            data to remove lines from (</span>
+<span class="sd">                                                first axis is time).</span>
+
+<span class="sd">            erosion_shape(numpy.ndarray):       shape of the erosion element</span>
+<span class="sd">                                                (will be filled with 1).</span>
+
+<span class="sd">            dilation_shape(numpy.ndarray):      shape of the dilation element</span>
+<span class="sd">                                                (will be filled with 1).</span>
+
+<span class="sd">            out(numpy.ndarray):                 where the final results will be</span>
+<span class="sd">                                                stored.</span>
+
+<span class="sd">            **parameters(dict):                 essentially unused (catches</span>
+<span class="sd">                                                unneeded arguments).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                      a new array with the zeroed lines interpolated away.</span>
+<span class="sd">            numpy.ndarray:                      a new array with the zeroed</span>
+<span class="sd">                                                lines interpolated away.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -297,29 +308,79 @@
                 <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                 <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Estimates F_0 using a rank order filter with some smoothing..</span>
+<span class="sd">        Estimates F_0 using a rank order filter with some smoothing.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_data(numpy.ndarray):                                array of data for finding baseline (first axis is time).</span>
-<span class="sd">            half_window_size(int):                                  the rank filter window size is 2*half_window_size+1.</span>
-<span class="sd">            which_quantile(float):                                  while quantile to return from the rank filter.</span>
-<span class="sd">            temporal_smoothing_gaussian_filter_stdev(float):        stdev for gaussian filter to convolve over time.</span>
-<span class="sd">            temporal_smoothing_gaussian_filter_window_size(float):  window for gaussian filter to convolve over time.</span>
-<span class="sd">                                                                    (Measured in standard deviations)</span>
-<span class="sd">            spatial_smoothing_gaussian_filter_stdev(float):         stdev for gaussian filter to convolve over space.</span>
-<span class="sd">            spatial_smoothing_gaussian_filter_window_size(float):   window for gaussian filter to convolve over space.</span>
-<span class="sd">                                                                    (Measured in standard deviations)</span>
-<span class="sd">            out(numpy.ndarray):                                     where the final result will be stored.</span>
-<span class="sd">            **parameters(dict):                                     essentially unused (catches unneeded arguments).</span>
+<span class="sd">            new_data(numpy.ndarray):                                array of</span>
+<span class="sd">                                                                    data for</span>
+<span class="sd">                                                                    finding</span>
+<span class="sd">                                                                    baseline (</span>
+<span class="sd">                                                                    first axis</span>
+<span class="sd">                                                                    is time).</span>
+
+<span class="sd">            half_window_size(int):                                  the rank</span>
+<span class="sd">                                                                    filter</span>
+<span class="sd">                                                                    window size</span>
+<span class="sd">                                                                    is</span>
+<span class="sd">                                                                    2*half_window_size+1.</span>
+
+<span class="sd">            which_quantile(float):                                  which</span>
+<span class="sd">                                                                    quantile to</span>
+<span class="sd">                                                                    return from</span>
+<span class="sd">                                                                    the rank</span>
+<span class="sd">                                                                    filter.</span>
+
+<span class="sd">            temporal_smoothing_gaussian_filter_stdev(float):        stdev for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter</span>
+<span class="sd">                                                                    to convolve</span>
+<span class="sd">                                                                    over time.</span>
+
+<span class="sd">            temporal_smoothing_gaussian_filter_window_size(float):  window for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter to</span>
+<span class="sd">                                                                    convolve</span>
+<span class="sd">                                                                    over time.</span>
+<span class="sd">                                                                    (Measured</span>
+<span class="sd">                                                                    in standard</span>
+<span class="sd">                                                                    deviations)</span>
+
+<span class="sd">            spatial_smoothing_gaussian_filter_stdev(float):         stdev for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter to</span>
+<span class="sd">                                                                    convolve</span>
+<span class="sd">                                                                    over space.</span>
+
+<span class="sd">            spatial_smoothing_gaussian_filter_window_size(float):   window for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter</span>
+<span class="sd">                                                                    to convolve</span>
+<span class="sd">                                                                    over space.</span>
+<span class="sd">                                                                    (Measured</span>
+<span class="sd">                                                                    in standard</span>
+<span class="sd">                                                                    deviations)</span>
+
+<span class="sd">            out(numpy.ndarray):                                     where the</span>
+<span class="sd">                                                                    final</span>
+<span class="sd">                                                                    result</span>
+<span class="sd">                                                                    will be</span>
+<span class="sd">                                                                    stored.</span>
+
+<span class="sd">            **parameters(dict):                                     essentially</span>
+<span class="sd">                                                                    unused (</span>
+<span class="sd">                                                                    catches</span>
+<span class="sd">                                                                    unneeded</span>
+<span class="sd">                                                                    arguments).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                                          the F_0 estimate.</span>
+<span class="sd">            numpy.ndarray:                                          the F_0</span>
+<span class="sd">                                                                    estimate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span>
+            <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span> <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
             <span class="ne">RuntimeWarning</span>
         <span class="p">)</span>
 
@@ -336,8 +397,9 @@
 
         <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)):</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
+                <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span> <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span>
+                <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
                 <span class="ne">RuntimeWarning</span>
             <span class="p">)</span>
 
@@ -428,28 +490,90 @@
 <span class="sd">        Attempts to find an estimate for dF/F.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_data(numpy.ndarray):                                array of data for finding baseline (first axis is time).</span>
-<span class="sd">            half_window_size(int):                                  the rank filter window size is 2*half_window_size+1.</span>
-<span class="sd">            which_quantile(float):                                  while quantile to return from the rank filter.</span>
-<span class="sd">            temporal_smoothing_gaussian_filter_stdev(float):        stdev for gaussian filter to convolve over time.</span>
-<span class="sd">            temporal_smoothing_gaussian_filter_window_size(float):  window for gaussian filter to convolve over time.</span>
-<span class="sd">                                                                    (Measured in standard deviations)</span>
-<span class="sd">            spatial_smoothing_gaussian_filter_stdev(float):         stdev for gaussian filter to convolve over space.</span>
-<span class="sd">            spatial_smoothing_gaussian_filter_window_size(float):   window for gaussian filter to convolve over space.</span>
-<span class="sd">                                                                    (Measured in standard deviations)</span>
-<span class="sd">            bias(float):                                            value to be added to dataset to avoid nan.</span>
-<span class="sd">            out(numpy.ndarray):                                     where the final result will be stored.</span>
-<span class="sd">            return_f0(bool):                                        whether to return F_0 also, F_0 will be returned first.</span>
-<span class="sd">            **parameters(dict):                                     essentially unused (catches unneeded arguments).</span>
+<span class="sd">            new_data(numpy.ndarray):                                array of</span>
+<span class="sd">                                                                    data for</span>
+<span class="sd">                                                                    finding</span>
+<span class="sd">                                                                    baseline (</span>
+<span class="sd">                                                                    first axis</span>
+<span class="sd">                                                                    is time).</span>
+
+<span class="sd">            half_window_size(int):                                  the rank</span>
+<span class="sd">                                                                    filter</span>
+<span class="sd">                                                                    window size</span>
+<span class="sd">                                                                    is</span>
+<span class="sd">                                                                    2*half_window_size+1.</span>
+
+<span class="sd">            which_quantile(float):                                  which</span>
+<span class="sd">                                                                    quantile to</span>
+<span class="sd">                                                                    return from</span>
+<span class="sd">                                                                    the rank</span>
+<span class="sd">                                                                    filter.</span>
+
+<span class="sd">            temporal_smoothing_gaussian_filter_stdev(float):        stdev for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter to</span>
+<span class="sd">                                                                    convolve</span>
+<span class="sd">                                                                    over time.</span>
+
+<span class="sd">            temporal_smoothing_gaussian_filter_window_size(float):  window for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter to</span>
+<span class="sd">                                                                    convolve</span>
+<span class="sd">                                                                    over time.</span>
+<span class="sd">                                                                    (Measured</span>
+<span class="sd">                                                                    in standard</span>
+<span class="sd">                                                                    deviations)</span>
+
+<span class="sd">            spatial_smoothing_gaussian_filter_stdev(float):         stdev for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter to</span>
+<span class="sd">                                                                    convolve</span>
+<span class="sd">                                                                    over space.</span>
+
+<span class="sd">            spatial_smoothing_gaussian_filter_window_size(float):   window for</span>
+<span class="sd">                                                                    gaussian</span>
+<span class="sd">                                                                    filter</span>
+<span class="sd">                                                                    to convolve</span>
+<span class="sd">                                                                    over space.</span>
+<span class="sd">                                                                    (Measured</span>
+<span class="sd">                                                                    in standard</span>
+<span class="sd">                                                                    deviations)</span>
+
+<span class="sd">            bias(float):                                            value to be</span>
+<span class="sd">                                                                    added to</span>
+<span class="sd">                                                                    dataset to</span>
+<span class="sd">                                                                    avoid nan.</span>
+
+<span class="sd">            out(numpy.ndarray):                                     where the</span>
+<span class="sd">                                                                    final</span>
+<span class="sd">                                                                    result will</span>
+<span class="sd">                                                                    be stored.</span>
+
+<span class="sd">            return_f0(bool):                                        whether to</span>
+<span class="sd">                                                                    return F_0</span>
+<span class="sd">                                                                    also, F_0</span>
+<span class="sd">                                                                    will be</span>
+<span class="sd">                                                                    returned</span>
+<span class="sd">                                                                    first.</span>
+
+<span class="sd">            **parameters(dict):                                     essentially</span>
+<span class="sd">                                                                    unused (</span>
+<span class="sd">                                                                    catches</span>
+<span class="sd">                                                                    unneeded</span>
+<span class="sd">                                                                    arguments).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                                          dF/F or if return_f0 is True a tuple (F_0, dF/F).</span>
+<span class="sd">            (tuple of numpy.ndarray):                               dF/F or if</span>
+<span class="sd">                                                                    return_f0</span>
+<span class="sd">                                                                    is True a</span>
+<span class="sd">                                                                    tuple (F_0,</span>
+<span class="sd">                                                                    dF/F).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span>
+            <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span> <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
             <span class="ne">RuntimeWarning</span>
         <span class="p">)</span>
 
@@ -462,8 +586,9 @@
 
         <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)):</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
+                <span class="s">&quot;Provided new_data with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span>
+                <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span> <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span>
+                <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
                 <span class="ne">RuntimeWarning</span>
             <span class="p">)</span>
 
@@ -507,14 +632,20 @@
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="normalize_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.normalize_data">[docs]</a><span class="k">def</span> <span class="nf">normalize_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Removes the mean from each image and normalizes each image as if they were vectors.</span>
+<span class="sd">        Removes the mean from each image and normalizes each image as if they</span>
+<span class="sd">        were vectors.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_data(numpy.ndarray):                array of data for normalization (first axis is time).</span>
-<span class="sd">            **parameters(dict):                     contains arguments for renormalized_images.</span>
+<span class="sd">            new_data(numpy.ndarray):                array of data for</span>
+<span class="sd">                                                    normalization (first axis</span>
+<span class="sd">                                                    is time).</span>
+
+<span class="sd">            **parameters(dict):                     contains arguments for</span>
+<span class="sd">                                                    renormalized_images.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                          data that has been normalized.</span>
+<span class="sd">            numpy.ndarray:                          data that has been</span>
+<span class="sd">                                                    normalized.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; a = numpy.zeros((2,2,2,))</span>
@@ -580,13 +711,20 @@
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
 <div class="viewcode-block" id="preprocess_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.preprocess_data">[docs]</a><span class="k">def</span> <span class="nf">preprocess_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Performs all preprocessing steps that are specified (remove_zeroed_lines, bias, extract_f0, and</span>
-<span class="sd">        wavelet.transform).</span>
+<span class="sd">        Performs all preprocessing steps that are specified.</span>
+
+<span class="sd">        (e.g. remove_zeroed_lines, bias, extract_f0, and wavelet.transform).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).</span>
-<span class="sd">            out(numpy.ndarray):                 where the final result will be stored.</span>
-<span class="sd">            **parameters(dict):                 additional parameters for each step of preprocessing.</span>
+<span class="sd">            new_data(numpy.ndarray):            array of data for generating a</span>
+<span class="sd">                                                dictionary (first axis is</span>
+<span class="sd">                                                time).</span>
+
+<span class="sd">            out(numpy.ndarray):                 where the final result will be</span>
+<span class="sd">                                                stored.</span>
+
+<span class="sd">            **parameters(dict):                 additional parameters for each</span>
+<span class="sd">                                                step of preprocessing.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict:                               the dictionary found.</span>
@@ -670,8 +808,12 @@
 <span class="sd">        Generates a dictionary using the data and parameters given for trainDL.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_data(numpy.ndarray):            array of data for generating a dictionary (first axis is time).</span>
-<span class="sd">            **parameters(dict):                 passed directly to spams.trainDL.</span>
+<span class="sd">            new_data(numpy.ndarray):            array of data for generating a</span>
+<span class="sd">                                                dictionary (first axis is</span>
+<span class="sd">                                                time).</span>
+
+<span class="sd">            **parameters(dict):                 passed directly to</span>
+<span class="sd">                                                spams.trainDL.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict:                               the dictionary found.</span>
@@ -694,8 +836,9 @@
         <span class="n">float_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">float_ctype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_float</span>
 
-    <span class="c"># Want to support NumPy types in parameters. However, SPAMS expects normal C types. So, we convert them in advance.</span>
-    <span class="c"># This was needed for the Ilastik based GUI.</span>
+    <span class="c"># Want to support NumPy types in parameters. However, SPAMS expects normal</span>
+    <span class="c"># C types. So, we convert them in advance. This was needed for the</span>
+    <span class="c"># Ilastik-based GUI.</span>
     <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s">&quot;spams.trainDL&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">_v</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_v</span><span class="p">)[()]</span> <span class="c"># Convert to NumPy type</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
@@ -743,17 +886,25 @@
 <span class="sd">        Grabs region properties from a label image.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_label_image(numpy.ndarray):      label image used for generating properties.</span>
-<span class="sd">            args(list):                          additional position arguments to pass skimage.measure.regionprops.</span>
-<span class="sd">            **parameters(dict):                  additional keyword arguments to pass skimage.measure.regionprops.</span>
+<span class="sd">            new_label_image(numpy.ndarray):      label image used for</span>
+<span class="sd">                                                 generating properties.</span>
+
+<span class="sd">            args(list):                          additional position arguments</span>
+<span class="sd">                                                 to pass</span>
+<span class="sd">                                                 skimage.measure.regionprops.</span>
+
+<span class="sd">            **parameters(dict):                  additional keyword arguments</span>
+<span class="sd">                                                 to pass</span>
+<span class="sd">                                                 skimage.measure.regionprops.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won&#39;t be</span>
-<span class="sd">            returned.</span>
+<span class="sd">            Uses all the same options in skimage.measure.regionprops. If a</span>
+<span class="sd">            property is not specified, then it won&#39;t be returned.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                       a structured array of all the properties found for each label.</span>
-
+<span class="sd">            numpy.ndarray:                       a structured array of all the</span>
+<span class="sd">                                                 properties found for each</span>
+<span class="sd">                                                 label.</span>
 
 <span class="sd">        Examples:</span>
 
@@ -947,7 +1098,6 @@
         <span class="c"># So, we will convert this to a structured NumPy array.</span>
         <span class="c"># In future versions, the properties argument will be removed.</span>
         <span class="c"># It does not need to be passed to retain functionality of this function.</span>
-        <span class="c"># new_label_image_props = skimage.measure.regionprops(new_label_image, intensity_image, *args, **kwargs)</span>
         <span class="n">new_label_image_props</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">measure</span><span class="o">.</span><span class="n">regionprops</span><span class="p">(</span>
             <span class="n">label_image</span><span class="o">=</span><span class="n">new_label_image</span><span class="p">,</span>
             <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span>
@@ -1046,17 +1196,25 @@
 <span class="sd">        Grabs region properties from a label image.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_label_image(numpy.ndarray):      label image used for generating properties.</span>
-<span class="sd">            args(list):                          additional position arguments to pass skimage.measure.regionprops.</span>
-<span class="sd">            **parameters(dict):                  additional keyword arguments to pass skimage.measure.regionprops.</span>
+<span class="sd">            new_label_image(numpy.ndarray):      label image used for</span>
+<span class="sd">                                                 generating properties.</span>
+
+<span class="sd">            args(list):                          additional position arguments</span>
+<span class="sd">                                                 to pass</span>
+<span class="sd">                                                 skimage.measure.regionprops.</span>
+
+<span class="sd">            **parameters(dict):                  additional keyword arguments</span>
+<span class="sd">                                                 to pass</span>
+<span class="sd">                                                 skimage.measure.regionprops.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won&#39;t be</span>
-<span class="sd">            returned.</span>
+<span class="sd">            Uses all the same options in skimage.measure.regionprops. If a</span>
+<span class="sd">            property is not specified, then it won&#39;t be returned.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                       a structured array of all the properties found for each label.</span>
-
+<span class="sd">            numpy.ndarray:                       a structured array of all the</span>
+<span class="sd">                                                 properties found for each</span>
+<span class="sd">                                                 label.</span>
 
 <span class="sd">        Examples:</span>
 
@@ -1371,22 +1529,24 @@
                 <span class="c"># Add all values in order of keys from the dictionary.</span>
                 <span class="n">new_label_image_props_with_arrays_values</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
                 <span class="k">for</span> <span class="n">each_new_label_image_props_with_arrays_dtype</span> <span class="ow">in</span> <span class="n">new_label_image_props_with_arrays_dtype</span><span class="p">:</span>
-
                     <span class="n">each_name</span><span class="p">,</span> <span class="n">each_type</span><span class="p">,</span> <span class="n">each_shape</span> <span class="o">=</span> <span class="n">each_new_label_image_props_with_arrays_dtype</span>
 
                     <span class="k">if</span> <span class="n">each_shape</span><span class="p">:</span>
                         <span class="n">new_label_image_props_with_arrays_values</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                            <span class="n">new_label_image_props_with_arrays</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">each_name</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                            <span class="n">new_label_image_props_with_arrays</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">each_name</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                        <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">new_label_image_props_with_arrays_values</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                            <span class="n">new_label_image_props_with_arrays</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">each_name</span><span class="p">])</span>
+                            <span class="n">new_label_image_props_with_arrays</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">each_name</span><span class="p">]</span>
+                        <span class="p">)</span>
 
                 <span class="c"># NumPy will expect a tuple for each set of values.</span>
                 <span class="n">new_label_image_props_with_arrays_values</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
                     <span class="n">new_label_image_props_with_arrays_values</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
                 <span class="p">)</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">new_label_image</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_label_image_props_with_arrays</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">new_label_image</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="ow">or</span> \
+            <span class="p">(</span><span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_label_image_props_with_arrays</span><span class="p">)):</span>
         <span class="n">new_label_image_props_with_arrays_dtype</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">each_key</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
             <span class="n">each_type</span> <span class="o">=</span> <span class="n">region_properties_type_dict</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span>
@@ -1419,16 +1579,25 @@
 <span class="sd">        Grabs region properties from a label image.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_label_image(numpy.ndarray):      label image used for generating properties.</span>
-<span class="sd">            args(list):                          additional position arguments to pass skimage.measure.regionprops.</span>
-<span class="sd">            **parameters(dict):                  additional keyword arguments to pass skimage.measure.regionprops.</span>
+<span class="sd">            new_label_image(numpy.ndarray):      label image used for</span>
+<span class="sd">                                                 generating properties.</span>
+
+<span class="sd">            args(list):                          additional position arguments</span>
+<span class="sd">                                                 to pass</span>
+<span class="sd">                                                 skimage.measure.regionprops.</span>
+
+<span class="sd">            **parameters(dict):                  additional keyword arguments</span>
+<span class="sd">                                                 to pass</span>
+<span class="sd">                                                 skimage.measure.regionprops.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            Uses all the same options in skimage.measure.regionprops. If a property is not specified, then it won&#39;t be</span>
-<span class="sd">            returned.</span>
+<span class="sd">            Uses all the same options in skimage.measure.regionprops. If a</span>
+<span class="sd">            property is not specified, then it won&#39;t be returned.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                       a structured array of all the properties found for each label.</span>
+<span class="sd">            numpy.ndarray:                       a structured array of all the</span>
+<span class="sd">                                                 properties found for each</span>
+<span class="sd">                                                 label.</span>
 
 
 <span class="sd">        Examples:</span>
@@ -1459,10 +1628,13 @@
 <span class="sd">        Gets the type based on properties of an image.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_image(numpy.ndarray):     a single sample image (only spatial dimension).</span>
+<span class="sd">            new_image(numpy.ndarray):     a single sample image (only spatial</span>
+<span class="sd">                                          dimension).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list:                         a list that can be converted to a numpy.dtype using numpy.ndtype&#39;s constructor.</span>
+<span class="sd">            list:                         a list that can be converted to a</span>
+<span class="sd">                                          numpy.dtype using numpy.ndtype&#39;s</span>
+<span class="sd">                                          constructor.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; get_neuron_dtype((3,), numpy.float64) #doctest: +NORMALIZE_WHITESPACE</span>
@@ -1504,13 +1676,17 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_empty_neuron"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_empty_neuron">[docs]</a><span class="k">def</span> <span class="nf">get_empty_neuron</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that has no contents.</span>
+<span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that</span>
+<span class="sd">        has no contents.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_image(numpy.ndarray):     an empty numpy structured array with all types needed for a neuron.</span>
+<span class="sd">            new_image(numpy.ndarray):     an empty numpy structured array with</span>
+<span class="sd">                                          all types needed for a neuron.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                a numpy structured array with no contents and type from get_neuron_dtype.</span>
+<span class="sd">            numpy.ndarray:                a numpy structured array with no</span>
+<span class="sd">                                          contents and type from</span>
+<span class="sd">                                          get_neuron_dtype.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; get_empty_neuron((3,), numpy.float64) #doctest: +NORMALIZE_WHITESPACE</span>
@@ -1544,13 +1720,17 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_one_neuron"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_one_neuron">[docs]</a><span class="k">def</span> <span class="nf">get_one_neuron</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that has one neuron with all zeros.</span>
+<span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that</span>
+<span class="sd">        has one neuron with all zeros.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_image(numpy.ndarray):     an empty numpy structured array with all types needed for a neuron.</span>
+<span class="sd">            new_image(numpy.ndarray):     an empty numpy structured array with</span>
+<span class="sd">                                          all types needed for a neuron.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                a numpy structured array with one neuron using type from get_neuron_dtype.</span>
+<span class="sd">            numpy.ndarray:                a numpy structured array with one</span>
+<span class="sd">                                          neuron using type from</span>
+<span class="sd">                                          get_neuron_dtype.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; get_one_neuron((3,), numpy.float) #doctest: +NORMALIZE_WHITESPACE</span>
@@ -1604,12 +1784,17 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima_vigra"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima_vigra">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima_vigra</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
-<span class="sd">        Uses vigra&#39;s vigra.analysis.extendedLocalMaxima for 2D and vigra&#39;s vigra.analysis.extendedLocalMaxima3D for 3D.</span>
+<span class="sd">        Creates a mask the same size as the intensity image with local maxima</span>
+<span class="sd">        as True and background False. Uses vigra&#39;s</span>
+<span class="sd">        vigra.analysis.extendedLocalMaxima for 2D and</span>
+<span class="sd">        vigra&#39;s vigra.analysis.extendedLocalMaxima3D for 3D.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are</span>
-<span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
+<span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local</span>
+<span class="sd">                                                    maxima for (ideally, all</span>
+<span class="sd">                                                    axes are spatial; however,</span>
+<span class="sd">                                                    it will treat all axes the</span>
+<span class="sd">                                                    same).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray:                          A mask of the local maxima.</span>
@@ -1629,16 +1814,22 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="generate_local_maxima_scikit_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima_scikit_image">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima_scikit_image</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">,</span> <span class="n">local_max_neighborhood_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_local_maxima_scikit_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima_scikit_image">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima_scikit_image</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">,</span>
+                                       <span class="n">local_max_neighborhood_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
-<span class="sd">        Uses scikit image&#39;s skimage.feature.peak_local_max.</span>
+<span class="sd">        Creates a mask the same size as the intensity image with local maxima</span>
+<span class="sd">        as True and background False. Uses scikit image&#39;s</span>
+<span class="sd">        skimage.feature.peak_local_max.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are</span>
-<span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
+<span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local</span>
+<span class="sd">                                                    maxima for (ideally, all</span>
+<span class="sd">                                                    axes are spatial; however,</span>
+<span class="sd">                                                    it will treat all axes the</span>
+<span class="sd">                                                    same).</span>
 
-<span class="sd">            local_max_neighborhood_size(int):       Size of the neighborhood to check for a local maxima.</span>
+<span class="sd">            local_max_neighborhood_size(int):       Size of the neighborhood to</span>
+<span class="sd">                                                    check for a local maxima.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray:                          A mask of the local maxima.</span>
@@ -1660,11 +1851,15 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a mask the same size as the intensity image with local maxima as True and background False.</span>
+<span class="sd">        Creates a mask the same size as the intensity image with local maxima</span>
+<span class="sd">        as True and background False.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local maxima for (ideally, all axes are</span>
-<span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
+<span class="sd">            new_intensity_image(numpy.ndarray):     The image to find local</span>
+<span class="sd">                                                    maxima for (ideally, all</span>
+<span class="sd">                                                    axes are spatial; however,</span>
+<span class="sd">                                                    it will treat all axes the</span>
+<span class="sd">                                                    same).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray:                          A mask of the local maxima.</span>
@@ -1680,20 +1875,27 @@
         <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates local maxima along with other properties for each labeled region</span>
-<span class="sd">        (therefore at least one entry per label).</span>
-<span class="sd">        Gets a label image if not provided by using the threshold (if not provided is zero).</span>
+<span class="sd">        Generates local maxima along with other properties for each labeled</span>
+<span class="sd">        region (therefore at least one entry per label). Gets a label image if</span>
+<span class="sd">        not provided by using the threshold (if not provided is zero).</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This is similar to region_properties. It differs in that it keeps track of all local maxima. So, it is no</span>
-<span class="sd">            longer one-to-one in labels, but is one-to-one in local maxima.</span>
+<span class="sd">            This is similar to region_properties. It differs in that it keeps</span>
+<span class="sd">            track of all local maxima. So, it is no longer one-to-one in</span>
+<span class="sd">            labels, but is one-to-one in local maxima.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_intensity_image(numpy.ndarray):     The intensity image to find local maxima for (ideally, all axes are</span>
-<span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
+<span class="sd">            new_intensity_image(numpy.ndarray):     The intensity image to find</span>
+<span class="sd">                                                    local maxima for (ideally,</span>
+<span class="sd">                                                    all axes are spatial;</span>
+<span class="sd">                                                    however, it will treat all</span>
+<span class="sd">                                                    axes the same).</span>
 
-<span class="sd">            new_label_image(numpy.ndarray):         The label image to find local maxima for (ideally, all axes are</span>
-<span class="sd">                                                    spatial; however, it will treat all axes the same).</span>
+<span class="sd">            new_label_image(numpy.ndarray):         The label image to find</span>
+<span class="sd">                                                    local maxima for (ideally,</span>
+<span class="sd">                                                    all axes are spatial;</span>
+<span class="sd">                                                    however, it will treat all</span>
+<span class="sd">                                                    axes the same).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray:                          A mask of the local maxima.</span>
@@ -1773,15 +1975,20 @@
 <span class="nd">@hdf5.record.class_static_array_debug_recorder</span>
 <div class="viewcode-block" id="ExtendedRegionProps"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps">[docs]</a><span class="k">class</span> <span class="nc">ExtendedRegionProps</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Using the results of extended_region_local_maxima_properties with given intensity and label images, the</span>
-<span class="sd">        ExtendedRegionProps attempts to make it easy to get information about local maxima in the image. Further, it</span>
-<span class="sd">        provides methods to allow removal of local maxima. When removing local maxima, it will updated the given label</span>
-<span class="sd">        image to reflect labels that have been removed completely and will automatically renumber the label image (as</span>
-<span class="sd">        some functions expect a label image with sequential numbering, no missing label number). This provides a simple</span>
-<span class="sd">        way to maintain a label image, whose local maxima one is more interested in directly manipulating.</span>
+<span class="sd">        Using the results of extended_region_local_maxima_properties with given</span>
+<span class="sd">        intensity and label images, the ExtendedRegionProps attempts to make it</span>
+<span class="sd">        easy to get information about local maxima in the image. Further, it</span>
+<span class="sd">        provides methods to allow removal of local maxima. When removing local</span>
+<span class="sd">        maxima, it will updated the given label image to reflect labels that</span>
+<span class="sd">        have been removed completely and will automatically renumber the label</span>
+<span class="sd">        image (as some functions expect a label image with sequential</span>
+<span class="sd">        numbering, no missing label number). This provides a simple way to</span>
+<span class="sd">        maintain a label image, whose local maxima one is more interested in</span>
+<span class="sd">        directly manipulating.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            Adding local maxima is not allowed for and wouldn&#39;t make sense given its dependency on the intensity image.</span>
+<span class="sd">            Adding local maxima is not allowed for and wouldn&#39;t make sense</span>
+<span class="sd">            given its dependency on the intensity image.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -1791,18 +1998,27 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Construct an ExtendedRegionProps instance.</span>
 
-<span class="sd">            This uses extended_region_local_maxima_properties to determine local maxima and properties for the labeled</span>
-<span class="sd">            region. After doing this, it is possible to remove local maxima and update the label image to reflect this</span>
-<span class="sd">            change.</span>
+<span class="sd">            This uses extended_region_local_maxima_properties to determine</span>
+<span class="sd">            local maxima and properties for the labeled region. After doing</span>
+<span class="sd">            this, it is possible to remove local maxima and update the label</span>
+<span class="sd">            image to reflect this change.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                new_intensity_image(numpy.ndarray):     The intensity image to find local maxima for (ideally, all axes are</span>
-<span class="sd">                                                        spatial; however, it will treat all axes the same).</span>
+<span class="sd">                new_intensity_image(numpy.ndarray):     The intensity image to</span>
+<span class="sd">                                                        find local maxima for</span>
+<span class="sd">                                                        (ideally, all axes are</span>
+<span class="sd">                                                        spatial; however, it</span>
+<span class="sd">                                                        will treat all axes</span>
+<span class="sd">                                                        the same).</span>
 
-<span class="sd">                new_label_image(numpy.ndarray):         The label image to find local maxima for (ideally, all axes are</span>
-<span class="sd">                                                        spatial; however, it will treat all axes the same).</span>
+<span class="sd">                new_label_image(numpy.ndarray):         The label image to find</span>
+<span class="sd">                                                        local maxima for (</span>
+<span class="sd">                                                        ideally, all axes are</span>
+<span class="sd">                                                        spatial; however, it</span>
+<span class="sd">                                                        will treat all axes the</span>
+<span class="sd">                                                        same).</span>
 
-<span class="sd">                properties(list):                       used by extended_region_local_maxima_properties to generate</span>
+<span class="sd">                properties(list):                       used to generate</span>
 <span class="sd">                                                        initial properties.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1881,7 +2097,8 @@
 <span class="sd">            Gets a numpy style index array from the local maxima present.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                tuple:      a numpy styled index array, which can be used on the intensity image, or label image.</span>
+<span class="sd">                tuple:      a numpy styled index array, which can be used on</span>
+<span class="sd">                            the intensity image, or label image.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s">&quot;local_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
@@ -1889,10 +2106,12 @@
 </div>
 <div class="viewcode-block" id="ExtendedRegionProps.get_local_max_mask"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps.get_local_max_mask">[docs]</a>    <span class="k">def</span> <span class="nf">get_local_max_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Gets a bool numpy array that is True at the locations of the local maxima.</span>
+<span class="sd">            Gets a bool numpy array that is True at the locations of the local</span>
+<span class="sd">            maxima.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                numpy.ndarray:      a bool numpy array that is True where a local max is and False everywhere else.</span>
+<span class="sd">                numpy.ndarray:      a bool numpy array that is True where a</span>
+<span class="sd">                                    local max is and False everywhere else.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># Returns a label image containing each local max and its label.</span>
@@ -1908,10 +2127,12 @@
 </div>
 <div class="viewcode-block" id="ExtendedRegionProps.get_local_max_label_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps.get_local_max_label_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_local_max_label_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Gets an int numpy array that contains the labels of the local maxima.</span>
+<span class="sd">            Gets an int numpy array that contains the labels of the local</span>
+<span class="sd">            maxima.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                numpy.ndarray:      an int numpy array that contains the labels of the local maxima and is zero in the</span>
+<span class="sd">                numpy.ndarray:      an int numpy array that contains the labels</span>
+<span class="sd">                                    of the local maxima and is zero in the</span>
 <span class="sd">                                    background.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1928,15 +2149,21 @@
 </div>
 <div class="viewcode-block" id="ExtendedRegionProps.remove_prop_mask"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps.remove_prop_mask">[docs]</a>    <span class="k">def</span> <span class="nf">remove_prop_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remove_prop_indices_mask</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Removes the local maxima by the mask over their indices (only False elements will be kept).</span>
+<span class="sd">            Removes the local maxima by the mask over their indices (only False</span>
+<span class="sd">            elements will be kept).</span>
 
 <span class="sd">            Note:</span>
-<span class="sd">                If a label is removed completely, the label image, intensity image, and image mask will be updated.</span>
-<span class="sd">                Also, the count (of local maxima per label) will be updated, regardless.</span>
+<span class="sd">                If a label is removed completely, the label image, intensity</span>
+<span class="sd">                image, and image mask will be updated. Also, the count (of</span>
+<span class="sd">                local maxima per label) will be updated, regardless.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                remove_prop_indices_mask(numpy.ndarray):     A mask of the indices to drop (True for the ones to remove,</span>
-<span class="sd">                                                             and False for the ones to keep).</span>
+<span class="sd">                remove_prop_indices_mask(numpy.ndarray):     A mask of the</span>
+<span class="sd">                                                             indices to drop</span>
+<span class="sd">                                                             (True for the ones</span>
+<span class="sd">                                                             to remove, and</span>
+<span class="sd">                                                             False for the ones</span>
+<span class="sd">                                                             to keep).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># Get the labels to remove</span>
@@ -1946,8 +2173,8 @@
             <span class="n">remove_labels</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
 
-        <span class="c"># Take a subset of the label props that does not include the removal mask</span>
-        <span class="c"># (copying may not be necessary as the mask may be as effective)</span>
+        <span class="c"># Take a subset of the label props that does not include the removal</span>
+        <span class="c"># mask (copying may not be necessary as the mask may be as effective).</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="o">~</span><span class="n">remove_prop_indices_mask</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="c"># Reduce the count by the number of each label</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">[</span><span class="s">&quot;count&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="n">label_count_to_remove</span>
@@ -1973,15 +2200,17 @@
 </div>
 <div class="viewcode-block" id="ExtendedRegionProps.remove_prop_indices"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps.remove_prop_indices">[docs]</a>    <span class="k">def</span> <span class="nf">remove_prop_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">i</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Removes the local maxima of the indices listed (like remove_prop_mask except with indices).</span>
+<span class="sd">            Removes the local maxima of the indices listed (like</span>
+<span class="sd">            remove_prop_mask except with indices).</span>
 
 <span class="sd">            Note:</span>
-<span class="sd">                If a label is removed completely, the label image, intensity image, and image mask will be updated.</span>
-<span class="sd">                Also, the count (of local maxima per label) will be updated, regardless.</span>
+<span class="sd">                If a label is removed completely, the label image, intensity</span>
+<span class="sd">                image, and image mask will be updated. Also, the count (of</span>
+<span class="sd">                local maxima per label) will be updated, regardless.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                *i(int):     A mask of the indices to drop (True for the ones to remove,</span>
-<span class="sd">                                                             and False for the ones to keep).</span>
+<span class="sd">                *i(int):     A mask of the indices to drop (True for the ones</span>
+<span class="sd">                             to remove, and False for the ones to keep).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># A mask of the indices to remove</span>
@@ -1992,24 +2221,22 @@
 </div>
 <div class="viewcode-block" id="ExtendedRegionProps.renumber_labels"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps.renumber_labels">[docs]</a>    <span class="k">def</span> <span class="nf">renumber_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            An internal method to be called after a label is completely removed from the local maxima.</span>
+<span class="sd">            An internal method to be called after a label is completely removed</span>
+<span class="sd">            from the local maxima.</span>
 
-<span class="sd">            Ensures all labels are in sequential order in the label image, count, and that all local maxima have their</span>
-<span class="sd">            labels updated.</span>
+<span class="sd">            Ensures all labels are in sequential order in the label image,</span>
+<span class="sd">            count, and that all local maxima have their labels updated.</span>
 
 
 <span class="sd">            Note:</span>
-<span class="sd">                Calling this externally will not make a difference as long as removal has occurred through the usual</span>
-<span class="sd">                mechanisms.</span>
+<span class="sd">                Calling this externally will not make a difference as long as</span>
+<span class="sd">                removal has occurred through the usual mechanisms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># Renumber all labels sequentially starting with the label image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span><span class="p">[:],</span> <span class="n">forward_label_mapping</span><span class="p">,</span> <span class="n">reverse_label_mapping</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">segmentation</span><span class="o">.</span><span class="n">relabel_sequential</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span>
         <span class="p">)</span>
-        <span class="c"># new_label_image, forward_label_mapping, reverse_label_mapping = advanced_numpy.renumber_label_image(</span>
-        <span class="c">#   self.label_image</span>
-        <span class="c"># )</span>
 
         <span class="c"># Remove zero from the mappings as it is background and remains the</span>
         <span class="c"># same</span>
@@ -2020,8 +2247,9 @@
         <span class="n">props_reverse_mapped</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">all_permutations_equal</span><span class="p">(</span>
             <span class="n">reverse_label_mapping</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s">&quot;label&quot;</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="c"># Get the new labels by noting they must range from 0 to the length of reverse_label_mapping.</span>
-        <span class="c"># Skip zero as it is not necessary to check for it.</span>
+        <span class="c"># Get the new labels by noting they must range from 0 to the length of</span>
+        <span class="c"># reverse_label_mapping. Skip zero as it is not necessary to check</span>
+        <span class="c"># for it.</span>
         <span class="n">new_labels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">reverse_label_mapping</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c"># Expand new_labels into a view of the same size as</span>
         <span class="c"># props_reverse_mapped</span>
@@ -2051,19 +2279,23 @@
                                       <span class="n">percentage_pixels_below_max</span><span class="p">,</span>
                                       <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Removes the local maxima for regions, which have too many pixels that are below the intensity of their local</span>
-<span class="sd">        maxima.</span>
+<span class="sd">        Removes the local maxima for regions, which have too many pixels that</span>
+<span class="sd">        are below the intensity of their local maxima.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            local_maxima(ExtendedRegionProps):      The local maxima to refine</span>
 
-<span class="sd">            percentage_pixels_below_max(float):     The percentage of pixels out of a region that are below the</span>
-<span class="sd">                                                    local maxima of the region</span>
+<span class="sd">            percentage_pixels_below_max(float):     The percentage of pixels</span>
+<span class="sd">                                                    out of a region that are</span>
+<span class="sd">                                                    below the local maxima of</span>
+<span class="sd">                                                    the region</span>
 
-<span class="sd">            **parameters(dict):                     essentially unused (catches unneeded arguments).</span>
+<span class="sd">            **parameters(dict):                     essentially unused (catches</span>
+<span class="sd">                                                    unneeded arguments).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            ExtendedRegionProps:                    a new instance with the local maxima removed</span>
+<span class="sd">            ExtendedRegionProps:                    a new instance with the</span>
+<span class="sd">                                                    local maxima removed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Deleting local maxima that does not exceed the 90th percentile of the</span>
@@ -2112,19 +2344,25 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="remove_too_close_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_too_close_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">remove_too_close_local_maxima</span><span class="p">(</span><span class="n">local_maxima</span><span class="p">,</span> <span class="n">min_local_max_distance</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+<div class="viewcode-block" id="remove_too_close_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_too_close_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">remove_too_close_local_maxima</span><span class="p">(</span><span class="n">local_maxima</span><span class="p">,</span>
+                                  <span class="n">min_local_max_distance</span><span class="p">,</span>
+                                  <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes local maxima that are too close to each other.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            local_maxima(ExtendedRegionProps):      The local maxima to refine</span>
 
-<span class="sd">            min_local_max_distance(float):          The minimum allowed distance between local maxima</span>
+<span class="sd">            min_local_max_distance(float):          The minimum allowed</span>
+<span class="sd">                                                    distance between local</span>
+<span class="sd">                                                    maxima</span>
 
-<span class="sd">            **parameters(dict):                     essentially unused (catches unneeded arguments).</span>
+<span class="sd">            **parameters(dict):                     essentially unused (catches</span>
+<span class="sd">                                                    unneeded arguments).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            ExtendedRegionProps:                    a new instance with the local maxima removed</span>
+<span class="sd">            ExtendedRegionProps:                    a new instance with the</span>
+<span class="sd">                                                    local maxima removed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Deleting close local maxima below 16 pixels</span>
@@ -2169,20 +2407,36 @@
 <span class="sd">        Performs wavelet denoising on the given dictionary.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_image(numpy.ndarray):                   array of data for generating a dictionary (first axis is time).</span>
+<span class="sd">            new_image(numpy.ndarray):                   array of data for</span>
+<span class="sd">                                                        generating a dictionary</span>
+<span class="sd">                                                        (first axis is time).</span>
 
-<span class="sd">            accepted_region_shape_constraints(dict):    a dictionary containing properties (that could be passed to</span>
-<span class="sd">                                                        region_properties) under this should be a dictionary that</span>
-<span class="sd">                                                        contains the keys min and/or max with a value for each.</span>
+<span class="sd">            accepted_region_shape_constraints(dict):    a dictionary containing</span>
+<span class="sd">                                                        properties (that could be passed to</span>
+<span class="sd">                                                        region_properties)</span>
+<span class="sd">                                                        under this should be a</span>
+<span class="sd">                                                        dictionary that</span>
+<span class="sd">                                                        contains the keys min</span>
+<span class="sd">                                                        and/or max with a value</span>
+<span class="sd">                                                        for each.</span>
 
-<span class="sd">            accepted_neuron_shape_constraints(dict):    a dictionary containing properties (that could be passed to</span>
-<span class="sd">                                                        region_properties) under this should be a dictionary that</span>
-<span class="sd">                                                        contains the keys min and/or max with a value for each.</span>
+<span class="sd">            accepted_neuron_shape_constraints(dict):    a dictionary containing</span>
+<span class="sd">                                                        properties (that could</span>
+<span class="sd">                                                        be passed to</span>
+<span class="sd">                                                        region_properties)</span>
+<span class="sd">                                                        under this should be a</span>
+<span class="sd">                                                        dictionary that</span>
+<span class="sd">                                                        contains the keys min</span>
+<span class="sd">                                                        and/or max with a value</span>
+<span class="sd">                                                        for each.</span>
 
-<span class="sd">            **parameters(dict):                         additional parameters for various other function calls.</span>
+<span class="sd">            **parameters(dict):                         additional parameters</span>
+<span class="sd">                                                        for various other</span>
+<span class="sd">                                                        function calls.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                              a structured array of candidate neurons.</span>
+<span class="sd">            numpy.ndarray:                              a structured array of</span>
+<span class="sd">                                                        candidate neurons.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">neurons</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">new_image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_image</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -2336,9 +2590,9 @@
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Found new label image.&quot;</span><span class="p">)</span>
 
-        <span class="c"># ExtendedRegionProps.recorders.array_debug_recorder = hdf5.record.HDF5EnumeratedArrayRecorder(</span>
-        <span class="c">#     wavelet_denoising.recorders.array_debug_recorder.hdf5_handle</span>
-        <span class="c"># )</span>
+        <span class="c">#ExtendedRegionProps.recorders.array_debug_recorder = hdf5.record.HDF5EnumeratedArrayRecorder(</span>
+        <span class="c">#    wavelet_denoising.recorders.array_debug_recorder.hdf5_handle</span>
+        <span class="c">#)</span>
         <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">local_maxima</span> <span class="o">=</span> <span class="n">ExtendedRegionProps</span><span class="p">(</span>
             <span class="n">new_wavelet_image_denoised</span><span class="p">,</span> <span class="n">new_wavelet_image_denoised_label_image</span>
@@ -2374,7 +2628,9 @@
 
             <span class="c"># First perform disc opening on the image.</span>
             <span class="c"># (Actually, we don&#39;t do this according to Ferran.)</span>
-            <span class="c">#new_wavelet_image_denoised_opened = vigra.filters.discOpening(new_wavelet_image_denoised.astype(numpy.float32), radius = 1)</span>
+            <span class="c">#new_wavelet_image_denoised_opened = vigra.filters.discOpening(</span>
+            <span class="c">#    new_wavelet_image_denoised.astype(numpy.float32), radius=1</span>
+            <span class="c">#)</span>
 
             <span class="c"># We could look for seeds using local maxima.</span>
             <span class="c"># However, we already know what these should be as these are the</span>
@@ -2547,12 +2803,16 @@
 <span class="sd">        Extracts neurons from an image using a stack of masks.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_image(numpy.ndarray):           spatial coordinates only (no time).</span>
+<span class="sd">            new_image(numpy.ndarray):           spatial coordinates only (no</span>
+<span class="sd">                                                time).</span>
 
-<span class="sd">            neuron_masks(numpy.ndarray):        first index of denotes which mask and all others are spatial indices.</span>
+<span class="sd">            neuron_masks(numpy.ndarray):        first index of denotes which</span>
+<span class="sd">                                                mask and all others are spatial</span>
+<span class="sd">                                                indices.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                      a stack of neurons in the same order as the masks.</span>
+<span class="sd">            numpy.ndarray:                      a stack of neurons in the same</span>
+<span class="sd">                                                order as the masks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">neurons</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
@@ -2587,19 +2847,23 @@
 <span class="sd">        Merges the two neurons into one neuron, which is returned.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            The first neuron (neuron_1) is preferred in tie-breaking situations.</span>
+<span class="sd">            The first neuron (neuron_1) is preferred in tie-breaking</span>
+<span class="sd">            situations.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            neuron_1(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the first</span>
-<span class="sd">                                                neuron.</span>
+<span class="sd">            neuron_1(numpy.ndarray):            numpy structured array (dtype</span>
+<span class="sd">                                                get_neuron_dtype) containing</span>
+<span class="sd">                                                the first neuron.</span>
 
-<span class="sd">            neuron_2(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the second</span>
-<span class="sd">                                                neuron.</span>
+<span class="sd">            neuron_2(numpy.ndarray):            numpy structured array (dtype</span>
+<span class="sd">                                                get_neuron_dtype) containing</span>
+<span class="sd">                                                the second neuron.</span>
 
 <span class="sd">            **parameters(dict):                 dictionary of parameters</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                      a new neuron that is the result of fusing the two.</span>
+<span class="sd">            numpy.ndarray:                      a new neuron that is the result</span>
+<span class="sd">                                                of fusing the two.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;neuron_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neuron_1</span>
@@ -2665,35 +2929,58 @@
                            <span class="n">overlap_min_threshold</span><span class="p">,</span>
                            <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Merges the two sets of neurons into one. Appends neurons that cannot be merged with the existing set.</span>
+<span class="sd">        Merges the two sets of neurons into one. Appends neurons that cannot be</span>
+<span class="sd">        merged with the existing set.</span>
 
-<span class="sd">        In the functions that follow, it helps to think of each neuron as a vector (instead of as an image). So, dot</span>
-<span class="sd">        products for vectors are important.</span>
+<span class="sd">        In the functions that follow, it helps to think of each neuron as a</span>
+<span class="sd">        vector (instead of as an image). So, dot products for vectors are</span>
+<span class="sd">        important.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            The first neuron set (new_neuron_set_1) is preferred and treated as the set to merge into. However, this</span>
-<span class="sd">            function will not change the original argument.</span>
+<span class="sd">            The first neuron set (new_neuron_set_1) is preferred and treated as</span>
+<span class="sd">            the set to merge into. However, this function will not change the</span>
+<span class="sd">            original argument.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_neuron_set_1(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the</span>
-<span class="sd">                                                        first neuron set (preferred for tie breaking).</span>
+<span class="sd">            new_neuron_set_1(numpy.ndarray):            numpy structured array</span>
+<span class="sd">                                                        (dtype get_neuron_dtype)</span>
+<span class="sd">                                                        containing the first</span>
+<span class="sd">                                                        neuron set (preferred</span>
+<span class="sd">                                                        for tie breaking).</span>
 
-<span class="sd">            new_neuron_set_2(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the</span>
-<span class="sd">                                                        second neuron set.</span>
+<span class="sd">            new_neuron_set_2(numpy.ndarray):            numpy structured array</span>
+<span class="sd">                                                        (dtype get_neuron_dtype)</span>
+<span class="sd">                                                        containing the second</span>
+<span class="sd">                                                        neuron set.</span>
 
-<span class="sd">            alignment_min_threshold(float):             The minimum required cosine of the angle between two neurons for</span>
-<span class="sd">                                                        them to be treated as candidates for merging (uses the function</span>
-<span class="sd">                                                        expanded_numpy.dot_product_normalized with ord = 2).</span>
+<span class="sd">            alignment_min_threshold(float):             The minimum required</span>
+<span class="sd">                                                        cosine of the angle</span>
+<span class="sd">                                                        between two neurons for</span>
+<span class="sd">                                                        them to be treated as</span>
+<span class="sd">                                                        candidates for merging</span>
+<span class="sd">                                                        (uses the function</span>
+<span class="sd">                                                        expanded_numpy.dot_product_normalized</span>
+<span class="sd">                                                        with ord = 2).</span>
 
-<span class="sd">            overlap_min_threshold(numpy.ndarray):       The minimum required dot product (divided by the L1 norm of one</span>
-<span class="sd">                                                        of the neurons) for them to be treated as candidates for merging</span>
-<span class="sd">                                                        (uses the function expanded_numpy.dot_product_partially_normalized).</span>
+<span class="sd">            overlap_min_threshold(numpy.ndarray):       The minimum required</span>
+<span class="sd">                                                        dot product (divided by</span>
+<span class="sd">                                                        the L1 norm of one of</span>
+<span class="sd">                                                        the neurons) for them</span>
+<span class="sd">                                                        to be treated as</span>
+<span class="sd">                                                        candidates for merging</span>
+<span class="sd">                                                        (uses the function</span>
+<span class="sd">                                                        expanded_numpy.dot_product_partially_normalized).</span>
 
-<span class="sd">            **parameters(dict):                         dictionary of parameters</span>
+<span class="sd">            **parameters(dict):                         dictionary of</span>
+<span class="sd">                                                        parameters</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                              a numpy structured array that contains the result of merging the</span>
-<span class="sd">                                                        two sets (or appending for neurons that could not be merged).</span>
+<span class="sd">            numpy.ndarray:                              a numpy structured</span>
+<span class="sd">                                                        array that contains the</span>
+<span class="sd">                                                        result of merging the</span>
+<span class="sd">                                                        two sets (or appending</span>
+<span class="sd">                                                        for neurons that could</span>
+<span class="sd">                                                        not be merged).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">new_neuron_set_1</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
@@ -2912,35 +3199,57 @@
                                  <span class="n">overlap_min_threshold</span><span class="p">,</span>
                                  <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Merges the two sets of neurons into one. Appends neurons that cannot be merged with the existing set.</span>
+<span class="sd">        Merges the two sets of neurons into one. Appends neurons that cannot be</span>
+<span class="sd">        merged with the existing set.</span>
 
-<span class="sd">        In the functions that follow, it helps to think of each neuron as a vector (instead of as an image). So, dot</span>
-<span class="sd">        products for vectors are important.</span>
+<span class="sd">        In the functions that follow, it helps to think of each neuron as a</span>
+<span class="sd">        vector (instead of as an image). So, dot products for vectors are</span>
+<span class="sd">        important.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            The first neuron set (new_neuron_set_1) is preferred and treated as the set to merge into. However, this</span>
-<span class="sd">            function will not change the original argument.</span>
+<span class="sd">            The first neuron set (new_neuron_set_1) is preferred and treated as</span>
+<span class="sd">            the set to merge into. However, this function will not change the</span>
+<span class="sd">            original argument.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_neuron_set_1(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the</span>
-<span class="sd">                                                        first neuron set (preferred for tie breaking).</span>
+<span class="sd">            new_neuron_set_1(numpy.ndarray):            numpy structured array</span>
+<span class="sd">                                                        (dtype get_neuron_dtype)</span>
+<span class="sd">                                                        containing the first</span>
+<span class="sd">                                                        neuron set (preferred</span>
+<span class="sd">                                                        for tie breaking).</span>
 
-<span class="sd">            new_neuron_set_2(numpy.ndarray):            numpy structured array (dtype get_neuron_dtype) containing the</span>
-<span class="sd">                                                        second neuron set.</span>
+<span class="sd">            new_neuron_set_2(numpy.ndarray):            numpy structured array</span>
+<span class="sd">                                                        (dtype get_neuron_dtype)</span>
+<span class="sd">                                                        containing the second</span>
+<span class="sd">                                                        neuron set.</span>
 
-<span class="sd">            alignment_min_threshold(float):             The minimum required cosine of the angle between two neurons for</span>
-<span class="sd">                                                        them to be treated as candidates for merging (uses the function</span>
-<span class="sd">                                                        expanded_numpy.dot_product_normalized with ord = 2).</span>
+<span class="sd">            alignment_min_threshold(float):             The minimum required</span>
+<span class="sd">                                                        cosine of the angle</span>
+<span class="sd">                                                        between two neurons for</span>
+<span class="sd">                                                        them to be treated as</span>
+<span class="sd">                                                        candidates for merging</span>
+<span class="sd">                                                        (uses the function</span>
+<span class="sd">                                                        expanded_numpy.dot_product_normalized</span>
+<span class="sd">                                                        with ord = 2).</span>
 
-<span class="sd">            overlap_min_threshold(numpy.ndarray):       The minimum required dot product (divided by the L1 norm of one</span>
-<span class="sd">                                                        of the neurons) for them to be treated as candidates for merging</span>
-<span class="sd">                                                        (uses the function expanded_numpy.dot_product_partially_normalized).</span>
+<span class="sd">            overlap_min_threshold(numpy.ndarray):       The minimum required</span>
+<span class="sd">                                                        dot product (divided by</span>
+<span class="sd">                                                        the L1 norm of one of</span>
+<span class="sd">                                                        the neurons) for them</span>
+<span class="sd">                                                        to be treated as</span>
+<span class="sd">                                                        candidates for merging</span>
+<span class="sd">                                                        (uses the function</span>
+<span class="sd">                                                        expanded_numpy.dot_product_partially_normalized).</span>
 
 <span class="sd">            **parameters(dict):                         dictionary of parameters</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                              a numpy structured array that contains the result of merging the</span>
-<span class="sd">                                                        two sets (or appending for neurons that could not be merged).</span>
+<span class="sd">            numpy.ndarray:                              a numpy structured</span>
+<span class="sd">                                                        array that contains the</span>
+<span class="sd">                                                        result of merging the</span>
+<span class="sd">                                                        two sets (or appending</span>
+<span class="sd">                                                        for neurons that could</span>
+<span class="sd">                                                        not be merged).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">new_neuron_set_1</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
@@ -2987,7 +3296,8 @@
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle</span>
 
         <span class="c"># Measure the distance between the two masks</span>
-        <span class="c"># (note distance relative to the total mask content of each mask individually)</span>
+        <span class="c"># (note distance relative to the total mask content of each mask</span>
+        <span class="c"># individually)</span>
         <span class="n">new_neuron_set_masks_overlaid</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">pair_dot_product_partially_normalized</span><span class="p">(</span>
             <span class="n">new_neuron_set_flattened_mask</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span>
         <span class="p">)</span>
@@ -2999,10 +3309,10 @@
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_masks_overlaid_1</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_masks_overlaid_2</span>
 
-        <span class="c"># Now that the three measures for the correlation method have been found, we want to know,</span>
-        <span class="c"># which are the best correlated neurons between the two sets using these measures.</span>
-        <span class="c"># This done to find the neuron in new_neuron_set_1 that best matches</span>
-        <span class="c"># each neuron in new_neuron_set_2.</span>
+        <span class="c"># Now that the three measures for the correlation method have been</span>
+        <span class="c"># found, we want to know, which are the best correlated neurons between</span>
+        <span class="c"># the two sets using these measures. This done to find the neuron in</span>
+        <span class="c"># new_neuron_set_1 that best matches each neuron in new_neuron_set_2.</span>
         <span class="n">new_neuron_set_angle_all_optimal_i</span> <span class="o">=</span> <span class="n">new_neuron_set_angle</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
@@ -3095,9 +3405,7 @@
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_1_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_masks_overlaid_2_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span>
 
-        <span class="c"># Using the masks construct the best match neuron index for each case</span>
-        <span class="c"># After doing these three, new_neuron_set_all_optimal_i will contain either</span>
-        <span class="c"># the index of the neuron to fuse with in new_neuron_set for each</span>
+        <span class="c"># Using the masks construct the best match neuron index for each case.</span>
         <span class="n">new_neuron_set_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">]</span>
 
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_all_optimal_i_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_all_optimal_i</span>
@@ -3111,8 +3419,8 @@
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron_set_all_optimal_i_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_all_optimal_i</span>
 
 
-        <span class="c"># Separate all the best matches that were found from those that were not.</span>
-        <span class="c"># Also, remove the -1 as they have served their purpose.</span>
+        <span class="c"># Separate all the best matches that were found from those that were</span>
+        <span class="c"># not. Also, remove the -1 as they have served their purpose.</span>
         <span class="n">new_neuron_set_all_optimal_i_found</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">new_neuron_set_all_optimal_i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="p">)</span>
@@ -3233,16 +3541,18 @@
 <span class="sd">        Generates neurons from the dictionary.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_dictionary(numpy.ndarray):        dictionary of basis images to analyze for neurons.</span>
+<span class="sd">            new_dictionary(numpy.ndarray):        dictionary of basis images to</span>
+<span class="sd">                                                  analyze for neurons.</span>
+
 <span class="sd">            **parameters(dict):                   dictionary of parameters</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:                        structured array with relevant information for each neuron found.</span>
+<span class="sd">            numpy.ndarray:                        structured array with</span>
+<span class="sd">                                                  relevant information for each</span>
+<span class="sd">                                                  neuron found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-
     <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="bp">None</span>
-
 
     <span class="c"># TODO: Remove this as it is already accomplished using the HDF5EnumeratedArrayRecorder.</span>
     <span class="c"># Puts each dictionary basis debug log into a separate group depending on</span>

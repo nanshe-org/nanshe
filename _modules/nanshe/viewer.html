@@ -145,17 +145,35 @@
 <span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5DataSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DataSource">[docs]</a><span class="k">class</span> <span class="nc">HDF5DataSource</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.</span>
+<span class="sd">        Creates a source that reads from an HDF5 dataset and shapes it in a way</span>
+<span class="sd">        that Volumina can use.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">              file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.</span>
-<span class="sd">              file_path(str):                          External path to the file</span>
-<span class="sd">              dataset_path(str):                       Internal path to the dataset</span>
-<span class="sd">              full_path(str):                          Both external and internal paths combined as one path</span>
-<span class="sd">              dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension</span>
-<span class="sd">              dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.</span>
-<span class="sd">              axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request</span>
+<span class="sd">              file_handle(h5py.File or str):           A handle for reading the</span>
+<span class="sd">                                                       HDF5 file or the</span>
+<span class="sd">                                                       external file path.</span>
 
+<span class="sd">              file_path(str):                          External path to the</span>
+<span class="sd">                                                       file</span>
+
+<span class="sd">              dataset_path(str):                       Internal path to the</span>
+<span class="sd">                                                       dataset</span>
+
+<span class="sd">              full_path(str):                          Both external and</span>
+<span class="sd">                                                       internal paths combined</span>
+<span class="sd">                                                       as one path</span>
+
+<span class="sd">              dataset_shape(tuple of ints):            A tuple representing the</span>
+<span class="sd">                                                       shape of the dataset in</span>
+<span class="sd">                                                       each dimension</span>
+
+<span class="sd">              dataset_dtype(numpy.dtype or type):      The type of the</span>
+<span class="sd">                                                       underlying dataset.</span>
+
+<span class="sd">              axis_order(tuple of ints):               A tuple representing how</span>
+<span class="sd">                                                       to reshape the array</span>
+<span class="sd">                                                       before returning a</span>
+<span class="sd">                                                       request.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
@@ -165,15 +183,29 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_handle</span><span class="p">,</span> <span class="n">internal_path</span><span class="p">,</span> <span class="n">record_name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an HDF5DataSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
-<span class="sd">            can be specified.</span>
+<span class="sd">            Constructs an HDF5DataSource using a given file and path to the</span>
+<span class="sd">            dataset. Optionally, the shape and dtype can be specified.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                file_handle(h5py.File or str):          A file handle for the HDF5 file..</span>
-<span class="sd">                internal_path(str):                     path to the dataset inside of the HDF5 file.</span>
-<span class="sd">                record_name(str):                       which record to extract from the HDF5 file.</span>
-<span class="sd">                shape(tuple of ints):                   shape of underlying dataset if not specified defaults to that of the dataset.</span>
-<span class="sd">                dtype(numpy.dtype or type):             type of underlying dataset if not specified defaults to that of the dataset.</span>
+<span class="sd">                file_handle(h5py.File or str):          A file handle for the</span>
+<span class="sd">                                                        HDF5 file.</span>
+
+<span class="sd">                internal_path(str):                     path to the dataset</span>
+<span class="sd">                                                        inside of the HDF5</span>
+<span class="sd">                                                        file.</span>
+
+<span class="sd">                record_name(str):                       which record to extract</span>
+<span class="sd">                                                        from the HDF5 file.</span>
+
+<span class="sd">                shape(tuple of ints):                   shape of underlying</span>
+<span class="sd">                                                        dataset if not</span>
+<span class="sd">                                                        specified defaults to</span>
+<span class="sd">                                                        that of the dataset.</span>
+
+<span class="sd">                dtype(numpy.dtype or type):             type of underlying</span>
+<span class="sd">                                                        dataset if not</span>
+<span class="sd">                                                        specified defaults to</span>
+<span class="sd">                                                        that of the dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
@@ -347,23 +379,41 @@
 <span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5DataRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DataRequest">[docs]</a><span class="k">class</span> <span class="nc">HDF5DataRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an HDF5DataSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an HDF5DataSource to provide a way to request slices of th</span>
+<span class="sd">         HDF5 file in a nice way.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">          file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.</span>
+<span class="sd">          file_handle(h5py.File or str):           A handle for reading the</span>
+<span class="sd">                                                   HDF5 file or the external</span>
+<span class="sd">                                                   file path.</span>
+
 <span class="sd">          dataset_path(str):                       Internal path to the dataset</span>
-<span class="sd">          axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request.</span>
-<span class="sd">          dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.</span>
-<span class="sd">          throw_on_not_found(bool):                Whether to throw an exception if the dataset is not found.</span>
-<span class="sd">          slicing(tuple of slices):                The slicing request by Volumina.</span>
-<span class="sd">          actual_slicing(tuple of slices):         The actual slicing that will be performed on the dataset.</span>
-<span class="sd">          throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.</span>
+<span class="sd">          axis_order(tuple of ints):               A tuple representing how to</span>
+<span class="sd">                                                   reshape the array before</span>
+<span class="sd">                                                   returning a request.</span>
+
+<span class="sd">          dataset_dtype(numpy.dtype or type):      The type of the underlying</span>
+<span class="sd">                                                   dataset.</span>
+
+<span class="sd">          throw_on_not_found(bool):                Whether to throw an</span>
+<span class="sd">                                                   exception if the dataset is</span>
+<span class="sd">                                                   not found.</span>
+
+<span class="sd">          slicing(tuple of slices):                The slicing request by</span>
+<span class="sd">                                                   Volumina.</span>
+<span class="sd">          actual_slicing(tuple of slices):         The actual slicing that will</span>
+<span class="sd">                                                   be performed on the dataset.</span>
+
+<span class="sd">          throw_on_not_found(bool):                Whether to throw an</span>
+<span class="sd">                                                   exception if the dataset is</span>
+<span class="sd">                                                   not found.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">             Before returning the result to Volumina the axes will likely need to be transposed. Also, singleton axes</span>
-<span class="sd">             will need to be inserted to ensure the dimensionality is 5 as Volumina expects. This result will be cached</span>
-<span class="sd">             inside the request instance. So, if this request instance is kept, this won&#39;t need to be repeated.</span>
-
+<span class="sd">             Before returning the result to Volumina the axes will likely need</span>
+<span class="sd">             to be transposed. Also, singleton axes will need to be inserted to</span>
+<span class="sd">             ensure the dimensionality is 5 as Volumina expects. This result</span>
+<span class="sd">             will be cached inside the request instance. So, if this request</span>
+<span class="sd">             instance is kept, this won&#39;t need to be repeated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.</span>
@@ -371,17 +421,38 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_handle</span><span class="p">,</span> <span class="n">dataset_path</span><span class="p">,</span> <span class="n">axis_order</span><span class="p">,</span> <span class="n">dataset_dtype</span><span class="p">,</span> <span class="n">slicing</span><span class="p">,</span> <span class="n">record_name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">throw_on_not_found</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an HDF5DataRequest using a given file and path to the dataset. Optionally, throwing can be</span>
-<span class="sd">            suppressed if the source is not found.</span>
+<span class="sd">            Constructs an HDF5DataRequest using a given file and path to the</span>
+<span class="sd">            dataset. Optionally, throwing can be suppressed if the source is</span>
+<span class="sd">            not found.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                file_handle(h5py.File or str):              A file handle for the HDF5 file.</span>
-<span class="sd">                dataset_path(str):                          Internal path to the dataset</span>
-<span class="sd">                axis_order(tuple of ints):                  A tuple representing how to reshape the array before returning a request.</span>
-<span class="sd">                dataset_dtype(numpy.dtype or type):         The type of the underlying dataset.</span>
-<span class="sd">                slicing(tuple of ints):                     The slicing to extract from the HDF5 file.</span>
-<span class="sd">                record_name(str):                           Name of member to retrieve from compound type.</span>
-<span class="sd">                throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.</span>
+<span class="sd">                file_handle(h5py.File or str):              A file handle for</span>
+<span class="sd">                                                            the HDF5 file.</span>
+
+<span class="sd">                dataset_path(str):                          Internal path to</span>
+<span class="sd">                                                            the dataset.</span>
+
+<span class="sd">                axis_order(tuple of ints):                  A tuple</span>
+<span class="sd">                                                            representing how to</span>
+<span class="sd">                                                            reshape the array</span>
+<span class="sd">                                                            before returning a</span>
+<span class="sd">                                                            request.</span>
+
+<span class="sd">                dataset_dtype(numpy.dtype or type):         The type of the</span>
+<span class="sd">                                                            underlying dataset.</span>
+
+<span class="sd">                slicing(tuple of ints):                     The slicing to</span>
+<span class="sd">                                                            extract from the</span>
+<span class="sd">                                                            HDF5 file.</span>
+
+<span class="sd">                record_name(str):                           Name of member to</span>
+<span class="sd">                                                            retrieve from</span>
+<span class="sd">                                                            compound type.</span>
+
+<span class="sd">                throw_on_not_found(bool):                   Whether to throw an</span>
+<span class="sd">                                                            exception if the</span>
+<span class="sd">                                                            dataset is not</span>
+<span class="sd">                                                            found.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># TODO: Look at adding assertion check on slices.</span>
@@ -481,17 +552,34 @@
 <span class="nd">@prof.qt_log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5Viewer"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5Viewer">[docs]</a><span class="k">class</span> <span class="nc">HDF5Viewer</span><span class="p">(</span><span class="n">Viewer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.</span>
+<span class="sd">        Extends the Viewer from Volumina so that it provides some additional</span>
+<span class="sd">        features that are nice for HDF5 sources.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">              file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.</span>
-<span class="sd">              file_path(str):                          External path to the file</span>
-<span class="sd">              dataset_path(str):                       Internal path to the dataset</span>
-<span class="sd">              full_path(str):                          Both external and internal paths combined as one path</span>
-<span class="sd">              dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension</span>
-<span class="sd">              dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.</span>
-<span class="sd">              axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request</span>
+<span class="sd">              file_handle(h5py.File or str):           A handle for reading the</span>
+<span class="sd">                                                       HDF5 file or the</span>
+<span class="sd">                                                       external file path.</span>
+<span class="sd">              file_path(str):                          External path to the</span>
+<span class="sd">                                                       file</span>
 
+<span class="sd">              dataset_path(str):                       Internal path to the</span>
+<span class="sd">                                                       dataset</span>
+
+<span class="sd">              full_path(str):                          Both external and</span>
+<span class="sd">                                                       internal paths combined</span>
+<span class="sd">                                                       as one path</span>
+
+<span class="sd">              dataset_shape(tuple of ints):            A tuple representing the</span>
+<span class="sd">                                                       shape of the dataset in</span>
+<span class="sd">                                                       each dimension</span>
+
+<span class="sd">              dataset_dtype(numpy.dtype or type):      The type of the</span>
+<span class="sd">                                                       underlying dataset.</span>
+
+<span class="sd">              axis_order(tuple of ints):               A tuple representing how</span>
+<span class="sd">                                                       to reshape the array</span>
+<span class="sd">                                                       before returning a</span>
+<span class="sd">                                                       request.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -853,16 +941,21 @@
 </div>
 <div class="viewcode-block" id="EnumeratedProjectionConstantSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantSource">[docs]</a><span class="k">class</span> <span class="nc">EnumeratedProjectionConstantSource</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.</span>
+<span class="sd">        Creates a source that uses another source (ideally some HDF5 dataset or</span>
+<span class="sd">        array) and performs a max projection.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_source(a constant SourceABC):      Source to take the max projection of.</span>
-<span class="sd">            axis(int):                                  The axis to take compute the max along.</span>
-<span class="sd">            _shape(tuple of ints):                      The shape of the source.</span>
+<span class="sd">            constant_source(a constant SourceABC):      Source to take the max</span>
+<span class="sd">                                                        projection of.</span>
 
+<span class="sd">            axis(int):                                  The axis to take</span>
+<span class="sd">                                                        compute the max along.</span>
+
+<span class="sd">            _shape(tuple of ints):                      The shape of the source</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
@@ -873,12 +966,17 @@
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an EnumeratedProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
-<span class="sd">            can be specified.</span>
+<span class="sd">            Constructs an EnumeratedProjectionConstantSource using a given file</span>
+<span class="sd">            and path to the dataset. Optionally, the shape and dtype can be</span>
+<span class="sd">            specified.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_source(a constant SourceABC):      Source to take the max projection of.</span>
-<span class="sd">                axis(int):                                  The axis to take compute the max along.</span>
+<span class="sd">                constant_source(a constant SourceABC):      Source to take the</span>
+<span class="sd">                                                            max projection of.</span>
+
+<span class="sd">                axis(int):                                  The axis to take</span>
+<span class="sd">                                                            compute the max</span>
+<span class="sd">                                                            along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
@@ -970,28 +1068,46 @@
 
 <div class="viewcode-block" id="EnumeratedProjectionConstantRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.EnumeratedProjectionConstantRequest">[docs]</a><span class="k">class</span> <span class="nc">EnumeratedProjectionConstantRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an EnumeratedProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an EnumeratedProjectionConstantSource to provide a way to</span>
+<span class="sd">        request slices of the HDF5 file in a nice way.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">            axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">            slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">            constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                             take the max</span>
+<span class="sd">                                                             projection of.</span>
+
+<span class="sd">            axis(int):                                       The axis to take</span>
+<span class="sd">                                                             the max projection</span>
+<span class="sd">                                                             along.</span>
+
+<span class="sd">            slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                             returned.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an EnumeratedProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
+<span class="sd">            Constructs an EnumeratedProjectionConstantRequest using a given</span>
+<span class="sd">            file and path to the dataset. Optionally, throwing can be</span>
 <span class="sd">            suppressed if the source is not found.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">                axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">                slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">                constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection of.</span>
+
+<span class="sd">                axis(int):                                       The axis to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection</span>
+<span class="sd">                                                                 along.</span>
+
+<span class="sd">                slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                                 returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># TODO: Look at adding assertion check on slices.</span>
@@ -1051,16 +1167,24 @@
 
 <div class="viewcode-block" id="ContourProjectionConstantSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantSource">[docs]</a><span class="k">class</span> <span class="nc">ContourProjectionConstantSource</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an ContourProjectionConstantSource to provide a way to</span>
+<span class="sd">        request slices of the HDF5 file in a nice way.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">            axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">            slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">            constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                             take the max</span>
+<span class="sd">                                                             projection of.</span>
 
+<span class="sd">            axis(int):                                       The axis to take</span>
+<span class="sd">                                                             the max projection</span>
+<span class="sd">                                                             along.</span>
+
+<span class="sd">            slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                             returned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and</span>
@@ -1072,10 +1196,17 @@
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an ContourProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
-<span class="sd">            can be specifie            Args:</span>
-<span class="sd">                constant_source(a constant SourceABC):      Source to take the max projection of.</span>
-<span class="sd">                axis(int):                                  The axis to take compute the max along.</span>
+<span class="sd">            Constructs an ContourProjectionConstantSource using a given file</span>
+<span class="sd">            and path to the dataset. Optionally, the shape and dtype.</span>
+<span class="sd">            can be specified.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                constant_source(a constant SourceABC):      Source to take th</span>
+<span class="sd">                                                            max projection of.</span>
+
+<span class="sd">                axis(int):                                  The axis to take</span>
+<span class="sd">                                                            compute the max</span>
+<span class="sd">                                                            along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
@@ -1162,28 +1293,45 @@
 
 <div class="viewcode-block" id="ContourProjectionConstantRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.ContourProjectionConstantRequest">[docs]</a><span class="k">class</span> <span class="nc">ContourProjectionConstantRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an ContourProjectionConstantSource to provide a way to</span>
+<span class="sd">        request slices of the HDF5 file in a nice way.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">            axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">            slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">            constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                             take the max</span>
+<span class="sd">                                                             projection of.</span>
 
+<span class="sd">            axis(int):                                       The axis to take</span>
+<span class="sd">                                                             the max projection</span>
+<span class="sd">                                                             along.</span>
+
+<span class="sd">            slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                             returned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an ContourProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
-<span class="sd">            suppressed if the source is not found.</span>
+<span class="sd">            Constructs an ContourProjectionConstantRequest using a given file</span>
+<span class="sd">            and path to the dataset. Optionally, throwing can be suppressed if</span>
+<span class="sd">            the source is not found.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">                axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">                slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">                constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection of.</span>
+
+<span class="sd">                axis(int):                                       The axis to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection</span>
+<span class="sd">                                                                 along.</span>
+
+<span class="sd">                slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                                 returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># TODO: Look at adding assertion check on slices.</span>
@@ -1235,20 +1383,27 @@
 
 <div class="viewcode-block" id="FloatProjectionConstantSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantSource">[docs]</a><span class="k">class</span> <span class="nc">FloatProjectionConstantSource</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an FloatProjectionConstantSource to provide a way to request</span>
+<span class="sd">        slices of the HDF5 file in a nice way.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">            axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">            slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">            constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                             take the max</span>
+<span class="sd">                                                             projection of.</span>
 
+<span class="sd">            axis(int):                                       The axis to take</span>
+<span class="sd">                                                             the max projection</span>
+<span class="sd">                                                             along.</span>
+
+<span class="sd">            slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                             returned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and</span>
-    <span class="c"># thus removed from this directly.</span>
+    <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
 
     <span class="n">isDirty</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="n">numberOfChannelsChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c"># Never emitted</span>
@@ -1256,11 +1411,13 @@
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an FloatProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
-<span class="sd">            can be specific</span>
+<span class="sd">            Constructs an FloatProjectionConstantSource using a given file and</span>
+<span class="sd">            path to the dataset. Optionally, the shape and dtype can be</span>
+<span class="sd">            specific.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_source(a constant SourceABC):      Source to make float.</span>
+<span class="sd">                constant_source(a constant SourceABC):       Source to make</span>
+<span class="sd">                                                             float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
@@ -1323,28 +1480,45 @@
 
 <div class="viewcode-block" id="FloatProjectionConstantRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.FloatProjectionConstantRequest">[docs]</a><span class="k">class</span> <span class="nc">FloatProjectionConstantRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an FloatProjectionConstantSource to provide a way to request</span>
+<span class="sd">        slices of the HDF5 file in a nice way.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">            axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">            slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">            constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                             take the max</span>
+<span class="sd">                                                             projection of.</span>
 
+<span class="sd">            axis(int):                                       The axis to take</span>
+<span class="sd">                                                             the max projection</span>
+<span class="sd">                                                             along.</span>
+
+<span class="sd">            slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                             returned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an FloatProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
-<span class="sd">            suppressed if the source is not found.</span>
+<span class="sd">            Constructs an FloatProjectionConstantRequest using a given file and</span>
+<span class="sd">            path to the dataset. Optionally, throwing can be suppressed if the</span>
+<span class="sd">            source is not found.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">                axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">                slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">                constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection of.</span>
+
+<span class="sd">                axis(int):                                       The axis to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection</span>
+<span class="sd">                                                                 along.</span>
+
+<span class="sd">                slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                                 returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">constant_request</span> <span class="o">=</span> <span class="n">constant_request</span>
@@ -1392,16 +1566,22 @@
 
 <div class="viewcode-block" id="MaxProjectionConstantSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantSource">[docs]</a><span class="k">class</span> <span class="nc">MaxProjectionConstantSource</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.</span>
+<span class="sd">        Creates a source that uses another source (ideally some HDF5 dataset or</span>
+<span class="sd">        array) and performs a max projection.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_source(a constant SourceABC):      Source to take the max projection of.</span>
-<span class="sd">            axis(int):                                  The axis to take compute the max along.</span>
-<span class="sd">            _shape(tuple of ints):                      The shape of the source.</span>
+<span class="sd">            constant_source(a constant SourceABC):      Source to take the max</span>
+<span class="sd">                                                        projection of.</span>
 
+<span class="sd">            axis(int):                                  The axis to take</span>
+<span class="sd">                                                        compute the max along.</span>
+
+<span class="sd">            _shape(tuple of ints):                      The shape of the</span>
+<span class="sd">                                                        source.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.</span>
@@ -1412,12 +1592,17 @@
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an MaxProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
-<span class="sd">            can be specified.</span>
+<span class="sd">            Constructs an MaxProjectionConstantSource using a given file and</span>
+<span class="sd">            path to the dataset. Optionally, the shape and dtype can be</span>
+<span class="sd">            specified.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_source(a constant SourceABC):      Source to take the max projection of.</span>
-<span class="sd">                axis(int):                                  The axis to take compute the max along.</span>
+<span class="sd">                constant_source(a constant SourceABC):      Source to take the</span>
+<span class="sd">                                                            max projection of.</span>
+
+<span class="sd">                axis(int):                                  The axis to take</span>
+<span class="sd">                                                            compute the max</span>
+<span class="sd">                                                            along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
@@ -1510,28 +1695,45 @@
 
 <div class="viewcode-block" id="MaxProjectionConstantRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MaxProjectionConstantRequest">[docs]</a><span class="k">class</span> <span class="nc">MaxProjectionConstantRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an MaxProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an MaxProjectionConstantSource to provide a way to request</span>
+<span class="sd">        slices of the HDF5 file in a nice way.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">            axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">            slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">            constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                             take the max</span>
+<span class="sd">                                                             projection of.</span>
 
+<span class="sd">            axis(int):                                       The axis to take</span>
+<span class="sd">                                                             the max projection</span>
+<span class="sd">                                                             along.</span>
+
+<span class="sd">            slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                             returned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an MaxProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
-<span class="sd">            suppressed if the source is not found.</span>
+<span class="sd">            Constructs an MaxProjectionConstantRequest using a given file and</span>
+<span class="sd">            path to the dataset. Optionally, throwing can be suppressed if the</span>
+<span class="sd">            source is not found.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_request(a constant RequestABC):         The request to take the max projection of.</span>
-<span class="sd">                axis(int):                                       The axis to take the max projection along.</span>
-<span class="sd">                slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">                constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection of.</span>
+
+<span class="sd">                axis(int):                                       The axis to</span>
+<span class="sd">                                                                 take the max</span>
+<span class="sd">                                                                 projection</span>
+<span class="sd">                                                                 along.</span>
+
+<span class="sd">                slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                                 returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># TODO: Look at adding assertion check on slices.</span>
@@ -1591,15 +1793,22 @@
 
 <div class="viewcode-block" id="MeanProjectionConstantSource"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantSource">[docs]</a><span class="k">class</span> <span class="nc">MeanProjectionConstantSource</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a mean projection.</span>
+<span class="sd">        Creates a source that uses another source (ideally some HDF5 dataset or</span>
+<span class="sd">        array) and performs a mean projection.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_source(a constant SourceABC):      Source to take the mean projection of.</span>
-<span class="sd">            axis(int):                                  The axis to take compute the mean along.</span>
-<span class="sd">            _shape(tuple of ints):                      The shape of the source.</span>
+<span class="sd">            constant_source(a constant SourceABC):      Source to take the mean</span>
+<span class="sd">                                                        projection of.</span>
+
+<span class="sd">            axis(int):                                  The axis to take</span>
+<span class="sd">                                                        compute the mean along.</span>
+
+<span class="sd">            _shape(tuple of ints):                      The shape of the</span>
+<span class="sd">                                                        source.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1612,12 +1821,17 @@
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_source</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an MeanProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype</span>
-<span class="sd">            can be specified.</span>
+<span class="sd">            Constructs an MeanProjectionConstantSource using a given file and</span>
+<span class="sd">            path to the dataset. Optionally, the shape and dtype can be</span>
+<span class="sd">            specified.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_source(a constant SourceABC):      Source to take the mean projection of.</span>
-<span class="sd">                axis(int):                                  The axis to take compute the mean along.</span>
+<span class="sd">                constant_source(a constant SourceABC):      Source to take the</span>
+<span class="sd">                                                            mean projection of.</span>
+
+<span class="sd">                axis(int):                                  The axis to take</span>
+<span class="sd">                                                            compute the mean</span>
+<span class="sd">                                                            along.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: Get rid of shape and dtype as arguments.</span>
 
@@ -1712,28 +1926,46 @@
 
 <div class="viewcode-block" id="MeanProjectionConstantRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.MeanProjectionConstantRequest">[docs]</a><span class="k">class</span> <span class="nc">MeanProjectionConstantRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an MeanProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.</span>
+<span class="sd">        Created by an MeanProjectionConstantSource to provide a way to request</span>
+<span class="sd">        slices of the HDF5 file in a nice way.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            This was not designed to know about dirtiness or any sort of changing data.</span>
+<span class="sd">            This was not designed to know about dirtiness or any sort of</span>
+<span class="sd">            changing data.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">            constant_request(a constant RequestABC):         The request to take the mean projection of.</span>
-<span class="sd">            axis(int):                                       The axis to take the mean projection along.</span>
-<span class="sd">            slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">            constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                             take the mean</span>
+<span class="sd">                                                             projection of.</span>
+
+<span class="sd">            axis(int):                                       The axis to take</span>
+<span class="sd">                                                             the mean</span>
+<span class="sd">                                                             projection along.</span>
+
+<span class="sd">            slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                             returned.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant_request</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">slicing</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Constructs an MeanProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be</span>
-<span class="sd">            suppressed if the source is not found.</span>
+<span class="sd">            Constructs an MeanProjectionConstantRequest using a given file and</span>
+<span class="sd">            path to the dataset. Optionally, throwing can be suppressed if the</span>
+<span class="sd">            source is not found.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                constant_request(a constant RequestABC):         The request to take the mean projection of.</span>
-<span class="sd">                axis(int):                                       The axis to take the mean projection along.</span>
-<span class="sd">                slicing(tuple of slices):                        Slicing to be returned.</span>
+<span class="sd">                constant_request(a constant RequestABC):         The request to</span>
+<span class="sd">                                                                 take the mean</span>
+<span class="sd">                                                                 projection of.</span>
+
+<span class="sd">                axis(int):                                       The axis to</span>
+<span class="sd">                                                                 take the mean</span>
+<span class="sd">                                                                 projection</span>
+<span class="sd">                                                                 along.</span>
+
+<span class="sd">                slicing(tuple of slices):                        Slicing to be</span>
+<span class="sd">                                                                 returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># TODO: Look at adding assertion check on slices.</span>

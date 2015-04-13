@@ -79,7 +79,8 @@ module. So, depending on this module is unwise.</p>
 <dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">DictionaryLearningRandomDataGenerator</code><span class="sig-paren">(</span><em>frame_shape</em>, <em>num_objects</em>, <em>num_groups</em>, <em>num_frames</em>, <em>mean_group_size</em>, <em>object_spread</em>, <em>object_max_intensity</em>, <em>object_min_intensity</em>, <em>background_noise_intensity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>A Random Generator that build pseudo-data similar in nature to that which the ADINA algorithm is run.</p>
+<p>A Random Generator that build pseudo-data similar in nature to that
+which the ADINA algorithm is run.</p>
 <dl class="method">
 <dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__">
 <code class="descname">__call__</code><span class="sig-paren">(</span><em>num_runs=1</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator.__call__" title="Permalink to this definition">¶</a></dt>
@@ -90,12 +91,19 @@ module. So, depending on this module is unwise.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>num_runs</strong> (<em>int</em>) &#8211; number of pseudo-videos to generate</li>
-<li><strong>seed</strong> (<em>int</em>) &#8211; uses the seed for numpy.random.seed if provided.</li>
+<li><strong>seed</strong> (<em>int</em>) &#8211; uses the seed for numpy.random.seed if
+provided.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> &#8211;
-a list of DictionaryLearningRandomDataSample instances with relevant data from generation included.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>results</strong> &#8211;
+a list of</p>
+<blockquote>
+<div><p>DictionaryLearningRandomDataSample
+instances with relevant data from
+generation included.</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -111,31 +119,38 @@ a list of DictionaryLearningRandomDataSample instances with relevant data from g
 <dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataSample">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">DictionaryLearningRandomDataSample</code><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataSample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Essentially a struct with its values set at runtime by DictionaryLearningRandomDataGenerator calls.</p>
+<p>Essentially a struct with its values set at runtime by
+DictionaryLearningRandomDataGenerator calls.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">MappingDiscreteGeometricDistributionGenerator</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteGeometricDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>A random generator of groups. Each group has a size that is geometrically distributed.
-However, the individuals chosen for the group are all equally likely.</p>
+<p>A random generator of groups. Each group has a size that is
+geometrically distributed. However, the individuals chosen for the
+group are all equally likely.</p>
 <dl class="method">
 <dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__">
 <code class="descname">__call__</code><span class="sig-paren">(</span><em>p</em>, <em>size=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteGeometricDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a number of groups equal to size with each group size being distributed geometrically by p.</p>
+<dd><p>Generates a number of groups equal to size with each group size
+being distributed geometrically by p.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>the probability of success for a geometric distribution (starts with 1 so has mean 1/p).</strong> (<em>p(float)</em>) &#8211; </li>
+<li><strong>the probability of success for a geometric</strong> (<em>p(float)</em>) &#8211; distribution (starts with 1 so has mean 1/p).</li>
 <li><strong>the number of groups to make</strong> (<em>size(int)</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> &#8211;
-a list of groups of arguments drawn (None if no arguments)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>results</strong> &#8211;
+a list of groups of arguments drawn (None if</p>
+<blockquote>
+<div><p>no arguments)</p>
+</div></blockquote>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -151,19 +166,24 @@ a list of groups of arguments drawn (None if no arguments)</p>
 <dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">MappingDiscreteUniformDistributionGenerator</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Given a bunch of arguments. This will create a random element generator that returns one or many</p>
+<p>Given a bunch of arguments. This will create a random element generator
+that returns one or many.</p>
 <dl class="method">
 <dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__">
 <code class="descname">__call__</code><span class="sig-paren">(</span><em>size=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteUniformDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws a certain number of elements with equal likelihood and returns them in a list.</p>
+<dd><p>Draws a certain number of elements with equal likelihood and
+returns them in a list.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of elements to draw (one if unspecified).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of elements to draw (one if
+unspecified).</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> &#8211;
-a list of arguments drawn (None if no arguments)</td>
+a list of arguments drawn (None if no<blockquote>
+<div>arguments)</div></blockquote>
+</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -178,7 +198,8 @@ a list of arguments drawn (None if no arguments)</td>
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">NumpyRandomArrayDiscreteUniformDistributionGenerator</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#NumpyRandomArrayDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Creates a random numpy array (with type bool) generator that will set
-a certain number of random positions in the array to True (like Bernoulli random distribution)</p>
+a certain number of random positions in the array to True (like
+Bernoulli random distribution)</p>
 <dl class="method">
 <dt id="nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__">
 <code class="descname">__call__</code><span class="sig-paren">(</span><em>size=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator.__call__" title="Permalink to this definition">¶</a></dt>
@@ -187,10 +208,13 @@ a certain number of random positions in the array to True (like Bernoulli random
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of Trues to have in the numpy array.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; Number of Trues to have in the numpy
+array.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> &#8211;
-a boolean numpy array with a fixed number of randomly placed Trues</td>
+a boolean numpy array with a fixed<blockquote>
+<div>number of randomly placed Trues</div></blockquote>
+</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
 </tr>

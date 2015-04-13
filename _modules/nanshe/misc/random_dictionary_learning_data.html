@@ -103,12 +103,13 @@
 
 <div class="viewcode-block" id="MappingDiscreteUniformDistributionGenerator"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator">[docs]</a><span class="k">class</span> <span class="nc">MappingDiscreteUniformDistributionGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Given a bunch of arguments. This will create a random element generator that returns one or many</span>
+<span class="sd">        Given a bunch of arguments. This will create a random element generator</span>
+<span class="sd">        that returns one or many.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Builds a random element generator</span>
+<span class="sd">            Builds a random element generator.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                *args:  Anything that needs to be drawn from.</span>
@@ -118,13 +119,16 @@
 
 <div class="viewcode-block" id="MappingDiscreteUniformDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Draws a certain number of elements with equal likelihood and returns them in a list.</span>
+<span class="sd">            Draws a certain number of elements with equal likelihood and</span>
+<span class="sd">            returns them in a list.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                size(int):       Number of elements to draw (one if unspecified).</span>
+<span class="sd">                size(int):       Number of elements to draw (one if</span>
+<span class="sd">                                 unspecified).</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                results(list):   a list of arguments drawn (None if no arguments)</span>
+<span class="sd">                results(list):   a list of arguments drawn (None if no</span>
+<span class="sd">                                 arguments)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -142,15 +146,18 @@
 <div class="viewcode-block" id="NumpyRandomArrayDiscreteUniformDistributionGenerator"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator">[docs]</a><span class="k">class</span> <span class="nc">NumpyRandomArrayDiscreteUniformDistributionGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a random numpy array (with type bool) generator that will set</span>
-<span class="sd">        a certain number of random positions in the array to True (like Bernoulli random distribution)</span>
+<span class="sd">        a certain number of random positions in the array to True (like</span>
+<span class="sd">        Bernoulli random distribution)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Creates a random numpy array generator that returns arrays of a certain shape.</span>
+<span class="sd">            Creates a random numpy array generator that returns arrays of a</span>
+<span class="sd">            certain shape.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                shape(tuple):   A tuple permissible for setting the size of a numpy array.</span>
+<span class="sd">                shape(tuple):   A tuple permissible for setting the size of a</span>
+<span class="sd">                                numpy array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
@@ -160,10 +167,12 @@
 <span class="sd">            Generates a numpy array.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                size(int):                Number of Trues to have in the numpy array.</span>
+<span class="sd">                size(int):                Number of Trues to have in the numpy</span>
+<span class="sd">                                          array.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                results(numpy.ndarray):   a boolean numpy array with a fixed number of randomly placed Trues</span>
+<span class="sd">                results(numpy.ndarray):   a boolean numpy array with a fixed</span>
+<span class="sd">                                          number of randomly placed Trues</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># A completely empty numpy array</span>
@@ -182,8 +191,9 @@
 </div></div>
 <div class="viewcode-block" id="MappingDiscreteGeometricDistributionGenerator"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator">[docs]</a><span class="k">class</span> <span class="nc">MappingDiscreteGeometricDistributionGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A random generator of groups. Each group has a size that is geometrically distributed.</span>
-<span class="sd">        However, the individuals chosen for the group are all equally likely.</span>
+<span class="sd">        A random generator of groups. Each group has a size that is</span>
+<span class="sd">        geometrically distributed. However, the individuals chosen for the</span>
+<span class="sd">        group are all equally likely.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
@@ -198,14 +208,18 @@
 
 <div class="viewcode-block" id="MappingDiscreteGeometricDistributionGenerator.__call__"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Generates a number of groups equal to size with each group size being distributed geometrically by p.</span>
+<span class="sd">            Generates a number of groups equal to size with each group size</span>
+<span class="sd">            being distributed geometrically by p.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                p(float)         the probability of success for a geometric distribution (starts with 1 so has mean 1/p).</span>
+<span class="sd">                p(float)         the probability of success for a geometric</span>
+<span class="sd">                                 distribution (starts with 1 so has mean 1/p).</span>
+
 <span class="sd">                size(int)        the number of groups to make</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                results(list):   a list of groups of arguments drawn (None if no arguments)</span>
+<span class="sd">                results(list):   a list of groups of arguments drawn (None if</span>
+<span class="sd">                                 no arguments)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># Get a uniform distribution over the elements to fill each group.</span>
@@ -225,7 +239,8 @@
 </div></div>
 <div class="viewcode-block" id="DictionaryLearningRandomDataSample"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataSample">[docs]</a><span class="k">class</span> <span class="nc">DictionaryLearningRandomDataSample</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Essentially a struct with its values set at runtime by DictionaryLearningRandomDataGenerator calls.</span>
+<span class="sd">        Essentially a struct with its values set at runtime by</span>
+<span class="sd">        DictionaryLearningRandomDataGenerator calls.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -240,7 +255,8 @@
 </div>
 <div class="viewcode-block" id="DictionaryLearningRandomDataGenerator"><a class="viewcode-back" href="../../../nanshe.misc.random_dictionary_learning_data.html#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator">[docs]</a><span class="k">class</span> <span class="nc">DictionaryLearningRandomDataGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A Random Generator that build pseudo-data similar in nature to that which the ADINA algorithm is run.</span>
+<span class="sd">        A Random Generator that build pseudo-data similar in nature to that</span>
+<span class="sd">        which the ADINA algorithm is run.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shape</span><span class="p">,</span> <span class="n">num_objects</span><span class="p">,</span> <span class="n">num_groups</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">mean_group_size</span><span class="p">,</span> <span class="n">object_spread</span><span class="p">,</span> <span class="n">object_max_intensity</span><span class="p">,</span> <span class="n">object_min_intensity</span><span class="p">,</span> <span class="n">background_noise_intensity</span><span class="p">):</span>
@@ -248,15 +264,38 @@
 <span class="sd">            Builds a DictionaryLearningRandomDataGenerator for draws.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                frame_shape(tuple)                  a tuple of ints for constructing a numpy array</span>
-<span class="sd">                num_objects(int)                    the number of objects that can possible be active (i.e. neurons present whether active or not)</span>
-<span class="sd">                num_groups(int)                     number of groups of objects that will be active (i.e. number of groups of neurons seen to be active)</span>
-<span class="sd">                num_frames(int)                     number of frames for any group to be active in the pseudo-video</span>
-<span class="sd">                mean_group_size(float)              average group size (average for a geometric distribution)</span>
-<span class="sd">                object_spread(float)                how big an object is on average</span>
-<span class="sd">                object_max_intensity(float)         the highest intensity possible</span>
-<span class="sd">                object_min_intensity(float)         the lowest intensity possible</span>
-<span class="sd">                background_noise_intensity(float)   how much noise there is in the background.</span>
+<span class="sd">                frame_shape(tuple)                  a tuple of ints for</span>
+<span class="sd">                                                    constructing a numpy array</span>
+
+<span class="sd">                num_objects(int)                    the number of objects that</span>
+<span class="sd">                                                    can possible be active</span>
+<span class="sd">                                                    (i.e. neurons present</span>
+<span class="sd">                                                    whether active or not)</span>
+
+<span class="sd">                num_groups(int)                     number of groups of objects</span>
+<span class="sd">                                                    that will be active (i.e.</span>
+<span class="sd">                                                    number of groups of neurons</span>
+<span class="sd">                                                    seen to be active)</span>
+
+<span class="sd">                num_frames(int)                     number of frames for any</span>
+<span class="sd">                                                    group to be active in the</span>
+<span class="sd">                                                    pseudo-video</span>
+
+<span class="sd">                mean_group_size(float)              average group size (average</span>
+<span class="sd">                                                    for a geometric</span>
+<span class="sd">                                                    distribution)</span>
+
+<span class="sd">                object_spread(float)                how big an object is on</span>
+<span class="sd">                                                    average</span>
+
+<span class="sd">                object_max_intensity(float)         the highest intensity</span>
+<span class="sd">                                                    possible</span>
+
+<span class="sd">                object_min_intensity(float)         the lowest intensity</span>
+<span class="sd">                                                    possible</span>
+
+<span class="sd">                background_noise_intensity(float)   how much noise there is in</span>
+<span class="sd">                                                    the background.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">frame_shape</span> <span class="o">=</span> <span class="n">frame_shape</span>
@@ -276,11 +315,15 @@
 <span class="sd">            Constructs a series of pseudo-videos.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                num_runs(int):  number of pseudo-videos to generate</span>
-<span class="sd">                seed(int):      uses the seed for numpy.random.seed if provided.</span>
+<span class="sd">                num_runs(int):          number of pseudo-videos to generate</span>
+<span class="sd">                seed(int):              uses the seed for numpy.random.seed if</span>
+<span class="sd">                                        provided.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                results(list):           a list of DictionaryLearningRandomDataSample instances with relevant data from generation included.</span>
+<span class="sd">                results(list):          a list of</span>
+<span class="sd">                                        DictionaryLearningRandomDataSample</span>
+<span class="sd">                                        instances with relevant data from</span>
+<span class="sd">                                        generation included.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># Use the seed provided.</span>

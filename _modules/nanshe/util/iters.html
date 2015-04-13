@@ -95,10 +95,12 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="index_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.index_generator">[docs]</a><span class="k">def</span> <span class="nf">index_generator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size.</span>
+<span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to</span>
+<span class="sd">        (but not including) each size.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            *sizes(int):            an argument list of ints for the max sizes in each index.</span>
+<span class="sd">            *sizes(int):            an argument list of ints for the max sizes</span>
+<span class="sd">                                    in each index.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            chain_gen(generator):   a generator over every possible coordinated</span>
@@ -141,11 +143,14 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="index_enumerator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.index_enumerator">[docs]</a><span class="k">def</span> <span class="nf">index_enumerator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size (i.e. like</span>
-<span class="sd">        index_generator). However, also included is an index corresponding to how many elements have been seen.</span>
+<span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to</span>
+<span class="sd">        (but not including) each size (i.e. like index_generator). However,</span>
+<span class="sd">        also included is an index corresponding to how many elements have been</span>
+<span class="sd">        seen.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            *sizes(int):            an argument list of ints for the max sizes in each index.</span>
+<span class="sd">            *sizes(int):            an argument list of ints for the max sizes</span>
+<span class="sd">                                    in each index.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            chain_gen(generator):   a generator over every possible coordinated</span>
@@ -191,10 +196,12 @@
 <span class="sd">        Converts a list of tuple indices to numpy index array.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            list_indices(list):    a list of indices corresponding to some array object</span>
+<span class="sd">            list_indices(list):    a list of indices corresponding to some</span>
+<span class="sd">                                   array object</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            chain_gen(tuple):       a tuple containing a numpy array in for each index</span>
+<span class="sd">            chain_gen(tuple):      a tuple containing a numpy array for each</span>
+<span class="sd">                                   index</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; list_indices_to_index_array([])</span>
@@ -215,15 +222,21 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="list_indices_to_numpy_bool_array"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.list_indices_to_numpy_bool_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_numpy_bool_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.</span>
-<span class="sd">        All indices in list_indices are set to True in the numpy.ndarray. The rest are False by default.</span>
+<span class="sd">        Much like list_indices_to_index_array except that it constructs</span>
+<span class="sd">        numpy.ndarray with dtype of bool. All indices in list_indices are set</span>
+<span class="sd">        to True in the numpy.ndarray. The rest are False by default.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            list_indices(list):      a list of indices corresponding to some numpy.ndarray object</span>
-<span class="sd">            shape(tuple):            a tuple used to set the shape of the numpy.ndarray to return</span>
+<span class="sd">            list_indices(list):      a list of indices corresponding to some</span>
+<span class="sd">                                     numpy.ndarray object</span>
+
+<span class="sd">            shape(tuple):            a tuple used to set the shape of the</span>
+<span class="sd">                                     numpy.ndarray to return</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            result(numpy.ndarray):   a numpy.ndarray with dtype bool (True for indices in list_indices and False otherwise).</span>
+<span class="sd">            result(numpy.ndarray):   a numpy.ndarray with dtype bool (True for</span>
+<span class="sd">                                     indices in list_indices and False</span>
+<span class="sd">                                     otherwise).</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([], ())</span>
@@ -266,14 +279,18 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="repeat_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.repeat_generator">[docs]</a><span class="k">def</span> <span class="nf">repeat_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Repeats each value on an iterator given n-times before proceeding to the next value.</span>
+<span class="sd">        Repeats each value on an iterator given n-times before proceeding to</span>
+<span class="sd">        the next value.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            a_iter(iter):          an iterator that will have its values repeated contiguously</span>
+<span class="sd">            a_iter(iter):          an iterator that will have its values</span>
+<span class="sd">                                   repeated contiguously</span>
+
 <span class="sd">            n(int):                number of times to repeat each value</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (generator object):    a generator that contiguously repeats value from the given iterator.</span>
+<span class="sd">            (generator object):    a generator that contiguously repeats value</span>
+<span class="sd">                                   from the given iterator.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; repeat_generator(xrange(5)) #doctest: +ELLIPSIS</span>
@@ -314,7 +331,8 @@
 <span class="sd">            n(int):                number of times to repeat the iterator</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (generator object):    a generator that repeats the given iterator a certain number of times.</span>
+<span class="sd">            (generator object):    a generator that repeats the given iterator</span>
+<span class="sd">                                   a certain number of times.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; cycle_generator(xrange(5)) #doctest: +ELLIPSIS</span>
@@ -349,15 +367,19 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="iter_with_skip_indices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.iter_with_skip_indices">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_indices</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary values, as well.</span>
-<span class="sd">        These values to be skipped should be specified by their indices using some iterable.</span>
+<span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary</span>
+<span class="sd">        values, as well. These values to be skipped should be specified by</span>
+<span class="sd">        their indices using some iterable.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a_iter(iter):          an iterator that will skip some values</span>
-<span class="sd">            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).</span>
+
+<span class="sd">            to_skip(iter):         some form of iterable or list of indices to</span>
+<span class="sd">                                   skip (can be a single value as well).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (generator object):    a generator that skips some values with indices in to_skip.</span>
+<span class="sd">            (generator object):    a generator that skips some values with</span>
+<span class="sd">                                   indices in to_skip.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; iter_with_skip_indices(xrange(10)) #doctest: +ELLIPSIS</span>
@@ -409,15 +431,19 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="iter_with_skip_values"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.iter_with_skip_values">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_values</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary values, as well.</span>
-<span class="sd">        These values to be skipped should be specified by their indices using some iterable.</span>
+<span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary</span>
+<span class="sd">        values, as well. These values to be skipped should be specified by</span>
+<span class="sd">        their indices using some iterable.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a_iter(iter):          an iterator that will skip some values</span>
-<span class="sd">            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).</span>
+
+<span class="sd">            to_skip(iter):         some form of iterable or list of indices to</span>
+<span class="sd">                                   skip (can be a single value as well).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (generator object):    a generator that skips some values with indices in to_skip.</span>
+<span class="sd">            (generator object):    a generator that skips some values with</span>
+<span class="sd">                                   indices in to_skip.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; iter_with_skip_values(10) #doctest: +ELLIPSIS</span>
@@ -467,17 +493,24 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="xrange_with_skip"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.xrange_with_skip">[docs]</a><span class="k">def</span> <span class="nf">xrange_with_skip</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Behaves as xrange does except allows for skipping arbitrary values as well.</span>
-<span class="sd">        These values to be skipped should be specified using some iterable.</span>
+<span class="sd">        Behaves as xrange does except allows for skipping arbitrary values, as</span>
+<span class="sd">        well. These values to be skipped should be specified using some</span>
+<span class="sd">        iterable.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            start(int):            start for xrange or if stop is not specified this will be stop.</span>
+<span class="sd">            start(int):            start for xrange or if stop is not specified</span>
+<span class="sd">                                   this will be stop.</span>
+
 <span class="sd">            stop(int):             stop for xrange.</span>
+
 <span class="sd">            stop(int):             step for xrange.</span>
-<span class="sd">            to_skip(iter):         some form of iterable or list of elements to skip (can be a single value as well).</span>
+
+<span class="sd">            to_skip(iter):         some form of iterable or list of elements to</span>
+<span class="sd">                                   skip (can be a single value as well).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (generator object):    an xrange-like generator that skips some values.</span>
+<span class="sd">            (generator object):    an xrange-like generator that skips some</span>
+<span class="sd">                                   values.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; xrange_with_skip(10) #doctest: +ELLIPSIS</span>
@@ -543,16 +576,18 @@
 </div>
 <div class="viewcode-block" id="splitting_xrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.splitting_xrange">[docs]</a><span class="k">def</span> <span class="nf">splitting_xrange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Similar to xrange except that it recursively proceeds through the given range in such a way that values that</span>
-<span class="sd">        follow each other are preferably not only non-sequential, but fairly different. This does not always work with</span>
-<span class="sd">        small ranges, but works nicely with large ranges</span>
+<span class="sd">        Similar to xrange except that it recursively proceeds through the given</span>
+<span class="sd">        range in such a way that values that follow each other are preferably</span>
+<span class="sd">        not only non-sequential, but fairly different. This does not always</span>
+<span class="sd">        work with small ranges, but works nicely with large ranges.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            a(int):      the lower bound of the range</span>
-<span class="sd">            b(int):      the upper bound of the range</span>
+<span class="sd">            a(int):              the lower bound of the range</span>
+<span class="sd">            b(int):              the upper bound of the range</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            result(generator):   a generator that can be used to iterate through the sequence.</span>
+<span class="sd">            result(generator):   a generator that can be used to iterate</span>
+<span class="sd">                                 through the sequence.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; splitting_xrange(0, 0) #doctest: +ELLIPSIS</span>
@@ -632,10 +667,12 @@
 <span class="sd">        factorials up to and including the factorial of 4 (24).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_op(callabel):      something that can be called on two values and return a result with a type that is a</span>
+<span class="sd">            new_op(callabel):      something that can be called on two values</span>
+<span class="sd">                                   and return a result with a type that is a</span>
 <span class="sd">                                   permissible argument.</span>
 
-<span class="sd">            new_iter(iter):        an iterator or something that can be turned into an iterator.</span>
+<span class="sd">            new_iter(iter):        an iterator or something that can be turned</span>
+<span class="sd">                                   into an iterator.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (generator object):    an iterator over the intermediate results.</span>
@@ -674,7 +711,8 @@
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_iter(iter):        an iterator or something that can be turned into an iterator.</span>
+<span class="sd">            new_iter(iter):        an iterator or something that can be turned</span>
+<span class="sd">                                   into an iterator.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (generator object):    an iterator over the reversed elements.</span>
@@ -702,14 +740,19 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="lagged_generators"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.lagged_generators">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a tuple of generators with each next generator one step ahead of the previous generator.</span>
+<span class="sd">        Creates a tuple of generators with each next generator one step ahead</span>
+<span class="sd">        of the previous generator.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_iter(iter):                 an iterator or something that can be turned into an iterator</span>
-<span class="sd">            n(int):                         number of generators to create as lagged</span>
+<span class="sd">            new_iter(iter):                 an iterator or something that can</span>
+<span class="sd">                                            be turned into an iterator</span>
+
+<span class="sd">            n(int):                         number of generators to create as</span>
+<span class="sd">                                            lagged</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (tuple of generator objects):   a tuple of iterators with each one step in front of the others.</span>
+<span class="sd">            (tuple of generator objects):   a tuple of iterators with each one</span>
+<span class="sd">                                            step in front of the others.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; lagged_generators(xrange(5), 1) #doctest: +ELLIPSIS</span>
@@ -768,16 +811,25 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="lagged_generators_zipped"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.lagged_generators_zipped">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators_zipped</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">longest</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a tuple of generators with each next generator one step ahead of the previous generator.</span>
+<span class="sd">        Creates a tuple of generators with each next generator one step ahead</span>
+<span class="sd">        of the previous generator.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_iter(iter):                 an iterator or something that can be turned into an iterator</span>
-<span class="sd">            n(int):                         number of generators to create as lagged</span>
-<span class="sd">            longest(bool):                  whether to continue zipping along the longest generator</span>
-<span class="sd">            fillvalue:                      value to use to fill generators shorter than the longest.</span>
+<span class="sd">            new_iter(iter):                 an iterator or something that can</span>
+<span class="sd">                                            be turned into an iterator</span>
+
+<span class="sd">            n(int):                         number of generators to create as</span>
+<span class="sd">                                            lagged</span>
+
+<span class="sd">            longest(bool):                  whether to continue zipping along</span>
+<span class="sd">                                            the longest generator</span>
+
+<span class="sd">            fillvalue:                      value to use to fill generators</span>
+<span class="sd">                                            shorter than the longest.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            generator object:               a generator object that will return values from each iterator.</span>
+<span class="sd">            generator object:               a generator object that will return</span>
+<span class="sd">                                            values from each iterator.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; lagged_generators_zipped(xrange(5), 1) #doctest: +ELLIPSIS</span>
@@ -816,10 +868,11 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="filled_stringify_numbers"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.filled_stringify_numbers">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">include_numbers</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Like enumerate except it also returns a string with the number from enumeration with left padding by zero.</span>
+<span class="sd">        Like enumerate except it also returns a string with the number from</span>
+<span class="sd">        enumeration with left padding by zero.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_iter(iter):        a list or an iterator to use for enumeration over.</span>
+<span class="sd">            new_iter(iter):        an iterator to use for enumeration over.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (generator object):    an iterator over the reversed elements.</span>
@@ -881,7 +934,7 @@
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_iter(iter):        a list or an iterator to use for enumeration over.</span>
+<span class="sd">            new_iter(iter):        an iterator to use for enumeration over.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (generator object):    an iterator over the reversed elements.</span>
@@ -935,7 +988,7 @@
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_iter(iter):        a list or an iterator to use for enumeration over.</span>
+<span class="sd">            new_iter(iter):        an iterator to use for enumeration over.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (generator object):    an iterator over the reversed elements.</span>
@@ -986,14 +1039,18 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="reformat_slice"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slice">[docs]</a><span class="k">def</span> <span class="nf">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a slice and reformats it to fill in as many undefined values as possible.</span>
+<span class="sd">        Takes a slice and reformats it to fill in as many undefined values as</span>
+<span class="sd">        possible.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a_slice(slice):        a slice to reformat.</span>
-<span class="sd">            a_length(int):         a length to fill for stopping if not provided.</span>
+
+<span class="sd">            a_length(int):         a length to fill for stopping if not</span>
+<span class="sd">                                   provided.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (slice):               a new slice with as many values filled in as possible.</span>
+<span class="sd">            (slice):               a new slice with as many values filled in as</span>
+<span class="sd">                                   possible.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; reformat_slice(slice(None))</span>
@@ -1141,14 +1198,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="reformat_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slices">[docs]</a><span class="k">def</span> <span class="nf">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</span>
+<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined</span>
+<span class="sd">        values as possible.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            slices(tuple(slice)):        a tuple of slices to reformat.</span>
 <span class="sd">            lengths(tuple(int)):         a tuple of lengths to fill.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (slice):                     a tuple of slices with all default values filled if possible.</span>
+<span class="sd">            (slice):                     a tuple of slices with all default</span>
+<span class="sd">                                         values filled if possible.</span>
 
 <span class="sd">        Examples:</span>
 
@@ -1204,14 +1263,18 @@
 <span class="sd">        Determines how many elements a slice will contain.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            UnknownSliceLengthException: Will raise an exception if a_slice.stop and a_length is None.</span>
+<span class="sd">            UnknownSliceLengthException: Will raise an exception if</span>
+<span class="sd">            a_slice.stop and a_length is None.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            a_slice(slice):        a slice to reformat.</span>
-<span class="sd">            a_length(int):         a length to fill for stopping if not provided.</span>
+
+<span class="sd">            a_length(int):         a length to fill for stopping if not</span>
+<span class="sd">                                   provided.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (slice):               a new slice with as many values filled in as possible.</span>
+<span class="sd">            (slice):               a new slice with as many values filled in as</span>
+<span class="sd">                                   possible.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; len_slice(slice(None)) #doctest: +IGNORE_EXCEPTION_DETAIL</span>
@@ -1270,14 +1333,16 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="len_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.len_slices">[docs]</a><span class="k">def</span> <span class="nf">len_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.</span>
+<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined</span>
+<span class="sd">        values as possible.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            slices(tuple(slice)):        a tuple of slices to reformat.</span>
 <span class="sd">            lengths(tuple(int)):         a tuple of lengths to fill.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (slice):                     a tuple of slices with all default values filled if possible.</span>
+<span class="sd">            (slice):                     a tuple of slices with all default</span>
+<span class="sd">                                         values filled if possible.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2))) #doctest: +IGNORE_EXCEPTION_DETAIL</span>

@@ -95,15 +95,19 @@
 <span class="sd">        Estimates the noise in the given array.</span>
 
 <span class="sd">        Using the array finds what the standard deviation is of some values in</span>
-<span class="sd">        the array, which are within the standard deviation of the whole array times</span>
-<span class="sd">        the significance threshold</span>
+<span class="sd">        the array, which are within the standard deviation of the whole array</span>
+<span class="sd">        times the significance threshold.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            input_array(numpy.ndarray):          the array to estimate noise of.</span>
-<span class="sd">            significance_threshold(float):      the number of standard deviations (of the whole array), below which must be noise.</span>
+<span class="sd">            input_array(numpy.ndarray):         the array to estimate noise of.</span>
+<span class="sd">            significance_threshold(float):      the number of standard</span>
+<span class="sd">                                                deviations (of the whole</span>
+<span class="sd">                                                array), below which must be</span>
+<span class="sd">                                                noise.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            cs(numpy.ndarray): a numpy array containing the row of Pascal&#39;s triangle.</span>
+<span class="sd">            noise(float):                       The standard deviation of the</span>
+<span class="sd">                                                noise.</span>
 
 
 <span class="sd">        Examples:</span>
@@ -144,14 +148,20 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="significant_mask"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.significant_mask">[docs]</a><span class="k">def</span> <span class="nf">significant_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Using estimate_noise, creates a mask that selects the non-noise and suppresses noise.</span>
+<span class="sd">        Using estimate_noise, creates a mask that selects the non-noise and</span>
+<span class="sd">        suppresses noise.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            input_array(numpy.ndarray):          the array, which needs noise removed.</span>
-<span class="sd">            noise_threshold(float):             the estimated noise times this value determines the max value to</span>
-<span class="sd">                                                 consider as noise (to zero).</span>
+<span class="sd">            input_array(numpy.ndarray):         the array, which needs noise</span>
+<span class="sd">                                                removed.</span>
 
-<span class="sd">            in_place(bool):                      whether to modify input_array directly or to return a copy instead.</span>
+<span class="sd">            noise_threshold(float):             the estimated noise times this</span>
+<span class="sd">                                                value determines the max value</span>
+<span class="sd">                                                to consider as noise (to zero).</span>
+
+<span class="sd">            in_place(bool):                     whether to modify input_array</span>
+<span class="sd">                                                directly or to return a copy</span>
+<span class="sd">                                                instead.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            result(numpy.ndarray): a numpy array with noise zeroed.</span>
@@ -199,19 +209,25 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="noise_mask"><a class="viewcode-back" href="../../../../nanshe.imp.filters.noise.html#nanshe.imp.filters.noise.noise_mask">[docs]</a><span class="k">def</span> <span class="nf">noise_mask</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">noise_threshold</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Using estimate_noise, creates a mask that selects the noise and suppresses non-noise.</span>
+<span class="sd">        Using estimate_noise, creates a mask that selects the noise and</span>
+<span class="sd">        suppresses non-noise.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            input_array(numpy.ndarray):          the array to use for generating the noise mask.</span>
+<span class="sd">            input_array(numpy.ndarray):         the array to use for generating</span>
+<span class="sd">                                                the noise mask.</span>
 
-<span class="sd">            significance_threshold(float):      the number of standard deviations (of the whole array),</span>
-<span class="sd">                                                 below which must be noise.</span>
+<span class="sd">            significance_threshold(float):      the number of standard</span>
+<span class="sd">                                                deviations (of the whole</span>
+<span class="sd">                                                array), below which must be</span>
+<span class="sd">                                                noise.</span>
 
-<span class="sd">            noise_threshold(float):             the estimated noise times this value determines the max value</span>
-<span class="sd">                                                 to consider as noise (to zero).</span>
+<span class="sd">            noise_threshold(float):             the estimated noise times this</span>
+<span class="sd">                                                value determines the max value</span>
+<span class="sd">                                                to consider as noise (to zero).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            result(numpy.ndarray): a numpy array with noise zeroed.</span>
+<span class="sd">            result(numpy.ndarray):              a numpy array with noise</span>
+<span class="sd">                                                zeroed.</span>
 
 
 <span class="sd">        Examples:</span>

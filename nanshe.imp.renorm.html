@@ -78,21 +78,26 @@ appropriate <a class="reference external" href="http://en.wikipedia.org/wiki/Lp_
 <dl class="function">
 <dt id="nanshe.imp.renorm.renormalized_images">
 <code class="descclassname">nanshe.imp.renorm.</code><code class="descname">renormalized_images</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/renorm.html#renormalized_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.renorm.renormalized_images" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</p>
+<dd><p>Takes and divide each image by its norm. Where each image is
+new_numpy_array[i] with some index i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_numpy_array</strong> (<em>numpy.ndarray</em>) &#8211; array images with time as the first index</li>
-<li><strong>output_array</strong> (<em>numpy.ndarray</em>) &#8211; provides a location to store the result (optional)</li>
+<li><strong>new_numpy_array</strong> (<em>numpy.ndarray</em>) &#8211; array images with time as the
+first index</li>
+<li><strong>ord</strong> (<em>int</em>) &#8211; Which norm to use. (L_2 or
+Euclidean is default)</li>
+<li><strong>output_array</strong> (<em>numpy.ndarray</em>) &#8211; provides a location to store
+the result (optional)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>result</strong> &#8211;
-The same array with each images mean removed.</p>
+The same array with each images</p>
 <blockquote>
-<div><p>Where means[i] = mean(new_numpy_array[i])</p>
+<div><p>normalized.</p>
 </div></blockquote>
 </p>
 </td>
@@ -161,21 +166,25 @@ The same array with each images mean removed.</p>
 <dl class="function">
 <dt id="nanshe.imp.renorm.zeroed_mean_images">
 <code class="descclassname">nanshe.imp.renorm.</code><code class="descname">zeroed_mean_images</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/renorm.html#zeroed_mean_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.renorm.zeroed_mean_images" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes and finds the mean for each image. Where each image is new_numpy_array[i] with some index i.</p>
+<dd><p>Takes and finds the mean for each image. Where each image is
+new_numpy_array[i] with some index i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_numpy_array</strong> (<em>numpy.ndarray</em>) &#8211; array images with time as the first index</li>
-<li><strong>output_array</strong> (<em>numpy.ndarray</em>) &#8211; provides a location to store the result (optional)</li>
+<li><strong>new_numpy_array</strong> (<em>numpy.ndarray</em>) &#8211; array images with time as the
+first index</li>
+<li><strong>output_array</strong> (<em>numpy.ndarray</em>) &#8211; provides a location to store
+the result (optional)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>result</strong> &#8211;
-The same array with each images mean removed.</p>
+The same array with each images</p>
 <blockquote>
-<div><p>Where means[i] = mean(new_numpy_array[i])</p>
+<div><p>mean removed. Where
+means[i] = mean(new_numpy_array[i])</p>
 </div></blockquote>
 </p>
 </td>
