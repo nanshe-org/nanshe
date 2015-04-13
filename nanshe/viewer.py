@@ -1187,8 +1187,7 @@ class FloatProjectionConstantSource(QObject):
 
     """
 
-    # TODO: Reshaping should probably be some sort of lazyflow operator and
-    # thus removed from this directly.
+    # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
 
     isDirty = pyqtSignal(object)
     numberOfChannelsChanged = pyqtSignal(int) # Never emitted
