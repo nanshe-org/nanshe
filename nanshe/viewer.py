@@ -85,17 +85,35 @@ class HDF5DatasetNotFoundException(Exception):
 @prof.qt_log_class(trace_logger)
 class HDF5DataSource(QObject):
     """
-        Creates a source that reads from an HDF5 dataset and shapes it in a way that Volumina can use.
+        Creates a source that reads from an HDF5 dataset and shapes it in a way
+        that Volumina can use.
 
         Attributes:
-              file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
-              file_path(str):                          External path to the file
-              dataset_path(str):                       Internal path to the dataset
-              full_path(str):                          Both external and internal paths combined as one path
-              dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
-              dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
-              axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
+              file_handle(h5py.File or str):           A handle for reading the
+                                                       HDF5 file or the
+                                                       external file path.
 
+              file_path(str):                          External path to the
+                                                       file
+
+              dataset_path(str):                       Internal path to the
+                                                       dataset
+
+              full_path(str):                          Both external and
+                                                       internal paths combined
+                                                       as one path
+
+              dataset_shape(tuple of ints):            A tuple representing the
+                                                       shape of the dataset in
+                                                       each dimension
+
+              dataset_dtype(numpy.dtype or type):      The type of the
+                                                       underlying dataset.
+
+              axis_order(tuple of ints):               A tuple representing how
+                                                       to reshape the array
+                                                       before returning a
+                                                       request.
     """
 
     # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
@@ -105,15 +123,29 @@ class HDF5DataSource(QObject):
 
     def __init__(self, file_handle, internal_path, record_name="", shape=None, dtype=None):
         """
-            Constructs an HDF5DataSource using a given file and path to the dataset. Optionally, the shape and dtype
-            can be specified.
+            Constructs an HDF5DataSource using a given file and path to the
+            dataset. Optionally, the shape and dtype can be specified.
 
             Args:
-                file_handle(h5py.File or str):          A file handle for the HDF5 file..
-                internal_path(str):                     path to the dataset inside of the HDF5 file.
-                record_name(str):                       which record to extract from the HDF5 file.
-                shape(tuple of ints):                   shape of underlying dataset if not specified defaults to that of the dataset.
-                dtype(numpy.dtype or type):             type of underlying dataset if not specified defaults to that of the dataset.
+                file_handle(h5py.File or str):          A file handle for the
+                                                        HDF5 file.
+
+                internal_path(str):                     path to the dataset
+                                                        inside of the HDF5
+                                                        file.
+
+                record_name(str):                       which record to extract
+                                                        from the HDF5 file.
+
+                shape(tuple of ints):                   shape of underlying
+                                                        dataset if not
+                                                        specified defaults to
+                                                        that of the dataset.
+
+                dtype(numpy.dtype or type):             type of underlying
+                                                        dataset if not
+                                                        specified defaults to
+                                                        that of the dataset.
         """
         # TODO: Get rid of shape and dtype as arguments.
 
@@ -287,23 +319,41 @@ assert issubclass(HDF5DataSource, SourceABC)
 @prof.log_class(trace_logger)
 class HDF5DataRequest(object):
     """
-        Created by an HDF5DataSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an HDF5DataSource to provide a way to request slices of th
+         HDF5 file in a nice way.
 
         Attributes:
-          file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
+          file_handle(h5py.File or str):           A handle for reading the
+                                                   HDF5 file or the external
+                                                   file path.
+
           dataset_path(str):                       Internal path to the dataset
-          axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request.
-          dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
-          throw_on_not_found(bool):                Whether to throw an exception if the dataset is not found.
-          slicing(tuple of slices):                The slicing request by Volumina.
-          actual_slicing(tuple of slices):         The actual slicing that will be performed on the dataset.
-          throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.
+          axis_order(tuple of ints):               A tuple representing how to
+                                                   reshape the array before
+                                                   returning a request.
+
+          dataset_dtype(numpy.dtype or type):      The type of the underlying
+                                                   dataset.
+
+          throw_on_not_found(bool):                Whether to throw an
+                                                   exception if the dataset is
+                                                   not found.
+
+          slicing(tuple of slices):                The slicing request by
+                                                   Volumina.
+          actual_slicing(tuple of slices):         The actual slicing that will
+                                                   be performed on the dataset.
+
+          throw_on_not_found(bool):                Whether to throw an
+                                                   exception if the dataset is
+                                                   not found.
 
         Note:
-             Before returning the result to Volumina the axes will likely need to be transposed. Also, singleton axes
-             will need to be inserted to ensure the dimensionality is 5 as Volumina expects. This result will be cached
-             inside the request instance. So, if this request instance is kept, this won't need to be repeated.
-
+             Before returning the result to Volumina the axes will likely need
+             to be transposed. Also, singleton axes will need to be inserted to
+             ensure the dimensionality is 5 as Volumina expects. This result
+             will be cached inside the request instance. So, if this request
+             instance is kept, this won't need to be repeated.
     """
 
     # TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
@@ -311,17 +361,38 @@ class HDF5DataRequest(object):
 
     def __init__(self, file_handle, dataset_path, axis_order, dataset_dtype, slicing, record_name="", throw_on_not_found=False):
         """
-            Constructs an HDF5DataRequest using a given file and path to the dataset. Optionally, throwing can be
-            suppressed if the source is not found.
+            Constructs an HDF5DataRequest using a given file and path to the
+            dataset. Optionally, throwing can be suppressed if the source is
+            not found.
 
             Args:
-                file_handle(h5py.File or str):              A file handle for the HDF5 file.
-                dataset_path(str):                          Internal path to the dataset
-                axis_order(tuple of ints):                  A tuple representing how to reshape the array before returning a request.
-                dataset_dtype(numpy.dtype or type):         The type of the underlying dataset.
-                slicing(tuple of ints):                     The slicing to extract from the HDF5 file.
-                record_name(str):                           Name of member to retrieve from compound type.
-                throw_on_not_found(bool):                   Whether to throw an exception if the dataset is not found.
+                file_handle(h5py.File or str):              A file handle for
+                                                            the HDF5 file.
+
+                dataset_path(str):                          Internal path to
+                                                            the dataset.
+
+                axis_order(tuple of ints):                  A tuple
+                                                            representing how to
+                                                            reshape the array
+                                                            before returning a
+                                                            request.
+
+                dataset_dtype(numpy.dtype or type):         The type of the
+                                                            underlying dataset.
+
+                slicing(tuple of ints):                     The slicing to
+                                                            extract from the
+                                                            HDF5 file.
+
+                record_name(str):                           Name of member to
+                                                            retrieve from
+                                                            compound type.
+
+                throw_on_not_found(bool):                   Whether to throw an
+                                                            exception if the
+                                                            dataset is not
+                                                            found.
         """
 
         # TODO: Look at adding assertion check on slices.
@@ -421,17 +492,34 @@ assert issubclass(HDF5DataRequest, RequestABC)
 @prof.qt_log_class(trace_logger)
 class HDF5Viewer(Viewer):
     """
-        Extends the Viewer from Volumina so that it provides some additional features that are nice for HDF5 sources.
+        Extends the Viewer from Volumina so that it provides some additional
+        features that are nice for HDF5 sources.
 
         Attributes:
-              file_handle(h5py.File or str):           A handle for reading the HDF5 file or the external file path.
-              file_path(str):                          External path to the file
-              dataset_path(str):                       Internal path to the dataset
-              full_path(str):                          Both external and internal paths combined as one path
-              dataset_shape(tuple of ints):            A tuple representing the shape of the dataset in each dimension
-              dataset_dtype(numpy.dtype or type):      The type of the underlying dataset.
-              axis_order(tuple of ints):               A tuple representing how to reshape the array before returning a request
+              file_handle(h5py.File or str):           A handle for reading the
+                                                       HDF5 file or the
+                                                       external file path.
+              file_path(str):                          External path to the
+                                                       file
 
+              dataset_path(str):                       Internal path to the
+                                                       dataset
+
+              full_path(str):                          Both external and
+                                                       internal paths combined
+                                                       as one path
+
+              dataset_shape(tuple of ints):            A tuple representing the
+                                                       shape of the dataset in
+                                                       each dimension
+
+              dataset_dtype(numpy.dtype or type):      The type of the
+                                                       underlying dataset.
+
+              axis_order(tuple of ints):               A tuple representing how
+                                                       to reshape the array
+                                                       before returning a
+                                                       request.
     """
 
     def __init__(self, parent=None):
@@ -793,16 +881,21 @@ class SyncedChannelLayers(object):
 
 class EnumeratedProjectionConstantSource(QObject):
     """
-        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.
+        Creates a source that uses another source (ideally some HDF5 dataset or
+        array) and performs a max projection.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_source(a constant SourceABC):      Source to take the max projection of.
-            axis(int):                                  The axis to take compute the max along.
-            _shape(tuple of ints):                      The shape of the source.
+            constant_source(a constant SourceABC):      Source to take the max
+                                                        projection of.
 
+            axis(int):                                  The axis to take
+                                                        compute the max along.
+
+            _shape(tuple of ints):                      The shape of the source
     """
 
     # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
@@ -813,12 +906,17 @@ class EnumeratedProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def __init__(self, constant_source, axis=-1):
         """
-            Constructs an EnumeratedProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
-            can be specified.
+            Constructs an EnumeratedProjectionConstantSource using a given file
+            and path to the dataset. Optionally, the shape and dtype can be
+            specified.
 
             Args:
-                constant_source(a constant SourceABC):      Source to take the max projection of.
-                axis(int):                                  The axis to take compute the max along.
+                constant_source(a constant SourceABC):      Source to take the
+                                                            max projection of.
+
+                axis(int):                                  The axis to take
+                                                            compute the max
+                                                            along.
         """
         # TODO: Get rid of shape and dtype as arguments.
 
@@ -910,28 +1008,46 @@ assert issubclass(EnumeratedProjectionConstantSource, SourceABC)
 
 class EnumeratedProjectionConstantRequest(object):
     """
-        Created by an EnumeratedProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an EnumeratedProjectionConstantSource to provide a way to
+        request slices of the HDF5 file in a nice way.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_request(a constant RequestABC):         The request to take the max projection of.
-            axis(int):                                       The axis to take the max projection along.
-            slicing(tuple of slices):                        Slicing to be returned.
+            constant_request(a constant RequestABC):         The request to
+                                                             take the max
+                                                             projection of.
+
+            axis(int):                                       The axis to take
+                                                             the max projection
+                                                             along.
+
+            slicing(tuple of slices):                        Slicing to be
+                                                             returned.
 
     """
 
     @prof.log_call(trace_logger)
     def __init__(self, constant_request, axis, slicing):
         """
-            Constructs an EnumeratedProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
+            Constructs an EnumeratedProjectionConstantRequest using a given
+            file and path to the dataset. Optionally, throwing can be
             suppressed if the source is not found.
 
             Args:
-                constant_request(a constant RequestABC):         The request to take the max projection of.
-                axis(int):                                       The axis to take the max projection along.
-                slicing(tuple of slices):                        Slicing to be returned.
+                constant_request(a constant RequestABC):         The request to
+                                                                 take the max
+                                                                 projection of.
+
+                axis(int):                                       The axis to
+                                                                 take the max
+                                                                 projection
+                                                                 along.
+
+                slicing(tuple of slices):                        Slicing to be
+                                                                 returned.
         """
 
         # TODO: Look at adding assertion check on slices.
@@ -991,16 +1107,24 @@ assert issubclass(EnumeratedProjectionConstantRequest, RequestABC)
 
 class ContourProjectionConstantSource(QObject):
     """
-        Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an ContourProjectionConstantSource to provide a way to
+        request slices of the HDF5 file in a nice way.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_request(a constant RequestABC):         The request to take the max projection of.
-            axis(int):                                       The axis to take the max projection along.
-            slicing(tuple of slices):                        Slicing to be returned.
+            constant_request(a constant RequestABC):         The request to
+                                                             take the max
+                                                             projection of.
 
+            axis(int):                                       The axis to take
+                                                             the max projection
+                                                             along.
+
+            slicing(tuple of slices):                        Slicing to be
+                                                             returned.
     """
 
     # TODO: Reshaping should probably be some sort of lazyflow operator and
@@ -1012,10 +1136,17 @@ class ContourProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def __init__(self, constant_source, axis=-1):
         """
-            Constructs an ContourProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
-            can be specifie            Args:
-                constant_source(a constant SourceABC):      Source to take the max projection of.
-                axis(int):                                  The axis to take compute the max along.
+            Constructs an ContourProjectionConstantSource using a given file
+            and path to the dataset. Optionally, the shape and dtype.
+            can be specified.
+
+            Args:
+                constant_source(a constant SourceABC):      Source to take th
+                                                            max projection of.
+
+                axis(int):                                  The axis to take
+                                                            compute the max
+                                                            along.
         """
         # TODO: Get rid of shape and dtype as arguments.
 
@@ -1102,28 +1233,45 @@ assert issubclass(ContourProjectionConstantSource, SourceABC)
 
 class ContourProjectionConstantRequest(object):
     """
-        Created by an ContourProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an ContourProjectionConstantSource to provide a way to
+        request slices of the HDF5 file in a nice way.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_request(a constant RequestABC):         The request to take the max projection of.
-            axis(int):                                       The axis to take the max projection along.
-            slicing(tuple of slices):                        Slicing to be returned.
+            constant_request(a constant RequestABC):         The request to
+                                                             take the max
+                                                             projection of.
 
+            axis(int):                                       The axis to take
+                                                             the max projection
+                                                             along.
+
+            slicing(tuple of slices):                        Slicing to be
+                                                             returned.
     """
 
     @prof.log_call(trace_logger)
     def __init__(self, constant_request, axis, slicing):
         """
-            Constructs an ContourProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
-            suppressed if the source is not found.
+            Constructs an ContourProjectionConstantRequest using a given file
+            and path to the dataset. Optionally, throwing can be suppressed if
+            the source is not found.
 
             Args:
-                constant_request(a constant RequestABC):         The request to take the max projection of.
-                axis(int):                                       The axis to take the max projection along.
-                slicing(tuple of slices):                        Slicing to be returned.
+                constant_request(a constant RequestABC):         The request to
+                                                                 take the max
+                                                                 projection of.
+
+                axis(int):                                       The axis to
+                                                                 take the max
+                                                                 projection
+                                                                 along.
+
+                slicing(tuple of slices):                        Slicing to be
+                                                                 returned.
         """
 
         # TODO: Look at adding assertion check on slices.
@@ -1175,16 +1323,24 @@ assert issubclass(ContourProjectionConstantRequest, RequestABC)
 
 class FloatProjectionConstantSource(QObject):
     """
-        Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an FloatProjectionConstantSource to provide a way to request
+        slices of the HDF5 file in a nice way.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_request(a constant RequestABC):         The request to take the max projection of.
-            axis(int):                                       The axis to take the max projection along.
-            slicing(tuple of slices):                        Slicing to be returned.
+            constant_request(a constant RequestABC):         The request to
+                                                             take the max
+                                                             projection of.
 
+            axis(int):                                       The axis to take
+                                                             the max projection
+                                                             along.
+
+            slicing(tuple of slices):                        Slicing to be
+                                                             returned.
     """
 
     # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
@@ -1195,11 +1351,13 @@ class FloatProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def __init__(self, constant_source):
         """
-            Constructs an FloatProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
-            can be specific
+            Constructs an FloatProjectionConstantSource using a given file and
+            path to the dataset. Optionally, the shape and dtype can be
+            specific.
 
             Args:
-                constant_source(a constant SourceABC):      Source to make float.
+                constant_source(a constant SourceABC):       Source to make
+                                                             float.
         """
         # TODO: Get rid of shape and dtype as arguments.
 
@@ -1262,28 +1420,45 @@ assert issubclass(FloatProjectionConstantSource, SourceABC)
 
 class FloatProjectionConstantRequest(object):
     """
-        Created by an FloatProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an FloatProjectionConstantSource to provide a way to request
+        slices of the HDF5 file in a nice way.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_request(a constant RequestABC):         The request to take the max projection of.
-            axis(int):                                       The axis to take the max projection along.
-            slicing(tuple of slices):                        Slicing to be returned.
+            constant_request(a constant RequestABC):         The request to
+                                                             take the max
+                                                             projection of.
 
+            axis(int):                                       The axis to take
+                                                             the max projection
+                                                             along.
+
+            slicing(tuple of slices):                        Slicing to be
+                                                             returned.
     """
 
     @prof.log_call(trace_logger)
     def __init__(self, constant_request):
         """
-            Constructs an FloatProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
-            suppressed if the source is not found.
+            Constructs an FloatProjectionConstantRequest using a given file and
+            path to the dataset. Optionally, throwing can be suppressed if the
+            source is not found.
 
             Args:
-                constant_request(a constant RequestABC):         The request to take the max projection of.
-                axis(int):                                       The axis to take the max projection along.
-                slicing(tuple of slices):                        Slicing to be returned.
+                constant_request(a constant RequestABC):         The request to
+                                                                 take the max
+                                                                 projection of.
+
+                axis(int):                                       The axis to
+                                                                 take the max
+                                                                 projection
+                                                                 along.
+
+                slicing(tuple of slices):                        Slicing to be
+                                                                 returned.
         """
 
         self.constant_request = constant_request
@@ -1331,16 +1506,22 @@ assert issubclass(FloatProjectionConstantRequest, RequestABC)
 
 class MaxProjectionConstantSource(QObject):
     """
-        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a max projection.
+        Creates a source that uses another source (ideally some HDF5 dataset or
+        array) and performs a max projection.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_source(a constant SourceABC):      Source to take the max projection of.
-            axis(int):                                  The axis to take compute the max along.
-            _shape(tuple of ints):                      The shape of the source.
+            constant_source(a constant SourceABC):      Source to take the max
+                                                        projection of.
 
+            axis(int):                                  The axis to take
+                                                        compute the max along.
+
+            _shape(tuple of ints):                      The shape of the
+                                                        source.
     """
 
     # TODO: Reshaping should probably be some sort of lazyflow operator and thus removed from this directly.
@@ -1351,12 +1532,17 @@ class MaxProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def __init__(self, constant_source, axis=-1):
         """
-            Constructs an MaxProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
-            can be specified.
+            Constructs an MaxProjectionConstantSource using a given file and
+            path to the dataset. Optionally, the shape and dtype can be
+            specified.
 
             Args:
-                constant_source(a constant SourceABC):      Source to take the max projection of.
-                axis(int):                                  The axis to take compute the max along.
+                constant_source(a constant SourceABC):      Source to take the
+                                                            max projection of.
+
+                axis(int):                                  The axis to take
+                                                            compute the max
+                                                            along.
         """
         # TODO: Get rid of shape and dtype as arguments.
 
@@ -1449,28 +1635,45 @@ assert issubclass(MaxProjectionConstantSource, SourceABC)
 
 class MaxProjectionConstantRequest(object):
     """
-        Created by an MaxProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an MaxProjectionConstantSource to provide a way to request
+        slices of the HDF5 file in a nice way.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_request(a constant RequestABC):         The request to take the max projection of.
-            axis(int):                                       The axis to take the max projection along.
-            slicing(tuple of slices):                        Slicing to be returned.
+            constant_request(a constant RequestABC):         The request to
+                                                             take the max
+                                                             projection of.
 
+            axis(int):                                       The axis to take
+                                                             the max projection
+                                                             along.
+
+            slicing(tuple of slices):                        Slicing to be
+                                                             returned.
     """
 
     @prof.log_call(trace_logger)
     def __init__(self, constant_request, axis, slicing):
         """
-            Constructs an MaxProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
-            suppressed if the source is not found.
+            Constructs an MaxProjectionConstantRequest using a given file and
+            path to the dataset. Optionally, throwing can be suppressed if the
+            source is not found.
 
             Args:
-                constant_request(a constant RequestABC):         The request to take the max projection of.
-                axis(int):                                       The axis to take the max projection along.
-                slicing(tuple of slices):                        Slicing to be returned.
+                constant_request(a constant RequestABC):         The request to
+                                                                 take the max
+                                                                 projection of.
+
+                axis(int):                                       The axis to
+                                                                 take the max
+                                                                 projection
+                                                                 along.
+
+                slicing(tuple of slices):                        Slicing to be
+                                                                 returned.
         """
 
         # TODO: Look at adding assertion check on slices.
@@ -1530,15 +1733,22 @@ assert issubclass(MaxProjectionConstantRequest, RequestABC)
 
 class MeanProjectionConstantSource(QObject):
     """
-        Creates a source that uses another source (ideally some HDF5 dataset or array) and performs a mean projection.
+        Creates a source that uses another source (ideally some HDF5 dataset or
+        array) and performs a mean projection.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_source(a constant SourceABC):      Source to take the mean projection of.
-            axis(int):                                  The axis to take compute the mean along.
-            _shape(tuple of ints):                      The shape of the source.
+            constant_source(a constant SourceABC):      Source to take the mean
+                                                        projection of.
+
+            axis(int):                                  The axis to take
+                                                        compute the mean along.
+
+            _shape(tuple of ints):                      The shape of the
+                                                        source.
 
     """
 
@@ -1551,12 +1761,17 @@ class MeanProjectionConstantSource(QObject):
     @prof.log_call(trace_logger)
     def __init__(self, constant_source, axis=-1):
         """
-            Constructs an MeanProjectionConstantSource using a given file and path to the dataset. Optionally, the shape and dtype
-            can be specified.
+            Constructs an MeanProjectionConstantSource using a given file and
+            path to the dataset. Optionally, the shape and dtype can be
+            specified.
 
             Args:
-                constant_source(a constant SourceABC):      Source to take the mean projection of.
-                axis(int):                                  The axis to take compute the mean along.
+                constant_source(a constant SourceABC):      Source to take the
+                                                            mean projection of.
+
+                axis(int):                                  The axis to take
+                                                            compute the mean
+                                                            along.
         """
         # TODO: Get rid of shape and dtype as arguments.
 
@@ -1651,28 +1866,46 @@ assert issubclass(MeanProjectionConstantSource, SourceABC)
 
 class MeanProjectionConstantRequest(object):
     """
-        Created by an MeanProjectionConstantSource to provide a way to request slices of the HDF5 file in a nice way.
+        Created by an MeanProjectionConstantSource to provide a way to request
+        slices of the HDF5 file in a nice way.
 
         Note:
-            This was not designed to know about dirtiness or any sort of changing data.
+            This was not designed to know about dirtiness or any sort of
+            changing data.
 
         Attributes:
-            constant_request(a constant RequestABC):         The request to take the mean projection of.
-            axis(int):                                       The axis to take the mean projection along.
-            slicing(tuple of slices):                        Slicing to be returned.
+            constant_request(a constant RequestABC):         The request to
+                                                             take the mean
+                                                             projection of.
+
+            axis(int):                                       The axis to take
+                                                             the mean
+                                                             projection along.
+
+            slicing(tuple of slices):                        Slicing to be
+                                                             returned.
 
     """
 
     @prof.log_call(trace_logger)
     def __init__(self, constant_request, axis, slicing):
         """
-            Constructs an MeanProjectionConstantRequest using a given file and path to the dataset. Optionally, throwing can be
-            suppressed if the source is not found.
+            Constructs an MeanProjectionConstantRequest using a given file and
+            path to the dataset. Optionally, throwing can be suppressed if the
+            source is not found.
 
             Args:
-                constant_request(a constant RequestABC):         The request to take the mean projection of.
-                axis(int):                                       The axis to take the mean projection along.
-                slicing(tuple of slices):                        Slicing to be returned.
+                constant_request(a constant RequestABC):         The request to
+                                                                 take the mean
+                                                                 projection of.
+
+                axis(int):                                       The axis to
+                                                                 take the mean
+                                                                 projection
+                                                                 along.
+
+                slicing(tuple of slices):                        Slicing to be
+                                                                 returned.
         """
 
         # TODO: Look at adding assertion check on slices.
