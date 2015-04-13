@@ -1596,7 +1596,6 @@ def get_neuron_dtype(shape, dtype):
              ('gaussian_mean', <type 'numpy.float64'>, (2,)),
              ('gaussian_cov', <type 'numpy.float64'>, (2, 2)),
              ('centroid', <type 'numpy.float64'>, (2,))]
-
     """
 
     ndim = len(shape)
@@ -1648,7 +1647,6 @@ def get_empty_neuron(shape, dtype):
                              ('gaussian_mean', '<f8', (2,)),
                              ('gaussian_cov', '<f8', (2, 2)),
                              ('centroid', '<f8', (2,))])
-
     """
 
     neurons_dtype = get_neuron_dtype(shape=shape, dtype=dtype)
