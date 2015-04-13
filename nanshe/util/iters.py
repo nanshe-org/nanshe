@@ -198,7 +198,6 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
             array([[ True, False,  True, False],
                    [False,  True, False, False],
                    [False, False, False,  True]], dtype=bool)
-
     """
 
     # Constructs the numpy.ndarray with False everywhere
@@ -250,7 +249,6 @@ def repeat_generator(a_iter, n=1):
 
             >>> list(repeat_generator(xrange(5), 3))
             [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
-
     """
 
     assert (n >= 0), "n must be positive, but got n = " + repr(n)
@@ -292,7 +290,6 @@ def cycle_generator(a_iter, n=1):
 
             >>> list(cycle_generator(xrange(5), 3))
             [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
-
     """
 
     assert (n >= 0), "n must be positive, but got n = " + repr(n)
@@ -345,7 +342,6 @@ def iter_with_skip_indices(a_iter, to_skip=None):
 
             >>> list(iter_with_skip_indices(xrange(10), to_skip = [9]))
             [0, 1, 2, 3, 4, 5, 6, 7, 8]
-
     """
 
     full = iter(a_iter)
@@ -412,7 +408,6 @@ def iter_with_skip_values(a_iter, to_skip=None):
 
             >>> list(iter_with_skip_values(xrange(0, 10, 2), to_skip = [2,6]))
             [0, 4, 8]
-
     """
 
     full = iter(a_iter)
@@ -485,7 +480,6 @@ def xrange_with_skip(start, stop=None, step=None, to_skip=None):
 
             >>> list(xrange_with_skip(10, to_skip = [9]))
             [0, 1, 2, 3, 4, 5, 6, 7, 8]
-
     """
 
     full = None
@@ -632,7 +626,6 @@ def cumulative_generator(new_op, new_iter):
 
             >>> import operator; list(cumulative_generator(operator.mul, xrange(1,5)))
             [1, 2, 6, 24]
-
     """
 
     new_iter = iter(new_iter)
@@ -903,7 +896,6 @@ def filled_stringify_xrange(new_iter):
 
             >>> list(filled_stringify_xrange(range(11)))
             [(0, '00'), (1, '01'), (2, '02'), (3, '03'), (4, '04'), (5, '05'), (6, '06'), (7, '07'), (8, '08'), (9, '09'), (10, '10')]
-
     """
 
     new_list = new_iter
@@ -957,7 +949,6 @@ def filled_stringify_enumerate(new_iter):
 
             >>> list(filled_stringify_enumerate(range(11)))
             [(0, '00', 0), (1, '01', 1), (2, '02', 2), (3, '03', 3), (4, '04', 4), (5, '05', 5), (6, '06', 6), (7, '07', 7), (8, '08', 8), (9, '09', 9), (10, '10', 10)]
-
     """
 
     new_list = new_iter
