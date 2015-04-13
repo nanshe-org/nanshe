@@ -35,10 +35,12 @@ trace_logger = prof.getTraceLogger(__name__)
 @prof.log_call(trace_logger)
 def index_generator(*sizes):
     """
-        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size.
+        Takes an argument list of sizes and iterates through them from 0 up to
+        (but not including) each size.
 
         Args:
-            *sizes(int):            an argument list of ints for the max sizes in each index.
+            *sizes(int):            an argument list of ints for the max sizes
+                                    in each index.
 
         Returns:
             chain_gen(generator):   a generator over every possible coordinated
@@ -81,11 +83,14 @@ def index_generator(*sizes):
 @prof.log_call(trace_logger)
 def index_enumerator(*sizes):
     """
-        Takes an argument list of sizes and iterates through them from 0 up to (but not including) each size (i.e. like
-        index_generator). However, also included is an index corresponding to how many elements have been seen.
+        Takes an argument list of sizes and iterates through them from 0 up to
+        (but not including) each size (i.e. like index_generator). However,
+        also included is an index corresponding to how many elements have been
+        seen.
 
         Args:
-            *sizes(int):            an argument list of ints for the max sizes in each index.
+            *sizes(int):            an argument list of ints for the max sizes
+                                    in each index.
 
         Returns:
             chain_gen(generator):   a generator over every possible coordinated
@@ -131,10 +136,12 @@ def list_indices_to_index_array(list_indices):
         Converts a list of tuple indices to numpy index array.
 
         Args:
-            list_indices(list):    a list of indices corresponding to some array object
+            list_indices(list):    a list of indices corresponding to some
+                                   array object
 
         Returns:
-            chain_gen(tuple):       a tuple containing a numpy array in for each index
+            chain_gen(tuple):      a tuple containing a numpy array for each
+                                   index
 
         Examples:
             >>> list_indices_to_index_array([])
@@ -155,15 +162,21 @@ def list_indices_to_index_array(list_indices):
 @prof.log_call(trace_logger)
 def list_indices_to_numpy_bool_array(list_indices, shape):
     """
-        Much like list_indices_to_index_array except that it constructs a numpy.ndarray with dtype of bool.
-        All indices in list_indices are set to True in the numpy.ndarray. The rest are False by default.
+        Much like list_indices_to_index_array except that it constructs
+        numpy.ndarray with dtype of bool. All indices in list_indices are set
+        to True in the numpy.ndarray. The rest are False by default.
 
         Args:
-            list_indices(list):      a list of indices corresponding to some numpy.ndarray object
-            shape(tuple):            a tuple used to set the shape of the numpy.ndarray to return
+            list_indices(list):      a list of indices corresponding to some
+                                     numpy.ndarray object
+
+            shape(tuple):            a tuple used to set the shape of the
+                                     numpy.ndarray to return
 
         Returns:
-            result(numpy.ndarray):   a numpy.ndarray with dtype bool (True for indices in list_indices and False otherwise).
+            result(numpy.ndarray):   a numpy.ndarray with dtype bool (True for
+                                     indices in list_indices and False
+                                     otherwise).
 
         Examples:
             >>> list_indices_to_numpy_bool_array([], ())
@@ -206,14 +219,18 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
 @prof.log_call(trace_logger)
 def repeat_generator(a_iter, n=1):
     """
-        Repeats each value on an iterator given n-times before proceeding to the next value.
+        Repeats each value on an iterator given n-times before proceeding to
+        the next value.
 
         Args:
-            a_iter(iter):          an iterator that will have its values repeated contiguously
+            a_iter(iter):          an iterator that will have its values
+                                   repeated contiguously
+
             n(int):                number of times to repeat each value
 
         Returns:
-            (generator object):    a generator that contiguously repeats value from the given iterator.
+            (generator object):    a generator that contiguously repeats value
+                                   from the given iterator.
 
         Examples:
             >>> repeat_generator(xrange(5)) #doctest: +ELLIPSIS
@@ -254,7 +271,8 @@ def cycle_generator(a_iter, n=1):
             n(int):                number of times to repeat the iterator
 
         Returns:
-            (generator object):    a generator that repeats the given iterator a certain number of times.
+            (generator object):    a generator that repeats the given iterator
+                                   a certain number of times.
 
         Examples:
             >>> cycle_generator(xrange(5)) #doctest: +ELLIPSIS
@@ -289,15 +307,19 @@ def cycle_generator(a_iter, n=1):
 @prof.log_call(trace_logger)
 def iter_with_skip_indices(a_iter, to_skip=None):
     """
-        Behaves as a normal iterator except allows for skipping arbitrary values, as well.
-        These values to be skipped should be specified by their indices using some iterable.
+        Behaves as a normal iterator except allows for skipping arbitrary
+        values, as well. These values to be skipped should be specified by
+        their indices using some iterable.
 
         Args:
             a_iter(iter):          an iterator that will skip some values
-            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).
+
+            to_skip(iter):         some form of iterable or list of indices to
+                                   skip (can be a single value as well).
 
         Returns:
-            (generator object):    a generator that skips some values with indices in to_skip.
+            (generator object):    a generator that skips some values with
+                                   indices in to_skip.
 
         Examples:
             >>> iter_with_skip_indices(xrange(10)) #doctest: +ELLIPSIS
@@ -349,15 +371,19 @@ def iter_with_skip_indices(a_iter, to_skip=None):
 @prof.log_call(trace_logger)
 def iter_with_skip_values(a_iter, to_skip=None):
     """
-        Behaves as a normal iterator except allows for skipping arbitrary values, as well.
-        These values to be skipped should be specified by their indices using some iterable.
+        Behaves as a normal iterator except allows for skipping arbitrary
+        values, as well. These values to be skipped should be specified by
+        their indices using some iterable.
 
         Args:
             a_iter(iter):          an iterator that will skip some values
-            to_skip(iter):         some form of iterable or list of indices to skip (can be a single value as well).
+
+            to_skip(iter):         some form of iterable or list of indices to
+                                   skip (can be a single value as well).
 
         Returns:
-            (generator object):    a generator that skips some values with indices in to_skip.
+            (generator object):    a generator that skips some values with
+                                   indices in to_skip.
 
         Examples:
             >>> iter_with_skip_values(10) #doctest: +ELLIPSIS
@@ -407,17 +433,24 @@ def iter_with_skip_values(a_iter, to_skip=None):
 @prof.log_call(trace_logger)
 def xrange_with_skip(start, stop=None, step=None, to_skip=None):
     """
-        Behaves as xrange does except allows for skipping arbitrary values as well.
-        These values to be skipped should be specified using some iterable.
+        Behaves as xrange does except allows for skipping arbitrary values, as
+        well. These values to be skipped should be specified using some
+        iterable.
 
         Args:
-            start(int):            start for xrange or if stop is not specified this will be stop.
+            start(int):            start for xrange or if stop is not specified
+                                   this will be stop.
+
             stop(int):             stop for xrange.
+
             stop(int):             step for xrange.
-            to_skip(iter):         some form of iterable or list of elements to skip (can be a single value as well).
+
+            to_skip(iter):         some form of iterable or list of elements to
+                                   skip (can be a single value as well).
 
         Returns:
-            (generator object):    an xrange-like generator that skips some values.
+            (generator object):    an xrange-like generator that skips some
+                                   values.
 
         Examples:
             >>> xrange_with_skip(10) #doctest: +ELLIPSIS
@@ -483,16 +516,18 @@ def xrange_with_skip(start, stop=None, step=None, to_skip=None):
 
 def splitting_xrange(a, b=None):
     """
-        Similar to xrange except that it recursively proceeds through the given range in such a way that values that
-        follow each other are preferably not only non-sequential, but fairly different. This does not always work with
-        small ranges, but works nicely with large ranges
+        Similar to xrange except that it recursively proceeds through the given
+        range in such a way that values that follow each other are preferably
+        not only non-sequential, but fairly different. This does not always
+        work with small ranges, but works nicely with large ranges.
 
         Args:
-            a(int):      the lower bound of the range
-            b(int):      the upper bound of the range
+            a(int):              the lower bound of the range
+            b(int):              the upper bound of the range
 
         Returns:
-            result(generator):   a generator that can be used to iterate through the sequence.
+            result(generator):   a generator that can be used to iterate
+                                 through the sequence.
 
         Examples:
             >>> splitting_xrange(0, 0) #doctest: +ELLIPSIS
@@ -572,10 +607,12 @@ def cumulative_generator(new_op, new_iter):
         factorials up to and including the factorial of 4 (24).
 
         Args:
-            new_op(callabel):      something that can be called on two values and return a result with a type that is a
+            new_op(callabel):      something that can be called on two values
+                                   and return a result with a type that is a
                                    permissible argument.
 
-            new_iter(iter):        an iterator or something that can be turned into an iterator.
+            new_iter(iter):        an iterator or something that can be turned
+                                   into an iterator.
 
         Returns:
             (generator object):    an iterator over the intermediate results.
@@ -614,7 +651,8 @@ def reverse_each_element(new_iter):
         Takes each element yielded by new_iter and reverses it using reversed.
 
         Args:
-            new_iter(iter):        an iterator or something that can be turned into an iterator.
+            new_iter(iter):        an iterator or something that can be turned
+                                   into an iterator.
 
         Returns:
             (generator object):    an iterator over the reversed elements.
@@ -642,14 +680,19 @@ def reverse_each_element(new_iter):
 @prof.log_call(trace_logger)
 def lagged_generators(new_iter, n=2):
     """
-        Creates a tuple of generators with each next generator one step ahead of the previous generator.
+        Creates a tuple of generators with each next generator one step ahead
+        of the previous generator.
 
         Args:
-            new_iter(iter):                 an iterator or something that can be turned into an iterator
-            n(int):                         number of generators to create as lagged
+            new_iter(iter):                 an iterator or something that can
+                                            be turned into an iterator
+
+            n(int):                         number of generators to create as
+                                            lagged
 
         Returns:
-            (tuple of generator objects):   a tuple of iterators with each one step in front of the others.
+            (tuple of generator objects):   a tuple of iterators with each one
+                                            step in front of the others.
 
         Examples:
             >>> lagged_generators(xrange(5), 1) #doctest: +ELLIPSIS
@@ -708,16 +751,25 @@ def lagged_generators(new_iter, n=2):
 @prof.log_call(trace_logger)
 def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
     """
-        Creates a tuple of generators with each next generator one step ahead of the previous generator.
+        Creates a tuple of generators with each next generator one step ahead
+        of the previous generator.
 
         Args:
-            new_iter(iter):                 an iterator or something that can be turned into an iterator
-            n(int):                         number of generators to create as lagged
-            longest(bool):                  whether to continue zipping along the longest generator
-            fillvalue:                      value to use to fill generators shorter than the longest.
+            new_iter(iter):                 an iterator or something that can
+                                            be turned into an iterator
+
+            n(int):                         number of generators to create as
+                                            lagged
+
+            longest(bool):                  whether to continue zipping along
+                                            the longest generator
+
+            fillvalue:                      value to use to fill generators
+                                            shorter than the longest.
 
         Returns:
-            generator object:               a generator object that will return values from each iterator.
+            generator object:               a generator object that will return
+                                            values from each iterator.
 
         Examples:
             >>> lagged_generators_zipped(xrange(5), 1) #doctest: +ELLIPSIS
@@ -756,10 +808,11 @@ def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
 @prof.log_call(trace_logger)
 def filled_stringify_numbers(new_iter, include_numbers=False):
     """
-        Like enumerate except it also returns a string with the number from enumeration with left padding by zero.
+        Like enumerate except it also returns a string with the number from
+        enumeration with left padding by zero.
 
         Args:
-            new_iter(iter):        a list or an iterator to use for enumeration over.
+            new_iter(iter):        an iterator to use for enumeration over.
 
         Returns:
             (generator object):    an iterator over the reversed elements.
@@ -821,7 +874,7 @@ def filled_stringify_xrange(new_iter):
         Takes each element yielded by new_iter and reverses it using reversed.
 
         Args:
-            new_iter(iter):        a list or an iterator to use for enumeration over.
+            new_iter(iter):        an iterator to use for enumeration over.
 
         Returns:
             (generator object):    an iterator over the reversed elements.
@@ -875,7 +928,7 @@ def filled_stringify_enumerate(new_iter):
         Takes each element yielded by new_iter and reverses it using reversed.
 
         Args:
-            new_iter(iter):        a list or an iterator to use for enumeration over.
+            new_iter(iter):        an iterator to use for enumeration over.
 
         Returns:
             (generator object):    an iterator over the reversed elements.
@@ -926,14 +979,18 @@ def filled_stringify_enumerate(new_iter):
 @prof.log_call(trace_logger)
 def reformat_slice(a_slice, a_length=None):
     """
-        Takes a slice and reformats it to fill in as many undefined values as possible.
+        Takes a slice and reformats it to fill in as many undefined values as
+        possible.
 
         Args:
             a_slice(slice):        a slice to reformat.
-            a_length(int):         a length to fill for stopping if not provided.
+
+            a_length(int):         a length to fill for stopping if not
+                                   provided.
 
         Returns:
-            (slice):               a new slice with as many values filled in as possible.
+            (slice):               a new slice with as many values filled in as
+                                   possible.
 
         Examples:
             >>> reformat_slice(slice(None))
@@ -1081,14 +1138,16 @@ def reformat_slice(a_slice, a_length=None):
 @prof.log_call(trace_logger)
 def reformat_slices(slices, lengths=None):
     """
-        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.
+        Takes a tuple of slices and reformats them to fill in as many undefined
+        values as possible.
 
         Args:
             slices(tuple(slice)):        a tuple of slices to reformat.
             lengths(tuple(int)):         a tuple of lengths to fill.
 
         Returns:
-            (slice):                     a tuple of slices with all default values filled if possible.
+            (slice):                     a tuple of slices with all default
+                                         values filled if possible.
 
         Examples:
 
@@ -1144,14 +1203,18 @@ def len_slice(a_slice, a_length=None):
         Determines how many elements a slice will contain.
 
         Raises:
-            UnknownSliceLengthException: Will raise an exception if a_slice.stop and a_length is None.
+            UnknownSliceLengthException: Will raise an exception if
+            a_slice.stop and a_length is None.
 
         Args:
             a_slice(slice):        a slice to reformat.
-            a_length(int):         a length to fill for stopping if not provided.
+
+            a_length(int):         a length to fill for stopping if not
+                                   provided.
 
         Returns:
-            (slice):               a new slice with as many values filled in as possible.
+            (slice):               a new slice with as many values filled in as
+                                   possible.
 
         Examples:
             >>> len_slice(slice(None)) #doctest: +IGNORE_EXCEPTION_DETAIL
@@ -1210,14 +1273,16 @@ def len_slice(a_slice, a_length=None):
 @prof.log_call(trace_logger)
 def len_slices(slices, lengths=None):
     """
-        Takes a tuple of slices and reformats them to fill in as many undefined values as possible.
+        Takes a tuple of slices and reformats them to fill in as many undefined
+        values as possible.
 
         Args:
             slices(tuple(slice)):        a tuple of slices to reformat.
             lengths(tuple(int)):         a tuple of lengths to fill.
 
         Returns:
-            (slice):                     a tuple of slices with all default values filled if possible.
+            (slice):                     a tuple of slices with all default
+                                         values filled if possible.
 
         Examples:
             >>> len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2))) #doctest: +IGNORE_EXCEPTION_DETAIL
