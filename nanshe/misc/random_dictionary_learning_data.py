@@ -43,12 +43,13 @@ trace_logger = nanshe.util.prof.getTraceLogger(__name__)
 
 class MappingDiscreteUniformDistributionGenerator(object):
     """
-        Given a bunch of arguments. This will create a random element generator that returns one or many
+        Given a bunch of arguments. This will create a random element generator
+        that returns one or many.
     """
 
     def __init__(self, *args):
         """
-            Builds a random element generator
+            Builds a random element generator.
 
             Args:
                 *args:  Anything that needs to be drawn from.
@@ -58,13 +59,16 @@ class MappingDiscreteUniformDistributionGenerator(object):
 
     def __call__(self, size=1):
         """
-            Draws a certain number of elements with equal likelihood and returns them in a list.
+            Draws a certain number of elements with equal likelihood and
+            returns them in a list.
 
             Args:
-                size(int):       Number of elements to draw (one if unspecified).
+                size(int):       Number of elements to draw (one if
+                                 unspecified).
 
             Returns:
-                results(list):   a list of arguments drawn (None if no arguments)
+                results(list):   a list of arguments drawn (None if no
+                                 arguments)
         """
 
         results = []
@@ -82,15 +86,18 @@ class MappingDiscreteUniformDistributionGenerator(object):
 class NumpyRandomArrayDiscreteUniformDistributionGenerator(object):
     """
         Creates a random numpy array (with type bool) generator that will set
-        a certain number of random positions in the array to True (like Bernoulli random distribution)
+        a certain number of random positions in the array to True (like
+        Bernoulli random distribution)
     """
 
     def __init__(self, shape):
         """
-            Creates a random numpy array generator that returns arrays of a certain shape.
+            Creates a random numpy array generator that returns arrays of a
+            certain shape.
 
             Args:
-                shape(tuple):   A tuple permissible for setting the size of a numpy array.
+                shape(tuple):   A tuple permissible for setting the size of a
+                                numpy array.
         """
 
         self.shape = shape
@@ -100,10 +107,12 @@ class NumpyRandomArrayDiscreteUniformDistributionGenerator(object):
             Generates a numpy array.
 
             Args:
-                size(int):                Number of Trues to have in the numpy array.
+                size(int):                Number of Trues to have in the numpy
+                                          array.
 
             Returns:
-                results(numpy.ndarray):   a boolean numpy array with a fixed number of randomly placed Trues
+                results(numpy.ndarray):   a boolean numpy array with a fixed
+                                          number of randomly placed Trues
         """
 
         # A completely empty numpy array
@@ -122,8 +131,9 @@ class NumpyRandomArrayDiscreteUniformDistributionGenerator(object):
 
 class MappingDiscreteGeometricDistributionGenerator(object):
     """
-        A random generator of groups. Each group has a size that is geometrically distributed.
-        However, the individuals chosen for the group are all equally likely.
+        A random generator of groups. Each group has a size that is
+        geometrically distributed. However, the individuals chosen for the
+        group are all equally likely.
     """
 
     def __init__(self, *args):
@@ -138,14 +148,18 @@ class MappingDiscreteGeometricDistributionGenerator(object):
 
     def __call__(self, p, size=1):
         """
-            Generates a number of groups equal to size with each group size being distributed geometrically by p.
+            Generates a number of groups equal to size with each group size
+            being distributed geometrically by p.
 
             Args:
-                p(float)         the probability of success for a geometric distribution (starts with 1 so has mean 1/p).
+                p(float)         the probability of success for a geometric
+                                 distribution (starts with 1 so has mean 1/p).
+
                 size(int)        the number of groups to make
 
             Returns:
-                results(list):   a list of groups of arguments drawn (None if no arguments)
+                results(list):   a list of groups of arguments drawn (None if
+                                 no arguments)
         """
 
         # Get a uniform distribution over the elements to fill each group.
@@ -165,7 +179,8 @@ class MappingDiscreteGeometricDistributionGenerator(object):
 
 class DictionaryLearningRandomDataSample(object):
     """
-        Essentially a struct with its values set at runtime by DictionaryLearningRandomDataGenerator calls.
+        Essentially a struct with its values set at runtime by
+        DictionaryLearningRandomDataGenerator calls.
     """
     def __init__(self):
         """
@@ -180,7 +195,8 @@ class DictionaryLearningRandomDataSample(object):
 
 class DictionaryLearningRandomDataGenerator(object):
     """
-        A Random Generator that build pseudo-data similar in nature to that which the ADINA algorithm is run.
+        A Random Generator that build pseudo-data similar in nature to that
+        which the ADINA algorithm is run.
     """
 
     def __init__(self, frame_shape, num_objects, num_groups, num_frames, mean_group_size, object_spread, object_max_intensity, object_min_intensity, background_noise_intensity):
@@ -188,15 +204,38 @@ class DictionaryLearningRandomDataGenerator(object):
             Builds a DictionaryLearningRandomDataGenerator for draws.
 
             Args:
-                frame_shape(tuple)                  a tuple of ints for constructing a numpy array
-                num_objects(int)                    the number of objects that can possible be active (i.e. neurons present whether active or not)
-                num_groups(int)                     number of groups of objects that will be active (i.e. number of groups of neurons seen to be active)
-                num_frames(int)                     number of frames for any group to be active in the pseudo-video
-                mean_group_size(float)              average group size (average for a geometric distribution)
-                object_spread(float)                how big an object is on average
-                object_max_intensity(float)         the highest intensity possible
-                object_min_intensity(float)         the lowest intensity possible
-                background_noise_intensity(float)   how much noise there is in the background.
+                frame_shape(tuple)                  a tuple of ints for
+                                                    constructing a numpy array
+
+                num_objects(int)                    the number of objects that
+                                                    can possible be active
+                                                    (i.e. neurons present
+                                                    whether active or not)
+
+                num_groups(int)                     number of groups of objects
+                                                    that will be active (i.e.
+                                                    number of groups of neurons
+                                                    seen to be active)
+
+                num_frames(int)                     number of frames for any
+                                                    group to be active in the
+                                                    pseudo-video
+
+                mean_group_size(float)              average group size (average
+                                                    for a geometric
+                                                    distribution)
+
+                object_spread(float)                how big an object is on
+                                                    average
+
+                object_max_intensity(float)         the highest intensity
+                                                    possible
+
+                object_min_intensity(float)         the lowest intensity
+                                                    possible
+
+                background_noise_intensity(float)   how much noise there is in
+                                                    the background.
         """
 
         self.frame_shape = frame_shape
@@ -216,11 +255,15 @@ class DictionaryLearningRandomDataGenerator(object):
             Constructs a series of pseudo-videos.
 
             Args:
-                num_runs(int):  number of pseudo-videos to generate
-                seed(int):      uses the seed for numpy.random.seed if provided.
+                num_runs(int):          number of pseudo-videos to generate
+                seed(int):              uses the seed for numpy.random.seed if
+                                        provided.
 
             Returns:
-                results(list):           a list of DictionaryLearningRandomDataSample instances with relevant data from generation included.
+                results(list):          a list of
+                                        DictionaryLearningRandomDataSample
+                                        instances with relevant data from
+                                        generation included.
         """
 
         # Use the seed provided.
