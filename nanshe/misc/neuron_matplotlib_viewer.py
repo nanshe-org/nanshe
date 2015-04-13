@@ -53,15 +53,17 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
     def __init__(self, *args, **kwargs):
         """
-            Initializes a NeuronMatplotlibViewer using the given figure to clone and image stack to view.
+            Initializes a NeuronMatplotlibViewer using the given figure to
+            clone and image stack to view.
 
-            After cloning, self will be the same as fig. Additional features will be attached to self.
+            After cloning, self will be the same as fig. Additional features
+            will be attached to self.
 
             Args:
-                args(list):     arguments to be passed to parent
+                args(list):         arguments to be passed to parent
 
             Keyword Args:
-                kwargs(dict):   arguments to be passed to parent
+                kwargs(dict):       arguments to be passed to parent
 
             Note:
                 Todo
@@ -69,7 +71,9 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         """
 
         super(NeuronMatplotlibViewer, self).__init__(*args, **kwargs)
-        #super(NeuronMatplotlibViewer, self).__init__(*args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"]))
+        super(NeuronMatplotlibViewer, self).__init__(
+            *args, **dict([(_k, _v) for (_k, _v) in kwargs.items() if _k is not "neuron_images"])
+        )
 
         self.subplots_adjust(left=0.25, bottom=0.25)
         self.viewer = self.add_axes([0.25, 0.25, 0.7, 0.7])
@@ -84,7 +88,8 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             Sets the images to be viewed.
 
             Args:
-                new_neuron_images(numpy.ndarray):     array of images (first index is which image)
+                new_neuron_images(numpy.ndarray):     array of images (first
+                                                      index is which image)
         """
         if (new_neuron_images.ndim > 3):
             raise ValueError(
@@ -129,7 +134,8 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
     def time_update(self):
         """
-            Method to be called by the TimeNavigator when the time changes. Updates image displayed.
+            Method to be called by the TimeNavigator when the time changes.
+            Updates image displayed.
         """
         if (self.neuron_images.ndim == 3):
             self.image_view.set_array(
@@ -142,12 +148,13 @@ class TimeNavigator(object):
     def __init__(self, fig, max_time, min_time=0, time_step=1, axcolor='lightgoldenrodyellow',
                  hovercolor='0.975'):
         """
-            Initializes a TimeNavigator using the given figure and a fixed number of steps.
+            Initializes a TimeNavigator using the given figure and a fixed
+            number of steps.
 
             Provides a simple slider bar and buttons to navigate through time.
 
             Args:
-                fig         should be a figure that has been initialized already.
+                fig         should be a figure that has been initialized.
                 max_time    maximum step for images.
                 min_time    minimum step for images.
                 time_step   how much to increase/decrease by for each step.
@@ -157,7 +164,8 @@ class TimeNavigator(object):
             Note:
                 Todo
                 Extract constants as parameters of constructor.
-                Also, determine out a way to make all position relative to some bounding box for all of TimeNavigator as opposed to the fig.
+                Also, determine out a way to make all position relative to some
+                bounding box for all of TimeNavigator as opposed to the fig.
         """
 
         self.min_time = min_time
@@ -286,7 +294,8 @@ class TimeNavigator(object):
     def normalize_val(self, val):
         """
             Takes the time value and normalizes it to fit within the range.
-            Then, makes sure it is a discrete number of steps from the min_time.
+            Then, makes sure it is a discrete number of steps from the
+            min_time.
 
             Args:
                 val     float position from the slider bar to correct
@@ -304,7 +313,8 @@ class TimeNavigator(object):
 
     def time_update(self, val):
         """
-            Takes the time value and normalizes it within the range if it does not fit.
+            Takes the time value and normalizes it within the range if it does
+            not fit.
 
             Args:
                 val     float position from slider bar to move to
@@ -358,13 +368,15 @@ class TimeNavigator(object):
 
     def on_time_update(self, func):
         """
-            Registers a callback function for notification when the time is updated.
+            Registers a callback function for notification when the time is
+            updated.
 
             Args:
-                func    function call when the time is updated
+                func(callable):     function call when the time is updated
 
             Returns:
-                int:    a callback ID or cid to allow pulling the callback when no longer necessary.
+                int:                a callback ID or cid to allow pulling the
+                                    callback when no longer necessary.
         """
 
         logger.debug(
