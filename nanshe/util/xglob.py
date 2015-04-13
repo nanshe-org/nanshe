@@ -42,7 +42,6 @@ def expand_pathname_list(*pathnames):
 
         Returns:
             list:                a list of path names (without regex)
-
     """
 
     expanded_pathnames = []
