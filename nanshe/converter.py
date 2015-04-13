@@ -33,7 +33,8 @@ trace_logger = prof.getTraceLogger(__name__)
 @prof.log_call(trace_logger)
 def main(*argv):
     """
-        Simple main function (like in C). Takes all arguments (as from sys.argv) and returns an exit status.
+        Simple main function (like in C). Takes all arguments (as from
+        sys.argv) and returns an exit status.
 
         Args:
             argv(list):     arguments (includes command line call).
