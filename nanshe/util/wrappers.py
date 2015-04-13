@@ -140,7 +140,6 @@ def static_variables(**kwargs):
 
         Returns:
             (decorator):        a decorator for the callable.
-
     """
 
     def static_variables_tie(a_callable):
@@ -181,7 +180,6 @@ def metaclass(meta):
 
         Returns:
             (decorator):         a decorator for the class.
-
     """
 
     def metaclass_wrapper(cls):
@@ -232,7 +230,6 @@ def metaclasses(*metas):
 
         Returns:
             (decorator):             a decorator for the class.
-
     """
 
     def metaclasses_wrapper(cls):
@@ -269,7 +266,6 @@ def class_static_variables(**kwargs):
 
         Returns:
             (decorator):         a decorator for the class.
-
     """
 
     class MetaStaticVariables(type):
@@ -298,7 +294,6 @@ def class_decorate_all_methods(*decorators):
 
         Returns:
             (decorator):            a decorator for the class.
-
     """
 
     class MetaAllMethodsDecorator(type):
@@ -334,7 +329,6 @@ def qt_class_decorate_all_methods(*decorators):
 
         Returns:
             (decorator):            a decorator for the class.
-
     """
 
     class MetaAllMethodsDecorator(PyQt4.QtCore.pyqtWrapperType):
@@ -374,7 +368,6 @@ def class_decorate_methods(**method_decorators):
 
         Returns:
             (decorator):                    a decorator for the class.
-
     """
 
     class MetaMethodsDecorator(type):
