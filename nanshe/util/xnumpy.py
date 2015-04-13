@@ -2699,9 +2699,9 @@ def norm(new_vector_set, ord=2):
 
     new_vector_set_float = new_vector_set.astype(float)
 
-    # Wrap the order parameter so as to avoid passing through numpy.apply_along_axis
-    # and risk having it break. Also, makes sure the same function can be used in the
-    # two cases.
+    # Wrap the order parameter so as to avoid passing through
+    # numpy.apply_along_axis and risk having it break. Also, makes sure the
+    # same function can be used in the two cases.
     wrapped_norm = lambda a_vector_set: numpy.linalg.norm(
         a_vector_set, ord=ord)
 
