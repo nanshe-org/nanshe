@@ -37,20 +37,24 @@ def update_wrapper(wrapper,
                    assigned=functools.WRAPPER_ASSIGNMENTS,
                    updated=functools.WRAPPER_UPDATES):
     """
-        Extends functools.update_wrapper to ensure that it stores the wrapped function in the attribute __wrapped__.
+        Extends functools.update_wrapper to ensure that it stores the wrapped
+        function in the attribute __wrapped__.
 
         Args:
             wrapper(callable):      the replacement callable.
 
             wrapped(callable):      the callable that is being wrapped.
 
-            assigned(tuple):        is a tuple naming the attributes assigned directly
-                                    from the wrapped function to the wrapper function (defaults to
+            assigned(tuple):        is a tuple naming the attributes assigned
+                                    directly from the wrapped function to the
+                                    wrapper function (defaults to
                                     functools.WRAPPER_ASSIGNMENTS)
 
-            updated(tuple):         is a tuple naming the attributes of the wrapper that
-                                    are updated with the corresponding attribute from the wrapped
-                                    function (defaults to functools.WRAPPER_UPDATES)
+            updated(tuple):         is a tuple naming the attributes of the
+                                    wrapper that are updated with the
+                                    corresponding attribute from the wrapped
+                                    function (defaults to
+                                    functools.WRAPPER_UPDATES)
 
         Returns:
             (callable):             the wrapped callable.
@@ -70,21 +74,26 @@ def wraps(wrapped,
           assigned=functools.WRAPPER_ASSIGNMENTS,
           updated=functools.WRAPPER_UPDATES):
     """
-        Builds on functools.wraps to ensure that it stores the wrapped function in the attribute __wrapped__.
+        Builds on functools.wraps to ensure that it stores the wrapped function
+        in the attribute __wrapped__.
 
         Args:
             wrapped(callable):      the callable that is being wrapped.
 
-            assigned(tuple):        is a tuple naming the attributes assigned directly
-                                    from the wrapped function to the wrapper function (defaults to
+            assigned(tuple):        is a tuple naming the attributes assigned
+                                    directly from the wrapped function to the
+                                    wrapper function (defaults to
                                     functools.WRAPPER_ASSIGNMENTS)
 
-            updated(tuple):         is a tuple naming the attributes of the wrapper that
-                                    are updated with the corresponding attribute from the wrapped
-                                    function (defaults to functools.WRAPPER_UPDATES)
+            updated(tuple):         is a tuple naming the attributes of the
+                                    wrapper that are updated with the
+                                    corresponding attribute from the wrapped
+                                    function (defaults to
+                                    functools.WRAPPER_UPDATES)
 
         Returns:
-            (callable):             a decorator for callable, which will contain wrapped.
+            (callable):             a decorator for callable, which will
+                                    contain wrapped.
     """
 
     return(functools.partial(
@@ -123,7 +132,8 @@ def identity_wrapper(a_callable):
 
 def static_variables(**kwargs):
     """
-        Returns a decorator that decorates a callable such that it has the given static variables set.
+        Returns a decorator that decorates a callable such that it has the
+        given static variables set.
 
         Args:
             *kwargs(tuple):     keyword args will be set to the value provided.
@@ -135,7 +145,8 @@ def static_variables(**kwargs):
 
     def static_variables_tie(a_callable):
         """
-            Decorates a function such that it has the given static variables set.
+            Decorates a function such that it has the given static variables
+            set.
 
             Args:
                 a_callable(callable):     the callable to decorate.
@@ -157,11 +168,13 @@ def static_variables(**kwargs):
 
 def metaclass(meta):
     """
-        Returns a decorator that decorates a class such that the given metaclass is applied.
+        Returns a decorator that decorates a class such that the given
+        metaclass is applied.
 
         Note:
-            Decorator will add the __metaclass__ attribute so the last metaclass applied is known.
-            Also, decorator will add the __wrapped__ attribute so that the unwrapped class can be retrieved.
+            Decorator will add the __metaclass__ attribute so the last
+            metaclass applied is known. Also, decorator will add the
+            __wrapped__ attribute so that the unwrapped class can be retrieved.
 
         Args:
             meta(metaclass):     metaclass to apply to a given class.
@@ -176,8 +189,9 @@ def metaclass(meta):
             Returns a decorated class such that the given metaclass is applied.
 
             Note:
-                Adds the __metaclass__ attribute so the last metaclass used is known.
-                Also, adds the __wrapped__ attribute so that the unwrapped class can be retrieved.
+                Adds the __metaclass__ attribute so the last metaclass used is
+                known. Also, adds the __wrapped__ attribute so that the
+                unwrapped class can be retrieved.
 
             Args:
                 cls(class):          class to decorate.
@@ -207,7 +221,8 @@ def metaclass(meta):
 
 def metaclasses(*metas):
     """
-        Returns a decorator that decorates a class such that the given metaclasses are applied.
+        Returns a decorator that decorates a class such that the given
+        metaclasses are applied.
 
         Note:
             Shorthand for repeated application of metaclass.
@@ -222,7 +237,8 @@ def metaclasses(*metas):
 
     def metaclasses_wrapper(cls):
         """
-            Returns a decorated class such that the given metaclasses are applied.
+            Returns a decorated class such that the given metaclasses are
+            applied.
 
             Args:
                 cls(class):          class to decorate.
@@ -244,10 +260,12 @@ def metaclasses(*metas):
 
 def class_static_variables(**kwargs):
     """
-        Returns a decorator that decorates a class such that it has the given static variables set.
+        Returns a decorator that decorates a class such that it has the given
+        static variables set.
 
         Args:
-            **kwargs(tuple):     keyword args will be set to the value provided.
+            **kwargs(tuple):     keyword args will be set to the value
+                                 provided.
 
         Returns:
             (decorator):         a decorator for the class.
@@ -256,7 +274,8 @@ def class_static_variables(**kwargs):
 
     class MetaStaticVariables(type):
         """
-            Metaclass, which adds static variable with the given value to a class.
+            Metaclass, which adds static variable with the given value to a
+            class.
         """
 
         def __new__(meta, name, bases, dct):
@@ -271,7 +290,8 @@ def class_static_variables(**kwargs):
 
 def class_decorate_all_methods(*decorators):
     """
-        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.
+        Returns a decorator that decorates a class such that all its methods
+        are decorated by the decorators provided.
 
         Args:
             *decorators(tuple):     decorators to decorate all methods with.
@@ -283,7 +303,8 @@ def class_decorate_all_methods(*decorators):
 
     class MetaAllMethodsDecorator(type):
         """
-            Metaclass, which decorates all methods with the list of decorators in order.
+            Metaclass, which decorates all methods with the list of decorators
+            in order.
         """
 
         def __new__(meta, name, bases, dct):
@@ -305,7 +326,8 @@ def class_decorate_all_methods(*decorators):
 
 def qt_class_decorate_all_methods(*decorators):
     """
-        Returns a decorator that decorates a class such that all its methods are decorated by the decorators provided.
+        Returns a decorator that decorates a class such that all its methods
+        are decorated by the decorators provided.
 
         Args:
             *decorators(tuple):     decorators to decorate all methods with.
@@ -317,7 +339,8 @@ def qt_class_decorate_all_methods(*decorators):
 
     class MetaAllMethodsDecorator(PyQt4.QtCore.pyqtWrapperType):
         """
-            Metaclass, which decorates all methods with the list of decorators in order.
+            Metaclass, which decorates all methods with the list of decorators
+            in order.
 
             Inherits from PyQt4.QtCore.pyqtWrapperType based on this
             ( http://www.gulon.co.uk/2012/12/28/pyqt4-qobjects-and-metaclasses/ ).
@@ -342,10 +365,12 @@ def qt_class_decorate_all_methods(*decorators):
 
 def class_decorate_methods(**method_decorators):
     """
-        Returns a decorator that decorates a class such that specified methods are decorated by the decorators provided.
+        Returns a decorator that decorates a class such that specified methods
+        are decorated by the decorators provided.
 
         Args:
-            **method_decorators(tuple):     method names with a single decorator or a list of decorators.
+            **method_decorators(tuple):     method names with a single
+                                            decorator or a list of decorators.
 
         Returns:
             (decorator):                    a decorator for the class.
@@ -354,8 +379,9 @@ def class_decorate_methods(**method_decorators):
 
     class MetaMethodsDecorator(type):
         """
-            Metaclass, which decorates some methods based on the keys given. Uses the decorator(s) provided for each
-            method to decorator in order.
+            Metaclass, which decorates some methods based on the keys given.
+            Uses the decorator(s) provided for each method to decorator in
+            order.
         """
 
         def __new__(meta, name, bases, dct):
