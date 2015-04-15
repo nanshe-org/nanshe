@@ -1040,7 +1040,6 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         # It does not need to be passed to retain functionality of this function.
         new_label_image_props = skimage.measure.regionprops(
             label_image=new_label_image,
-            properties=properties,
             intensity_image=intensity_image,
             *args, **kwargs
         )
