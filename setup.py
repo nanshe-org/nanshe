@@ -15,6 +15,5 @@ setup(
     author="John Kirkham",
     author_email="kirkhamj@janelia.hhmi.org",
     description="An image processing toolkit.",
-    setup_requires=["nose>=1.2", "sphinx>=1.3"],
     scripts=glob("bin/*")
 )
