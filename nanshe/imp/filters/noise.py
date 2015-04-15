@@ -57,17 +57,17 @@ def estimate_noise(input_array, significance_threshold=3.0):
             >>> estimate_noise(numpy.eye(2), significance_threshold = 3)
             0.5
 
-            >>> estimate_noise(numpy.eye(3), significance_threshold = 3)
-            0.47140452079103173
+            >>> round(1000*estimate_noise(numpy.eye(3), significance_threshold = 3))/1000
+            0.471
 
-            >>> import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 1))/1000
-            0.166
+            >>> round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 1))/1000
+            0.167
 
-            >>> import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 2))/1000
-            0.288
+            >>> round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 2))/1000
+            0.289
 
-            >>> import math; math.floor(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 3))/1000
-            0.288
+            >>> round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 3))/1000
+            0.289
     """
 
     mean = input_array.mean()
