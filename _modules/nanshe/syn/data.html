@@ -241,8 +241,8 @@
 <span class="sd">                    [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],</span>
 <span class="sd">                    [ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08]]])</span>
 
-<span class="sd">            &gt;&gt;&gt; generate_gaussian_images((5, 5), (2, 2), 0.5, 1).sum()</span>
-<span class="sd">            1.0000000000000002</span>
+<span class="sd">            &gt;&gt;&gt; round(1000*generate_gaussian_images((5, 5), (2, 2), 0.5, 1).sum())/1000</span>
+<span class="sd">            1.0</span>
 
 <span class="sd">            &gt;&gt;&gt; generate_gaussian_images((5, 5), (2, 2), 0.25, 1) #doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],</span>
@@ -251,7 +251,7 @@
 <span class="sd">                    [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],</span>
 <span class="sd">                    [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])</span>
 
-<span class="sd">            &gt;&gt;&gt; generate_gaussian_images((5, 5), (2, 2), 0.25, 1).sum()</span>
+<span class="sd">            &gt;&gt;&gt; round(1000*generate_gaussian_images((5, 5), (2, 2), 0.25, 1).sum())/1000</span>
 <span class="sd">            1.0</span>
 
 <span class="sd">            &gt;&gt;&gt; generate_gaussian_images((5, 5), (2, 2), 0.25, 5) #doctest: +NORMALIZE_WHITESPACE</span>
@@ -261,8 +261,9 @@
 <span class="sd">                    [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],</span>
 <span class="sd">                    [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])</span>
 
-<span class="sd">            &gt;&gt;&gt; generate_gaussian_images((5, 5), (2, 2), 0.25, 5).sum()</span>
-<span class="sd">            5.0000000000000009</span>
+
+<span class="sd">            &gt;&gt;&gt; round(1000*generate_gaussian_images((5, 5), (2, 2), 0.25, 5).sum())/1000</span>
+<span class="sd">            5.0</span>
 
 <span class="sd">            &gt;&gt;&gt; generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100)</span>
 <span class="sd">            array([[[[  3.76754623e-09,   1.12308970e-05,   3.76754623e-09],</span>
@@ -277,7 +278,7 @@
 <span class="sd">                     [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
 <span class="sd">                     [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]]]])</span>
 
-<span class="sd">            &gt;&gt;&gt; generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100).sum()</span>
+<span class="sd">            &gt;&gt;&gt; round(1000*generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100).sum())/1000</span>
 <span class="sd">            100.0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
