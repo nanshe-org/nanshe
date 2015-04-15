@@ -6,11 +6,11 @@ Overview
 ===============================================================================
 The ``main`` function actually starts the algorithm and can
 be called externally. The module allows for running multiple jobs through
-|multiprocessing|_ or |drmaa|_. Configuration files for the learner are
+|subprocess|_ or |drmaa|_. Configuration files for the learner are
 provided in the examples_ and are entitled learner.
 
-.. |multiprocessing| replace:: ``multiprocessing``
-.. _multiprocessing: http://docs.python.org/2/library/multiprocessing.html
+.. |subprocess| replace:: ``subprocess``
+.. _subprocess: http://docs.python.org/2/library/subprocess.html
 .. |drmaa| replace:: ``drmaa``
 .. _drmaa: http://github.com/pygridtools/drmaa-python
 .. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
