@@ -181,8 +181,8 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                     [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],
                     [ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08]]])
 
-            >>> generate_gaussian_images((5, 5), (2, 2), 0.5, 1).sum()
-            1.0000000000000002
+            >>> round(1000*generate_gaussian_images((5, 5), (2, 2), 0.5, 1).sum())/1000
+            1.0
 
             >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 1) #doctest: +NORMALIZE_WHITESPACE
             array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],
@@ -191,7 +191,7 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                     [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],
                     [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])
 
-            >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 1).sum()
+            >>> round(1000*generate_gaussian_images((5, 5), (2, 2), 0.25, 1).sum())/1000
             1.0
 
             >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 5) #doctest: +NORMALIZE_WHITESPACE
@@ -201,8 +201,9 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                     [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],
                     [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])
 
-            >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 5).sum()
-            5.0000000000000009
+
+            >>> round(1000*generate_gaussian_images((5, 5), (2, 2), 0.25, 5).sum())/1000
+            5.0
 
             >>> generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100)
             array([[[[  3.76754623e-09,   1.12308970e-05,   3.76754623e-09],
@@ -217,7 +218,7 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                      [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],
                      [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]]]])
 
-            >>> generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100).sum()
+            >>> round(1000*generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100).sum())/1000
             100.0
     """
 
