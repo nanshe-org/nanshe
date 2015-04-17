@@ -50,13 +50,15 @@ def binary_dilation(input_array, footprint, out=None):
             out(numpy.ndarray):                 Same as out if out was
                                                 provided.
 
-        >>> a = numpy.array([[ True,  True, False, False, False, False, False],
-        ...                  [False, False, False, False, False, False, False],
-        ...                  [False, False, False, False, False, False, False],
-        ...                  [False, False, False, False, False, False, False],
-        ...                  [False, False, False, False,  True, False, False],
-        ...                  [False, False, False, False, False, False, False],
-        ...                  [False, False, False, False, False, False, False]], dtype=bool)
+        >>> a = numpy.array(
+        ...     [[ True,  True, False, False, False, False, False],
+        ...      [False, False, False, False, False, False, False],
+        ...      [False, False, False, False, False, False, False],
+        ...      [False, False, False, False, False, False, False],
+        ...      [False, False, False, False,  True, False, False],
+        ...      [False, False, False, False, False, False, False],
+        ...      [False, False, False, False, False, False, False]], dtype=bool
+        ... )
         >>> b = numpy.zeros_like(a)
 
         >>> binary_dilation(a, numpy.ones(a.ndim*(3,), dtype=bool))
@@ -136,13 +138,15 @@ def binary_erosion(input_array, footprint, out=None):
             out(numpy.ndarray):                 Same as out if out was
                                                 provided.
 
-        >>> a = numpy.array([[ True,  True,  True, False, False, False,  True],
-        ...                  [ True,  True,  True, False, False,  True,  True],
-        ...                  [False, False, False, False, False, False, False],
-        ...                  [False, False, False,  True,  True,  True, False],
-        ...                  [False,  True, False,  True,  True,  True, False],
-        ...                  [False,  True, False,  True,  True,  True, False],
-        ...                  [False, False, False, False, False, False,  True]], dtype=bool)
+        >>> a = numpy.array(
+        ...     [[ True,  True,  True, False, False, False,  True],
+        ...      [ True,  True,  True, False, False,  True,  True],
+        ...      [False, False, False, False, False, False, False],
+        ...      [False, False, False,  True,  True,  True, False],
+        ...      [False,  True, False,  True,  True,  True, False],
+        ...      [False,  True, False,  True,  True,  True, False],
+        ...      [False, False, False, False, False, False,  True]], dtype=bool
+        ... )
         >>> b = numpy.zeros_like(a)
 
         >>> binary_erosion(a, numpy.ones(a.ndim*(3,), dtype=bool))
