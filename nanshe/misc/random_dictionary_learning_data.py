@@ -199,7 +199,16 @@ class DictionaryLearningRandomDataGenerator(object):
         which the ADINA algorithm is run.
     """
 
-    def __init__(self, frame_shape, num_objects, num_groups, num_frames, mean_group_size, object_spread, object_max_intensity, object_min_intensity, background_noise_intensity):
+    def __init__(self,
+                 frame_shape,
+                 num_objects,
+                 num_groups,
+                 num_frames,
+                 mean_group_size,
+                 object_spread,
+                 object_max_intensity,
+                 object_min_intensity,
+                 background_noise_intensity):
         """
             Builds a DictionaryLearningRandomDataGenerator for draws.
 
