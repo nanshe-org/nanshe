@@ -614,19 +614,20 @@ def cumulative_generator(new_op, new_iter):
             (generator object):    an iterator over the intermediate results.
 
         Examples:
-            >>> import operator; cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS
+            >>> import operator
+            >>> cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS
             <generator object cumulative_generator at 0x...>
 
-            >>> import operator; list(cumulative_generator(operator.add, xrange(1,5)))
+            >>> list(cumulative_generator(operator.add, xrange(1,5)))
             [1, 3, 6, 10]
 
-            >>> import operator; list(cumulative_generator(operator.add, xrange(5)))
+            >>> list(cumulative_generator(operator.add, xrange(5)))
             [0, 1, 3, 6, 10]
 
-            >>> import operator; list(cumulative_generator(operator.mul, xrange(5)))
+            >>> list(cumulative_generator(operator.mul, xrange(5)))
             [0, 0, 0, 0, 0]
 
-            >>> import operator; list(cumulative_generator(operator.mul, xrange(1,5)))
+            >>> list(cumulative_generator(operator.mul, xrange(1,5)))
             [1, 2, 6, 24]
     """
 
@@ -653,7 +654,9 @@ def reverse_each_element(new_iter):
             (generator object):    an iterator over the reversed elements.
 
         Examples:
-            >>> reverse_each_element(zip(xrange(5, 11), xrange(5))) #doctest: +ELLIPSIS
+            >>> reverse_each_element(
+            ...     zip(xrange(5, 11), xrange(5))
+            ... ) #doctest: +ELLIPSIS
             <generator object reverse_each_element at 0x...>
 
             >>> list(reverse_each_element(zip(xrange(5, 11), xrange(5))))
@@ -831,10 +834,17 @@ def filled_stringify_numbers(new_iter, include_numbers=False):
             >>> list(filled_stringify_numbers([5, 7, 11]))
             ['05', '07', '11']
 
-            >>> list(filled_stringify_numbers([5, 7, 11], include_numbers = True))
+            >>> list(
+            ...     filled_stringify_numbers([5, 7, 11], include_numbers=True)
+            ... )
             [(5, '05'), (7, '07'), (11, '11')]
 
-            >>> list(filled_stringify_numbers(iter([5, 7, 11]), include_numbers = True))
+            >>> list(
+            ...     filled_stringify_numbers(
+            ...         iter([5, 7, 11]),
+            ...         include_numbers=True
+            ...     )
+            ... )
             [(5, '05'), (7, '07'), (11, '11')]
     """
 
@@ -1150,10 +1160,23 @@ def reformat_slices(slices, lengths=None):
             >>> reformat_slices((slice(None),))
             (slice(0, None, 1),)
 
-            >>> reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)))
+            >>> reformat_slices((
+            ...     slice(None),
+            ...     slice(3, None),
+            ...     slice(None, 5),
+            ...     slice(None, None, 2)
+            ... ))
             (slice(0, None, 1), slice(3, None, 1), slice(0, 5, 1), slice(0, None, 2))
 
-            >>> reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))
+            >>> reformat_slices(
+            ...     (
+            ...         slice(None),
+            ...         slice(3, None),
+            ...         slice(None, 5),
+            ...         slice(None, None, 2)
+            ...     ),
+            ...     (10, 13, 15, 20)
+            ... )
             (slice(0, 10, 1), slice(3, 13, 1), slice(0, 5, 1), slice(0, 20, 2))
     """
 
@@ -1278,11 +1301,24 @@ def len_slices(slices, lengths=None):
                                          values filled if possible.
 
         Examples:
-            >>> len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2))) #doctest: +IGNORE_EXCEPTION_DETAIL
+            >>> len_slices((
+            ...     slice(None),
+            ...     slice(3, None),
+            ...     slice(None, 5),
+            ...     slice(None, None, 2)
+            ... ))
             Traceback (most recent call last):
             UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).
 
-            >>> len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))
+            >>> len_slices(
+            ...     (
+            ...         slice(None),
+            ...         slice(3, None),
+            ...         slice(None, 5),
+            ...         slice(None, None, 2)
+            ...     ),
+            ...     (10, 13, 15, 20)
+            ... )
             (10, 10, 5, 10)
     """
 
