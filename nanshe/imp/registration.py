@@ -100,7 +100,8 @@ def register_mean_offsets(frames2reg,
                                                  frame.
 
         Examples:
-            >>> a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1; a
+            >>> a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1
+            >>> a
             array([[[ 1.,  1.,  1.,  1.],
                     [ 0.,  0.,  0.,  0.],
                     [ 0.,  0.,  0.,  0.]],
@@ -506,7 +507,8 @@ def find_offsets(frames2reg_fft, template_fft):
                                                  frame.
 
         Examples:
-            >>> a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1; a
+            >>> a = numpy.zeros((5, 3, 4)); a[:,0] = 1; a[2,0] = 0; a[2,2] = 1
+            >>> a
             array([[[ 1.,  1.,  1.,  1.],
                     [ 0.,  0.,  0.,  0.],
                     [ 0.,  0.,  0.,  0.]],
