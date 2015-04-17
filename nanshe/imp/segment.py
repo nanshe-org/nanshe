@@ -598,7 +598,9 @@ def normalize_data(new_data, out=None, **parameters):
                    [[-0.28867513, -0.28867513],
                     [-0.28867513,  0.8660254 ]]])
             >>> b = numpy.zeros_like(a)
-            >>> normalize_data(a, out=b, **{"renormalized_images" : { "ord" : 2 }})
+            >>> normalize_data(
+            ...     a, out=b, **{"renormalized_images" : { "ord" : 2 }}
+            ... )
             array([[[ 0.8660254 , -0.28867513],
                     [-0.28867513, -0.28867513]],
             <BLANKLINE>
@@ -610,7 +612,9 @@ def normalize_data(new_data, out=None, **parameters):
             <BLANKLINE>
                    [[-0.28867513, -0.28867513],
                     [-0.28867513,  0.8660254 ]]])
-            >>> normalize_data(a, out=a, **{"renormalized_images" : { "ord" : 2 }})
+            >>> normalize_data(
+            ...     a, out=a, **{"renormalized_images" : { "ord" : 2 }}
+            ... )
             array([[[ 0.8660254 , -0.28867513],
                     [-0.28867513, -0.28867513]],
             <BLANKLINE>
@@ -1541,16 +1545,22 @@ def region_properties(new_label_image, *args, **kwargs):
 
         Examples:
 
-            >>> region_properties(numpy.zeros((2,2), dtype=int)) # doctest: +NORMALIZE_WHITESPACE
+            >>> region_properties(
+            ...     numpy.zeros((2,2), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
             array([], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties(numpy.ones((2,2), dtype=int)) # doctest: +NORMALIZE_WHITESPACE
-            array([(1, 4.0, [0.5, 0.5])], 
+            >>> region_properties(
+            ...     numpy.ones((2,2), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 4.0, [0.5, 0.5])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties(numpy.ones((3,3), dtype=int)) # doctest: +NORMALIZE_WHITESPACE
-            array([(1, 9.0, [1.0, 1.0])], 
+            >>> region_properties(
+            ...     numpy.ones((3,3), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 9.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties(numpy.eye(3, dtype=int))
@@ -1576,7 +1586,9 @@ def get_neuron_dtype(shape, dtype):
                                           constructor.
 
         Examples:
-            >>> get_neuron_dtype((3,), numpy.float64) #doctest: +NORMALIZE_WHITESPACE
+            >>> get_neuron_dtype(
+            ...     (3,), numpy.float64
+            ... ) #doctest: +NORMALIZE_WHITESPACE
             [('mask', <type 'numpy.bool_'>, (3,)),
              ('contour', <type 'numpy.bool_'>, (3,)),
              ('image', <type 'numpy.float64'>, (3,)),
@@ -1586,7 +1598,10 @@ def get_neuron_dtype(shape, dtype):
              ('gaussian_cov', <type 'numpy.float64'>, (1, 1)),
              ('centroid', <type 'numpy.float64'>, (1,))]
 
-            >>> get_neuron_dtype((2, 3), numpy.float64) #doctest: +NORMALIZE_WHITESPACE
+
+            >>> get_neuron_dtype(
+            ...     (2, 3), numpy.float64
+            ... ) #doctest: +NORMALIZE_WHITESPACE
             [('mask', <type 'numpy.bool_'>, (2, 3)),
              ('contour', <type 'numpy.bool_'>, (2, 3)),
              ('image', <type 'numpy.float64'>, (2, 3)),
@@ -1627,7 +1642,9 @@ def get_empty_neuron(shape, dtype):
                                           get_neuron_dtype.
 
         Examples:
-            >>> get_empty_neuron((3,), numpy.float64) #doctest: +NORMALIZE_WHITESPACE
+            >>> get_empty_neuron(
+            ...     (3,), numpy.float64
+            ... ) #doctest: +NORMALIZE_WHITESPACE
             array([], dtype=[('mask', '?', (3,)),
                              ('contour', '?', (3,)),
                              ('image', '<f8', (3,)),
@@ -1637,7 +1654,9 @@ def get_empty_neuron(shape, dtype):
                              ('gaussian_cov', '<f8', (1, 1)),
                              ('centroid', '<f8', (1,))])
 
-            >>> get_empty_neuron((2, 3), numpy.float64) #doctest: +NORMALIZE_WHITESPACE
+            >>> get_empty_neuron(
+            ...     (2, 3), numpy.float64
+            ... ) #doctest: +NORMALIZE_WHITESPACE
             array([], dtype=[('mask', '?', (2, 3)),
                              ('contour', '?', (2, 3)),
                              ('image', '<f8', (2, 3)),
@@ -1670,7 +1689,9 @@ def get_one_neuron(shape, dtype):
                                           get_neuron_dtype.
 
         Examples:
-            >>> get_one_neuron((3,), numpy.float) #doctest: +NORMALIZE_WHITESPACE
+            >>> get_one_neuron(
+            ...     (3,), numpy.float
+            ... ) #doctest: +NORMALIZE_WHITESPACE
             array([ ([False, False, False],
                      [False, False, False],
                      [0.0, 0.0, 0.0],
@@ -1688,8 +1709,9 @@ def get_one_neuron(shape, dtype):
                           ('gaussian_cov', '<f8', (1, 1)),
                           ('centroid', '<f8', (1,))])
 
-
-            >>> get_one_neuron((2, 3), numpy.float) #doctest: +NORMALIZE_WHITESPACE
+            >>> get_one_neuron(
+            ...     (2, 3), numpy.float
+            ... ) #doctest: +NORMALIZE_WHITESPACE
             array([ ([[False, False, False],
                       [False, False, False]],
                      [[False, False, False],
