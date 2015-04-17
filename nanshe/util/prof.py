@@ -120,7 +120,11 @@ def getTraceMetaLogger(name, *args, **kwargs):
     return(getSpecialLogger("TRACE.META", name, *args, **kwargs))
 
 
-def log_call(logger, to_log_call=True, to_print_args=False, to_print_time=True, to_print_exception=False):
+def log_call(logger,
+             to_log_call=True,
+             to_print_args=False,
+             to_print_time=True,
+             to_print_exception=False):
     """
         Takes a given logger and uses it to log entering and leaving the
         decorated callable. Intended to be used as a decorator that takes a few
@@ -316,7 +320,11 @@ def log_class(logger,
     )))
 
 
-def qt_log_class(logger, to_log_call=True, to_print_args=False, to_print_time=True, to_print_exception=False):
+def qt_log_class(logger,
+                 to_log_call=True,
+                 to_print_args=False,
+                 to_print_time=True,
+                 to_print_exception=False):
     """
         Takes a given logger and uses it to log entering and leaving all
         methods of the decorated class. Intended to be used as a decorator that
