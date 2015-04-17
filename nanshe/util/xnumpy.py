@@ -180,34 +180,44 @@ def index_axis_at_pos(new_array, axis, pos):
                                                  original array.
 
         Examples:
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 0, 0).shape
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> index_axis_at_pos(a, 0, 0).shape
             (2, 3, 4)
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 1, 0).shape
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> index_axis_at_pos(a, 1, 0).shape
             (1, 3, 4)
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 2, 0).shape
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> index_axis_at_pos(a, 2, 0).shape
             (1, 2, 4)
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 3, 0).shape
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> index_axis_at_pos(a, 3, 0).shape
             (1, 2, 3)
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, 3, 0) == a[:,:,:,0]).all()
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> (index_axis_at_pos(a, 3, 0) == a[:,:,:,0]).all()
             True
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, -1, 0) == a[:,:,:,0]).all()
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> (index_axis_at_pos(a, -1, 0) == a[:,:,:,0]).all()
             True
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, -1, 2) == a[:,:,:,2]).all()
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> (index_axis_at_pos(a, -1, 2) == a[:,:,:,2]).all()
             True
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, 1, 1) == a[:,1,:,:]).all()
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> (index_axis_at_pos(a, 1, 1) == a[:,1,:,:]).all()
             True
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); (index_axis_at_pos(a, 2, slice(None,None,2)) == a[:,:,::2,:]).all()
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> (index_axis_at_pos(a, 2, slice(None,None,2)) == a[:,:,::2,:]).all()
             True
 
-            >>> a = numpy.arange(24).reshape((1,2,3,4)); index_axis_at_pos(a, 2, 2)[0, 1, 3] = 19; a[0, 1, 2, 3] == 19
+            >>> a = numpy.arange(24).reshape((1,2,3,4))
+            >>> index_axis_at_pos(a, 2, 2)[0, 1, 3] = 19; a[0, 1, 2, 3] == 19
             True
     """
 
@@ -540,7 +550,6 @@ def unsquish(new_array, shape, axis=None):
             >>> a.base is None
             True
 
-
             >>> a.reshape(-1)
             array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
                    17, 18, 19, 20, 21, 22, 23])
@@ -555,7 +564,6 @@ def unsquish(new_array, shape, axis=None):
                     [20, 21, 22, 23]]])
             >>> b.base is a
             True
-
 
             >>> a.transpose(1,2,0)
             array([[[ 0, 12],
@@ -584,7 +592,6 @@ def unsquish(new_array, shape, axis=None):
             >>> b.base is a
             True
 
-
             >>> b = unsquish(a, (2,3,4), axis=2); b
             array([[[ 0,  1,  2,  3],
                     [ 4,  5,  6,  7],
@@ -595,7 +602,6 @@ def unsquish(new_array, shape, axis=None):
                     [20, 21, 22, 23]]])
             >>> b.base is a
             True
-
 
             >>> b = unsquish(a, (2,3,4), axis=-1); b
             array([[[ 0,  1,  2,  3],
@@ -608,14 +614,18 @@ def unsquish(new_array, shape, axis=None):
             >>> b.base is a
             True
 
-
             >>> a.transpose(2,0,1).reshape(a.shape[2], -1)
             array([[ 0,  4,  8, 12, 16, 20],
                    [ 1,  5,  9, 13, 17, 21],
                    [ 2,  6, 10, 14, 18, 22],
                    [ 3,  7, 11, 15, 19, 23]])
 
-            >>> b = unsquish(a.transpose(2,0,1).reshape(a.shape[2], -1), (2,3,4), axis=(0,1)); b
+            >>> b = unsquish(
+            ...     a.transpose(2,0,1).reshape(a.shape[2], -1),
+            ...     (2,3,4),
+            ...     axis=(0,1)
+            ... )
+            >>> b
             array([[[ 0,  1,  2,  3],
                     [ 4,  5,  6,  7],
                     [ 8,  9, 10, 11]],
@@ -626,14 +636,18 @@ def unsquish(new_array, shape, axis=None):
             >>> b.base is a
             True
 
-
             >>> a.transpose(2, 1, 0).reshape(a.shape[2], -1)
             array([[ 0, 12,  4, 16,  8, 20],
                    [ 1, 13,  5, 17,  9, 21],
                    [ 2, 14,  6, 18, 10, 22],
                    [ 3, 15,  7, 19, 11, 23]])
 
-            >>> b = unsquish(a.transpose(2, 1, 0).reshape(a.shape[2], -1), (2,3,4), axis=(1,0)); b
+            >>> b = unsquish(
+            ...     a.transpose(2, 1, 0).reshape(a.shape[2], -1),
+            ...     (2,3,4),
+            ...     axis=(1,0)
+            ... )
+            >>> b
             array([[[ 0,  1,  2,  3],
                     [ 4,  5,  6,  7],
                     [ 8,  9, 10, 11]],
@@ -643,14 +657,18 @@ def unsquish(new_array, shape, axis=None):
                     [20, 21, 22, 23]]])
             >>> b.base is a
             False
-
 
             >>> a.transpose(1, 0, 2).reshape(a.shape[1], -1)
             array([[ 0,  1,  2,  3, 12, 13, 14, 15],
                    [ 4,  5,  6,  7, 16, 17, 18, 19],
                    [ 8,  9, 10, 11, 20, 21, 22, 23]])
 
-            >>> b = unsquish(a.transpose(1, 0, 2).reshape(a.shape[1], -1), (2,3,4), axis=(0,2)); b
+            >>> b = unsquish(
+            ...     a.transpose(1, 0, 2).reshape(a.shape[1], -1),
+            ...     (2,3,4),
+            ...     axis=(0,2)
+            ... )
+            >>> b
             array([[[ 0,  1,  2,  3],
                     [ 4,  5,  6,  7],
                     [ 8,  9, 10, 11]],
@@ -661,13 +679,17 @@ def unsquish(new_array, shape, axis=None):
             >>> b.base is a
             False
 
-
             >>> a.transpose(1, 0, 2).reshape(a.shape[1], -1)[None]
             array([[[ 0,  1,  2,  3, 12, 13, 14, 15],
                     [ 4,  5,  6,  7, 16, 17, 18, 19],
                     [ 8,  9, 10, 11, 20, 21, 22, 23]]])
 
-            >>> b = unsquish(a.transpose(1, 0, 2).reshape(a.shape[1], -1)[None], (2,3,4), axis=(0,2)); b
+            >>> b = unsquish(
+            ...     a.transpose(1, 0, 2).reshape(a.shape[1], -1)[None],
+            ...     (2,3,4),
+            ...     axis=(0,2)
+            ... )
+            >>> b
             array([[[ 0,  1,  2,  3],
                     [ 4,  5,  6,  7],
                     [ 8,  9, 10, 11]],
@@ -675,7 +697,6 @@ def unsquish(new_array, shape, axis=None):
                    [[12, 13, 14, 15],
                     [16, 17, 18, 19],
                     [20, 21, 22, 23]]])
-
 
             >>> a.transpose(2, 1, 0).reshape(a.shape[2], -1)[None, None]
             array([[[[ 0, 12,  4, 16,  8, 20],
@@ -683,7 +704,12 @@ def unsquish(new_array, shape, axis=None):
                      [ 2, 14,  6, 18, 10, 22],
                      [ 3, 15,  7, 19, 11, 23]]]])
 
-            >>> b = unsquish(a.transpose(2, 1, 0).reshape(a.shape[2], -1)[None, None], (2,3,4), axis=(1,0)); b
+            >>> b = unsquish(
+            ...     a.transpose(2, 1, 0).reshape(a.shape[2], -1)[None, None],
+            ...     (2,3,4),
+            ...     axis=(1,0)
+            ... )
+            >>> b
             array([[[ 0,  1,  2,  3],
                     [ 4,  5,  6,  7],
                     [ 8,  9, 10, 11]],
@@ -860,7 +886,10 @@ def roll(new_array, shift, out=None, to_mask=False):
             array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                    18, 19,  0])
 
-            >>> roll(numpy.arange(10).reshape(2,5), numpy.ones((2,), dtype=int))
+            >>> roll(
+            ...     numpy.arange(10).reshape(2,5),
+            ...     numpy.ones((2,), dtype=int)
+            ... )
             array([[9, 5, 6, 7, 8],
                    [4, 0, 1, 2, 3]])
 
@@ -884,7 +913,11 @@ def roll(new_array, shift, out=None, to_mask=False):
             array([[6, 7, 8, 9, 5],
                    [1, 2, 3, 4, 0]])
 
-            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([1, -1]), to_mask=True)
+            >>> roll(
+            ...     numpy.arange(10).reshape(2,5),
+            ...     numpy.array([1, -1]),
+            ...     to_mask=True
+            ... )
             masked_array(data =
              [[-- -- -- -- --]
              [1 2 3 4 --]],
@@ -894,7 +927,11 @@ def roll(new_array, shift, out=None, to_mask=False):
                    fill_value = 999999)
             <BLANKLINE>
 
-            >>> roll(numpy.arange(10).reshape(2,5), numpy.array([0, -1]), to_mask=True)
+            >>> roll(
+            ...     numpy.arange(10).reshape(2,5),
+            ...     numpy.array([0, -1]),
+            ...     to_mask=True
+            ... )
             masked_array(data =
              [[1 2 3 4 --]
              [6 7 8 9 --]],
@@ -982,7 +1019,9 @@ def roll(new_array, shift, out=None, to_mask=False):
                    fill_value = 999999)
             <BLANKLINE>
 
-            >>> a = numpy.arange(10).reshape(2,5); b = a.copy(); roll(a, numpy.arange(1, 3), b)
+            >>> a = numpy.arange(10).reshape(2,5)
+            >>> b = a.copy()
+            >>> roll(a, numpy.arange(1, 3), b)
             array([[8, 9, 5, 6, 7],
                    [3, 4, 0, 1, 2]])
             >>> a
@@ -1195,10 +1234,16 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> min_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
             0j
 
-            >>> min_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=0)
+            >>> min_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=0
+            ... )
             array([ 0.+0.j,  0.+1.j,  2.+1.j])
 
-            >>> min_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
+            >>> min_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=1
+            ... )
             array([ 1.+0.j,  0.+0.j])
 
             >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
@@ -1207,7 +1252,11 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
             array([0, 4, 8])
 
-            >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2), keepdims=True)
+            >>> min_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(0,2),
+            ...     keepdims=True
+            ... )
             array([[[0],
                     [4],
                     [8]]])
@@ -1215,7 +1264,11 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
             array([0, 4, 8])
 
-            >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0), return_indices=True)
+            >>> min_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(2,0),
+            ...     return_indices=True
+            ... )
             (array([0, 4, 8]), (array([0, 0, 0]), array([0, 1, 2]), array([0, 0, 0])))
 
             >>> min_abs(numpy.array([numpy.nan, -2, 3]))
@@ -1300,17 +1353,29 @@ def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> nanmin_abs(numpy.arange(10).reshape(2,5), axis=-1)
             array([0, 5])
 
-            >>> nanmin_abs(numpy.arange(10).reshape(2,5), axis=-1, keepdims=True)
+            >>> nanmin_abs(
+            ...     numpy.arange(10).reshape(2,5),
+            ...     axis=-1,
+            ...     keepdims=True
+            ... )
             array([[0],
                    [5]])
 
-            >>> nanmin_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
+            >>> nanmin_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ... )
             0j
 
-            >>> nanmin_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=0)
+            >>> nanmin_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=0
+            ... )
             array([ 0.+0.j,  0.+1.j,  2.+1.j])
 
-            >>> nanmin_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
+            >>> nanmin_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=1
+            ... )
             array([ 1.+0.j,  0.+0.j])
 
             >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
@@ -1319,15 +1384,26 @@ def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
             array([0, 4, 8])
 
-            >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2), keepdims=True)
+            >>> nanmin_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(0,2),
+            ...     keepdims=True
+            ... )
             array([[[0],
                     [4],
                     [8]]])
 
-            >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
+            >>> nanmin_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(2,0)
+            ... )
             array([0, 4, 8])
 
-            >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0), return_indices=True)
+            >>> nanmin_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(2,0),
+            ...     return_indices=True
+            ... )
             (array([0, 4, 8]), (array([0, 0, 0]), array([0, 1, 2]), array([0, 0, 0])))
 
             >>> nanmin_abs(numpy.array([numpy.nan, -2, 3]))
@@ -1424,10 +1500,16 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> max_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
             (1+3j)
 
-            >>> max_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=0)
+            >>> max_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=0
+            ... )
             array([ 1.+0.j,  1.+1.j,  1.+3.j])
 
-            >>> max_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
+            >>> max_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=1
+            ... )
             array([ 2.+1.j,  1.+3.j])
 
             >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
@@ -1436,7 +1518,11 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
             array([15, 19, 23])
 
-            >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2), keepdims=True)
+            >>> max_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(0,2),
+            ...     keepdims=True
+            ... )
             array([[[15],
                     [19],
                     [23]]])
@@ -1444,7 +1530,11 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
             array([15, 19, 23])
 
-            >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0), return_indices=True)
+            >>> max_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(2,0),
+            ...     return_indices=True
+            ... )
             (array([15, 19, 23]), (array([1, 1, 1]), array([0, 1, 2]), array([3, 3, 3])))
 
             >>> max_abs(numpy.array([numpy.nan, -2, 3]))
@@ -1530,17 +1620,29 @@ def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> nanmax_abs(numpy.arange(10).reshape(2,5), axis=-1)
             array([4, 9])
 
-            >>> nanmax_abs(numpy.arange(10).reshape(2,5), axis=-1, keepdims=True)
+            >>> nanmax_abs(
+            ...     numpy.arange(10).reshape(2,5),
+            ...     axis=-1,
+            ...     keepdims=True
+            ... )
             array([[4],
                    [9]])
 
-            >>> nanmax_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]))
+            >>> nanmax_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]])
+            ... )
             (1+3j)
 
-            >>> nanmax_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=0)
+            >>> nanmax_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=0,
+            ... )
             array([ 1.+0.j,  1.+1.j,  1.+3.j])
 
-            >>> nanmax_abs(numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]), axis=1)
+            >>> nanmax_abs(
+            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
+            ...     axis=1,
+            ... )
             array([ 2.+1.j,  1.+3.j])
 
             >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
@@ -1549,7 +1651,11 @@ def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2))
             array([15, 19, 23])
 
-            >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(0,2), keepdims=True)
+            >>> nanmax_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(0,2),
+            ...     keepdims=True
+            ... )
             array([[[15],
                     [19],
                     [23]]])
@@ -1557,7 +1663,11 @@ def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0))
             array([15, 19, 23])
 
-            >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(2,0), return_indices=True)
+            >>> nanmax_abs(
+            ...     numpy.arange(24).reshape(2,3,4),
+            ...     axis=(2,0),
+            ...     return_indices=True
+            ... )
             (array([15, 19, 23]), (array([1, 1, 1]), array([0, 1, 2]), array([3, 3, 3])))
 
             >>> nanmax_abs(numpy.array([numpy.nan, -2, 3]))
@@ -1663,7 +1773,9 @@ def index_array_to_bool_array(index_array, shape):
             >>> index_array_to_bool_array((numpy.arange(1, 4),), (5,))
             array([False,  True,  True,  True, False], dtype=bool)
 
-            >>> index_array_to_bool_array((numpy.arange(3), numpy.arange(3)), (3, 3,))
+            >>> index_array_to_bool_array(
+            ...     (numpy.arange(3), numpy.arange(3)), (3, 3)
+            ... )
             array([[ True, False, False],
                    [False,  True, False],
                    [False, False,  True]], dtype=bool)
@@ -1673,7 +1785,6 @@ def index_array_to_bool_array(index_array, shape):
     bool_array[index_array] = True
 
     return(bool_array)
-
 
 
 @prof.log_call(trace_logger)
@@ -1732,7 +1843,7 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                     [4],
                     [5]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_after = 1)
+            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_after=1)
             array([[[0],
                     [1],
                     [2]],
@@ -1741,7 +1852,7 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                     [4],
                     [5]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_after = (1,))
+            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_after=(1,))
             array([[[0],
                     [1],
                     [2]],
@@ -1750,15 +1861,15 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                     [4],
                     [5]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before = 1)
+            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before=1)
             array([[[0, 1, 2],
                     [3, 4, 5]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before = (1,))
+            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before=(1,))
             array([[[0, 1, 2],
                     [3, 4, 5]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before = (3,))
+            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before=(3,))
             array([[[0, 1, 2],
                     [3, 4, 5]],
             <BLANKLINE>
@@ -1768,7 +1879,7 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                    [[0, 1, 2],
                     [3, 4, 5]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_after = (4,))
+            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_after=(4,))
             array([[[0, 0, 0, 0],
                     [1, 1, 1, 1],
                     [2, 2, 2, 2]],
@@ -1777,7 +1888,11 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                     [4, 4, 4, 4],
                     [5, 5, 5, 5]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before = (3,), reps_after = (4,))
+            >>> expand_view(
+            ...     numpy.arange(6).reshape((2,3)),
+            ...     reps_before=(3,),
+            ...     reps_after=(4,)
+            ... )
             array([[[[0, 0, 0, 0],
                      [1, 1, 1, 1],
                      [2, 2, 2, 2]],
@@ -1836,7 +1951,10 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                      [5, 5, 5],
                      [5, 5, 5]]]])
 
-            >>> expand_view(numpy.arange(6).reshape((2,3)), reps_before = (4,3))
+            >>> expand_view(
+            ...     numpy.arange(6).reshape((2,3)),
+            ...     reps_before=(4,3),
+            ... )
             array([[[[0, 1, 2],
                      [3, 4, 5]],
             <BLANKLINE>
@@ -2089,25 +2207,27 @@ def enumerate_masks(new_masks, axis=0):
                     [3, 3, 3],
                     [3, 3, 3]]], dtype=uint64)
 
-            >>> enumerate_masks(numpy.array([[[ True, False, False, False],
-            ...                               [False, False, False, False],
-            ...                               [False, False, False, False],
-            ...                               [False, False, False, False]],
+            >>> enumerate_masks(
+            ...     numpy.array([[[ True, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False]],
             ...
-            ...                              [[False, False, False, False],
-            ...                               [False,  True, False, False],
-            ...                               [False, False, False, False],
-            ...                               [False, False, False, False]],
+            ...                  [[False, False, False, False],
+            ...                   [False,  True, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False]],
             ...
-            ...                              [[False, False, False, False],
-            ...                               [False, False, False, False],
-            ...                               [False, False,  True, False],
-            ...                               [False, False, False, False]],
+            ...                  [[False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False,  True, False],
+            ...                   [False, False, False, False]],
             ...
-            ...                              [[False, False, False, False],
-            ...                               [False, False, False, False],
-            ...                               [False, False, False, False],
-            ...                               [False, False, False,  True]]], dtype=bool))
+            ...                  [[False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False,  True]]], dtype=bool)
+            ... )
             array([[[1, 0, 0, 0],
                     [0, 0, 0, 0],
                     [0, 0, 0, 0],
@@ -2163,25 +2283,27 @@ def enumerate_masks_max(new_masks, axis=0):
                     [3, 3, 3],
                     [3, 3, 3]]], dtype=uint64)
 
-            >>> enumerate_masks_max(numpy.array([[[ True, False, False, False],
-            ...                                   [False, False, False, False],
-            ...                                   [False, False, False, False],
-            ...                                   [False, False, False, False]],
+            >>> enumerate_masks_max(
+            ...     numpy.array([[[ True, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False]],
             ...
-            ...                                  [[False, False, False, False],
-            ...                                   [False,  True, False, False],
-            ...                                   [False, False, False, False],
-            ...                                   [False, False, False, False]],
+            ...                  [[False, False, False, False],
+            ...                   [False,  True, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False]],
             ...
-            ...                                  [[False, False, False, False],
-            ...                                   [False, False, False, False],
-            ...                                   [False, False,  True, False],
-            ...                                   [False, False, False, False]],
+            ...                  [[False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False,  True, False],
+            ...                   [False, False, False, False]],
             ...
-            ...                                  [[False, False, False, False],
-            ...                                   [False, False, False, False],
-            ...                                   [False, False, False, False],
-            ...                                   [False, False, False,  True]]], dtype=bool))
+            ...                  [[False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False, False],
+            ...                   [False, False, False,  True]]], dtype=bool)
+            ... )
             array([[[1, 0, 0, 0],
                     [0, 2, 0, 0],
                     [0, 0, 3, 0],
@@ -2235,7 +2357,10 @@ def cartesian_product(arrays):
                    [1, 1],
                    [1, 2]])
 
-            >>> cartesian_product([numpy.arange(2, dtype=float), numpy.arange(3)])
+            >>> cartesian_product([
+            ...     numpy.arange(2, dtype=float),
+            ...     numpy.arange(3)
+            ... ])
             array([[ 0.,  0.],
                    [ 0.,  1.],
                    [ 0.,  2.],
@@ -2243,7 +2368,11 @@ def cartesian_product(arrays):
                    [ 1.,  1.],
                    [ 1.,  2.]])
 
-            >>> cartesian_product([numpy.arange(2), numpy.arange(3), numpy.arange(4)])
+            >>> cartesian_product([
+            ...     numpy.arange(2),
+            ...     numpy.arange(3),
+            ...     numpy.arange(4)
+            ... ])
             array([[0, 0, 0],
                    [0, 0, 1],
                    [0, 0, 2],
@@ -2345,8 +2474,10 @@ def truncate_masked_frames(shifted_frames):
                                                         that has no mask.
 
         Examples:
-            >>> a = numpy.arange(60).reshape(3,5,4);
-            >>> a = numpy.ma.masked_array(a, mask=numpy.zeros(a.shape, dtype=bool), shrink=False)
+            >>> a = numpy.arange(60).reshape(3,5,4)
+            >>> a = numpy.ma.masked_array(
+            ...     a, mask=numpy.zeros(a.shape, dtype=bool), shrink=False
+            ... )
             >>> a[0, :1, :] = numpy.ma.masked; a[0, :, -1:] = numpy.ma.masked
             >>> a[1, :2, :] = numpy.ma.masked; a[1, :, :0] = numpy.ma.masked
             >>> a[2, :0, :] = numpy.ma.masked; a[2, :, :1] = numpy.ma.masked
@@ -2470,13 +2601,19 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
                                                  end.
 
         Examples:
-            >>> all_permutations_operation(operator.add, numpy.ones((1,3)), numpy.eye(2)).shape
+            >>> all_permutations_operation(
+            ...     operator.add, numpy.ones((1,3)), numpy.eye(2)
+            ... ).shape
             (1, 3, 2, 2)
 
-            >>> all_permutations_operation(operator.add, numpy.ones((2,2)), numpy.eye(2)).shape
+            >>> all_permutations_operation(
+            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)
+            ... ).shape
             (2, 2, 2, 2)
 
-            >>> all_permutations_operation(operator.add, numpy.ones((2,2)), numpy.eye(2))
+            >>> all_permutations_operation(
+            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)
+            ... )
             array([[[[ 2.,  1.],
                      [ 1.,  2.]],
             <BLANKLINE>
@@ -2490,7 +2627,9 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
                     [[ 2.,  1.],
                      [ 1.,  2.]]]])
 
-            >>> all_permutations_operation(operator.sub, numpy.ones((2,2)), numpy.eye(2))
+            >>> all_permutations_operation(
+            ...     operator.sub, numpy.ones((2,2)), numpy.eye(2)
+            ... )
             array([[[[ 0.,  1.],
                      [ 1.,  0.]],
             <BLANKLINE>
@@ -2504,7 +2643,9 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
                     [[ 0.,  1.],
                      [ 1.,  0.]]]])
 
-            >>> all_permutations_operation(operator.sub, numpy.ones((2,2)), numpy.fliplr(numpy.eye(2)))
+            >>> all_permutations_operation(
+            ...     operator.sub, numpy.ones((2,2)), numpy.fliplr(numpy.eye(2))
+            ... )
             array([[[[ 1.,  0.],
                      [ 0.,  1.]],
             <BLANKLINE>
@@ -2518,7 +2659,9 @@ def all_permutations_operation(new_op, new_array_1, new_array_2):
                     [[ 1.,  0.],
                      [ 0.,  1.]]]])
 
-            >>> all_permutations_operation(operator.sub, numpy.zeros((2,2)), numpy.eye(2))
+            >>> all_permutations_operation(
+            ...     operator.sub, numpy.zeros((2,2)), numpy.eye(2)
+            ... )
             array([[[[-1.,  0.],
                      [ 0., -1.]],
             <BLANKLINE>
@@ -2587,7 +2730,9 @@ def all_permutations_equal(new_array_1, new_array_2):
                     [[ True, False],
                      [False,  True]]]], dtype=bool)
 
-            >>> all_permutations_equal(numpy.ones((2,2)), numpy.fliplr(numpy.eye(2)))
+            >>> all_permutations_equal(
+            ...     numpy.ones((2,2)), numpy.fliplr(numpy.eye(2))
+            ... )
             array([[[[False,  True],
                      [ True, False]],
             <BLANKLINE>
@@ -2633,7 +2778,10 @@ def all_permutations_equal(new_array_1, new_array_2):
                      [ True, False,  True],
                      [ True,  True, False]]]], dtype=bool)
 
-            >>> all_permutations_equal(numpy.arange(4).reshape((2,2)), numpy.arange(2,6).reshape((2,2)))
+            >>> all_permutations_equal(
+            ...     numpy.arange(4).reshape((2,2)),
+            ...     numpy.arange(2,6).reshape((2,2))
+            ... )
             array([[[[False, False],
                      [False, False]],
             <BLANKLINE>
@@ -2749,7 +2897,10 @@ def dot_product(new_vector_set_1, new_vector_set_2):
             >>> dot_product(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
             array([[ 1.]])
 
-            >>> dot_product(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]))
+            >>> dot_product(
+            ...     numpy.array([[ True,  False]]),
+            ...     numpy.array([[ True,  True]])
+            ... )
             array([[ 1.]])
     """
 
@@ -2930,39 +3081,84 @@ def threshold_array(an_array, threshold, include_below=True, is_closed=True):
                                                               threshold.
 
         Examples:
-            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=True,
+            ...     is_closed=False
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=True)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=True,
+            ...     is_closed=True
+            ... )
             array([[ True, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=True)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=False,
+            ...     is_closed=True
+            ... )
             array([[ True,  True,  True],
                    [ True,  True,  True]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=False)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=False,
+            ...     is_closed=False
+            ... )
             array([[False,  True,  True],
                    [ True,  True,  True]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3), 5, include_below=True, is_closed=True)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     5,
+            ...     include_below=True,
+            ...     is_closed=True
+            ... )
             array([[ True,  True,  True],
                    [ True,  True,  True]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3), 6, include_below=True, is_closed=False)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     6,
+            ...     include_below=True,
+            ...     is_closed=False
+            ... )
             array([[ True,  True,  True],
                    [ True,  True,  True]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3), 2*numpy.ones((2,3)), include_below=True, is_closed=True)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     2*numpy.ones((2,3)),
+            ...     include_below=True,
+            ...     is_closed=True
+            ... )
             array([[ True,  True,  True],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3) % 2, 1, include_below=False, is_closed=True)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3) % 2,
+            ...     1,
+            ...     include_below=False,
+            ...     is_closed=True
+            ... )
             array([[False,  True, False],
                    [ True, False,  True]], dtype=bool)
 
-            >>> threshold_array(numpy.arange(6).reshape(2,3) % 2, 1, include_below=True, is_closed=False)
+            >>> threshold_array(
+            ...     numpy.arange(6).reshape(2,3) % 2,
+            ...     1,
+            ...     include_below=True,
+            ...     is_closed=False
+            ... )
             array([[ True, False,  True],
                    [False,  True, False]], dtype=bool)
     """
@@ -3089,39 +3285,84 @@ def threshold_metric(a_metric, threshold, include_below=True, is_closed=True):
                                                               unique matches.
 
         Examples:
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=False)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=True,
+            ...     is_closed=False
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=True, is_closed=True)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=True,
+            ...     is_closed=True
+            ... )
             array([[ True, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=True)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=False,
+            ...     is_closed=True
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), 0, include_below=False, is_closed=False)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     0,
+            ...     include_below=False,
+            ...     is_closed=False
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), 5, include_below=True, is_closed=True)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     5,
+            ...     include_below=True,
+            ...     is_closed=True
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), 6, include_below=True, is_closed=False)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     6,
+            ...     include_below=True,
+            ...     is_closed=False
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), 2*numpy.ones((2,3)), include_below=True, is_closed=True)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     2*numpy.ones((2,3)),
+            ...     include_below=True,
+            ...     is_closed=True
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3), numpy.arange(0, 12, 2).reshape(2,3), include_below=True, is_closed=True)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     numpy.arange(0, 12, 2).reshape(2,3),
+            ...     include_below=True,
+            ...     is_closed=True
+            ... )
             array([[False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> threshold_metric(numpy.arange(6).reshape(2,3) % 2, 1, include_below=True, is_closed=False)
+            >>> threshold_metric(
+            ...     numpy.arange(6).reshape(2,3) % 2,
+            ...     1,
+            ...     include_below=True,
+            ...     is_closed=False
+            ... )
             array([[False, False, False],
                    [False,  True, False]], dtype=bool)
     """
@@ -3166,7 +3407,9 @@ def compute_mapping_matches(mapping):
             >>> compute_mapping_matches(numpy.arange(6).reshape(2,3) <= 0)
             array([1, 1, 2], dtype=uint64)
 
-            >>> compute_mapping_matches((numpy.arange(6).reshape(2,3) % 2) == 1)
+            >>> compute_mapping_matches(
+            ...     (numpy.arange(6).reshape(2,3) % 2) == 1
+            ... )
             array([1, 1, 2], dtype=uint64)
 
             >>> compute_mapping_matches(numpy.eye(2, dtype=bool))
@@ -3224,13 +3467,17 @@ def compute_mapping_relevance(mapping):
             >>> compute_mapping_relevance(numpy.arange(6).reshape(2,3) <= 0)
             array([ 0.5       ,  0.33333333])
 
-            >>> compute_mapping_relevance((numpy.arange(6).reshape(2,3) % 2) == 1)
+            >>> compute_mapping_relevance(
+            ...     (numpy.arange(6).reshape(2,3) % 2) == 1
+            ... )
             array([ 0.5       ,  0.33333333])
 
             >>> compute_mapping_relevance(numpy.eye(2, dtype=bool))
             array([ 1.,  1.])
 
-            >>> compute_mapping_relevance(numpy.fliplr(numpy.eye(2, dtype=bool)))
+            >>> compute_mapping_relevance(
+            ...     numpy.fliplr(numpy.eye(2, dtype=bool))
+            ... )
             array([ 1.,  1.])
     """
 
@@ -3483,19 +3730,33 @@ def matrix_reduced_op(a, b, op):
                                    result of op(a[i], b[j]).
 
         Examples:
-            >>> matrix_reduced_op(numpy.arange(6).reshape(2,3), numpy.arange(0,12,2).reshape(2,3), op=numpy.dot)
+            >>> matrix_reduced_op(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     numpy.arange(0,12,2).reshape(2,3),
+            ...     op=numpy.dot
+            ... )
             array([[ 10,  28],
                    [ 28, 100]])
 
-            >>> numpy.dot(numpy.arange(6).reshape(2,3), numpy.arange(0,12,2).reshape(2,3).T)
+            >>> numpy.dot(
+            ...     numpy.arange(6).reshape(2,3),
+            ...     numpy.arange(0,12,2).reshape(2,3).T,
+            ... )
             array([[ 10,  28],
                    [ 28, 100]])
 
-            >>> matrix_reduced_op(numpy.arange(8).reshape(2,4), numpy.arange(0,16,2).reshape(2,4), op=numpy.dot)
+            >>> matrix_reduced_op(
+            ...     numpy.arange(8).reshape(2,4),
+            ...     numpy.arange(0,16,2).reshape(2,4),
+            ...     op=numpy.dot
+            ... )
             array([[ 28,  76],
                    [ 76, 252]])
 
-            >>> numpy.dot(numpy.arange(8).reshape(2,4), numpy.arange(0,16,2).reshape(2,4).T)
+            >>> numpy.dot(
+            ...     numpy.arange(8).reshape(2,4),
+            ...     numpy.arange(0,16,2).reshape(2,4).T,
+            ... )
             array([[ 28,  76],
                    [ 76, 252]])
 
@@ -3600,8 +3861,10 @@ def masks_intersection(a, b):
             array([[False, False, False],
                    [False,  True, False]], dtype=bool)
 
-            >>> masks_intersection((numpy.arange(6).reshape(2,3) % 2).astype(bool),
-            ...                    (numpy.arange(6).reshape(2,3) == 4))
+            >>> masks_intersection(
+            ...     (numpy.arange(6).reshape(2,3) % 2).astype(bool),
+            ...     (numpy.arange(6).reshape(2,3) == 4)
+            ... )
             array([[0, 1],
                    [0, 0]], dtype=uint64)
     """
@@ -3645,16 +3908,16 @@ def masks_union(a, b):
                    [2, 2]], dtype=uint64)
 
             >>> masks_union(numpy.eye(2).astype(bool),
-            ...                    numpy.ones((2,), dtype=bool))
+            ...             numpy.ones((2,), dtype=bool))
             array([[2],
                    [2]], dtype=uint64)
 
             >>> masks_union(numpy.ones((2,), dtype=bool),
-            ...                    numpy.eye(2).astype(bool))
+            ...             numpy.eye(2).astype(bool))
             array([[2, 2]], dtype=uint64)
 
             >>> masks_union(numpy.ones((2,), dtype=bool),
-            ...                    numpy.ones((2,), dtype=bool))
+            ...             numpy.ones((2,), dtype=bool))
             array([[2]], dtype=uint64)
 
             >>> masks_union(numpy.eye(2).astype(bool),
@@ -3747,8 +4010,10 @@ def masks_overlap_normalized(a, b):
             array([[False, False, False],
                    [False,  True, False]], dtype=bool)
 
-            >>> masks_overlap_normalized((numpy.arange(6).reshape(2,3) % 2).astype(bool),
-            ...                          (numpy.arange(6).reshape(2,3) == 4))
+            >>> masks_overlap_normalized(
+            ...     (numpy.arange(6).reshape(2,3) % 2).astype(bool),
+            ...     (numpy.arange(6).reshape(2,3) == 4)
+            ... )
             array([[ 0.,  1.],
                    [ 0.,  0.]])
     """
@@ -3802,35 +4067,71 @@ def dot_product_partially_normalized(new_vector_set_1,
             >>> (numpy.array(dot_product_partially_normalized(numpy.eye(10), numpy.eye(10), 2)) == numpy.array((numpy.eye(10), numpy.eye(10),))).all()
             True
 
-            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]), 2)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  0]]),
+            ...     2
+            ... )
             (array([[ 1.]]), array([[ 1.]]))
 
-            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]), 2)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 0,  1]]),
+            ...     2
+            ... )
             (array([[ 0.]]), array([[ 0.]]))
 
-            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]), 2)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[-1,  0]]),
+            ...     2
+            ... )
             (array([[-1.]]), array([[-1.]]))
 
-            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]), 2)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 0, -1]]),
+            ...     2
+            ... )
             (array([[ 0.]]), array([[ 0.]]))
 
-            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 2)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  1]]),
+            ...     2
+            ... )
             (array([[ 1.]]), array([[ 0.70710678]]))
 
-            >>> dot_product_partially_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 1)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  1]]),
+            ...     1
+            ... )
             (array([[ 1.]]), array([[ 0.5]]))
 
-            >>> dot_product_partially_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 2)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ True,  False]]),
+            ...     numpy.array([[ True,  True]]),
+            ...     2
+            ... )
             (array([[ 1.]]), array([[ 0.70710678]]))
 
-            >>> dot_product_partially_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 1)
+            >>> dot_product_partially_normalized(
+            ...     numpy.array([[ True,  False]]),
+            ...     numpy.array([[ True,  True]]),
+            ...     1
+            ... )
             (array([[ 1.]]), array([[ 0.5]]))
 
-            >>> dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE
+            >>> dot_product_partially_normalized(
+            ...     numpy.arange(6).reshape((2,3)),
+            ...     numpy.arange(5, 17).reshape((4,3)),
+            ...     2
+            ... )  #doctest: +NORMALIZE_WHITESPACE
             (array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],
-                   [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),
+                    [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),
              array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],
-                   [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
+                    [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
     """
 
     new_vector_set_1_float = new_vector_set_1.astype(float)
@@ -3887,22 +4188,40 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
             >>> (pair_dot_product_partially_normalized(numpy.eye(10), 2) == numpy.eye(10)).all()
             True
 
-            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  0]]), 2)
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     2
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_partially_normalized(numpy.array([[-1,  0]]), 2)
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.array([[-1,  0]]),
+            ...     2
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]))
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  1]]),
+            ...     2
+            ... )
             array([[ 1.41421356]])
 
-            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]), 1)
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.array([[ 1,  1]]),
+            ...     1
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_partially_normalized(numpy.array([[ True,  False]]), 2)
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.array([[ True,  False]]),
+            ...     2
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_partially_normalized(numpy.array([[ True,  True]]), 1)
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.array([[ True,  True]]),
+            ...     1
+            ... )
             array([[ 1.]])
 
             # >>> pair_dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE
@@ -3959,31 +4278,67 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
             >>> (dot_product_normalized(numpy.eye(10), numpy.eye(10), 2) == numpy.eye(10)).all()
             True
 
-            >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]), 2)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  0]]),
+            ...     2
+            ... )
             array([[ 1.]])
 
-            >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]), 2)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 0,  1]]),
+            ...     2
+            ... )
             array([[ 0.]])
 
-            >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]), 2)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[-1,  0]]),
+            ...     2
+            ... )
             array([[-1.]])
 
-            >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]), 2)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 0, -1]]),
+            ...     2
+            ... )
             array([[ 0.]])
 
-            >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 2)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  1]]),
+            ...     2
+            ... )
             array([[ 0.70710678]])
 
-            >>> dot_product_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]), 1)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  1]]),
+            ...     1
+            ... )
             array([[ 0.5]])
 
-            >>> dot_product_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 2)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ True,  False]]),
+            ...     numpy.array([[ True,   True]]),
+            ...     2
+            ... )
             array([[ 0.70710678]])
 
-            >>> dot_product_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]), 1)
+            >>> dot_product_normalized(
+            ...     numpy.array([[ True, False]]),
+            ...     numpy.array([[ True,  True]]),
+            ...     1
+            ... )
             array([[ 0.5]])
 
-            >>> dot_product_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2)
+            >>> dot_product_normalized(
+            ...     numpy.arange(6).reshape((2,3)),
+            ...     numpy.arange(5, 17).reshape((4,3)),
+            ...     2
+            ... )
             array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
@@ -4037,22 +4392,34 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
             >>> (pair_dot_product_normalized(numpy.eye(10)) == numpy.eye(10)).all()
             True
 
-            >>> pair_dot_product_normalized(numpy.array([[ 1,  0]]))
+            >>> pair_dot_product_normalized(
+            ...     numpy.array([[ 1,  0]])
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_normalized(numpy.array([[ 1.,  0.]]))
+            >>> pair_dot_product_normalized(
+            ...     numpy.array([[ 1.,  0.]])
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_normalized(numpy.array([[-1,  0]]))
+            >>> pair_dot_product_normalized(
+            ...     numpy.array([[-1,  0]]),
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_normalized(numpy.array([[ 0,  1]]))
+            >>> pair_dot_product_normalized(
+            ...     numpy.array([[ 0,  1]]),
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_normalized(numpy.array([[ 1,  1]]))
+            >>> pair_dot_product_normalized(
+            ...     numpy.array([[ 1,  1]]),
+            ... )
             array([[ 1.]])
 
-            >>> pair_dot_product_normalized(numpy.array([[ True,  False]]))
+            >>> pair_dot_product_normalized(
+            ...     numpy.array([[ True,  False]]),
+            ... )
             array([[ 1.]])
     """
 
@@ -4100,25 +4467,46 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
             >>> (dot_product_L2_normalized(numpy.eye(10), numpy.eye(10)) == numpy.eye(10)).all()
             True
 
-            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  0]]))
+            >>> dot_product_L2_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  0]]),
+            ... )
             array([[ 1.]])
 
-            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0,  1]]))
+            >>> dot_product_L2_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 0,  1]]),
+            ... )
             array([[ 0.]])
 
-            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[-1,  0]]))
+            >>> dot_product_L2_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[-1,  0]]),
+            ... )
             array([[-1.]])
 
-            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 0, -1]]))
+            >>> dot_product_L2_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 0, -1]]),
+            ... )
             array([[ 0.]])
 
-            >>> dot_product_L2_normalized(numpy.array([[ 1,  0]]), numpy.array([[ 1,  1]]))
+            >>> dot_product_L2_normalized(
+            ...     numpy.array([[ 1,  0]]),
+            ...     numpy.array([[ 1,  1]]),
+            ... )
             array([[ 0.70710678]])
 
-            >>> dot_product_L2_normalized(numpy.array([[ True,  False]]), numpy.array([[ True,  True]]))
+            >>> dot_product_L2_normalized(
+            ...     numpy.array([[ True,  False]]),
+            ...     numpy.array([[ True,   True]]),
+            ... )
             array([[ 0.70710678]])
 
-            >>> dot_product_L2_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)) )
+            >>> dot_product_L2_normalized(
+            ...     numpy.arange(6).reshape((2,3)),
+            ...     numpy.arange(5, 17).reshape((4,3)),
+            ... )
             array([[ 0.85280287,  0.82857143,  0.8157437 ,  0.80782729],
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
@@ -4156,7 +4544,7 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
         Examples:
             >>> a = numpy.array([[ True,  True, False],
             ...                  [False, False, False],
-            ...                  [ True,  True,  True]], dtype=bool);
+            ...                  [ True,  True,  True]], dtype=bool)
             >>> generate_contour(a)
             array([[ True,  True, False],
                    [False, False, False],
@@ -4167,13 +4555,15 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
                    [ 0.,  1.,  0.],
                    [ 0.,  0.,  1.]])
 
-            >>> a = numpy.array([[False, False,  True, False, False, False,  True],
-            ...                  [ True, False, False, False,  True, False, False],
-            ...                  [ True,  True, False,  True,  True, False,  True],
-            ...                  [ True, False, False,  True,  True, False, False],
-            ...                  [ True, False, False, False, False, False, False],
-            ...                  [False,  True, False, False, False, False,  True],
-            ...                  [False,  True,  True, False, False, False, False]], dtype=bool)
+            >>> a = numpy.array([
+            ...     [False, False,  True, False, False, False,  True],
+            ...     [ True, False, False, False,  True, False, False],
+            ...     [ True,  True, False,  True,  True, False,  True],
+            ...     [ True, False, False,  True,  True, False, False],
+            ...     [ True, False, False, False, False, False, False],
+            ...     [False,  True, False, False, False, False,  True],
+            ...     [False,  True,  True, False, False, False, False]
+            ... ], dtype=bool)
             >>> generate_contour(a)
             array([[False, False,  True, False, False, False,  True],
                    [ True, False, False, False,  True, False, False],
@@ -4226,7 +4616,7 @@ def generate_labeled_contours(a_mask, separation_distance=1.0, margin=1.0):
         Examples:
             >>> a = numpy.array([[ True,  True, False],
             ...                  [False, False, False],
-            ...                  [ True,  True,  True]], dtype=bool);
+            ...                  [ True,  True,  True]], dtype=bool)
             >>> generate_labeled_contours(a)
             array([[1, 1, 0],
                    [0, 0, 0],
@@ -4237,13 +4627,15 @@ def generate_labeled_contours(a_mask, separation_distance=1.0, margin=1.0):
                    [0, 1, 0],
                    [0, 0, 1]], dtype=int32)
 
-            >>> a = numpy.array([[False, False,  True, False, False, False,  True],
-            ...                  [ True, False, False, False,  True, False, False],
-            ...                  [ True,  True, False,  True,  True, False,  True],
-            ...                  [ True, False, False,  True,  True, False, False],
-            ...                  [ True, False, False, False, False, False, False],
-            ...                  [False,  True, False, False, False, False,  True],
-            ...                  [False,  True,  True, False, False, False, False]], dtype=bool);
+            >>> a = numpy.array([
+            ...     [False, False,  True, False, False, False,  True],
+            ...     [ True, False, False, False,  True, False, False],
+            ...     [ True,  True, False,  True,  True, False,  True],
+            ...     [ True, False, False,  True,  True, False, False],
+            ...     [ True, False, False, False, False, False, False],
+            ...     [False,  True, False, False, False, False,  True],
+            ...     [False,  True,  True, False, False, False, False]
+            ... ], dtype=bool)
             >>> generate_labeled_contours(a)
             array([[0, 0, 1, 0, 0, 0, 2],
                    [3, 0, 0, 0, 4, 0, 0],
@@ -4383,7 +4775,10 @@ def quantile(data, probs, axis=None):
                    fill_value = nan)
             <BLANKLINE>
 
-            >>> quantile(numpy.array([ 1.,  2.,  3.]), numpy.array([ 0.25,  0.5,  0.75]))
+            >>> quantile(
+            ...     numpy.array([ 1.,  2.,  3.]),
+            ...     numpy.array([ 0.25,  0.5,  0.75])
+            ... )
             masked_array(data = [ 1.25  2.    2.75],
                          mask = False,
                    fill_value = nan)
@@ -4632,28 +5027,53 @@ def tagging_reorder_array(new_array,
             >>> tagging_reorder_array(numpy.ones((1,2,3,4,5))).shape
             (1, 2, 3, 4, 5)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), from_axis_order = "tzyxc").shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     from_axis_order = "tzyxc"
+            ... ).shape
             (1, 2, 3, 4, 5)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = "tzyxc").shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     to_axis_order = "tzyxc"
+            ... ).shape
             (1, 2, 3, 4, 5)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), from_axis_order = "tzyxc", to_axis_order = "tzyxc").shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     from_axis_order = "tzyxc",
+            ...     to_axis_order = "tzyxc"
+            ... ).shape
             (1, 2, 3, 4, 5)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), from_axis_order = "txyzc").shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     from_axis_order = "txyzc"
+            ... ).shape
             (1, 4, 3, 2, 5)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), from_axis_order = "ctxyz").shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     from_axis_order = "ctxyz"
+            ... ).shape
             (2, 5, 4, 3, 1)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = "txyzc").shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     to_axis_order = "txyzc"
+            ... ).shape
             (1, 4, 3, 2, 5)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), from_axis_order = ["c","t","x","y","z"]).shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     from_axis_order = ["c","t","x","y","z"]
+            ... ).shape
             (2, 5, 4, 3, 1)
 
-            >>> tagging_reorder_array(numpy.ones((1,2,3,4,5)), to_axis_order = ["t","x","y","z","c"]).shape
+            >>> tagging_reorder_array(
+            ...     numpy.ones((1,2,3,4,5)),
+            ...     to_axis_order = ["t","x","y","z","c"]
+            ... ).shape
             (1, 4, 3, 2, 5)
     """
 
