@@ -1041,7 +1041,8 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         # This gives a list of dictionaries. However, this is not very usable.
         # So, we will convert this to a structured NumPy array.
         # In future versions, the properties argument will be removed.
-        # It does not need to be passed to retain functionality of this function.
+        # It does not need to be passed to retain functionality of this
+        # function.
         new_label_image_props = skimage.measure.regionprops(
             label_image=new_label_image,
             intensity_image=intensity_image,
