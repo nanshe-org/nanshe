@@ -65,7 +65,8 @@ def register_mean_offsets(frames2reg,
         The code for translations can be found in find_mean_offsets.
 
         Notes:
-            Adapted from code provided by Wenzhi Sun with speed improvements provided by Uri Dubin.
+            Adapted from code provided by Wenzhi Sun with speed improvements
+            provided by Uri Dubin.
 
         Args:
             frames2reg(numpy.ndarray):           Image stack to register (time
