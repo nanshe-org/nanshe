@@ -85,7 +85,9 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
                     [False,  True,  True,  True,  True,  True,  True,  True, False],
                     [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)
 
-            >>> generate_hypersphere_masks((9, 9), (4, 4), 5, include_boundary=True)
+            >>> generate_hypersphere_masks(
+            ...     (9, 9), (4, 4), 5, include_boundary=True
+            ... )
             array([[[False,  True,  True,  True,  True,  True,  True,  True, False],
                     [ True,  True,  True,  True,  True,  True,  True,  True,  True],
                     [ True,  True,  True,  True,  True,  True,  True,  True,  True],
@@ -181,7 +183,9 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                     [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],
                     [ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08]]])
 
-            >>> round(1000*generate_gaussian_images((5, 5), (2, 2), 0.5, 1).sum())/1000
+            >>> round(
+            ...     generate_gaussian_images((5, 5), (2, 2), 0.5, 1).sum(), 3
+            ... )
             1.0
 
             >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 1) #doctest: +NORMALIZE_WHITESPACE
@@ -191,18 +195,23 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                     [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],
                     [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])
 
-            >>> round(1000*generate_gaussian_images((5, 5), (2, 2), 0.25, 1).sum())/1000
+            >>> round(
+            ...     generate_gaussian_images((5, 5), (2, 2), 0.25, 1).sum(), 3
+            ... )
             1.0
 
-            >>> generate_gaussian_images((5, 5), (2, 2), 0.25, 5) #doctest: +NORMALIZE_WHITESPACE
+            >>> generate_gaussian_images(
+            ...     (5, 5), (2, 2), 0.25, 5
+            ... ) #doctest: +NORMALIZE_WHITESPACE
             array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],
                     [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],
                     [ 0.00000000e+00, 1.67506470e-03, 4.99329749e+00, 1.67506470e-03, 0.00000000e+00],
                     [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],
                     [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])
 
-
-            >>> round(1000*generate_gaussian_images((5, 5), (2, 2), 0.25, 5).sum())/1000
+            >>> round(
+            ...     generate_gaussian_images((5, 5), (2, 2), 0.25, 5).sum(), 3
+            ... )
             5.0
 
             >>> generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100)
@@ -218,7 +227,12 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
                      [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],
                      [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]]]])
 
-            >>> round(1000*generate_gaussian_images((3, 3, 3), (1, 1, 1), 0.25, 100).sum())/1000
+            >>> round(
+            ...     generate_gaussian_images(
+            ...         (3, 3, 3), (1, 1, 1), 0.25, 100
+            ...     ).sum(),
+            ...     3
+            ... )
             100.0
     """
 
@@ -292,17 +306,21 @@ def generate_random_bound_points(space, radii):
                                                  coordinate.
 
         Examples:
-            >>> numpy.random.seed(0); generate_random_bound_points((100, 100), 5)
+            >>> numpy.random.seed(0)
+            >>> generate_random_bound_points((100, 100), 5)
             array([[49, 52]])
 
-            >>> numpy.random.seed(0); generate_random_bound_points((100, 100), (5, 5))
+            >>> numpy.random.seed(0)
+            >>> generate_random_bound_points((100, 100), (5, 5))
             array([[49, 52],
                    [69, 72]])
 
-            >>> numpy.random.seed(0); generate_random_bound_points((100, 100, 100), (5,))
+            >>> numpy.random.seed(0)
+            >>> generate_random_bound_points((100, 100, 100), (5,))
             array([[49, 52, 69]])
 
-            >>> numpy.random.seed(0); generate_random_bound_points((100, 100, 100), (5, 5))
+            >>> numpy.random.seed(0)
+            >>> generate_random_bound_points((100, 100, 100), (5, 5))
             array([[49, 52, 69],
                    [72, 72, 14]])
     """
