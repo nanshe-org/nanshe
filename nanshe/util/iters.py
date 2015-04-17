@@ -194,7 +194,9 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
             >>> list_indices_to_numpy_bool_array([(0,0)], (1,1))
             array([[ True]], dtype=bool)
 
-            >>> list_indices_to_numpy_bool_array([(2,3), (0,0), (0,2), (1,1)], (3,4))
+            >>> list_indices_to_numpy_bool_array(
+            ...     [(2,3), (0,0), (0,2), (1,1)], (3,4)
+            ... )
             array([[ True, False,  True, False],
                    [False,  True, False, False],
                    [False, False, False,  True]], dtype=bool)
