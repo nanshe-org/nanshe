@@ -564,7 +564,10 @@ def splitting_xrange(a, b=None):
             if a < mid_1 and b > mid_2:
                 yield(mid_2)
 
-                for _1, _2 in itertools.izip(splitting_xrange_helper(a, mid_1), splitting_xrange_helper(mid_2, b)):
+                for _1, _2 in itertools.izip(
+                        splitting_xrange_helper(a, mid_1),
+                        splitting_xrange_helper(mid_2, b)
+                ):
                     yield(_2)
                     yield(_1)
 
