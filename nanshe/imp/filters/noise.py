@@ -54,19 +54,19 @@ def estimate_noise(input_array, significance_threshold=3.0):
             >>> estimate_noise(numpy.eye(2))
             0.5
 
-            >>> estimate_noise(numpy.eye(2), significance_threshold = 3)
+            >>> estimate_noise(numpy.eye(2), 3)
             0.5
 
-            >>> round(1000*estimate_noise(numpy.eye(3), significance_threshold = 3))/1000
+            >>> round(estimate_noise(numpy.eye(3), 3), 3)
             0.471
 
-            >>> round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 1))/1000
+            >>> round(estimate_noise(numpy.random.random((2000,2000)), 1), 3)
             0.167
 
-            >>> round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 2))/1000
+            >>> round(estimate_noise(numpy.random.random((2000,2000)), 2), 3)
             0.289
 
-            >>> round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 3))/1000
+            >>> round(estimate_noise(numpy.random.random((2000,2000)), 3), 3)
             0.289
     """
 
@@ -109,24 +109,24 @@ def significant_mask(input_array, noise_threshold=6.0, noise_estimate=None):
 
         Examples:
 
-            >>> significant_mask(numpy.eye(2), noise_threshold = 6.0)
+            >>> significant_mask(numpy.eye(2), 6.0)
             array([[False, False],
                    [False, False]], dtype=bool)
 
-            >>> significant_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)
+            >>> significant_mask(numpy.eye(2), 6.0, 0.5)
             array([[False, False],
                    [False, False]], dtype=bool)
 
-            >>> significant_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)
+            >>> significant_mask(numpy.eye(2), 1.0, 0.5)
             array([[ True,  True],
                    [ True,  True]], dtype=bool)
 
-            >>> significant_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)
+            >>> significant_mask(numpy.eye(3), 2.0, 0.47140452079103173)
             array([[False, False, False],
                    [False, False, False],
                    [False, False, False]], dtype=bool)
 
-            >>> significant_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)
+            >>> significant_mask(numpy.eye(3), 1.0, 0.47140452079103173)
             array([[ True, False, False],
                    [False,  True, False],
                    [False, False,  True]], dtype=bool)
@@ -171,20 +171,20 @@ def noise_mask(input_array, noise_threshold=6.0, noise_estimate=None):
 
 
         Examples:
-            >>> noise_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)
+            >>> noise_mask(numpy.eye(2), 6.0, 0.5)
             array([[ True,  True],
                    [ True,  True]], dtype=bool)
 
-            >>> noise_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)
+            >>> noise_mask(numpy.eye(2), 1.0, 0.5)
             array([[False, False],
                    [False, False]], dtype=bool)
 
-            >>> noise_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)
+            >>> noise_mask(numpy.eye(3), 2.0, 0.47140452079103173)
             array([[ True,  True,  True],
                    [ True,  True,  True],
                    [ True,  True,  True]], dtype=bool)
 
-            >>> noise_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)
+            >>> noise_mask(numpy.eye(3), 1.0, 0.47140452079103173)
             array([[False,  True,  True],
                    [ True, False,  True],
                    [ True,  True, False]], dtype=bool)
