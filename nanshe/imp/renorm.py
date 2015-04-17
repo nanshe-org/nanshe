@@ -73,7 +73,9 @@ def zeroed_mean_images(input_array, output_array=None):
             array([[-0.5,  0.5],
                    [-0.5,  0.5]])
 
-            >>> zeroed_mean_images(numpy.array([[1,2],[3,4]])) #doctest: +ELLIPSIS
+            >>> zeroed_mean_images(
+            ...     numpy.array([[1,2],[3,4]])
+            ... ) #doctest: +ELLIPSIS
             Traceback (most recent call last):
                 ...
             AssertionError
@@ -94,14 +96,18 @@ def zeroed_mean_images(input_array, output_array=None):
             array([[-0.5,  0.5],
                    [-0.5,  0.5]])
 
-            >>> zeroed_mean_images(numpy.array([[1,2],[3,4]]).astype(numpy.float32))
+            >>> zeroed_mean_images(
+            ...     numpy.array([[1,2],[3,4]]).astype(numpy.float32)
+            ... )
             array([[-0.5,  0.5],
                    [-0.5,  0.5]], dtype=float32)
 
-            >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a != zeroed_mean_images(a))
+            >>> a = numpy.array([[1.,2.],[3.,4.]])
+            >>> numpy.all(a != zeroed_mean_images(a))
             True
 
-            >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == zeroed_mean_images(a, output_array = a))
+            >>> a = numpy.array([[1.,2.],[3.,4.]])
+            >>> numpy.all(a == zeroed_mean_images(a, output_array=a))
             True
     """
 
@@ -158,12 +164,16 @@ def renormalized_images(input_array, ord=2, output_array=None):
             array([[ 0.,  1.],
                    [ 1.,  0.]])
 
-            >>> renormalized_images(numpy.array([[0,1],[1,0]])) #doctest: +ELLIPSIS
+            >>> renormalized_images(
+            ...     numpy.array([[0,1],[1,0]])
+            ... ) #doctest: +ELLIPSIS
             Traceback (most recent call last):
                 ...
             AssertionError
 
-            >>> renormalized_images(numpy.array([[0,1],[1,0]], dtype=numpy.float32))
+            >>> renormalized_images(
+            ...     numpy.array([[0,1],[1,0]], dtype=numpy.float32)
+            ... )
             array([[ 0.,  1.],
                    [ 1.,  0.]], dtype=float32)
 
@@ -179,17 +189,20 @@ def renormalized_images(input_array, ord=2, output_array=None):
             array([[ 0.4472136 ,  0.89442719],
                    [ 0.6       ,  0.8       ]])
 
-            >>> renormalized_images(numpy.array([[1.,2.],[3.,4.]]), ord = 1)
+            >>> renormalized_images(numpy.array([[1.,2.],[3.,4.]]), ord=1)
             array([[ 0.33333333,  0.66666667],
                    [ 0.42857143,  0.57142857]])
 
-            >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a != renormalized_images(a))
+            >>> a = numpy.array([[1.,2.],[3.,4.]])
+            >>> numpy.all(a != renormalized_images(a))
             True
 
-            >>> a = numpy.array([[1.,2.],[3.,4.]]); numpy.all(a == renormalized_images(a, output_array = a))
+            >>> a = numpy.array([[1.,2.],[3.,4.]])
+            >>> numpy.all(a == renormalized_images(a, output_array=a))
             True
 
-            >>> a = numpy.array([[1.,2.],[3.,4.]]); b = numpy.zeros_like(a); numpy.all(b == renormalized_images(a, output_array = b))
+            >>> a = numpy.array([[1.,2.],[3.,4.]]); b = numpy.zeros_like(a)
+            >>> numpy.all(b == renormalized_images(a, output_array=b))
             True
 
             >>> renormalized_images(numpy.zeros((2,3,)))
