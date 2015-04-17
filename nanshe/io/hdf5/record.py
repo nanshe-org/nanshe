@@ -630,10 +630,12 @@ def class_static_subgrouping_array_recorders(*args, **kwargs):
                 #                                                    EmptyArrayRecorder()).
                 #
                 #     Keyword Args:
-                #         kwargs(dict of strs and ArrayRecorders):   All variables
+                #         kwargs(dict of strs and ArrayRecorders):   All
+                #                                                    variables
                 #                                                    to be named
-                #                                                    with values of
-                #                                                    type ArrayRecorder.
+                #                                                    with values
+                #                                                    of type
+                #                                                    ArrayRecorder.
                 # """
 
                 for _k in args:
