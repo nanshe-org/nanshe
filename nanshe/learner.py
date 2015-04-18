@@ -494,7 +494,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
                 )
 
         if "blocks" not in output_group:
-           output_group.create_group("blocks")
+            output_group.create_group("blocks")
 
         output_group_blocks = output_group["blocks"]
 
