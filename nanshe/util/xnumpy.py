@@ -3896,9 +3896,6 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
             >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]))
             array([[ 1.41421356]])
 
-            >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]), 2)
-            array([[ 1.41421356]])
-
             >>> pair_dot_product_partially_normalized(numpy.array([[ 1,  1]]), 1)
             array([[ 1.]])
 
