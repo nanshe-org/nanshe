@@ -237,7 +237,11 @@
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
-<div class="viewcode-block" id="transform"><a class="viewcode-back" href="../../../../nanshe.imp.filters.wavelet.html#nanshe.imp.filters.wavelet.transform">[docs]</a><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">include_intermediates</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">include_lower_scales</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="transform"><a class="viewcode-back" href="../../../../nanshe.imp.filters.wavelet.html#nanshe.imp.filters.wavelet.transform">[docs]</a><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span>
+              <span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+              <span class="n">include_intermediates</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+              <span class="n">include_lower_scales</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+              <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs integral steps of the wavelet transform on im0 up to the given</span>
 <span class="sd">        scale. If scale is an iterable, then</span>

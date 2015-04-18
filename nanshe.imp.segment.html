@@ -164,7 +164,7 @@ local max is and False everywhere else.</td>
 
 <dl class="attribute">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.recorders">
-<code class="descname">recorders</code><em class="property"> = &lt;nanshe.io.hdf5.record.ClassSubgroupingRecorders object at 0x4882b50&gt;</em><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recorders</code><em class="property"> = &lt;nanshe.io.hdf5.record.ClassSubgroupingRecorders object at 0x4156b50&gt;</em><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.recorders" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -628,7 +628,9 @@ get_neuron_dtype.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([], dtype=[(&#39;mask&#39;, &#39;?&#39;, (3,)),</span>
 <span class="go">                 (&#39;contour&#39;, &#39;?&#39;, (3,)),</span>
 <span class="go">                 (&#39;image&#39;, &#39;&lt;f8&#39;, (3,)),</span>
@@ -639,7 +641,9 @@ get_neuron_dtype.</td>
 <span class="go">                 (&#39;centroid&#39;, &#39;&lt;f8&#39;, (1,))])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([], dtype=[(&#39;mask&#39;, &#39;?&#39;, (2, 3)),</span>
 <span class="go">                 (&#39;contour&#39;, &#39;?&#39;, (2, 3)),</span>
 <span class="go">                 (&#39;image&#39;, &#39;&lt;f8&#39;, (2, 3)),</span>
@@ -672,7 +676,9 @@ constructor.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">[(&#39;mask&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (3,)),</span>
 <span class="go"> (&#39;contour&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (3,)),</span>
 <span class="go"> (&#39;image&#39;, &lt;type &#39;numpy.float64&#39;&gt;, (3,)),</span>
@@ -683,7 +689,9 @@ constructor.</td>
 <span class="go"> (&#39;centroid&#39;, &lt;type &#39;numpy.float64&#39;&gt;, (1,))]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">[(&#39;mask&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (2, 3)),</span>
 <span class="go"> (&#39;contour&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (2, 3)),</span>
 <span class="go"> (&#39;image&#39;, &lt;type &#39;numpy.float64&#39;&gt;, (2, 3)),</span>
@@ -717,7 +725,9 @@ get_neuron_dtype.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([ ([False, False, False],</span>
 <span class="go">         [False, False, False],</span>
 <span class="go">         [0.0, 0.0, 0.0],</span>
@@ -736,7 +746,9 @@ get_neuron_dtype.</td>
 <span class="go">              (&#39;centroid&#39;, &#39;&lt;f8&#39;, (1,))])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([ ([[False, False, False],</span>
 <span class="go">          [False, False, False]],</span>
 <span class="go">         [[False, False, False],</span>
@@ -931,7 +943,9 @@ normalized.</p>
 <span class="go">       [[-0.28867513, -0.28867513],</span>
 <span class="go">        [-0.28867513,  0.8660254 ]]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_data</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_data</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">a</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}}</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[ 0.8660254 , -0.28867513],</span>
 <span class="go">        [-0.28867513, -0.28867513]],</span>
 
@@ -943,7 +957,9 @@ normalized.</p>
 
 <span class="go">       [[-0.28867513, -0.28867513],</span>
 <span class="go">        [-0.28867513,  0.8660254 ]]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_data</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_data</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">a</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}}</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[ 0.8660254 , -0.28867513],</span>
 <span class="go">        [-0.28867513, -0.28867513]],</span>
 
@@ -1056,17 +1072,23 @@ label.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 4.0, [0.5, 0.5])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 9.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>

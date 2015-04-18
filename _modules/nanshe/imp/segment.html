@@ -658,7 +658,9 @@
 <span class="sd">                   [[-0.28867513, -0.28867513],</span>
 <span class="sd">                    [-0.28867513,  0.8660254 ]]])</span>
 <span class="sd">            &gt;&gt;&gt; b = numpy.zeros_like(a)</span>
-<span class="sd">            &gt;&gt;&gt; normalize_data(a, out=b, **{&quot;renormalized_images&quot; : { &quot;ord&quot; : 2 }})</span>
+<span class="sd">            &gt;&gt;&gt; normalize_data(</span>
+<span class="sd">            ...     a, out=b, **{&quot;renormalized_images&quot; : { &quot;ord&quot; : 2 }}</span>
+<span class="sd">            ... )</span>
 <span class="sd">            array([[[ 0.8660254 , -0.28867513],</span>
 <span class="sd">                    [-0.28867513, -0.28867513]],</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
@@ -670,7 +672,9 @@
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">                   [[-0.28867513, -0.28867513],</span>
 <span class="sd">                    [-0.28867513,  0.8660254 ]]])</span>
-<span class="sd">            &gt;&gt;&gt; normalize_data(a, out=a, **{&quot;renormalized_images&quot; : { &quot;ord&quot; : 2 }})</span>
+<span class="sd">            &gt;&gt;&gt; normalize_data(</span>
+<span class="sd">            ...     a, out=a, **{&quot;renormalized_images&quot; : { &quot;ord&quot; : 2 }}</span>
+<span class="sd">            ... )</span>
 <span class="sd">            array([[[ 0.8660254 , -0.28867513],</span>
 <span class="sd">                    [-0.28867513, -0.28867513]],</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
@@ -1097,7 +1101,8 @@
         <span class="c"># This gives a list of dictionaries. However, this is not very usable.</span>
         <span class="c"># So, we will convert this to a structured NumPy array.</span>
         <span class="c"># In future versions, the properties argument will be removed.</span>
-        <span class="c"># It does not need to be passed to retain functionality of this function.</span>
+        <span class="c"># It does not need to be passed to retain functionality of this</span>
+        <span class="c"># function.</span>
         <span class="n">new_label_image_props</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">measure</span><span class="o">.</span><span class="n">regionprops</span><span class="p">(</span>
             <span class="n">label_image</span><span class="o">=</span><span class="n">new_label_image</span><span class="p">,</span>
             <span class="n">intensity_image</span><span class="o">=</span><span class="n">intensity_image</span><span class="p">,</span>
@@ -1601,16 +1606,22 @@
 
 <span class="sd">        Examples:</span>
 
-<span class="sd">            &gt;&gt;&gt; region_properties(numpy.zeros((2,2), dtype=int)) # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            &gt;&gt;&gt; region_properties(</span>
+<span class="sd">            ...     numpy.zeros((2,2), dtype=int)</span>
+<span class="sd">            ... ) # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            array([], </span>
 <span class="sd">                  dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 
-<span class="sd">            &gt;&gt;&gt; region_properties(numpy.ones((2,2), dtype=int)) # doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            array([(1, 4.0, [0.5, 0.5])], </span>
+<span class="sd">            &gt;&gt;&gt; region_properties(</span>
+<span class="sd">            ...     numpy.ones((2,2), dtype=int)</span>
+<span class="sd">            ... ) # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            array([(1, 4.0, [0.5, 0.5])],</span>
 <span class="sd">                  dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 
-<span class="sd">            &gt;&gt;&gt; region_properties(numpy.ones((3,3), dtype=int)) # doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            array([(1, 9.0, [1.0, 1.0])], </span>
+<span class="sd">            &gt;&gt;&gt; region_properties(</span>
+<span class="sd">            ...     numpy.ones((3,3), dtype=int)</span>
+<span class="sd">            ... ) # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            array([(1, 9.0, [1.0, 1.0])],</span>
 <span class="sd">                  dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 
 <span class="sd">            &gt;&gt;&gt; region_properties(numpy.eye(3, dtype=int))</span>
@@ -1636,7 +1647,9 @@
 <span class="sd">                                          constructor.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; get_neuron_dtype((3,), numpy.float64) #doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            &gt;&gt;&gt; get_neuron_dtype(</span>
+<span class="sd">            ...     (3,), numpy.float64</span>
+<span class="sd">            ... ) #doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            [(&#39;mask&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (3,)),</span>
 <span class="sd">             (&#39;contour&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (3,)),</span>
 <span class="sd">             (&#39;image&#39;, &lt;type &#39;numpy.float64&#39;&gt;, (3,)),</span>
@@ -1646,7 +1659,10 @@
 <span class="sd">             (&#39;gaussian_cov&#39;, &lt;type &#39;numpy.float64&#39;&gt;, (1, 1)),</span>
 <span class="sd">             (&#39;centroid&#39;, &lt;type &#39;numpy.float64&#39;&gt;, (1,))]</span>
 
-<span class="sd">            &gt;&gt;&gt; get_neuron_dtype((2, 3), numpy.float64) #doctest: +NORMALIZE_WHITESPACE</span>
+
+<span class="sd">            &gt;&gt;&gt; get_neuron_dtype(</span>
+<span class="sd">            ...     (2, 3), numpy.float64</span>
+<span class="sd">            ... ) #doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            [(&#39;mask&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (2, 3)),</span>
 <span class="sd">             (&#39;contour&#39;, &lt;type &#39;numpy.bool_&#39;&gt;, (2, 3)),</span>
 <span class="sd">             (&#39;image&#39;, &lt;type &#39;numpy.float64&#39;&gt;, (2, 3)),</span>
@@ -1687,7 +1703,9 @@
 <span class="sd">                                          get_neuron_dtype.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; get_empty_neuron((3,), numpy.float64) #doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            &gt;&gt;&gt; get_empty_neuron(</span>
+<span class="sd">            ...     (3,), numpy.float64</span>
+<span class="sd">            ... ) #doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            array([], dtype=[(&#39;mask&#39;, &#39;?&#39;, (3,)),</span>
 <span class="sd">                             (&#39;contour&#39;, &#39;?&#39;, (3,)),</span>
 <span class="sd">                             (&#39;image&#39;, &#39;&lt;f8&#39;, (3,)),</span>
@@ -1697,7 +1715,9 @@
 <span class="sd">                             (&#39;gaussian_cov&#39;, &#39;&lt;f8&#39;, (1, 1)),</span>
 <span class="sd">                             (&#39;centroid&#39;, &#39;&lt;f8&#39;, (1,))])</span>
 
-<span class="sd">            &gt;&gt;&gt; get_empty_neuron((2, 3), numpy.float64) #doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            &gt;&gt;&gt; get_empty_neuron(</span>
+<span class="sd">            ...     (2, 3), numpy.float64</span>
+<span class="sd">            ... ) #doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            array([], dtype=[(&#39;mask&#39;, &#39;?&#39;, (2, 3)),</span>
 <span class="sd">                             (&#39;contour&#39;, &#39;?&#39;, (2, 3)),</span>
 <span class="sd">                             (&#39;image&#39;, &#39;&lt;f8&#39;, (2, 3)),</span>
@@ -1730,7 +1750,9 @@
 <span class="sd">                                          get_neuron_dtype.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; get_one_neuron((3,), numpy.float) #doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            &gt;&gt;&gt; get_one_neuron(</span>
+<span class="sd">            ...     (3,), numpy.float</span>
+<span class="sd">            ... ) #doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            array([ ([False, False, False],</span>
 <span class="sd">                     [False, False, False],</span>
 <span class="sd">                     [0.0, 0.0, 0.0],</span>
@@ -1748,8 +1770,9 @@
 <span class="sd">                          (&#39;gaussian_cov&#39;, &#39;&lt;f8&#39;, (1, 1)),</span>
 <span class="sd">                          (&#39;centroid&#39;, &#39;&lt;f8&#39;, (1,))])</span>
 
-
-<span class="sd">            &gt;&gt;&gt; get_one_neuron((2, 3), numpy.float) #doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            &gt;&gt;&gt; get_one_neuron(</span>
+<span class="sd">            ...     (2, 3), numpy.float</span>
+<span class="sd">            ... ) #doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            array([ ([[False, False, False],</span>
 <span class="sd">                      [False, False, False]],</span>
 <span class="sd">                     [[False, False, False],</span>

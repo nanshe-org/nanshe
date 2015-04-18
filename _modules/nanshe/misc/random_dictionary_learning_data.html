@@ -259,7 +259,16 @@
 <span class="sd">        which the ADINA algorithm is run.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shape</span><span class="p">,</span> <span class="n">num_objects</span><span class="p">,</span> <span class="n">num_groups</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">mean_group_size</span><span class="p">,</span> <span class="n">object_spread</span><span class="p">,</span> <span class="n">object_max_intensity</span><span class="p">,</span> <span class="n">object_min_intensity</span><span class="p">,</span> <span class="n">background_noise_intensity</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">frame_shape</span><span class="p">,</span>
+                 <span class="n">num_objects</span><span class="p">,</span>
+                 <span class="n">num_groups</span><span class="p">,</span>
+                 <span class="n">num_frames</span><span class="p">,</span>
+                 <span class="n">mean_group_size</span><span class="p">,</span>
+                 <span class="n">object_spread</span><span class="p">,</span>
+                 <span class="n">object_max_intensity</span><span class="p">,</span>
+                 <span class="n">object_min_intensity</span><span class="p">,</span>
+                 <span class="n">background_noise_intensity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Builds a DictionaryLearningRandomDataGenerator for draws.</span>
 

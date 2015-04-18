@@ -110,13 +110,15 @@
 <span class="sd">            out(numpy.ndarray):                 Same as out if out was</span>
 <span class="sd">                                                provided.</span>
 
-<span class="sd">        &gt;&gt;&gt; a = numpy.array([[ True,  True, False, False, False, False, False],</span>
-<span class="sd">        ...                  [False, False, False, False, False, False, False],</span>
-<span class="sd">        ...                  [False, False, False, False, False, False, False],</span>
-<span class="sd">        ...                  [False, False, False, False, False, False, False],</span>
-<span class="sd">        ...                  [False, False, False, False,  True, False, False],</span>
-<span class="sd">        ...                  [False, False, False, False, False, False, False],</span>
-<span class="sd">        ...                  [False, False, False, False, False, False, False]], dtype=bool)</span>
+<span class="sd">        &gt;&gt;&gt; a = numpy.array(</span>
+<span class="sd">        ...     [[ True,  True, False, False, False, False, False],</span>
+<span class="sd">        ...      [False, False, False, False, False, False, False],</span>
+<span class="sd">        ...      [False, False, False, False, False, False, False],</span>
+<span class="sd">        ...      [False, False, False, False, False, False, False],</span>
+<span class="sd">        ...      [False, False, False, False,  True, False, False],</span>
+<span class="sd">        ...      [False, False, False, False, False, False, False],</span>
+<span class="sd">        ...      [False, False, False, False, False, False, False]], dtype=bool</span>
+<span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; b = numpy.zeros_like(a)</span>
 
 <span class="sd">        &gt;&gt;&gt; binary_dilation(a, numpy.ones(a.ndim*(3,), dtype=bool))</span>
@@ -196,13 +198,15 @@
 <span class="sd">            out(numpy.ndarray):                 Same as out if out was</span>
 <span class="sd">                                                provided.</span>
 
-<span class="sd">        &gt;&gt;&gt; a = numpy.array([[ True,  True,  True, False, False, False,  True],</span>
-<span class="sd">        ...                  [ True,  True,  True, False, False,  True,  True],</span>
-<span class="sd">        ...                  [False, False, False, False, False, False, False],</span>
-<span class="sd">        ...                  [False, False, False,  True,  True,  True, False],</span>
-<span class="sd">        ...                  [False,  True, False,  True,  True,  True, False],</span>
-<span class="sd">        ...                  [False,  True, False,  True,  True,  True, False],</span>
-<span class="sd">        ...                  [False, False, False, False, False, False,  True]], dtype=bool)</span>
+<span class="sd">        &gt;&gt;&gt; a = numpy.array(</span>
+<span class="sd">        ...     [[ True,  True,  True, False, False, False,  True],</span>
+<span class="sd">        ...      [ True,  True,  True, False, False,  True,  True],</span>
+<span class="sd">        ...      [False, False, False, False, False, False, False],</span>
+<span class="sd">        ...      [False, False, False,  True,  True,  True, False],</span>
+<span class="sd">        ...      [False,  True, False,  True,  True,  True, False],</span>
+<span class="sd">        ...      [False,  True, False,  True,  True,  True, False],</span>
+<span class="sd">        ...      [False, False, False, False, False, False,  True]], dtype=bool</span>
+<span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; b = numpy.zeros_like(a)</span>
 
 <span class="sd">        &gt;&gt;&gt; binary_erosion(a, numpy.ones(a.ndim*(3,), dtype=bool))</span>

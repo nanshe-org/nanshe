@@ -254,7 +254,9 @@
 <span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([(0,0)], (1,1))</span>
 <span class="sd">            array([[ True]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array([(2,3), (0,0), (0,2), (1,1)], (3,4))</span>
+<span class="sd">            &gt;&gt;&gt; list_indices_to_numpy_bool_array(</span>
+<span class="sd">            ...     [(2,3), (0,0), (0,2), (1,1)], (3,4)</span>
+<span class="sd">            ... )</span>
 <span class="sd">            array([[ True, False,  True, False],</span>
 <span class="sd">                   [False,  True, False, False],</span>
 <span class="sd">                   [False, False, False,  True]], dtype=bool)</span>
@@ -622,7 +624,10 @@
             <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">mid_1</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">mid_2</span><span class="p">:</span>
                 <span class="k">yield</span><span class="p">(</span><span class="n">mid_2</span><span class="p">)</span>
 
-                <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mid_1</span><span class="p">),</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">mid_2</span><span class="p">,</span> <span class="n">b</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span>
+                        <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mid_1</span><span class="p">),</span>
+                        <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">mid_2</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+                <span class="p">):</span>
                     <span class="k">yield</span><span class="p">(</span><span class="n">_2</span><span class="p">)</span>
                     <span class="k">yield</span><span class="p">(</span><span class="n">_1</span><span class="p">)</span>
 
@@ -672,19 +677,20 @@
 <span class="sd">            (generator object):    an iterator over the intermediate results.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; import operator; cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS</span>
+<span class="sd">            &gt;&gt;&gt; import operator</span>
+<span class="sd">            &gt;&gt;&gt; cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS</span>
 <span class="sd">            &lt;generator object cumulative_generator at 0x...&gt;</span>
 
-<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.add, xrange(1,5)))</span>
+<span class="sd">            &gt;&gt;&gt; list(cumulative_generator(operator.add, xrange(1,5)))</span>
 <span class="sd">            [1, 3, 6, 10]</span>
 
-<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.add, xrange(5)))</span>
+<span class="sd">            &gt;&gt;&gt; list(cumulative_generator(operator.add, xrange(5)))</span>
 <span class="sd">            [0, 1, 3, 6, 10]</span>
 
-<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.mul, xrange(5)))</span>
+<span class="sd">            &gt;&gt;&gt; list(cumulative_generator(operator.mul, xrange(5)))</span>
 <span class="sd">            [0, 0, 0, 0, 0]</span>
 
-<span class="sd">            &gt;&gt;&gt; import operator; list(cumulative_generator(operator.mul, xrange(1,5)))</span>
+<span class="sd">            &gt;&gt;&gt; list(cumulative_generator(operator.mul, xrange(1,5)))</span>
 <span class="sd">            [1, 2, 6, 24]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -711,7 +717,9 @@
 <span class="sd">            (generator object):    an iterator over the reversed elements.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; reverse_each_element(zip(xrange(5, 11), xrange(5))) #doctest: +ELLIPSIS</span>
+<span class="sd">            &gt;&gt;&gt; reverse_each_element(</span>
+<span class="sd">            ...     zip(xrange(5, 11), xrange(5))</span>
+<span class="sd">            ... ) #doctest: +ELLIPSIS</span>
 <span class="sd">            &lt;generator object reverse_each_element at 0x...&gt;</span>
 
 <span class="sd">            &gt;&gt;&gt; list(reverse_each_element(zip(xrange(5, 11), xrange(5))))</span>
@@ -889,10 +897,17 @@
 <span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers([5, 7, 11]))</span>
 <span class="sd">            [&#39;05&#39;, &#39;07&#39;, &#39;11&#39;]</span>
 
-<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers([5, 7, 11], include_numbers = True))</span>
+<span class="sd">            &gt;&gt;&gt; list(</span>
+<span class="sd">            ...     filled_stringify_numbers([5, 7, 11], include_numbers=True)</span>
+<span class="sd">            ... )</span>
 <span class="sd">            [(5, &#39;05&#39;), (7, &#39;07&#39;), (11, &#39;11&#39;)]</span>
 
-<span class="sd">            &gt;&gt;&gt; list(filled_stringify_numbers(iter([5, 7, 11]), include_numbers = True))</span>
+<span class="sd">            &gt;&gt;&gt; list(</span>
+<span class="sd">            ...     filled_stringify_numbers(</span>
+<span class="sd">            ...         iter([5, 7, 11]),</span>
+<span class="sd">            ...         include_numbers=True</span>
+<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            [(5, &#39;05&#39;), (7, &#39;07&#39;), (11, &#39;11&#39;)]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1208,10 +1223,23 @@
 <span class="sd">            &gt;&gt;&gt; reformat_slices((slice(None),))</span>
 <span class="sd">            (slice(0, None, 1),)</span>
 
-<span class="sd">            &gt;&gt;&gt; reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)))</span>
+<span class="sd">            &gt;&gt;&gt; reformat_slices((</span>
+<span class="sd">            ...     slice(None),</span>
+<span class="sd">            ...     slice(3, None),</span>
+<span class="sd">            ...     slice(None, 5),</span>
+<span class="sd">            ...     slice(None, None, 2)</span>
+<span class="sd">            ... ))</span>
 <span class="sd">            (slice(0, None, 1), slice(3, None, 1), slice(0, 5, 1), slice(0, None, 2))</span>
 
-<span class="sd">            &gt;&gt;&gt; reformat_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))</span>
+<span class="sd">            &gt;&gt;&gt; reformat_slices(</span>
+<span class="sd">            ...     (</span>
+<span class="sd">            ...         slice(None),</span>
+<span class="sd">            ...         slice(3, None),</span>
+<span class="sd">            ...         slice(None, 5),</span>
+<span class="sd">            ...         slice(None, None, 2)</span>
+<span class="sd">            ...     ),</span>
+<span class="sd">            ...     (10, 13, 15, 20)</span>
+<span class="sd">            ... )</span>
 <span class="sd">            (slice(0, 10, 1), slice(3, 13, 1), slice(0, 5, 1), slice(0, 20, 2))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1336,11 +1364,24 @@
 <span class="sd">                                         values filled if possible.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2))) #doctest: +IGNORE_EXCEPTION_DETAIL</span>
+<span class="sd">            &gt;&gt;&gt; len_slices((</span>
+<span class="sd">            ...     slice(None),</span>
+<span class="sd">            ...     slice(3, None),</span>
+<span class="sd">            ...     slice(None, 5),</span>
+<span class="sd">            ...     slice(None, None, 2)</span>
+<span class="sd">            ... ))</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
 
-<span class="sd">            &gt;&gt;&gt; len_slices((slice(None), slice(3, None), slice(None, 5), slice(None, None, 2)), (10, 13, 15, 20))</span>
+<span class="sd">            &gt;&gt;&gt; len_slices(</span>
+<span class="sd">            ...     (</span>
+<span class="sd">            ...         slice(None),</span>
+<span class="sd">            ...         slice(3, None),</span>
+<span class="sd">            ...         slice(None, 5),</span>
+<span class="sd">            ...         slice(None, None, 2)</span>
+<span class="sd">            ...     ),</span>
+<span class="sd">            ...     (10, 13, 15, 20)</span>
+<span class="sd">            ... )</span>
 <span class="sd">            (10, 10, 5, 10)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

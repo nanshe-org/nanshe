@@ -110,23 +110,24 @@ into an iterator.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span><span class="p">;</span> <span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> 
 <span class="go">&lt;generator object cumulative_generator at 0x...&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span><span class="p">;</span> <span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
 <span class="go">[1, 3, 6, 10]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span><span class="p">;</span> <span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
 <span class="go">[0, 1, 3, 6, 10]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span><span class="p">;</span> <span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
 <span class="go">[0, 0, 0, 0, 0]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span><span class="p">;</span> <span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
 <span class="go">[1, 2, 6, 24]</span>
 </pre></div>
 </div>
@@ -275,11 +276,18 @@ enumeration with left padding by zero.</p>
 <span class="go">[&#39;05&#39;, &#39;07&#39;, &#39;11&#39;]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">filled_stringify_numbers</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="n">include_numbers</span> <span class="o">=</span> <span class="bp">True</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">filled_stringify_numbers</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="n">include_numbers</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="go">[(5, &#39;05&#39;), (7, &#39;07&#39;), (11, &#39;11&#39;)]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">filled_stringify_numbers</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">]),</span> <span class="n">include_numbers</span> <span class="o">=</span> <span class="bp">True</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">filled_stringify_numbers</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="nb">iter</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">]),</span>
+<span class="gp">... </span>        <span class="n">include_numbers</span><span class="o">=</span><span class="bp">True</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="go">[(5, &#39;05&#39;), (7, &#39;07&#39;), (11, &#39;11&#39;)]</span>
 </pre></div>
 </div>
@@ -790,12 +798,25 @@ values filled if possible.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slices</span><span class="p">((</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slices</span><span class="p">((</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">))</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="gr">UnknownSliceLengthException</span>: <span class="n">Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slices</span><span class="p">((</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slices</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="go">(10, 10, 5, 10)</span>
 </pre></div>
 </div>
@@ -889,7 +910,9 @@ otherwise).</p>
 <span class="go">array([[ True]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">list_indices_to_numpy_bool_array</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)],</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">list_indices_to_numpy_bool_array</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)],</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[ True, False,  True, False],</span>
 <span class="go">       [False,  True, False, False],</span>
 <span class="go">       [False, False, False,  True]], dtype=bool)</span>
@@ -1054,11 +1077,24 @@ values filled if possible.</p>
 <span class="go">(slice(0, None, 1),)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">((</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">((</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">))</span>
 <span class="go">(slice(0, None, 1), slice(3, None, 1), slice(0, 5, 1), slice(0, None, 2))</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">((</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="go">(slice(0, 10, 1), slice(3, 13, 1), slice(0, 5, 1), slice(0, 20, 2))</span>
 </pre></div>
 </div>
@@ -1134,7 +1170,9 @@ into an iterator.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reverse_each_element</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reverse_each_element</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="nb">zip</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">&lt;generator object reverse_each_element at 0x...&gt;</span>
 </pre></div>
 </div>

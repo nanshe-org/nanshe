@@ -114,19 +114,19 @@
 <span class="sd">            &gt;&gt;&gt; estimate_noise(numpy.eye(2))</span>
 <span class="sd">            0.5</span>
 
-<span class="sd">            &gt;&gt;&gt; estimate_noise(numpy.eye(2), significance_threshold = 3)</span>
+<span class="sd">            &gt;&gt;&gt; estimate_noise(numpy.eye(2), 3)</span>
 <span class="sd">            0.5</span>
 
-<span class="sd">            &gt;&gt;&gt; round(1000*estimate_noise(numpy.eye(3), significance_threshold = 3))/1000</span>
+<span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.eye(3), 3), 3)</span>
 <span class="sd">            0.471</span>
 
-<span class="sd">            &gt;&gt;&gt; round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 1))/1000</span>
+<span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.random.random((2000,2000)), 1), 3)</span>
 <span class="sd">            0.167</span>
 
-<span class="sd">            &gt;&gt;&gt; round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 2))/1000</span>
+<span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.random.random((2000,2000)), 2), 3)</span>
 <span class="sd">            0.289</span>
 
-<span class="sd">            &gt;&gt;&gt; round(1000*estimate_noise(numpy.random.random((2000,2000)), significance_threshold = 3))/1000</span>
+<span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.random.random((2000,2000)), 3), 3)</span>
 <span class="sd">            0.289</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -169,24 +169,24 @@
 
 <span class="sd">        Examples:</span>
 
-<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), noise_threshold = 6.0)</span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), 6.0)</span>
 <span class="sd">            array([[False, False],</span>
 <span class="sd">                   [False, False]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)</span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), 6.0, 0.5)</span>
 <span class="sd">            array([[False, False],</span>
 <span class="sd">                   [False, False]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)</span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(2), 1.0, 0.5)</span>
 <span class="sd">            array([[ True,  True],</span>
 <span class="sd">                   [ True,  True]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(3), 2.0, 0.47140452079103173)</span>
 <span class="sd">            array([[False, False, False],</span>
 <span class="sd">                   [False, False, False],</span>
 <span class="sd">                   [False, False, False]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            &gt;&gt;&gt; significant_mask(numpy.eye(3), 1.0, 0.47140452079103173)</span>
 <span class="sd">            array([[ True, False, False],</span>
 <span class="sd">                   [False,  True, False],</span>
 <span class="sd">                   [False, False,  True]], dtype=bool)</span>
@@ -231,20 +231,20 @@
 
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(2), noise_threshold = 6.0, noise_estimate = 0.5)</span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(2), 6.0, 0.5)</span>
 <span class="sd">            array([[ True,  True],</span>
 <span class="sd">                   [ True,  True]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(2), noise_threshold = 1.0, noise_estimate = 0.5)</span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(2), 1.0, 0.5)</span>
 <span class="sd">            array([[False, False],</span>
 <span class="sd">                   [False, False]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(3), noise_threshold = 2.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(3), 2.0, 0.47140452079103173)</span>
 <span class="sd">            array([[ True,  True,  True],</span>
 <span class="sd">                   [ True,  True,  True],</span>
 <span class="sd">                   [ True,  True,  True]], dtype=bool)</span>
 
-<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(3), noise_threshold = 1.0, noise_estimate = 0.47140452079103173)</span>
+<span class="sd">            &gt;&gt;&gt; noise_mask(numpy.eye(3), 1.0, 0.47140452079103173)</span>
 <span class="sd">            array([[False,  True,  True],</span>
 <span class="sd">                   [ True, False,  True],</span>
 <span class="sd">                   [ True,  True, False]], dtype=bool)</span>

@@ -180,7 +180,11 @@
     <span class="k">return</span><span class="p">(</span><span class="n">getSpecialLogger</span><span class="p">(</span><span class="s">&quot;TRACE.META&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="log_call"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.log_call">[docs]</a><span class="k">def</span> <span class="nf">log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="log_call"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.log_call">[docs]</a><span class="k">def</span> <span class="nf">log_call</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span>
+             <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+             <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+             <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+             <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a given logger and uses it to log entering and leaving the</span>
 <span class="sd">        decorated callable. Intended to be used as a decorator that takes a few</span>
@@ -376,7 +380,11 @@
     <span class="p">)))</span>
 
 </div>
-<div class="viewcode-block" id="qt_log_class"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.qt_log_class">[docs]</a><span class="k">def</span> <span class="nf">qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="qt_log_class"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.qt_log_class">[docs]</a><span class="k">def</span> <span class="nf">qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span>
+                 <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                 <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                 <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a given logger and uses it to log entering and leaving all</span>
 <span class="sd">        methods of the decorated class. Intended to be used as a decorator that</span>

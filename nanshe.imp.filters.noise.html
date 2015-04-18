@@ -112,23 +112,23 @@ The standard deviation of the</p>
 <span class="go">0.5</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">significance_threshold</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">0.5</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mi">1000</span><span class="o">*</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">significance_threshold</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span><span class="o">/</span><span class="mi">1000</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">0.471</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mi">1000</span><span class="o">*</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span><span class="mi">2000</span><span class="p">)),</span> <span class="n">significance_threshold</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">1000</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span><span class="mi">2000</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">0.167</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mi">1000</span><span class="o">*</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span><span class="mi">2000</span><span class="p">)),</span> <span class="n">significance_threshold</span> <span class="o">=</span> <span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="mi">1000</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span><span class="mi">2000</span><span class="p">)),</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">0.289</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mi">1000</span><span class="o">*</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span><span class="mi">2000</span><span class="p">)),</span> <span class="n">significance_threshold</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span><span class="o">/</span><span class="mi">1000</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">estimate_noise</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span><span class="mi">2000</span><span class="p">)),</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">0.289</span>
 </pre></div>
 </div>
@@ -170,23 +170,23 @@ a numpy array with noise</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="go">array([[ True,  True],</span>
 <span class="go">       [ True,  True]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="go">array([[False, False],</span>
 <span class="go">       [False, False]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
 <span class="go">array([[ True,  True,  True],</span>
 <span class="go">       [ True,  True,  True],</span>
 <span class="go">       [ True,  True,  True]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">noise_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
 <span class="go">array([[False,  True,  True],</span>
 <span class="go">       [ True, False,  True],</span>
 <span class="go">       [ True,  True, False]], dtype=bool)</span>
@@ -225,28 +225,28 @@ a numpy array with noise zeroed.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mf">6.0</span><span class="p">)</span>
 <span class="go">array([[False, False],</span>
 <span class="go">       [False, False]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="go">array([[False, False],</span>
 <span class="go">       [False, False]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="go">array([[ True,  True],</span>
 <span class="go">       [ True,  True]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
 <span class="go">array([[False, False, False],</span>
 <span class="go">       [False, False, False],</span>
 <span class="go">       [False, False, False]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">noise_threshold</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">noise_estimate</span> <span class="o">=</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">significant_mask</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.47140452079103173</span><span class="p">)</span>
 <span class="go">array([[ True, False, False],</span>
 <span class="go">       [False,  True, False],</span>
 <span class="go">       [False, False,  True]], dtype=bool)</span>
