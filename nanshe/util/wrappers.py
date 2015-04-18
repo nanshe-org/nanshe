@@ -388,7 +388,7 @@ def class_decorate_methods(**method_decorators):
                             _dl = [_dl]
 
                         for _d in _dl:
-                           _v = _d(_v)
+                            _v = _d(_v)
 
                 dct[_k] = _v
 
