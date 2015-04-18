@@ -463,7 +463,7 @@ class HDF5DataRequest(object):
                 self._result[:] = a_result
             except KeyError:
                 if self.throw_on_not_found:
-                   raise
+                    raise
 
             logger.debug("Found the result.")
 
