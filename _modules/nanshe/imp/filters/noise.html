@@ -120,12 +120,15 @@
 <span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.eye(3), 3), 3)</span>
 <span class="sd">            0.471</span>
 
+<span class="sd">            &gt;&gt;&gt; numpy.random.seed(10)</span>
 <span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.random.random((2000,2000)), 1), 3)</span>
 <span class="sd">            0.167</span>
 
+<span class="sd">            &gt;&gt;&gt; numpy.random.seed(10)</span>
 <span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.random.random((2000,2000)), 2), 3)</span>
 <span class="sd">            0.289</span>
 
+<span class="sd">            &gt;&gt;&gt; numpy.random.seed(10)</span>
 <span class="sd">            &gt;&gt;&gt; round(estimate_noise(numpy.random.random((2000,2000)), 3), 3)</span>
 <span class="sd">            0.289</span>
 <span class="sd">    &quot;&quot;&quot;</span>
