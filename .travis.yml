@@ -7,41 +7,41 @@ before_install:
    - cd ../..
    - pwd
 install:
-   # Download and extract the prebuilt binary.
-   - wget -O nanshe-package.tgz https://www.dropbox.com/s/qhy2lhsk0ioge0p/nanshe-package.tgz?dl=0
-   - tar -xzf nanshe-package.tgz
-   - ls
-   # Replace the src in the prebuilt binary with the one TravisCI cloned for us.
-   - rm -rf nanshe-package.tgz
-   - rm -rf nanshe-package/src/nanshe-git
-   - mv $TRAVIS_REPO_SLUG nanshe-package/src/nanshe-git
-   # Activate the environment.
-   - cd nanshe-package
-   - export BUILDEM_DIR=$(pwd)
-   - echo "\$BUILDEM_DIR = ${BUILDEM_DIR}"
-   - source $BUILDEM_DIR/bin/setenv_ilastik_gui.sh
+   # Download and setup conda.
+   - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+   - bash miniconda.sh -b -p $HOME/miniconda
+   - export PATH="$HOME/miniconda/bin:$PATH"
+   - conda config --set always_yes yes
+   - conda update conda
+   # Setup environment for nanshe with dependencies. This includes volumina.
+   - conda create -n nanshenv python=$TRAVIS_PYTHON_VERSION
+   - source activate nanshenv
+   - conda install -c https://conda.binstar.org/jakirkham nanshe
+   - conda install -c https://conda.binstar.org/jakirkham sphinx-pkg
+   # Replace the version of nanshe included.
+   - cd $TRAVIS_REPO_SLUG
+   - conda remove nanshe
+   - python setup.py install
    # Install coverage and coveralls to generate and submit test coverage results for coveralls.io. Also, install docstring-coverage to get information about documentation coverage.
-   - python $BUILDEM_DIR/bin/pip install coverage
-   - python $BUILDEM_DIR/bin/pip install docstring-coverage
-   - python $BUILDEM_DIR/bin/pip install python-coveralls
-   # Won't recognize setup.cfg unless we are in the source directory.
-   - cd src/nanshe-git
+   - pip install coverage
+   - pip install docstring-coverage
+   - pip install python-coveralls
 script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
-   - python $BUILDEM_DIR/bin/nosetests --with-coverage --cover-erase --cover-branches --cover-package=nanshe -a '!3D','!DRMAA'
+   - nosetests --with-coverage --cover-erase --cover-branches --cover-package=nanshe -a '!3D','!DRMAA'
    # Build documentation.
    - cd docs
    # Unfortunately, this does not seem to work on TravisCI. This is because sphinx-apidoc cannot be found when in the Makefile. However, it is easily and correctly found right before the call. This may be related to a more general issue ( https://github.com/travis-ci/travis-ci/issues/3084 ). As a consequence, we will just copy code from the Makefile for now.
    # - make html
-   - python $BUILDEM_DIR/bin/sphinx-apidoc -f -T -e -M -o . .. ../setup.py ../tests
-   - python $BUILDEM_DIR/bin/sphinx-build -b html -d _build/doctrees . _build/html
+   - sphinx-apidoc -f -T -e -M -o . .. ../setup.py ../tests
+   - sphinx-build -b html -d _build/doctrees . _build/html
    # Move back to source directory.
    - cd ..
    # Get info on docstring coverage.
-   - python $BUILDEM_DIR/bin/docstring-coverage nanshe | tee .docstring-coverage
+   - docstring-coverage nanshe | tee .docstring-coverage
 after_success:
    # Submit results to coveralls.io.
-   - python $BUILDEM_DIR/bin/coveralls
+   - coveralls
    # Check to see if this is the right branch to build documentation from.
    - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.
