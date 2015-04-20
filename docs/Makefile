@@ -59,6 +59,7 @@ clean:
 
 rst:
 	$(SPHINXAPIDOC) -f -T -e -M -o . .. ../setup.py ../tests
+	rm versioneer.rst
 
 html: rst
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
