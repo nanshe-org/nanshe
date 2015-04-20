@@ -2,6 +2,16 @@
 File nanshe/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
+File nanshe/_version.py
+ - No module dostring!
+ - No docstring for run_command!
+ - No docstring for versions_from_parentdir!
+ - No docstring for git_get_keywords!
+ - No docstring for git_versions_from_keywords!
+ - No docstring for git_versions_from_vcs!
+ - No docstring for get_versions!
+ Needed: 7; Exist: 0; Missing: 7; Coverage: 0.0%
+
 File nanshe/converter.py
  Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
 
@@ -307,6 +317,6 @@ File nanshe/util/xnumpy.py
  Needed: 57; Exist: 57; Missing: 0; Coverage: 100.0%
 
 
-Overall statistics for 34 files:
-Docstrings needed: 490; Docstrings exist: 285; Docstrings missing: 205
-Total docstring coverage: 58.2%;  Grade: not so bad
+Overall statistics for 35 files:
+Docstrings needed: 497; Docstrings exist: 285; Docstrings missing: 212
+Total docstring coverage: 57.3%;  Grade: not so bad
