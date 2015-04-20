@@ -153,6 +153,11 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Dec 22, 2014 08:46:12 EST$"
 
 
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+
+
 __all__ = [
     "box", "converter", "io", "imp", "learner", "registerer", "syn", "util",
     # "viewer"
@@ -168,3 +173,5 @@ import syn
 import util
 # import viewer           # Must be commented as there is some segfault
                           # coming from Volumina.
+
+
