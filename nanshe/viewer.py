@@ -546,7 +546,7 @@ class HDF5Viewer(Viewer):
         return layer
 
     def addAlphaModulatedHDF5Layer(self, a, name=None):
-        source,self.dataShape = createHDF5DataSource(a, True)
+        source, self.dataShape = createHDF5DataSource(a, True)
         layer = AlphaModulatedLayer(source)
         if name:
             layer.name = name
@@ -557,12 +557,12 @@ class HDF5Viewer(Viewer):
         # TODO: Avoid this array indexing as it is a filename.
         assert False
         assert (a.shape[2] >= 3)
-        sources = [None, None, None,None]
+        sources = [None, None, None, None]
         for i in range(3):
-            sources[i], self.dataShape = createHDF5DataSource(a[...,i], True)
+            sources[i], self.dataShape = createHDF5DataSource(a[..., i], True)
         if(a.shape[3] >= 4):
-            sources[3], self.dataShape = createHDF5DataSource(a[...,3], True)
-        layer = RGBALayer(sources[0],sources[1],sources[2], sources[3])
+            sources[3], self.dataShape = createHDF5DataSource(a[..., 3], True)
+        layer = RGBALayer(sources[0], sources[1], sources[2], sources[3])
         if name:
             layer.name = name
         self.layerstack.append(layer)
@@ -608,7 +608,7 @@ class HDF5Viewer(Viewer):
                                colortable=None,
                                direct=False,
                                clickFunctor=None):
-        source, self.dataShape = createHDF5DataSource(a,True)
+        source, self.dataShape = createHDF5DataSource(a, True)
 
         if colortable is None:
             colortable = self._randomColors()
