@@ -50,8 +50,8 @@ if "%1" == "clean" (
 	move index.rst index.rst.saved
 	move readme.rst readme.rst.saved
 	del /q /s *.rst
-        move index.rst.saved index.rst
-        move readme.rst.saved readme.rst
+	move index.rst.saved index.rst
+	move readme.rst.saved readme.rst
 	for /d %%i in (%BUILDDIR%\*) do rmdir /q /s %%i
 	del /q /s %BUILDDIR%
 	goto end
