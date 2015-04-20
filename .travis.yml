@@ -2,6 +2,9 @@ language: python
 python:
    - "2.7"
 before_install:
+   # Get the tag if it wasn't provided. Travis doesn't provide this if it isn't a tagged build.
+   - if [ -z $TRAVIS_TAG ]; then TRAVIS_TAG=`git tag --contains` ; fi
+   - echo $TRAVIS_TAG
    # Move out of git directory to build root.
    - deactivate
    - cd ../..
