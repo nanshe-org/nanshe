@@ -53,7 +53,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'..'
-copyright = u'2014, Author'
+copyright = u'2014, John A. Kirkham'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -206,7 +206,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'sphinx.tex', u'.. Documentation',
-   u'Author', 'manual'),
+   u'John A. Kirkham', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -236,7 +236,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'sphinx', u'.. Documentation',
-     [u'Author'], 1)
+     [u'John A. Kirkham'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -250,7 +250,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'sphinx', u'.. Documentation',
-   u'Author', 'sphinx', 'One line description of project.',
+   u'John A. Kirkham', 'sphinx', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -271,9 +271,9 @@ texinfo_documents = [
 
 # Bibliographic Dublin Core info.
 epub_title = u'..'
-epub_author = u'John Kirkham'
-epub_publisher = u'John Kirkham'
-epub_copyright = u'2014, John Kirkham'
+epub_author = u'John A. Kirkham'
+epub_publisher = u'John A. Kirkham'
+epub_copyright = u'2014, John A. Kirkham'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'..'
