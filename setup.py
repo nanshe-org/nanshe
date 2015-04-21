@@ -25,5 +25,6 @@ setup(
     author_email="kirkhamj@janelia.hhmi.org",
     scripts=glob("bin/*"),
     packages=find_packages(exclude=["tests*"]),
-    cmdclass=versioneer.get_cmdclass()
+    cmdclass=versioneer.get_cmdclass(),
+    zip_safe=True
 )
