@@ -69,8 +69,19 @@ after_success:
    - git add -A
    - if [ -z $TRAVIS_TAG ]; then git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT})." --allow-empty ; else git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT}) and tag (${TRAVIS_TAG})." --allow-empty ; fi
    - git push origin gh-pages
+   # Check to see if this is a release. If so, create and upload binaries.
+   - if [ -z $TRAVIS_TAG ]; then exit 0 ; fi
+   - git checkout $TRAVIS_TAG
+   - source activate root
+   - conda install conda-build
+   - conda install binstar
+   - python setup.py bdist_conda
+   - cd $HOME/miniconda/conda-bld/
+   - conda convert -p osx-64 linux-64/nanshe*
+   - binstar -t ${BS_TOKEN} upload linux-64/nanshe*
+   - binstar -t ${BS_TOKEN} upload osx-64/nanshe*
 env:
    global:
-       secure: gCN4vEn/1pKi+N9+00E8Ju+ImKpizdoblkSFnBr8TCXRWY4/iKM4yNkX/YtYsNwzh0eCq+840CXRYlcodG9nilG23RmubKZ1Y+T2fuFoEQbzE5QmPB7+fl01dlLpDbDtN6L7VSOtfjOj8BQGkdR9VwBMomseWgY37yuTnErfxeU=
+       secure: gWMpQYLs36C4X+GQ6cqiXn1K7ZMwkGGJaCvLd8DTCWxGclZeY2/+7P1eeIyo8sGz2bmzHGHbGqoZ3Q02+dSy20qf/WXwwNdjbF7d/JOL94cCYUHZuNGOOYVrq1VHFG+3j3QOijnsc4TPlxmI1ov3urHnlplEaU5PiyIEnzdY0EY=
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 sudo: false
