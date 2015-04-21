@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'..'
+project = u'nanshe'
 copyright = u'2014-2015, John A. Kirkham'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -207,7 +207,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'sphinx.tex', u'.. Documentation',
+  ('index', 'sphinx.tex', u'Nanshe Documentation',
    u'John A. Kirkham', 'manual'),
 ]
 
@@ -237,7 +237,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'sphinx', u'.. Documentation',
+    ('index', 'sphinx', u'Nanshe Documentation',
      [u'John A. Kirkham'], 1)
 ]
 
@@ -251,7 +251,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'sphinx', u'.. Documentation',
+  ('index', 'sphinx', u'Nanshe Documentation',
    u'John A. Kirkham', 'sphinx', 'One line description of project.',
    'Miscellaneous'),
 ]
@@ -272,7 +272,7 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'..'
+epub_title = u'Nanshe Documentation'
 epub_author = u'John A. Kirkham'
 epub_publisher = u'John A. Kirkham'
 epub_copyright = u'2014-2015, John A. Kirkham'
