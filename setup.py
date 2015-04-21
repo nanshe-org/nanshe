@@ -18,12 +18,12 @@ versioneer.parentdir_prefix = "nanshe-"
 setup(
     name="nanshe",
     version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
-    packages=find_packages(exclude=["tests*"]),
+    description="An image processing toolkit.",
     url="https://github.com/jakirkham/nanshe",
     license="GPLv3",
     author="John Kirkham",
     author_email="kirkhamj@janelia.hhmi.org",
-    description="An image processing toolkit.",
-    scripts=glob("bin/*")
+    scripts=glob("bin/*"),
+    packages=find_packages(exclude=["tests*"]),
+    cmdclass=versioneer.get_cmdclass()
 )
