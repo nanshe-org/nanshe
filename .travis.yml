@@ -17,10 +17,11 @@ install:
    - conda config --set always_yes yes
    - conda update conda
    # Setup environment for nanshe with dependencies. This includes volumina.
+   - conda config --add channels http://conda.binstar.org/jakirkham
    - conda create -n nanshenv python=$TRAVIS_PYTHON_VERSION
    - source activate nanshenv
-   - conda install -c https://conda.binstar.org/jakirkham nanshe
-   - conda install -c https://conda.binstar.org/jakirkham sphinx-pkg
+   - conda install nanshe
+   - conda install sphinx-pkg
    # Replace the version of nanshe included.
    - cd $TRAVIS_REPO_SLUG
    - conda remove nanshe
