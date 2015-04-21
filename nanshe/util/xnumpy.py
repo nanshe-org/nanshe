@@ -2544,7 +2544,7 @@ def truncate_masked_frames(shifted_frames):
     )
     shifted_frames_mask_shape = (len(shifted_frames),) + shifted_frames_mask_shape
 
-    # # Assert that this is an acceptable mask
+    # Assert that this is an acceptable mask
     #shifted_frames_mask_upper_offset = tuple(
     #    (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(xrange(shifted_frames_mask.ndim))
     #)
