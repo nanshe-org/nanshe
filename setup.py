@@ -3,6 +3,8 @@ __date__ = "$Mar 30, 2015 23:17:09 EDT$"
 
 
 from glob import glob
+import os
+import shutil
 import sys
 
 from setuptools import setup, find_packages
@@ -71,6 +73,25 @@ elif sys.argv[1] == "build_sphinx":
         "-o", "docs",
         ".", "setup.py", "tests", "versioneer.py"
     ])
+elif sys.argv[1] == "clean":
+    saved_rst_files = ["docs/index.rst", "docs/readme.rst"]
+
+    tmp_rst_files = glob("docs/*.rst")
+
+    print "removing 'docs/*.rst'"
+    for each_saved_rst_file in saved_rst_files:
+        print "skipping '" + each_saved_rst_file + "'"
+        tmp_rst_files.remove(each_saved_rst_file)
+
+    for each_tmp_rst_file in tmp_rst_files:
+        os.remove(each_tmp_rst_file)
+
+    if (len(sys.argv) > 2) and (sys.argv[2] in ["-a", "--all"]):
+        if os.path.exists("build/sphinx"):
+            print "removing 'build/sphinx'"
+            shutil.rmtree("build/sphinx")
+        else:
+            print "'build/sphinx' does not exist -- can't clean it"
 
 setup(
     name="nanshe",
