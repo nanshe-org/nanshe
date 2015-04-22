@@ -22,11 +22,13 @@ install:
    - conda install conda-build
    # Build the conda package for nanshe.
    - cd $TRAVIS_REPO_SLUG
+   - VERSION=`python setup.py --version`
+   - echo $VERSION
    - python setup.py bdist_conda
    # Setup environment for nanshe and install it with all dependencies.
    - conda create -n nanshenv python=$TRAVIS_PYTHON_VERSION
    - source activate nanshenv
-   - conda install --use-local nanshe
+   - conda install --use-local nanshe==$VERSION
    # Install sphinx 1.3.1 and friends to build documentation.
    # Install coverage and coveralls to generate and submit test coverage results for coveralls.io.
    # Also, install docstring-coverage to get information about documentation coverage.
