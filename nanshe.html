@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe package &mdash; nanshe 0.1.0a2+6.g0db9f77 documentation</title>
+    <title>nanshe package &mdash; nanshe 0.1.0a3 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a2+6.g0db9f77',
+        VERSION:     '0.1.0a3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a2+6.g0db9f77 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a3 documentation" href="index.html" />
     <link rel="next" title="nanshe.box package" href="nanshe.box.html" />
     <link rel="prev" title="README" href="readme.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="readme.html" title="README"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a2+6.g0db9f77 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a3 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -147,15 +147,15 @@ a passing commit is added to the <code class="docutils literal"><span class="pre
 is added to <code class="docutils literal"><span class="pre">gh-pages</span></code> branch with a reference to the commit <code class="docutils literal"><span class="pre">master</span></code> that
 triggered the build as well as version number if provided.</p>
 <p>It is also possible to build the documentation from source. This project uses
-<a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> for generating documentation. Please make sure you have it installed if
-you wish to use it. The <code class="docutils literal"><span class="pre">rst</span></code> files (outside of <code class="docutils literal"><span class="pre">index.rst</span></code> are not
-distributed with the source code. This is because is trivial to generate them
-and it is to easy for the code to become out of sync with documentation if they
-are distributed. However, building <code class="docutils literal"><span class="pre">rst</span></code> files has been made a dependency of
-all other documentation build steps so one does not have to think about this.
-The easiest way to build documentation is to do the following. This will build
-and place all the documentation in <code class="docutils literal"><span class="pre">_build/html</span></code>. Simply open the
-<code class="docutils literal"><span class="pre">index.html</span></code> file to take a look. There is a <code class="docutils literal"><span class="pre">make.bat</span></code> file for windows.</p>
+<a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> for generating documentation. Please make sure you have it installed.
+The <code class="docutils literal"><span class="pre">rst</span></code> files (outside of <code class="docutils literal"><span class="pre">index.rst</span></code> are not distributed with the source
+code. This is because it is trivial to generate them and it is to easy for the
+code to become out of sync with documentation if they are distributed. However,
+building <code class="docutils literal"><span class="pre">rst</span></code> files has been made a dependency of all other documentation
+build steps so one does not have to think about this. The easiest way to build
+documentation is to do the following. This will build and place all the
+documentation in <code class="docutils literal"><span class="pre">_build/html</span></code>. Simply open the <code class="docutils literal"><span class="pre">index.html</span></code> file to take a
+look. There is a <code class="docutils literal"><span class="pre">make.bat</span></code> file for windows.</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="nb">cd </span>docs
 make html
 </pre></div>
@@ -168,6 +168,14 @@ using <code class="docutils literal"><span class="pre">help</span></code>.</p>
 <p>To remove the documentation and all build artifacts used to make it one can use
 the standard <code class="docutils literal"><span class="pre">clean</span></code> command.</p>
 <div class="highlight-sh"><div class="highlight"><pre>make clean
+</pre></div>
+</div>
+<p>Also, documentation can be generated using <code class="docutils literal"><span class="pre">setup.py</span></code>. This will generate all
+<code class="docutils literal"><span class="pre">rst</span></code> files before proceeding to building the documentation. By default
+<code class="docutils literal"><span class="pre">html</span></code> documentation is generated. However, this can be changed by editing
+the <code class="docutils literal"><span class="pre">builder</span></code> parameter in <code class="docutils literal"><span class="pre">setup.cfg</span></code> under the <code class="docutils literal"><span class="pre">build_sphinx</span></code> section.
+To generate documentation with <code class="docutils literal"><span class="pre">setup.py</span></code> simply run the command below.</p>
+<div class="highlight-sh"><div class="highlight"><pre>python setup.py build_sphinx
 </pre></div>
 </div>
 </div>
@@ -446,7 +454,7 @@ the standard <code class="docutils literal"><span class="pre">clean</span></code
         <li class="right" >
           <a href="readme.html" title="README"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a2+6.g0db9f77 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a3 documentation</a> &raquo;</li>
  
       </ul>
     </div>
