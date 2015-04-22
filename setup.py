@@ -20,6 +20,7 @@ versioneer.parentdir_prefix = "nanshe-"
 build_requires = []
 install_requires = []
 tests_require = []
+sphinx_build_pdf = False
 if len(sys.argv) == 1:
     pass
 elif ("--help" in sys.argv) or ("-h" in sys.argv):
@@ -73,6 +74,18 @@ elif sys.argv[1] == "build_sphinx":
         "-o", "docs",
         ".", "setup.py", "tests", "versioneer.py"
     ])
+
+    build_prefix_arg_index = None
+    for each_build_arg in ["-b", "--builder"]:
+        try:
+            build_arg_index = sys.argv.index(each_build_arg)
+        except ValueError:
+            continue
+
+        if sys.argv[build_arg_index + 1] == "pdf":
+            sphinx_build_pdf = True
+            sys.argv[build_arg_index + 1] = "latex"
+
 elif sys.argv[1] == "clean":
     saved_rst_files = ["docs/index.rst", "docs/readme.rst"]
 
@@ -115,3 +128,10 @@ setup(
     tests_require=tests_require,
     zip_safe=True
 )
+
+if sphinx_build_pdf:
+    make_cmd = os.environ.get("MAKE", "make")
+    cwd = os.getcwd()
+    os.chdir("build/sphinx/latex")
+    os.execlpe(make_cmd, "all", os.environ)
+    os.chdir(cwd)
