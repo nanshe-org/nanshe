@@ -10,23 +10,24 @@ before_install:
    - cd ../..
    - pwd
 install:
-   # Download and setup conda.
+   # Download and configure conda.
    - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
    - bash miniconda.sh -b -p $HOME/miniconda
    - export PATH="$HOME/miniconda/bin:$PATH"
    - conda config --set always_yes yes
+   - conda config --add channels http://conda.binstar.org/jakirkham
+   - source activate root
    - conda update conda
    # Setup environment for nanshe with dependencies. This includes volumina.
-   - conda config --add channels http://conda.binstar.org/jakirkham
    - conda create -n nanshenv python=$TRAVIS_PYTHON_VERSION
    - source activate nanshenv
    - conda install nanshe
-   - conda install sphinx-pkg
    # Replace the version of nanshe included.
    - cd $TRAVIS_REPO_SLUG
    - conda remove nanshe
    - python setup.py install
-   # Install coverage and coveralls to generate and submit test coverage results for coveralls.io. Also, install docstring-coverage to get information about documentation coverage.
+   # Install sphinx 1.3.1 and friends to build documentation. Install coverage and coveralls to generate and submit test coverage results for coveralls.io. Also, install docstring-coverage to get information about documentation coverage.
+   - conda install sphinx-pkg
    - pip install coverage
    - pip install docstring-coverage
    - pip install python-coveralls
