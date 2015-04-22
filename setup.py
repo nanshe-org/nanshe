@@ -58,6 +58,15 @@ if sys.argv[1] == "bdist_conda":
     tests_require = [
         "nose"
     ]
+elif sys.argv[1] == "build_sphinx":
+    import sphinx.apidoc
+
+    sphinx.apidoc.main([
+        sphinx.apidoc.__file__,
+        "-f", "-T", "-e", "-M",
+        "-o", "docs",
+        ".", "setup.py", "tests"
+    ])
 
 setup(
     name="nanshe",
