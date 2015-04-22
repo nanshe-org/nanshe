@@ -86,6 +86,12 @@ elif sys.argv[1] == "clean":
     for each_tmp_rst_file in tmp_rst_files:
         os.remove(each_tmp_rst_file)
 
+    if os.path.exists("build/sphinx/doctrees"):
+        print "removing 'build/sphinx/doctrees'"
+        shutil.rmtree("build/sphinx/doctrees")
+    else:
+        print "'build/sphinx/doctrees' does not exist -- can't clean it"
+
     if (len(sys.argv) > 2) and (sys.argv[2] in ["-a", "--all"]):
         if os.path.exists("build/sphinx"):
             print "removing 'build/sphinx'"
