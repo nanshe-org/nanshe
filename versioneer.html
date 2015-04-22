@@ -1,0 +1,542 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>versioneer module &mdash; nanshe 0.1.0a2+5.g3ba8aba documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0a2+5.g3ba8aba',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="top" title="nanshe 0.1.0a2+5.g3ba8aba documentation" href="index.html" />
+    <link rel="prev" title="nanshe.viewer module" href="nanshe.viewer.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.viewer.html" title="nanshe.viewer module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">nanshe 0.1.0a2+5.g3ba8aba documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-versioneer">
+<span id="versioneer-module"></span><h1>versioneer module<a class="headerlink" href="#module-versioneer" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-versioneer">
+<h2>The Versioneer<a class="headerlink" href="#the-versioneer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>like a rocketeer, but for versions!</li>
+<li><a class="reference external" href="https://github.com/warner/python-versioneer">https://github.com/warner/python-versioneer</a></li>
+<li>Brian Warner</li>
+<li>License: Public Domain</li>
+<li>Compatible With: python2.6, 2.7, 3.2, 3.3, 3.4, and pypy</li>
+<li>[![Latest Version]</li>
+</ul>
+<p>(<a class="reference external" href="https://pypip.in/version/versioneer/badge.svg?style=flat">https://pypip.in/version/versioneer/badge.svg?style=flat</a>)
+](<a class="reference external" href="https://pypi.python.org/pypi/versioneer/">https://pypi.python.org/pypi/versioneer/</a>)
+* [![Build Status]
+(<a class="reference external" href="https://travis-ci.org/warner/python-versioneer.png?branch=master">https://travis-ci.org/warner/python-versioneer.png?branch=master</a>)
+](<a class="reference external" href="https://travis-ci.org/warner/python-versioneer">https://travis-ci.org/warner/python-versioneer</a>)</p>
+<p>This is a tool for managing a recorded version number in distutils-based
+python projects. The goal is to remove the tedious and error-prone &#8220;update
+the embedded version string&#8221; step from your release process. Making a new
+release should be as easy as recording a new tag in your version-control
+system, and maybe making new tarballs.</p>
+<p>## Quick Install</p>
+<ul class="simple">
+<li><cite>pip install versioneer</cite> to somewhere to your $PATH</li>
+<li>run <cite>versioneer-installer</cite> in your source tree: this installs <cite>versioneer.py</cite></li>
+<li>follow the instructions below (also in the <cite>versioneer.py</cite> docstring)</li>
+</ul>
+<p>## Version Identifiers</p>
+<p>Source trees come from a variety of places:</p>
+<ul class="simple">
+<li>a version-control system checkout (mostly used by developers)</li>
+<li>a nightly tarball, produced by build automation</li>
+<li>a snapshot tarball, produced by a web-based VCS browser, like github&#8217;s
+&#8220;tarball from tag&#8221; feature</li>
+<li>a release tarball, produced by &#8220;setup.py sdist&#8221;, distributed through PyPI</li>
+</ul>
+<p>Within each source tree, the version identifier (either a string or a number,
+this tool is format-agnostic) can come from a variety of places:</p>
+<ul class="simple">
+<li>ask the VCS tool itself, e.g. &#8220;git describe&#8221; (for checkouts), which knows
+about recent &#8220;tags&#8221; and an absolute revision-id</li>
+<li>the name of the directory into which the tarball was unpacked</li>
+<li>an expanded VCS keyword ($Id$, etc)</li>
+<li>a <cite>_version.py</cite> created by some earlier build step</li>
+</ul>
+<p>For released software, the version identifier is closely related to a VCS
+tag. Some projects use tag names that include more than just the version
+string (e.g. &#8220;myproject-1.2&#8221; instead of just &#8220;1.2&#8221;), in which case the tool
+needs to strip the tag prefix to extract the version identifier. For
+unreleased software (between tags), the version identifier should provide
+enough information to help developers recreate the same tree, while also
+giving them an idea of roughly how old the tree is (after version 1.2, before
+version 1.3). Many VCS systems can report a description that captures this,
+for example &#8216;git describe &#8211;tags &#8211;dirty &#8211;always&#8217; reports things like
+&#8220;0.7-1-g574ab98-dirty&#8221; to indicate that the checkout is one revision past the
+0.7 tag, has a unique revision id of &#8220;574ab98&#8221;, and is &#8220;dirty&#8221; (it has
+uncommitted changes.</p>
+<p>The version identifier is used for multiple purposes:</p>
+<ul class="simple">
+<li>to allow the module to self-identify its version: <cite>myproject.__version__</cite></li>
+<li>to choose a name and prefix for a &#8216;setup.py sdist&#8217; tarball</li>
+</ul>
+<p>## Theory of Operation</p>
+<p>Versioneer works by adding a special <cite>_version.py</cite> file into your source
+tree, where your <cite>__init__.py</cite> can import it. This <cite>_version.py</cite> knows how to
+dynamically ask the VCS tool for version information at import time. However,
+when you use &#8220;setup.py build&#8221; or &#8220;setup.py sdist&#8221;, <cite>_version.py</cite> in the new
+copy is replaced by a small static file that contains just the generated
+version data.</p>
+<p><cite>_version.py</cite> also contains <cite>$Revision$</cite> markers, and the installation
+process marks <cite>_version.py</cite> to have this marker rewritten with a tag name
+during the &#8220;git archive&#8221; command. As a result, generated tarballs will
+contain enough information to get the proper version.</p>
+<p>## Installation</p>
+<p>First, decide on values for the following configuration variables:</p>
+<ul>
+<li><p class="first"><cite>VCS</cite>: the version control system you use. Currently accepts &#8220;git&#8221;.</p>
+</li>
+<li><p class="first"><cite>versionfile_source</cite>:</p>
+<p>A project-relative pathname into which the generated version strings should
+be written. This is usually a <cite>_version.py</cite> next to your project&#8217;s main
+<cite>__init__.py</cite> file, so it can be imported at runtime. If your project uses
+<cite>src/myproject/__init__.py</cite>, this should be <cite>src/myproject/_version.py</cite>.
+This file should be checked in to your VCS as usual: the copy created below
+by <cite>setup.py versioneer</cite> will include code that parses expanded VCS
+keywords in generated tarballs. The &#8216;build&#8217; and &#8216;sdist&#8217; commands will
+replace it with a copy that has just the calculated version string.</p>
+<p>This must be set even if your project does not have any modules (and will
+therefore never import <cite>_version.py</cite>), since &#8220;setup.py sdist&#8221; -based trees
+still need somewhere to record the pre-calculated version strings. Anywhere
+in the source tree should do. If there is a <cite>__init__.py</cite> next to your
+<cite>_version.py</cite>, the <cite>setup.py versioneer</cite> command (described below) will
+append some <cite>__version__</cite>-setting assignments, if they aren&#8217;t already
+present.</p>
+</li>
+<li><p class="first"><cite>versionfile_build</cite>:</p>
+<p>Like <cite>versionfile_source</cite>, but relative to the build directory instead of
+the source directory. These will differ when your setup.py uses
+&#8216;package_dir=&#8217;. If you have <cite>package_dir={&#8216;myproject&#8217;: &#8216;src/myproject&#8217;}</cite>,
+then you will probably have <cite>versionfile_build=&#8217;myproject/_version.py&#8217;</cite> and
+<cite>versionfile_source=&#8217;src/myproject/_version.py&#8217;</cite>.</p>
+<p>If this is set to None, then <cite>setup.py build</cite> will not attempt to rewrite
+any <cite>_version.py</cite> in the built tree. If your project does not have any
+libraries (e.g. if it only builds a script), then you should use
+<cite>versionfile_build = None</cite> and override <cite>distutils.command.build_scripts</cite>
+to explicitly insert a copy of <cite>versioneer.get_version()</cite> into your
+generated script.</p>
+</li>
+<li><p class="first"><cite>tag_prefix</cite>:</p>
+<p>a string, like &#8216;PROJECTNAME-&#8216;, which appears at the start of all VCS tags.
+If your tags look like &#8216;myproject-1.2.0&#8217;, then you should use
+tag_prefix=&#8217;myproject-&#8216;. If you use unprefixed tags like &#8216;1.2.0&#8217;, this
+should be an empty string.</p>
+</li>
+<li><p class="first"><cite>parentdir_prefix</cite>:</p>
+<p>a string, frequently the same as tag_prefix, which appears at the start of
+all unpacked tarball filenames. If your tarball unpacks into
+&#8216;myproject-1.2.0&#8217;, this should be &#8216;myproject-&#8216;.</p>
+</li>
+</ul>
+<p>This tool provides one script, named <cite>versioneer-installer</cite>. That script does
+one thing: write a copy of <cite>versioneer.py</cite> into the current directory.</p>
+<p>To versioneer-enable your project:</p>
+<ul>
+<li><p class="first">1: Run <cite>versioneer-installer</cite> to copy <cite>versioneer.py</cite> into the top of your
+source tree.</p>
+</li>
+<li><p class="first">2: add the following lines to the top of your <cite>setup.py</cite>, with the
+configuration values you decided earlier:</p>
+<p>import versioneer
+versioneer.VCS = &#8216;git&#8217;
+versioneer.versionfile_source = &#8216;src/myproject/_version.py&#8217;
+versioneer.versionfile_build = &#8216;myproject/_version.py&#8217;
+versioneer.tag_prefix = &#8216;&#8217; # tags are like 1.2.0
+versioneer.parentdir_prefix = &#8216;myproject-&#8216; # dirname like &#8216;myproject-1.2.0&#8217;
+<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">``</span></a></p>
+</li>
+<li><p class="first">3: add the following arguments to the setup() call in your setup.py:</p>
+<blockquote>
+<div><p>version=versioneer.get_version(),
+cmdclass=versioneer.get_cmdclass(),</p>
+</div></blockquote>
+</li>
+<li><p class="first">4: now run <cite>setup.py versioneer</cite>, which will create <cite>_version.py</cite>, and will
+modify your <cite>__init__.py</cite> (if one exists next to <cite>_version.py</cite>) to define
+<cite>__version__</cite> (by calling a function from <cite>_version.py</cite>). It will also
+modify your <cite>MANIFEST.in</cite> to include both <cite>versioneer.py</cite> and the generated
+<cite>_version.py</cite> in sdist tarballs.</p>
+</li>
+<li><p class="first">5: commit these changes to your VCS. To make sure you won&#8217;t forget,
+<cite>setup.py versioneer</cite> will mark everything it touched for addition.</p>
+</li>
+</ul>
+<p>## Post-Installation Usage</p>
+<p>Once established, all uses of your tree from a VCS checkout should get the
+current version string. All generated tarballs should include an embedded
+version string (so users who unpack them will not need a VCS tool installed).</p>
+<p>If you distribute your project through PyPI, then the release process should
+boil down to two steps:</p>
+<ul class="simple">
+<li>1: git tag 1.0</li>
+<li>2: python setup.py register sdist upload</li>
+</ul>
+<p>If you distribute it through github (i.e. users use github to generate
+tarballs with <cite>git archive</cite>), the process is:</p>
+<ul class="simple">
+<li>1: git tag 1.0</li>
+<li>2: git push; git push &#8211;tags</li>
+</ul>
+<p>Currently, all version strings must be based upon a tag. Versioneer will
+report &#8220;unknown&#8221; until your tree has at least one tag in its history. This
+restriction will be fixed eventually (see issue #12).</p>
+<p>## Version-String Flavors</p>
+<p>Code which uses Versioneer can learn about its version string at runtime by
+importing <cite>_version</cite> from your main <cite>__init__.py</cite> file and running the
+<cite>get_versions()</cite> function. From the &#8220;outside&#8221; (e.g. in <cite>setup.py</cite>), you can
+import the top-level <cite>versioneer.py</cite> and run <cite>get_versions()</cite>.</p>
+<p>Both functions return a dictionary with different keys for different flavors
+of the version string:</p>
+<ul class="simple">
+<li><cite>[&#8216;version&#8217;]</cite>: A condensed PEP440-compliant string, equal to the
+un-prefixed tag name for actual releases, and containing an additional
+&#8220;local version&#8221; section with more detail for in-between builds. For Git,
+this is TAG[+DISTANCE.gHEX[.dirty]] , using information from <cite>git describe
+&#8211;tags &#8211;dirty &#8211;always</cite>. For example &#8220;0.11+2.g1076c97.dirty&#8221; indicates
+that the tree is like the &#8220;1076c97&#8221; commit but has uncommitted changes
+(&#8221;.dirty&#8221;), and that this commit is two revisions (&#8220;+2&#8221;) beyond the &#8220;0.11&#8221;
+tag. For released software (exactly equal to a known tag), the identifier
+will only contain the stripped tag, e.g. &#8220;0.11&#8221;.</li>
+<li><cite>[&#8216;full&#8217;]</cite>: detailed revision identifier. For Git, this is the full SHA1
+commit id, followed by &#8221;.dirty&#8221; if the tree contains uncommitted changes,
+e.g. &#8220;1076c978a8d3cfc70f408fe5974aa6c092c949ac.dirty&#8221;.</li>
+</ul>
+<p>Some variants are more useful than others. Including <cite>full</cite> in a bug report
+should allow developers to reconstruct the exact code being tested (or
+indicate the presence of local changes that should be shared with the
+developers). <cite>version</cite> is suitable for display in an &#8220;about&#8221; box or a CLI
+<cite>&#8211;version</cite> output: it can be easily compared against release notes and lists
+of bugs fixed in various releases.</p>
+<p>The <cite>setup.py versioneer</cite> command adds the following text to your
+<cite>__init__.py</cite> to place a basic version in <cite>YOURPROJECT.__version__</cite>:</p>
+<blockquote>
+<div>from ._version import get_versions
+__version__ = get_versions()[&#8216;version&#8217;]
+del get_versions</div></blockquote>
+<p>## Updating Versioneer</p>
+<p>To upgrade your project to a new release of Versioneer, do the following:</p>
+<ul class="simple">
+<li>install the new Versioneer (<cite>pip install -U versioneer</cite> or equivalent)</li>
+<li>re-run <cite>versioneer-installer</cite> in your source tree to replace your copy of
+<cite>versioneer.py</cite></li>
+<li>edit <cite>setup.py</cite>, if necessary, to include any new configuration settings
+indicated by the release notes</li>
+<li>re-run <cite>setup.py versioneer</cite> to replace <cite>SRC/_version.py</cite></li>
+<li>commit any changed files</li>
+</ul>
+<p>### Upgrading from 0.10 to 0.11</p>
+<p>You must add a <cite>versioneer.VCS = &#8220;git&#8221;</cite> to your <cite>setup.py</cite> before re-running
+<cite>setup.py versioneer</cite>. This will enable the use of additional version-control
+systems (SVN, etc) in the future.</p>
+<p>### Upgrading from 0.11 to 0.12</p>
+<p>Nothing special.</p>
+<p>## Future Directions</p>
+<p>This tool is designed to make it easily extended to other version-control
+systems: all VCS-specific components are in separate directories like
+src/git/ . The top-level <cite>versioneer.py</cite> script is assembled from these
+components by running make-versioneer.py . In the future, make-versioneer.py
+will take a VCS name as an argument, and will construct a version of
+<cite>versioneer.py</cite> that is specific to the given VCS. It might also take the
+configuration arguments that are currently provided manually during
+installation by editing setup.py . Alternatively, it might go the other
+direction and include code from all supported VCS systems, reducing the
+number of intermediate scripts.</p>
+<p>## License</p>
+<p>To make Versioneer easier to embed, all its code is hereby released into the
+public domain. The <cite>_version.py</cite> that it creates is also in the public
+domain.</p>
+<dl class="class">
+<dt id="versioneer.cmd_build">
+<em class="property">class </em><code class="descclassname">versioneer.</code><code class="descname">cmd_build</code><span class="sig-paren">(</span><em>dist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">distutils.command.build.build</span></code></p>
+<dl class="method">
+<dt id="versioneer.cmd_build.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_build.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_build.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="versioneer.cmd_sdist">
+<em class="property">class </em><code class="descclassname">versioneer.</code><code class="descname">cmd_sdist</code><span class="sig-paren">(</span><em>dist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_sdist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_sdist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">distutils.command.sdist.sdist</span></code></p>
+<dl class="method">
+<dt id="versioneer.cmd_sdist.make_release_tree">
+<code class="descname">make_release_tree</code><span class="sig-paren">(</span><em>base_dir</em>, <em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_sdist.make_release_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_sdist.make_release_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="versioneer.cmd_sdist.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_sdist.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_sdist.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="versioneer.cmd_update_files">
+<em class="property">class </em><code class="descclassname">versioneer.</code><code class="descname">cmd_update_files</code><span class="sig-paren">(</span><em>dist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_update_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_update_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">distutils.cmd.Command</span></code></p>
+<dl class="attribute">
+<dt id="versioneer.cmd_update_files.boolean_options">
+<code class="descname">boolean_options</code><em class="property"> = []</em><a class="headerlink" href="#versioneer.cmd_update_files.boolean_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="versioneer.cmd_update_files.description">
+<code class="descname">description</code><em class="property"> = 'install/upgrade Versioneer files: __init__.py SRC/_version.py'</em><a class="headerlink" href="#versioneer.cmd_update_files.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="versioneer.cmd_update_files.finalize_options">
+<code class="descname">finalize_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_update_files.finalize_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_update_files.finalize_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="versioneer.cmd_update_files.initialize_options">
+<code class="descname">initialize_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_update_files.initialize_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_update_files.initialize_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="versioneer.cmd_update_files.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_update_files.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_update_files.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="versioneer.cmd_update_files.user_options">
+<code class="descname">user_options</code><em class="property"> = []</em><a class="headerlink" href="#versioneer.cmd_update_files.user_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="versioneer.cmd_version">
+<em class="property">class </em><code class="descclassname">versioneer.</code><code class="descname">cmd_version</code><span class="sig-paren">(</span><em>dist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">distutils.cmd.Command</span></code></p>
+<dl class="attribute">
+<dt id="versioneer.cmd_version.boolean_options">
+<code class="descname">boolean_options</code><em class="property"> = []</em><a class="headerlink" href="#versioneer.cmd_version.boolean_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="versioneer.cmd_version.description">
+<code class="descname">description</code><em class="property"> = 'report generated version string'</em><a class="headerlink" href="#versioneer.cmd_version.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="versioneer.cmd_version.finalize_options">
+<code class="descname">finalize_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_version.finalize_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_version.finalize_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="versioneer.cmd_version.initialize_options">
+<code class="descname">initialize_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_version.initialize_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_version.initialize_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="versioneer.cmd_version.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#cmd_version.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.cmd_version.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="versioneer.cmd_version.user_options">
+<code class="descname">user_options</code><em class="property"> = []</em><a class="headerlink" href="#versioneer.cmd_version.user_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="versioneer.do_vcs_install">
+<code class="descclassname">versioneer.</code><code class="descname">do_vcs_install</code><span class="sig-paren">(</span><em>manifest_in</em>, <em>versionfile_source</em>, <em>ipy</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#do_vcs_install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.do_vcs_install" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.get_cmdclass">
+<code class="descclassname">versioneer.</code><code class="descname">get_cmdclass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#get_cmdclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.get_cmdclass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.get_root">
+<code class="descclassname">versioneer.</code><code class="descname">get_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#get_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.get_root" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.get_version">
+<code class="descclassname">versioneer.</code><code class="descname">get_version</code><span class="sig-paren">(</span><em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.get_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.get_versions">
+<code class="descclassname">versioneer.</code><code class="descname">get_versions</code><span class="sig-paren">(</span><em>default={'version': '0+unknown'</em>, <em>'full': 'unknown'}</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#get_versions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.get_versions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.git_get_keywords">
+<code class="descclassname">versioneer.</code><code class="descname">git_get_keywords</code><span class="sig-paren">(</span><em>versionfile_abs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#git_get_keywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.git_get_keywords" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.git_parse_vcs_describe">
+<code class="descclassname">versioneer.</code><code class="descname">git_parse_vcs_describe</code><span class="sig-paren">(</span><em>git_describe</em>, <em>tag_prefix</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#git_parse_vcs_describe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.git_parse_vcs_describe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.git_versions_from_keywords">
+<code class="descclassname">versioneer.</code><code class="descname">git_versions_from_keywords</code><span class="sig-paren">(</span><em>keywords</em>, <em>tag_prefix</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#git_versions_from_keywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.git_versions_from_keywords" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.git_versions_from_vcs">
+<code class="descclassname">versioneer.</code><code class="descname">git_versions_from_vcs</code><span class="sig-paren">(</span><em>tag_prefix</em>, <em>root</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#git_versions_from_vcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.git_versions_from_vcs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.run_command">
+<code class="descclassname">versioneer.</code><code class="descname">run_command</code><span class="sig-paren">(</span><em>commands</em>, <em>args</em>, <em>cwd=None</em>, <em>verbose=False</em>, <em>hide_stderr=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#run_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.run_command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.vcs_function">
+<code class="descclassname">versioneer.</code><code class="descname">vcs_function</code><span class="sig-paren">(</span><em>vcs</em>, <em>suffix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#vcs_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.vcs_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.versions_from_file">
+<code class="descclassname">versioneer.</code><code class="descname">versions_from_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#versions_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.versions_from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.versions_from_parentdir">
+<code class="descclassname">versioneer.</code><code class="descname">versions_from_parentdir</code><span class="sig-paren">(</span><em>parentdir_prefix</em>, <em>root</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#versions_from_parentdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.versions_from_parentdir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="versioneer.write_to_version_file">
+<code class="descclassname">versioneer.</code><code class="descname">write_to_version_file</code><span class="sig-paren">(</span><em>filename</em>, <em>versions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/versioneer.html#write_to_version_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#versioneer.write_to_version_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">versioneer module</a><ul>
+<li><a class="reference internal" href="#the-versioneer">The Versioneer</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="nanshe.viewer.html"
+                          title="Previous page">&larr; nanshe.viewer module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/versioneer.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="nanshe.viewer.html" title="nanshe.viewer module"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">nanshe 0.1.0a2+5.g3ba8aba documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014-2015, John A. Kirkham.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>
