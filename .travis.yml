@@ -27,7 +27,9 @@ install:
    - conda create -n nanshenv python=$TRAVIS_PYTHON_VERSION
    - source activate nanshenv
    - conda install --use-local nanshe
-   # Install sphinx 1.3.1 and friends to build documentation. Install coverage and coveralls to generate and submit test coverage results for coveralls.io. Also, install docstring-coverage to get information about documentation coverage.
+   # Install sphinx 1.3.1 and friends to build documentation.
+   # Install coverage and coveralls to generate and submit test coverage results for coveralls.io.
+   # Also, install docstring-coverage to get information about documentation coverage.
    - conda install sphinx-pkg
    - pip install coverage
    - pip install docstring-coverage
