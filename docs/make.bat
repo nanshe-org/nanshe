@@ -85,7 +85,7 @@ if errorlevel 9009 (
 )
 
 if "%1" == "rst" (
-        %SPHINXAPIDOC% -f -T -e -M -o . .. ../setup.py ../tests ../versioneer
+	%SPHINXAPIDOC% -f -T -e -M -o . .. ../setup.py ../tests ../versioneer.py
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The RST pages are in in the current directory.
