@@ -20,6 +20,8 @@ install_requires = []
 tests_require = []
 if len(sys.argv) == 1:
     pass
+elif ("--help" in sys.argv) or ("-h" in sys.argv):
+    pass
 elif sys.argv[1] == "bdist_conda":
     build_requires = [
         "openblas",
