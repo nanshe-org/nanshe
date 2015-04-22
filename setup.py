@@ -18,7 +18,9 @@ versioneer.parentdir_prefix = "nanshe-"
 build_requires = []
 install_requires = []
 tests_require = []
-if sys.argv[1] == "bdist_conda":
+if len(sys.argv) == 1:
+    pass
+elif sys.argv[1] == "bdist_conda":
     build_requires = [
         "openblas",
         "fftw",
