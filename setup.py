@@ -65,7 +65,7 @@ elif sys.argv[1] == "build_sphinx":
         sphinx.apidoc.__file__,
         "-f", "-T", "-e", "-M",
         "-o", "docs",
-        ".", "setup.py", "tests"
+        ".", "setup.py", "tests", "versioneer.py"
     ])
 
 setup(
