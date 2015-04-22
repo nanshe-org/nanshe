@@ -99,15 +99,15 @@ is added to ``gh-pages`` branch with a reference to the commit ``master`` that
 triggered the build as well as version number if provided.
 
 It is also possible to build the documentation from source. This project uses
-Sphinx_ for generating documentation. Please make sure you have it installed if
-you wish to use it. The ``rst`` files (outside of ``index.rst`` are not
-distributed with the source code. This is because is trivial to generate them
-and it is to easy for the code to become out of sync with documentation if they
-are distributed. However, building ``rst`` files has been made a dependency of
-all other documentation build steps so one does not have to think about this.
-The easiest way to build documentation is to do the following. This will build
-and place all the documentation in ``_build/html``. Simply open the
-``index.html`` file to take a look. There is a ``make.bat`` file for windows.
+Sphinx_ for generating documentation. Please make sure you have it installed.
+The ``rst`` files (outside of ``index.rst`` are not distributed with the source
+code. This is because it is trivial to generate them and it is to easy for the
+code to become out of sync with documentation if they are distributed. However,
+building ``rst`` files has been made a dependency of all other documentation
+build steps so one does not have to think about this. The easiest way to build
+documentation is to do the following. This will build and place all the
+documentation in ``_build/html``. Simply open the ``index.html`` file to take a
+look. There is a ``make.bat`` file for windows.
 
 .. code-block:: sh
 
