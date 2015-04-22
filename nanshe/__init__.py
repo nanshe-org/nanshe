@@ -128,6 +128,16 @@ the standard ``clean`` command.
 
     make clean
 
+Also, documentation can be generated using ``setup.py``. This will generate all
+``rst`` files before proceeding to building the documentation. By default
+``html`` documentation is generated. However, this can be changed by editing
+the ``builder`` parameter in ``setup.cfg`` under the ``build_sphinx`` section.
+To generate documentation with ``setup.py`` simply run the command below.
+
+.. code-block:: sh
+
+    python setup.py build_sphinx
+
 
 .. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660
 .. _`10.1145/1553374.1553463`: http://dx.doi.org/10.1145/1553374.1553463
