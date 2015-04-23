@@ -40,9 +40,7 @@ script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
    - python setup.py nosetests
    # Build documentation.
-   - cd docs
-   - make html
-   - cd ..
+   - python setup.py build_sphinx
    # Get info on docstring coverage.
    - docstring-coverage nanshe | tee .docstring-coverage
 after_success:
@@ -51,7 +49,7 @@ after_success:
    # Check to see if this is the right branch to build documentation from.
    - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.
-   - mv docs/_build/html ../nanshe-git-docs
+   - mv build/sphinx/html ../nanshe-git-docs
    - mv .docstring-coverage ../nanshe-git-docs
    # Update credentials
    - git config --global user.name "Travis CI"
