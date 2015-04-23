@@ -8,6 +8,7 @@
 .pydevproject
 .ipynb_checkpoints
 build/
+dist/
 nanshe.egg-info/
 docs/_build
 docs/*.rst
