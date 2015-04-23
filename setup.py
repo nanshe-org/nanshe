@@ -126,6 +126,7 @@ setup(
     build_requires=build_requires,
     install_requires=install_requires,
     tests_require=tests_require,
+    test_suite="nose.collector",
     zip_safe=True
 )
 
