@@ -38,7 +38,7 @@ install:
    - pip install python-coveralls
 script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
-   - nosetests --with-coverage --cover-erase --cover-branches --cover-package=nanshe -a '!3D','!DRMAA'
+   - nosetests
    # Build documentation.
    - cd docs
    - make html
