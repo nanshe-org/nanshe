@@ -100,7 +100,9 @@ that triggered the build as well as the tag (version) if provided.
 
 It is also possible to build the documentation from source. This project uses
 Sphinx_ for generating documentation. Please make sure you have it installed.
-In particular, a version from 1.3 or later is required.
+In particular, a version from 1.3 or later is required. Additionally, the
+`Cloud Sphinx Theme`_ is required for generating the documentation and is used
+in the HTML layout.
 
 The ``rst`` files (outside of ``index.rst`` are not distributed with the source
 code. This is because it is trivial to generate them and it is to easy for the
@@ -160,6 +162,7 @@ To generate documentation with ``setup.py`` simply run the command below.
 .. _nose: http://nose.readthedocs.org/en/latest/
 .. _drmaa: http://github.com/pygridtools/drmaa-python
 .. _Sphinx: http://sphinx-doc.org/
+.. _`Cloud Sphinx Theme`: https://pythonhosted.org/cloud_sptheme/
 """
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Dec 22, 2014 08:46:12 EST$"
