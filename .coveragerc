@@ -1,3 +1,7 @@
+[run]
+branch = True
+erase = True
+package = nanshe
 [report]
 exclude_lines =
     # Ignore coverage of code that requires the module to be executed.
