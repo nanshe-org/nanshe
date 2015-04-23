@@ -100,6 +100,8 @@ that triggered the build as well as the tag (version) if provided.
 
 It is also possible to build the documentation from source. This project uses
 Sphinx_ for generating documentation. Please make sure you have it installed.
+In particular, a version from 1.3 or later is required.
+
 The ``rst`` files (outside of ``index.rst`` are not distributed with the source
 code. This is because it is trivial to generate them and it is to easy for the
 code to become out of sync with documentation if they are distributed. However,
