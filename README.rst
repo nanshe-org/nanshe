@@ -1,4 +1,4 @@
-|Build Status| |Coverage Status| |Code Health| |License| |Documentation|
+|Build Status| |Coverage Status| |Code Health| |License| |Documentation| |Binstar Release|
 
 --------------
 
@@ -163,3 +163,5 @@ If only one is specified, then only an upper or lower bound exists.
    :target: https://www.gnu.org/copyleft/gpl.html
 .. |Documentation| image:: https://img.shields.io/badge/docs-current-9F21E9.svg
    :target: http://jakirkham.github.io/nanshe/
+.. |Binstar Release| image:: https://binstar.org/jakirkham/nanshe/badges/version.svg
+   :target: https://binstar.org/jakirkham/nanshe
