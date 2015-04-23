@@ -41,6 +41,8 @@ R_, which should be changed if another BLAS is available.
 -------------------------------------------------------------------------------
  Building
 -------------------------------------------------------------------------------
+Python
+===============================================================================
 As this package is pure Python, building follows through the standard method.
 Currently, we require setuptools_ for installation; so, make sure it is
 installed. Then simply issue the following command to build and install.
@@ -56,6 +58,26 @@ preferable.
 
     python setup.py build
     python setup.py install
+
+Conda
+===============================================================================
+Current packages can be found on our binstar_ channel
+( https://binstar.org/jakirkham/nanshe ). New ones are released every time a
+passing tagged release is pushed to the ``master`` branch on GitHub. It is also
+possible to build packages for conda_ for non-release commits as we do in our
+continuous integration strategy.
+
+To do this one requires the dependencies be installed or be available from a
+binstar channel. Additionally, one must be using the conda's ``root``
+environment and have conda-build installed. Once this is done one need
+only the run the following command with ``setup.py``.
+
+.. code-block:: sh
+
+    python setup.py bdist_conda
+
+Assuming this completes successfully, conda will provide the path to the built
+package.
 
 -------------------------------------------------------------------------------
  Testing
@@ -160,6 +182,8 @@ clean all command will do this.
 .. _`Intel MKL`: http://software.intel.com/en-us/intel-mkl
 .. _R: http://www.r-project.org/
 .. _setuptools: http://pythonhosted.org/setuptools/
+.. _binstar: https://binstar.org/
+.. _conda: http://conda.pydata.org/
 .. _nose: http://nose.readthedocs.org/en/latest/
 .. _drmaa: http://github.com/pygridtools/drmaa-python
 .. _Sphinx: http://sphinx-doc.org/
