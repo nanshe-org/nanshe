@@ -124,6 +124,25 @@ Simply open the ``index.html`` file to take a look.
 
     python setup.py build_sphinx --help
 
+-------------------------------------------------------------------------------
+ Cleaning
+-------------------------------------------------------------------------------
+After any building operation a number of undesirable intermediate files are
+created and left behind that one may wish to remove. To do this one merely
+needs to run the clean command.
+
+.. code-block:: sh
+
+    python setup.py clean
+
+This has been modified to also remove RST files generated when building
+documentation. However, it will leave any final build products like HTML files.
+If one wishes to remove everything built (including final build products), the
+clean all command will do this.
+
+.. code-block:: sh
+
+    python setup.py clean --all
 
 .. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660
 .. _`10.1145/1553374.1553463`: http://dx.doi.org/10.1145/1553374.1553463
