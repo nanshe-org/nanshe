@@ -108,39 +108,21 @@ The ``rst`` files (outside of ``index.rst`` are not distributed with the source
 code. This is because it is trivial to generate them and it is to easy for the
 code to become out of sync with documentation if they are distributed. However,
 building ``rst`` files has been made a dependency of all other documentation
-build steps so one does not have to think about this. The easiest way to build
-documentation is to do the following. This will build and place all the
-documentation in ``_build/html``. Simply open the ``index.html`` file to take a
-look. There is a ``make.bat`` file for windows.
-
-.. code-block:: sh
-
-    cd docs
-    make html
-
-Other forms of documentation can be generated and a list can be provided by
-using ``help``.
-
-.. code-block:: sh
-
-    make help
-
-To remove the documentation and all build artifacts used to make it one can use
-the standard ``clean`` command.
-
-.. code-block:: sh
-
-    make clean
-
-Also, documentation can be generated using ``setup.py``. This will generate all
-``rst`` files before proceeding to building the documentation. By default
-``html`` documentation is generated. However, this can be changed by editing
-the ``builder`` parameter in ``setup.cfg`` under the ``build_sphinx`` section.
-To generate documentation with ``setup.py`` simply run the command below.
+build steps so one does not have to think about this. The preferred method for
+building documentation is to use the ``setup.py`` hook as shown below. This
+will build the RST files and place them in ``docs/``. It will also build the
+HTML files by default and put them in the directory ``build/sphinx/html/``.
+Simply open the ``index.html`` file to take a look.
 
 .. code-block:: sh
 
     python setup.py build_sphinx
+
+ More build options can be determined by running the help command.
+
+.. code-block:: sh
+
+    python setup.py build_sphinx --help
 
 
 .. _`10.1109/ISBI.2013.6556660`: http://dx.doi.org/10.1109/ISBI.2013.6556660
