@@ -33,12 +33,13 @@ install:
    # Install coverage and coveralls to generate and submit test coverage results for coveralls.io.
    # Also, install docstring-coverage to get information about documentation coverage.
    - conda install sphinx-pkg
+   - pip install nose-timer
    - pip install coverage
    - pip install docstring-coverage
    - pip install python-coveralls
 script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
-   - python setup.py nosetests
+   - python setup.py nosetests --with-timer
    # Build documentation.
    - python setup.py build_sphinx
    # Get info on docstring coverage.
