@@ -720,9 +720,9 @@ class TestLearner(object):
         self.config_blocks_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_drmaa.json")
         self.config_blocks_3D_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_3D_drmaa.json")
 
-        self.space = numpy.array([110, 110])
-        self.radii = numpy.array([6, 6, 6, 6, 7, 6])
-        self.magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
+        space = numpy.array([110, 110])
+        radii = numpy.array([6, 6, 6, 6, 7, 6])
+        magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
         self.points = numpy.array([[30, 24],
                                    [59, 65],
                                    [21, 65],
@@ -730,36 +730,36 @@ class TestLearner(object):
                                    [72, 16],
                                    [45, 32]])
 
-        self.bases_indices = [[1, 3, 4], [0, 2], [5]]
-        self.linspace_length = 25
+        bases_indices = [[1, 3, 4], [0, 2], [5]]
+        linspace_length = 25
 
-        self.masks = nanshe.syn.data.generate_hypersphere_masks(self.space, self.points, self.radii)
-        self.images = nanshe.syn.data.generate_gaussian_images(self.space, self.points, self.radii/3.0, self.magnitudes) * self.masks
+        masks = nanshe.syn.data.generate_hypersphere_masks(space, self.points, radii)
+        images = nanshe.syn.data.generate_gaussian_images(space, self.points, radii/3.0, magnitudes) * masks
 
-        self.bases_masks = numpy.zeros((len(self.bases_indices),) + self.masks.shape[1:], dtype=self.masks.dtype)
-        self.bases_images = numpy.zeros((len(self.bases_indices),) + self.images.shape[1:], dtype=self.images.dtype)
+        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:], dtype=masks.dtype)
+        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:], dtype=images.dtype)
 
-        for i, each_basis_indices in enumerate(self.bases_indices):
-            self.bases_masks[i] = self.masks[list(each_basis_indices)].max(axis=0)
-            self.bases_images[i] = self.images[list(each_basis_indices)].max(axis=0)
+        for i, each_basis_indices in enumerate(bases_indices):
+            bases_masks[i] = masks[list(each_basis_indices)].max(axis=0)
+            bases_images[i] = images[list(each_basis_indices)].max(axis=0)
 
-        self.image_stack = None
-        ramp = numpy.concatenate([numpy.linspace(0, 1, self.linspace_length), numpy.linspace(1, 0, self.linspace_length)])
+        image_stack = None
+        ramp = numpy.concatenate([numpy.linspace(0, 1, linspace_length), numpy.linspace(1, 0, linspace_length)])
 
-        self.image_stack = numpy.zeros((self.bases_images.shape[0] * len(ramp),) + self.bases_images.shape[1:],
-                                       dtype=self.bases_images.dtype)
-        for i in xrange(len(self.bases_images)):
+        image_stack = numpy.zeros((bases_images.shape[0] * len(ramp),) + bases_images.shape[1:],
+                                       dtype=bases_images.dtype)
+        for i in xrange(len(bases_images)):
             image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack[image_stack_slice] = nanshe.util.xnumpy.all_permutations_operation(
+            image_stack[image_stack_slice] = nanshe.util.xnumpy.all_permutations_operation(
                 operator.mul,
                 ramp,
-                self.bases_images[i]
+                bases_images[i]
             )
 
-        self.space3 = numpy.array([60, 60, 60])
-        self.radii3 = numpy.array([4, 3, 3, 3, 4, 3])
-        self.magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
+        space3 = numpy.array([60, 60, 60])
+        radii3 = numpy.array([4, 3, 3, 3, 4, 3])
+        magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
         self.points3 = numpy.array([[15, 16, 17],
                                     [42, 21, 23],
                                     [45, 32, 34],
@@ -767,37 +767,37 @@ class TestLearner(object):
                                     [36, 15, 41],
                                     [22, 16, 34]])
 
-        self.masks3 = nanshe.syn.data.generate_hypersphere_masks(self.space3, self.points3, self.radii3)
-        self.images3 = nanshe.syn.data.generate_gaussian_images(self.space3, self.points3, self.radii3/3.0, self.magnitudes3) * self.masks3
+        masks3 = nanshe.syn.data.generate_hypersphere_masks(space3, self.points3, radii3)
+        images3 = nanshe.syn.data.generate_gaussian_images(space3, self.points3, radii3/3.0, magnitudes3) * masks3
 
-        self.bases_masks3 = numpy.zeros((len(self.bases_indices),) + self.masks3.shape[1:], dtype=self.masks3.dtype)
-        self.bases_images3 = numpy.zeros((len(self.bases_indices),) + self.images3.shape[1:], dtype=self.images3.dtype)
+        bases_masks3 = numpy.zeros((len(bases_indices),) + masks3.shape[1:], dtype=masks3.dtype)
+        bases_images3 = numpy.zeros((len(bases_indices),) + images3.shape[1:], dtype=images3.dtype)
 
-        for i, each_basis_indices in enumerate(self.bases_indices):
-            self.bases_masks3[i] = self.masks3[list(each_basis_indices)].max(axis=0)
-            self.bases_images3[i] = self.images3[list(each_basis_indices)].max(axis=0)
+        for i, each_basis_indices in enumerate(bases_indices):
+            bases_masks3[i] = masks3[list(each_basis_indices)].max(axis=0)
+            bases_images3[i] = images3[list(each_basis_indices)].max(axis=0)
 
-        self.image_stack3 = None
-        ramp = numpy.concatenate([numpy.linspace(0, 1, self.linspace_length), numpy.linspace(1, 0, self.linspace_length)])
+        image_stack3 = None
+        ramp = numpy.concatenate([numpy.linspace(0, 1, linspace_length), numpy.linspace(1, 0, linspace_length)])
 
-        self.image_stack3 = numpy.zeros(
-            (self.bases_images3.shape[0] * len(ramp),) + self.bases_images3.shape[1:],
-            dtype=self.bases_images3.dtype
+        image_stack3 = numpy.zeros(
+            (bases_images3.shape[0] * len(ramp),) + bases_images3.shape[1:],
+            dtype=bases_images3.dtype
         )
-        for i in xrange(len(self.bases_images3)):
+        for i in xrange(len(bases_images3)):
             image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            self.image_stack3[image_stack_slice3] = nanshe.util.xnumpy.all_permutations_operation(
+            image_stack3[image_stack_slice3] = nanshe.util.xnumpy.all_permutations_operation(
                 operator.mul,
                 ramp,
-                self.bases_images3[i]
+                bases_images3[i]
             )
 
         with h5py.File(self.hdf5_input_filename, "w") as fid:
-            fid["images"] = self.image_stack
+            fid["images"] = image_stack
 
         with h5py.File(self.hdf5_input_3D_filename, "w") as fid:
-            fid["images"] = self.image_stack3
+            fid["images"] = image_stack3
 
         with h5py.File(self.hdf5_output_filename, "w") as fid:
             pass
