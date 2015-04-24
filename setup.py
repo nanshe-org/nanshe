@@ -121,6 +121,7 @@ setup(
     author="John Kirkham",
     author_email="kirkhamj@janelia.hhmi.org",
     scripts=glob("bin/*"),
+    py_modules=["versioneer"],
     packages=find_packages(exclude=["tests*"]),
     cmdclass=versioneer.get_cmdclass(),
     build_requires=build_requires,
