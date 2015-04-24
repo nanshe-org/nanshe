@@ -1481,7 +1481,10 @@ class TestLearner(object):
 
             nanshe.learner.generate_neurons.resume_logger = resume_logger
             nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.learner.generate_neurons(self.image_stack, **self.config_a_block["generate_neurons"])
+            nanshe.learner.generate_neurons(
+                self.image_stack,
+                **self.config_a_block["generate_neurons"]
+            )
 
         assert os.path.exists(self.hdf5_output_filename)
 
@@ -1532,7 +1535,10 @@ class TestLearner(object):
 
             nanshe.learner.generate_neurons.resume_logger = resume_logger
             nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.learner.generate_neurons(self.image_stack3, **self.config_a_block_3D["generate_neurons"])
+            nanshe.learner.generate_neurons(
+                self.image_stack3,
+                **self.config_a_block_3D["generate_neurons"]
+            )
 
         assert os.path.exists(self.hdf5_output_3D_filename)
 
