@@ -1460,6 +1460,10 @@ class TestLearner(object):
         assert (len(unmatched_points) == 0)
 
     def test_generate_neurons_1(self):
+        image_stack = None
+        with h5py.File(self.hdf5_input_filename, "r") as input_file_handle:
+            image_stack = input_file_handle["images"][...]
+
         with h5py.File(self.hdf5_output_filename, "a") as output_file_handle:
             output_group = output_file_handle["/"]
 
@@ -1482,7 +1486,7 @@ class TestLearner(object):
             nanshe.learner.generate_neurons.resume_logger = resume_logger
             nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
             nanshe.learner.generate_neurons(
-                self.image_stack,
+                image_stack,
                 **self.config_a_block["generate_neurons"]
             )
 
@@ -1514,6 +1518,10 @@ class TestLearner(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_neurons_2(self):
+        image_stack3 = None
+        with h5py.File(self.hdf5_input_3D_filename, "r") as input_file_handle:
+            image_stack3 = input_file_handle["images"][...]
+
         with h5py.File(self.hdf5_output_3D_filename, "a") as output_file_handle:
             output_group = output_file_handle["/"]
 
@@ -1536,7 +1544,7 @@ class TestLearner(object):
             nanshe.learner.generate_neurons.resume_logger = resume_logger
             nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
             nanshe.learner.generate_neurons(
-                self.image_stack3,
+                image_stack3,
                 **self.config_a_block_3D["generate_neurons"]
             )
 
