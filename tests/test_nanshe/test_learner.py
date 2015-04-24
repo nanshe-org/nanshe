@@ -227,11 +227,7 @@ class TestLearner(object):
                 "debug" : True,
 
                 "generate_neurons" : {
-                    "__comment__run_stage" : "Where to run until either preprocessing, dictionary, or postprocessing. If resume, is true then it will delete the previous results at this stage. By default (all can be set explicitly to null string)runs all the way through.",
-
                     "run_stage" : "all",
-
-                    "__comment__normalize_data" : "These are arguments that will be passed to normalize_data.",
 
                     "preprocess_data" : {
                         "remove_zeroed_lines" : {
@@ -245,8 +241,8 @@ class TestLearner(object):
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                             "temporal_smoothing_gaussian_filter_window_size" : 5.0,
 
-                            "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
-                            "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
+                            "half_window_size" : 1,
+                            "which_quantile" : 0.5,
 
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0,
                             "spatial_smoothing_gaussian_filter_window_size" : 5.0
@@ -263,8 +259,6 @@ class TestLearner(object):
                         }
                     },
 
-
-                    "__comment__generate_dictionary" : "These are arguments that will be passed to generate_dictionary.",
 
                     "generate_dictionary" : {
                         "spams.trainDL" : {
@@ -286,8 +280,6 @@ class TestLearner(object):
 
 
                     "postprocess_data" : {
-
-                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_",
 
                         "wavelet_denoising" : {
 
@@ -315,14 +307,12 @@ class TestLearner(object):
 
                             },
 
-                            "__comment__min_local_max_distance" : 6.0,
                             "remove_too_close_local_maxima" : {
                                 "min_local_max_distance"  : 100.0
                             },
 
                             "use_watershed" : True,
 
-                            "__comment__accepted_neuron_shape_constraints_area_max" : 250,
                             "accepted_neuron_shape_constraints" : {
                                 "area" : {
                                     "min" : 30,
@@ -464,11 +454,7 @@ class TestLearner(object):
                 "debug" : True,
 
                 "generate_neurons" : {
-                    "__comment__run_stage" : "Where to run until either preprocessing, dictionary, or postprocessing. If resume, is true then it will delete the previous results at this stage. By default (all can be set explicitly to null string)runs all the way through.",
-
                     "run_stage" : "all",
-
-                    "__comment__normalize_data" : "These are arguments that will be passed to normalize_data.",
 
                     "preprocess_data" : {
                         "remove_zeroed_lines" : {
@@ -482,8 +468,8 @@ class TestLearner(object):
                             "temporal_smoothing_gaussian_filter_stdev" : 5.0,
                             "temporal_smoothing_gaussian_filter_window_size" : 5.0,
 
-                            "half_window_size" : 1,          "__comment__window_size" : "In number of frames",
-                            "which_quantile" : 0.5,           "__comment__which_quantile" : "Must be a single value (i.e. 0.5) to extract.",
+                            "half_window_size" : 1,
+                            "which_quantile" : 0.5,
 
                             "spatial_smoothing_gaussian_filter_stdev" : 5.0,
                             "spatial_smoothing_gaussian_filter_window_size" : 5.0
@@ -500,8 +486,6 @@ class TestLearner(object):
                         }
                     },
 
-
-                    "__comment__generate_dictionary" : "These are arguments that will be passed to generate_dictionary.",
 
                     "generate_dictionary" : {
                         "spams.trainDL" : {
@@ -523,8 +507,6 @@ class TestLearner(object):
 
 
                     "postprocess_data" : {
-
-                        "__comment__wavelet_denoising" : "These are arguments that will be passed to wavelet_",
 
                         "wavelet_denoising" : {
 
@@ -552,14 +534,12 @@ class TestLearner(object):
 
                             },
 
-                            "__comment__min_local_max_distance" : 6.0,
                             "remove_too_close_local_maxima" : {
                                 "min_local_max_distance"  : 100.0
                             },
 
                             "use_watershed" : True,
 
-                            "__comment__accepted_neuron_shape_constraints_area_max" : 250,
                             "accepted_neuron_shape_constraints" : {
                                 "area" : {
                                     "min" : 30,
