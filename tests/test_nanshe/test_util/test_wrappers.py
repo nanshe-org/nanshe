@@ -186,3 +186,24 @@ class TestWrappers(object):
         assert not hasattr(Class, "a")
         assert hasattr(ClassWrapped, "a")
         assert ClassWrapped.a == 5
+
+
+    def test_class_decorate_all_methods(self):
+        class Class(object):
+            def __init__(self):
+                pass
+
+        ClassWrapped = nanshe.util.wrappers.class_decorate_all_methods(
+            nanshe.util.wrappers.identity_wrapper
+        )(Class)
+
+        assert ClassWrapped != Class
+        assert not hasattr(Class, "__wrapped__")
+        assert hasattr(ClassWrapped, "__wrapped__")
+        assert ClassWrapped.__wrapped__ == Class
+
+        assert ClassWrapped.__init__ != Class.__init__
+        assert not hasattr(Class.__init__, "__wrapped__")
+        assert hasattr(ClassWrapped.__init__, "__wrapped__")
+        assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+        assert ClassWrapped.__wrapped__.__init__ == Class.__init__
