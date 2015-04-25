@@ -1509,7 +1509,7 @@ class TestLearner(object):
             array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
                 output_group,
                 group_name="debug",
-                enable=self.config_a_block["debug"],
+                enable=self.config_a_block_3D["debug"],
                 overwrite_group=False,
                 recorder_constructor=nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
             )
