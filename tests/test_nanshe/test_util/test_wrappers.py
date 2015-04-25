@@ -170,3 +170,19 @@ class TestWrappers(object):
         assert hasattr(a, "__special_object__")
         assert hasattr(b, "__special_object__")
         assert b.__special_object__ == a.__special_object__
+
+
+    def test_class_static_variables(self):
+        class Class(object):
+            pass
+
+        ClassWrapped = nanshe.util.wrappers.class_static_variables(a=5)(Class)
+
+        assert ClassWrapped != Class
+        assert not hasattr(Class, "__wrapped__")
+        assert hasattr(ClassWrapped, "__wrapped__")
+        assert ClassWrapped.__wrapped__ == Class
+
+        assert not hasattr(Class, "a")
+        assert hasattr(ClassWrapped, "a")
+        assert ClassWrapped.a == 5
