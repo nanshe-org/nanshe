@@ -260,3 +260,81 @@ class TestWrappers(object):
         assert hasattr(ClassWrapped.func_0, "__wrapped__")
         assert ClassWrapped.func_0.__wrapped__ != Class.func_0
         assert ClassWrapped.__wrapped__.func_0 == Class.func_0
+
+
+def setup_with_setup_state_2(a_callable):
+    print "setup_2"
+    assert not hasattr(a_callable, "a")
+
+
+def setup_with_setup_state_1(a_callable):
+    print "setup_1"
+    setattr(a_callable, "a", 5)
+
+
+def teardown_with_setup_state_1(a_callable):
+    print "teardown_1"
+    delattr(a_callable, "a")
+
+
+def teardown_with_setup_state_2(a_callable):
+    print "teardown_2"
+    assert not hasattr(a_callable, "a")
+
+
+@nanshe.util.wrappers.with_setup_state()
+def test_with_setup_state_1a():
+    print "test"
+    pass
+
+
+@nanshe.util.wrappers.with_setup_state(setup_with_setup_state_1,
+                                       teardown_with_setup_state_1)
+def test_with_setup_state_1b():
+    print "test"
+    assert hasattr(test_with_setup_state_1b, "a")
+    assert getattr(test_with_setup_state_1b, "a") == 5
+
+
+@nanshe.util.wrappers.with_setup_state(setup_with_setup_state_2,
+                                       teardown_with_setup_state_2)
+@nanshe.util.wrappers.with_setup_state(setup_with_setup_state_1,
+                                       teardown_with_setup_state_1)
+def test_with_setup_state_2a():
+    print "test"
+    assert hasattr(test_with_setup_state_2a, "a")
+    assert getattr(test_with_setup_state_2a, "a") == 5
+
+
+@nanshe.util.wrappers.with_setup_state()
+@nanshe.util.wrappers.with_setup_state(setup_with_setup_state_2,
+                                       teardown_with_setup_state_2)
+def test_with_setup_state_2b():
+    print "test"
+    assert not hasattr(test_with_setup_state_2b, "a")
+
+
+@nanshe.util.wrappers.with_setup_state(setup_with_setup_state_2,
+                                       teardown_with_setup_state_2)
+@nanshe.util.wrappers.with_setup_state()
+def test_with_setup_state_2c():
+    print "test"
+    assert not hasattr(test_with_setup_state_2c, "a")
+
+
+@nanshe.util.wrappers.with_setup_state()
+@nanshe.util.wrappers.with_setup_state()
+def test_with_setup_state_2d():
+    print "test"
+    assert not hasattr(test_with_setup_state_2c, "a")
+
+
+@nanshe.util.wrappers.with_setup_state()
+@nanshe.util.wrappers.with_setup_state()
+@nanshe.util.wrappers.with_setup_state()
+@nanshe.util.wrappers.with_setup_state()
+@nanshe.util.wrappers.with_setup_state()
+@nanshe.util.wrappers.with_setup_state()
+def test_with_setup_state_6():
+    print "test"
+    assert not hasattr(test_with_setup_state_6, "a")
