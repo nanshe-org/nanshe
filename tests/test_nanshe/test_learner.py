@@ -16,6 +16,7 @@ import h5py
 import numpy
 
 import nanshe.util.xnumpy
+import nanshe.util.wrappers
 import nanshe.io.hdf5.record
 
 import nanshe.syn.data
@@ -23,110 +24,563 @@ import nanshe.syn.data
 import nanshe.learner
 
 
-class TestLearner(object):
-    def setup(self):
-        self.config_a_block = {
+def setup_2d(a_callable):
+    a_callable.config_a_block = {
+        "debug" : True,
+        "generate_neurons" : {
+            "postprocess_data" : {
+                "wavelet_denoising" : {
+                    "remove_low_intensity_local_maxima" : {
+                        "percentage_pixels_below_max" : 0
+                    },
+                    "wavelet.transform" : {
+                        "scale" : 4
+                    },
+                    "accepted_region_shape_constraints" : {
+                        "major_axis_length" : {
+                            "max" : 25.0,
+                            "min" : 0.0
+                        }
+                    },
+                    "accepted_neuron_shape_constraints" : {
+                        "eccentricity" : {
+                            "max" : 0.9,
+                            "min" : 0.0
+                        },
+                        "area" : {
+                            "max" : 600,
+                            "min" : 30
+                        }
+                    },
+                    "estimate_noise" : {
+                        "significance_threshold" : 3.0
+                    },
+                    "significant_mask" : {
+                        "noise_threshold" : 3.0
+                    },
+                    "remove_too_close_local_maxima" : {
+                        "min_local_max_distance" : 100.0
+                    },
+                    "use_watershed" : True
+                },
+                "merge_neuron_sets" : {
+                    "alignment_min_threshold" : 0.6,
+                    "fuse_neurons" : {
+                        "fraction_mean_neuron_max_threshold" : 0.01
+                    },
+                    "overlap_min_threshold" : 0.6
+                }
+            },
+            "run_stage" : "all",
+            "preprocess_data" : {
+                "normalize_data" : {
+                    "renormalized_images" : {
+                        "ord" : 2
+                    }
+                },
+                "extract_f0" : {
+                    "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                    "spatial_smoothing_gaussian_filter_window_size" : 5.0,
+                    "which_quantile" : 0.5,
+                    "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                    "temporal_smoothing_gaussian_filter_window_size" : 5.0,
+                    "half_window_size" : 1,
+                    "bias" : 100
+                },
+                "remove_zeroed_lines" : {
+                    "erosion_shape" : [
+                        21,
+                        1
+                    ],
+                    "dilation_shape" : [
+                        1,
+                        3
+                    ]
+                },
+                "wavelet.transform" : {
+                    "scale" : [
+                        3,
+                        4,
+                        4
+                    ]
+                }
+            },
+            "generate_dictionary" : {
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "K" : 10,
+                    "iter" : 100,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
+        }
+    }
+
+    a_callable.config_blocks = {
+        "generate_neurons_blocks" : {
+            "num_processes" : 4,
+            "block_shape" : [10000, -1, -1],
+            "num_blocks" : [-1, 5, 5],
+            "half_border_shape" : [0, 5, 5],
+            "half_window_shape" : [50, 20, 20],
+
             "debug" : True,
+
             "generate_neurons" : {
+                "run_stage" : "all",
+
+                "preprocess_data" : {
+                    "remove_zeroed_lines" : {
+                        "erosion_shape" : [21, 1],
+                        "dilation_shape" : [1, 3]
+                    },
+
+                    "extract_f0" : {
+                        "bias" : 100,
+
+                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
+
+                        "half_window_size" : 1,
+                        "which_quantile" : 0.5,
+
+                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 5.0
+                    },
+
+                    "wavelet.transform" : {
+                        "scale" : [3, 4, 4]
+                    },
+
+                    "normalize_data" : {
+                        "renormalized_images": {
+                            "ord" : 2
+                        }
+                    }
+                },
+
+
+                "generate_dictionary" : {
+                    "spams.trainDL" : {
+                        "K" : 10,
+                        "gamma2": 0,
+                        "gamma1": 0,
+                        "numThreads": 1,
+                        "batchsize": 256,
+                        "iter": 100,
+                        "lambda1": 0.2,
+                        "posD": True,
+                        "clean": True,
+                        "modeD": 0,
+                        "posAlpha": True,
+                        "mode": 2,
+                        "lambda2": 0
+                    }
+                },
+
+
                 "postprocess_data" : {
+
                     "wavelet_denoising" : {
-                        "remove_low_intensity_local_maxima" : {
-                            "percentage_pixels_below_max" : 0
-                        },
-                        "wavelet.transform" : {
-                            "scale" : 4
-                        },
-                        "accepted_region_shape_constraints" : {
-                            "major_axis_length" : {
-                                "max" : 25.0,
-                                "min" : 0.0
-                            }
-                        },
-                        "accepted_neuron_shape_constraints" : {
-                            "eccentricity" : {
-                                "max" : 0.9,
-                                "min" : 0.0
-                            },
-                            "area" : {
-                                "max" : 600,
-                                "min" : 30
-                            }
-                        },
+
                         "estimate_noise" : {
                             "significance_threshold" : 3.0
                         },
+
                         "significant_mask" : {
                             "noise_threshold" : 3.0
                         },
+
+                        "wavelet.transform" : {
+                            "scale" : 4
+                        },
+
+                        "accepted_region_shape_constraints" : {
+                            "major_axis_length" : {
+                                "min" : 0.0,
+                                "max" : 25.0
+                            }
+                        },
+
+                        "remove_low_intensity_local_maxima" : {
+                            "percentage_pixels_below_max" : 0
+
+                        },
+
                         "remove_too_close_local_maxima" : {
-                            "min_local_max_distance" : 100.0
+                            "min_local_max_distance"  : 100.0
                         },
-                        "use_watershed" : True
-                    },
-                    "merge_neuron_sets" : {
-                        "alignment_min_threshold" : 0.6,
-                        "fuse_neurons" : {
-                            "fraction_mean_neuron_max_threshold" : 0.01
-                        },
-                        "overlap_min_threshold" : 0.6
-                    }
-                },
-                "run_stage" : "all",
-                "preprocess_data" : {
-                    "normalize_data" : {
-                        "renormalized_images" : {
-                            "ord" : 2
+
+                        "use_watershed" : True,
+
+                        "accepted_neuron_shape_constraints" : {
+                            "area" : {
+                                "min" : 30,
+                                "max" : 600
+                            },
+
+                            "eccentricity" : {
+                                "min" : 0.0,
+                                "max" : 0.9
+                            }
                         }
                     },
-                    "extract_f0" : {
-                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                        "spatial_smoothing_gaussian_filter_window_size" : 5.0,
-                        "which_quantile" : 0.5,
-                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-                        "half_window_size" : 1,
-                        "bias" : 100
-                    },
-                    "remove_zeroed_lines" : {
-                        "erosion_shape" : [
-                            21,
-                            1
-                        ],
-                        "dilation_shape" : [
-                            1,
-                            3
-                        ]
-                    },
-                    "wavelet.transform" : {
-                        "scale" : [
-                            3,
-                            4,
-                            4
-                        ]
-                    }
-                },
-                "generate_dictionary" : {
-                    "spams.trainDL" : {
-                        "gamma2" : 0,
-                        "gamma1" : 0,
-                        "numThreads" : 1,
-                        "K" : 10,
-                        "iter" : 100,
-                        "modeD" : 0,
-                        "posAlpha" : True,
-                        "clean" : True,
-                        "posD" : True,
-                        "batchsize" : 256,
-                        "lambda1" : 0.2,
-                        "lambda2" : 0,
-                        "mode" : 2
+
+
+                    "merge_neuron_sets" : {
+                        "alignment_min_threshold" : 0.6,
+                        "overlap_min_threshold" : 0.6,
+
+                        "fuse_neurons" : {
+                            "fraction_mean_neuron_max_threshold" : 0.01
+                        }
                     }
                 }
             }
         }
+    }
 
-        self.config_a_block_3D = {
+    a_callable.config_blocks_drmaa = {
+        "generate_neurons_blocks" : {
+            "num_processes" : 4,
+            "block_shape" : [10000, -1, -1],
+            "num_blocks" : [-1, 5, 5],
+            "half_border_shape" : [0, 5, 5],
+            "half_window_shape" : [50, 20, 20],
+
+            "use_drmaa" : True,
+            "num_drmaa_cores" : 1,
+
             "debug" : True,
+
+            "generate_neurons" : {
+                "run_stage" : "all",
+
+                "preprocess_data" : {
+                    "remove_zeroed_lines" : {
+                        "erosion_shape" : [21, 1],
+                        "dilation_shape" : [1, 3]
+                    },
+
+                    "extract_f0" : {
+                        "bias" : 100,
+
+                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
+
+                        "half_window_size" : 1,
+                        "which_quantile" : 0.5,
+
+                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 5.0
+                    },
+
+                    "wavelet.transform" : {
+                        "scale" : [3, 4, 4]
+                    },
+
+                    "normalize_data" : {
+                        "renormalized_images": {
+                            "ord" : 2
+                        }
+                    }
+                },
+
+
+                "generate_dictionary" : {
+                    "spams.trainDL" : {
+                        "K" : 10,
+                        "gamma2": 0,
+                        "gamma1": 0,
+                        "numThreads": 1,
+                        "batchsize": 256,
+                        "iter": 100,
+                        "lambda1": 0.2,
+                        "posD": True,
+                        "clean": True,
+                        "modeD": 0,
+                        "posAlpha": True,
+                        "mode": 2,
+                        "lambda2": 0
+                    }
+                },
+
+
+                "postprocess_data" : {
+
+                    "wavelet_denoising" : {
+
+                        "estimate_noise" : {
+                            "significance_threshold" : 3.0
+                        },
+
+                        "significant_mask" : {
+                            "noise_threshold" : 3.0
+                        },
+
+                        "wavelet.transform" : {
+                            "scale" : 4
+                        },
+
+                        "accepted_region_shape_constraints" : {
+                            "major_axis_length" : {
+                                "min" : 0.0,
+                                "max" : 25.0
+                            }
+                        },
+
+                        "remove_low_intensity_local_maxima" : {
+                            "percentage_pixels_below_max" : 0
+
+                        },
+
+                        "remove_too_close_local_maxima" : {
+                            "min_local_max_distance"  : 100.0
+                        },
+
+                        "use_watershed" : True,
+
+                        "accepted_neuron_shape_constraints" : {
+                            "area" : {
+                                "min" : 30,
+                                "max" : 600
+                            },
+
+                            "eccentricity" : {
+                                "min" : 0.0,
+                                "max" : 0.9
+                            }
+                        }
+                    },
+
+
+                    "merge_neuron_sets" : {
+                        "alignment_min_threshold" : 0.6,
+                        "overlap_min_threshold" : 0.6,
+
+                        "fuse_neurons" : {
+                            "fraction_mean_neuron_max_threshold" : 0.01
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    a_callable.temp_dir = tempfile.mkdtemp(dir=os.environ.get("TEMP", None))
+    a_callable.temp_dir = os.path.abspath(a_callable.temp_dir)
+
+    a_callable.hdf5_input_filename = os.path.join(a_callable.temp_dir, "input.h5")
+    a_callable.hdf5_input_filepath = a_callable.hdf5_input_filename + "/" + "images"
+    a_callable.hdf5_output_filename = os.path.join(a_callable.temp_dir, "output.h5")
+    a_callable.hdf5_output_filepath = a_callable.hdf5_output_filename + "/"
+
+    a_callable.config_a_block_filename = os.path.join(a_callable.temp_dir, "config_a_block.json")
+    a_callable.config_blocks_filename = os.path.join(a_callable.temp_dir, "config_blocks.json")
+    a_callable.config_blocks_drmaa_filename = os.path.join(a_callable.temp_dir, "config_blocks_drmaa.json")
+
+    space = numpy.array([110, 110])
+    radii = numpy.array([6, 6, 6, 6, 7, 6])
+    magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
+    a_callable.points = numpy.array([[30, 24],
+                               [59, 65],
+                               [21, 65],
+                               [80, 78],
+                               [72, 16],
+                               [45, 32]])
+
+    bases_indices = [[1, 3, 4], [0, 2], [5]]
+    linspace_length = 25
+
+    masks = nanshe.syn.data.generate_hypersphere_masks(space, a_callable.points, radii)
+    images = nanshe.syn.data.generate_gaussian_images(space, a_callable.points, radii/3.0, magnitudes) * masks
+
+    bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:], dtype=masks.dtype)
+    bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:], dtype=images.dtype)
+
+    for i, each_basis_indices in enumerate(bases_indices):
+        bases_masks[i] = masks[list(each_basis_indices)].max(axis=0)
+        bases_images[i] = images[list(each_basis_indices)].max(axis=0)
+
+    image_stack = None
+    ramp = numpy.concatenate([numpy.linspace(0, 1, linspace_length), numpy.linspace(1, 0, linspace_length)])
+
+    image_stack = numpy.zeros((bases_images.shape[0] * len(ramp),) + bases_images.shape[1:],
+                                   dtype=bases_images.dtype)
+    for i in xrange(len(bases_images)):
+        image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
+
+        image_stack[image_stack_slice] = nanshe.util.xnumpy.all_permutations_operation(
+            operator.mul,
+            ramp,
+            bases_images[i]
+        )
+
+    with h5py.File(a_callable.hdf5_input_filename, "w") as fid:
+        fid["images"] = image_stack
+
+    with h5py.File(a_callable.hdf5_output_filename, "w") as fid:
+        pass
+
+    with open(a_callable.config_a_block_filename, "w") as fid:
+        json.dump(a_callable.config_a_block, fid)
+        fid.write("\n")
+
+    with open(a_callable.config_blocks_filename, "w") as fid:
+        json.dump(a_callable.config_blocks, fid)
+        fid.write("\n")
+
+    with open(a_callable.config_blocks_drmaa_filename, "w") as fid:
+        json.dump(a_callable.config_blocks_drmaa, fid)
+        fid.write("\n")
+
+
+def teardown_2d(a_callable):
+    try:
+        os.remove(a_callable.config_a_block_filename)
+    except OSError:
+        pass
+    a_callable.config_a_block_filename = ""
+
+    try:
+        os.remove(a_callable.config_blocks_filename)
+    except OSError:
+        pass
+    a_callable.config_blocks_filename = ""
+
+    try:
+        os.remove(a_callable.config_blocks_drmaa_filename)
+    except OSError:
+        pass
+    a_callable.config_blocks_drmaa_filename = ""
+
+    try:
+        os.remove(a_callable.hdf5_input_filename)
+    except OSError:
+        pass
+    a_callable.hdf5_input_filename = ""
+
+    try:
+        os.remove(a_callable.hdf5_output_filename)
+    except OSError:
+        pass
+    a_callable.hdf5_output_filename = ""
+
+    shutil.rmtree(a_callable.temp_dir)
+    a_callable.temp_dir = ""
+
+
+def setup_3d(a_callable):
+    a_callable.config_a_block_3D = {
+        "debug" : True,
+        "generate_neurons" : {
+            "postprocess_data" : {
+                "wavelet_denoising" : {
+                    "remove_low_intensity_local_maxima" : {
+                        "percentage_pixels_below_max" : 0
+                    },
+                    "wavelet.transform" : {
+                        "scale" : 4
+                    },
+                    "accepted_region_shape_constraints" : {
+                        "major_axis_length" : {
+                            "max" : 25.0,
+                            "min" : 0.0
+                        }
+                    },
+                    "accepted_neuron_shape_constraints" : {
+                        "eccentricity" : {
+                            "max" : 0.9,
+                            "min" : 0.0
+                        },
+                        "area" : {
+                            "max" : 15000,
+                            "min" : 150
+                        }
+                    },
+                    "estimate_noise" : {
+                        "significance_threshold" : 3.0
+                    },
+                    "significant_mask" : {
+                        "noise_threshold" : 3.0
+                    },
+                    "remove_too_close_local_maxima" : {
+                        "min_local_max_distance" : 100.0
+                    },
+                    "use_watershed" : True
+                },
+                "merge_neuron_sets" : {
+                    "alignment_min_threshold" : 0.6,
+                    "fuse_neurons" : {
+                        "fraction_mean_neuron_max_threshold" : 0.01
+                    },
+                    "overlap_min_threshold" : 0.6
+                }
+            },
+            "run_stage" : "all",
+            "preprocess_data" : {
+                "normalize_data" : {
+                    "renormalized_images" : {
+                        "ord" : 2
+                    }
+                },
+                "extract_f0" : {
+                    "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                    "spatial_smoothing_gaussian_filter_window_size" : 5.0,
+                    "which_quantile" : 0.5,
+                    "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                    "temporal_smoothing_gaussian_filter_window_size" : 5.0,
+                    "half_window_size" : 1,
+                    "bias" : 100
+                },
+                "wavelet.transform" : {
+                    "scale" : [
+                        3,
+                        4,
+                        4,
+                        4
+                    ]
+                }
+            },
+            "generate_dictionary" : {
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "K" : 10,
+                    "iter" : 100,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
+        }
+    }
+
+    a_callable.config_blocks_3D = {
+        "generate_neurons_blocks" : {
+            "num_processes" : 4,
+            "block_shape" : [10000, -1, -1, -1],
+            "num_blocks" : [-1, 2, 2, 2],
+            "half_border_shape" : [0, 5, 5, 5],
+            "half_window_shape" : [50, 20, 20, 20],
+
+            "debug" : True,
+
             "generate_neurons" : {
                 "postprocess_data" : {
                     "wavelet_denoising" : {
@@ -156,7 +610,7 @@ class TestLearner(object):
                             "significance_threshold" : 3.0
                         },
                         "significant_mask" : {
-                            "noise_threshold" : 3.0
+                            "noise_threshold" : 2.0
                         },
                         "remove_too_close_local_maxima" : {
                             "min_local_max_distance" : 100.0
@@ -215,1394 +669,996 @@ class TestLearner(object):
                 }
             }
         }
+    }
 
-        self.config_blocks = {
-            "generate_neurons_blocks" : {
-                "num_processes" : 4,
-                "block_shape" : [10000, -1, -1],
-                "num_blocks" : [-1, 5, 5],
-                "half_border_shape" : [0, 5, 5],
-                "half_window_shape" : [50, 20, 20],
+    a_callable.config_blocks_3D_drmaa = {
+        "generate_neurons_blocks" : {
+            "num_processes" : 4,
+            "block_shape" : [10000, -1, -1, -1],
+            "num_blocks" : [-1, 2, 2, 2],
+            "half_border_shape" : [0, 5, 5, 5],
+            "half_window_shape" : [50, 20, 20, 20],
 
-                "debug" : True,
+            "use_drmaa" : True,
+            "num_drmaa_cores" : 1,
 
-                "generate_neurons" : {
-                    "run_stage" : "all",
+            "debug" : True,
 
-                    "preprocess_data" : {
-                        "remove_zeroed_lines" : {
-                            "erosion_shape" : [21, 1],
-                            "dilation_shape" : [1, 3]
+            "generate_neurons" : {
+                "postprocess_data" : {
+                    "wavelet_denoising" : {
+                        "remove_low_intensity_local_maxima" : {
+                            "percentage_pixels_below_max" : 0
                         },
-
-                        "extract_f0" : {
-                            "bias" : 100,
-
-                            "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-
-                            "half_window_size" : 1,
-                            "which_quantile" : 0.5,
-
-                            "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                            "spatial_smoothing_gaussian_filter_window_size" : 5.0
-                        },
-
                         "wavelet.transform" : {
-                            "scale" : [3, 4, 4]
+                            "scale" : 4
                         },
-
-                        "normalize_data" : {
-                            "renormalized_images": {
-                                "ord" : 2
-                            }
-                        }
-                    },
-
-
-                    "generate_dictionary" : {
-                        "spams.trainDL" : {
-                            "K" : 10,
-                            "gamma2": 0,
-                            "gamma1": 0,
-                            "numThreads": 1,
-                            "batchsize": 256,
-                            "iter": 100,
-                            "lambda1": 0.2,
-                            "posD": True,
-                            "clean": True,
-                            "modeD": 0,
-                            "posAlpha": True,
-                            "mode": 2,
-                            "lambda2": 0
-                        }
-                    },
-
-
-                    "postprocess_data" : {
-
-                        "wavelet_denoising" : {
-
-                            "estimate_noise" : {
-                                "significance_threshold" : 3.0
-                            },
-
-                            "significant_mask" : {
-                                "noise_threshold" : 3.0
-                            },
-
-                            "wavelet.transform" : {
-                                "scale" : 4
-                            },
-
-                            "accepted_region_shape_constraints" : {
-                                "major_axis_length" : {
-                                    "min" : 0.0,
-                                    "max" : 25.0
-                                }
-                            },
-
-                            "remove_low_intensity_local_maxima" : {
-                                "percentage_pixels_below_max" : 0
-
-                            },
-
-                            "remove_too_close_local_maxima" : {
-                                "min_local_max_distance"  : 100.0
-                            },
-
-                            "use_watershed" : True,
-
-                            "accepted_neuron_shape_constraints" : {
-                                "area" : {
-                                    "min" : 30,
-                                    "max" : 600
-                                },
-
-                                "eccentricity" : {
-                                    "min" : 0.0,
-                                    "max" : 0.9
-                                }
+                        "accepted_region_shape_constraints" : {
+                            "major_axis_length" : {
+                                "max" : 25.0,
+                                "min" : 0.0
                             }
                         },
-
-
-                        "merge_neuron_sets" : {
-                            "alignment_min_threshold" : 0.6,
-                            "overlap_min_threshold" : 0.6,
-
-                            "fuse_neurons" : {
-                                "fraction_mean_neuron_max_threshold" : 0.01
+                        "accepted_neuron_shape_constraints" : {
+                            "eccentricity" : {
+                                "max" : 0.9,
+                                "min" : 0.0
+                            },
+                            "area" : {
+                                "max" : 15000,
+                                "min" : 150
                             }
+                        },
+                        "estimate_noise" : {
+                            "significance_threshold" : 3.0
+                        },
+                        "significant_mask" : {
+                            "noise_threshold" : 2.0
+                        },
+                        "remove_too_close_local_maxima" : {
+                            "min_local_max_distance" : 100.0
+                        },
+                        "use_watershed" : True
+                    },
+                    "merge_neuron_sets" : {
+                        "alignment_min_threshold" : 0.6,
+                        "fuse_neurons" : {
+                            "fraction_mean_neuron_max_threshold" : 0.01
+                        },
+                        "overlap_min_threshold" : 0.6
+                    }
+                },
+                "run_stage" : "all",
+                "preprocess_data" : {
+                    "normalize_data" : {
+                        "renormalized_images" : {
+                            "ord" : 2
                         }
+                    },
+                    "extract_f0" : {
+                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 5.0,
+                        "which_quantile" : 0.5,
+                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
+                        "half_window_size" : 1,
+                        "bias" : 100
+                    },
+                    "wavelet.transform" : {
+                        "scale" : [
+                            3,
+                            4,
+                            4,
+                            4
+                        ]
+                    }
+                },
+                "generate_dictionary" : {
+                    "spams.trainDL" : {
+                        "gamma2" : 0,
+                        "gamma1" : 0,
+                        "numThreads" : 1,
+                        "K" : 10,
+                        "iter" : 100,
+                        "modeD" : 0,
+                        "posAlpha" : True,
+                        "clean" : True,
+                        "posD" : True,
+                        "batchsize" : 256,
+                        "lambda1" : 0.2,
+                        "lambda2" : 0,
+                        "mode" : 2
                     }
                 }
             }
         }
+    }
 
-        self.config_blocks_3D = {
-            "generate_neurons_blocks" : {
-                "num_processes" : 4,
-                "block_shape" : [10000, -1, -1, -1],
-                "num_blocks" : [-1, 2, 2, 2],
-                "half_border_shape" : [0, 5, 5, 5],
-                "half_window_shape" : [50, 20, 20, 20],
+    a_callable.temp_dir = tempfile.mkdtemp(dir=os.environ.get("TEMP", None))
+    a_callable.temp_dir = os.path.abspath(a_callable.temp_dir)
 
-                "debug" : True,
+    a_callable.hdf5_input_3D_filename = os.path.join(a_callable.temp_dir, "input_3D.h5")
+    a_callable.hdf5_input_3D_filepath = a_callable.hdf5_input_3D_filename + "/" + "images"
+    a_callable.hdf5_output_3D_filename = os.path.join(a_callable.temp_dir, "output_3D.h5")
+    a_callable.hdf5_output_3D_filepath = a_callable.hdf5_output_3D_filename + "/"
 
-                "generate_neurons" : {
-                    "postprocess_data" : {
-                        "wavelet_denoising" : {
-                            "remove_low_intensity_local_maxima" : {
-                                "percentage_pixels_below_max" : 0
-                            },
-                            "wavelet.transform" : {
-                                "scale" : 4
-                            },
-                            "accepted_region_shape_constraints" : {
-                                "major_axis_length" : {
-                                    "max" : 25.0,
-                                    "min" : 0.0
-                                }
-                            },
-                            "accepted_neuron_shape_constraints" : {
-                                "eccentricity" : {
-                                    "max" : 0.9,
-                                    "min" : 0.0
-                                },
-                                "area" : {
-                                    "max" : 15000,
-                                    "min" : 150
-                                }
-                            },
-                            "estimate_noise" : {
-                                "significance_threshold" : 3.0
-                            },
-                            "significant_mask" : {
-                                "noise_threshold" : 2.0
-                            },
-                            "remove_too_close_local_maxima" : {
-                                "min_local_max_distance" : 100.0
-                            },
-                            "use_watershed" : True
-                        },
-                        "merge_neuron_sets" : {
-                            "alignment_min_threshold" : 0.6,
-                            "fuse_neurons" : {
-                                "fraction_mean_neuron_max_threshold" : 0.01
-                            },
-                            "overlap_min_threshold" : 0.6
-                        }
-                    },
-                    "run_stage" : "all",
-                    "preprocess_data" : {
-                        "normalize_data" : {
-                            "renormalized_images" : {
-                                "ord" : 2
-                            }
-                        },
-                        "extract_f0" : {
-                            "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                            "spatial_smoothing_gaussian_filter_window_size" : 5.0,
-                            "which_quantile" : 0.5,
-                            "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-                            "half_window_size" : 1,
-                            "bias" : 100
-                        },
-                        "wavelet.transform" : {
-                            "scale" : [
-                                3,
-                                4,
-                                4,
-                                4
-                            ]
-                        }
-                    },
-                    "generate_dictionary" : {
-                        "spams.trainDL" : {
-                            "gamma2" : 0,
-                            "gamma1" : 0,
-                            "numThreads" : 1,
-                            "K" : 10,
-                            "iter" : 100,
-                            "modeD" : 0,
-                            "posAlpha" : True,
-                            "clean" : True,
-                            "posD" : True,
-                            "batchsize" : 256,
-                            "lambda1" : 0.2,
-                            "lambda2" : 0,
-                            "mode" : 2
-                        }
-                    }
-                }
-            }
-        }
+    a_callable.config_a_block_3D_filename = os.path.join(a_callable.temp_dir, "config_a_block_3D.json")
+    a_callable.config_blocks_3D_filename = os.path.join(a_callable.temp_dir, "config_blocks_3D.json")
+    a_callable.config_blocks_3D_drmaa_filename = os.path.join(a_callable.temp_dir, "config_blocks_3D_drmaa.json")
 
-        self.config_blocks_drmaa = {
-            "generate_neurons_blocks" : {
-                "num_processes" : 4,
-                "block_shape" : [10000, -1, -1],
-                "num_blocks" : [-1, 5, 5],
-                "half_border_shape" : [0, 5, 5],
-                "half_window_shape" : [50, 20, 20],
+    bases_indices = [[1, 3, 4], [0, 2], [5]]
+    linspace_length = 25
 
-                "use_drmaa" : True,
-                "num_drmaa_cores" : 1,
+    space3 = numpy.array([60, 60, 60])
+    radii3 = numpy.array([4, 3, 3, 3, 4, 3])
+    magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
+    a_callable.points3 = numpy.array([[15, 16, 17],
+                                [42, 21, 23],
+                                [45, 32, 34],
+                                [41, 41, 42],
+                                [36, 15, 41],
+                                [22, 16, 34]])
 
-                "debug" : True,
+    masks3 = nanshe.syn.data.generate_hypersphere_masks(space3, a_callable.points3, radii3)
+    images3 = nanshe.syn.data.generate_gaussian_images(space3, a_callable.points3, radii3/3.0, magnitudes3) * masks3
 
-                "generate_neurons" : {
-                    "run_stage" : "all",
+    bases_masks3 = numpy.zeros((len(bases_indices),) + masks3.shape[1:], dtype=masks3.dtype)
+    bases_images3 = numpy.zeros((len(bases_indices),) + images3.shape[1:], dtype=images3.dtype)
 
-                    "preprocess_data" : {
-                        "remove_zeroed_lines" : {
-                            "erosion_shape" : [21, 1],
-                            "dilation_shape" : [1, 3]
-                        },
+    for i, each_basis_indices in enumerate(bases_indices):
+        bases_masks3[i] = masks3[list(each_basis_indices)].max(axis=0)
+        bases_images3[i] = images3[list(each_basis_indices)].max(axis=0)
 
-                        "extract_f0" : {
-                            "bias" : 100,
+    image_stack3 = None
+    ramp = numpy.concatenate([numpy.linspace(0, 1, linspace_length), numpy.linspace(1, 0, linspace_length)])
 
-                            "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
+    image_stack3 = numpy.zeros(
+        (bases_images3.shape[0] * len(ramp),) + bases_images3.shape[1:],
+        dtype=bases_images3.dtype
+    )
+    for i in xrange(len(bases_images3)):
+        image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-                            "half_window_size" : 1,
-                            "which_quantile" : 0.5,
-
-                            "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                            "spatial_smoothing_gaussian_filter_window_size" : 5.0
-                        },
-
-                        "wavelet.transform" : {
-                            "scale" : [3, 4, 4]
-                        },
-
-                        "normalize_data" : {
-                            "renormalized_images": {
-                                "ord" : 2
-                            }
-                        }
-                    },
-
-
-                    "generate_dictionary" : {
-                        "spams.trainDL" : {
-                            "K" : 10,
-                            "gamma2": 0,
-                            "gamma1": 0,
-                            "numThreads": 1,
-                            "batchsize": 256,
-                            "iter": 100,
-                            "lambda1": 0.2,
-                            "posD": True,
-                            "clean": True,
-                            "modeD": 0,
-                            "posAlpha": True,
-                            "mode": 2,
-                            "lambda2": 0
-                        }
-                    },
-
-
-                    "postprocess_data" : {
-
-                        "wavelet_denoising" : {
-
-                            "estimate_noise" : {
-                                "significance_threshold" : 3.0
-                            },
-
-                            "significant_mask" : {
-                                "noise_threshold" : 3.0
-                            },
-
-                            "wavelet.transform" : {
-                                "scale" : 4
-                            },
-
-                            "accepted_region_shape_constraints" : {
-                                "major_axis_length" : {
-                                    "min" : 0.0,
-                                    "max" : 25.0
-                                }
-                            },
-
-                            "remove_low_intensity_local_maxima" : {
-                                "percentage_pixels_below_max" : 0
-
-                            },
-
-                            "remove_too_close_local_maxima" : {
-                                "min_local_max_distance"  : 100.0
-                            },
-
-                            "use_watershed" : True,
-
-                            "accepted_neuron_shape_constraints" : {
-                                "area" : {
-                                    "min" : 30,
-                                    "max" : 600
-                                },
-
-                                "eccentricity" : {
-                                    "min" : 0.0,
-                                    "max" : 0.9
-                                }
-                            }
-                        },
-
-
-                        "merge_neuron_sets" : {
-                            "alignment_min_threshold" : 0.6,
-                            "overlap_min_threshold" : 0.6,
-
-                            "fuse_neurons" : {
-                                "fraction_mean_neuron_max_threshold" : 0.01
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        self.config_blocks_3D_drmaa = {
-            "generate_neurons_blocks" : {
-                "num_processes" : 4,
-                "block_shape" : [10000, -1, -1, -1],
-                "num_blocks" : [-1, 2, 2, 2],
-                "half_border_shape" : [0, 5, 5, 5],
-                "half_window_shape" : [50, 20, 20, 20],
-
-                "use_drmaa" : True,
-                "num_drmaa_cores" : 1,
-
-                "debug" : True,
-
-                "generate_neurons" : {
-                    "postprocess_data" : {
-                        "wavelet_denoising" : {
-                            "remove_low_intensity_local_maxima" : {
-                                "percentage_pixels_below_max" : 0
-                            },
-                            "wavelet.transform" : {
-                                "scale" : 4
-                            },
-                            "accepted_region_shape_constraints" : {
-                                "major_axis_length" : {
-                                    "max" : 25.0,
-                                    "min" : 0.0
-                                }
-                            },
-                            "accepted_neuron_shape_constraints" : {
-                                "eccentricity" : {
-                                    "max" : 0.9,
-                                    "min" : 0.0
-                                },
-                                "area" : {
-                                    "max" : 15000,
-                                    "min" : 150
-                                }
-                            },
-                            "estimate_noise" : {
-                                "significance_threshold" : 3.0
-                            },
-                            "significant_mask" : {
-                                "noise_threshold" : 2.0
-                            },
-                            "remove_too_close_local_maxima" : {
-                                "min_local_max_distance" : 100.0
-                            },
-                            "use_watershed" : True
-                        },
-                        "merge_neuron_sets" : {
-                            "alignment_min_threshold" : 0.6,
-                            "fuse_neurons" : {
-                                "fraction_mean_neuron_max_threshold" : 0.01
-                            },
-                            "overlap_min_threshold" : 0.6
-                        }
-                    },
-                    "run_stage" : "all",
-                    "preprocess_data" : {
-                        "normalize_data" : {
-                            "renormalized_images" : {
-                                "ord" : 2
-                            }
-                        },
-                        "extract_f0" : {
-                            "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                            "spatial_smoothing_gaussian_filter_window_size" : 5.0,
-                            "which_quantile" : 0.5,
-                            "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                            "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-                            "half_window_size" : 1,
-                            "bias" : 100
-                        },
-                        "wavelet.transform" : {
-                            "scale" : [
-                                3,
-                                4,
-                                4,
-                                4
-                            ]
-                        }
-                    },
-                    "generate_dictionary" : {
-                        "spams.trainDL" : {
-                            "gamma2" : 0,
-                            "gamma1" : 0,
-                            "numThreads" : 1,
-                            "K" : 10,
-                            "iter" : 100,
-                            "modeD" : 0,
-                            "posAlpha" : True,
-                            "clean" : True,
-                            "posD" : True,
-                            "batchsize" : 256,
-                            "lambda1" : 0.2,
-                            "lambda2" : 0,
-                            "mode" : 2
-                        }
-                    }
-                }
-            }
-        }
-
-        self.temp_dir = tempfile.mkdtemp(dir=os.environ.get("TEMP", None))
-        self.temp_dir = os.path.abspath(self.temp_dir)
-
-        self.hdf5_input_filename = os.path.join(self.temp_dir, "input.h5")
-        self.hdf5_input_filepath = self.hdf5_input_filename + "/" + "images"
-        self.hdf5_input_3D_filename = os.path.join(self.temp_dir, "input_3D.h5")
-        self.hdf5_input_3D_filepath = self.hdf5_input_3D_filename + "/" + "images"
-        self.hdf5_output_filename = os.path.join(self.temp_dir, "output.h5")
-        self.hdf5_output_filepath = self.hdf5_output_filename + "/"
-        self.hdf5_output_3D_filename = os.path.join(self.temp_dir, "output_3D.h5")
-        self.hdf5_output_3D_filepath = self.hdf5_output_3D_filename + "/"
-
-        self.config_a_block_filename = os.path.join(self.temp_dir, "config_a_block.json")
-        self.config_a_block_3D_filename = os.path.join(self.temp_dir, "config_a_block_3D.json")
-        self.config_blocks_filename = os.path.join(self.temp_dir, "config_blocks.json")
-        self.config_blocks_3D_filename = os.path.join(self.temp_dir, "config_blocks_3D.json")
-        self.config_blocks_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_drmaa.json")
-        self.config_blocks_3D_drmaa_filename = os.path.join(self.temp_dir, "config_blocks_3D_drmaa.json")
-
-        space = numpy.array([110, 110])
-        radii = numpy.array([6, 6, 6, 6, 7, 6])
-        magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
-        self.points = numpy.array([[30, 24],
-                                   [59, 65],
-                                   [21, 65],
-                                   [80, 78],
-                                   [72, 16],
-                                   [45, 32]])
-
-        bases_indices = [[1, 3, 4], [0, 2], [5]]
-        linspace_length = 25
-
-        masks = nanshe.syn.data.generate_hypersphere_masks(space, self.points, radii)
-        images = nanshe.syn.data.generate_gaussian_images(space, self.points, radii/3.0, magnitudes) * masks
-
-        bases_masks = numpy.zeros((len(bases_indices),) + masks.shape[1:], dtype=masks.dtype)
-        bases_images = numpy.zeros((len(bases_indices),) + images.shape[1:], dtype=images.dtype)
-
-        for i, each_basis_indices in enumerate(bases_indices):
-            bases_masks[i] = masks[list(each_basis_indices)].max(axis=0)
-            bases_images[i] = images[list(each_basis_indices)].max(axis=0)
-
-        image_stack = None
-        ramp = numpy.concatenate([numpy.linspace(0, 1, linspace_length), numpy.linspace(1, 0, linspace_length)])
-
-        image_stack = numpy.zeros((bases_images.shape[0] * len(ramp),) + bases_images.shape[1:],
-                                       dtype=bases_images.dtype)
-        for i in xrange(len(bases_images)):
-            image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
-
-            image_stack[image_stack_slice] = nanshe.util.xnumpy.all_permutations_operation(
-                operator.mul,
-                ramp,
-                bases_images[i]
-            )
-
-        space3 = numpy.array([60, 60, 60])
-        radii3 = numpy.array([4, 3, 3, 3, 4, 3])
-        magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
-        self.points3 = numpy.array([[15, 16, 17],
-                                    [42, 21, 23],
-                                    [45, 32, 34],
-                                    [41, 41, 42],
-                                    [36, 15, 41],
-                                    [22, 16, 34]])
-
-        masks3 = nanshe.syn.data.generate_hypersphere_masks(space3, self.points3, radii3)
-        images3 = nanshe.syn.data.generate_gaussian_images(space3, self.points3, radii3/3.0, magnitudes3) * masks3
-
-        bases_masks3 = numpy.zeros((len(bases_indices),) + masks3.shape[1:], dtype=masks3.dtype)
-        bases_images3 = numpy.zeros((len(bases_indices),) + images3.shape[1:], dtype=images3.dtype)
-
-        for i, each_basis_indices in enumerate(bases_indices):
-            bases_masks3[i] = masks3[list(each_basis_indices)].max(axis=0)
-            bases_images3[i] = images3[list(each_basis_indices)].max(axis=0)
-
-        image_stack3 = None
-        ramp = numpy.concatenate([numpy.linspace(0, 1, linspace_length), numpy.linspace(1, 0, linspace_length)])
-
-        image_stack3 = numpy.zeros(
-            (bases_images3.shape[0] * len(ramp),) + bases_images3.shape[1:],
-            dtype=bases_images3.dtype
+        image_stack3[image_stack_slice3] = nanshe.util.xnumpy.all_permutations_operation(
+            operator.mul,
+            ramp,
+            bases_images3[i]
         )
-        for i in xrange(len(bases_images3)):
-            image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
-            image_stack3[image_stack_slice3] = nanshe.util.xnumpy.all_permutations_operation(
-                operator.mul,
-                ramp,
-                bases_images3[i]
-            )
+    with h5py.File(a_callable.hdf5_input_3D_filename, "w") as fid:
+        fid["images"] = image_stack3
 
-        with h5py.File(self.hdf5_input_filename, "w") as fid:
-            fid["images"] = image_stack
+    with h5py.File(a_callable.hdf5_output_3D_filename, "w") as fid:
+        pass
 
-        with h5py.File(self.hdf5_input_3D_filename, "w") as fid:
-            fid["images"] = image_stack3
+    with open(a_callable.config_a_block_3D_filename, "w") as fid:
+        json.dump(a_callable.config_a_block_3D, fid)
+        fid.write("\n")
 
-        with h5py.File(self.hdf5_output_filename, "w") as fid:
-            pass
+    with open(a_callable.config_blocks_3D_filename, "w") as fid:
+        json.dump(a_callable.config_blocks_3D, fid)
+        fid.write("\n")
 
-        with h5py.File(self.hdf5_output_3D_filename, "w") as fid:
-            pass
+    with open(a_callable.config_blocks_3D_drmaa_filename, "w") as fid:
+        json.dump(a_callable.config_blocks_3D_drmaa, fid)
+        fid.write("\n")
 
-        with open(self.config_a_block_filename, "w") as fid:
-            json.dump(self.config_a_block, fid)
-            fid.write("\n")
 
-        with open(self.config_a_block_3D_filename, "w") as fid:
-            json.dump(self.config_a_block_3D, fid)
-            fid.write("\n")
+def teardown_3d(a_callable):
+    try:
+        os.remove(a_callable.config_a_block_3D_filename)
+    except OSError:
+        pass
+    a_callable.config_a_block_3D_filename = ""
 
-        with open(self.config_blocks_filename, "w") as fid:
-            json.dump(self.config_blocks, fid)
-            fid.write("\n")
+    try:
+        os.remove(a_callable.config_blocks_3D_filename)
+    except OSError:
+        pass
+    a_callable.config_blocks_3D_filename = ""
 
-        with open(self.config_blocks_3D_filename, "w") as fid:
-            json.dump(self.config_blocks_3D, fid)
-            fid.write("\n")
+    try:
+        os.remove(a_callable.config_blocks_3D_drmaa_filename)
+    except OSError:
+        pass
+    a_callable.config_blocks_3D_drmaa_filename = ""
 
-        with open(self.config_blocks_drmaa_filename, "w") as fid:
-            json.dump(self.config_blocks_drmaa, fid)
-            fid.write("\n")
+    try:
+        os.remove(a_callable.hdf5_input_3D_filename)
+    except OSError:
+        pass
+    a_callable.hdf5_input_3D_filename = ""
 
-        with open(self.config_blocks_3D_drmaa_filename, "w") as fid:
-            json.dump(self.config_blocks_3D_drmaa, fid)
-            fid.write("\n")
+    try:
+        os.remove(a_callable.hdf5_output_3D_filename)
+    except OSError:
+        pass
+    a_callable.hdf5_output_3D_filename = ""
 
-    def test_main_1(self):
-        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
+    shutil.rmtree(a_callable.temp_dir)
+    a_callable.temp_dir = ""
 
-        argv = (executable, self.config_a_block_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
 
-        assert (0 == nanshe.learner.main(*argv))
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_main_1():
+    executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
-        assert os.path.exists(self.hdf5_output_filename)
+    argv = (executable, test_main_1.config_a_block_filename, test_main_1.hdf5_input_filepath, test_main_1.hdf5_output_filepath,)
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+    assert (0 == nanshe.learner.main(*argv))
 
-            neurons = fid["neurons"].value
+    assert os.path.exists(test_main_1.hdf5_output_filename)
 
-        assert (len(self.points) == len(neurons))
+    with h5py.File(test_main_1.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+        neurons = fid["neurons"].value
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert (len(test_main_1.points) == len(neurons))
 
-            unmatched_points = new_unmatched_points
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert (len(unmatched_points) == 0)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_main_1.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_main_1.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-    def test_main_2(self):
-        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
+        unmatched_points = new_unmatched_points
 
-        argv = (executable, self.config_blocks_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
+    assert (len(unmatched_points) == 0)
 
-        assert (0 == nanshe.learner.main(*argv))
 
-        assert os.path.exists(self.hdf5_output_filename)
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_main_2():
+    executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+    argv = (executable, test_main_2.config_blocks_filename, test_main_2.hdf5_input_filepath, test_main_2.hdf5_output_filepath,)
 
-            neurons = fid["neurons"].value
+    assert (0 == nanshe.learner.main(*argv))
 
-        assert (len(self.points) == len(neurons))
+    assert os.path.exists(test_main_2.hdf5_output_filename)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    with h5py.File(test_main_2.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+        neurons = fid["neurons"].value
 
-            unmatched_points = new_unmatched_points
+    assert (len(test_main_2.points) == len(neurons))
 
-        assert (len(unmatched_points) == 0)
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-    @nose.plugins.attrib.attr("DRMAA")
-    def test_main_3(self):
-        # Attempt to import drmaa.
-        # If it fails to import, either the user has no intent in using it or forgot to install it.
-        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
-        try:
-            import drmaa
-        except ImportError:
-            # python-drmaa is not installed.
-            raise nose.SkipTest("Skipping test test_main_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
-        except RuntimeError:
-            # The drmaa library was not specified, but python-drmaa is installed.
-            raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_main_2.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_main_2.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
+        unmatched_points = new_unmatched_points
 
-        argv = (executable, self.config_blocks_drmaa_filename, self.hdf5_input_filepath, self.hdf5_output_filepath,)
+    assert (len(unmatched_points) == 0)
 
-        assert (0 == nanshe.learner.main(*argv))
 
-        assert os.path.exists(self.hdf5_output_filename)
+@nose.plugins.attrib.attr("DRMAA")
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_main_3():
+    # Attempt to import drmaa.
+    # If it fails to import, either the user has no intent in using it or forgot to install it.
+    # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+    try:
+        import drmaa
+    except ImportError:
+        # python-drmaa is not installed.
+        raise nose.SkipTest("Skipping test test_main_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
+    except RuntimeError:
+        # The drmaa library was not specified, but python-drmaa is installed.
+        raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+    executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
-            neurons = fid["neurons"].value
+    argv = (executable, test_main_3.config_blocks_drmaa_filename, test_main_3.hdf5_input_filepath, test_main_3.hdf5_output_filepath,)
 
-        assert (len(self.points) == len(neurons))
+    assert (0 == nanshe.learner.main(*argv))
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    assert os.path.exists(test_main_3.hdf5_output_filename)
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    with h5py.File(test_main_3.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-            unmatched_points = new_unmatched_points
+        neurons = fid["neurons"].value
 
-        assert (len(unmatched_points) == 0)
+    assert (len(test_main_3.points) == len(neurons))
 
-    @nose.plugins.attrib.attr("3D")
-    def test_main_4(self):
-        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        argv = (executable, self.config_a_block_3D_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_main_3.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_main_3.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        assert (0 == nanshe.learner.main(*argv))
+        unmatched_points = new_unmatched_points
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+    assert (len(unmatched_points) == 0)
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
 
-            neurons = fid["neurons"].value
+@nose.plugins.attrib.attr("3D")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_main_4():
+    executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
-        assert (len(self.points3) == len(neurons))
+    argv = (executable, test_main_4.config_a_block_3D_filename, test_main_4.hdf5_input_3D_filepath, test_main_4.hdf5_output_3D_filepath,)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    assert (0 == nanshe.learner.main(*argv))
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert os.path.exists(test_main_4.hdf5_output_3D_filename)
 
-            unmatched_points = new_unmatched_points
+    with h5py.File(test_main_4.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        assert (len(unmatched_points) == 0)
+        neurons = fid["neurons"].value
 
-    @nose.plugins.attrib.attr("3D")
-    def test_main_5(self):
-        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
+    assert (len(test_main_4.points3) == len(neurons))
 
-        argv = (executable, self.config_blocks_3D_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert (0 == nanshe.learner.main(*argv))
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_main_4.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_main_4.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+        unmatched_points = new_unmatched_points
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+    assert (len(unmatched_points) == 0)
 
-            neurons = fid["neurons"].value
 
-        assert (len(self.points3) == len(neurons))
+@nose.plugins.attrib.attr("3D")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_main_5():
+    executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    argv = (executable, test_main_5.config_blocks_3D_filename, test_main_5.hdf5_input_3D_filepath, test_main_5.hdf5_output_3D_filepath,)
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert (0 == nanshe.learner.main(*argv))
 
-            unmatched_points = new_unmatched_points
+    assert os.path.exists(test_main_5.hdf5_output_3D_filename)
 
-        assert (len(unmatched_points) == 0)
+    with h5py.File(test_main_5.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-    @nose.plugins.attrib.attr("3D", "DRMAA")
-    def test_main_6(self):
-        # Attempt to import drmaa.
-        # If it fails to import, either the user has no intent in using it or forgot to install it.
-        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
-        try:
-            import drmaa
-        except ImportError:
-            # python-drmaa is not installed.
-            raise nose.SkipTest("Skipping test test_main_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
-        except RuntimeError:
-            # The drmaa library was not specified, but python-drmaa is installed.
-            raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+        neurons = fid["neurons"].value
 
-        executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
+    assert (len(test_main_5.points3) == len(neurons))
 
-        argv = (executable, self.config_blocks_3D_drmaa_filename, self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath,)
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert (0 == nanshe.learner.main(*argv))
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_main_5.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_main_5.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+        unmatched_points = new_unmatched_points
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+    assert (len(unmatched_points) == 0)
 
-            neurons = fid["neurons"].value
 
-        assert (len(self.points3) == len(neurons))
+@nose.plugins.attrib.attr("3D", "DRMAA")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_main_6():
+    # Attempt to import drmaa.
+    # If it fails to import, either the user has no intent in using it or forgot to install it.
+    # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+    try:
+        import drmaa
+    except ImportError:
+        # python-drmaa is not installed.
+        raise nose.SkipTest("Skipping test test_main_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
+    except RuntimeError:
+        # The drmaa library was not specified, but python-drmaa is installed.
+        raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    argv = (executable, test_main_6.config_blocks_3D_drmaa_filename, test_main_6.hdf5_input_3D_filepath, test_main_6.hdf5_output_3D_filepath,)
 
-            unmatched_points = new_unmatched_points
+    assert (0 == nanshe.learner.main(*argv))
 
-        assert (len(unmatched_points) == 0)
+    assert os.path.exists(test_main_6.hdf5_output_3D_filename)
 
-    def test_generate_neurons_io_handler_1(self):
-        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_a_block_filename)
+    with h5py.File(test_main_6.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        assert os.path.exists(self.hdf5_output_filename)
+        neurons = fid["neurons"].value
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+    assert (len(test_main_6.points3) == len(neurons))
 
-            neurons = fid["neurons"].value
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert (len(self.points) == len(neurons))
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_main_6.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_main_6.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+        unmatched_points = new_unmatched_points
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert (len(unmatched_points) == 0)
 
-            unmatched_points = new_unmatched_points
 
-        assert (len(unmatched_points) == 0)
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_generate_neurons_io_handler_1():
+    nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_1.hdf5_input_filepath, test_generate_neurons_io_handler_1.hdf5_output_filepath, test_generate_neurons_io_handler_1.config_a_block_filename)
 
-    def test_generate_neurons_io_handler_2(self):
-        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_filename)
+    assert os.path.exists(test_generate_neurons_io_handler_1.hdf5_output_filename)
 
-        assert os.path.exists(self.hdf5_output_filename)
+    with h5py.File(test_generate_neurons_io_handler_1.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+        neurons = fid["neurons"].value
 
-            neurons = fid["neurons"].value
+    assert (len(test_generate_neurons_io_handler_1.points) == len(neurons))
 
-        assert (len(self.points) == len(neurons))
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_1.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_io_handler_1.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+        unmatched_points = new_unmatched_points
 
-            unmatched_points = new_unmatched_points
+    assert (len(unmatched_points) == 0)
 
-        assert (len(unmatched_points) == 0)
 
-    @nose.plugins.attrib.attr("DRMAA")
-    def test_generate_neurons_io_handler_3(self):
-        # Attempt to import drmaa.
-        # If it fails to import, either the user has no intent in using it or forgot to install it.
-        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
-        try:
-            import drmaa
-        except ImportError:
-            # python-drmaa is not installed.
-            raise nose.SkipTest("Skipping test test_generate_neurons_io_handler_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
-        except RuntimeError:
-            # The drmaa library was not specified, but python-drmaa is installed.
-            raise nose.SkipTest("Skipping test test_generate_neurons_io_handler_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_generate_neurons_io_handler_2():
+    nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_2.hdf5_input_filepath, test_generate_neurons_io_handler_2.hdf5_output_filepath, test_generate_neurons_io_handler_2.config_blocks_filename)
 
-        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_filepath, self.hdf5_output_filepath, self.config_blocks_drmaa_filename)
+    assert os.path.exists(test_generate_neurons_io_handler_2.hdf5_output_filename)
 
-        assert os.path.exists(self.hdf5_output_filename)
+    with h5py.File(test_generate_neurons_io_handler_2.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+        neurons = fid["neurons"].value
 
-            neurons = fid["neurons"].value
+    assert (len(test_generate_neurons_io_handler_2.points) == len(neurons))
 
-        assert (len(self.points) == len(neurons))
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_2.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_io_handler_2.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+        unmatched_points = new_unmatched_points
 
-            unmatched_points = new_unmatched_points
+    assert (len(unmatched_points) == 0)
 
-        assert (len(unmatched_points) == 0)
 
-    @nose.plugins.attrib.attr("3D")
-    def test_generate_neurons_io_handler_4(self):
-        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_a_block_3D_filename)
+@nose.plugins.attrib.attr("DRMAA")
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_generate_neurons_io_handler_3():
+    # Attempt to import drmaa.
+    # If it fails to import, either the user has no intent in using it or forgot to install it.
+    # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+    try:
+        import drmaa
+    except ImportError:
+        # python-drmaa is not installed.
+        raise nose.SkipTest("Skipping test test_generate_neurons_io_handler_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
+    except RuntimeError:
+        # The drmaa library was not specified, but python-drmaa is installed.
+        raise nose.SkipTest("Skipping test test_generate_neurons_io_handler_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+    nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_3.hdf5_input_filepath, test_generate_neurons_io_handler_3.hdf5_output_filepath, test_generate_neurons_io_handler_3.config_blocks_drmaa_filename)
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+    assert os.path.exists(test_generate_neurons_io_handler_3.hdf5_output_filename)
 
-            neurons = fid["neurons"].value
+    with h5py.File(test_generate_neurons_io_handler_3.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        assert (len(self.points3) == len(neurons))
+        neurons = fid["neurons"].value
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    assert (len(test_generate_neurons_io_handler_3.points) == len(neurons))
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-            unmatched_points = new_unmatched_points
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_3.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_io_handler_3.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        assert (len(unmatched_points) == 0)
+        unmatched_points = new_unmatched_points
 
-    @nose.plugins.attrib.attr("3D")
-    def test_generate_neurons_io_handler_5(self):
-        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_filename)
+    assert (len(unmatched_points) == 0)
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+@nose.plugins.attrib.attr("3D")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_generate_neurons_io_handler_4():
+    nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_4.hdf5_input_3D_filepath, test_generate_neurons_io_handler_4.hdf5_output_3D_filepath, test_generate_neurons_io_handler_4.config_a_block_3D_filename)
 
-            neurons = fid["neurons"].value
+    assert os.path.exists(test_generate_neurons_io_handler_4.hdf5_output_3D_filename)
 
-        assert (len(self.points3) == len(neurons))
+    with h5py.File(test_generate_neurons_io_handler_4.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+        neurons = fid["neurons"].value
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert (len(test_generate_neurons_io_handler_4.points3) == len(neurons))
 
-            unmatched_points = new_unmatched_points
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert (len(unmatched_points) == 0)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_4.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_io_handler_4.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-    @nose.plugins.attrib.attr("3D", "DRMAA")
-    def test_generate_neurons_io_handler_6(self):
-        # Attempt to import drmaa.
-        # If it fails to import, either the user has no intent in using it or forgot to install it.
-        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
-        try:
-            import drmaa
-        except ImportError:
-            # python-drmaa is not installed.
-            raise nose.SkipTest("Skipping test test_main_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
-        except RuntimeError:
-            # The drmaa library was not specified, but python-drmaa is installed.
-            raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+        unmatched_points = new_unmatched_points
 
-        nanshe.learner.generate_neurons_io_handler(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, self.config_blocks_3D_drmaa_filename)
+    assert (len(unmatched_points) == 0)
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+@nose.plugins.attrib.attr("3D")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_generate_neurons_io_handler_5():
+    nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_5.hdf5_input_3D_filepath, test_generate_neurons_io_handler_5.hdf5_output_3D_filepath, test_generate_neurons_io_handler_5.config_blocks_3D_filename)
 
-            neurons = fid["neurons"].value
+    assert os.path.exists(test_generate_neurons_io_handler_5.hdf5_output_3D_filename)
 
-        assert (len(self.points3) == len(neurons))
+    with h5py.File(test_generate_neurons_io_handler_5.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+        neurons = fid["neurons"].value
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert (len(test_generate_neurons_io_handler_5.points3) == len(neurons))
 
-            unmatched_points = new_unmatched_points
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert (len(unmatched_points) == 0)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_5.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_io_handler_5.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-    def test_generate_neurons_a_block_1(self):
-        nanshe.learner.generate_neurons_a_block(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_a_block)
+        unmatched_points = new_unmatched_points
 
-        assert os.path.exists(self.hdf5_output_filename)
+    assert (len(unmatched_points) == 0)
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
 
-            neurons = fid["neurons"].value
+@nose.plugins.attrib.attr("3D", "DRMAA")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_generate_neurons_io_handler_6():
+    # Attempt to import drmaa.
+    # If it fails to import, either the user has no intent in using it or forgot to install it.
+    # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+    try:
+        import drmaa
+    except ImportError:
+        # python-drmaa is not installed.
+        raise nose.SkipTest("Skipping test test_main_3. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
+    except RuntimeError:
+        # The drmaa library was not specified, but python-drmaa is installed.
+        raise nose.SkipTest("Skipping test test_main_3. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        assert (len(self.points) == len(neurons))
+    nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_6.hdf5_input_3D_filepath, test_generate_neurons_io_handler_6.hdf5_output_3D_filepath, test_generate_neurons_io_handler_6.config_blocks_3D_drmaa_filename)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    assert os.path.exists(test_generate_neurons_io_handler_6.hdf5_output_3D_filename)
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    with h5py.File(test_generate_neurons_io_handler_6.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-            unmatched_points = new_unmatched_points
+        neurons = fid["neurons"].value
 
-        assert (len(unmatched_points) == 0)
+    assert (len(test_generate_neurons_io_handler_6.points3) == len(neurons))
 
-    @nose.plugins.attrib.attr("3D")
-    def test_generate_neurons_a_block_2(self):
-        nanshe.learner.generate_neurons_a_block(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_a_block_3D)
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_6.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_io_handler_6.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+        unmatched_points = new_unmatched_points
 
-            neurons = fid["neurons"].value
+    assert (len(unmatched_points) == 0)
 
-        assert (len(self.points3) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_generate_neurons_a_block_1():
+    nanshe.learner.generate_neurons_a_block(test_generate_neurons_a_block_1.hdf5_input_filepath, test_generate_neurons_a_block_1.hdf5_output_filepath, **test_generate_neurons_a_block_1.config_a_block)
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert os.path.exists(test_generate_neurons_a_block_1.hdf5_output_filename)
 
-            unmatched_points = new_unmatched_points
+    with h5py.File(test_generate_neurons_a_block_1.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        assert (len(unmatched_points) == 0)
+        neurons = fid["neurons"].value
 
-    def test_generate_neurons_blocks_1(self):
-        nanshe.learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks["generate_neurons_blocks"])
+    assert (len(test_generate_neurons_a_block_1.points) == len(neurons))
 
-        assert os.path.exists(self.hdf5_output_filename)
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_a_block_1.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_a_block_1.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-            neurons = fid["neurons"].value
+        unmatched_points = new_unmatched_points
 
-        assert (len(self.points) == len(neurons))
+    assert (len(unmatched_points) == 0)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+@nose.plugins.attrib.attr("3D")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_generate_neurons_a_block_2():
+    nanshe.learner.generate_neurons_a_block(test_generate_neurons_a_block_2.hdf5_input_3D_filepath, test_generate_neurons_a_block_2.hdf5_output_3D_filepath, **test_generate_neurons_a_block_2.config_a_block_3D)
 
-            unmatched_points = new_unmatched_points
+    assert os.path.exists(test_generate_neurons_a_block_2.hdf5_output_3D_filename)
 
-        assert (len(unmatched_points) == 0)
+    with h5py.File(test_generate_neurons_a_block_2.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-    @nose.plugins.attrib.attr("DRMAA")
-    def test_generate_neurons_blocks_2(self):
-        # Attempt to import drmaa.
-        # If it fails to import, either the user has no intent in using it or forgot to install it.
-        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
-        try:
-            import drmaa
-        except ImportError:
-            # python-drmaa is not installed.
-            raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
-        except RuntimeError:
-            # The drmaa library was not specified, but python-drmaa is installed.
-            raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+        neurons = fid["neurons"].value
 
-        nanshe.learner.generate_neurons_blocks(self.hdf5_input_filepath, self.hdf5_output_filepath, **self.config_blocks_drmaa["generate_neurons_blocks"])
+    assert (len(test_generate_neurons_a_block_2.points3) == len(neurons))
 
-        assert os.path.exists(self.hdf5_output_filename)
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_a_block_2.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_a_block_2.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-            neurons = fid["neurons"].value
+        unmatched_points = new_unmatched_points
 
-        assert (len(self.points) == len(neurons))
+    assert (len(unmatched_points) == 0)
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_generate_neurons_blocks_1():
+    nanshe.learner.generate_neurons_blocks(test_generate_neurons_blocks_1.hdf5_input_filepath, test_generate_neurons_blocks_1.hdf5_output_filepath, **test_generate_neurons_blocks_1.config_blocks["generate_neurons_blocks"])
 
-            unmatched_points = new_unmatched_points
+    assert os.path.exists(test_generate_neurons_blocks_1.hdf5_output_filename)
 
-        assert (len(unmatched_points) == 0)
+    with h5py.File(test_generate_neurons_blocks_1.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-    @nose.plugins.attrib.attr("3D")
-    def test_generate_neurons_blocks_3(self):
-        nanshe.learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D["generate_neurons_blocks"])
+        neurons = fid["neurons"].value
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+    assert (len(test_generate_neurons_blocks_1.points) == len(neurons))
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-            neurons = fid["neurons"].value
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_blocks_1.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_blocks_1.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        assert (len(self.points3) == len(neurons))
+        unmatched_points = new_unmatched_points
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+    assert (len(unmatched_points) == 0)
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
 
-            unmatched_points = new_unmatched_points
+@nose.plugins.attrib.attr("DRMAA")
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_generate_neurons_blocks_2():
+    # Attempt to import drmaa.
+    # If it fails to import, either the user has no intent in using it or forgot to install it.
+    # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+    try:
+        import drmaa
+    except ImportError:
+        # python-drmaa is not installed.
+        raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
+    except RuntimeError:
+        # The drmaa library was not specified, but python-drmaa is installed.
+        raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        assert (len(unmatched_points) == 0)
+    nanshe.learner.generate_neurons_blocks(test_generate_neurons_blocks_2.hdf5_input_filepath, test_generate_neurons_blocks_2.hdf5_output_filepath, **test_generate_neurons_blocks_2.config_blocks_drmaa["generate_neurons_blocks"])
 
-    @nose.plugins.attrib.attr("3D", "DRMAA")
-    def test_generate_neurons_blocks_4(self):
-        # Attempt to import drmaa.
-        # If it fails to import, either the user has no intent in using it or forgot to install it.
-        # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
-        try:
-            import drmaa
-        except ImportError:
-            # python-drmaa is not installed.
-            raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
-        except RuntimeError:
-            # The drmaa library was not specified, but python-drmaa is installed.
-            raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
+    assert os.path.exists(test_generate_neurons_blocks_2.hdf5_output_filename)
 
-        nanshe.learner.generate_neurons_blocks(self.hdf5_input_3D_filepath, self.hdf5_output_3D_filepath, **self.config_blocks_3D_drmaa["generate_neurons_blocks"])
+    with h5py.File(test_generate_neurons_blocks_2.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+        neurons = fid["neurons"].value
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
+    assert (len(test_generate_neurons_blocks_2.points) == len(neurons))
 
-            neurons = fid["neurons"].value
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert (len(self.points3) == len(neurons))
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_blocks_2.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_blocks_2.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+        unmatched_points = new_unmatched_points
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    assert (len(unmatched_points) == 0)
 
-            unmatched_points = new_unmatched_points
 
-        assert (len(unmatched_points) == 0)
+@nose.plugins.attrib.attr("3D")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_generate_neurons_blocks_3():
+    nanshe.learner.generate_neurons_blocks(test_generate_neurons_blocks_3.hdf5_input_3D_filepath, test_generate_neurons_blocks_3.hdf5_output_3D_filepath, **test_generate_neurons_blocks_3.config_blocks_3D["generate_neurons_blocks"])
 
-    def test_generate_neurons_1(self):
-        image_stack = None
-        with h5py.File(self.hdf5_input_filename, "r") as input_file_handle:
-            image_stack = input_file_handle["images"][...]
+    assert os.path.exists(test_generate_neurons_blocks_3.hdf5_output_3D_filename)
 
-        with h5py.File(self.hdf5_output_filename, "a") as output_file_handle:
-            output_group = output_file_handle["/"]
+    with h5py.File(test_generate_neurons_blocks_3.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-            # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
-                output_group,
-                group_name="debug",
-                enable=self.config_a_block["debug"],
-                overwrite_group=False,
-                recorder_constructor=nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
-            )
+        neurons = fid["neurons"].value
 
-            # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
-                output_group,
-                recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
-                overwrite=True
-            )
+    assert (len(test_generate_neurons_blocks_3.points3) == len(neurons))
 
-            nanshe.learner.generate_neurons.resume_logger = resume_logger
-            nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.learner.generate_neurons(
-                image_stack,
-                **self.config_a_block["generate_neurons"]
-            )
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        assert os.path.exists(self.hdf5_output_filename)
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_blocks_3.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_blocks_3.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        with h5py.File(self.hdf5_output_filename, "r") as fid:
-            assert ("neurons" in fid)
+        unmatched_points = new_unmatched_points
 
-            neurons = fid["neurons"].value
+    assert (len(unmatched_points) == 0)
 
-        assert (len(self.points) == len(neurons))
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+@nose.plugins.attrib.attr("3D", "DRMAA")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_generate_neurons_blocks_4():
+    # Attempt to import drmaa.
+    # If it fails to import, either the user has no intent in using it or forgot to install it.
+    # If it imports, but fails to find symbols, then the user has not set DRMAA_LIBRARY_PATH or does not have libdrmaa.so.
+    try:
+        import drmaa
+    except ImportError:
+        # python-drmaa is not installed.
+        raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was not able to import drmaa. To run this test, please pip or easy_install drmaa.")
+    except RuntimeError:
+        # The drmaa library was not specified, but python-drmaa is installed.
+        raise nose.SkipTest("Skipping test test_generate_neurons_blocks_2. Was able to import drmaa. However, the drmaa library could not be found. Please either specify the location of libdrmaa.so using the DRMAA_LIBRARY_PATH environment variable or disable/remove use_drmaa from the config file.")
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+    nanshe.learner.generate_neurons_blocks(test_generate_neurons_blocks_4.hdf5_input_3D_filepath, test_generate_neurons_blocks_4.hdf5_output_3D_filepath, **test_generate_neurons_blocks_4.config_blocks_3D_drmaa["generate_neurons_blocks"])
 
-            unmatched_points = new_unmatched_points
+    assert os.path.exists(test_generate_neurons_blocks_4.hdf5_output_3D_filename)
 
-        assert (len(unmatched_points) == 0)
+    with h5py.File(test_generate_neurons_blocks_4.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-    @nose.plugins.attrib.attr("3D")
-    def test_generate_neurons_2(self):
-        image_stack3 = None
-        with h5py.File(self.hdf5_input_3D_filename, "r") as input_file_handle:
-            image_stack3 = input_file_handle["images"][...]
+        neurons = fid["neurons"].value
 
-        with h5py.File(self.hdf5_output_3D_filename, "a") as output_file_handle:
-            output_group = output_file_handle["/"]
+    assert (len(test_generate_neurons_blocks_4.points3) == len(neurons))
 
-            # Get a debug logger for the HDF5 file (if needed)
-            array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
-                output_group,
-                group_name="debug",
-                enable=self.config_a_block_3D["debug"],
-                overwrite_group=False,
-                recorder_constructor=nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
-            )
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-            # Saves intermediate result to make resuming easier
-            resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
-                output_group,
-                recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
-                overwrite=True
-            )
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_blocks_4.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_blocks_4.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-            nanshe.learner.generate_neurons.resume_logger = resume_logger
-            nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
-            nanshe.learner.generate_neurons(
-                image_stack3,
-                **self.config_a_block_3D["generate_neurons"]
-            )
+        unmatched_points = new_unmatched_points
 
-        assert os.path.exists(self.hdf5_output_3D_filename)
+    assert (len(unmatched_points) == 0)
 
-        with h5py.File(self.hdf5_output_3D_filename, "r") as fid:
-            assert ("neurons" in fid)
 
-            neurons = fid["neurons"].value
+@nanshe.util.wrappers.with_setup_state(setup_2d, teardown_2d)
+def test_generate_neurons_1():
+    image_stack = None
+    with h5py.File(test_generate_neurons_1.hdf5_input_filename, "r") as input_file_handle:
+        image_stack = input_file_handle["images"][...]
 
-        assert (len(self.points3) == len(neurons))
+    with h5py.File(test_generate_neurons_1.hdf5_output_filename, "a") as output_file_handle:
+        output_group = output_file_handle["/"]
 
-        neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-        neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+        # Get a debug logger for the HDF5 file (if needed)
+        array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+            output_group,
+            group_name="debug",
+            enable=test_generate_neurons_1.config_a_block["debug"],
+            overwrite_group=False,
+            recorder_constructor=nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
+        )
 
-        matched = dict()
-        unmatched_points = numpy.arange(len(self.points3))
-        for i in xrange(len(neuron_max_points)):
-            new_unmatched_points = []
-            for j in unmatched_points:
-                if not (neuron_max_points[i] == self.points3[j]).all():
-                    new_unmatched_points.append(j)
-                else:
-                    matched[i] = j
+        # Saves intermediate result to make resuming easier
+        resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+            output_group,
+            recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
+            overwrite=True
+        )
 
-            unmatched_points = new_unmatched_points
+        nanshe.learner.generate_neurons.resume_logger = resume_logger
+        nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
+        nanshe.learner.generate_neurons(
+            image_stack,
+            **test_generate_neurons_1.config_a_block["generate_neurons"]
+        )
 
-        assert (len(unmatched_points) == 0)
+    assert os.path.exists(test_generate_neurons_1.hdf5_output_filename)
 
-    def teardown(self):
-        try:
-            os.remove(self.config_a_block_filename)
-        except OSError:
-            pass
-        self.config_a_block_filename = ""
+    with h5py.File(test_generate_neurons_1.hdf5_output_filename, "r") as fid:
+        assert ("neurons" in fid)
 
-        try:
-            os.remove(self.config_a_block_3D_filename)
-        except OSError:
-            pass
-        self.config_a_block_3D_filename = ""
+        neurons = fid["neurons"].value
 
-        try:
-            os.remove(self.config_blocks_filename)
-        except OSError:
-            pass
-        self.config_blocks_filename = ""
+    assert (len(test_generate_neurons_1.points) == len(neurons))
 
-        try:
-            os.remove(self.config_blocks_drmaa_filename)
-        except OSError:
-            pass
-        self.config_blocks_drmaa_filename = ""
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
 
-        try:
-            os.remove(self.config_blocks_3D_filename)
-        except OSError:
-            pass
-        self.config_blocks_3D_filename = ""
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_1.points))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_1.points[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
 
-        try:
-            os.remove(self.config_blocks_3D_drmaa_filename)
-        except OSError:
-            pass
-        self.config_blocks_3D_drmaa_filename = ""
+        unmatched_points = new_unmatched_points
 
-        try:
-            os.remove(self.hdf5_input_filename)
-        except OSError:
-            pass
-        self.hdf5_input_filename = ""
+    assert (len(unmatched_points) == 0)
 
-        try:
-            os.remove(self.hdf5_input_3D_filename)
-        except OSError:
-            pass
-        self.hdf5_input_3D_filename = ""
 
-        try:
-            os.remove(self.hdf5_output_filename)
-        except OSError:
-            pass
-        self.hdf5_output_filename = ""
+@nose.plugins.attrib.attr("3D")
+@nanshe.util.wrappers.with_setup_state(setup_3d, teardown_3d)
+def test_generate_neurons_2():
+    image_stack3 = None
+    with h5py.File(test_generate_neurons_2.hdf5_input_3D_filename, "r") as input_file_handle:
+        image_stack3 = input_file_handle["images"][...]
 
-        try:
-            os.remove(self.hdf5_output_3D_filename)
-        except OSError:
-            pass
-        self.hdf5_output_3D_filename = ""
+    with h5py.File(test_generate_neurons_2.hdf5_output_3D_filename, "a") as output_file_handle:
+        output_group = output_file_handle["/"]
 
-        shutil.rmtree(self.temp_dir)
-        self.temp_dir = ""
+        # Get a debug logger for the HDF5 file (if needed)
+        array_debug_recorder = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+            output_group,
+            group_name="debug",
+            enable=test_generate_neurons_2.config_a_block_3D["debug"],
+            overwrite_group=False,
+            recorder_constructor=nanshe.io.hdf5.record.HDF5EnumeratedArrayRecorder
+        )
+
+        # Saves intermediate result to make resuming easier
+        resume_logger = nanshe.io.hdf5.record.generate_HDF5_array_recorder(
+            output_group,
+            recorder_constructor=nanshe.io.hdf5.record.HDF5ArrayRecorder,
+            overwrite=True
+        )
+
+        nanshe.learner.generate_neurons.resume_logger = resume_logger
+        nanshe.learner.generate_neurons.recorders.array_debug_recorder = array_debug_recorder
+        nanshe.learner.generate_neurons(
+            image_stack3,
+            **test_generate_neurons_2.config_a_block_3D["generate_neurons"]
+        )
+
+    assert os.path.exists(test_generate_neurons_2.hdf5_output_3D_filename)
+
+    with h5py.File(test_generate_neurons_2.hdf5_output_3D_filename, "r") as fid:
+        assert ("neurons" in fid)
+
+        neurons = fid["neurons"].value
+
+    assert (len(test_generate_neurons_2.points3) == len(neurons))
+
+    neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
+    neuron_max_points = numpy.array(neuron_maxes.max(axis=0).nonzero()).T.copy()
+
+    matched = dict()
+    unmatched_points = numpy.arange(len(test_generate_neurons_2.points3))
+    for i in xrange(len(neuron_max_points)):
+        new_unmatched_points = []
+        for j in unmatched_points:
+            if not (neuron_max_points[i] == test_generate_neurons_2.points3[j]).all():
+                new_unmatched_points.append(j)
+            else:
+                matched[i] = j
+
+        unmatched_points = new_unmatched_points
+
+    assert (len(unmatched_points) == 0)
