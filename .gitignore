@@ -2,6 +2,7 @@
 *.pyc
 *.pyo
 *.pyd
+*.orig
 .DS_Store
 .idea
 .project
