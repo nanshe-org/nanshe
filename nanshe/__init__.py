@@ -140,7 +140,7 @@ Simply open the ``index.html`` file to take a look.
 
     python setup.py build_sphinx
 
- More build options can be determined by running the help command.
+More build options can be determined by running the help command.
 
 .. code-block:: sh
 
