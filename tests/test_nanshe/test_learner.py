@@ -670,18 +670,7 @@ class TestLearner(object):
             }
         }
 
-        has_drmaa = True
-        try:
-            import drmaa
-        except ImportError:
-            has_drmaa = False
-        except RuntimeError:
-            has_drmaa = False
-
-        if has_drmaa:
-            tempfile.tempdir = os.path.join(os.path.expanduser("~"), "tmp")
-
-        self.temp_dir = tempfile.mkdtemp()
+        self.temp_dir = tempfile.mkdtemp(dir=os.environ.get("TEMP", None))
         self.temp_dir = os.path.abspath(self.temp_dir)
 
         self.hdf5_input_filename = os.path.join(self.temp_dir, "input.h5")
@@ -1617,5 +1606,3 @@ class TestLearner(object):
 
         shutil.rmtree(self.temp_dir)
         self.temp_dir = ""
-
-        tempfile.tempdir = None
