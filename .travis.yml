@@ -47,7 +47,7 @@ after_success:
    # Submit results to coveralls.io.
    - coveralls
    # Check to see if this is the right branch to build documentation from.
-   - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
+   - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_REPO_SLUG != "jakirkham/nanshe" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.
    - mv build/sphinx/html ../nanshe-git-docs
    - mv .docstring-coverage ../nanshe-git-docs
@@ -84,6 +84,6 @@ after_success:
    - binstar -t ${BS_TOKEN} upload osx-64/nanshe*
 env:
    global:
-       secure: gWMpQYLs36C4X+GQ6cqiXn1K7ZMwkGGJaCvLd8DTCWxGclZeY2/+7P1eeIyo8sGz2bmzHGHbGqoZ3Q02+dSy20qf/WXwwNdjbF7d/JOL94cCYUHZuNGOOYVrq1VHFG+3j3QOijnsc4TPlxmI1ov3urHnlplEaU5PiyIEnzdY0EY=
+       secure: NkywIa+AzkNWMIyEY8qqYgk5aJtK7iejSXWj+dlsNg5noQwUj7Rf3RJoAn7qMaSrxbDYYBEg1icE7cYHbl59VKCTU650uLzRO1i77BJfYDA2rsGpMv+Gt2Z+APt//YmTq/TERysH+cy+RZHvbi0fZkkt1cohqOI8gWOECIUYH5I=
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 sudo: false
