@@ -38,6 +38,7 @@ class TestRegisterer(object):
 
         self.result_filename = os.path.join(self.temp_dirname, "out.h5")
 
+
     def teardown(self):
         if self.temp_dirname:
             shutil.rmtree(self.temp_dirname)
@@ -46,6 +47,7 @@ class TestRegisterer(object):
         self.config_filename = ""
         self.data_filename = ""
         self.result_filename = ""
+
 
     def test_main_0a(self):
         a = numpy.zeros((20,10,11), dtype=int)
@@ -77,6 +79,7 @@ class TestRegisterer(object):
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
+
 
     def test_main_1a(self):
         a = numpy.zeros((20,10,11), dtype=int)
@@ -116,6 +119,7 @@ class TestRegisterer(object):
 
         assert (b2 == b).all()
 
+
     def test_main_2a(self):
         a = numpy.zeros((20,11,12), dtype=int)
 
@@ -154,6 +158,7 @@ class TestRegisterer(object):
 
         assert (b2 == b).all()
 
+
     @nose.plugins.attrib.attr("3D")
     def test_main_0b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
@@ -185,6 +190,7 @@ class TestRegisterer(object):
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
+
 
     @nose.plugins.attrib.attr("3D")
     def test_main_1b(self):
@@ -225,6 +231,7 @@ class TestRegisterer(object):
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
+
 
     @nose.plugins.attrib.attr("3D")
     def test_main_2b(self):
