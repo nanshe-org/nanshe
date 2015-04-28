@@ -47,6 +47,7 @@ class TestConverter(object):
             vigra.impex.writeVolume(nanshe.util.xnumpy.tagging_reorder_array(each_data, to_axis_order="czyxt")[0, 0],
                                     os.path.join(self.temp_dir, "test_tiff_" + str(i) + ".tif"), "")
 
+
     def test_main(self):
         params = {
             "axis" : 0,
@@ -79,6 +80,7 @@ class TestConverter(object):
         assert (data == self_data_h5).all()
 
         os.remove(hdf5_filename)
+
 
     def teardown(self):
         shutil.rmtree(self.temp_dir)
