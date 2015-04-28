@@ -266,12 +266,12 @@ File nanshe/io/hdf5/serializers.py
 File nanshe/misc/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
+File nanshe/misc/random_dictionary_learning_data.py
+ Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
+
 File nanshe/misc/neuron_matplotlib_viewer.py
  - No docstring for TimeNavigator!
  Needed: 15; Exist: 14; Missing: 1; Coverage: 93.3%
-
-File nanshe/misc/random_dictionary_learning_data.py
- Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
 
 File nanshe/syn/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -304,18 +304,18 @@ File nanshe/util/pathHelpers.py
 File nanshe/util/prof.py
  Needed: 10; Exist: 10; Missing: 0; Coverage: 100.0%
 
+File nanshe/util/xglob.py
+ Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
+
+File nanshe/util/xnumpy.py
+ Needed: 57; Exist: 57; Missing: 0; Coverage: 100.0%
+
 File nanshe/util/wrappers.py
  - No docstring for MetaStaticVariables.__new__!
  - No docstring for MetaAllMethodsDecorator.__new__!
  - No docstring for MetaAllMethodsDecorator.__new__!
  - No docstring for MetaMethodsDecorator.__new__!
  Needed: 23; Exist: 19; Missing: 4; Coverage: 82.6%
-
-File nanshe/util/xglob.py
- Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
-
-File nanshe/util/xnumpy.py
- Needed: 57; Exist: 57; Missing: 0; Coverage: 100.0%
 
 
 Overall statistics for 35 files:
