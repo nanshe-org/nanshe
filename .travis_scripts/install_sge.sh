@@ -4,7 +4,9 @@
 #
 # Written by Dan Blanchard (dblanchard@ets.org), September 2013
 
-cd .travis_scripts
+export SGE_CONFIG_DIR=$HOME/sge_config
+mkdir -p $SGE_CONFIG_DIR
+cp .travis_scripts/*_template $SGE_CONFIG_DIR
 sudo sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain $(hostname) /" /etc/hosts
 sudo apt-get update -qq
 echo "gridengine-master shared/gridenginemaster string localhost" | sudo debconf-set-selections
@@ -14,15 +16,15 @@ sudo apt-get install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
 sudo apt-get install libdrmaa1.0 gridengine-client gridengine-exec
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
-sed -i -r "s/template/$USER/" user_template
-sudo qconf -Auser user_template
+sed -i -r "s/template/$USER/" $SGE_CONFIG_DIR/user_template
+sudo qconf -Auser $SGE_CONFIG_DIR/user_template
 sudo qconf -au $USER arusers
 sudo qconf -as localhost
 export LOCALHOST_IN_SEL=$(qconf -sel | grep -c 'localhost')
-if [ $LOCALHOST_IN_SEL != "1" ]; then sudo qconf -Ae host_template; else sudo qconf -Me host_template; fi
-sed -i -r "s/UNDEFINED/$CORES/" queue_template
-sudo qconf -Ap batch_template
-sudo qconf -Aq queue_template
+if [ $LOCALHOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host_template; else sudo qconf -Me $SGE_CONFIG_DIR/host_template; fi
+sed -i -r "s/UNDEFINED/$CORES/" $SGE_CONFIG_DIR/queue_template
+sudo qconf -Ap $SGE_CONFIG_DIR/batch_template
+sudo qconf -Aq $SGE_CONFIG_DIR/queue_template
 echo "Printing queue info to verify that things are working correctly."
 qstat -f -q all.q -explain a
 echo "You should see sge_execd and sge_qmaster running below:"
