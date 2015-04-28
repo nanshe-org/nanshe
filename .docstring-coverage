@@ -304,20 +304,22 @@ File nanshe/util/pathHelpers.py
 File nanshe/util/prof.py
  Needed: 10; Exist: 10; Missing: 0; Coverage: 100.0%
 
+File nanshe/util/wrappers.py
+ - No docstring for MetaStaticVariables.__new__!
+ - No docstring for MetaAllMethodsDecorator.__new__!
+ - No docstring for MetaAllMethodsDecorator.__new__!
+ - No docstring for MetaMethodsDecorator.__new__!
+ - No docstring for with_setup_state_wrapper.stages!
+ - No docstring for with_setup_state_wrapper.a_stage!
+ Needed: 27; Exist: 21; Missing: 6; Coverage: 77.8%
+
 File nanshe/util/xglob.py
  Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/xnumpy.py
  Needed: 57; Exist: 57; Missing: 0; Coverage: 100.0%
 
-File nanshe/util/wrappers.py
- - No docstring for MetaStaticVariables.__new__!
- - No docstring for MetaAllMethodsDecorator.__new__!
- - No docstring for MetaAllMethodsDecorator.__new__!
- - No docstring for MetaMethodsDecorator.__new__!
- Needed: 23; Exist: 19; Missing: 4; Coverage: 82.6%
-
 
 Overall statistics for 35 files:
-Docstrings needed: 498; Docstrings exist: 285; Docstrings missing: 213
+Docstrings needed: 502; Docstrings exist: 287; Docstrings missing: 215
 Total docstring coverage: 57.2%;  Grade: not so bad
