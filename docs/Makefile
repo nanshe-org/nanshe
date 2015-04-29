@@ -52,9 +52,11 @@ help:
 clean:
 	mv index.rst index.rst.saved
 	mv readme.rst readme.rst.saved
+	mv todo.rst todo.rst.saved
 	rm -f *.rst
 	mv index.rst.saved index.rst
 	mv readme.rst.saved readme.rst
+	mv todo.rst.saved todo.rst
 	rm -rf $(BUILDDIR)
 
 rst:
