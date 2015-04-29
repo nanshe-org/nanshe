@@ -337,3 +337,9 @@ epub_exclude_files = ['search.html']
 
 # If false, no index is generated.
 #epub_use_index = True
+
+
+# -- Options for Todo extension  ----------------------------------------------
+
+# Whether to include the TODOs in the documentation.
+todo_include_todos = True
