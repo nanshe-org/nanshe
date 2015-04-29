@@ -88,7 +88,7 @@ elif sys.argv[1] == "build_sphinx":
             sys.argv[build_arg_index + 1] = "latex"
 
 elif sys.argv[1] == "clean":
-    saved_rst_files = ["docs/index.rst", "docs/readme.rst"]
+    saved_rst_files = ["docs/index.rst", "docs/readme.rst", "docs/todo.rst"]
 
     tmp_rst_files = glob("docs/*.rst")
 
