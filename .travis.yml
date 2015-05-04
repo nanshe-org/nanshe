@@ -44,6 +44,10 @@ install:
    - pip install coverage
    - pip install docstring-coverage
    - pip install python-coveralls
+   # Clean up downloads as there are quite a few and they waste space/memory.
+   - sudo apt-get clean
+   - conda clean -t
+   - rm -rfv $HOME/.cache/pip
 script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
    - python setup.py nosetests --with-timer
