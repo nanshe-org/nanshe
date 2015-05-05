@@ -1,3 +1,6 @@
+from __future__ import print_function
+
+
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Mar 25, 2015 13:30:52 EDT$"
 
@@ -263,34 +266,34 @@ class TestWrappers(object):
 
 
 def setup_with_setup_state_2(a_callable):
-    print "setup_2"
+    print("setup_2")
     assert not hasattr(a_callable, "a")
 
 
 def setup_with_setup_state_1(a_callable):
-    print "setup_1"
+    print("setup_1")
     setattr(a_callable, "a", 5)
 
 
 def teardown_with_setup_state_1(a_callable):
-    print "teardown_1"
+    print("teardown_1")
     delattr(a_callable, "a")
 
 
 def teardown_with_setup_state_2(a_callable):
-    print "teardown_2"
+    print("teardown_2")
     assert not hasattr(a_callable, "a")
 
 
 @nanshe.util.wrappers.with_setup_state()
 def test_with_setup_state_1a():
-    print "test"
+    print("test")
 
 
 @nanshe.util.wrappers.with_setup_state(setup_with_setup_state_1,
                                        teardown_with_setup_state_1)
 def test_with_setup_state_1b():
-    print "test"
+    print("test")
     assert hasattr(test_with_setup_state_1b, "a")
     assert getattr(test_with_setup_state_1b, "a") == 5
 
@@ -300,7 +303,7 @@ def test_with_setup_state_1b():
 @nanshe.util.wrappers.with_setup_state(setup_with_setup_state_1,
                                        teardown_with_setup_state_1)
 def test_with_setup_state_2a():
-    print "test"
+    print("test")
     assert hasattr(test_with_setup_state_2a, "a")
     assert getattr(test_with_setup_state_2a, "a") == 5
 
@@ -309,7 +312,7 @@ def test_with_setup_state_2a():
 @nanshe.util.wrappers.with_setup_state(setup_with_setup_state_2,
                                        teardown_with_setup_state_2)
 def test_with_setup_state_2b():
-    print "test"
+    print("test")
     assert not hasattr(test_with_setup_state_2b, "a")
 
 
@@ -317,14 +320,14 @@ def test_with_setup_state_2b():
                                        teardown_with_setup_state_2)
 @nanshe.util.wrappers.with_setup_state()
 def test_with_setup_state_2c():
-    print "test"
+    print("test")
     assert not hasattr(test_with_setup_state_2c, "a")
 
 
 @nanshe.util.wrappers.with_setup_state()
 @nanshe.util.wrappers.with_setup_state()
 def test_with_setup_state_2d():
-    print "test"
+    print("test")
     assert not hasattr(test_with_setup_state_2c, "a")
 
 
@@ -335,5 +338,5 @@ def test_with_setup_state_2d():
 @nanshe.util.wrappers.with_setup_state()
 @nanshe.util.wrappers.with_setup_state()
 def test_with_setup_state_6():
-    print "test"
+    print("test")
     assert not hasattr(test_with_setup_state_6, "a")
