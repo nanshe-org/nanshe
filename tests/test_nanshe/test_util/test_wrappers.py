@@ -285,7 +285,6 @@ def teardown_with_setup_state_2(a_callable):
 @nanshe.util.wrappers.with_setup_state()
 def test_with_setup_state_1a():
     print "test"
-    pass
 
 
 @nanshe.util.wrappers.with_setup_state(setup_with_setup_state_1,
