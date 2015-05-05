@@ -1,3 +1,6 @@
+from __future__ import print_function
+
+
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Mar 30, 2015 23:17:09 EDT$"
 
@@ -92,26 +95,26 @@ elif sys.argv[1] == "clean":
 
     tmp_rst_files = glob("docs/*.rst")
 
-    print "removing 'docs/*.rst'"
+    print("removing 'docs/*.rst'")
     for each_saved_rst_file in saved_rst_files:
-        print "skipping '" + each_saved_rst_file + "'"
+        print("skipping '" + each_saved_rst_file + "'")
         tmp_rst_files.remove(each_saved_rst_file)
 
     for each_tmp_rst_file in tmp_rst_files:
         os.remove(each_tmp_rst_file)
 
     if os.path.exists("build/sphinx/doctrees"):
-        print "removing 'build/sphinx/doctrees'"
+        print("removing 'build/sphinx/doctrees'")
         shutil.rmtree("build/sphinx/doctrees")
     else:
-        print "'build/sphinx/doctrees' does not exist -- can't clean it"
+        print("'build/sphinx/doctrees' does not exist -- can't clean it")
 
     if (len(sys.argv) > 2) and (sys.argv[2] in ["-a", "--all"]):
         if os.path.exists("build/sphinx"):
-            print "removing 'build/sphinx'"
+            print("removing 'build/sphinx'")
             shutil.rmtree("build/sphinx")
         else:
-            print "'build/sphinx' does not exist -- can't clean it"
+            print("'build/sphinx' does not exist -- can't clean it")
 
 setup(
     name="nanshe",
