@@ -391,12 +391,14 @@ def setup_2d(a_callable):
     space = numpy.array([110, 110])
     radii = numpy.array([6, 6, 6, 6, 7, 6])
     magnitudes = numpy.array([15, 16, 15, 17, 16, 16])
-    a_callable.points = numpy.array([[30, 24],
-                               [59, 65],
-                               [21, 65],
-                               [80, 78],
-                               [72, 16],
-                               [45, 32]])
+    a_callable.points = numpy.array([
+        [30, 24],
+        [59, 65],
+        [21, 65],
+        [80, 78],
+        [72, 16],
+        [45, 32]
+    ])
 
     bases_indices = [[1, 3, 4], [0, 2], [5]]
     linspace_length = 25
@@ -792,12 +794,14 @@ def setup_3d(a_callable):
     space3 = numpy.array([60, 60, 60])
     radii3 = numpy.array([4, 3, 3, 3, 4, 3])
     magnitudes3 = numpy.array([8, 8, 8, 8, 8, 8])
-    a_callable.points3 = numpy.array([[15, 16, 17],
-                                [42, 21, 23],
-                                [45, 32, 34],
-                                [41, 41, 42],
-                                [36, 15, 41],
-                                [22, 16, 34]])
+    a_callable.points3 = numpy.array([
+        [15, 16, 17],
+        [42, 21, 23],
+        [45, 32, 34],
+        [41, 41, 42],
+        [36, 15, 41],
+        [22, 16, 34]
+    ])
 
     masks3 = nanshe.syn.data.generate_hypersphere_masks(space3, a_callable.points3, radii3)
     images3 = nanshe.syn.data.generate_gaussian_images(space3, a_callable.points3, radii3/3.0, magnitudes3) * masks3
