@@ -1001,9 +1001,11 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
     properties = None
     if (len(args)) and (args[0]):
         properties = args[0]
+        properties = [str(_) for _ in properties]
         args = args[1:]
     elif (len(kwargs)) and ("properties" in kwargs):
         properties = kwargs["properties"]
+        properties = [str(_) for _ in properties]
         del kwargs["properties"]
     else:
         properties = ["area", "centroid"]
@@ -1338,9 +1340,11 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
     properties = None
     if (len(args)) and (args[0]):
         properties = args[0]
+        properties = [str(_) for _ in properties]
         args = args[1:]
     elif (len(kwargs)) and ("properties" in kwargs):
         properties = kwargs["properties"]
+        properties = [str(_) for _ in properties]
         del kwargs["properties"]
     else:
         properties = ["area", "centroid"]
