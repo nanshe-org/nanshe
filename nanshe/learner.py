@@ -521,7 +521,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
 
             # Ensure that the blocks are corrected to deal with trimming of the image stack
             # Must be done after the calculation of
-            #original_images_pared_slices["windowed_block_selection"]
+            # original_images_pared_slices["windowed_block_selection"].
             sequential_block_i_windowed = sequential_block_i["windowed_stack_selection"]
             slice_i = tuple(
                 slice(_1, _2, 1) for _1, _2 in sequential_block_i_windowed
