@@ -794,6 +794,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
                         neurons_block_i["gaussian_cov"] = neurons_block_i_accepted["gaussian_cov"]
                         # TODO: Correct centroid to larger block position.
                         neurons_block_i["centroid"] = neurons_block_i_accepted["centroid"]
+                        neurons_block_i["centroid"] += sequential_block_i["windowed_stack_selection"][1:, 0]
 
                         array_debug_recorder = hdf5.record.generate_HDF5_array_recorder(
                             output_group,
