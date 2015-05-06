@@ -920,8 +920,8 @@ def generate_neurons(original_images, run_stage="all", **parameters):
         logger.warning("No neurons were found in the data.")
     else:
         logger.info(
-            "Found ," + str(len(new_neurons)) +
-            ", neurons were found in the data."
+            "Found \"" + str(len(new_neurons)) +
+            "\" neurons were found in the data."
         )
 
 
