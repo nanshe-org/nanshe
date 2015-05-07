@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.learner &mdash; nanshe 0.1.0a10 documentation</title>
+    <title>nanshe.learner &mdash; nanshe 0.1.0a10+1.gacd6797 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a10',
+        VERSION:     '0.1.0a10+1.gacd6797',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10 documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10+1.gacd6797 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+1.gacd6797 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -226,8 +226,7 @@
     <span class="c"># Write out the output.</span>
     <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
         <span class="c"># Create a new output directory if doesn&#39;t exists.</span>
-        <span class="k">if</span> <span class="n">output_group_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_file_handle</span><span class="p">:</span>
-            <span class="n">output_file_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
+        <span class="n">output_file_handle</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
 
         <span class="c"># Group where all data will be stored.</span>
         <span class="n">output_group</span> <span class="o">=</span> <span class="n">output_file_handle</span><span class="p">[</span><span class="n">output_group_name</span><span class="p">]</span>
@@ -537,8 +536,7 @@
     <span class="n">stderr_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
         <span class="c"># Create a new output directory if doesn&#39;t exists.</span>
-        <span class="k">if</span> <span class="n">output_group_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_file_handle</span><span class="p">:</span>
-            <span class="n">output_file_handle</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
+        <span class="n">output_file_handle</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
 
         <span class="n">output_group</span> <span class="o">=</span> <span class="n">output_file_handle</span><span class="p">[</span><span class="n">output_group_name</span><span class="p">]</span>
 
@@ -553,8 +551,7 @@
                     <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
 
-        <span class="k">if</span> <span class="s">&quot;blocks&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">:</span>
-            <span class="n">output_group</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">&quot;blocks&quot;</span><span class="p">)</span>
+        <span class="n">output_group</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="s">&quot;blocks&quot;</span><span class="p">)</span>
 
         <span class="n">output_group_blocks</span> <span class="o">=</span> <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;blocks&quot;</span><span class="p">]</span>
 
@@ -1096,7 +1093,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+1.gacd6797 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
