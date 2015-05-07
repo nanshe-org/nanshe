@@ -867,6 +867,18 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
             >>> region_properties_scikit_image(numpy.eye(3, dtype=int))
             array([(1, 3.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties_scikit_image(
+            ...     numpy.eye(3, dtype=int), ["area", "centroid"]
+            ... )
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties_scikit_image(
+            ...     numpy.eye(3, dtype=int), properties=["area", "centroid"]
+            ... )
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
     """
 
     region_properties_type_dict = {
@@ -1177,6 +1189,18 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties_vigra(numpy.eye(3, dtype=int))
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties_vigra(
+            ...     numpy.eye(3, dtype=int), ["area", "centroid"]
+            ... )
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties_vigra(
+            ...     numpy.eye(3, dtype=int), properties=["area", "centroid"]
+            ... )
             array([(1, 3.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
     """
@@ -1569,6 +1593,18 @@ def region_properties(new_label_image, *args, **kwargs):
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties(numpy.eye(3, dtype=int))
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties(
+            ...     numpy.eye(3, dtype=int), ["area", "centroid"]
+            ... )
+            array([(1, 3.0, [1.0, 1.0])], 
+                  dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> region_properties(
+            ...     numpy.eye(3, dtype=int), properties=["area", "centroid"]
+            ... )
             array([(1, 3.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
     """
