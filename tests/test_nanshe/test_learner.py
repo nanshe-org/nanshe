@@ -903,6 +903,10 @@ def test_main_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
 
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
+
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_1.points))
     for i in xrange(len(neuron_max_points)):
@@ -937,6 +941,10 @@ def test_main_2():
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_2.points))
@@ -985,6 +993,10 @@ def test_main_3():
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_3.points))
@@ -1137,6 +1149,10 @@ def test_generate_neurons_io_handler_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
 
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
+
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_1.points))
     for i in xrange(len(neuron_max_points)):
@@ -1167,6 +1183,10 @@ def test_generate_neurons_io_handler_2():
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_2.points))
@@ -1211,6 +1231,10 @@ def test_generate_neurons_io_handler_3():
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_3.points))
@@ -1351,6 +1375,10 @@ def test_generate_neurons_a_block_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
 
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
+
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_a_block_1.points))
     for i in xrange(len(neuron_max_points)):
@@ -1414,6 +1442,10 @@ def test_generate_neurons_blocks_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
 
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
+
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_blocks_1.points))
     for i in xrange(len(neuron_max_points)):
@@ -1457,6 +1489,10 @@ def test_generate_neurons_blocks_2():
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_blocks_2.points))
@@ -1592,6 +1628,10 @@ def test_generate_neurons_1():
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
     neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    assert numpy.allclose(
+        neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
+    )
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_1.points))
