@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.learner &mdash; nanshe 0.1.0a9+13.g9046996 documentation</title>
+    <title>nanshe.learner &mdash; nanshe 0.1.0a10 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a9+13.g9046996',
+        VERSION:     '0.1.0a10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a9+13.g9046996 documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a9+13.g9046996 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -854,6 +854,7 @@
                         <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;gaussian_cov&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;gaussian_cov&quot;</span><span class="p">]</span>
                         <span class="c"># TODO: Correct centroid to larger block position.</span>
                         <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s">&quot;windowed_stack_selection&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
 
                         <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
                             <span class="n">output_group</span><span class="p">,</span>
@@ -1095,7 +1096,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a9+13.g9046996 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
