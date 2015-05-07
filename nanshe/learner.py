@@ -166,8 +166,7 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
     # Write out the output.
     with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
         # Create a new output directory if doesn't exists.
-        if output_group_name not in output_file_handle:
-            output_file_handle.create_group(output_group_name)
+        output_file_handle.require_group(output_group_name)
 
         # Group where all data will be stored.
         output_group = output_file_handle[output_group_name]
@@ -477,8 +476,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
     stderr_filename_block = []
     with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
         # Create a new output directory if doesn't exists.
-        if output_group_name not in output_file_handle:
-            output_file_handle.create_group(output_group_name)
+        output_file_handle.require_group(output_group_name)
 
         output_group = output_file_handle[output_group_name]
 
@@ -493,8 +491,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
                     "/" + input_dataset_name
                 )
 
-        if "blocks" not in output_group:
-            output_group.create_group("blocks")
+        output_group.require_group("blocks")
 
         output_group_blocks = output_group["blocks"]
 
