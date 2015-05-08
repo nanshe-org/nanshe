@@ -48,7 +48,7 @@ def create_numpy_structured_array_in_HDF5(file_handle,
             performed first.
 
         Args:
-            file_handle(HDF5 file):     either an HDF5 file or an HDF5 filename.
+            file_handle(HDF5 file):     either an HDF5 filename or Group.
             internalPath(str):          an internal path for the HDF5 file.
             data(numpy.ndarray):        the NumPy structure array to save (or
                                         normal NumPy array).
