@@ -2412,7 +2412,8 @@ def wavelet_denoising(new_image,
                                                         (first axis is time).
 
             accepted_region_shape_constraints(dict):    a dictionary containing
-                                                        properties (that could be passed to
+                                                        properties (that could
+                                                        be passed to
                                                         region_properties)
                                                         under this should be a
                                                         dictionary that
@@ -3144,7 +3145,9 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the
         # new_neuron_set (composed of new_neuron_set_1)
-        for i, j in itertools.izip(new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse):
+        for i, j in itertools.izip(
+                new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse
+        ):
             #fuse_neurons.recorders.array_debug_recorder = hdf5.record.HDF5EnumeratedArrayRecorder(
             #    merge_neuron_sets_once.recorders.array_debug_recorder.hdf5_handle
             #)
@@ -3603,7 +3606,9 @@ def postprocess_data(new_dictionary, **parameters):
     if unmerged_neuron_set.size:
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
 
-        unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(numpy.uint64)
+        unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(
+            numpy.uint64
+        )
 
         unmerged_neuron_set_contours *= xnumpy.expand_enumerate(
             unmerged_neuron_set_contours, start=1
@@ -3619,7 +3624,9 @@ def postprocess_data(new_dictionary, **parameters):
     if new_neurons_set.size:
         postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
 
-        new_neurons_set_contours = new_neurons_set["contour"].astype(numpy.uint64)
+        new_neurons_set_contours = new_neurons_set["contour"].astype(
+            numpy.uint64
+        )
 
         new_neurons_set_contours *= xnumpy.expand_enumerate(
             new_neurons_set_contours, start=1
