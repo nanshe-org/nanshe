@@ -170,38 +170,18 @@ def get_standard_tiff_array(new_tiff_filename,
     # Get the shape and dtype information
     shape, dtype = get_multipage_tiff_shape_dtype(new_tiff_filename).values()
 
-    # Turn dtype into something that VIGRA's readImage or readVolume will take
-    dtype_str = ""
-    if dtype is None:
-        dtype_str = ""
-    elif (dtype is numpy.float64) or (dtype is float):
-        dtype_str = "DOUBLE"
-    elif (dtype is numpy.float32):
-        dtype_str = "FLOAT"
-    elif (dtype is numpy.uint32):
-        dtype_str = "UINT32"
-    elif (dtype is numpy.int32):
-        dtype_str = "INT32"
-    elif (dtype is numpy.uint16):
-        dtype_str = "UINT16"
-    elif (dtype is numpy.int16):
-        dtype_str = "INT16"
-    elif (dtype is numpy.uint8):
-        dtype_str = "UINT8"
-    else:
-        raise Exception("Unacceptable dtype of " + repr(dtype))
-
+    # Read the image into a NumPy array.
     if shape[-2] > 1:
         # Our algorithm expect double precision
         new_tiff_array = vigra.impex.readVolume(
-            new_tiff_filename, dtype=dtype_str
+            new_tiff_filename, dtype=dtype
         )
         # Convert to normal array
         new_tiff_array = new_tiff_array.view(numpy.ndarray)
     else:
         # Our algorithm expect double precision
         new_tiff_array = vigra.impex.readImage(
-            new_tiff_filename, dtype=dtype_str)
+            new_tiff_filename, dtype=dtype)
         # Convert to normal array
         new_tiff_array = new_tiff_array.view(numpy.ndarray)
         # Need to add singleton time dimension before channel
