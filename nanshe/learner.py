@@ -123,7 +123,6 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
             parameters              how the run should be configured.
     """
 
-
     # Extract and validate file extensions.
 
     # Parse input filename and validate that the name is acceptable
