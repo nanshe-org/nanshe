@@ -215,8 +215,18 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
 
 
 @prof.log_call(trace_logger)
-def generate_neurons_blocks(input_filename, output_filename, num_processes=multiprocessing.cpu_count(), block_shape=None, num_blocks=None, half_window_shape=None, half_border_shape=None, use_drmaa=False, num_drmaa_cores=16, debug=False, **parameters):
-    # TODO: Move this function into a new module with its own command line interface.
+def generate_neurons_blocks(input_filename,
+                            output_filename,
+                            num_processes=multiprocessing.cpu_count(),
+                            block_shape=None,
+                            num_blocks=None,
+                            half_window_shape=None,
+                            half_border_shape=None,
+                            use_drmaa=False,
+                            num_drmaa_cores=16,
+                            debug=False,
+                            **parameters):
+    # TODO: Move function into new module with its own command line interface.
     # TODO: Heavy refactoring required on this function.
 
     # Extract and validate file extensions.
