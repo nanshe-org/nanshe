@@ -891,10 +891,10 @@ def generate_neurons(original_images, run_stage="all", **parameters):
 
         if "dictionary_max_projection" not in generate_neurons.recorders.array_debug_recorder:
             generate_neurons.recorders.array_debug_recorder["dictionary_max_projection"] = xnumpy.add_singleton_op(
-            numpy.max,
-            new_dictionary,
-            axis=0
-        )
+                numpy.max,
+                new_dictionary,
+                axis=0
+            )
 
     if run_stage == "dictionary":
         return
