@@ -24,10 +24,8 @@ from nanshe.util import prof
 from nanshe.io import xjson, xtiff
 
 
-
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
-
 
 
 @prof.log_call(trace_logger)
