@@ -215,7 +215,8 @@ def log_call(logger,
                 )
 
                 # Output arguments and keyword arguments if acceptable.
-                # This allows keyword arguments to be turned on or off at runtime.
+                # This allows keyword arguments to be turned on or off at
+                # runtime.
                 #
                 # Note: We have used log_call_callable_wrapped.to_print_args.
                 # However, we cannot define this until after as wrapping will
@@ -226,9 +227,9 @@ def log_call(logger,
                         "Keyword Arguments: \"" + str(kwargs) + "\"."
                     )
 
-                # We don't return immediately. Why? We want to know if this succeeded or failed.
-                # So, we want the log message below to print after the function
-                # runs.
+                # We don't return immediately. Why? We want to know if this
+                # succeeded or failed. So, we want the log message below to
+                # print after the function runs.
                 diff_time = 0.0
                 start_time = time.time()
                 try:
