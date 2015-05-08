@@ -319,7 +319,7 @@ assert issubclass(HDF5DataSource, SourceABC)
 @prof.log_class(trace_logger)
 class HDF5DataRequest(object):
     """
-        Created by an HDF5DataSource to provide a way to request slices of th
+        Created by an HDF5DataSource to provide a way to request slices of the
          HDF5 file in a nice way.
 
         Attributes:
