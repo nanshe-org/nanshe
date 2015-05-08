@@ -64,7 +64,8 @@ def main(*argv):
         "config_filename",
         metavar="CONFIG_FILE",
         type=str,
-        help="JSON file that provides configuration options for how to import TIFF(s)."
+        help="JSON file that provides configuration options" +
+             " for how to import TIFF(s)."
     )
     parser.add_argument(
         "input_files",
@@ -79,7 +80,9 @@ def main(*argv):
         metavar="OUTPUT_FILE",
         type=str,
         nargs=1,
-        help="HDF5 file to export (this should include a path to where the internal dataset should be stored)."
+        help="HDF5 file to export" +
+             " (this should include a path to" +
+             " where the internal dataset should be stored)."
     )
 
     # Results of parsing arguments
