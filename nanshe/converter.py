@@ -54,28 +54,32 @@ def main(*argv):
         description="Parses input from the command line for a batch job."
     )
 
-    parser.add_argument("format",
-                        choices=["tiff"],
-                        help="Format to convert from to HDF5.",
+    parser.add_argument(
+        "format",
+        choices=["tiff"],
+        help="Format to convert from to HDF5.",
     )
 
-    parser.add_argument("config_filename",
-                        metavar="CONFIG_FILE",
-                        type=str,
-                        help="JSON file that provides configuration options for how to import TIFF(s)."
+    parser.add_argument(
+        "config_filename",
+        metavar="CONFIG_FILE",
+        type=str,
+        help="JSON file that provides configuration options for how to import TIFF(s)."
     )
-    parser.add_argument("input_files",
-                        metavar="INPUT_FILE",
-                        type=str,
-                        nargs="+",
-                        help="TIFF file paths (with optional regex e.g. \"./*.tif\")."
+    parser.add_argument(
+        "input_files",
+        metavar="INPUT_FILE",
+        type=str,
+        nargs="+",
+        help="TIFF file paths (with optional regex e.g. \"./*.tif\")."
     )
 
-    parser.add_argument("output_file",
-                        metavar="OUTPUT_FILE",
-                        type=str,
-                        nargs=1,
-                        help="HDF5 file to export (this should include a path to where the internal dataset should be stored)."
+    parser.add_argument(
+        "output_file",
+        metavar="OUTPUT_FILE",
+        type=str,
+        nargs=1,
+        help="HDF5 file to export (this should include a path to where the internal dataset should be stored)."
     )
 
     # Results of parsing arguments
