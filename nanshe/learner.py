@@ -76,7 +76,6 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
             parameters_filename     JSON filename with parameters.
     """
 
-
     # Extract and validate file extensions.
 
     # Parse parameter filename and validate that the name is acceptable
