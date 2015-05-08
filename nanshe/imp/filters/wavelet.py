@@ -366,7 +366,8 @@ def transform(im0,
 
                 if not issubclass(out.dtype.type, numpy.float32):
                     warnings.warn(
-                        "Provided out with type \"" + repr(out.dtype.type) + "\". " +
+                        "Provided out with type \"" + repr(out.dtype.type) +
+                        "\". " +
                         "Will be cast to type \"" + repr(numpy.float32) + "\"",
                         RuntimeWarning
                     )
@@ -380,7 +381,8 @@ def transform(im0,
 
                 if not issubclass(out.dtype.type, numpy.float32):
                     warnings.warn(
-                        "Provided out with type \"" + repr(out.dtype.type) + "\". " +
+                        "Provided out with type \"" + repr(out.dtype.type) +
+                        "\". " +
                         "Will be cast to type \"" + repr(numpy.float32) + "\"",
                         RuntimeWarning
                     )
