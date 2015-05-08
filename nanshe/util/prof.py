@@ -157,7 +157,7 @@ def log_call(logger,
             to_print_time(bool):           Prints the time it took to run the
                                            wrapped callable.
 
-            to_print_exception  (bool):    Whether to print the traceback when
+            to_print_exception(bool):      Whether to print the traceback when
                                            an exception is raise. It will be
                                            stored as a global variable on the
                                            function, which can be changed at
