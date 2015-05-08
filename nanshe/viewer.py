@@ -320,40 +320,40 @@ assert issubclass(HDF5DataSource, SourceABC)
 class HDF5DataRequest(object):
     """
         Created by an HDF5DataSource to provide a way to request slices of the
-         HDF5 file in a nice way.
+        HDF5 file in a nice way.
 
         Attributes:
-          file_handle(h5py.File or str):           A handle for reading the
+            file_handle(h5py.File or str):         A handle for reading the
                                                    HDF5 file or the external
                                                    file path.
 
-          dataset_path(str):                       Internal path to the dataset
-          axis_order(tuple of ints):               A tuple representing how to
+            dataset_path(str):                     Internal path to the dataset
+            axis_order(tuple of ints):             A tuple representing how to
                                                    reshape the array before
                                                    returning a request.
 
-          dataset_dtype(numpy.dtype or type):      The type of the underlying
+            dataset_dtype(numpy.dtype or type):    The type of the underlying
                                                    dataset.
 
-          throw_on_not_found(bool):                Whether to throw an
+            throw_on_not_found(bool):              Whether to throw an
                                                    exception if the dataset is
                                                    not found.
 
-          slicing(tuple of slices):                The slicing request by
+            slicing(tuple of slices):              The slicing request by
                                                    Volumina.
-          actual_slicing(tuple of slices):         The actual slicing that will
+            actual_slicing(tuple of slices):       The actual slicing that will
                                                    be performed on the dataset.
 
-          throw_on_not_found(bool):                Whether to throw an
+            throw_on_not_found(bool):              Whether to throw an
                                                    exception if the dataset is
                                                    not found.
 
         Note:
-             Before returning the result to Volumina the axes will likely need
-             to be transposed. Also, singleton axes will need to be inserted to
-             ensure the dimensionality is 5 as Volumina expects. This result
-             will be cached inside the request instance. So, if this request
-             instance is kept, this won't need to be repeated.
+            Before returning the result to Volumina the axes will likely need
+            to be transposed. Also, singleton axes will need to be inserted to
+            ensure the dimensionality is 5 as Volumina expects. This result
+            will be cached inside the request instance. So, if this request
+            instance is kept, this won't need to be repeated.
     """
 
     # TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.
