@@ -164,7 +164,7 @@ def log_call(logger,
                                            runtime.
 
         Returns:
-            log_call_decorator (for wrapping)
+            log_call_decorator:            For performing the actual wrapping.
     """
 
     def log_call_decorator(callable):
