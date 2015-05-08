@@ -254,7 +254,6 @@ def log_call(logger,
             else:
                 result = callable(*args, **kwargs)
 
-
             # Return the result even None.
             return(result)
 
