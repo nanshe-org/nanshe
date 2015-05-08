@@ -128,11 +128,13 @@ def generate_neurons_a_block(input_filename, output_filename, debug=False, **par
     # Parse input filename and validate that the name is acceptable
     input_filename_details = pathHelpers.PathComponents(input_filename)
     # Clean up the extension so it fits the standard.
-    if (input_filename_details.extension.lower().lstrip(os.extsep) not in ["h5", "hdf5", "he5"]):
+    input_filename_ext = input_filename_details.extension
+    input_filename_ext = input_filename_ext.lower().lstrip(os.extsep)
+    if (input_filename_ext not in ["h5", "hdf5", "he5"]):
         raise Exception(
             "Input file with filename: \"" + input_filename + "\"" +
             " provided with an unknown file extension: \"" +
-            input_filename_details.extension + "\". If it is a supported " +
+            input_filename_ext + "\". If it is a supported " +
             "format, please run the given file through " +
             "nanshe_converter first before proceeding."
         )
