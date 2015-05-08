@@ -456,8 +456,9 @@ def generate_neurons_blocks(input_filename,
         half_border_shape_array, reps_after=2
     )
 
-    # Get slice information for the portion within original_images_pared_slices["windowed"],
-    # which corresponds to original_images_pared_slices["actual"]
+    # Get slice information for the portion within
+    # `original_images_pared_slices["windowed"]`, which corresponds to
+    # `original_images_pared_slices["actual"]`.
     #original_images_pared_slices["windowed_block_selection"][..., 0] = 0
     original_images_pared_slices["windowed_block_selection"][..., 1] = (
         original_images_pared_slices["actual"][..., 1] - original_images_pared_slices["actual"][..., 0]
