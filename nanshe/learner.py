@@ -532,7 +532,8 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
             block_i = output_group_blocks[i_str]
 
             with h5py.File(intermediate_basename_i + os.extsep + "h5", "a") as each_block_file_handle:
-                # Create a soft link to the original images. But use the appropriate type of soft link depending on whether
+                # Create a soft link to the original images. But use the
+                # appropriate type of soft link depending on whether
                 # the input and output file are the same.
                 if "original_images" not in each_block_file_handle:
                     each_block_file_handle["original_images"] = h5py.ExternalLink(
