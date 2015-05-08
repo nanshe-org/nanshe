@@ -82,12 +82,14 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
     parameters_filename_details = pathHelpers.PathComponents(
         parameters_filename
     )
+    parameters_filename_ext = parameters_filename_details.extension
+    parameters_filename_ext = parameters_filename_ext.lower().lstrip(os.extsep)
     # Clean up the extension so it fits the standard.
-    if (parameters_filename_details.extension.lower().lstrip(os.extsep) not in ["json"]):
+    if (parameters_filename_ext not in ["json"]):
         raise Exception(
             "Parameter file with filename: \"" + parameters_filename + "\"" +
             " provided with an unknown file extension: \"" +
-            parameters_filename_details.extension + "\". If it is a " +
+            parameters_filename_ext + "\". If it is a " +
             "supported format, please run the given file through " +
             "nanshe_converter first before proceeding."
         )
