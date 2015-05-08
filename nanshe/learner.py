@@ -374,8 +374,7 @@ def generate_neurons_blocks(input_filename, output_filename, num_processes=multi
     # the f0 calculation.
     if "extract_f0" in parameters["generate_neurons"]["preprocess_data"]:
         #assert (parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] == half_window_shape_array[0])
-        assert (parameters["generate_neurons"]["preprocess_data"][
-                "extract_f0"]["half_window_size"] <= half_window_shape_array[0])
+        assert (parameters["generate_neurons"]["preprocess_data"]["extract_f0"]["half_window_size"] <= half_window_shape_array[0])
 
     # Estimate bounds for each slice. Uses typical python [begin, end) for the
     # indices.
