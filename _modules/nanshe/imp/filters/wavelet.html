@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.filters.wavelet &mdash; nanshe 0.1.0a10+2.g301253f documentation</title>
+    <title>nanshe.imp.filters.wavelet &mdash; nanshe 0.1.0a10+24.gfb7997d documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a10+2.g301253f',
+        VERSION:     '0.1.0a10+24.gfb7997d',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+2.g301253f documentation" href="../../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10+24.gfb7997d documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -426,7 +426,8 @@
 
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
                     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                        <span class="s">&quot;Provided out with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
+                        <span class="s">&quot;Provided out with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span>
+                        <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
                         <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
                         <span class="ne">RuntimeWarning</span>
                     <span class="p">)</span>
@@ -440,7 +441,8 @@
 
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
                     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                        <span class="s">&quot;Provided out with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
+                        <span class="s">&quot;Provided out with type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span>
+                        <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. &quot;</span> <span class="o">+</span>
                         <span class="s">&quot;Will be cast to type </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
                         <span class="ne">RuntimeWarning</span>
                     <span class="p">)</span>
@@ -516,7 +518,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>

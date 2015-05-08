@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.learner &mdash; nanshe 0.1.0a10+2.g301253f documentation</title>
+    <title>nanshe.learner &mdash; nanshe 0.1.0a10+24.gfb7997d documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a10+2.g301253f',
+        VERSION:     '0.1.0a10+24.gfb7997d',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+2.g301253f documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10+24.gfb7997d documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -136,19 +136,20 @@
 <span class="sd">            parameters_filename     JSON filename with parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-
     <span class="c"># Extract and validate file extensions.</span>
 
     <span class="c"># Parse parameter filename and validate that the name is acceptable</span>
     <span class="n">parameters_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span>
         <span class="n">parameters_filename</span>
     <span class="p">)</span>
+    <span class="n">parameters_filename_ext</span> <span class="o">=</span> <span class="n">parameters_filename_details</span><span class="o">.</span><span class="n">extension</span>
+    <span class="n">parameters_filename_ext</span> <span class="o">=</span> <span class="n">parameters_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
     <span class="c"># Clean up the extension so it fits the standard.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">parameters_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;json&quot;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">parameters_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;json&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="s">&quot;Parameter file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">parameters_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
             <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">parameters_filename_details</span><span class="o">.</span><span class="n">extension</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a &quot;</span> <span class="o">+</span>
+            <span class="n">parameters_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a &quot;</span> <span class="o">+</span>
             <span class="s">&quot;supported format, please run the given file through &quot;</span> <span class="o">+</span>
             <span class="s">&quot;nanshe_converter first before proceeding.&quot;</span>
         <span class="p">)</span>
@@ -182,17 +183,18 @@
 <span class="sd">            parameters              how the run should be configured.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-
     <span class="c"># Extract and validate file extensions.</span>
 
     <span class="c"># Parse input filename and validate that the name is acceptable</span>
     <span class="n">input_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
     <span class="c"># Clean up the extension so it fits the standard.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span>
+    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="s">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
             <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
             <span class="s">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
             <span class="s">&quot;nanshe_converter first before proceeding.&quot;</span>
         <span class="p">)</span>
@@ -200,11 +202,13 @@
     <span class="c"># Parse output filename and validate that the name is acceptable</span>
     <span class="n">output_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
     <span class="c"># Clean up the extension so it fits the standard.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span>
+    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="s">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
             <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
             <span class="s">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
             <span class="s">&quot;first before proceeding.&quot;</span>
         <span class="p">)</span>
@@ -275,8 +279,18 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="generate_neurons_blocks"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_blocks">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_blocks</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">(),</span> <span class="n">block_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">num_blocks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">half_window_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">half_border_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_drmaa</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">num_drmaa_cores</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
-    <span class="c"># TODO: Move this function into a new module with its own command line interface.</span>
+<div class="viewcode-block" id="generate_neurons_blocks"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_blocks">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_blocks</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span>
+                            <span class="n">output_filename</span><span class="p">,</span>
+                            <span class="n">num_processes</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">(),</span>
+                            <span class="n">block_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                            <span class="n">num_blocks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                            <span class="n">half_window_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                            <span class="n">half_border_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                            <span class="n">use_drmaa</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="n">num_drmaa_cores</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+                            <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="c"># TODO: Move function into new module with its own command line interface.</span>
     <span class="c"># TODO: Heavy refactoring required on this function.</span>
 
     <span class="c"># Extract and validate file extensions.</span>
@@ -284,23 +298,27 @@
     <span class="c"># Parse input filename and validate that the name is acceptable</span>
     <span class="n">input_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
     <span class="c"># Clean up the extension so it fits the standard.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span>
+    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="s">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
             <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;first before proceeding.&quot;</span>
+            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="s">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
+            <span class="s">&quot;nanshe_converter first before proceeding.&quot;</span>
         <span class="p">)</span>
 
     <span class="c"># Parse output filename and validate that the name is acceptable</span>
     <span class="n">output_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
     <span class="c"># Clean up the extension so it fits the standard.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span>
+    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="s">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
             <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
             <span class="s">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
             <span class="s">&quot;first before proceeding.&quot;</span>
         <span class="p">)</span>
@@ -434,8 +452,7 @@
     <span class="c"># the f0 calculation.</span>
     <span class="k">if</span> <span class="s">&quot;extract_f0&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">]:</span>
         <span class="c">#assert (parameters[&quot;generate_neurons&quot;][&quot;preprocess_data&quot;][&quot;extract_f0&quot;][&quot;half_window_size&quot;] == half_window_shape_array[0])</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">][</span>
-                <span class="s">&quot;extract_f0&quot;</span><span class="p">][</span><span class="s">&quot;half_window_size&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">half_window_shape_array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">][</span><span class="s">&quot;extract_f0&quot;</span><span class="p">][</span><span class="s">&quot;half_window_size&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">half_window_shape_array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="c"># Estimate bounds for each slice. Uses typical python [begin, end) for the</span>
     <span class="c"># indices.</span>
@@ -499,8 +516,9 @@
         <span class="n">half_border_shape_array</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="mi">2</span>
     <span class="p">)</span>
 
-    <span class="c"># Get slice information for the portion within original_images_pared_slices[&quot;windowed&quot;],</span>
-    <span class="c"># which corresponds to original_images_pared_slices[&quot;actual&quot;]</span>
+    <span class="c"># Get slice information for the portion within</span>
+    <span class="c"># `original_images_pared_slices[&quot;windowed&quot;]`, which corresponds to</span>
+    <span class="c"># `original_images_pared_slices[&quot;actual&quot;]`.</span>
     <span class="c">#original_images_pared_slices[&quot;windowed_block_selection&quot;][..., 0] = 0</span>
     <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed_block_selection&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -593,7 +611,8 @@
             <span class="n">block_i</span> <span class="o">=</span> <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span>
 
             <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">intermediate_basename_i</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
-                <span class="c"># Create a soft link to the original images. But use the appropriate type of soft link depending on whether</span>
+                <span class="c"># Create a soft link to the original images. But use the</span>
+                <span class="c"># appropriate type of soft link depending on whether</span>
                 <span class="c"># the input and output file are the same.</span>
                 <span class="k">if</span> <span class="s">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
                     <span class="n">each_block_file_handle</span><span class="p">[</span><span class="s">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
@@ -951,10 +970,10 @@
 
         <span class="k">if</span> <span class="s">&quot;dictionary_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
             <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;dictionary_max_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-            <span class="n">new_dictionary</span><span class="p">,</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                <span class="n">new_dictionary</span><span class="p">,</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+            <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;dictionary&quot;</span><span class="p">:</span>
         <span class="k">return</span>
@@ -1093,7 +1112,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>

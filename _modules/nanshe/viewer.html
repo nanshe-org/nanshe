@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.viewer &mdash; nanshe 0.1.0a10+2.g301253f documentation</title>
+    <title>nanshe.viewer &mdash; nanshe 0.1.0a10+24.gfb7997d documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a10+2.g301253f',
+        VERSION:     '0.1.0a10+24.gfb7997d',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+2.g301253f documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10+24.gfb7997d documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -379,41 +379,41 @@
 <span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="HDF5DataRequest"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DataRequest">[docs]</a><span class="k">class</span> <span class="nc">HDF5DataRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Created by an HDF5DataSource to provide a way to request slices of th</span>
-<span class="sd">         HDF5 file in a nice way.</span>
+<span class="sd">        Created by an HDF5DataSource to provide a way to request slices of the</span>
+<span class="sd">        HDF5 file in a nice way.</span>
 
 <span class="sd">        Attributes:</span>
-<span class="sd">          file_handle(h5py.File or str):           A handle for reading the</span>
+<span class="sd">            file_handle(h5py.File or str):         A handle for reading the</span>
 <span class="sd">                                                   HDF5 file or the external</span>
 <span class="sd">                                                   file path.</span>
 
-<span class="sd">          dataset_path(str):                       Internal path to the dataset</span>
-<span class="sd">          axis_order(tuple of ints):               A tuple representing how to</span>
+<span class="sd">            dataset_path(str):                     Internal path to the dataset</span>
+<span class="sd">            axis_order(tuple of ints):             A tuple representing how to</span>
 <span class="sd">                                                   reshape the array before</span>
 <span class="sd">                                                   returning a request.</span>
 
-<span class="sd">          dataset_dtype(numpy.dtype or type):      The type of the underlying</span>
+<span class="sd">            dataset_dtype(numpy.dtype or type):    The type of the underlying</span>
 <span class="sd">                                                   dataset.</span>
 
-<span class="sd">          throw_on_not_found(bool):                Whether to throw an</span>
+<span class="sd">            throw_on_not_found(bool):              Whether to throw an</span>
 <span class="sd">                                                   exception if the dataset is</span>
 <span class="sd">                                                   not found.</span>
 
-<span class="sd">          slicing(tuple of slices):                The slicing request by</span>
+<span class="sd">            slicing(tuple of slices):              The slicing request by</span>
 <span class="sd">                                                   Volumina.</span>
-<span class="sd">          actual_slicing(tuple of slices):         The actual slicing that will</span>
+<span class="sd">            actual_slicing(tuple of slices):       The actual slicing that will</span>
 <span class="sd">                                                   be performed on the dataset.</span>
 
-<span class="sd">          throw_on_not_found(bool):                Whether to throw an</span>
+<span class="sd">            throw_on_not_found(bool):              Whether to throw an</span>
 <span class="sd">                                                   exception if the dataset is</span>
 <span class="sd">                                                   not found.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">             Before returning the result to Volumina the axes will likely need</span>
-<span class="sd">             to be transposed. Also, singleton axes will need to be inserted to</span>
-<span class="sd">             ensure the dimensionality is 5 as Volumina expects. This result</span>
-<span class="sd">             will be cached inside the request instance. So, if this request</span>
-<span class="sd">             instance is kept, this won&#39;t need to be repeated.</span>
+<span class="sd">            Before returning the result to Volumina the axes will likely need</span>
+<span class="sd">            to be transposed. Also, singleton axes will need to be inserted to</span>
+<span class="sd">            ensure the dimensionality is 5 as Volumina expects. This result</span>
+<span class="sd">            will be cached inside the request instance. So, if this request</span>
+<span class="sd">            instance is kept, this won&#39;t need to be repeated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># TODO: Try to remove throw_on_not_found. This basically would have been thrown earlier. So, we would rather not have this as it is a bit hacky.</span>
@@ -2299,7 +2299,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>

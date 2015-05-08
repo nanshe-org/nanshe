@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.converter &mdash; nanshe 0.1.0a10+2.g301253f documentation</title>
+    <title>nanshe.converter &mdash; nanshe 0.1.0a10+24.gfb7997d documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a10+2.g301253f',
+        VERSION:     '0.1.0a10+24.gfb7997d',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+2.g301253f documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10+24.gfb7997d documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -84,10 +84,8 @@
 <span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">xjson</span><span class="p">,</span> <span class="n">xtiff</span>
 
 
-
 <span class="c"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-
 
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -114,28 +112,35 @@
         <span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line for a batch job.&quot;</span>
     <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;format&quot;</span><span class="p">,</span>
-                        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;tiff&quot;</span><span class="p">],</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;Format to convert from to HDF5.&quot;</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;format&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;tiff&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;Format to convert from to HDF5.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides configuration options for how to import TIFF(s).&quot;</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides configuration options&quot;</span> <span class="o">+</span>
+             <span class="s">&quot; for how to import TIFF(s).&quot;</span>
     <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;input_files&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;TIFF file paths (with optional regex e.g. </span><span class="se">\&quot;</span><span class="s">./*.tif</span><span class="se">\&quot;</span><span class="s">).&quot;</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;input_files&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;TIFF file paths (with optional regex e.g. </span><span class="se">\&quot;</span><span class="s">./*.tif</span><span class="se">\&quot;</span><span class="s">).&quot;</span>
     <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;output_file&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file to export (this should include a path to where the internal dataset should be stored).&quot;</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&quot;output_file&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file to export&quot;</span> <span class="o">+</span>
+             <span class="s">&quot; (this should include a path to&quot;</span> <span class="o">+</span>
+             <span class="s">&quot; where the internal dataset should be stored).&quot;</span>
     <span class="p">)</span>
 
     <span class="c"># Results of parsing arguments</span>
@@ -188,7 +193,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+2.g301253f documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+24.gfb7997d documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
