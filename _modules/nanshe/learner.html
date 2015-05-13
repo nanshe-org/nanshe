@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.learner &mdash; nanshe 0.1.0a10+25.g943b9b8 documentation</title>
+    <title>nanshe.learner &mdash; nanshe 0.1.0a10+29.g11cf2d5 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a10+25.g943b9b8',
+        VERSION:     '0.1.0a10+29.g11cf2d5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+25.g943b9b8 documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10+29.g11cf2d5 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+25.g943b9b8 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+29.g11cf2d5 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -121,7 +121,9 @@
 
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="generate_neurons_io_handler"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_io_handler">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_io_handler</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">parameters_filename</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_neurons_io_handler"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_io_handler">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_io_handler</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span>
+                                <span class="n">output_filename</span><span class="p">,</span>
+                                <span class="n">parameters_filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uses generate_neurons to process a input_filename (HDF5 dataset) and</span>
 <span class="sd">        outputs results to an output_filename (HDF5 dataset). Also,</span>
@@ -168,7 +170,10 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="generate_neurons_a_block"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_a_block">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_a_block</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_neurons_a_block"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_a_block">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_a_block</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span>
+                             <span class="n">output_filename</span><span class="p">,</span>
+                             <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                             <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uses generate_neurons to process a input_filename (HDF5 dataset) and</span>
 <span class="sd">        outputs results to an output_filename (HDF5 dataset).</span>
@@ -361,7 +366,8 @@
 
     <span class="c"># TODO: Refactor to expanded_numpy.</span>
     <span class="c"># Cuts boundaries from original_images_shape</span>
-    <span class="n">original_images_pared_shape_array</span> <span class="o">=</span> <span class="n">original_images_shape_array</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">half_border_shape_array</span>
+    <span class="n">original_images_pared_shape_array</span> <span class="o">=</span> <span class="n">original_images_shape_array</span> <span class="o">-</span> \
+                                        <span class="mi">2</span><span class="o">*</span><span class="n">half_border_shape_array</span>
 
     <span class="c"># At least one of them must be specified. If not some mixture of both.</span>
     <span class="k">assert</span> <span class="p">((</span><span class="n">block_shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">num_blocks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">))</span>
@@ -1112,7 +1118,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+25.g943b9b8 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a10+29.g11cf2d5 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
