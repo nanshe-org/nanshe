@@ -32,7 +32,7 @@ pep257:
         # definition and docstrings.
         - D203
         # PEP257 expects the documentation to be indented the same as
-        # the code. We have prefered to indent it one time further as it
+        # the code. We have preferred to indent it one time further as it
         # makes it easier on the eye to note documentation from code on
         # a quick pass. So, we suppress this constraint.
         - D208
