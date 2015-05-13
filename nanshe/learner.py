@@ -61,7 +61,9 @@ logger = prof.logging.getLogger(__name__)
 
 
 @prof.log_call(trace_logger)
-def generate_neurons_io_handler(input_filename, output_filename, parameters_filename):
+def generate_neurons_io_handler(input_filename,
+                                output_filename,
+                                parameters_filename):
     """
         Uses generate_neurons to process a input_filename (HDF5 dataset) and
         outputs results to an output_filename (HDF5 dataset). Also,
@@ -108,7 +110,10 @@ def generate_neurons_io_handler(input_filename, output_filename, parameters_file
 
 
 @prof.log_call(trace_logger)
-def generate_neurons_a_block(input_filename, output_filename, debug=False, **parameters):
+def generate_neurons_a_block(input_filename,
+                             output_filename,
+                             debug=False,
+                             **parameters):
     """
         Uses generate_neurons to process a input_filename (HDF5 dataset) and
         outputs results to an output_filename (HDF5 dataset).
