@@ -257,7 +257,8 @@ class DictionaryLearningRandomDataGenerator(object):
         self.object_min_intensity = object_min_intensity
         self.background_noise_intensity = background_noise_intensity
 
-        self.object_intensity_range = self.object_max_intensity - self.object_min_intensity
+        self.object_intensity_range = self.object_max_intensity - \
+                                      self.object_min_intensity
 
     def __call__(self, num_runs=1, seed=None):
         """
