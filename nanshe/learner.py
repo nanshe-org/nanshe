@@ -306,7 +306,8 @@ def generate_neurons_blocks(input_filename,
 
     # TODO: Refactor to expanded_numpy.
     # Cuts boundaries from original_images_shape
-    original_images_pared_shape_array = original_images_shape_array - 2*half_border_shape_array
+    original_images_pared_shape_array = original_images_shape_array - \
+                                        2*half_border_shape_array
 
     # At least one of them must be specified. If not some mixture of both.
     assert ((block_shape is not None) or (num_blocks is not None))
