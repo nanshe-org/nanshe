@@ -297,7 +297,8 @@ def convert_tiffs(new_tiff_filenames,
                 new_hdf5_dataset_dtype = each_new_tiff_file_dtype
             else:
                 raise Exception(
-                    "Cannot find safe conversion between new_hdf5_dataset_dtype = " +
+                    "Cannot find safe conversion between" +
+                    " new_hdf5_dataset_dtype = " +
                     repr(new_hdf5_dataset_dtype) +
                     " and each_new_tiff_file_dtype = " +
                     repr(each_new_tiff_file_dtype) + "."
