@@ -6,7 +6,8 @@ Overview
 ===============================================================================
 The ``main`` function actually starts the algorithm and can be called
 externally. Configuration files for the registerer are provided in the
-examples_ and are entitled registerer.
+examples_ and are entitled registerer. Any attributes on the raw dataset are
+copied to the registered dataset.
 
 .. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
 
