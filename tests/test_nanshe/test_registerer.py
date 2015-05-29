@@ -59,7 +59,7 @@ class TestRegisterer(object):
 
 
         with open(self.config_filename, "a") as config_file:
-                json.dump({}, config_file)
+            json.dump({}, config_file)
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
@@ -98,7 +98,7 @@ class TestRegisterer(object):
 
 
         with open(self.config_filename, "a") as config_file:
-                json.dump({}, config_file)
+            json.dump({}, config_file)
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
@@ -137,7 +137,7 @@ class TestRegisterer(object):
 
 
         with open(self.config_filename, "a") as config_file:
-                json.dump({}, config_file)
+            json.dump({}, config_file)
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
@@ -170,7 +170,7 @@ class TestRegisterer(object):
 
 
         with open(self.config_filename, "a") as config_file:
-                json.dump({}, config_file)
+            json.dump({}, config_file)
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
@@ -211,7 +211,7 @@ class TestRegisterer(object):
 
 
         with open(self.config_filename, "a") as config_file:
-                json.dump({}, config_file)
+            json.dump({}, config_file)
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
@@ -252,7 +252,7 @@ class TestRegisterer(object):
 
 
         with open(self.config_filename, "a") as config_file:
-                json.dump({}, config_file)
+            json.dump({}, config_file)
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
