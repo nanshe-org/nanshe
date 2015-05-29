@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a10+29.g11cf2d5 documentation</title>
+    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a10+33.g3b61de1 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a10+29.g11cf2d5',
+        VERSION:     '0.1.0a10+33.g3b61de1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+29.g11cf2d5 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a10+33.g3b61de1 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a10+29.g11cf2d5 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a10+33.g3b61de1 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -357,7 +357,8 @@
                 <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="n">each_new_tiff_file_dtype</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s">&quot;Cannot find safe conversion between new_hdf5_dataset_dtype = &quot;</span> <span class="o">+</span>
+                    <span class="s">&quot;Cannot find safe conversion between&quot;</span> <span class="o">+</span>
+                    <span class="s">&quot; new_hdf5_dataset_dtype = &quot;</span> <span class="o">+</span>
                     <span class="nb">repr</span><span class="p">(</span><span class="n">new_hdf5_dataset_dtype</span><span class="p">)</span> <span class="o">+</span>
                     <span class="s">&quot; and each_new_tiff_file_dtype = &quot;</span> <span class="o">+</span>
                     <span class="nb">repr</span><span class="p">(</span><span class="n">each_new_tiff_file_dtype</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span>
@@ -375,9 +376,7 @@
 
     <span class="c"># Dump all datasets to the file</span>
     <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">new_hdf5_filename</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_hdf5_file</span><span class="p">:</span>
-        <span class="n">new_hdf5_file</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">new_hdf5_groupname</span><span class="p">)</span>
-
-        <span class="n">new_hdf5_group</span> <span class="o">=</span> <span class="n">new_hdf5_file</span><span class="p">[</span><span class="n">new_hdf5_groupname</span><span class="p">]</span>
+        <span class="n">new_hdf5_group</span> <span class="o">=</span> <span class="n">new_hdf5_file</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">new_hdf5_groupname</span><span class="p">)</span>
         <span class="n">new_hdf5_dataset</span> <span class="o">=</span> <span class="n">new_hdf5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
             <span class="n">new_hdf5_dataset_name</span><span class="p">,</span>
             <span class="n">new_hdf5_dataset_shape</span><span class="p">,</span>
@@ -395,8 +394,8 @@
             <span class="p">)</span>
 
             <span class="c"># Take channel and z selection</span>
-            <span class="c"># TODO: Could we drop the channel constraint by saving different channels to different arrays? Need to think about it.</span>
-            <span class="c"># TODO: Want to drop z constraint, but need to consult with Ferran about algorithms that work on 3D for the end.</span>
+            <span class="c"># TODO: Could we drop the channel constraint?</span>
+            <span class="c"># TODO: Want to drop z constraint.</span>
             <span class="n">each_new_tiff_array</span> <span class="o">=</span> <span class="n">each_new_tiff_array</span><span class="p">[</span><span class="n">channel</span><span class="p">,</span> <span class="n">z_index</span><span class="p">]</span>
 
             <span class="c"># Store into the current slice and go to the next one.</span>
@@ -439,7 +438,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a10+29.g11cf2d5 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a10+33.g3b61de1 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
