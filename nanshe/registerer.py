@@ -6,7 +6,8 @@ Overview
 ===============================================================================
 The ``main`` function actually starts the algorithm and can be called
 externally. Configuration files for the registerer are provided in the
-examples_ and are entitled registerer.
+examples_ and are entitled registerer. Any attributes on the raw dataset are
+copied to the registered dataset.
 
 .. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
 
@@ -119,6 +120,13 @@ def main(*argv):
                         output_file[each_output_filename_components.internalDirectory],
                         name=each_output_filename_components.internalDatasetName
                     )
+
+                # Copy all attributes from raw data to the final result.
+                output = output_file[
+                    each_output_filename_components.internalDatasetName
+                ]
+                for each_attr_name in data.attrs:
+                    output.attrs[each_attr_name] = data.attrs[each_attr_name]
 
                 # Only remove the directory if our input or output files are
                 # not stored there.

@@ -63,6 +63,7 @@ class TestRegisterer(object):
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
+            data_file["images"].attrs["attr"] = "test"
 
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
@@ -76,6 +77,9 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "attr" in result_file["images"].attrs
+            assert "test" == result_file["images"].attrs["attr"]
+
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
@@ -102,6 +106,7 @@ class TestRegisterer(object):
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
+            data_file["images"].attrs["attr"] = "test"
 
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
@@ -115,6 +120,9 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "attr" in result_file["images"].attrs
+            assert "test" == result_file["images"].attrs["attr"]
+
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
@@ -141,6 +149,7 @@ class TestRegisterer(object):
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
+            data_file["images"].attrs["attr"] = "test"
 
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
@@ -154,6 +163,9 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "attr" in result_file["images"].attrs
+            assert "test" == result_file["images"].attrs["attr"]
+
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
@@ -174,6 +186,7 @@ class TestRegisterer(object):
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
+            data_file["images"].attrs["attr"] = "test"
 
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
@@ -187,6 +200,9 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "attr" in result_file["images"].attrs
+            assert "test" == result_file["images"].attrs["attr"]
+
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
@@ -215,6 +231,7 @@ class TestRegisterer(object):
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
+            data_file["images"].attrs["attr"] = "test"
 
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
@@ -228,6 +245,9 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "attr" in result_file["images"].attrs
+            assert "test" == result_file["images"].attrs["attr"]
+
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()
@@ -256,6 +276,7 @@ class TestRegisterer(object):
 
         with h5py.File(self.data_filename, "a") as data_file:
             data_file["images"] = a
+            data_file["images"].attrs["attr"] = "test"
 
         self.data_filepath = self.data_filename + "/" + "images"
         self.result_filepath = self.result_filename + "/" + "images"
@@ -269,6 +290,9 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "attr" in result_file["images"].attrs
+            assert "test" == result_file["images"].attrs["attr"]
+
             b2 = result_file["images"][...]
 
         assert (b2 == b).all()

@@ -5,13 +5,15 @@ The module ``xtiff`` provides support for conversion from TIFF to HDF5.
 Overview
 ===============================================================================
 The module ``xtiff`` implements a relatively simplistic form of conversion from
-TIFF to HDF5.
+TIFF to HDF5. Preserves the description fields from the metadata if found as a
+list under the attribute `descriptions`. Additionally, keeps track of the TIFF
+filenames stitched together and the offsets of each TIFF file as the attributes
+`filenames` and `offsets`, respectively.
 
 .. todo::
 
-    Currently, this only keeps one channel and works on one \
-    Z-plane. Also, it does not preserve any metadata from the TIFF file. It \
-    would be nice to relax these constraints and these features in the future.
+    Currently, this only keeps one channel and works on one Z-plane. It would \
+    be nice to relax these constraints and these features in the future.
 
 ===============================================================================
 API
@@ -27,6 +29,9 @@ import collections
 
 import numpy
 import h5py
+
+import PIL
+import PIL.Image
 
 import vigra
 import vigra.impex
@@ -267,11 +272,29 @@ def convert_tiffs(new_tiff_filenames,
     # Expand any regex in path names
     new_tiff_filenames = xglob.expand_pathname_list(*new_tiff_filenames)
 
+    # Extract the offset and descriptions for storage.
+    new_hdf5_dataset_filenames = list()
+    new_hdf5_dataset_offsets = list()
+    new_hdf5_dataset_descriptions = list()
+
     # Determine the shape and dtype to use for the dataset (so that everything
     # will fit).
     new_hdf5_dataset_shape = numpy.zeros((3,), dtype=int)
     new_hdf5_dataset_dtype = bool
     for each_new_tiff_filename in new_tiff_filenames:
+        # Add each filename.
+        new_hdf5_dataset_filenames.append(each_new_tiff_filename)
+
+        # Get all of the offsets.
+        new_hdf5_dataset_offsets.append(new_hdf5_dataset_shape[axis])
+
+        # Extract the descriptions.
+        with PIL.Image.open(each_new_tiff_filename) as each_new_tiff_file:
+            new_hdf5_dataset_descriptions.append(
+                each_new_tiff_file.tag.get(270, u"")
+            )
+
+        # Get the shape and type of each frame.
         each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(
             each_new_tiff_filename,
             axis_order="cztyx",
@@ -304,6 +327,11 @@ def convert_tiffs(new_tiff_filenames,
                     repr(each_new_tiff_file_dtype) + "."
                 )
 
+    # Convert to arrays.
+    new_hdf5_dataset_filenames = numpy.array(new_hdf5_dataset_filenames)
+    new_hdf5_dataset_offsets = numpy.array(new_hdf5_dataset_offsets)
+    new_hdf5_dataset_descriptions = numpy.array(new_hdf5_dataset_descriptions)
+
     # Convert to standard forms
     new_hdf5_dataset_shape = tuple(new_hdf5_dataset_shape)
     new_hdf5_dataset_dtype = numpy.dtype(new_hdf5_dataset_dtype)
@@ -322,6 +350,15 @@ def convert_tiffs(new_tiff_filenames,
             new_hdf5_dataset_shape,
             new_hdf5_dataset_dtype,
             chunks=True
+        )
+        new_hdf5_dataset.attrs["filenames"] = new_hdf5_dataset_filenames
+        new_hdf5_dataset.attrs["offsets"] = new_hdf5_dataset_offsets
+        # Workaround required due to this issue
+        # ( https://github.com/h5py/h5py/issues/289 ).
+        new_hdf5_dataset.attrs.create(
+            "descriptions",
+            new_hdf5_dataset_descriptions,
+            dtype=h5py.special_dtype(vlen=unicode)
         )
 
         new_hdf5_dataset_axis_pos = 0
