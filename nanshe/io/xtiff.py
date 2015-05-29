@@ -5,13 +5,15 @@ The module ``xtiff`` provides support for conversion from TIFF to HDF5.
 Overview
 ===============================================================================
 The module ``xtiff`` implements a relatively simplistic form of conversion from
-TIFF to HDF5.
+TIFF to HDF5. Preserves the description fields from the metadata if found as a
+list under the attribute `descriptions`. Additionally, keeps track of the TIFF
+filenames stitched together and the offsets of each TIFF file as the attributes
+`filenames` and `offsets`, respectively.
 
 .. todo::
 
-    Currently, this only keeps one channel and works on one \
-    Z-plane. Also, it does not preserve any metadata from the TIFF file. It \
-    would be nice to relax these constraints and these features in the future.
+    Currently, this only keeps one channel and works on one Z-plane. It would \
+    be nice to relax these constraints and these features in the future.
 
 ===============================================================================
 API
