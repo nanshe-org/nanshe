@@ -316,9 +316,7 @@ def convert_tiffs(new_tiff_filenames,
 
     # Dump all datasets to the file
     with h5py.File(new_hdf5_filename, "a") as new_hdf5_file:
-        new_hdf5_file.require_group(new_hdf5_groupname)
-
-        new_hdf5_group = new_hdf5_file[new_hdf5_groupname]
+        new_hdf5_group = new_hdf5_file.require_group(new_hdf5_groupname)
         new_hdf5_dataset = new_hdf5_group.create_dataset(
             new_hdf5_dataset_name,
             new_hdf5_dataset_shape,
