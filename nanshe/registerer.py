@@ -120,6 +120,13 @@ def main(*argv):
                         name=each_output_filename_components.internalDatasetName
                     )
 
+                # Copy all attributes from raw data to the final result.
+                output = output_file[
+                    each_output_filename_components.internalDatasetName
+                ]
+                for each_attr_name in data.attrs:
+                    output.attrs[each_attr_name] = data.attrs[each_attr_name]
+
                 # Only remove the directory if our input or output files are
                 # not stored there.
                 os.remove(result_filename)
