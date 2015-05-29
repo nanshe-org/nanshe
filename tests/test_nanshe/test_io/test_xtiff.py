@@ -87,7 +87,9 @@ class TestXTiff(object):
         with h5py.File(hdf5_filename, "r") as hdf5_handle:
             data = hdf5_handle["data"].value
 
-        self_data_h5 = nanshe.util.xnumpy.tagging_reorder_array(self.data, to_axis_order="cztyx")[0, 0]
+        self_data_h5 = nanshe.util.xnumpy.tagging_reorder_array(
+            self.data, to_axis_order="cztyx"
+        )[0, 0]
 
         assert (data == self_data_h5).all()
 
