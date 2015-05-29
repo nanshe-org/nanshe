@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a10+35.g7f3d87c documentation</title>
+    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a11 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a10+35.g7f3d87c',
+        VERSION:     '0.1.0a11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+35.g7f3d87c documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a11 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a10+35.g7f3d87c documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a11 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -65,13 +65,15 @@
 <span class="sd">Overview</span>
 <span class="sd">===============================================================================</span>
 <span class="sd">The module ``xtiff`` implements a relatively simplistic form of conversion from</span>
-<span class="sd">TIFF to HDF5.</span>
+<span class="sd">TIFF to HDF5. Preserves the description fields from the metadata if found as a</span>
+<span class="sd">list under the attribute `descriptions`. Additionally, keeps track of the TIFF</span>
+<span class="sd">filenames stitched together and the offsets of each TIFF file as the attributes</span>
+<span class="sd">`filenames` and `offsets`, respectively.</span>
 
 <span class="sd">.. todo::</span>
 
-<span class="sd">    Currently, this only keeps one channel and works on one \</span>
-<span class="sd">    Z-plane. Also, it does not preserve any metadata from the TIFF file. It \</span>
-<span class="sd">    would be nice to relax these constraints and these features in the future.</span>
+<span class="sd">    Currently, this only keeps one channel and works on one Z-plane. It would \</span>
+<span class="sd">    be nice to relax these constraints and these features in the future.</span>
 
 <span class="sd">===============================================================================</span>
 <span class="sd">API</span>
@@ -87,6 +89,9 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">h5py</span>
+
+<span class="kn">import</span> <span class="nn">PIL</span>
+<span class="kn">import</span> <span class="nn">PIL.Image</span>
 
 <span class="kn">import</span> <span class="nn">vigra</span>
 <span class="kn">import</span> <span class="nn">vigra.impex</span>
@@ -327,11 +332,29 @@
     <span class="c"># Expand any regex in path names</span>
     <span class="n">new_tiff_filenames</span> <span class="o">=</span> <span class="n">xglob</span><span class="o">.</span><span class="n">expand_pathname_list</span><span class="p">(</span><span class="o">*</span><span class="n">new_tiff_filenames</span><span class="p">)</span>
 
+    <span class="c"># Extract the offset and descriptions for storage.</span>
+    <span class="n">new_hdf5_dataset_filenames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">new_hdf5_dataset_offsets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">new_hdf5_dataset_descriptions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
     <span class="c"># Determine the shape and dtype to use for the dataset (so that everything</span>
     <span class="c"># will fit).</span>
     <span class="n">new_hdf5_dataset_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="nb">bool</span>
     <span class="k">for</span> <span class="n">each_new_tiff_filename</span> <span class="ow">in</span> <span class="n">new_tiff_filenames</span><span class="p">:</span>
+        <span class="c"># Add each filename.</span>
+        <span class="n">new_hdf5_dataset_filenames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_new_tiff_filename</span><span class="p">)</span>
+
+        <span class="c"># Get all of the offsets.</span>
+        <span class="n">new_hdf5_dataset_offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_hdf5_dataset_shape</span><span class="p">[</span><span class="n">axis</span><span class="p">])</span>
+
+        <span class="c"># Extract the descriptions.</span>
+        <span class="k">with</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">each_new_tiff_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_new_tiff_file</span><span class="p">:</span>
+            <span class="n">new_hdf5_dataset_descriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">each_new_tiff_file</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="s">u&quot;&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c"># Get the shape and type of each frame.</span>
         <span class="n">each_new_tiff_file_shape</span><span class="p">,</span> <span class="n">each_new_tiff_file_dtype</span> <span class="o">=</span> <span class="n">get_multipage_tiff_shape_dtype_transformed</span><span class="p">(</span>
             <span class="n">each_new_tiff_filename</span><span class="p">,</span>
             <span class="n">axis_order</span><span class="o">=</span><span class="s">&quot;cztyx&quot;</span><span class="p">,</span>
@@ -364,6 +387,11 @@
                     <span class="nb">repr</span><span class="p">(</span><span class="n">each_new_tiff_file_dtype</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span>
                 <span class="p">)</span>
 
+    <span class="c"># Convert to arrays.</span>
+    <span class="n">new_hdf5_dataset_filenames</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_hdf5_dataset_filenames</span><span class="p">)</span>
+    <span class="n">new_hdf5_dataset_offsets</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_hdf5_dataset_offsets</span><span class="p">)</span>
+    <span class="n">new_hdf5_dataset_descriptions</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_hdf5_dataset_descriptions</span><span class="p">)</span>
+
     <span class="c"># Convert to standard forms</span>
     <span class="n">new_hdf5_dataset_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_hdf5_dataset_shape</span><span class="p">)</span>
     <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">new_hdf5_dataset_dtype</span><span class="p">)</span>
@@ -382,6 +410,15 @@
             <span class="n">new_hdf5_dataset_shape</span><span class="p">,</span>
             <span class="n">new_hdf5_dataset_dtype</span><span class="p">,</span>
             <span class="n">chunks</span><span class="o">=</span><span class="bp">True</span>
+        <span class="p">)</span>
+        <span class="n">new_hdf5_dataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;filenames&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_filenames</span>
+        <span class="n">new_hdf5_dataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;offsets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_offsets</span>
+        <span class="c"># Workaround required due to this issue</span>
+        <span class="c"># ( https://github.com/h5py/h5py/issues/289 ).</span>
+        <span class="n">new_hdf5_dataset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="s">&quot;descriptions&quot;</span><span class="p">,</span>
+            <span class="n">new_hdf5_dataset_descriptions</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">h5py</span><span class="o">.</span><span class="n">special_dtype</span><span class="p">(</span><span class="n">vlen</span><span class="o">=</span><span class="nb">unicode</span><span class="p">)</span>
         <span class="p">)</span>
 
         <span class="n">new_hdf5_dataset_axis_pos</span> <span class="o">=</span> <span class="mi">0</span>
@@ -438,7 +475,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a10+35.g7f3d87c documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a11 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

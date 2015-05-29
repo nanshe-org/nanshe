@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.registerer &mdash; nanshe 0.1.0a10+35.g7f3d87c documentation</title>
+    <title>nanshe.registerer &mdash; nanshe 0.1.0a11 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a10+35.g7f3d87c',
+        VERSION:     '0.1.0a11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a10+35.g7f3d87c documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a11 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+35.g7f3d87c documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a11 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -66,7 +66,8 @@
 <span class="sd">===============================================================================</span>
 <span class="sd">The ``main`` function actually starts the algorithm and can be called</span>
 <span class="sd">externally. Configuration files for the registerer are provided in the</span>
-<span class="sd">examples_ and are entitled registerer.</span>
+<span class="sd">examples_ and are entitled registerer. Any attributes on the raw dataset are</span>
+<span class="sd">copied to the registered dataset.</span>
 
 <span class="sd">.. _examples: http://github.com/jakirkham/nanshe/tree/master/examples</span>
 
@@ -180,6 +181,13 @@
                         <span class="n">name</span><span class="o">=</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span>
                     <span class="p">)</span>
 
+                <span class="c"># Copy all attributes from raw data to the final result.</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">output_file</span><span class="p">[</span>
+                    <span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span>
+                <span class="p">]</span>
+                <span class="k">for</span> <span class="n">each_attr_name</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+                    <span class="n">output</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">each_attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">each_attr_name</span><span class="p">]</span>
+
                 <span class="c"># Only remove the directory if our input or output files are</span>
                 <span class="c"># not stored there.</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">result_filename</span><span class="p">)</span>
@@ -228,7 +236,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a10+35.g7f3d87c documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a11 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
