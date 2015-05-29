@@ -336,8 +336,8 @@ def convert_tiffs(new_tiff_filenames,
             )
 
             # Take channel and z selection
-            # TODO: Could we drop the channel constraint by saving different channels to different arrays? Need to think about it.
-            # TODO: Want to drop z constraint, but need to consult with Ferran about algorithms that work on 3D for the end.
+            # TODO: Could we drop the channel constraint?
+            # TODO: Want to drop z constraint.
             each_new_tiff_array = each_new_tiff_array[channel, z_index]
 
             # Store into the current slice and go to the next one.
