@@ -1,4 +1,4 @@
-box: jakirkham/centos_drmaa_conda
+box: jakirkham/ubuntu_drmaa_conda
 build:
     steps:
         - script:
