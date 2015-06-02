@@ -1,0 +1,47 @@
+box: jakirkham/centos_drmaa_conda
+build:
+    steps:
+        - script:
+            name: Build Conda Package.
+            code: |-
+                conda config --set always_yes yes
+                conda config --add channels http://conda.binstar.org/jakirkham
+                source activate root
+                python setup.py bdist_conda
+
+        - script:
+            name: Create Conda Environment with package and dependencies.
+            code: |-
+                conda create -n nanshenv python=2.7
+                source activate nanshenv
+                conda install --use-local nanshe==$(python setup.py --version)
+
+        - script:
+            name: Install dependencies for cluster support.
+            code: |-
+                conda install drmaa
+
+        - script:
+            name: Install dependencies for building docs.
+            code: |-
+                conda install "sphinx>=1.3,<2"
+                conda install cloud_sptheme
+
+        - script:
+            name: Install dependencies for profiling and monitoring coverage.
+            code: |-
+                conda install nose-timer
+                conda install coverage
+                conda install docstring-coverage
+                conda install python-coveralls
+
+        - script:
+            name: Test code.
+            code: |-
+                python setup.py nosetests --with-timer
+
+        - script:
+            name: Test documentation.
+            code: |-
+                python setup.py build_sphinx
+                docstring-coverage nanshe | tee .docstring-coverage
