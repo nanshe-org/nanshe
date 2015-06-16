@@ -199,8 +199,7 @@ class HDF5MaskedDataset(object):
 
     def __init__(self,
                  group, shape=None, dtype=None, data=None, chunks=True,
-                 **kwargs
-            ):
+                 **kwargs):
         assert isinstance(group, h5py.Group)
 
         assert "compression" not in kwargs
