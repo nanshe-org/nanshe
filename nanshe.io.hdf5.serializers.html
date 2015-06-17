@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.hdf5.serializers module &mdash; nanshe 0.1.0a11+2.g09f3ce6 documentation</title>
+    <title>nanshe.io.hdf5.serializers module &mdash; nanshe 0.1.0a12 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a11+2.g09f3ce6',
+        VERSION:     '0.1.0a12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a11+2.g09f3ce6 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a12 documentation" href="index.html" />
     <link rel="next" title="nanshe.io.xjson module" href="nanshe.io.xjson.html" />
     <link rel="prev" title="nanshe.io.hdf5.search module" href="nanshe.io.hdf5.search.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.io.hdf5.search.html" title="nanshe.io.hdf5.search module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a11+2.g09f3ce6 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a12 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -175,6 +175,41 @@ there (defaults to False).</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="nanshe.io.hdf5.serializers.hdf5_wrapper">
+<code class="descclassname">nanshe.io.hdf5.serializers.</code><code class="descname">hdf5_wrapper</code><span class="sig-paren">(</span><em>hdf5_args=[]</em>, <em>hdf5_kwargs=[]</em>, <em>hdf5_result=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/serializers.html#hdf5_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.serializers.hdf5_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop array results into HDF5 files specified.</p>
+<p>Useful wrapper, which take a callable and handle its input arguments
+that are HDF5 Datasets and reads them in as NumPy arrays. These NumPy
+arrays are then provided to the decorated callable as normal arguments.
+The result is then stored as an HDF5 Dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hdf5_args</strong> (<em>Sequence</em>) &#8211; A sequence of indices that represent
+arguments passed in that are expected
+to be HDF5 Datasets that will be read in
+and provided as NumPy arrays.</li>
+<li><strong>hdf5_kwargs</strong> (<em>Sequence</em>) &#8211; A sequence of keyword arguments that are
+expected to be HDF5 Datasets that will be
+read in and provided as NumPy arrays.</li>
+<li><strong>hdf5_result</strong> (<em>bytes</em>) &#8211; Which HDF5 Dataset to use for storing the
+result.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Does the actual decoration.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">callable</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">
 <code class="descclassname">nanshe.io.hdf5.serializers.</code><code class="descname">read_numpy_structured_array_from_HDF5</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/hdf5/serializers.html#read_numpy_structured_array_from_HDF5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serializes a NumPy structure array from an HDF5 file by using the HDF5
@@ -285,7 +320,7 @@ the NumPy structure array.</td>
         <li class="right" >
           <a href="nanshe.io.hdf5.search.html" title="nanshe.io.hdf5.search module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a11+2.g09f3ce6 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a12 documentation</a> &raquo;</li>
  
       </ul>
     </div>

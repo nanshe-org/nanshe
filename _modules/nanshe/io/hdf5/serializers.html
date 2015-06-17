@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.hdf5.serializers &mdash; nanshe 0.1.0a11+2.g09f3ce6 documentation</title>
+    <title>nanshe.io.hdf5.serializers &mdash; nanshe 0.1.0a12 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a11+2.g09f3ce6',
+        VERSION:     '0.1.0a12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a11+2.g09f3ce6 documentation" href="../../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a12 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a11+2.g09f3ce6 documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a12 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -83,6 +83,8 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">h5py</span>
 
+<span class="kn">from</span> <span class="nn">nanshe.util.pathHelpers</span> <span class="kn">import</span> <span class="n">PathComponents</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">wrappers</span>
 
 <span class="c"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
@@ -243,6 +245,105 @@
         <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="hdf5_wrapper"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.hdf5_wrapper">[docs]</a><span class="k">def</span> <span class="nf">hdf5_wrapper</span><span class="p">(</span><span class="n">hdf5_args</span><span class="o">=</span><span class="p">[],</span> <span class="n">hdf5_kwargs</span><span class="o">=</span><span class="p">[],</span> <span class="n">hdf5_result</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Drop array results into HDF5 files specified.</span>
+
+<span class="sd">        Useful wrapper, which take a callable and handle its input arguments</span>
+<span class="sd">        that are HDF5 Datasets and reads them in as NumPy arrays. These NumPy</span>
+<span class="sd">        arrays are then provided to the decorated callable as normal arguments.</span>
+<span class="sd">        The result is then stored as an HDF5 Dataset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hdf5_args(Sequence):     A sequence of indices that represent</span>
+<span class="sd">                                     arguments passed in that are expected</span>
+<span class="sd">                                     to be HDF5 Datasets that will be read in</span>
+<span class="sd">                                     and provided as NumPy arrays.</span>
+
+<span class="sd">            hdf5_kwargs(Sequence):   A sequence of keyword arguments that are</span>
+<span class="sd">                                     expected to be HDF5 Datasets that will be</span>
+<span class="sd">                                     read in and provided as NumPy arrays.</span>
+
+<span class="sd">            hdf5_result(bytes):      Which HDF5 Dataset to use for storing the</span>
+<span class="sd">                                     result.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            callable:                Does the actual decoration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">hdf5_decorator</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Decorates the callable and returns the result.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                a_callable(callable):   A callable to be wrapped to offload</span>
+<span class="sd">                                        some arguments to HDF5 files.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                callable:               The decorated function with a different</span>
+<span class="sd">                                        argument spec.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nd">@wrappers.wraps</span><span class="p">(</span><span class="n">a_callable</span><span class="p">)</span>
+        <span class="nd">@wrappers.static_variables</span><span class="p">(</span><span class="n">hdf5_args</span><span class="o">=</span><span class="n">hdf5_args</span><span class="p">,</span>
+                                   <span class="n">hdf5_kwargs</span><span class="o">=</span><span class="n">hdf5_kwargs</span><span class="p">,</span>
+                                   <span class="n">hdf5_result</span><span class="o">=</span><span class="n">hdf5_result</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">hdf5_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Replaces the decorated callable.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    *args(Sequence):     Arguments for the callable.</span>
+<span class="sd">                    **kwargs(Mapping):   Keyword arguments for the callable.</span>
+
+<span class="sd">                Returns:</span>
+<span class="sd">                    str:                 Path to where the Dataset was stored.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="n">new_args</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">each_arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+                <span class="n">each_new_arg</span> <span class="o">=</span> <span class="n">each_arg</span>
+
+                <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">hdf5_wrapped</span><span class="o">.</span><span class="n">hdf5_args</span><span class="p">:</span>
+                    <span class="n">each_arg_pc</span> <span class="o">=</span> <span class="n">PathComponents</span><span class="p">(</span><span class="n">each_arg</span><span class="p">)</span>
+                    <span class="n">each_filename</span><span class="p">,</span> <span class="n">each_datasetpath</span> <span class="o">=</span> <span class="n">each_arg_pc</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> \
+                                                      <span class="n">each_arg_pc</span><span class="o">.</span><span class="n">internalPath</span>
+                    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_file</span><span class="p">:</span>
+                        <span class="n">each_new_arg</span> <span class="o">=</span> <span class="n">each_file</span><span class="p">[</span><span class="n">each_datasetpath</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
+
+                <span class="n">new_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_new_arg</span><span class="p">)</span>
+
+            <span class="n">new_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">each_key</span><span class="p">,</span> <span class="n">each_kwarg</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">each_new_kwarg</span> <span class="o">=</span> <span class="n">each_kwarg</span>
+
+                <span class="k">if</span> <span class="n">each_key</span> <span class="ow">in</span> <span class="n">hdf5_wrapped</span><span class="o">.</span><span class="n">hdf5_kwargs</span><span class="p">:</span>
+                    <span class="n">each_kwarg_pc</span> <span class="o">=</span> <span class="n">PathComponents</span><span class="p">(</span><span class="n">each_kwarg</span><span class="p">)</span>
+                    <span class="n">each_filename</span><span class="p">,</span> <span class="n">each_datasetpath</span> <span class="o">=</span> <span class="n">each_kwarg_pc</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> \
+                                                      <span class="n">each_kwarg_pc</span><span class="o">.</span><span class="n">internalPath</span>
+                    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_file</span><span class="p">:</span>
+                        <span class="n">each_new_kwarg</span> <span class="o">=</span> <span class="n">each_file</span><span class="p">[</span><span class="n">each_datasetpath</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
+
+                <span class="n">new_kwargs</span><span class="p">[</span><span class="n">each_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">each_new_kwarg</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="n">a_callable</span><span class="p">(</span><span class="o">*</span><span class="n">new_args</span><span class="p">,</span> <span class="o">**</span><span class="n">new_kwargs</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">hdf5_wrapped</span><span class="o">.</span><span class="n">hdf5_result</span><span class="p">:</span>
+                <span class="n">result_pc</span> <span class="o">=</span> <span class="n">PathComponents</span><span class="p">(</span><span class="n">hdf5_wrapped</span><span class="o">.</span><span class="n">hdf5_result</span><span class="p">)</span>
+                <span class="n">result_filename</span><span class="p">,</span> <span class="n">result_datasetpath</span> <span class="o">=</span> <span class="n">result_pc</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> \
+                                                      <span class="n">result_pc</span><span class="o">.</span><span class="n">internalPath</span>
+                <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">result_filename</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">result_file</span><span class="p">:</span>
+                    <span class="n">result_file</span><span class="p">[</span><span class="n">result_datasetpath</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+                <span class="n">result</span> <span class="o">=</span> <span class="n">hdf5_wrapped</span><span class="o">.</span><span class="n">hdf5_result</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">hdf5_wrapped</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">hdf5_decorator</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="HDF5MaskedDataset"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset">[docs]</a><span class="k">class</span> <span class="nc">HDF5MaskedDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -447,7 +548,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a11+2.g09f3ce6 documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a12 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
