@@ -23,6 +23,8 @@ import os
 import numpy
 import h5py
 
+from nanshe.util.pathHelpers import PathComponents
+from nanshe.util import wrappers
 
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
@@ -183,6 +185,105 @@ def read_numpy_structured_array_from_HDF5(file_handle, internalPath):
         file_handle.close()
 
     return(data)
+
+
+def hdf5_wrapper(hdf5_args=[], hdf5_kwargs=[], hdf5_result=""):
+    """
+        Drop array results into HDF5 files specified.
+
+        Useful wrapper, which take a callable and handle its input arguments
+        that are HDF5 Datasets and reads them in as NumPy arrays. These NumPy
+        arrays are then provided to the decorated callable as normal arguments.
+        The result is then stored as an HDF5 Dataset.
+
+        Args:
+            hdf5_args(Sequence):     A sequence of indices that represent
+                                     arguments passed in that are expected
+                                     to be HDF5 Datasets that will be read in
+                                     and provided as NumPy arrays.
+
+            hdf5_kwargs(Sequence):   A sequence of keyword arguments that are
+                                     expected to be HDF5 Datasets that will be
+                                     read in and provided as NumPy arrays.
+
+            hdf5_result(bytes):      Which HDF5 Dataset to use for storing the
+                                     result.
+
+        Returns:
+            callable:                Does the actual decoration.
+    """
+
+    def hdf5_decorator(a_callable):
+        """
+            Decorates the callable and returns the result.
+
+            Args:
+                a_callable(callable):   A callable to be wrapped to offload
+                                        some arguments to HDF5 files.
+
+            Returns:
+                callable:               The decorated function with a different
+                                        argument spec.
+        """
+
+        @wrappers.wraps(a_callable)
+        @wrappers.static_variables(hdf5_args=hdf5_args,
+                                   hdf5_kwargs=hdf5_kwargs,
+                                   hdf5_result=hdf5_result)
+        def hdf5_wrapped(*args, **kwargs):
+            """
+                Replaces the decorated callable.
+
+                Args:
+                    *args(Sequence):     Arguments for the callable.
+                    **kwargs(Mapping):   Keyword arguments for the callable.
+
+                Returns:
+                    str:                 Path to where the Dataset was stored.
+            """
+
+            new_args = []
+            for i, each_arg in enumerate(args):
+                each_new_arg = each_arg
+
+                if i in hdf5_wrapped.hdf5_args:
+                    each_arg_pc = PathComponents(each_arg)
+                    each_filename, each_datasetpath = each_arg_pc.externalPath, \
+                                                      each_arg_pc.internalPath
+                    with h5py.File(each_filename, "r") as each_file:
+                        each_new_arg = each_file[each_datasetpath][...]
+
+                new_args.append(each_new_arg)
+
+            new_kwargs = dict()
+            for each_key, each_kwarg in kwargs.items():
+                each_new_kwarg = each_kwarg
+
+                if each_key in hdf5_wrapped.hdf5_kwargs:
+                    each_kwarg_pc = PathComponents(each_kwarg)
+                    each_filename, each_datasetpath = each_kwarg_pc.externalPath, \
+                                                      each_kwarg_pc.internalPath
+                    with h5py.File(each_filename, "r") as each_file:
+                        each_new_kwarg = each_file[each_datasetpath][...]
+
+                new_kwargs[each_key] = each_new_kwarg
+
+            result = a_callable(*new_args, **new_kwargs)
+
+            if hdf5_wrapped.hdf5_result:
+                result_pc = PathComponents(hdf5_wrapped.hdf5_result)
+                result_filename, result_datasetpath = result_pc.externalPath, \
+                                                      result_pc.internalPath
+                with h5py.File(result_filename, "a") as result_file:
+                    result_file[result_datasetpath] = result
+
+                result = hdf5_wrapped.hdf5_result
+
+            return(result)
+
+        return(hdf5_wrapped)
+
+    return(hdf5_decorator)
 
 
 class HDF5MaskedDataset(object):

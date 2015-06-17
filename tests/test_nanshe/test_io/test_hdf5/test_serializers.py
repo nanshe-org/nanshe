@@ -6,6 +6,8 @@ import os
 import shutil
 import tempfile
 
+import nose
+
 import numpy
 import h5py
 
@@ -203,6 +205,113 @@ class TestSerializers(object):
         self.temp_hdf5_file.close()
 
         self.temp_hdf5_file = None
+
+        shutil.rmtree(self.temp_dir)
+
+        self.temp_dir = ""
+
+
+class TestHdf5Wrapper(object):
+    def setup(self):
+        self.temp_dir = tempfile.mkdtemp()
+
+        def my_add(a, b):
+            return(a + b)
+
+        self.func = my_add
+
+        self.data_a = numpy.random.random((2, 3))
+        self.data_b = numpy.random.random((2, 3))
+        self.data_ab = self.func(self.data_a, self.data_b)
+
+        self.filename_a = os.path.join(self.temp_dir, "data_a.h5")
+        self.datasetname_a = "array"
+        self.filepath_a = os.path.join(self.filename_a, self.datasetname_a)
+
+        with h5py.File(self.filename_a, "w") as file_a:
+            file_a[self.datasetname_a] = self.data_a
+
+        self.filename_b = os.path.join(self.temp_dir, "data_b.h5")
+        self.datasetname_b = "array"
+        self.filepath_b = os.path.join(self.filename_b, self.datasetname_b)
+
+        with h5py.File(self.filename_b, "w") as file_b:
+            file_b[self.datasetname_b] = self.data_b
+
+        self.filename_ab = os.path.join(self.temp_dir, "data_ab.h5")
+        self.datasetname_ab = "array"
+        self.filepath_ab = os.path.join(self.filename_ab, self.datasetname_ab)
+
+
+    def test_hdf5_wrapper_0(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper()(self.func)
+
+        new_data_ab = new_func(self.data_a, self.data_b)
+
+        assert (new_data_ab == self.data_ab).all()
+
+
+    def test_hdf5_wrapper_1a(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper(
+            hdf5_args=[1],
+            hdf5_kwargs=["b"]
+        )(self.func)
+
+        new_data_ab = new_func(self.data_a, self.filepath_b)
+
+        assert (new_data_ab == self.data_ab).all()
+
+
+    def test_hdf5_wrapper_1b(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper(
+            hdf5_args=[1],
+            hdf5_kwargs=["b"]
+        )(self.func)
+
+        new_data_ab = new_func(self.data_a, b=self.filepath_b)
+
+        assert (new_data_ab == self.data_ab).all()
+
+
+    @nose.tools.raises(TypeError)
+    def test_hdf5_wrapper_2(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper()(self.func)
+
+        new_data_ab = new_func(self.data_a, b=self.filepath_b)
+
+
+    def test_hdf5_wrapper_3(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper(
+            hdf5_result=self.filepath_ab
+        )(self.func)
+
+        new_filepath_ab = new_func(self.data_a, self.data_b)
+
+        assert (new_filepath_ab == self.filepath_ab)
+
+        with h5py.File(self.filename_ab, "r") as file_ab:
+            new_data_ab = file_ab[self.datasetname_ab][...]
+            assert (new_data_ab == self.data_ab).all()
+
+
+    def teardown(self):
+        self.filepath_ab = None
+        self.datasetname_ab = None
+        self.filename_ab = None
+
+        self.filepath_b = None
+        self.datasetname_b = None
+        self.filename_b = None
+
+        self.filepath_a = None
+        self.datasetname_a = None
+        self.filename_a = None
+
+        self.data_ab = None
+        self.data_b = None
+        self.data_a = None
+
+        self.func = None
 
         shutil.rmtree(self.temp_dir)
 
