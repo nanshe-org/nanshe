@@ -249,6 +249,17 @@ class TestHdf5Wrapper(object):
         assert (new_data_ab == self.data_ab).all()
 
 
+    def test_hdf5_wrapper_1(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper(
+            hdf5_args=[1],
+            hdf5_kwargs=["b"]
+        )(self.func)
+
+        new_data_ab = new_func(self.data_a, self.filepath_b)
+
+        assert (new_data_ab == self.data_ab).all()
+
+
     def teardown(self):
         self.filepath_ab = None
         self.datasetname_ab = None
