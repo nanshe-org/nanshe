@@ -280,6 +280,20 @@ class TestHdf5Wrapper(object):
         new_data_ab = new_func(self.data_a, b=self.filepath_b)
 
 
+    def test_hdf5_wrapper_3(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper(
+            hdf5_result=self.filepath_ab
+        )(self.func)
+
+        new_filepath_ab = new_func(self.data_a, self.data_b)
+
+        assert (new_filepath_ab == self.filepath_ab)
+
+        with h5py.File(self.filename_ab, "r") as file_ab:
+            new_data_ab = file_ab[self.datasetname_ab][...]
+            assert (new_data_ab == self.data_ab).all()
+
+
     def teardown(self):
         self.filepath_ab = None
         self.datasetname_ab = None
