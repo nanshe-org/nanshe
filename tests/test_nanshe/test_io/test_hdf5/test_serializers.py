@@ -6,6 +6,8 @@ import os
 import shutil
 import tempfile
 
+import nose
+
 import numpy
 import h5py
 
@@ -269,6 +271,13 @@ class TestHdf5Wrapper(object):
         new_data_ab = new_func(self.data_a, b=self.filepath_b)
 
         assert (new_data_ab == self.data_ab).all()
+
+
+    @nose.tools.raises(TypeError)
+    def test_hdf5_wrapper_2(self):
+        new_func = nanshe.io.hdf5.serializers.hdf5_wrapper()(self.func)
+
+        new_data_ab = new_func(self.data_a, b=self.filepath_b)
 
 
     def teardown(self):
