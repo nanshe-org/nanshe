@@ -96,7 +96,7 @@ after_success:
    - binstar -t ${BS_TOKEN} upload osx-64/nanshe*
 notifications:
   email: False
-  webhooks: https://api.kato.im/rooms/2b4e4c406ee91de0af727f5bc0603f3f40a48f6cd1759f1cb29bcf0995247f38/travis
+  webhooks: https://api.kato.im/rooms/a17f510ab0bcfd79de90a2f2887718bb86afdb4fcff8b4b87965b2bdf0c40ed/travis
 env:
    global:
        secure: "G2yKhhOs9LWOaInkRBaNc1f1ZVYKg+vEnY0RJv7ad4tBY9GZETP4LrKnwQvIFzTWQ8IMUTALCclGXI+U9ATDSNiSEkAs45sk8roRhCf23EKGCn0L0qTOh8h1LbsXplyZHvUkt8rgTs7Mxa9KA3os+qRz47R9OdOb1yS8WvAjC74="
