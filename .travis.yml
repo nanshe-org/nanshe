@@ -95,6 +95,7 @@ after_success:
    - binstar -t ${BS_TOKEN} upload linux-64/nanshe*
    - binstar -t ${BS_TOKEN} upload osx-64/nanshe*
 notifications:
+  email: False
   webhooks: https://api.kato.im/rooms/2b4e4c406ee91de0af727f5bc0603f3f40a48f6cd1759f1cb29bcf0995247f38/travis
 env:
    global:
