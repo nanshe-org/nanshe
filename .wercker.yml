@@ -4,7 +4,6 @@ build:
         - script:
             name: Build Conda Package.
             code: |-
-                conda config --set always_yes yes
                 conda config --add channels http://conda.binstar.org/jakirkham
                 source activate root
                 python setup.py bdist_conda
@@ -12,28 +11,28 @@ build:
         - script:
             name: Create Conda Environment with package and dependencies.
             code: |-
-                conda create -n nanshenv python=2.7
+                conda create -y -n nanshenv python=2.7
                 source activate nanshenv
-                conda install --use-local nanshe==$(python setup.py --version)
+                conda install -y --use-local nanshe==$(python setup.py --version)
 
         - script:
             name: Install dependencies for cluster support.
             code: |-
-                conda install drmaa
+                conda install -y drmaa
 
         - script:
             name: Install dependencies for building docs.
             code: |-
-                conda install "sphinx>=1.3,<2"
-                conda install cloud_sptheme
+                conda install -y "sphinx>=1.3,<2"
+                conda install -y cloud_sptheme
 
         - script:
             name: Install dependencies for profiling and monitoring coverage.
             code: |-
-                conda install nose-timer
-                conda install coverage
-                conda install docstring-coverage
-                conda install python-coveralls
+                conda install -y nose-timer
+                conda install -y coverage
+                conda install -y docstring-coverage
+                conda install -y python-coveralls
 
         - script:
             name: Test code.
