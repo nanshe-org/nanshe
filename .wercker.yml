@@ -35,6 +35,11 @@ build:
                 conda install -y python-coveralls
 
         - script:
+            name: Clean the environment.
+            code: |-
+                conda clean -tipsy
+
+        - script:
             name: Test code.
             code: |-
                 python setup.py nosetests --with-timer
