@@ -1,4 +1,4 @@
-|Build Status| |Coverage Status| |Code Health| |License| |Documentation| |Binstar Release|
+|Travis Build Status| |Wercker Build Status| |Coverage Status| |Code Health| |License| |Documentation| |Binstar Release|
 
 --------------
 
@@ -153,8 +153,10 @@ configuration file. For certain fields, like those in
 "min" and/or "max". If both are specified, then the range must be met.
 If only one is specified, then only an upper or lower bound exists.
 
-.. |Build Status| image:: https://travis-ci.org/jakirkham/nanshe.svg?branch=master
+.. |Travis Build Status| image:: https://travis-ci.org/jakirkham/nanshe.svg?branch=master
    :target: https://travis-ci.org/jakirkham/nanshe
+.. |Wercker Build Status| image:: https://app.wercker.com/status/1ed421adbbec48aac2a370817dc0410f/s/master
+   :target: https://app.wercker.com/project/bykey/1ed421adbbec48aac2a370817dc0410f
 .. |Coverage Status| image:: https://coveralls.io/repos/jakirkham/nanshe/badge.svg?branch=master
    :target: https://coveralls.io/r/jakirkham/nanshe?branch=master
 .. |Code Health| image:: https://landscape.io/github/jakirkham/nanshe/master/landscape.svg?style=flat
