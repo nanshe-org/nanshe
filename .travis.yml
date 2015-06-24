@@ -27,9 +27,8 @@ install:
    - echo $VERSION
    - python setup.py bdist_conda
    # Setup environment for nanshe and install it with all dependencies.
-   - conda create -n nanshenv python=$TRAVIS_PYTHON_VERSION
+   - conda create --use-local -n nanshenv python=$TRAVIS_PYTHON_VERSION nanshe==$VERSION
    - source activate nanshenv
-   - conda install --use-local nanshe==$VERSION
    # Install DRMAA with Python support.
    - .travis_scripts/install_sge.sh
    - export SGE_ROOT=/var/lib/gridengine
