@@ -13,6 +13,7 @@ MANIFEST
 build/
 dist/
 nanshe.egg-info/
+.eggs/
 docs/_build
 docs/*.rst
 !docs/index.rst
