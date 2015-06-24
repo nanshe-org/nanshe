@@ -19,7 +19,7 @@ install:
    - conda config --add channels http://conda.binstar.org/jakirkham
    - source activate root
    # Install basic conda dependencies.
-   - conda update conda
+   - conda update --all
    - conda install conda-build
    # Build the conda package for nanshe.
    - cd $TRAVIS_REPO_SLUG
