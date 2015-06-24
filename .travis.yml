@@ -46,7 +46,7 @@ install:
    - conda install python-coveralls
    # Clean up downloads as there are quite a few and they waste space/memory.
    - sudo apt-get clean
-   - conda clean -t
+   - conda clean -tipsy
    - rm -rfv $HOME/.cache/pip
 script:
    # Run tests. Skip 3D tests as they take too long (~1hr).
