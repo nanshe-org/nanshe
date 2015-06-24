@@ -13,9 +13,8 @@ build:
         - script:
             name: Create Conda Environment with package and dependencies.
             code: |-
-                conda create -y -n nanshenv python=2.7
+                conda create -y --use-local -n nanshenv nanshe==$(python setup.py --version)
                 source activate nanshenv
-                conda install -y --use-local nanshe==$(python setup.py --version)
 
         - script:
             name: Install dependencies for cluster support.
