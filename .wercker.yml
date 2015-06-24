@@ -7,6 +7,7 @@ build:
                 conda config --add channels http://conda.binstar.org/jakirkham
                 conda config --set show_channel_urls True
                 source activate root
+                conda update -y --all
                 python setup.py bdist_conda
 
         - script:
