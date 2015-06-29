@@ -2866,10 +2866,10 @@ def blocks_split(space_shape, block_shape, block_halo=None):
     """
         Return a list of slicings to cut each block out of an array or other.
 
-        Takes an array with `space_shape` and `block_shape` for every dimension
-        and a `block_halo` to extend each block on each side. From this,
-        it can compute slicings to use for cutting each block out from the
-        original array, HDF5 dataset or other.
+        Takes an array with ``space_shape`` and ``block_shape`` for every
+        dimension and a ``block_halo`` to extend each block on each side. From
+        this, it can compute slicings to use for cutting each block out from
+        the original array, HDF5 dataset or other.
 
         Note:
             Blocks on the boundary that cannot extend the full range will
