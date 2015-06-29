@@ -146,7 +146,7 @@ File nanshe/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/xnumpy.py
- Needed: 57; Exist: 57; Missing: 0; Coverage: 100.0%
+ Needed: 58; Exist: 58; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/xglob.py
  Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
@@ -321,5 +321,5 @@ File nanshe/box/__init__.py
 
 
 Overall statistics for 35 files:
-Docstrings needed: 505; Docstrings exist: 290; Docstrings missing: 215
-Total docstring coverage: 57.4%;  Grade: not so bad
+Docstrings needed: 506; Docstrings exist: 291; Docstrings missing: 215
+Total docstring coverage: 57.5%;  Grade: not so bad
