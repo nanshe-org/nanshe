@@ -2862,6 +2862,158 @@ def numpy_structured_array_dtype_list(new_array):
 
 
 @prof.log_call(trace_logger)
+def blocks_split(space_shape, block_shape, block_halo=None):
+    """
+        Return a list of slicings to cut each block out of an array or other.
+
+        Takes an array with `space_shape` and `block_shape` for every dimension
+        and a `block_halo` to extend each block on each side. From this,
+        it can compute slicings to use for cutting each block out from the
+        original array, HDF5 dataset or other.
+
+        Note:
+            Blocks on the boundary that cannot extend the full range will
+            be truncated to the largest block that will fit. This will raise
+            a warning, which can be converted to an exception, if needed.
+
+        Args:
+            space_shape(numpy.ndarray):    Shape of array to slice
+            block_shape(numpy.ndarray):    Size of each block to take
+            block_halo(numpy.ndarray):     Halo to tack on to each block
+
+        Returns:
+            collections.Sequence of \
+            tuples of slices:              Provides tuples of slices for \
+                                           retrieving blocks.
+
+        Examples:
+            >>> blocks_split(
+            ...     (2,), (1,)
+            ... )
+            [(slice(0, 1, None),), (slice(1, 2, None),)]
+
+            >>> blocks_split(
+            ...     (2, 3,), (1, 1,)
+            ... )  #doctest: +NORMALIZE_WHITESPACE
+            [(slice(0, 1, None), slice(0, 1, None)),
+             (slice(0, 1, None), slice(1, 2, None)),
+             (slice(0, 1, None), slice(2, 3, None)),
+             (slice(1, 2, None), slice(0, 1, None)),
+             (slice(1, 2, None), slice(1, 2, None)),
+             (slice(1, 2, None), slice(2, 3, None))]
+
+            >>> blocks_split(
+            ...     (2, 3,), (1, 1,), (0, 0,)
+            ... )  #doctest: +NORMALIZE_WHITESPACE
+            [(slice(0, 1, None), slice(0, 1, None)),
+             (slice(0, 1, None), slice(1, 2, None)),
+             (slice(0, 1, None), slice(2, 3, None)),
+             (slice(1, 2, None), slice(0, 1, None)),
+             (slice(1, 2, None), slice(1, 2, None)),
+             (slice(1, 2, None), slice(2, 3, None))]
+
+            >>> blocks_split(
+            ...     (2, 3,), (1, 1,), (1, 1,)
+            ... )  #doctest: +NORMALIZE_WHITESPACE
+            [(slice(0, 2, None), slice(0, 3, None))]
+
+            >>> blocks_split(
+            ...     (10, 12,), (3, 2,), (4, 3,)
+            ... )  #doctest: +NORMALIZE_WHITESPACE
+            [(slice(0, 10, None), slice(0, 7, None)),
+             (slice(0, 10, None), slice(1, 9, None)),
+             (slice(0, 10, None), slice(3, 11, None)),
+             (slice(0, 10, None), slice(5, 12, None))]
+
+    """
+
+    space_shape = numpy.array(space_shape)
+    block_shape = numpy.array(block_shape)
+
+    if block_halo is not None:
+        block_halo = numpy.array(block_halo)
+
+        assert (space_shape.ndim == block_shape.ndim == block_halo.ndim == 1), \
+            "There should be no more than 1 dimension for " + \
+            "`space_shape`, `block_shape`, and `block_halo`."
+        assert (len(space_shape) == len(block_shape) == len(block_halo)), \
+            "The dimensions of `space_shape`, `block_shape`, and `block_halo` " + \
+            "should be the same."
+    else:
+        assert (space_shape.ndim == block_shape.ndim == 1), \
+            "There should be no more than 1 dimension for " + \
+            "`space_shape` and `block_shape`."
+        assert (len(space_shape) == len(block_shape)), \
+            "The dimensions of `space_shape` and `block_shape` " + \
+            "should be the same."
+
+        block_halo = numpy.zeros(space_shape.shape)
+
+    uneven_block_division = (space_shape % block_shape != 0)
+
+    if uneven_block_division.any():
+        uneven_block_division_str = uneven_block_division.nonzero()[0].tolist()
+        uneven_block_division_str = [str(_) for _ in uneven_block_division_str]
+        uneven_block_division_str = ", ".join(uneven_block_division_str)
+
+        warnings.warn(
+            "Blocks will not evenly divide the array." +
+            " The following dimensions will be unevenly divided: %s." %
+            uneven_block_division_str,
+            RuntimeWarning
+        )
+
+    ranges_per_dim = []
+
+    for each_dim in xrange(len(space_shape)):
+        # Construct each block using the block size given. Allow to spill over.
+        a_range = numpy.arange(0, space_shape[each_dim], block_shape[each_dim])
+        a_range = expand_view(a_range, reps_before=2).copy()
+        a_range[1] += block_shape[each_dim]
+
+        # Add the halo to each block on both sides
+        a_range[0] -= block_halo[each_dim]
+        a_range[1] += block_halo[each_dim]
+
+        # Clip each block to the boundaries
+        a_range.clip(0, space_shape[each_dim], out=a_range)
+
+        # Remove any ranges that are contained by another
+        new_a_range = []
+        for i in xrange(a_range.shape[1]):
+            is_new = True
+            for j in xrange(len(new_a_range)):
+                # Check if one of the ranges completely includes the other.
+                # If the new range contains our range,
+                # replace our range with the new one.
+                # If our range contains the new one,
+                # then there is no need to do anything.
+                if ((a_range[0][i] <= new_a_range[j][0]) and
+                        (new_a_range[j][1] <= a_range[1][i])):
+                    new_a_range[j][0] = a_range[0][i]
+                    new_a_range[j][1] = a_range[1][i]
+                    is_new = False
+                    break
+                elif ((new_a_range[j][0] <= a_range[0][i]) and
+                        (a_range[1][i] <= new_a_range[j][1])):
+                    is_new = False
+                    break
+
+            if is_new:
+                new_a_range.append(a_range[:, i])
+
+        # Convert all ranges to slices for easier use.
+        a_range = [slice(*new_a_range[i]) for i in xrange(len(new_a_range))]
+        new_a_range = None
+        ranges_per_dim.append(a_range)
+
+    # Take all combinations of all ranges to get blocks.
+    blocks = list(itertools.product(*ranges_per_dim))
+
+    return(blocks)
+
+
+@prof.log_call(trace_logger)
 def dot_product(new_vector_set_1, new_vector_set_2):
     """
         Determines the dot product between the two pairs of vectors from each
