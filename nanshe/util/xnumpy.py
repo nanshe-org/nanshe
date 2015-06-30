@@ -2915,15 +2915,40 @@ def blocks_split(space_shape, block_shape, block_halo=None):
             >>> blocks_split(
             ...     (2, 3,), (1, 1,), (1, 1,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
-            [(slice(0, 2, None), slice(0, 3, None))]
+            [(slice(0, 2, None), slice(0, 2, None)),
+             (slice(0, 2, None), slice(0, 3, None)),
+             (slice(0, 2, None), slice(1, 3, None)),
+             (slice(0, 2, None), slice(0, 2, None)),
+             (slice(0, 2, None), slice(0, 3, None)),
+             (slice(0, 2, None), slice(1, 3, None))]
 
             >>> blocks_split(
             ...     (10, 12,), (3, 2,), (4, 3,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
-            [(slice(0, 10, None), slice(0, 7, None)),
+            [(slice(0, 7, None), slice(0, 5, None)),
+             (slice(0, 7, None), slice(0, 7, None)),
+             (slice(0, 7, None), slice(1, 9, None)),
+             (slice(0, 7, None), slice(3, 11, None)),
+             (slice(0, 7, None), slice(5, 12, None)),
+             (slice(0, 7, None), slice(7, 12, None)),
+             (slice(0, 10, None), slice(0, 5, None)),
+             (slice(0, 10, None), slice(0, 7, None)),
              (slice(0, 10, None), slice(1, 9, None)),
              (slice(0, 10, None), slice(3, 11, None)),
-             (slice(0, 10, None), slice(5, 12, None))]
+             (slice(0, 10, None), slice(5, 12, None)),
+             (slice(0, 10, None), slice(7, 12, None)),
+             (slice(2, 10, None), slice(0, 5, None)),
+             (slice(2, 10, None), slice(0, 7, None)),
+             (slice(2, 10, None), slice(1, 9, None)),
+             (slice(2, 10, None), slice(3, 11, None)),
+             (slice(2, 10, None), slice(5, 12, None)),
+             (slice(2, 10, None), slice(7, 12, None)),
+             (slice(5, 10, None), slice(0, 5, None)),
+             (slice(5, 10, None), slice(0, 7, None)),
+             (slice(5, 10, None), slice(1, 9, None)),
+             (slice(5, 10, None), slice(3, 11, None)),
+             (slice(5, 10, None), slice(5, 12, None)),
+             (slice(5, 10, None), slice(7, 12, None))]
 
     """
 
