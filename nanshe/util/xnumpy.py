@@ -2964,6 +2964,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         )
 
     ranges_per_dim = []
+    halos_per_dim = []
 
     for each_dim in xrange(len(space_shape)):
         # Construct each block using the block size given. Allow to spill over.
@@ -3014,11 +3015,15 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Convert all ranges to slices for easier use.
         a_range = [slice(*new_a_range[i]) for i in xrange(len(new_a_range))]
+        a_halo = [slice(*new_a_halo[i]) for i in xrange(len(new_a_halo))]
         new_a_range = None
         ranges_per_dim.append(a_range)
+        halos_per_dim.append(a_halo)
 
     # Take all combinations of all ranges to get blocks.
     blocks = list(itertools.product(*ranges_per_dim))
+    halos = list(itertools.product(*halos_per_dim))
+
 
     return(blocks)
 
