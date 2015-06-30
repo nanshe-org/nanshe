@@ -3037,7 +3037,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
             RuntimeWarning
         )
 
-    ranges_per_dim = []
+    haloed_ranges_per_dim = []
     halos_per_dim = []
 
     for each_dim in xrange(len(space_shape)):
@@ -3068,11 +3068,11 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_halo = [slice(*map(lambda _: _ if _ != 0 else None, a_halo[i])) for i in xrange(len(a_halo))]
 
         # Collect all blocks
-        ranges_per_dim.append(a_range)
+        haloed_ranges_per_dim.append(a_range)
         halos_per_dim.append(a_halo)
 
     # Take all combinations of all ranges to get blocks.
-    blocks = list(itertools.product(*ranges_per_dim))
+    blocks = list(itertools.product(*haloed_ranges_per_dim))
     halos = list(itertools.product(*halos_per_dim))
 
     return(blocks, halos)
