@@ -3055,12 +3055,12 @@ def blocks_split(space_shape, block_shape, block_halo=None):
     if block_halo is not None:
         block_halo = numpy.array(block_halo)
 
-        assert (space_shape.ndim == block_shape.ndim == block_halo.ndim == 1), \
+        assert (space_shape.ndim == block_shape.ndim == block_halo.ndim == 1),\
             "There should be no more than 1 dimension for " + \
             "`space_shape`, `block_shape`, and `block_halo`."
         assert (len(space_shape) == len(block_shape) == len(block_halo)), \
-            "The dimensions of `space_shape`, `block_shape`, and `block_halo` " + \
-            "should be the same."
+            "The dimensions of `space_shape`, `block_shape`, and " + \
+            "`block_halo` should be the same."
     else:
         assert (space_shape.ndim == block_shape.ndim == 1), \
             "There should be no more than 1 dimension for " + \
@@ -3116,8 +3116,14 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Convert all ranges to slices for easier use.
         a_range = [slice(*a_range[i]) for i in xrange(len(a_range))]
-        a_range_haloed = [slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))]
-        a_halo = [slice(*map(lambda _: _ if _ != 0 else None, a_halo[i])) for i in xrange(len(a_halo))]
+        a_range_haloed = [
+            slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))
+        ]
+        a_halo = [
+            slice(*map(
+                lambda _: _ if _ != 0 else None, a_halo[i]
+            )) for i in xrange(len(a_halo))
+        ]
 
         # Collect all blocks
         ranges_per_dim.append(a_range)
