@@ -3073,10 +3073,10 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         halos_per_dim.append(a_halo)
 
     # Take all combinations of all ranges to get blocks.
-    blocks = list(itertools.product(*haloed_ranges_per_dim))
+    haloed_blocks = list(itertools.product(*haloed_ranges_per_dim))
     halos = list(itertools.product(*halos_per_dim))
 
-    return(blocks, halos)
+    return(haloed_blocks, halos)
 
 
 @prof.log_call(trace_logger)
