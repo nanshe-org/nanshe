@@ -3024,7 +3024,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Convert all ranges to slices for easier use.
         a_range = [slice(*a_range[i]) for i in xrange(len(a_range))]
-        a_halo = [slice(*a_halo[i]) for i in xrange(len(a_halo))]
+        a_halo = [slice(*map(lambda _: _ if _ != 0 else None, a_halo[i])) for i in xrange(len(a_halo))]
 
         # Collect all blocks
         ranges_per_dim.append(a_range)
