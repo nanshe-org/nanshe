@@ -3026,7 +3026,6 @@ def blocks_split(space_shape, block_shape, block_halo=None):
     blocks = list(itertools.product(*ranges_per_dim))
     halos = list(itertools.product(*halos_per_dim))
 
-
     return(blocks)
 
 
