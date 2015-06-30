@@ -2983,7 +2983,8 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Clip each block to the boundaries
         a_range_haloed.clip(0, space_shape[each_dim], out=a_range)
-        a_halo[...] = a_range - a_range_haloed
+        a_halo[...] += a_range - a_range_haloed
+        numpy.negative(a_halo, out=a_halo)
 
         # Remove any ranges that are contained by another
         new_a_range = []
