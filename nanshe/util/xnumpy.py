@@ -2986,6 +2986,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Remove any ranges that are contained by another
         new_a_range = []
+        new_a_halo = []
         for i in xrange(a_range.shape[1]):
             is_new = True
             for j in xrange(len(new_a_range)):
@@ -2998,6 +2999,8 @@ def blocks_split(space_shape, block_shape, block_halo=None):
                         (new_a_range[j][1] <= a_range[1][i])):
                     new_a_range[j][0] = a_range[0][i]
                     new_a_range[j][1] = a_range[1][i]
+                    new_a_halo[j][0] = a_halo[0][i]
+                    new_a_halo[j][1] = a_halo[1][i]
                     is_new = False
                     break
                 elif ((new_a_range[j][0] <= a_range[0][i]) and
@@ -3007,6 +3010,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
             if is_new:
                 new_a_range.append(a_range[:, i])
+                new_a_halo.append(a_halo[:, i])
 
         # Convert all ranges to slices for easier use.
         a_range = [slice(*new_a_range[i]) for i in xrange(len(new_a_range))]
