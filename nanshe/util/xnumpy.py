@@ -3013,8 +3013,14 @@ def blocks_split(space_shape, block_shape, block_halo=None):
                 new_a_range.append(a_range[:, i])
                 new_a_halo.append(a_halo[:, i])
 
+        new_a_range = numpy.array(new_a_range).T.copy()
+        new_a_halo = numpy.array(new_a_halo).T.copy()
+
         a_range = new_a_range
         a_halo = new_a_halo
+
+        a_range = a_range.T.copy()
+        a_halo = a_halo.T.copy()
 
         # Convert all ranges to slices for easier use.
         a_range = [slice(*a_range[i]) for i in xrange(len(a_range))]
