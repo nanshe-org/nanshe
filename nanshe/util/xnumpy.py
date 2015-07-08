@@ -3107,7 +3107,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         # Clip each block to the boundaries
         a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
         a_halo[...] = 0
-        a_halo[1] = block_shape[each_dim] + a_range[0] - a_range_haloed[0]
+        a_halo[1] = a_range[1] - a_range_haloed[0]
         a_halo[0] = a_range[0] - a_range_haloed[0]
 
         a_range = a_range.T.copy()
