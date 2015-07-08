@@ -3111,7 +3111,9 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_trimmed_halo = a_trimmed_halo.T.copy()
 
         # Convert all ranges to slices for easier use.
-        a_range = [slice(*a_range[i]) for i in xrange(len(a_range))]
+        a_range = [
+            slice(*a_range[i]) for i in xrange(len(a_range))
+        ]
         a_range_haloed = [
             slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))
         ]
