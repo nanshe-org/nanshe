@@ -3105,10 +3105,10 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_range_haloed[...] += a_halo
 
         # Clip each block to the boundaries
-        a_range_haloed_unclipped = a_range_haloed.copy()
         a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
-        a_halo[...] += a_range_haloed - a_range_haloed_unclipped
-        numpy.negative(a_halo, out=a_halo)
+        a_halo[...] = 0
+        a_halo[1] = block_shape[each_dim]
+        a_halo[:] += a_range[0] - a_range_haloed[0]
 
         a_range = a_range.T.copy()
         a_range_haloed = a_range_haloed.T.copy()
