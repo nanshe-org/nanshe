@@ -3111,15 +3111,15 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_trimmed_halo = a_trimmed_halo.T.copy()
 
         # Convert all ranges to slices for easier use.
-        a_range = [
+        a_range = iters.reformat_slices([
             slice(*a_range[i]) for i in xrange(len(a_range))
-        ]
-        a_range_haloed = [
+        ])
+        a_range_haloed = iters.reformat_slices([
             slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))
-        ]
-        a_trimmed_halo = [
+        ])
+        a_trimmed_halo = iters.reformat_slices([
             slice(*a_trimmed_halo[i]) for i in xrange(len(a_trimmed_halo))
-        ]
+        ])
 
         # Collect all blocks
         ranges_per_dim.append(a_range)
