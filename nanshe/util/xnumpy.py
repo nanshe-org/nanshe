@@ -3105,6 +3105,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_trimmed_halo = numpy.empty_like(a_range)
         a_trimmed_halo[...] = a_range - a_range_haloed[0]
 
+        # Transpose to allow for iteration over each block's dimension
         a_range = a_range.T.copy()
         a_range_haloed = a_range_haloed.T.copy()
         a_trimmed_halo = a_trimmed_halo.T.copy()
