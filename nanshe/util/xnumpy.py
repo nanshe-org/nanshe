@@ -3095,11 +3095,6 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_range = expand_view(a_range, reps_before=2).copy()
         a_range[1] += block_shape[each_dim]
 
-        # Find the halo for each block
-        a_halo = numpy.empty_like(a_range)
-        a_halo[...] = block_halo[each_dim]
-        numpy.negative(a_halo[0], out=a_halo[0])
-
         # Add the halo to each block on both sides
         a_range_haloed = a_range.copy()
         a_range_haloed[1] += block_halo[each_dim]
@@ -3107,6 +3102,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Clip each block to the boundaries
         a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
+        a_halo = numpy.empty_like(a_range)
         a_halo[...] = a_range - a_range_haloed[0]
 
         a_range = a_range.T.copy()
