@@ -3102,7 +3102,8 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Add the halo to each block on both sides
         a_range_haloed = a_range.copy()
-        a_range_haloed[...] += a_halo
+        a_range_haloed[1] += block_halo[each_dim]
+        a_range_haloed[0] -= block_halo[each_dim]
 
         # Clip each block to the boundaries
         a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
