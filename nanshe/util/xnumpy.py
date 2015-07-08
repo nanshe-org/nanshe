@@ -2890,162 +2890,162 @@ def blocks_split(space_shape, block_shape, block_halo=None):
             >>> blocks_split(
             ...     (2,), (1,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
-            ([(slice(0, 1, None),), (slice(1, 2, None),)],
+            ([(slice(0, 1, 1),), (slice(1, 2, 1),)],
             <BLANKLINE>
-             [(slice(0, 1, None),), (slice(1, 2, None),)],
+             [(slice(0, 1, 1),), (slice(1, 2, 1),)],
             <BLANKLINE>
-             [(slice(None, None, None),), (slice(None, None, None),)])
+             [(slice(0, 1, 1),), (slice(0, 1, 1),)])
 
             >>> blocks_split(
             ...     (2, 3,), (1, 1,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
-            ([(slice(0, 1, None), slice(0, 1, None)),
-              (slice(0, 1, None), slice(1, 2, None)),
-              (slice(0, 1, None), slice(2, 3, None)),
-              (slice(1, 2, None), slice(0, 1, None)),
-              (slice(1, 2, None), slice(1, 2, None)),
-              (slice(1, 2, None), slice(2, 3, None))],
+            ([(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(1, 2, 1)),
+              (slice(0, 1, 1), slice(2, 3, 1)),
+              (slice(1, 2, 1), slice(0, 1, 1)),
+              (slice(1, 2, 1), slice(1, 2, 1)),
+              (slice(1, 2, 1), slice(2, 3, 1))],
             <BLANKLINE>
-             [(slice(0, 1, None), slice(0, 1, None)),
-              (slice(0, 1, None), slice(1, 2, None)),
-              (slice(0, 1, None), slice(2, 3, None)),
-              (slice(1, 2, None), slice(0, 1, None)),
-              (slice(1, 2, None), slice(1, 2, None)),
-              (slice(1, 2, None), slice(2, 3, None))],
+             [(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(1, 2, 1)),
+              (slice(0, 1, 1), slice(2, 3, 1)),
+              (slice(1, 2, 1), slice(0, 1, 1)),
+              (slice(1, 2, 1), slice(1, 2, 1)),
+              (slice(1, 2, 1), slice(2, 3, 1))],
             <BLANKLINE>
-             [(slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None))])
+             [(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1))])
 
             >>> blocks_split(
             ...     (2, 3,), (1, 1,), (0, 0,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
-            ([(slice(0, 1, None), slice(0, 1, None)),
-              (slice(0, 1, None), slice(1, 2, None)),
-              (slice(0, 1, None), slice(2, 3, None)),
-              (slice(1, 2, None), slice(0, 1, None)),
-              (slice(1, 2, None), slice(1, 2, None)),
-              (slice(1, 2, None), slice(2, 3, None))],
+            ([(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(1, 2, 1)),
+              (slice(0, 1, 1), slice(2, 3, 1)),
+              (slice(1, 2, 1), slice(0, 1, 1)),
+              (slice(1, 2, 1), slice(1, 2, 1)),
+              (slice(1, 2, 1), slice(2, 3, 1))],
             <BLANKLINE>
-             [(slice(0, 1, None), slice(0, 1, None)),
-              (slice(0, 1, None), slice(1, 2, None)),
-              (slice(0, 1, None), slice(2, 3, None)),
-              (slice(1, 2, None), slice(0, 1, None)),
-              (slice(1, 2, None), slice(1, 2, None)),
-              (slice(1, 2, None), slice(2, 3, None))],
+             [(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(1, 2, 1)),
+              (slice(0, 1, 1), slice(2, 3, 1)),
+              (slice(1, 2, 1), slice(0, 1, 1)),
+              (slice(1, 2, 1), slice(1, 2, 1)),
+              (slice(1, 2, 1), slice(2, 3, 1))],
             <BLANKLINE>
-             [(slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None)),
-              (slice(None, None, None), slice(None, None, None))])
+             [(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(0, 1, 1))])
 
             >>> blocks_split(
             ...     (2, 3,), (1, 1,), (1, 1,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
-            ([(slice(0, 1, None), slice(0, 1, None)),
-              (slice(0, 1, None), slice(1, 2, None)),
-              (slice(0, 1, None), slice(2, 3, None)),
-              (slice(1, 2, None), slice(0, 1, None)),
-              (slice(1, 2, None), slice(1, 2, None)),
-              (slice(1, 2, None), slice(2, 3, None))],
+            ([(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(1, 2, 1)),
+              (slice(0, 1, 1), slice(2, 3, 1)),
+              (slice(1, 2, 1), slice(0, 1, 1)),
+              (slice(1, 2, 1), slice(1, 2, 1)),
+              (slice(1, 2, 1), slice(2, 3, 1))],
             <BLANKLINE>
-             [(slice(0, 2, None), slice(0, 2, None)),
-              (slice(0, 2, None), slice(0, 3, None)),
-              (slice(0, 2, None), slice(1, 3, None)),
-              (slice(0, 2, None), slice(0, 2, None)),
-              (slice(0, 2, None), slice(0, 3, None)),
-              (slice(0, 2, None), slice(1, 3, None))],
+             [(slice(0, 2, 1), slice(0, 2, 1)),
+              (slice(0, 2, 1), slice(0, 3, 1)),
+              (slice(0, 2, 1), slice(1, 3, 1)),
+              (slice(0, 2, 1), slice(0, 2, 1)),
+              (slice(0, 2, 1), slice(0, 3, 1)),
+              (slice(0, 2, 1), slice(1, 3, 1))],
             <BLANKLINE>
-             [(slice(None, -1, None), slice(None, -1, None)),
-              (slice(None, -1, None), slice(1, -1, None)),
-              (slice(None, -1, None), slice(1, None, None)),
-              (slice(1, None, None), slice(None, -1, None)),
-              (slice(1, None, None), slice(1, -1, None)),
-              (slice(1, None, None), slice(1, None, None))])
+             [(slice(0, 1, 1), slice(0, 1, 1)),
+              (slice(0, 1, 1), slice(1, 2, 1)),
+              (slice(0, 1, 1), slice(1, 2, 1)),
+              (slice(1, 2, 1), slice(0, 1, 1)),
+              (slice(1, 2, 1), slice(1, 2, 1)),
+              (slice(1, 2, 1), slice(1, 2, 1))])
 
 
             >>> blocks_split(
             ...     (10, 12,), (3, 2,), (4, 3,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
-            ([(slice(0, 3, None), slice(0, 2, None)),
-              (slice(0, 3, None), slice(2, 4, None)),
-              (slice(0, 3, None), slice(4, 6, None)),
-              (slice(0, 3, None), slice(6, 8, None)),
-              (slice(0, 3, None), slice(8, 10, None)),
-              (slice(0, 3, None), slice(10, 12, None)),
-              (slice(3, 6, None), slice(0, 2, None)),
-              (slice(3, 6, None), slice(2, 4, None)),
-              (slice(3, 6, None), slice(4, 6, None)),
-              (slice(3, 6, None), slice(6, 8, None)),
-              (slice(3, 6, None), slice(8, 10, None)),
-              (slice(3, 6, None), slice(10, 12, None)),
-              (slice(6, 9, None), slice(0, 2, None)),
-              (slice(6, 9, None), slice(2, 4, None)),
-              (slice(6, 9, None), slice(4, 6, None)),
-              (slice(6, 9, None), slice(6, 8, None)),
-              (slice(6, 9, None), slice(8, 10, None)),
-              (slice(6, 9, None), slice(10, 12, None)),
-              (slice(9, 12, None), slice(0, 2, None)),
-              (slice(9, 12, None), slice(2, 4, None)),
-              (slice(9, 12, None), slice(4, 6, None)),
-              (slice(9, 12, None), slice(6, 8, None)),
-              (slice(9, 12, None), slice(8, 10, None)),
-              (slice(9, 12, None), slice(10, 12, None))],
+            ([(slice(0, 3, 1), slice(0, 2, 1)),
+              (slice(0, 3, 1), slice(2, 4, 1)),
+              (slice(0, 3, 1), slice(4, 6, 1)),
+              (slice(0, 3, 1), slice(6, 8, 1)),
+              (slice(0, 3, 1), slice(8, 10, 1)),
+              (slice(0, 3, 1), slice(10, 12, 1)),
+              (slice(3, 6, 1), slice(0, 2, 1)),
+              (slice(3, 6, 1), slice(2, 4, 1)),
+              (slice(3, 6, 1), slice(4, 6, 1)),
+              (slice(3, 6, 1), slice(6, 8, 1)),
+              (slice(3, 6, 1), slice(8, 10, 1)),
+              (slice(3, 6, 1), slice(10, 12, 1)),
+              (slice(6, 9, 1), slice(0, 2, 1)),
+              (slice(6, 9, 1), slice(2, 4, 1)),
+              (slice(6, 9, 1), slice(4, 6, 1)),
+              (slice(6, 9, 1), slice(6, 8, 1)),
+              (slice(6, 9, 1), slice(8, 10, 1)),
+              (slice(6, 9, 1), slice(10, 12, 1)),
+              (slice(9, 12, 1), slice(0, 2, 1)),
+              (slice(9, 12, 1), slice(2, 4, 1)),
+              (slice(9, 12, 1), slice(4, 6, 1)),
+              (slice(9, 12, 1), slice(6, 8, 1)),
+              (slice(9, 12, 1), slice(8, 10, 1)),
+              (slice(9, 12, 1), slice(10, 12, 1))],
             <BLANKLINE>
-             [(slice(0, 7, None), slice(0, 5, None)),
-              (slice(0, 7, None), slice(0, 7, None)),
-              (slice(0, 7, None), slice(1, 9, None)),
-              (slice(0, 7, None), slice(3, 11, None)),
-              (slice(0, 7, None), slice(5, 12, None)),
-              (slice(0, 7, None), slice(7, 12, None)),
-              (slice(0, 10, None), slice(0, 5, None)),
-              (slice(0, 10, None), slice(0, 7, None)),
-              (slice(0, 10, None), slice(1, 9, None)),
-              (slice(0, 10, None), slice(3, 11, None)),
-              (slice(0, 10, None), slice(5, 12, None)),
-              (slice(0, 10, None), slice(7, 12, None)),
-              (slice(2, 10, None), slice(0, 5, None)),
-              (slice(2, 10, None), slice(0, 7, None)),
-              (slice(2, 10, None), slice(1, 9, None)),
-              (slice(2, 10, None), slice(3, 11, None)),
-              (slice(2, 10, None), slice(5, 12, None)),
-              (slice(2, 10, None), slice(7, 12, None)),
-              (slice(5, 10, None), slice(0, 5, None)),
-              (slice(5, 10, None), slice(0, 7, None)),
-              (slice(5, 10, None), slice(1, 9, None)),
-              (slice(5, 10, None), slice(3, 11, None)),
-              (slice(5, 10, None), slice(5, 12, None)),
-              (slice(5, 10, None), slice(7, 12, None))],
+             [(slice(0, 7, 1), slice(0, 5, 1)),
+              (slice(0, 7, 1), slice(0, 7, 1)),
+              (slice(0, 7, 1), slice(1, 9, 1)),
+              (slice(0, 7, 1), slice(3, 11, 1)),
+              (slice(0, 7, 1), slice(5, 12, 1)),
+              (slice(0, 7, 1), slice(7, 12, 1)),
+              (slice(0, 10, 1), slice(0, 5, 1)),
+              (slice(0, 10, 1), slice(0, 7, 1)),
+              (slice(0, 10, 1), slice(1, 9, 1)),
+              (slice(0, 10, 1), slice(3, 11, 1)),
+              (slice(0, 10, 1), slice(5, 12, 1)),
+              (slice(0, 10, 1), slice(7, 12, 1)),
+              (slice(2, 10, 1), slice(0, 5, 1)),
+              (slice(2, 10, 1), slice(0, 7, 1)),
+              (slice(2, 10, 1), slice(1, 9, 1)),
+              (slice(2, 10, 1), slice(3, 11, 1)),
+              (slice(2, 10, 1), slice(5, 12, 1)),
+              (slice(2, 10, 1), slice(7, 12, 1)),
+              (slice(5, 10, 1), slice(0, 5, 1)),
+              (slice(5, 10, 1), slice(0, 7, 1)),
+              (slice(5, 10, 1), slice(1, 9, 1)),
+              (slice(5, 10, 1), slice(3, 11, 1)),
+              (slice(5, 10, 1), slice(5, 12, 1)),
+              (slice(5, 10, 1), slice(7, 12, 1))],
             <BLANKLINE>
-             [(slice(None, -4, None), slice(None, -3, None)),
-              (slice(None, -4, None), slice(2, -3, None)),
-              (slice(None, -4, None), slice(3, -3, None)),
-              (slice(None, -4, None), slice(3, -3, None)),
-              (slice(None, -4, None), slice(3, -2, None)),
-              (slice(None, -4, None), slice(3, None, None)),
-              (slice(3, -4, None), slice(None, -3, None)),
-              (slice(3, -4, None), slice(2, -3, None)),
-              (slice(3, -4, None), slice(3, -3, None)),
-              (slice(3, -4, None), slice(3, -3, None)),
-              (slice(3, -4, None), slice(3, -2, None)),
-              (slice(3, -4, None), slice(3, None, None)),
-              (slice(4, -1, None), slice(None, -3, None)),
-              (slice(4, -1, None), slice(2, -3, None)),
-              (slice(4, -1, None), slice(3, -3, None)),
-              (slice(4, -1, None), slice(3, -3, None)),
-              (slice(4, -1, None), slice(3, -2, None)),
-              (slice(4, -1, None), slice(3, None, None)),
-              (slice(4, 2, None), slice(None, -3, None)),
-              (slice(4, 2, None), slice(2, -3, None)),
-              (slice(4, 2, None), slice(3, -3, None)),
-              (slice(4, 2, None), slice(3, -3, None)),
-              (slice(4, 2, None), slice(3, -2, None)),
-              (slice(4, 2, None), slice(3, None, None))])
+              [(slice(0, 3, 1), slice(0, 2, 1)),
+               (slice(0, 3, 1), slice(2, 4, 1)),
+               (slice(0, 3, 1), slice(3, 5, 1)),
+               (slice(0, 3, 1), slice(3, 5, 1)),
+               (slice(0, 3, 1), slice(3, 5, 1)),
+               (slice(0, 3, 1), slice(3, 5, 1)),
+               (slice(3, 6, 1), slice(0, 2, 1)),
+               (slice(3, 6, 1), slice(2, 4, 1)),
+               (slice(3, 6, 1), slice(3, 5, 1)),
+               (slice(3, 6, 1), slice(3, 5, 1)),
+               (slice(3, 6, 1), slice(3, 5, 1)),
+               (slice(3, 6, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(0, 2, 1)),
+               (slice(4, 7, 1), slice(2, 4, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(0, 2, 1)),
+               (slice(4, 7, 1), slice(2, 4, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1)),
+               (slice(4, 7, 1), slice(3, 5, 1))])
 
     """
 
@@ -3087,7 +3087,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
     ranges_per_dim = []
     haloed_ranges_per_dim = []
-    halos_per_dim = []
+    trimmed_halos_per_dim = []
 
     for each_dim in xrange(len(space_shape)):
         # Construct each block using the block size given. Allow to spill over.
@@ -3095,47 +3095,43 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_range = expand_view(a_range, reps_before=2).copy()
         a_range[1] += block_shape[each_dim]
 
-        # Find the halo for each block
-        a_halo = numpy.empty_like(a_range)
-        a_halo[...] = block_halo[each_dim]
-        numpy.negative(a_halo[0], out=a_halo[0])
-
         # Add the halo to each block on both sides
         a_range_haloed = a_range.copy()
-        a_range_haloed[...] += a_halo
+        a_range_haloed[1] += block_halo[each_dim]
+        a_range_haloed[0] -= block_halo[each_dim]
+        a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
 
         # Clip each block to the boundaries
-        a_range_haloed_unclipped = a_range_haloed.copy()
-        a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
-        a_halo[...] += a_range_haloed - a_range_haloed_unclipped
-        numpy.negative(a_halo, out=a_halo)
+        a_trimmed_halo = numpy.empty_like(a_range)
+        a_trimmed_halo[...] = a_range - a_range_haloed[0]
 
+        # Transpose to allow for iteration over each block's dimension
         a_range = a_range.T.copy()
         a_range_haloed = a_range_haloed.T.copy()
-        a_halo = a_halo.T.copy()
+        a_trimmed_halo = a_trimmed_halo.T.copy()
 
         # Convert all ranges to slices for easier use.
-        a_range = [slice(*a_range[i]) for i in xrange(len(a_range))]
-        a_range_haloed = [
+        a_range = iters.reformat_slices([
+            slice(*a_range[i]) for i in xrange(len(a_range))
+        ])
+        a_range_haloed = iters.reformat_slices([
             slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))
-        ]
-        a_halo = [
-            slice(*map(
-                lambda _: _ if _ != 0 else None, a_halo[i]
-            )) for i in xrange(len(a_halo))
-        ]
+        ])
+        a_trimmed_halo = iters.reformat_slices([
+            slice(*a_trimmed_halo[i]) for i in xrange(len(a_trimmed_halo))
+        ])
 
         # Collect all blocks
         ranges_per_dim.append(a_range)
         haloed_ranges_per_dim.append(a_range_haloed)
-        halos_per_dim.append(a_halo)
+        trimmed_halos_per_dim.append(a_trimmed_halo)
 
     # Take all combinations of all ranges to get blocks.
     blocks = list(itertools.product(*ranges_per_dim))
     haloed_blocks = list(itertools.product(*haloed_ranges_per_dim))
-    halos = list(itertools.product(*halos_per_dim))
+    trimmed_halos = list(itertools.product(*trimmed_halos_per_dim))
 
-    return(blocks, haloed_blocks, halos)
+    return(blocks, haloed_blocks, trimmed_halos)
 
 
 @prof.log_call(trace_logger)
