@@ -3118,9 +3118,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
             slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))
         ]
         a_halo = [
-            slice(*map(
-                lambda _: _ if _ != 0 else None, a_halo[i]
-            )) for i in xrange(len(a_halo))
+            slice(*a_halo[i]) for i in xrange(len(a_halo))
         ]
 
         # Collect all blocks
