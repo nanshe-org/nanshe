@@ -3099,9 +3099,9 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_range_haloed = a_range.copy()
         a_range_haloed[1] += block_halo[each_dim]
         a_range_haloed[0] -= block_halo[each_dim]
+        a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
 
         # Clip each block to the boundaries
-        a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
         a_trimmed_halo = numpy.empty_like(a_range)
         a_trimmed_halo[...] = a_range - a_range_haloed[0]
 
