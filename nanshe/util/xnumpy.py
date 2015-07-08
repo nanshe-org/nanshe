@@ -3087,7 +3087,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
     ranges_per_dim = []
     haloed_ranges_per_dim = []
-    halos_per_dim = []
+    trimmed_halos_per_dim = []
 
     for each_dim in xrange(len(space_shape)):
         # Construct each block using the block size given. Allow to spill over.
@@ -3102,33 +3102,33 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Clip each block to the boundaries
         a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
-        a_halo = numpy.empty_like(a_range)
-        a_halo[...] = a_range - a_range_haloed[0]
+        a_trimmed_halo = numpy.empty_like(a_range)
+        a_trimmed_halo[...] = a_range - a_range_haloed[0]
 
         a_range = a_range.T.copy()
         a_range_haloed = a_range_haloed.T.copy()
-        a_halo = a_halo.T.copy()
+        a_trimmed_halo = a_trimmed_halo.T.copy()
 
         # Convert all ranges to slices for easier use.
         a_range = [slice(*a_range[i]) for i in xrange(len(a_range))]
         a_range_haloed = [
             slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))
         ]
-        a_halo = [
-            slice(*a_halo[i]) for i in xrange(len(a_halo))
+        a_trimmed_halo = [
+            slice(*a_trimmed_halo[i]) for i in xrange(len(a_trimmed_halo))
         ]
 
         # Collect all blocks
         ranges_per_dim.append(a_range)
         haloed_ranges_per_dim.append(a_range_haloed)
-        halos_per_dim.append(a_halo)
+        trimmed_halos_per_dim.append(a_trimmed_halo)
 
     # Take all combinations of all ranges to get blocks.
     blocks = list(itertools.product(*ranges_per_dim))
     haloed_blocks = list(itertools.product(*haloed_ranges_per_dim))
-    halos = list(itertools.product(*halos_per_dim))
+    trimmed_halos = list(itertools.product(*trimmed_halos_per_dim))
 
-    return(blocks, haloed_blocks, halos)
+    return(blocks, haloed_blocks, trimmed_halos)
 
 
 @prof.log_call(trace_logger)
