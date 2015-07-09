@@ -112,6 +112,12 @@ elif sys.argv[1] == "clean":
     else:
         print("'build/sphinx/doctrees' does not exist -- can't clean it")
 
+    if os.path.exists(".eggs"):
+        print("removing '.eggs'")
+        shutil.rmtree(".eggs")
+    else:
+        print("'.eggs' does not exist -- can't clean it")
+
     if (len(sys.argv) > 2) and (sys.argv[2] in ["-a", "--all"]):
         if os.path.exists("build/sphinx"):
             print("removing 'build/sphinx'")
