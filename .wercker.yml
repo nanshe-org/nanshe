@@ -50,3 +50,11 @@ build:
             code: |-
                 python setup.py build_sphinx
                 docstring-coverage nanshe | tee .docstring-coverage
+
+    after-steps:
+        - wercker/email-notify:
+            from: alerts@wercker.com
+            to: 1b272456faebfb92cd14d6e8757f7ff9940fa85d50836f4a67f39b08fba54d80@apps.kato.im
+            username: $USER
+            password: $PASS
+            host: smtp.gmail.com:587
