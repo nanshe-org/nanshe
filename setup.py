@@ -124,6 +124,13 @@ elif sys.argv[1] == "clean":
             shutil.rmtree("build/sphinx")
         else:
             print("'build/sphinx' does not exist -- can't clean it")
+elif sys.argv[1] == "develop":
+    if (len(sys.argv) > 2) and (sys.argv[2] in ["-u", "--uninstall"]):
+        if os.path.exists("nanshe.egg-info"):
+            print("removing 'nanshe.egg-info'")
+            shutil.rmtree("nanshe.egg-info")
+        else:
+            print("'nanshe.egg-info' does not exist -- can't clean it")
 
 setup(
     name="nanshe",
