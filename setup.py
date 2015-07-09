@@ -93,7 +93,6 @@ elif sys.argv[1] == "build_sphinx":
         if sys.argv[build_arg_index + 1] == "pdf":
             sphinx_build_pdf = True
             sys.argv[build_arg_index + 1] = "latex"
-
 elif sys.argv[1] == "clean":
     saved_rst_files = ["docs/index.rst", "docs/readme.rst", "docs/todo.rst"]
 
@@ -113,12 +112,25 @@ elif sys.argv[1] == "clean":
     else:
         print("'build/sphinx/doctrees' does not exist -- can't clean it")
 
+    if os.path.exists(".eggs"):
+        print("removing '.eggs'")
+        shutil.rmtree(".eggs")
+    else:
+        print("'.eggs' does not exist -- can't clean it")
+
     if (len(sys.argv) > 2) and (sys.argv[2] in ["-a", "--all"]):
         if os.path.exists("build/sphinx"):
             print("removing 'build/sphinx'")
             shutil.rmtree("build/sphinx")
         else:
             print("'build/sphinx' does not exist -- can't clean it")
+elif sys.argv[1] == "develop":
+    if (len(sys.argv) > 2) and (sys.argv[2] in ["-u", "--uninstall"]):
+        if os.path.exists("nanshe.egg-info"):
+            print("removing 'nanshe.egg-info'")
+            shutil.rmtree("nanshe.egg-info")
+        else:
+            print("'nanshe.egg-info' does not exist -- can't clean it")
 
 setup(
     name="nanshe",
