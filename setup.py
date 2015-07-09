@@ -93,7 +93,6 @@ elif sys.argv[1] == "build_sphinx":
         if sys.argv[build_arg_index + 1] == "pdf":
             sphinx_build_pdf = True
             sys.argv[build_arg_index + 1] = "latex"
-
 elif sys.argv[1] == "clean":
     saved_rst_files = ["docs/index.rst", "docs/readme.rst", "docs/todo.rst"]
 
