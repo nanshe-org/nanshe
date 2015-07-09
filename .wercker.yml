@@ -4,7 +4,7 @@ build:
         - script:
             name: Build Conda Package.
             code: |-
-                conda config --add channels http://conda.binstar.org/jakirkham
+                conda config --add channels http://conda.anaconda.org/jakirkham
                 conda config --set show_channel_urls True
                 source activate root
                 conda update -y --all
