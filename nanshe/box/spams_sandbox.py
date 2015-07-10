@@ -171,8 +171,8 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
     import spams
 
     as_ordered_array_dict = {
-        "F_CONTIGUOUS" : numpy.asfortranarray,
-        "C_CONTIGUOUS" : numpy.ascontiguousarray
+        "F_CONTIGUOUS": numpy.asfortranarray,
+        "C_CONTIGUOUS": numpy.ascontiguousarray
     }
 
     # Construct X from shared array.
