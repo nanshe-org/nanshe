@@ -246,6 +246,15 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     # Just to make sure this exists in the new process. Shouldn't be necessary.
     import numpy
 
+    D_is_arg = False
+    D = None
+    if (len(args) >= 4):
+        D_is_arg = True
+        D = args[4]
+        args[4] = None
+    else:
+        D = kwargs.pop("D", None)
+
     # Types for X_array
     X_array_type = numpy.ctypeslib.ndpointer(
         dtype=X.dtype, ndim=X.ndim, shape=X.shape, flags=X.flags
