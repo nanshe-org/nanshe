@@ -290,9 +290,10 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
         lock=False
     )
 
+    new_args = (result_array_type, result_array, X_array_type, X_array,) + args
     p = multiprocessing.Process(
         target=run_multiprocessing_array_spams_trainDL,
-        args=(result_array_type, result_array, X_array_type, X_array,) + args,
+        args=new_args,
         kwargs=kwargs
     )
     p.start()
