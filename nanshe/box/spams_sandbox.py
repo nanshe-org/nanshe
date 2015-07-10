@@ -117,6 +117,9 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
                                             result_array,
                                             X_array_type,
                                             X_array,
+                                            D_is_arg=False,
+                                            D_array_type=None,
+                                            D_array=None,
                                             *args,
                                             **kwargs):
     """
@@ -186,6 +189,24 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
     for order_name, as_ordered_array in as_ordered_array_dict.items():
         if order_name in X_array_type.__name__:
             X = as_ordered_array(X)
+
+    # Construct D from shared array.
+    if (D_array_type is not None) and (D_array is not None):
+        D_dtype = D_array_type._dtype_
+        D_shape = D_array_type._shape_
+        D_flags = numpy.core.multiarray.flagsobj(D_array_type._flags_)
+
+        D = numpy.frombuffer(D_array, dtype=D_dtype).reshape(D_shape)
+        D.setflags(D_flags)
+
+        for order_name, as_ordered_array in as_ordered_array_dict.items():
+            if order_name in D_array_type.__name__:
+                D = as_ordered_array(D)
+
+        if D_is_arg:
+            args[3] = D
+        else:
+            kwargs["D"] = D
 
     # Construct the result to use the shared buffer.
     result_dtype = result_array_type._dtype_
