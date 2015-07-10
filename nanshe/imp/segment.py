@@ -809,7 +809,7 @@ def generate_dictionary(new_data, **parameters):
     # Need to look into generating the sparse code given the dictionary,
     # spams.nmf? (may be too slow))
     new_dictionary = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
-        new_data_processed,
+        X=new_data_processed,
         **parameters["spams.trainDL"]
     )
 
