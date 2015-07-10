@@ -175,7 +175,6 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
         "C_CONTIGUOUS" : numpy.ascontiguousarray
     }
 
-
     # Construct X from shared array.
     X_dtype = X_array_type._dtype_
     X_shape = X_array_type._shape_
@@ -201,7 +200,6 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
     for order_name, as_ordered_array in as_ordered_array_dict.items():
         if order_name in result_array_type.__name__:
             result = as_ordered_array(result)
-
 
     result[:] = spams.trainDL(X, *args, **kwargs)
 
@@ -248,7 +246,6 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     # Just to make sure this exists in the new process. Shouldn't be necessary.
     import numpy
 
-
     # Types for X_array
     X_array_type = numpy.ctypeslib.ndpointer(
         dtype=X.dtype, ndim=X.ndim, shape=X.shape, flags=X.flags
@@ -269,7 +266,6 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     X_array_numpy[:] = X
     X_array_numpy = None
 
-
     # Types for result_array
     result_array_type = numpy.ctypeslib.ndpointer(
         dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], kwargs["K"])
@@ -285,7 +281,6 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
         lock=False
     )
 
-
     p = multiprocessing.Process(
         target=run_multiprocessing_array_spams_trainDL,
         args=(result_array_type, result_array, X_array_type, X_array,) + args,
@@ -297,7 +292,6 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     if p.exitcode != 0: raise SPAMSException(
         "SPAMS has terminated with exitcode \"" + repr(p.exitcode) + "\"."
     )
-
 
     # Reconstruct the result from the output array
     result = numpy.frombuffer(
