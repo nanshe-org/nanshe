@@ -271,8 +271,8 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     D = None
     if (len(args) >= 4):
         D_is_arg = True
-        D = args[4]
-        args[4] = None
+        D = args[3]
+        args[3] = None
     else:
         D = kwargs.pop("D", None)
 
@@ -296,9 +296,33 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     X_array_numpy[:] = X
     X_array_numpy = None
 
+    len_D = kwargs.get("K", None)
+    if D is not None:
+        # Types for D_array
+        D_array_type = numpy.ctypeslib.ndpointer(
+            dtype=D.dtype, ndim=D.ndim, shape=D.shape, flags=D.flags
+        )
+        D_array_ctype = type(
+            numpy.ctypeslib.as_ctypes(D_array_type._dtype_.type(0)[()])
+        )
+
+        # Create a shared array to contain D
+        D_array = multiprocessing.Array(D_array_ctype,
+                                        D.size,
+                                        lock=False)
+
+        # Copy over the contents of D.
+        D_array_numpy = numpy.frombuffer(
+            D_array, dtype=D_array_type._dtype_
+        ).reshape(D_array_type._shape_)
+        D_array_numpy[:] = D
+        D_array_numpy = None
+
+        len_D = D.shape[-1]
+
     # Types for result_array
     result_array_type = numpy.ctypeslib.ndpointer(
-        dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], kwargs["K"])
+        dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], len_D)
     )
     result_array_ctype = type(
         numpy.ctypeslib.as_ctypes(result_array_type._dtype_.type(0)[()])
@@ -311,7 +335,14 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
         lock=False
     )
 
-    new_args = (result_array_type, result_array, X_array_type, X_array,) + args
+    new_args = (
+        result_array_type, result_array,
+        X_array_type, X_array,
+    )
+    if D is not None:
+        new_args = new_args + (
+            D_is_arg, D_array_type, D_array,
+        )
     p = multiprocessing.Process(
         target=run_multiprocessing_array_spams_trainDL,
         args=new_args,
