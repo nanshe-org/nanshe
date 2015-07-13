@@ -853,6 +853,7 @@ class TestSpamsSandbox(object):
             result_array,
             g3_array_type,
             g3_array,
+            False,
             g3_array_type,
             g3_array,
             **{
@@ -1044,7 +1045,7 @@ class TestSpamsSandbox(object):
     def test_call_spams_trainDL_4(self):
         d3 = nanshe.box.spams_sandbox.call_spams_trainDL(
             self.g3.astype(float),
-            self.g3.astype(float),
+            D=self.g3.astype(float),
             **{
                 "gamma2" : 0,
                 "gamma1" : 0,
