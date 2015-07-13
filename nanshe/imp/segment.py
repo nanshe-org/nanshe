@@ -747,7 +747,7 @@ def preprocess_data(new_data, out=None, **parameters):
 
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
-def generate_dictionary(new_data, **parameters):
+def generate_dictionary(new_data, initial_dictionary=None, **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
 
@@ -755,6 +755,9 @@ def generate_dictionary(new_data, **parameters):
             new_data(numpy.ndarray):            array of data for generating a
                                                 dictionary (first axis is
                                                 time).
+
+            initial_dictionary(numpy.ndarray):  dictionary to start the
+                                                algorithm with.
 
             **parameters(dict):                 passed directly to
                                                 spams.trainDL.
@@ -805,11 +808,34 @@ def generate_dictionary(new_data, **parameters):
     # Spams requires all matrices to be fortran.
     new_data_processed = numpy.asfortranarray(new_data_processed)
 
+    # If there is an initial dictionary provided, go ahead and process it.
+    initial_dictionary_processed = initial_dictionary
+    if initial_dictionary_processed is not None:
+        # Go ahead and make the dictionary the same type as the input data.
+        # TODO: Add a warning if it needs to be down cast
+        initial_dictionary_processed = numpy.asarray(
+            initial_dictionary_processed, dtype=float_dtype
+        )
+
+        # Reshape dictionary into a matrix (each image is now a column vector)
+        initial_dictionary_processed = xnumpy.array_to_matrix(
+            initial_dictionary_processed
+        )
+        initial_dictionary_processed = numpy.asmatrix(
+            initial_dictionary_processed
+        )
+        initial_dictionary_processed = initial_dictionary_processed.transpose()
+
+        # Spams requires all matrices to be fortran.
+        initial_dictionary_processed = numpy.asfortranarray(
+            initial_dictionary_processed
+        )
+
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary,
     # spams.nmf? (may be too slow))
     new_dictionary = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
-        new_data_processed,
+        X=new_data_processed, D=initial_dictionary_processed,
         **parameters["spams.trainDL"]
     )
 
@@ -818,7 +844,7 @@ def generate_dictionary(new_data, **parameters):
     new_dictionary = new_dictionary.transpose()
     new_dictionary = numpy.asarray(new_dictionary, dtype=new_data.dtype.type)
     new_dictionary = new_dictionary.reshape(
-        (parameters["spams.trainDL"]["K"],) + new_data.shape[1:]
+        (-1,) + new_data.shape[1:]
     )
 
     return(new_dictionary)

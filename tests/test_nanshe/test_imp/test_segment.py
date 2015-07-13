@@ -882,19 +882,19 @@ class TestSegment(object):
             g.astype(float),
             **{
                 "spams.trainDL" : {
-                "gamma2" : 0,
-                "gamma1" : 0,
-                 "numThreads" : 1,
-                 "K" : len(g),
-                 "iter" : 10,
-                 "modeD" : 0,
-                 "posAlpha" : True,
-                 "clean" : True,
-                 "posD" : True,
-                 "batchsize" : 256,
-                 "lambda1" : 0.2,
-                 "lambda2" : 0,
-                 "mode" : 2
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "K" : len(g),
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
                 }
             }
         )
@@ -1028,6 +1028,228 @@ class TestSegment(object):
         print(unmatched_g)
 
         assert (len(unmatched_g) == 0)
+
+    def test_generate_dictionary_4(self):
+        p = numpy.array([[27, 51],
+                         [66, 85],
+                         [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(numpy.float32),
+            g.astype(numpy.float32),
+            **{
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+        assert (g.astype(bool) == d.astype(bool)).all()
+
+    def test_generate_dictionary_5(self):
+        p = numpy.array([[27, 51],
+                         [66, 85],
+                         [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            g.astype(float),
+            **{
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+        assert (g.astype(bool) == d.astype(bool)).all()
+
+    @nose.plugins.attrib.attr("3D")
+    def test_generate_dictionary_6(self):
+        p = numpy.array([[27, 51, 87],
+                         [66, 85, 55],
+                         [77, 45, 26]])
+
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(numpy.float32),
+            g.astype(numpy.float32),
+            **{
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+        assert (g.astype(bool) == d.astype(bool)).all()
+
+    @nose.plugins.attrib.attr("3D")
+    def test_generate_dictionary_7(self):
+        p = numpy.array([[27, 51, 87],
+                         [66, 85, 55],
+                         [77, 45, 26]])
+
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            g.astype(float),
+            **{
+                "spams.trainDL" : {
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+        assert (g.astype(bool) == d.astype(bool)).all()
 
     def test_generate_local_maxima_vigra_1(self):
         p = numpy.array([[27, 51],
