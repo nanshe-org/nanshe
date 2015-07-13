@@ -882,19 +882,19 @@ class TestSegment(object):
             g.astype(float),
             **{
                 "spams.trainDL" : {
-                "gamma2" : 0,
-                "gamma1" : 0,
-                 "numThreads" : 1,
-                 "K" : len(g),
-                 "iter" : 10,
-                 "modeD" : 0,
-                 "posAlpha" : True,
-                 "clean" : True,
-                 "posD" : True,
-                 "batchsize" : 256,
-                 "lambda1" : 0.2,
-                 "lambda2" : 0,
-                 "mode" : 2
+                    "gamma2" : 0,
+                    "gamma1" : 0,
+                    "numThreads" : 1,
+                    "K" : len(g),
+                    "iter" : 10,
+                    "modeD" : 0,
+                    "posAlpha" : True,
+                    "clean" : True,
+                    "posD" : True,
+                    "batchsize" : 256,
+                    "lambda1" : 0.2,
+                    "lambda2" : 0,
+                    "mode" : 2
                 }
             }
         )
