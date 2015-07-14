@@ -1072,7 +1072,7 @@ def reformat_slice(a_slice, a_length=None):
             True
     """
 
-    assert (a_slice != None), "err"
+    assert (a_slice is not None), "err"
 
     # Fill unknown values.
 
