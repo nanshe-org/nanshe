@@ -1048,7 +1048,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
     else:
         properties = ["area", "centroid"]
 
-    if ((properties == "all") or (properties == None)):
+    if ((properties == "all") or (properties is None)):
         properties = region_properties_type_dict.keys()
 
     intensity_image = None
@@ -1399,7 +1399,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
     else:
         properties = ["area", "centroid"]
 
-    if ((properties == "all") or (properties == None)):
+    if ((properties == "all") or (properties is None)):
         properties = region_properties_type_dict.keys()
 
     intensity_image = None
