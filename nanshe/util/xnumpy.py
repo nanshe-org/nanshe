@@ -2990,12 +2990,12 @@ def blocks_split(space_shape, block_shape, block_halo=None):
               (slice(6, 9, 1), slice(6, 8, 1)),
               (slice(6, 9, 1), slice(8, 10, 1)),
               (slice(6, 9, 1), slice(10, 12, 1)),
-              (slice(9, 12, 1), slice(0, 2, 1)),
-              (slice(9, 12, 1), slice(2, 4, 1)),
-              (slice(9, 12, 1), slice(4, 6, 1)),
-              (slice(9, 12, 1), slice(6, 8, 1)),
-              (slice(9, 12, 1), slice(8, 10, 1)),
-              (slice(9, 12, 1), slice(10, 12, 1))],
+              (slice(9, 10, 1), slice(0, 2, 1)),
+              (slice(9, 10, 1), slice(2, 4, 1)),
+              (slice(9, 10, 1), slice(4, 6, 1)),
+              (slice(9, 10, 1), slice(6, 8, 1)),
+              (slice(9, 10, 1), slice(8, 10, 1)),
+              (slice(9, 10, 1), slice(10, 12, 1))],
             <BLANKLINE>
              [(slice(0, 7, 1), slice(0, 5, 1)),
               (slice(0, 7, 1), slice(0, 7, 1)),
@@ -3095,17 +3095,19 @@ def blocks_split(space_shape, block_shape, block_halo=None):
         a_range = expand_view(a_range, reps_before=2).copy()
         a_range[1] += block_shape[each_dim]
 
-        # Add the halo to each block on both sides
+        # Add the halo to each block on both sides.
         a_range_haloed = a_range.copy()
         a_range_haloed[1] += block_halo[each_dim]
         a_range_haloed[0] -= block_halo[each_dim]
         a_range_haloed.clip(0, space_shape[each_dim], out=a_range_haloed)
 
-        # Clip each block to the boundaries
+        # Compute how to trim the halo off of each block.
+        # Clip each block to the boundaries.
         a_trimmed_halo = numpy.empty_like(a_range)
         a_trimmed_halo[...] = a_range - a_range_haloed[0]
+        a_range.clip(0, space_shape[each_dim], out=a_range)
 
-        # Transpose to allow for iteration over each block's dimension
+        # Transpose to allow for iteration over each block's dimension.
         a_range = a_range.T.copy()
         a_range_haloed = a_range_haloed.T.copy()
         a_trimmed_halo = a_trimmed_halo.T.copy()
