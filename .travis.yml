@@ -16,7 +16,7 @@ install:
    - export PATH="$HOME/miniconda/bin:$PATH"
    - conda config --set always_yes yes
    - conda config --set show_channel_urls True
-   - conda config --add channels http://conda.anaconda.org/jakirkham
+   - conda config --add channels jakirkham
    - source activate root
    # Install basic conda dependencies.
    - conda update --all
