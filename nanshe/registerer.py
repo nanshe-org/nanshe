@@ -132,7 +132,7 @@ def main(*argv):
                 # not stored there.
                 os.remove(result_filename)
                 in_out_dirnames = set(
-                    os.path.dirname(_.filename) for _ in [
+                    os.path.dirname(os.path.abspath(_.filename)) for _ in [
                         input_file, output_file
                     ]
                 )
