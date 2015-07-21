@@ -171,6 +171,51 @@ class TestRegisterer(object):
         assert (b2 == b).all()
 
 
+    def test_main_3a(self):
+        cwd = os.getcwd()
+        os.chdir(self.temp_dirname)
+
+        a = numpy.zeros((20,10,11), dtype=int)
+
+        a[:, 3:-3, 3:-3] = 1
+
+        b = numpy.ma.masked_array(a.copy())
+        b = nanshe.util.xnumpy.truncate_masked_frames(b)
+
+
+        with open(self.config_filename, "a") as config_file:
+            json.dump({}, config_file)
+
+        with h5py.File(self.data_filename, "a") as data_file:
+            data_file["images"] = a
+            data_file["images"].attrs["attr"] = "test"
+
+        self.data_filepath = os.path.relpath(
+            self.data_filename + "/" + "images"
+        )
+        self.result_filepath = os.path.relpath(
+            self.result_filename + "/" + "images"
+        )
+
+        nanshe.registerer.main(
+            nanshe.registerer.__file__,
+            self.config_filename,
+            self.data_filepath,
+            self.result_filepath
+        )
+
+        b2 = None
+        with h5py.File(self.result_filename, "a") as result_file:
+            assert "attr" in result_file["images"].attrs
+            assert "test" == result_file["images"].attrs["attr"]
+
+            b2 = result_file["images"][...]
+
+        os.chdir(cwd)
+
+        assert (b2 == b).all()
+
+
     @nose.plugins.attrib.attr("3D")
     def test_main_0b(self):
         a = numpy.zeros((20,10,11,12), dtype=int)
