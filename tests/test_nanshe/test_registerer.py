@@ -77,6 +77,7 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "images" in result_file
             assert "attr" in result_file["images"].attrs
             assert "test" == result_file["images"].attrs["attr"]
 
@@ -120,6 +121,7 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "images" in result_file
             assert "attr" in result_file["images"].attrs
             assert "test" == result_file["images"].attrs["attr"]
 
@@ -163,6 +165,7 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "images" in result_file
             assert "attr" in result_file["images"].attrs
             assert "test" == result_file["images"].attrs["attr"]
 
@@ -206,6 +209,7 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "images" in result_file
             assert "attr" in result_file["images"].attrs
             assert "test" == result_file["images"].attrs["attr"]
 
@@ -245,6 +249,7 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "images" in result_file
             assert "attr" in result_file["images"].attrs
             assert "test" == result_file["images"].attrs["attr"]
 
@@ -290,6 +295,7 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "images" in result_file
             assert "attr" in result_file["images"].attrs
             assert "test" == result_file["images"].attrs["attr"]
 
@@ -335,6 +341,7 @@ class TestRegisterer(object):
 
         b2 = None
         with h5py.File(self.result_filename, "a") as result_file:
+            assert "images" in result_file
             assert "attr" in result_file["images"].attrs
             assert "test" == result_file["images"].attrs["attr"]
 
