@@ -121,6 +121,13 @@ def main(*argv):
                         name=each_output_filename_components.internalDatasetName
                     )
 
+                    if parsed_args.parameters.get("include_shift", False):
+                        result_file.copy(
+                            "space_shift",
+                            output_file[each_output_filename_components.internalDirectory],
+                            name=each_output_filename_components.internalDatasetName + "_shift"
+                        )
+
                 # Copy all attributes from raw data to the final result.
                 output = output_file[
                     each_output_filename_components.internalDatasetName
