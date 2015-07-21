@@ -456,7 +456,7 @@ def register_mean_offsets(frames2reg,
         else:
             temporaries_file.copy(reg_frames.group, results_file)
         if include_shift:
-            temporaries_file.copy(space_shift, results_file)
+            temporaries_file.copy(space_shift.name, results_file)
         frames2reg_fft = None
         reg_frames = None
         space_shift = None
