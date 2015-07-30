@@ -89,7 +89,7 @@ after_success:
    - if [ -z $TRAVIS_TAG ]; then exit 0 ; fi
    - git checkout $TRAVIS_TAG
    - source activate root
-   - conda install conda-server
+   - conda install anaconda-client
    - cd $HOME/miniconda/conda-bld/
    - conda convert -p osx-64 linux-64/nanshe*
    - conda server -t ${BS_TOKEN} upload linux-64/nanshe*
