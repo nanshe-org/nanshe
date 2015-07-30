@@ -92,8 +92,8 @@ after_success:
    - conda install conda-server
    - cd $HOME/miniconda/conda-bld/
    - conda convert -p osx-64 linux-64/nanshe*
-   - conda-server -t ${BS_TOKEN} upload linux-64/nanshe*
-   - conda-server -t ${BS_TOKEN} upload osx-64/nanshe*
+   - conda server -t ${BS_TOKEN} upload linux-64/nanshe*
+   - conda server -t ${BS_TOKEN} upload osx-64/nanshe*
 notifications:
   email: False
   webhooks: https://api.kato.im/rooms/a17f510ab0bcfd79de90a2f2887718bb86afdb4fcff8b4b87965b2bdf0c40ed/travis
