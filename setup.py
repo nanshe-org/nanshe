@@ -11,6 +11,7 @@ import shutil
 import sys
 
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
 
 import versioneer
 
@@ -20,6 +21,16 @@ versioneer.versionfile_source = "nanshe/_version.py"
 versioneer.versionfile_build = None
 versioneer.tag_prefix = "v"
 versioneer.parentdir_prefix = "nanshe-"
+
+class NoseTestCommand(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import nose
+        nose.run_exit(argv=['nosetests'])
 
 build_requires = []
 install_requires = []
@@ -139,7 +150,10 @@ setup(
     scripts=glob("bin/*"),
     py_modules=["versioneer"],
     packages=find_packages(exclude=["tests*"]),
-    cmdclass=versioneer.get_cmdclass(),
+    cmdclass=dict(sum([_.items() for _ in [
+        versioneer.get_cmdclass(),
+        {"test": NoseTestCommand}
+    ]], [])),
     build_requires=build_requires,
     install_requires=install_requires,
     tests_require=tests_require,
