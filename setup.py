@@ -69,10 +69,6 @@ elif sys.argv[1] == "bdist_conda":
         "pyqt",
         "volumina"
     ]
-
-    tests_require = [
-        "nose"
-    ]
 elif sys.argv[1] == "build_sphinx":
     import sphinx.apidoc
 
