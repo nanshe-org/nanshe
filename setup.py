@@ -23,6 +23,9 @@ versioneer.tag_prefix = "v"
 versioneer.parentdir_prefix = "nanshe-"
 
 class NoseTestCommand(TestCommand):
+    description = "Run unit tests using nosetests"
+    user_options = []
+
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_args = []
