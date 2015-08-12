@@ -23,7 +23,7 @@ versioneer.parentdir_prefix = "nanshe-"
 
 build_requires = []
 install_requires = []
-tests_require = []
+tests_require = ["nose"]
 sphinx_build_pdf = False
 if len(sys.argv) == 1:
     pass
