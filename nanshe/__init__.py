@@ -111,6 +111,13 @@ need only replace ``setup.cfg`` with ``setup.all.cfg``.
 
     python setup.py nosetests
 
+Also, the typical `test` subcommand can be used to run `nosetests`, but no
+other arguments are allowed.
+
+.. code-block:: sh
+
+    python setup.py test
+
 -------------------------------------------------------------------------------
  Documentation
 -------------------------------------------------------------------------------

@@ -11,6 +11,8 @@ import shutil
 import sys
 
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
+
 import versioneer
 
 
@@ -20,9 +22,22 @@ versioneer.versionfile_build = None
 versioneer.tag_prefix = "v"
 versioneer.parentdir_prefix = "nanshe-"
 
+class NoseTestCommand(TestCommand):
+    description = "Run unit tests using nosetests"
+    user_options = []
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import nose
+        nose.run_exit(argv=['nosetests'])
+
 build_requires = []
 install_requires = []
-tests_require = []
+tests_require = ["nose"]
 sphinx_build_pdf = False
 if len(sys.argv) == 1:
     pass
@@ -67,11 +82,6 @@ elif sys.argv[1] == "bdist_conda":
         "rank_filter",
         "pyqt",
         "volumina"
-    ]
-
-    tests_require = [
-        "openblas",
-        "nose"
     ]
 elif sys.argv[1] == "build_sphinx":
     import sphinx.apidoc
@@ -143,7 +153,10 @@ setup(
     scripts=glob("bin/*"),
     py_modules=["versioneer"],
     packages=find_packages(exclude=["tests*"]),
-    cmdclass=versioneer.get_cmdclass(),
+    cmdclass=dict(sum([_.items() for _ in [
+        versioneer.get_cmdclass(),
+        {"test": NoseTestCommand}
+    ]], [])),
     build_requires=build_requires,
     install_requires=install_requires,
     tests_require=tests_require,
