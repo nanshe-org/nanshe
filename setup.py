@@ -71,7 +71,6 @@ elif sys.argv[1] == "bdist_conda":
     ]
 
     tests_require = [
-        "openblas",
         "nose"
     ]
 elif sys.argv[1] == "build_sphinx":
