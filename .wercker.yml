@@ -2,6 +2,11 @@ box: jakirkham/centos_drmaa_conda
 build:
     steps:
         - script:
+            name: Ensure clean repo.
+            code: |-
+                git diff
+
+        - script:
             name: Build Conda Package.
             code: |-
                 conda config --add channels jakirkham
