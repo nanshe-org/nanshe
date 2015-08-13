@@ -133,14 +133,27 @@ File nanshe/converter.py
 
 File nanshe/_version.py
  - No module dostring!
+ - No docstring for get_keywords!
+ - No docstring for VersioneerConfig!
+ - No docstring for get_config!
+ - No docstring for NotThisMethod!
+ - No docstring for register_vcs_handler!
+ - No docstring for register_vcs_handler.decorate!
  - No docstring for run_command!
  - No docstring for versions_from_parentdir!
  - No docstring for git_get_keywords!
  - No docstring for git_versions_from_keywords!
- - No docstring for git_parse_vcs_describe!
- - No docstring for git_versions_from_vcs!
+ - No docstring for git_pieces_from_vcs!
+ - No docstring for plus_or_dot!
+ - No docstring for render_pep440!
+ - No docstring for render_pep440_pre!
+ - No docstring for render_pep440_post!
+ - No docstring for render_pep440_old!
+ - No docstring for render_git_describe!
+ - No docstring for render_git_describe_long!
+ - No docstring for render!
  - No docstring for get_versions!
- Needed: 8; Exist: 0; Missing: 8; Coverage: 0.0%
+ Needed: 21; Exist: 0; Missing: 21; Coverage: 0.0%
 
 File nanshe/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -321,5 +334,5 @@ File nanshe/box/__init__.py
 
 
 Overall statistics for 35 files:
-Docstrings needed: 506; Docstrings exist: 291; Docstrings missing: 215
-Total docstring coverage: 57.5%;  Grade: not so bad
+Docstrings needed: 519; Docstrings exist: 291; Docstrings missing: 228
+Total docstring coverage: 56.1%;  Grade: not so bad
