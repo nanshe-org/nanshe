@@ -16,12 +16,6 @@ from setuptools.command.test import test as TestCommand
 import versioneer
 
 
-versioneer.VCS = "git"
-versioneer.versionfile_source = "nanshe/_version.py"
-versioneer.versionfile_build = None
-versioneer.tag_prefix = "v"
-versioneer.parentdir_prefix = "nanshe-"
-
 class NoseTestCommand(TestCommand):
     description = "Run unit tests using nosetests"
     user_options = []
