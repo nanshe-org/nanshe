@@ -4,7 +4,7 @@ build:
         - script:
             name: Ensure clean repo.
             code: |-
-                git diff
+                git update-index -q --refresh
 
         - script:
             name: Build Conda Package.
