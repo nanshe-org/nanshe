@@ -72,7 +72,7 @@ def main(*argv):
     parser.add_argument("input_filenames",
                         metavar="INPUT_FILE",
                         type=str,
-                        nargs="+",
+                        nargs=1,
                         help="HDF5 file to import (this should include a " +
                              "path to where the internal dataset should be " +
                              "stored)."
