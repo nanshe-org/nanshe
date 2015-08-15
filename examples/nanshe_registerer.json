@@ -1,4 +1,6 @@
 {
-    "max_iters" : -1,               "__comment__max_iters" :             "Number of iterations to do before stopping. -1 means no limit. Default is -1.",
-    "block_frame_length" : -1,      "__comment__block_frame_length" :    "Number frames to process in memory at a time. -1 means all of the frames. Default is -1."
+    "max_iters" : 10,               "__comment__max_iters" :             "Number of iterations to do before stopping. -1 means no limit. Default is -1.",
+    "block_frame_length" : 500,     "__comment__block_frame_length" :    "Number frames to process in memory at a time. -1 means all of the frames. Default is -1.",
+    "include_shift" : true,         "__comment__include_shift" :         "Whether to export the shifts used, as well. Default is False.",
+    "float_type" : "float32",       "__comment__float_type" :            "Type of float to use during computations. Default is float64."
 }
