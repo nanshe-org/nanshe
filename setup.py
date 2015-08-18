@@ -27,7 +27,7 @@ class NoseTestCommand(TestCommand):
 
     def run_tests(self):
         import nose
-        nose.run_exit(argv=['nosetests'])
+        nose.run_exit(argv=["nosetests"])
 
 build_requires = []
 install_requires = []
