@@ -31,8 +31,6 @@ import numpy
 import h5py
 
 import libtiff
-import PIL
-import PIL.Image
 
 import vigra
 import vigra.impex
