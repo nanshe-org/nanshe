@@ -290,10 +290,27 @@ def convert_tiffs(new_tiff_filenames,
         new_hdf5_dataset_offsets.append(new_hdf5_dataset_shape[axis])
 
         # Extract the descriptions.
-        with PIL.Image.open(each_new_tiff_filename) as each_new_tiff_file:
-            new_hdf5_dataset_descriptions.append(
-                each_new_tiff_file.tag.get(270, u"")
-            )
+        each_new_tiff_file = None
+        try:
+            each_new_tiff_file = libtiff.TiffFile(each_new_tiff_filename, 'r')
+
+            for i in xrange(each_new_tiff_file.get_depth()):
+                metadata_i = each_new_tiff_file.IFD[i].entries_dict
+
+                desc_i = u""
+                try:
+                    desc_i = unicode(metadata_i["ImageDescription"].human())
+                except KeyError:
+                    pass
+
+                new_hdf5_dataset_descriptions.append(
+                    desc_i
+                )
+        finally:
+            if each_new_tiff_file:
+                each_new_tiff_file.close()
+
+            each_new_tiff_file = None
 
         # Get the shape and type of each frame.
         each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(
