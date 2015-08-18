@@ -114,7 +114,7 @@ class TestXTiff(object):
         assert len(offsets) == len(self.offsets)
         assert numpy.equal(offsets, self.offsets).all()
 
-        assert len(descriptions) == len(self.filedata)
+        assert len(descriptions) == len(self.data)
         assert all(_ == u"" for _ in descriptions)
 
         assert (data == self_data_h5).all()
