@@ -371,9 +371,9 @@ def convert_tiffs(new_tiff_filenames,
         new_hdf5_dataset.attrs["offsets"] = new_hdf5_dataset_offsets
         # Workaround required due to this issue
         # ( https://github.com/h5py/h5py/issues/289 ).
-        new_hdf5_dataset.attrs.create(
-            "descriptions",
-            new_hdf5_dataset_descriptions,
+        new_hdf5_descriptions_dataset = new_hdf5_group.create_dataset(
+            "_".join([new_hdf5_dataset_name, "descriptions"]),
+            shape=(len(new_hdf5_dataset_descriptions),),
             dtype=h5py.special_dtype(vlen=unicode)
         )
 
