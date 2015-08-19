@@ -351,10 +351,10 @@ def convert_tiffs(new_tiff_filenames,
             shape=new_hdf5_dataset_shape[0:1],
             dtype=h5py.special_dtype(vlen=unicode)
         )
-        new_hdf5_dataset.attrs["descriptions"] = '/'.join([
-            new_hdf5_descriptions_dataset.file.filename,
+        new_hdf5_dataset.attrs["descriptions"] = (
+            new_hdf5_descriptions_dataset.file.filename +
             new_hdf5_descriptions_dataset.name
-        ])
+        )
 
         new_hdf5_dataset_axis_pos = 0
         for each_new_tiff_filename in new_tiff_filenames:
