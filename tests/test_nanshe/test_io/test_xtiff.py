@@ -100,6 +100,7 @@ class TestXTiff(object):
             filenames = hdf5_handle["data"].attrs["filenames"]
             offsets = hdf5_handle["data"].attrs["offsets"]
             descriptions = hdf5_handle["data"].attrs["descriptions"]
+            descriptions = hdf5_handle[descriptions.split(".h5/")[-1]][...]
 
             data = hdf5_handle["data"].value
 
