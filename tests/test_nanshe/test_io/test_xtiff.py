@@ -100,6 +100,7 @@ class TestXTiff(object):
             filenames = hdf5_handle["data"].attrs["filenames"]
             offsets = hdf5_handle["data"].attrs["offsets"]
             descriptions = hdf5_handle["data"].attrs["descriptions"]
+            descriptions = hdf5_handle[descriptions.split(".h5/")[-1]][...]
 
             data = hdf5_handle["data"].value
 
@@ -114,7 +115,7 @@ class TestXTiff(object):
         assert len(offsets) == len(self.offsets)
         assert numpy.equal(offsets, self.offsets).all()
 
-        assert len(descriptions) == len(self.filedata)
+        assert len(descriptions) == len(self.data)
         assert all(_ == u"" for _ in descriptions)
 
         assert (data == self_data_h5).all()
