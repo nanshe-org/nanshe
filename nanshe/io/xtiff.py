@@ -274,7 +274,6 @@ def convert_tiffs(new_tiff_filenames,
     # Extract the offset and descriptions for storage.
     new_hdf5_dataset_filenames = list()
     new_hdf5_dataset_offsets = list()
-    new_hdf5_dataset_descriptions = list()
 
     # Determine the shape and dtype to use for the dataset (so that everything
     # will fit).
@@ -286,29 +285,6 @@ def convert_tiffs(new_tiff_filenames,
 
         # Get all of the offsets.
         new_hdf5_dataset_offsets.append(new_hdf5_dataset_shape[axis])
-
-        # Extract the descriptions.
-        each_new_tiff_file = None
-        try:
-            each_new_tiff_file = libtiff.TiffFile(each_new_tiff_filename, 'r')
-
-            for i in xrange(each_new_tiff_file.get_depth()):
-                metadata_i = each_new_tiff_file.IFD[i].entries_dict
-
-                desc_i = u""
-                try:
-                    desc_i = unicode(metadata_i["ImageDescription"].human())
-                except KeyError:
-                    pass
-
-                new_hdf5_dataset_descriptions.append(
-                    desc_i
-                )
-        finally:
-            if each_new_tiff_file:
-                each_new_tiff_file.close()
-
-            each_new_tiff_file = None
 
         # Get the shape and type of each frame.
         each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(
@@ -346,7 +322,6 @@ def convert_tiffs(new_tiff_filenames,
     # Convert to arrays.
     new_hdf5_dataset_filenames = numpy.array(new_hdf5_dataset_filenames)
     new_hdf5_dataset_offsets = numpy.array(new_hdf5_dataset_offsets)
-    new_hdf5_dataset_descriptions = numpy.array(new_hdf5_dataset_descriptions)
 
     # Convert to standard forms
     new_hdf5_dataset_shape = tuple(new_hdf5_dataset_shape)
@@ -373,10 +348,9 @@ def convert_tiffs(new_tiff_filenames,
         # ( https://github.com/h5py/h5py/issues/289 ).
         new_hdf5_descriptions_dataset = new_hdf5_group.create_dataset(
             "_".join([new_hdf5_dataset_name, "descriptions"]),
-            shape=(len(new_hdf5_dataset_descriptions),),
+            shape=new_hdf5_dataset_shape[0:1],
             dtype=h5py.special_dtype(vlen=unicode)
         )
-        new_hdf5_descriptions_dataset[...] = new_hdf5_dataset_descriptions
         new_hdf5_dataset.attrs["descriptions"] = '/'.join([
             new_hdf5_descriptions_dataset.file.filename,
             new_hdf5_descriptions_dataset.name
@@ -391,6 +365,36 @@ def convert_tiffs(new_tiff_filenames,
                 pages_to_channel=pages_to_channel
             )
 
+            # Extract the descriptions.
+            each_new_tiff_description = []
+            each_new_tiff_file = None
+            try:
+                each_new_tiff_file = libtiff.TiffFile(
+                    each_new_tiff_filename, 'r'
+                )
+
+                for i in xrange(each_new_tiff_file.get_depth()):
+                    metadata_i = each_new_tiff_file.IFD[i].entries_dict
+
+                    desc_i = u""
+                    try:
+                        desc_i = unicode(
+                            metadata_i["ImageDescription"].human()
+                        )
+                    except KeyError:
+                        pass
+
+                    each_new_tiff_description.append(
+                        desc_i
+                    )
+            finally:
+                if each_new_tiff_file:
+                    each_new_tiff_file.close()
+
+                each_new_tiff_file = None
+
+            each_new_tiff_description = numpy.array(each_new_tiff_description)
+
             # Take channel and z selection
             # TODO: Could we drop the channel constraint?
             # TODO: Want to drop z constraint.
@@ -400,4 +404,5 @@ def convert_tiffs(new_tiff_filenames,
             new_hdf5_dataset_axis_pos_next = new_hdf5_dataset_axis_pos + \
                                              len(each_new_tiff_array)
             new_hdf5_dataset[new_hdf5_dataset_axis_pos:new_hdf5_dataset_axis_pos_next] = each_new_tiff_array
+            new_hdf5_descriptions_dataset[new_hdf5_dataset_axis_pos:new_hdf5_dataset_axis_pos_next] = each_new_tiff_description
             new_hdf5_dataset_axis_pos = new_hdf5_dataset_axis_pos_next
