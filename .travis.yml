@@ -19,6 +19,8 @@ install:
    - conda config --add channels jakirkham
    - source activate root
    # Install basic conda dependencies.
+   - touch $HOME/miniconda/conda-meta/pinned
+   - echo "conda-build ==1.16.0" >> $HOME/miniconda/conda-meta/pinned
    - conda update --all
    - conda install conda-build
    # Build the conda package for nanshe.

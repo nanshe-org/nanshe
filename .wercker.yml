@@ -11,6 +11,8 @@ build:
             code: |-
                 conda config --add channels jakirkham
                 conda config --set show_channel_urls True
+                touch /opt/conda/conda-meta/pinned
+                echo "conda-build ==1.16.0" >> /opt/conda/conda-meta/pinned
                 source activate root
                 conda update -y --all
                 python setup.py bdist_conda
