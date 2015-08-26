@@ -86,7 +86,7 @@ after_success:
    # Commit changes and push. Reference commit used and tag if relevant.
    - git add -A
    - if [ -z $TRAVIS_TAG ]; then git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT})." --allow-empty ; else git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT}) and tag (${TRAVIS_TAG})." --allow-empty ; fi
-   - git push origin gh-pages
+   - git push -q origin gh-pages > /dev/null 2>&1; echo $?
    # Check to see if this is a release. If so, create and upload binaries.
    - if [ -z $TRAVIS_TAG ]; then exit 0 ; fi
    - git checkout $TRAVIS_TAG
