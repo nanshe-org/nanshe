@@ -94,13 +94,10 @@ after_success:
    - conda install anaconda-client
    - cd $HOME/miniconda/conda-bld/
    - conda convert -p osx-64 linux-64/nanshe*
-   - conda server -t ${BS_TOKEN} upload linux-64/nanshe*
-   - conda server -t ${BS_TOKEN} upload osx-64/nanshe*
+   - conda server -t ${AS_TOKEN} upload linux-64/nanshe*
+   - conda server -t ${AS_TOKEN} upload osx-64/nanshe*
 notifications:
   email: False
   webhooks: https://api.kato.im/rooms/a17f510ab0bcfd79de90a2f2887718bb86afdb4fcff8b4b87965b2bdf0c40ed/travis
-env:
-   global:
-       secure: "G2yKhhOs9LWOaInkRBaNc1f1ZVYKg+vEnY0RJv7ad4tBY9GZETP4LrKnwQvIFzTWQ8IMUTALCclGXI+U9ATDSNiSEkAs45sk8roRhCf23EKGCn0L0qTOh8h1LbsXplyZHvUkt8rgTs7Mxa9KA3os+qRz47R9OdOb1yS8WvAjC74="
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 #sudo: false
