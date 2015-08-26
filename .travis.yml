@@ -99,6 +99,5 @@ after_success:
    - "curl -H \"Content-Type: application/json\" --data '&#123;\"docker_tag_name\": \"latest\"&#125;' -X POST \"https://registry.hub.docker.com/u/jakirkham/nanshe/trigger/${DH_TOKEN}/\""
 notifications:
   email: False
-  webhooks: https://api.kato.im/rooms/a17f510ab0bcfd79de90a2f2887718bb86afdb4fcff8b4b87965b2bdf0c40ed/travis
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 #sudo: false
