@@ -61,7 +61,7 @@ build:
     after-steps:
         - jakirkham/email-notify:
             from: alerts@wercker.com
-            to: 1b272456faebfb92cd14d6e8757f7ff9940fa85d50836f4a67f39b08fba54d80@apps.kato.im
+            to: $USER
             username: $USER
             password: $PASS
             host: smtp.gmail.com:587
