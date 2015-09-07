@@ -61,7 +61,7 @@ build:
     after-steps:
         - jakirkham/email-notify:
             from: alerts@wercker.com
-            to: $USER
-            username: $USER
+            to: $TO_EMAIL
+            username: $FROM_EMAIL
             password: $PASS
             host: smtp.gmail.com:587

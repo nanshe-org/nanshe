@@ -98,6 +98,7 @@ after_success:
    - conda server -t ${AS_TOKEN} upload osx-64/nanshe*
    - "curl -H \"Content-Type: application/json\" --data '&#123;\"docker_tag_name\": \"latest\"&#125;' -X POST \"https://registry.hub.docker.com/u/jakirkham/nanshe/trigger/${DH_TOKEN}/\""
 notifications:
-  email: False
+  email:
+    - $TO_EMAIL
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 #sudo: false
