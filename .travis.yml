@@ -100,5 +100,10 @@ after_success:
 notifications:
   email:
     - $TO_EMAIL
+  webhooks:
+    on_success: always
+    on_failure: always
+    urls:
+      - https://webhooks.gitter.im/e/70e67f941cc62174c9b2
 # Use container format for TravisCI to avoid termination due to insufficient resources.
 #sudo: false
