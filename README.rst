@@ -1,10 +1,6 @@
-|Travis Build Status| |Wercker Build Status| |Coverage Status| |Code Health| |License| |Documentation| |Binstar Release|
+|Travis Build Status| |Wercker Build Status| |Coverage Status| |Code Health| |License| |Documentation| |Binstar Release| |Gitter|
 
 --------------
-
-.. image:: https://badges.gitter.im/Join%20Chat.svg
-   :alt: Join the chat at https://gitter.im/jakirkham/nanshe
-   :target: https://gitter.im/jakirkham/nanshe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 Nanshe
 ======
@@ -171,3 +167,6 @@ If only one is specified, then only an upper or lower bound exists.
    :target: http://jakirkham.github.io/nanshe/
 .. |Binstar Release| image:: https://anaconda.org/jakirkham/nanshe/badges/version.svg
    :target: https://anaconda.org/jakirkham/nanshe
+.. |Gitter| image:: https://badges.gitter.im/Join%20Chat.svg
+   :alt: Join the chat at https://gitter.im/jakirkham/nanshe
+   :target: https://gitter.im/jakirkham/nanshe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
