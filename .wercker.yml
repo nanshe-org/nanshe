@@ -61,7 +61,7 @@ build:
                 docstring-coverage nanshe | tee .docstring-coverage
 
     after-steps:
-        - jakirkham/email-notify:
+        - email-notify:
             from: alerts@wercker.com
             to: $TO_EMAIL
             username: $FROM_EMAIL
