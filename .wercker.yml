@@ -31,7 +31,7 @@ build:
         - script:
             name: Install dependencies for building docs.
             code: |-
-                conda install -y "sphinx>=1.3,<2"
+                conda install -y sphinx
                 conda install -y cloud_sptheme
 
         - script:
