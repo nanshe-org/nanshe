@@ -39,6 +39,7 @@ build:
             name: Install dependencies for profiling and monitoring coverage.
             code: |-
                 conda install -y nose-timer
+                echo "coverage 3.*" >> /opt/conda/envs/testenv/conda-meta/pinned
                 conda install -y coverage
                 conda install -y docstring-coverage
                 conda install -y python-coveralls
