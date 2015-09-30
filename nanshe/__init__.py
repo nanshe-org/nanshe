@@ -181,7 +181,7 @@ clean all command will do this.
 .. _scikit-image: http://scikit-image.org/
 .. _SPAMS: http://spams-devel.gforge.inria.fr/
 .. _VIGRA: http://ukoethe.github.io/vigra/
-.. _rank_filter: http://github.com/jakirkham/rank_filter/
+.. _rank_filter: http://github.com/nanshe-org/rank_filter/
 .. _Anaconda: http://store.continuum.io/cshop/anaconda/
 .. _CMake: http://www.cmake.org/
 .. _ATLAS: http://math-atlas.sourceforge.net/
