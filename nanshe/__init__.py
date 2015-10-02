@@ -122,7 +122,7 @@ other arguments are allowed.
  Documentation
 -------------------------------------------------------------------------------
 Current documentation can be found on the GitHub page
-( http://jakirkham.github.io/nanshe/ ). A new copy is rebuilt any time there is
+( http://nanshe-org.github.io/nanshe/ ). A new copy is rebuilt any time there is
 a passing commit is added to the ``master`` branch. Each documentation commit
 is added to ``gh-pages`` branch with a reference to the commit in ``master``
 that triggered the build as well as the tag (version) if provided.
