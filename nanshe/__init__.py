@@ -62,7 +62,7 @@ preferable.
 Conda
 ===============================================================================
 Current packages can be found on our anaconda_ channel
-( https://anaconda.org/jakirkham/nanshe ). New ones are released every time a
+( https://anaconda.org/nanshe/nanshe ). New ones are released every time a
 passing tagged release is pushed to the ``master`` branch on GitHub. It is also
 possible to build packages for conda_ for non-release commits as we do in our
 continuous integration strategy.
