@@ -98,7 +98,7 @@ after_success:
    - conda convert -p osx-64 linux-64/nanshe*
    - conda server -t ${AS_TOKEN} upload linux-64/nanshe*
    - conda server -t ${AS_TOKEN} upload osx-64/nanshe*
-   - "curl -H \"Content-Type: application/json\" --data '&#123;\"docker_tag_name\": \"latest\"&#125;' -X POST \"https://registry.hub.docker.com/u/jakirkham/nanshe/trigger/${DH_TOKEN}/\""
+   - "curl -H \"Content-Type: application/json\" --data '&#123;\"docker_tag_name\": \"latest\"&#125;' -X POST \"https://registry.hub.docker.com/u/nanshe/nanshe/trigger/${DH_TOKEN}/\""
 notifications:
   email:
     - $TO_EMAIL
