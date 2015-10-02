@@ -157,8 +157,8 @@ If only one is specified, then only an upper or lower bound exists.
    :target: https://travis-ci.org/jakirkham/nanshe
 .. |Wercker Build Status| image:: https://app.wercker.com/status/1ed421adbbec48aac2a370817dc0410f/s/master
    :target: https://app.wercker.com/project/bykey/1ed421adbbec48aac2a370817dc0410f
-.. |Coverage Status| image:: https://coveralls.io/repos/jakirkham/nanshe/badge.svg?branch=master
-   :target: https://coveralls.io/r/jakirkham/nanshe?branch=master
+.. |Coverage Status| image:: https://coveralls.io/repos/jakirkham/nanshe/badge.svg?branch=master&service=github
+   :target: https://coveralls.io/github/jakirkham/nanshe?branch=master
 .. |Code Health| image:: https://landscape.io/github/jakirkham/nanshe/master/landscape.svg?style=flat
    :target: https://landscape.io/github/jakirkham/nanshe/master
 .. |License| image:: http://img.shields.io/badge/license-GPLv3-blue.svg
