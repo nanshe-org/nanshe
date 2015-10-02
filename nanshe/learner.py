@@ -13,7 +13,7 @@ provided in the examples_ and are entitled learner.
 .. _subprocess: http://docs.python.org/2/library/subprocess.html
 .. |drmaa| replace:: ``drmaa``
 .. _drmaa: http://github.com/pygridtools/drmaa-python
-.. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
+.. _examples: http://github.com/nanshe-org/nanshe/tree/master/examples
 
 ===============================================================================
 API
