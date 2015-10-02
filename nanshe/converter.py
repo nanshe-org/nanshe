@@ -8,7 +8,7 @@ The ``main`` function actually starts the algorithm and can be called
 externally. Configuration files for the learner are provided in the examples_
 and are entitled learner.
 
-.. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
+.. _examples: http://github.com/nanshe-org/nanshe/tree/master/examples
 
 ===============================================================================
 API
