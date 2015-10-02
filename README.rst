@@ -165,8 +165,8 @@ If only one is specified, then only an upper or lower bound exists.
    :target: https://www.gnu.org/copyleft/gpl.html
 .. |Documentation| image:: https://img.shields.io/badge/docs-current-9F21E9.svg
    :target: http://jakirkham.github.io/nanshe/
-.. |Anaconda Release| image:: https://anaconda.org/jakirkham/nanshe/badges/version.svg
-   :target: https://anaconda.org/jakirkham/nanshe
+.. |Anaconda Release| image:: https://anaconda.org/nanshe/nanshe/badges/version.svg
+   :target: https://anaconda.org/nanshe/nanshe
 .. |Gitter| image:: https://badges.gitter.im/Join%20Chat.svg
    :alt: Join the chat at https://gitter.im/jakirkham/nanshe
    :target: https://gitter.im/jakirkham/nanshe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
