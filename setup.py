@@ -140,7 +140,7 @@ setup(
     name="nanshe",
     version=versioneer.get_version(),
     description="An image processing toolkit.",
-    url="https://github.com/jakirkham/nanshe",
+    url="https://github.com/nanshe-org/nanshe",
     license="GPLv3",
     author="John Kirkham",
     author_email="kirkhamj@janelia.hhmi.org",
