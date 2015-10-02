@@ -9,7 +9,7 @@ externally. Configuration files for the registerer are provided in the
 examples_ and are entitled registerer. Any attributes on the raw dataset are
 copied to the registered dataset.
 
-.. _examples: http://github.com/jakirkham/nanshe/tree/master/examples
+.. _examples: http://github.com/nanshe-org/nanshe/tree/master/examples
 
 ===============================================================================
 API
