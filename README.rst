@@ -153,20 +153,20 @@ configuration file. For certain fields, like those in
 "min" and/or "max". If both are specified, then the range must be met.
 If only one is specified, then only an upper or lower bound exists.
 
-.. |Travis Build Status| image:: https://travis-ci.org/jakirkham/nanshe.svg?branch=master
-   :target: https://travis-ci.org/jakirkham/nanshe
-.. |Wercker Build Status| image:: https://app.wercker.com/status/1ed421adbbec48aac2a370817dc0410f/s/master
-   :target: https://app.wercker.com/project/bykey/1ed421adbbec48aac2a370817dc0410f
-.. |Coverage Status| image:: https://coveralls.io/repos/jakirkham/nanshe/badge.svg?branch=master&service=github
-   :target: https://coveralls.io/github/jakirkham/nanshe?branch=master
-.. |Code Health| image:: https://landscape.io/github/jakirkham/nanshe/master/landscape.svg?style=flat
-   :target: https://landscape.io/github/jakirkham/nanshe/master
+.. |Travis Build Status| image:: https://travis-ci.org/nanshe-org/nanshe.svg?branch=master
+   :target: https://travis-ci.org/nanshe-org/nanshe
+.. |Wercker Build Status| image:: https://app.wercker.com/status/0a126e02ea98f90a54a43fa12d20570a/s/master
+   :target: https://app.wercker.com/project/bykey/0a126e02ea98f90a54a43fa12d20570a
+.. |Coverage Status| image:: https://coveralls.io/repos/nanshe-org/nanshe/badge.svg?branch=master&service=github
+   :target: https://coveralls.io/github/nanshe-org/nanshe?branch=master
+.. |Code Health| image:: https://landscape.io/github/nanshe-org/nanshe/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/nanshe-org/nanshe/master
 .. |License| image:: http://img.shields.io/badge/license-GPLv3-blue.svg
    :target: https://www.gnu.org/copyleft/gpl.html
 .. |Documentation| image:: https://img.shields.io/badge/docs-current-9F21E9.svg
-   :target: http://jakirkham.github.io/nanshe/
+   :target: http://nanshe-org.github.io/nanshe/
 .. |Anaconda Release| image:: https://anaconda.org/nanshe/nanshe/badges/version.svg
    :target: https://anaconda.org/nanshe/nanshe
 .. |Gitter| image:: https://badges.gitter.im/Join%20Chat.svg
-   :alt: Join the chat at https://gitter.im/jakirkham/nanshe
-   :target: https://gitter.im/jakirkham/nanshe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+   :alt: Join the chat at https://gitter.im/nanshe-org/nanshe
+   :target: https://gitter.im/nanshe-org/nanshe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
