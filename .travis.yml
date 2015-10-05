@@ -63,7 +63,7 @@ after_success:
    # Submit results to coveralls.io.
    - coveralls
    # Check to see if this is the right branch to build documentation from.
-   - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_REPO_SLUG != "jakirkham/nanshe" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
+   - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_REPO_SLUG != "nanshe-org/nanshe" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.
    - mv build/sphinx/html ../nanshe-git-docs
    - mv .docstring-coverage ../nanshe-git-docs
