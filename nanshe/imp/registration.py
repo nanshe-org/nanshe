@@ -244,7 +244,8 @@ def register_mean_offsets(frames2reg,
             )
     ):
         frames2reg_fft[i:j] = fft.fftn(
-            frames2reg[i:j], axes=range(1, len(frames2reg.shape)))
+            frames2reg[i:j], axes=range(1, len(frames2reg.shape))
+        )
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
@@ -253,12 +254,14 @@ def register_mean_offsets(frames2reg,
     numpy.negative(negative_wave_vector, out=negative_wave_vector)
 
     template_fft_indices = xnumpy.cartesian_product(
-        [numpy.arange(_) for _ in template_fft.shape])
+        [numpy.arange(_) for _ in template_fft.shape]
+    )
 
     unit_space_shift_fft = template_fft_indices * negative_wave_vector
     unit_space_shift_fft = unit_space_shift_fft.T.copy()
     unit_space_shift_fft = unit_space_shift_fft.reshape(
-        (template_fft.ndim,) + template_fft.shape)
+        (template_fft.ndim,) + template_fft.shape
+    )
 
     negative_wave_vector = None
     template_fft_indices = None
@@ -444,10 +447,12 @@ def register_mean_offsets(frames2reg,
         for k in xrange(i, j):
             if to_truncate:
                 reg_frames[k] = xnumpy.roll(
-                    frames2reg[k], space_shift[k])[reg_frames_slice]
+                    frames2reg[k], space_shift[k]
+                )[reg_frames_slice]
             else:
                 reg_frames[k] = xnumpy.roll(
-                    frames2reg[k], space_shift[k], to_mask=True)
+                    frames2reg[k], space_shift[k], to_mask=True
+                )
 
     result = None
     results_filename = ""
