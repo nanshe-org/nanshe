@@ -263,6 +263,11 @@ def register_mean_offsets(frames2reg,
     negative_wave_vector = None
     template_fft_indices = None
 
+    this_space_shift_mean = numpy.empty(
+        this_space_shift.shape[1:],
+        dtype=this_space_shift.dtype
+    )
+
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
     squared_magnitude_delta_space_shift = 1.0
@@ -298,8 +303,7 @@ def register_mean_offsets(frames2reg,
             )
 
         # Remove global shifts.
-        this_space_shift_mean = numpy.zeros(
-            this_space_shift.shape[1:], dtype=this_space_shift.dtype)
+        this_space_shift_mean[...] = 0
         for i, j in iters.lagged_generators_zipped(
                 itertools.chain(
                     xrange(0, len(frames2reg), block_frame_length),
