@@ -370,10 +370,9 @@ def register_mean_offsets(frames2reg,
             + "where the L_2 norm squared of the relative shift was, %f." %
             squared_magnitude_delta_space_shift
         )
-        if max_iters != -1:
-            if num_iters >= max_iters:
-                logger.info("Hit maximum number of iterations.")
-                break
+        if (max_iters != -1) and (num_iters >= max_iters):
+            logger.info("Hit maximum number of iterations.")
+            break
 
     reg_frames_shape = frames2reg.shape
     if to_truncate:
