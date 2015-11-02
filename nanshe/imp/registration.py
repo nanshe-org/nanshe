@@ -247,6 +247,7 @@ def register_mean_offsets(frames2reg,
         frames2reg_fft[i:j] = fft.fftn(
             frames2reg[i:j], axes=range(1, len(frames2reg.shape))
         )
+
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
