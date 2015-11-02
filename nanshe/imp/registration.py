@@ -185,6 +185,7 @@ def register_mean_offsets(frames2reg,
         numpy.float128 : numpy.complex256
     }
     complex_type = float_complex_mapping[float_type]
+    J = complex_type(1j)
 
     if block_frame_length == -1:
         block_frame_length = len(frames2reg)
@@ -285,11 +286,11 @@ def register_mean_offsets(frames2reg,
                 )
         ):
             frames2reg_shifted_fft_ij = numpy.exp(
-                1j * numpy.tensordot(
-                        space_shift[i:j],
-                        unit_space_shift_fft,
-                        axes=[-1, 0]
-                     )
+                J * numpy.tensordot(
+                       space_shift[i:j],
+                       unit_space_shift_fft,
+                       axes=[-1, 0]
+                    )
             )
             frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
             template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
