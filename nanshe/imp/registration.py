@@ -185,6 +185,7 @@ def register_mean_offsets(frames2reg,
         numpy.float128 : numpy.complex256
     }
     complex_type = float_complex_mapping[float_type]
+    J = complex_type(1j)
 
     if block_frame_length == -1:
         block_frame_length = len(frames2reg)
@@ -244,7 +245,8 @@ def register_mean_offsets(frames2reg,
             )
     ):
         frames2reg_fft[i:j] = fft.fftn(
-            frames2reg[i:j], axes=range(1, len(frames2reg.shape)))
+            frames2reg[i:j], axes=range(1, len(frames2reg.shape))
+        )
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
@@ -253,15 +255,22 @@ def register_mean_offsets(frames2reg,
     numpy.negative(negative_wave_vector, out=negative_wave_vector)
 
     template_fft_indices = xnumpy.cartesian_product(
-        [numpy.arange(_) for _ in template_fft.shape])
+        [numpy.arange(_) for _ in template_fft.shape]
+    )
 
     unit_space_shift_fft = template_fft_indices * negative_wave_vector
     unit_space_shift_fft = unit_space_shift_fft.T.copy()
     unit_space_shift_fft = unit_space_shift_fft.reshape(
-        (template_fft.ndim,) + template_fft.shape)
+        (template_fft.ndim,) + template_fft.shape
+    )
 
     negative_wave_vector = None
     template_fft_indices = None
+
+    this_space_shift_mean = numpy.empty(
+        this_space_shift.shape[1:],
+        dtype=this_space_shift.dtype
+    )
 
     # Repeat shift calculation until there is no further adjustment.
     num_iters = 0
@@ -277,11 +286,11 @@ def register_mean_offsets(frames2reg,
                 )
         ):
             frames2reg_shifted_fft_ij = numpy.exp(
-                1j * numpy.tensordot(
-                        space_shift[i:j],
-                        unit_space_shift_fft,
-                        axes=[-1, 0]
-                     )
+                J * numpy.tensordot(
+                       space_shift[i:j],
+                       unit_space_shift_fft,
+                       axes=[-1, 0]
+                    )
             )
             frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
             template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
@@ -298,8 +307,7 @@ def register_mean_offsets(frames2reg,
             )
 
         # Remove global shifts.
-        this_space_shift_mean = numpy.zeros(
-            this_space_shift.shape[1:], dtype=this_space_shift.dtype)
+        this_space_shift_mean[...] = 0
         for i, j in iters.lagged_generators_zipped(
                 itertools.chain(
                     xrange(0, len(frames2reg), block_frame_length),
@@ -363,10 +371,9 @@ def register_mean_offsets(frames2reg,
             + "where the L_2 norm squared of the relative shift was, %f." %
             squared_magnitude_delta_space_shift
         )
-        if max_iters != -1:
-            if num_iters >= max_iters:
-                logger.info("Hit maximum number of iterations.")
-                break
+        if (max_iters != -1) and (num_iters >= max_iters):
+            logger.info("Hit maximum number of iterations.")
+            break
 
     reg_frames_shape = frames2reg.shape
     if to_truncate:
@@ -440,10 +447,12 @@ def register_mean_offsets(frames2reg,
         for k in xrange(i, j):
             if to_truncate:
                 reg_frames[k] = xnumpy.roll(
-                    frames2reg[k], space_shift[k])[reg_frames_slice]
+                    frames2reg[k], space_shift[k]
+                )[reg_frames_slice]
             else:
                 reg_frames[k] = xnumpy.roll(
-                    frames2reg[k], space_shift[k], to_mask=True)
+                    frames2reg[k], space_shift[k], to_mask=True
+                )
 
     result = None
     results_filename = ""
