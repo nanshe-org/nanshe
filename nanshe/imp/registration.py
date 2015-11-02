@@ -293,7 +293,7 @@ def register_mean_offsets(frames2reg,
                     )
             )
             frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
-            template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
+            template_fft += frames2reg_shifted_fft_ij.sum(axis=0)
         template_fft /= len(frames2reg)
 
         for i, j in iters.lagged_generators_zipped(
