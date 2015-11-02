@@ -586,7 +586,8 @@ def find_offsets(frames2reg_fft, template_fft):
     # Find the FFT inverse (over all spatial dimensions) to return to the
     # convolution.
     frames2reg_template_conv = fft.ifftn(
-        frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
+        frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim)
+    )
 
     # Find where the convolution is maximal. Will have the most things in
     # common between the template and frames.
