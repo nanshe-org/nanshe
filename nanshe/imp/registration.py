@@ -316,7 +316,7 @@ def register_mean_offsets(frames2reg,
                 )
         ):
             this_space_shift_mean += this_space_shift[i:j].sum(axis=0)
-        this_space_shift_mean = numpy.round(
+        this_space_shift_mean[...] = numpy.round(
             this_space_shift_mean.astype(float_type) / len(this_space_shift)
         ).astype(int)
         for i, j in iters.lagged_generators_zipped(
