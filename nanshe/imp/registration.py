@@ -238,14 +238,9 @@ def register_mean_offsets(frames2reg,
         )
         this_space_shift = numpy.empty_like(space_shift)
 
-    for i, j in iters.lagged_generators_zipped(
-            itertools.chain(
-                xrange(0, len(frames2reg), block_frame_length),
-                [len(frames2reg)]
-            )
-    ):
-        frames2reg_fft[i:j] = fft.fftn(
-            frames2reg[i:j], axes=range(1, len(frames2reg.shape))
+    for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+        frames2reg_fft[range_ij] = fft.fftn(
+            frames2reg[range_ij], axes=range(1, len(frames2reg.shape))
         )
 
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
@@ -280,54 +275,34 @@ def register_mean_offsets(frames2reg,
         squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = 0
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                        xrange(0, len(frames2reg), block_frame_length),
-                        [len(frames2reg)]
-                )
-        ):
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
             frames2reg_shifted_fft_ij = numpy.exp(
                 J * numpy.tensordot(
-                       space_shift[i:j],
+                       space_shift[range_ij],
                        unit_space_shift_fft,
                        axes=[-1, 0]
                     )
             )
-            frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
+            frames2reg_shifted_fft_ij *= frames2reg_fft[range_ij]
             frames2reg_shifted_fft_ij /= len(frames2reg)
             template_fft += frames2reg_shifted_fft_ij.sum(axis=0)
 
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift[i:j] = find_offsets(
-                frames2reg_fft[i:j], template_fft
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift[range_ij] = find_offsets(
+                frames2reg_fft[range_ij], template_fft
             )
 
         # Remove global shifts.
         this_space_shift_mean[...] = 0
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift_mean += this_space_shift[i:j].sum(axis=0)
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift_mean += this_space_shift[range_ij].sum(axis=0)
         numpy.round(
             this_space_shift_mean.astype(float_type) / len(this_space_shift),
             out=this_space_shift_mean
         )
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift[i:j] = xnumpy.find_relative_offsets(
-                this_space_shift[i:j],
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift[range_ij] = xnumpy.find_relative_offsets(
+                this_space_shift[range_ij],
                 this_space_shift_mean
             )
 
@@ -336,35 +311,21 @@ def register_mean_offsets(frames2reg,
         # Note all indices by definition were positive semi-definite and upper
         # bounded by the shape. This change will make them bound by
         # the half shape, but with either sign.
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift[i:j] = xnumpy.find_shortest_wraparound(
-                this_space_shift[i:j],
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift[range_ij] = xnumpy.find_shortest_wraparound(
+                this_space_shift[range_ij],
                 frames2reg_fft.shape[1:]
             )
 
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            delta_space_shift_ij = this_space_shift[i:j] - space_shift[i:j]
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            delta_space_shift_ij = this_space_shift[range_ij] - \
+                                   space_shift[range_ij]
             squared_magnitude_delta_space_shift += numpy.dot(
                 delta_space_shift_ij, delta_space_shift_ij.T
             ).sum()
 
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            space_shift[i:j] = this_space_shift[i:j]
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            space_shift[range_ij] = this_space_shift[range_ij]
 
         num_iters += 1
         logger.info(
@@ -385,20 +346,15 @@ def register_mean_offsets(frames2reg,
         space_shift_min = numpy.zeros(
             space_shift.shape[1:], dtype=space_shift.dtype
         )
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
             numpy.maximum(
                 space_shift_max,
-                space_shift[i:j].max(axis=0),
+                space_shift[range_ij].max(axis=0),
                 out=space_shift_max
             )
             numpy.minimum(
                 space_shift_min,
-                space_shift[i:j].min(axis=0),
+                space_shift[range_ij].min(axis=0),
                 out=space_shift_min
             )
         reg_frames_shape = numpy.asarray(reg_frames_shape)
@@ -440,13 +396,8 @@ def register_mean_offsets(frames2reg,
             reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
             reg_frames.set_fill_value(reg_frames.dtype.type(0))
 
-    for i, j in iters.lagged_generators_zipped(
-            itertools.chain(
-                xrange(0, len(frames2reg), block_frame_length),
-                [len(frames2reg)]
-            )
-    ):
-        for k in xrange(i, j):
+    for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+        for k in range_ij:
             if to_truncate:
                 reg_frames[k] = xnumpy.roll(
                     frames2reg[k], space_shift[k]
