@@ -440,6 +440,65 @@ def register_mean_offsets(frames2reg,
 
 
 @prof.log_call(trace_logger)
+def generate_unit_phase_shifts(shape, float_type=float):
+    """
+        Computes the complex phase shift's angle due to a unit spatial shift.
+
+        This is meant to be a helper function for ``register_mean_offsets``. It
+        does this by computing a table of the angle of the phase of a unit
+        shift in each dimension (with a factor of :math:`2\pi`).
+
+        This allows arbitrary phase shifts to be made in each dimensions by
+        multiplying these angles by the size of the shift and added to the
+        existing angle to induce the proper phase shift in fourier space, which
+        is equivalent to the spatial translation.
+
+        Args:
+            shape(tuple of ints):       shape of the data to be shifted.
+
+            float_type(real type):      phase type (default numpy.float64)
+
+        Returns:
+            (numpy.ndarray):            an array containing the angle of the
+                                        complex phase shift to use for each
+                                        dimension.
+
+        Examples:
+            >>> generate_unit_phase_shifts((2,4))
+            array([[[-0.        , -0.        , -0.        , -0.        ],
+                    [-3.14159265, -3.14159265, -3.14159265, -3.14159265]],
+            <BLANKLINE>
+                   [[-0.        , -1.57079633, -3.14159265, -4.71238898],
+                    [-0.        , -1.57079633, -3.14159265, -4.71238898]]])
+    """
+
+    # Convert to `numpy`-based type if not done already.
+    float_type = numpy.dtype(float_type).type
+
+    # Must be of type float.
+    assert issubclass(float_type, numpy.floating)
+    assert numpy.dtype(float_type).itemsize >= 4
+
+    # Get the negative wave vector
+    negative_wave_vector = numpy.asarray(shape, dtype=float_type)
+    numpy.reciprocal(negative_wave_vector, out=negative_wave_vector)
+    negative_wave_vector *= 2*numpy.pi
+    numpy.negative(negative_wave_vector, out=negative_wave_vector)
+
+    # Get the indices for each point in the selected space.
+    indices = xnumpy.cartesian_product([numpy.arange(_) for _ in shape])
+
+    # Determine the phase offset for each point in space.
+    complex_angle_unit_shift = indices * negative_wave_vector
+    complex_angle_unit_shift = complex_angle_unit_shift.T.copy()
+    complex_angle_unit_shift = complex_angle_unit_shift.reshape(
+        (len(shape),) + shape
+    )
+
+    return(complex_angle_unit_shift)
+
+
+@prof.log_call(trace_logger)
 def find_offsets(frames2reg_fft, template_fft):
     """
         Computes the convolution of the template with the frames by taking
