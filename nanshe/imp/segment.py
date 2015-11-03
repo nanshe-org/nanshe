@@ -645,7 +645,7 @@ def normalize_data(new_data, out=None, **parameters):
     renormalized_images(
         out,
         output_array=out,
-        **parameters["renormalized_images"]
+        **parameters.get("renormalized_images", {})
     )
 
     return(out)
