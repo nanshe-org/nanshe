@@ -294,9 +294,6 @@ File nanshe/io/hdf5/record.py
 File nanshe/io/hdf5/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
-File nanshe/imp/registration.py
- Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
-
 File nanshe/imp/segment.py
  - No docstring for region_properties_vigra.VigraProperties!
  - No docstring for VigraProperties.__init__!
@@ -308,6 +305,9 @@ File nanshe/imp/segment.py
  Needed: 40; Exist: 33; Missing: 7; Coverage: 82.5%
 
 File nanshe/imp/renorm.py
+ Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/registration.py
  Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
 
 File nanshe/imp/__init__.py
