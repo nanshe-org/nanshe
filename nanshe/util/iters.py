@@ -597,6 +597,66 @@ def splitting_xrange(a, b=None):
 
 
 @prof.log_call(trace_logger)
+def subrange(start, stop=None, step=None, substep=None):
+    """
+        Generates start and stop values for each subrange.
+
+        Args:
+            start(int):           First value in range (or last if only
+                                  specified value)
+
+            stop(int):            Last value in range
+
+            step(int):            Step between each range
+
+            substep(int):         Step within each range
+
+        Yields:
+            (xrange):             A subrange within the larger range.
+
+        Examples:
+            >>> subrange(5) # doctest: +ELLIPSIS
+            <generator object subrange at 0x...>
+
+            >>> list(subrange(5))
+            [xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]
+
+            >>> list(subrange(0, 5))
+            [xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]
+
+            >>> list(subrange(1, 5))
+            [xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]
+
+            >>> list(subrange(0, 10, 3))
+            [xrange(3), xrange(3, 6), xrange(6, 9), xrange(9, 10)]
+
+            >>> list(subrange(0, 7, 3))
+            [xrange(3), xrange(3, 6), xrange(6, 7)]
+
+            >>> [xrange(0, 3, 2), xrange(3, 6, 2), xrange(6, 7, 2)]
+            [xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]
+
+            >>> list(subrange(0, 7, 3, 2))
+            [xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]
+    """
+
+    if stop is None:
+        stop = start
+        start = 0
+
+    if step is None:
+        step = 1
+
+    if substep is None:
+        substep = 1
+
+    range_ends = itertools.chain(xrange(start, stop, step), [stop])
+
+    for i, j in lagged_generators_zipped(range_ends):
+        yield(xrange(i, j, substep))
+
+
+@prof.log_call(trace_logger)
 def cumulative_generator(new_op, new_iter):
     """
         Takes each value from new_iter and applies new_op to it with the result

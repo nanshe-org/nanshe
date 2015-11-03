@@ -54,6 +54,7 @@ elif sys.argv[1] == "bdist_conda":
         "vigra",
         "spams",
         "rank_filter",
+        "functools32",
         "pyqt",
         "volumina"
     ]
@@ -74,6 +75,7 @@ elif sys.argv[1] == "bdist_conda":
         "vigra",
         "spams",
         "rank_filter",
+        "functools32",
         "pyqt",
         "volumina"
     ]

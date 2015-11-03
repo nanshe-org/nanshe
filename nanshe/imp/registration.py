@@ -30,6 +30,11 @@ import numpy
 
 
 try:
+    from functools import lru_cache
+except ImportError:
+    from functools32 import lru_cache
+
+try:
     import pyfftw.interfaces.numpy_fft as fft
 except Exception as e:
     warnings.warn(str(e) + ". Falling back to NumPy FFTPACK.", ImportWarning)
@@ -185,7 +190,6 @@ def register_mean_offsets(frames2reg,
         numpy.float128 : numpy.complex256
     }
     complex_type = float_complex_mapping[float_type]
-    J = complex_type(1j)
 
     if block_frame_length == -1:
         block_frame_length = len(frames2reg)
@@ -238,35 +242,12 @@ def register_mean_offsets(frames2reg,
         )
         this_space_shift = numpy.empty_like(space_shift)
 
-    for i, j in iters.lagged_generators_zipped(
-            itertools.chain(
-                xrange(0, len(frames2reg), block_frame_length),
-                [len(frames2reg)]
-            )
-    ):
-        frames2reg_fft[i:j] = fft.fftn(
-            frames2reg[i:j], axes=range(1, len(frames2reg.shape))
+    for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+        frames2reg_fft[range_ij] = fft.fftn(
+            frames2reg[range_ij], axes=range(1, len(frames2reg.shape))
         )
 
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
-
-    negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
-    numpy.reciprocal(negative_wave_vector, out=negative_wave_vector)
-    negative_wave_vector *= 2*numpy.pi
-    numpy.negative(negative_wave_vector, out=negative_wave_vector)
-
-    template_fft_indices = xnumpy.cartesian_product(
-        [numpy.arange(_) for _ in template_fft.shape]
-    )
-
-    unit_space_shift_fft = template_fft_indices * negative_wave_vector
-    unit_space_shift_fft = unit_space_shift_fft.T.copy()
-    unit_space_shift_fft = unit_space_shift_fft.reshape(
-        (template_fft.ndim,) + template_fft.shape
-    )
-
-    negative_wave_vector = None
-    template_fft_indices = None
 
     this_space_shift_mean = numpy.empty(
         this_space_shift.shape[1:],
@@ -280,54 +261,29 @@ def register_mean_offsets(frames2reg,
         squared_magnitude_delta_space_shift = 0.0
 
         template_fft[:] = 0
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                        xrange(0, len(frames2reg), block_frame_length),
-                        [len(frames2reg)]
-                )
-        ):
-            frames2reg_shifted_fft_ij = numpy.exp(
-                J * numpy.tensordot(
-                       space_shift[i:j],
-                       unit_space_shift_fft,
-                       axes=[-1, 0]
-                    )
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            frames2reg_shifted_fft_ij = translate_fourier(
+                frames2reg_fft[range_ij] / len(frames2reg),
+                space_shift[range_ij]
             )
-            frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
             template_fft += frames2reg_shifted_fft_ij.sum(axis=0)
-        template_fft /= len(frames2reg)
 
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift[i:j] = find_offsets(
-                frames2reg_fft[i:j], template_fft
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift[range_ij] = find_offsets(
+                frames2reg_fft[range_ij], template_fft
             )
 
         # Remove global shifts.
         this_space_shift_mean[...] = 0
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift_mean += this_space_shift[i:j].sum(axis=0)
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift_mean += this_space_shift[range_ij].sum(axis=0)
         numpy.round(
             this_space_shift_mean.astype(float_type) / len(this_space_shift),
             out=this_space_shift_mean
         )
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift[i:j] = xnumpy.find_relative_offsets(
-                this_space_shift[i:j],
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift[range_ij] = xnumpy.find_relative_offsets(
+                this_space_shift[range_ij],
                 this_space_shift_mean
             )
 
@@ -336,35 +292,21 @@ def register_mean_offsets(frames2reg,
         # Note all indices by definition were positive semi-definite and upper
         # bounded by the shape. This change will make them bound by
         # the half shape, but with either sign.
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            this_space_shift[i:j] = xnumpy.find_shortest_wraparound(
-                this_space_shift[i:j],
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            this_space_shift[range_ij] = xnumpy.find_shortest_wraparound(
+                this_space_shift[range_ij],
                 frames2reg_fft.shape[1:]
             )
 
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            delta_space_shift_ij = this_space_shift[i:j] - space_shift[i:j]
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            delta_space_shift_ij = this_space_shift[range_ij] - \
+                                   space_shift[range_ij]
             squared_magnitude_delta_space_shift += numpy.dot(
                 delta_space_shift_ij, delta_space_shift_ij.T
             ).sum()
 
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
-            space_shift[i:j] = this_space_shift[i:j]
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+            space_shift[range_ij] = this_space_shift[range_ij]
 
         num_iters += 1
         logger.info(
@@ -385,20 +327,15 @@ def register_mean_offsets(frames2reg,
         space_shift_min = numpy.zeros(
             space_shift.shape[1:], dtype=space_shift.dtype
         )
-        for i, j in iters.lagged_generators_zipped(
-                itertools.chain(
-                    xrange(0, len(frames2reg), block_frame_length),
-                    [len(frames2reg)]
-                )
-        ):
+        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
             numpy.maximum(
                 space_shift_max,
-                space_shift[i:j].max(axis=0),
+                space_shift[range_ij].max(axis=0),
                 out=space_shift_max
             )
             numpy.minimum(
                 space_shift_min,
-                space_shift[i:j].min(axis=0),
+                space_shift[range_ij].min(axis=0),
                 out=space_shift_min
             )
         reg_frames_shape = numpy.asarray(reg_frames_shape)
@@ -440,13 +377,8 @@ def register_mean_offsets(frames2reg,
             reg_frames.mask = numpy.ma.getmaskarray(reg_frames)
             reg_frames.set_fill_value(reg_frames.dtype.type(0))
 
-    for i, j in iters.lagged_generators_zipped(
-            itertools.chain(
-                xrange(0, len(frames2reg), block_frame_length),
-                [len(frames2reg)]
-            )
-    ):
-        for k in xrange(i, j):
+    for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
+        for k in range_ij:
             if to_truncate:
                 reg_frames[k] = xnumpy.roll(
                     frames2reg[k], space_shift[k]
@@ -486,6 +418,171 @@ def register_mean_offsets(frames2reg,
         results_file = None
 
     return(result)
+
+
+@prof.log_call(trace_logger)
+@lru_cache(maxsize=2)
+def generate_unit_phase_shifts(shape, float_type=float):
+    """
+        Computes the complex phase shift's angle due to a unit spatial shift.
+
+        This is meant to be a helper function for ``register_mean_offsets``. It
+        does this by computing a table of the angle of the phase of a unit
+        shift in each dimension (with a factor of :math:`2\pi`).
+
+        This allows arbitrary phase shifts to be made in each dimensions by
+        multiplying these angles by the size of the shift and added to the
+        existing angle to induce the proper phase shift in fourier space, which
+        is equivalent to the spatial translation.
+
+        Args:
+            shape(tuple of ints):       shape of the data to be shifted.
+
+            float_type(real type):      phase type (default numpy.float64)
+
+        Returns:
+            (numpy.ndarray):            an array containing the angle of the
+                                        complex phase shift to use for each
+                                        dimension.
+
+        Examples:
+            >>> generate_unit_phase_shifts((2,4))
+            array([[[-0.        , -0.        , -0.        , -0.        ],
+                    [-3.14159265, -3.14159265, -3.14159265, -3.14159265]],
+            <BLANKLINE>
+                   [[-0.        , -1.57079633, -3.14159265, -4.71238898],
+                    [-0.        , -1.57079633, -3.14159265, -4.71238898]]])
+    """
+
+    # Convert to `numpy`-based type if not done already.
+    float_type = numpy.dtype(float_type).type
+
+    # Must be of type float.
+    assert issubclass(float_type, numpy.floating)
+    assert numpy.dtype(float_type).itemsize >= 4
+
+    # Get the negative wave vector
+    negative_wave_vector = numpy.asarray(shape, dtype=float_type)
+    numpy.reciprocal(negative_wave_vector, out=negative_wave_vector)
+    negative_wave_vector *= 2*numpy.pi
+    numpy.negative(negative_wave_vector, out=negative_wave_vector)
+
+    # Get the indices for each point in the selected space.
+    indices = xnumpy.cartesian_product([numpy.arange(_) for _ in shape])
+
+    # Determine the phase offset for each point in space.
+    complex_angle_unit_shift = indices * negative_wave_vector
+    complex_angle_unit_shift = complex_angle_unit_shift.T.copy()
+    complex_angle_unit_shift = complex_angle_unit_shift.reshape(
+        (len(shape),) + shape
+    )
+
+    return(complex_angle_unit_shift)
+
+
+@prof.log_call(trace_logger)
+def translate_fourier(frame_fft, shift):
+    """
+        Translates frame(s) of data in Fourier space using the shift(s) given.
+
+        Args:
+            frame_fft(complex array):   Either a single frame with C-order axes
+                                        or multiple frames with time on the 0th
+                                        axis.
+
+            shift(array of ints):       Either the shift for each dimension
+                                        with C-ordered values or multiple
+                                        frames with time on the 0th axis.
+
+        Returns:
+            (numpy.ndarray):            The frame(s) shifted.
+
+        Examples:
+            >>> a = numpy.arange(12).reshape(3,4).astype(float)
+            >>> a
+            array([[  0.,   1.,   2.,   3.],
+                   [  4.,   5.,   6.,   7.],
+                   [  8.,   9.,  10.,  11.]])
+            >>> af = fft.fftn(a, axes=tuple(xrange(a.ndim)))
+            >>> numpy.around(af, decimals=10)
+            array([[ 66. +0.j        ,  -6. +6.j        ,  -6. +0.j        ,  -6. -6.j        ],
+                   [-24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ],
+                   [-24.-13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ]])
+
+            >>> s = numpy. array([1, -1])
+
+            >>> atf = translate_fourier(af, s)
+            >>> numpy.around(atf, decimals=10)
+            array([[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],
+                   [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],
+                   [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]])
+
+            >>> fft.ifftn(
+            ...     atf, axes=tuple(xrange(a.ndim))
+            ... ).real.round().astype(int).astype(float)
+            array([[  9.,  10.,  11.,   8.],
+                   [  1.,   2.,   3.,   0.],
+                   [  5.,   6.,   7.,   4.]])
+
+            >>> a = a[None]; af = af[None]; s = s[None]
+            >>> atf = translate_fourier(af, s)
+            >>> numpy.around(atf, decimals=10)
+            array([[[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],
+                    [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],
+                    [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]]])
+
+
+            >>> fft.ifftn(
+            ...     atf, axes=tuple(xrange(1, a.ndim))
+            ... ).real.round().astype(int).astype(float)
+            array([[[  9.,  10.,  11.,   8.],
+                    [  1.,   2.,   3.,   0.],
+                    [  5.,   6.,   7.,   4.]]])
+
+    """
+
+    add_frame_axis = False
+    if (len(shift.shape) == 1) and (len(shift) == len(frame_fft.shape)):
+        add_frame_axis = True
+        shift = shift[None]
+        frame_fft = frame_fft[None]
+
+    assert (
+        (len(shift.shape) == 2) and
+        (shift.shape[1] == (len(frame_fft.shape) - 1))
+    ), "Shapes are incompatible." + \
+       ("`shift.shape = %s`" % repr(shift.shape)) + \
+       (" and `frame_fft.shape = %s`." % repr(frame_fft.shape))
+
+    # Sadly, there is no easier way to map the two types; so, this is it.
+    complex_type = frame_fft.dtype.type
+    complex_float_mapping = {
+        numpy.complex64 : numpy.float32,
+        numpy.complex128 : numpy.float64,
+        numpy.complex256 : numpy.float128
+    }
+    float_type = complex_float_mapping[complex_type]
+    J = complex_type(1j)
+
+    # Get unit translations in all directions as the complex phase's angle.
+    unit_space_shift_fft = generate_unit_phase_shifts(
+        frame_fft.shape[1:], float_type=float_type
+    )
+
+    # Compute phase adjustment in complex.
+    frame_fft_shifted = numpy.exp(
+        J * numpy.tensordot(
+                shift,
+                unit_space_shift_fft,
+                axes=[-1, 0]
+            )
+    )
+    frame_fft_shifted *= frame_fft
+
+    if add_frame_axis:
+        frame_fft_shifted = frame_fft_shifted[0]
+
+    return(frame_fft_shifted)
 
 
 @prof.log_call(trace_logger)
