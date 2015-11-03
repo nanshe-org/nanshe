@@ -245,23 +245,9 @@ def register_mean_offsets(frames2reg,
 
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
 
-    negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
-    numpy.reciprocal(negative_wave_vector, out=negative_wave_vector)
-    negative_wave_vector *= 2*numpy.pi
-    numpy.negative(negative_wave_vector, out=negative_wave_vector)
-
-    template_fft_indices = xnumpy.cartesian_product(
-        [numpy.arange(_) for _ in template_fft.shape]
+    unit_space_shift_fft = generate_unit_phase_shifts(
+        template_fft.shape, float_type=float_type
     )
-
-    unit_space_shift_fft = template_fft_indices * negative_wave_vector
-    unit_space_shift_fft = unit_space_shift_fft.T.copy()
-    unit_space_shift_fft = unit_space_shift_fft.reshape(
-        (template_fft.ndim,) + template_fft.shape
-    )
-
-    negative_wave_vector = None
-    template_fft_indices = None
 
     this_space_shift_mean = numpy.empty(
         this_space_shift.shape[1:],
