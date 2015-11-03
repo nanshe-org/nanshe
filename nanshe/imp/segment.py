@@ -591,6 +591,12 @@ def normalize_data(new_data, out=None, **parameters):
             >>> a = numpy.zeros((2,2,2,))
             >>> a[1,1,1] = 1
             >>> a[0,0,0] = 1
+            >>> normalize_data(a)
+            array([[[ 0.8660254 , -0.28867513],
+                    [-0.28867513, -0.28867513]],
+            <BLANKLINE>
+                   [[-0.28867513, -0.28867513],
+                    [-0.28867513,  0.8660254 ]]])
             >>> normalize_data(a, **{"renormalized_images" : { "ord" : 2 }})
             array([[[ 0.8660254 , -0.28867513],
                     [-0.28867513, -0.28867513]],
