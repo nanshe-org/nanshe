@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment module &mdash; nanshe 0.1.0a30 documentation</title>
+    <title>nanshe.imp.segment module &mdash; nanshe 0.1.0a31 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a30',
+        VERSION:     '0.1.0a31',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a30 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a31 documentation" href="index.html" />
     <link rel="next" title="nanshe.io package" href="nanshe.io.html" />
     <link rel="prev" title="nanshe.imp.renorm module" href="nanshe.imp.renorm.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a31 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -938,6 +938,12 @@ normalized.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_data</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([[[ 0.8660254 , -0.28867513],</span>
+<span class="go">        [-0.28867513, -0.28867513]],</span>
+
+<span class="go">       [[-0.28867513, -0.28867513],</span>
+<span class="go">        [-0.28867513,  0.8660254 ]]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_data</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s">&quot;renormalized_images&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;ord&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}})</span>
 <span class="go">array([[[ 0.8660254 , -0.28867513],</span>
 <span class="go">        [-0.28867513, -0.28867513]],</span>
@@ -1480,7 +1486,7 @@ candidate neurons.</p>
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a31 documentation</a> &raquo;</li>
  
       </ul>
     </div>
