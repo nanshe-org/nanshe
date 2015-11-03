@@ -421,6 +421,7 @@ def register_mean_offsets(frames2reg,
 
 
 @prof.log_call(trace_logger)
+@lru_cache(maxsize=2)
 def generate_unit_phase_shifts(shape, float_type=float):
     """
         Computes the complex phase shift's angle due to a unit spatial shift.
