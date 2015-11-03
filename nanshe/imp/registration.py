@@ -485,6 +485,111 @@ def generate_unit_phase_shifts(shape, float_type=float):
 
 
 @prof.log_call(trace_logger)
+def translate_fourier(frame_fft, shift):
+    """
+        Translates frame(s) of data in Fourier space using the shift(s) given.
+
+        Args:
+            frame_fft(complex array):   Either a single frame with C-order axes
+                                        or multiple frames with time on the 0th
+                                        axis.
+
+            shift(array of ints):       Either the shift for each dimension
+                                        with C-ordered values or multiple
+                                        frames with time on the 0th axis.
+
+        Returns:
+            (numpy.ndarray):            The frame(s) shifted.
+
+        Examples:
+            >>> a = numpy.arange(12).reshape(3,4).astype(float)
+            >>> a
+            array([[  0.,   1.,   2.,   3.],
+                   [  4.,   5.,   6.,   7.],
+                   [  8.,   9.,  10.,  11.]])
+            >>> af = fft.fftn(a, axes=tuple(xrange(a.ndim)))
+            >>> numpy.around(af, decimals=10)
+            array([[ 66. +0.j        ,  -6. +6.j        ,  -6. +0.j        ,  -6. -6.j        ],
+                   [-24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ],
+                   [-24.-13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ]])
+
+            >>> s = numpy. array([1, -1])
+
+            >>> atf = translate_fourier(af, s)
+            >>> numpy.around(atf, decimals=10)
+            array([[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],
+                   [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],
+                   [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]])
+
+            >>> fft.ifftn(
+            ...     atf, axes=tuple(xrange(a.ndim))
+            ... ).real.round().astype(int).astype(float)
+            array([[  9.,  10.,  11.,   8.],
+                   [  1.,   2.,   3.,   0.],
+                   [  5.,   6.,   7.,   4.]])
+
+            >>> a = a[None]; af = af[None]; s = s[None]
+            >>> atf = translate_fourier(af, s)
+            >>> numpy.around(atf, decimals=10)
+            array([[[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],
+                    [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],
+                    [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]]])
+
+
+            >>> fft.ifftn(
+            ...     atf, axes=tuple(xrange(1, a.ndim))
+            ... ).real.round().astype(int).astype(float)
+            array([[[  9.,  10.,  11.,   8.],
+                    [  1.,   2.,   3.,   0.],
+                    [  5.,   6.,   7.,   4.]]])
+
+    """
+
+    add_frame_axis = False
+    if (len(shift.shape) == 1) and (len(shift) == len(frame_fft.shape)):
+        add_frame_axis = True
+        shift = shift[None]
+        frame_fft = frame_fft[None]
+
+    assert (
+        (len(shift.shape) == 2) and
+        (shift.shape[1] == (len(frame_fft.shape) - 1))
+    ), "Shapes are incompatible." + \
+       ("`shift.shape = %s`" % repr(shift.shape)) + \
+       (" and `frame_fft.shape = %s`." % repr(frame_fft.shape))
+
+    # Sadly, there is no easier way to map the two types; so, this is it.
+    complex_type = frame_fft.dtype.type
+    complex_float_mapping = {
+        numpy.complex64 : numpy.float32,
+        numpy.complex128 : numpy.float64,
+        numpy.complex256 : numpy.float128
+    }
+    float_type = complex_float_mapping[complex_type]
+    J = complex_type(1j)
+
+    # Get unit translations in all directions as the complex phase's angle.
+    unit_space_shift_fft = generate_unit_phase_shifts(
+        frame_fft.shape[1:], float_type=float_type
+    )
+
+    # Compute phase adjustment in complex.
+    frame_fft_shifted = numpy.exp(
+        J * numpy.tensordot(
+                shift,
+                unit_space_shift_fft,
+                axes=[-1, 0]
+            )
+    )
+    frame_fft_shifted *= frame_fft
+
+    if add_frame_axis:
+        frame_fft_shifted = frame_fft_shifted[0]
+
+    return(frame_fft_shifted)
+
+
+@prof.log_call(trace_logger)
 def find_offsets(frames2reg_fft, template_fft):
     """
         Computes the convolution of the template with the frames by taking
