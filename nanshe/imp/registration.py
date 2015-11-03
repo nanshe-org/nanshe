@@ -247,6 +247,7 @@ def register_mean_offsets(frames2reg,
         frames2reg_fft[i:j] = fft.fftn(
             frames2reg[i:j], axes=range(1, len(frames2reg.shape))
         )
+
     template_fft = numpy.empty(frames2reg.shape[1:], dtype=complex_type)
 
     negative_wave_vector = numpy.asarray(template_fft.shape, dtype=float_type)
@@ -293,7 +294,7 @@ def register_mean_offsets(frames2reg,
                     )
             )
             frames2reg_shifted_fft_ij *= frames2reg_fft[i:j]
-            template_fft += numpy.sum(frames2reg_shifted_fft_ij, axis=0)
+            template_fft += frames2reg_shifted_fft_ij.sum(axis=0)
         template_fft /= len(frames2reg)
 
         for i, j in iters.lagged_generators_zipped(
@@ -315,9 +316,10 @@ def register_mean_offsets(frames2reg,
                 )
         ):
             this_space_shift_mean += this_space_shift[i:j].sum(axis=0)
-        this_space_shift_mean = numpy.round(
-            this_space_shift_mean.astype(float_type) / len(this_space_shift)
-        ).astype(int)
+        numpy.round(
+            this_space_shift_mean.astype(float_type) / len(this_space_shift),
+            out=this_space_shift_mean
+        )
         for i, j in iters.lagged_generators_zipped(
                 itertools.chain(
                     xrange(0, len(frames2reg), block_frame_length),
@@ -584,7 +586,8 @@ def find_offsets(frames2reg_fft, template_fft):
     # Find the FFT inverse (over all spatial dimensions) to return to the
     # convolution.
     frames2reg_template_conv = fft.ifftn(
-        frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim))
+        frames2reg_template_conv_fft, axes=range(1, frames2reg_fft.ndim)
+    )
 
     # Find where the convolution is maximal. Will have the most things in
     # common between the template and frames.
