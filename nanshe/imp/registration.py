@@ -30,6 +30,11 @@ import numpy
 
 
 try:
+    from functools import lru_cache
+except ImportError:
+    from functools32 import lru_cache
+
+try:
     import pyfftw.interfaces.numpy_fft as fft
 except Exception as e:
     warnings.warn(str(e) + ". Falling back to NumPy FFTPACK.", ImportWarning)
