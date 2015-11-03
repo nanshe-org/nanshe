@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.iters module &mdash; nanshe 0.1.0a29+56.ge90dc3d documentation</title>
+    <title>nanshe.util.iters module &mdash; nanshe 0.1.0a30 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a29+56.ge90dc3d',
+        VERSION:     '0.1.0a30',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a29+56.ge90dc3d documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a30 documentation" href="index.html" />
     <link rel="next" title="nanshe.util.pathHelpers module" href="nanshe.util.pathHelpers.html" />
     <link rel="prev" title="nanshe.util.xnumpy module" href="nanshe.util.xnumpy.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.util.xnumpy.html" title="nanshe.util.xnumpy module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a29+56.ge90dc3d documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -1260,6 +1260,64 @@ a generator that can be used to iterate</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="nanshe.util.iters.subrange">
+<code class="descclassname">nanshe.util.iters.</code><code class="descname">subrange</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#subrange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.subrange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates start and stop values for each subrange.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> (<em>int</em>) &#8211; First value in range (or last if only
+specified value)</li>
+<li><strong>stop</strong> (<em>int</em>) &#8211; Last value in range</li>
+<li><strong>step</strong> (<em>int</em>) &#8211; Step between each range</li>
+<li><strong>substep</strong> (<em>int</em>) &#8211; Step within each range</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first last"><em>(xrange)</em> &#8211;
+A subrange within the larger range.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">subrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> 
+<span class="go">&lt;generator object subrange at 0x...&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">subrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">[xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">[xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">subrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">[xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[xrange(3), xrange(3, 6), xrange(6, 9), xrange(9, 10)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[xrange(3), xrange(3, 6), xrange(6, 7)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+<span class="go">[xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">[xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="nanshe.util.iters.xrange_with_skip">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">xrange_with_skip</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#xrange_with_skip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.xrange_with_skip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Behaves as xrange does except allows for skipping arbitrary values, as
@@ -1405,7 +1463,7 @@ values.</p>
         <li class="right" >
           <a href="nanshe.util.xnumpy.html" title="nanshe.util.xnumpy module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a29+56.ge90dc3d documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
  
       </ul>
     </div>

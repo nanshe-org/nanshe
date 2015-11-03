@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.iters &mdash; nanshe 0.1.0a29+56.ge90dc3d documentation</title>
+    <title>nanshe.util.iters &mdash; nanshe 0.1.0a30 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a29+56.ge90dc3d',
+        VERSION:     '0.1.0a30',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a29+56.ge90dc3d documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a30 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a29+56.ge90dc3d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -654,6 +654,66 @@
 
     <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
+
+</div>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="subrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.subrange">[docs]</a><span class="k">def</span> <span class="nf">subrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">substep</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates start and stop values for each subrange.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start(int):           First value in range (or last if only</span>
+<span class="sd">                                  specified value)</span>
+
+<span class="sd">            stop(int):            Last value in range</span>
+
+<span class="sd">            step(int):            Step between each range</span>
+
+<span class="sd">            substep(int):         Step within each range</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            (xrange):             A subrange within the larger range.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; subrange(5) # doctest: +ELLIPSIS</span>
+<span class="sd">            &lt;generator object subrange at 0x...&gt;</span>
+
+<span class="sd">            &gt;&gt;&gt; list(subrange(5))</span>
+<span class="sd">            [xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(subrange(0, 5))</span>
+<span class="sd">            [xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(subrange(1, 5))</span>
+<span class="sd">            [xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(subrange(0, 10, 3))</span>
+<span class="sd">            [xrange(3), xrange(3, 6), xrange(6, 9), xrange(9, 10)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(subrange(0, 7, 3))</span>
+<span class="sd">            [xrange(3), xrange(3, 6), xrange(6, 7)]</span>
+
+<span class="sd">            &gt;&gt;&gt; [xrange(0, 3, 2), xrange(3, 6, 2), xrange(6, 7, 2)]</span>
+<span class="sd">            [xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]</span>
+
+<span class="sd">            &gt;&gt;&gt; list(subrange(0, 7, 3, 2))</span>
+<span class="sd">            [xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">substep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">substep</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">range_ends</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="p">[</span><span class="n">stop</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">range_ends</span><span class="p">):</span>
+        <span class="k">yield</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">substep</span><span class="p">))</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -1430,7 +1490,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a29+56.ge90dc3d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

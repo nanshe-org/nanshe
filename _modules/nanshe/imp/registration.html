@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.registration &mdash; nanshe 0.1.0a29+56.ge90dc3d documentation</title>
+    <title>nanshe.imp.registration &mdash; nanshe 0.1.0a30 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a29+56.ge90dc3d',
+        VERSION:     '0.1.0a30',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a29+56.ge90dc3d documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a30 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a29+56.ge90dc3d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -88,6 +88,11 @@
 <span class="kn">import</span> <span class="nn">h5py</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">functools32</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pyfftw.interfaces.numpy_fft</span> <span class="kn">as</span> <span class="nn">fft</span>
@@ -245,7 +250,6 @@
         <span class="n">numpy</span><span class="o">.</span><span class="n">float128</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">complex256</span>
     <span class="p">}</span>
     <span class="n">complex_type</span> <span class="o">=</span> <span class="n">float_complex_mapping</span><span class="p">[</span><span class="n">float_type</span><span class="p">]</span>
-    <span class="n">J</span> <span class="o">=</span> <span class="n">complex_type</span><span class="p">(</span><span class="mi">1j</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">block_frame_length</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="n">block_frame_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)</span>
@@ -298,35 +302,12 @@
         <span class="p">)</span>
         <span class="n">this_space_shift</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">space_shift</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-            <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-            <span class="p">)</span>
-    <span class="p">):</span>
-        <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span>
-            <span class="n">frames2reg</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+        <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span>
+            <span class="n">frames2reg</span><span class="p">[</span><span class="n">range_ij</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
         <span class="p">)</span>
 
     <span class="n">template_fft</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">frames2reg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">complex_type</span><span class="p">)</span>
-
-    <span class="n">negative_wave_vector</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
-    <span class="n">numpy</span><span class="o">.</span><span class="n">reciprocal</span><span class="p">(</span><span class="n">negative_wave_vector</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">negative_wave_vector</span><span class="p">)</span>
-    <span class="n">negative_wave_vector</span> <span class="o">*=</span> <span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span>
-    <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">negative_wave_vector</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">negative_wave_vector</span><span class="p">)</span>
-
-    <span class="n">template_fft_indices</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">cartesian_product</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">]</span>
-    <span class="p">)</span>
-
-    <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">template_fft_indices</span> <span class="o">*</span> <span class="n">negative_wave_vector</span>
-    <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">unit_space_shift_fft</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">unit_space_shift_fft</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">template_fft</span><span class="o">.</span><span class="n">ndim</span><span class="p">,)</span> <span class="o">+</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">shape</span>
-    <span class="p">)</span>
-
-    <span class="n">negative_wave_vector</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">template_fft_indices</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="n">this_space_shift_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
         <span class="n">this_space_shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
@@ -340,54 +321,29 @@
         <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="n">template_fft</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                        <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                        <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
-            <span class="n">frames2reg_shifted_fft_ij</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
-                <span class="n">J</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span>
-                       <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>
-                       <span class="n">unit_space_shift_fft</span><span class="p">,</span>
-                       <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-                    <span class="p">)</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+            <span class="n">frames2reg_shifted_fft_ij</span> <span class="o">=</span> <span class="n">translate_fourier</span><span class="p">(</span>
+                <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span>
+                <span class="n">space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span>
             <span class="p">)</span>
-            <span class="n">frames2reg_shifted_fft_ij</span> <span class="o">*=</span> <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
             <span class="n">template_fft</span> <span class="o">+=</span> <span class="n">frames2reg_shifted_fft_ij</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">template_fft</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
-            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_offsets</span><span class="p">(</span>
-                <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">template_fft</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_offsets</span><span class="p">(</span>
+                <span class="n">frames2reg_fft</span><span class="p">[</span><span class="n">range_ij</span><span class="p">],</span> <span class="n">template_fft</span>
             <span class="p">)</span>
 
         <span class="c"># Remove global shifts.</span>
         <span class="n">this_space_shift_mean</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
-            <span class="n">this_space_shift_mean</span> <span class="o">+=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+            <span class="n">this_space_shift_mean</span> <span class="o">+=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
             <span class="n">this_space_shift_mean</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">this_space_shift</span><span class="p">),</span>
             <span class="n">out</span><span class="o">=</span><span class="n">this_space_shift_mean</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
-            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">find_relative_offsets</span><span class="p">(</span>
-                <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">find_relative_offsets</span><span class="p">(</span>
+                <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">],</span>
                 <span class="n">this_space_shift_mean</span>
             <span class="p">)</span>
 
@@ -396,35 +352,21 @@
         <span class="c"># Note all indices by definition were positive semi-definite and upper</span>
         <span class="c"># bounded by the shape. This change will make them bound by</span>
         <span class="c"># the half shape, but with either sign.</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
-            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">find_shortest_wraparound</span><span class="p">(</span>
-                <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+            <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">find_shortest_wraparound</span><span class="p">(</span>
+                <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">],</span>
                 <span class="n">frames2reg_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
             <span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
-            <span class="n">delta_space_shift_ij</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+            <span class="n">delta_space_shift_ij</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span> <span class="o">-</span> \
+                                   <span class="n">space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span>
             <span class="n">squared_magnitude_delta_space_shift</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
                 <span class="n">delta_space_shift_ij</span><span class="p">,</span> <span class="n">delta_space_shift_ij</span><span class="o">.</span><span class="n">T</span>
             <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
-            <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+            <span class="n">space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span>
 
         <span class="n">num_iters</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
@@ -445,20 +387,15 @@
         <span class="n">space_shift_min</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
             <span class="n">space_shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">space_shift</span><span class="o">.</span><span class="n">dtype</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                    <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                    <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-                <span class="p">)</span>
-        <span class="p">):</span>
+        <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
             <span class="n">numpy</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
                 <span class="n">space_shift_max</span><span class="p">,</span>
-                <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="n">space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
                 <span class="n">out</span><span class="o">=</span><span class="n">space_shift_max</span>
             <span class="p">)</span>
             <span class="n">numpy</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span>
                 <span class="n">space_shift_min</span><span class="p">,</span>
-                <span class="n">space_shift</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="n">space_shift</span><span class="p">[</span><span class="n">range_ij</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
                 <span class="n">out</span><span class="o">=</span><span class="n">space_shift_min</span>
             <span class="p">)</span>
         <span class="n">reg_frames_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reg_frames_shape</span><span class="p">)</span>
@@ -500,13 +437,8 @@
             <span class="n">reg_frames</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">reg_frames</span><span class="p">)</span>
             <span class="n">reg_frames</span><span class="o">.</span><span class="n">set_fill_value</span><span class="p">(</span><span class="n">reg_frames</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">lagged_generators_zipped</span><span class="p">(</span>
-            <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-                <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">),</span>
-                <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">)]</span>
-            <span class="p">)</span>
-    <span class="p">):</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">range_ij</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">subrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames2reg</span><span class="p">),</span> <span class="n">block_frame_length</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">range_ij</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">to_truncate</span><span class="p">:</span>
                 <span class="n">reg_frames</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span>
                     <span class="n">frames2reg</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">space_shift</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
@@ -546,6 +478,171 @@
         <span class="n">results_file</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</div>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="viewcode-block" id="generate_unit_phase_shifts"><a class="viewcode-back" href="../../../nanshe.imp.registration.html#nanshe.imp.registration.generate_unit_phase_shifts">[docs]</a><span class="k">def</span> <span class="nf">generate_unit_phase_shifts</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the complex phase shift&#39;s angle due to a unit spatial shift.</span>
+
+<span class="sd">        This is meant to be a helper function for ``register_mean_offsets``. It</span>
+<span class="sd">        does this by computing a table of the angle of the phase of a unit</span>
+<span class="sd">        shift in each dimension (with a factor of :math:`2\pi`).</span>
+
+<span class="sd">        This allows arbitrary phase shifts to be made in each dimensions by</span>
+<span class="sd">        multiplying these angles by the size of the shift and added to the</span>
+<span class="sd">        existing angle to induce the proper phase shift in fourier space, which</span>
+<span class="sd">        is equivalent to the spatial translation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape(tuple of ints):       shape of the data to be shifted.</span>
+
+<span class="sd">            float_type(real type):      phase type (default numpy.float64)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (numpy.ndarray):            an array containing the angle of the</span>
+<span class="sd">                                        complex phase shift to use for each</span>
+<span class="sd">                                        dimension.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; generate_unit_phase_shifts((2,4))</span>
+<span class="sd">            array([[[-0.        , -0.        , -0.        , -0.        ],</span>
+<span class="sd">                    [-3.14159265, -3.14159265, -3.14159265, -3.14159265]],</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">                   [[-0.        , -1.57079633, -3.14159265, -4.71238898],</span>
+<span class="sd">                    [-0.        , -1.57079633, -3.14159265, -4.71238898]]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Convert to `numpy`-based type if not done already.</span>
+    <span class="n">float_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+
+    <span class="c"># Must be of type float.</span>
+    <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">float_type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span><span class="o">.</span><span class="n">itemsize</span> <span class="o">&gt;=</span> <span class="mi">4</span>
+
+    <span class="c"># Get the negative wave vector</span>
+    <span class="n">negative_wave_vector</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float_type</span><span class="p">)</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">reciprocal</span><span class="p">(</span><span class="n">negative_wave_vector</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">negative_wave_vector</span><span class="p">)</span>
+    <span class="n">negative_wave_vector</span> <span class="o">*=</span> <span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">negative_wave_vector</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">negative_wave_vector</span><span class="p">)</span>
+
+    <span class="c"># Get the indices for each point in the selected space.</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">cartesian_product</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">])</span>
+
+    <span class="c"># Determine the phase offset for each point in space.</span>
+    <span class="n">complex_angle_unit_shift</span> <span class="o">=</span> <span class="n">indices</span> <span class="o">*</span> <span class="n">negative_wave_vector</span>
+    <span class="n">complex_angle_unit_shift</span> <span class="o">=</span> <span class="n">complex_angle_unit_shift</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">complex_angle_unit_shift</span> <span class="o">=</span> <span class="n">complex_angle_unit_shift</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">),)</span> <span class="o">+</span> <span class="n">shape</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">complex_angle_unit_shift</span><span class="p">)</span>
+
+</div>
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="translate_fourier"><a class="viewcode-back" href="../../../nanshe.imp.registration.html#nanshe.imp.registration.translate_fourier">[docs]</a><span class="k">def</span> <span class="nf">translate_fourier</span><span class="p">(</span><span class="n">frame_fft</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Translates frame(s) of data in Fourier space using the shift(s) given.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame_fft(complex array):   Either a single frame with C-order axes</span>
+<span class="sd">                                        or multiple frames with time on the 0th</span>
+<span class="sd">                                        axis.</span>
+
+<span class="sd">            shift(array of ints):       Either the shift for each dimension</span>
+<span class="sd">                                        with C-ordered values or multiple</span>
+<span class="sd">                                        frames with time on the 0th axis.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (numpy.ndarray):            The frame(s) shifted.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; a = numpy.arange(12).reshape(3,4).astype(float)</span>
+<span class="sd">            &gt;&gt;&gt; a</span>
+<span class="sd">            array([[  0.,   1.,   2.,   3.],</span>
+<span class="sd">                   [  4.,   5.,   6.,   7.],</span>
+<span class="sd">                   [  8.,   9.,  10.,  11.]])</span>
+<span class="sd">            &gt;&gt;&gt; af = fft.fftn(a, axes=tuple(xrange(a.ndim)))</span>
+<span class="sd">            &gt;&gt;&gt; numpy.around(af, decimals=10)</span>
+<span class="sd">            array([[ 66. +0.j        ,  -6. +6.j        ,  -6. +0.j        ,  -6. -6.j        ],</span>
+<span class="sd">                   [-24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ],</span>
+<span class="sd">                   [-24.-13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ]])</span>
+
+<span class="sd">            &gt;&gt;&gt; s = numpy. array([1, -1])</span>
+
+<span class="sd">            &gt;&gt;&gt; atf = translate_fourier(af, s)</span>
+<span class="sd">            &gt;&gt;&gt; numpy.around(atf, decimals=10)</span>
+<span class="sd">            array([[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],</span>
+<span class="sd">                   [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],</span>
+<span class="sd">                   [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]])</span>
+
+<span class="sd">            &gt;&gt;&gt; fft.ifftn(</span>
+<span class="sd">            ...     atf, axes=tuple(xrange(a.ndim))</span>
+<span class="sd">            ... ).real.round().astype(int).astype(float)</span>
+<span class="sd">            array([[  9.,  10.,  11.,   8.],</span>
+<span class="sd">                   [  1.,   2.,   3.,   0.],</span>
+<span class="sd">                   [  5.,   6.,   7.,   4.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; a = a[None]; af = af[None]; s = s[None]</span>
+<span class="sd">            &gt;&gt;&gt; atf = translate_fourier(af, s)</span>
+<span class="sd">            &gt;&gt;&gt; numpy.around(atf, decimals=10)</span>
+<span class="sd">            array([[[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],</span>
+<span class="sd">                    [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],</span>
+<span class="sd">                    [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]]])</span>
+
+
+<span class="sd">            &gt;&gt;&gt; fft.ifftn(</span>
+<span class="sd">            ...     atf, axes=tuple(xrange(1, a.ndim))</span>
+<span class="sd">            ... ).real.round().astype(int).astype(float)</span>
+<span class="sd">            array([[[  9.,  10.,  11.,   8.],</span>
+<span class="sd">                    [  1.,   2.,   3.,   0.],</span>
+<span class="sd">                    [  5.,   6.,   7.,   4.]]])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">add_frame_axis</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shift</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shift</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">)):</span>
+        <span class="n">add_frame_axis</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">shift</span> <span class="o">=</span> <span class="n">shift</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="n">frame_fft</span> <span class="o">=</span> <span class="n">frame_fft</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shift</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">and</span>
+        <span class="p">(</span><span class="n">shift</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="p">),</span> <span class="s">&quot;Shapes are incompatible.&quot;</span> <span class="o">+</span> \
+       <span class="p">(</span><span class="s">&quot;`shift.shape = </span><span class="si">%s</span><span class="s">`&quot;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">shift</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span> <span class="o">+</span> \
+       <span class="p">(</span><span class="s">&quot; and `frame_fft.shape = </span><span class="si">%s</span><span class="s">`.&quot;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">frame_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+    <span class="c"># Sadly, there is no easier way to map the two types; so, this is it.</span>
+    <span class="n">complex_type</span> <span class="o">=</span> <span class="n">frame_fft</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">complex_float_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">complex64</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">complex128</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">complex256</span> <span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float128</span>
+    <span class="p">}</span>
+    <span class="n">float_type</span> <span class="o">=</span> <span class="n">complex_float_mapping</span><span class="p">[</span><span class="n">complex_type</span><span class="p">]</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">complex_type</span><span class="p">(</span><span class="mi">1j</span><span class="p">)</span>
+
+    <span class="c"># Get unit translations in all directions as the complex phase&#39;s angle.</span>
+    <span class="n">unit_space_shift_fft</span> <span class="o">=</span> <span class="n">generate_unit_phase_shifts</span><span class="p">(</span>
+        <span class="n">frame_fft</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">float_type</span><span class="o">=</span><span class="n">float_type</span>
+    <span class="p">)</span>
+
+    <span class="c"># Compute phase adjustment in complex.</span>
+    <span class="n">frame_fft_shifted</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="n">J</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span>
+                <span class="n">shift</span><span class="p">,</span>
+                <span class="n">unit_space_shift_fft</span><span class="p">,</span>
+                <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">frame_fft_shifted</span> <span class="o">*=</span> <span class="n">frame_fft</span>
+
+    <span class="k">if</span> <span class="n">add_frame_axis</span><span class="p">:</span>
+        <span class="n">frame_fft_shifted</span> <span class="o">=</span> <span class="n">frame_fft_shifted</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">frame_fft_shifted</span><span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -709,7 +806,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a29+56.ge90dc3d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a30 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

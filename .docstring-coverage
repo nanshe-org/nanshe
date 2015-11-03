@@ -193,7 +193,7 @@ File nanshe/util/pathHelpers.py
 
 File nanshe/util/iters.py
  - No docstring for splitting_xrange.splitting_xrange_helper!
- Needed: 24; Exist: 23; Missing: 1; Coverage: 95.8%
+ Needed: 25; Exist: 24; Missing: 1; Coverage: 96.0%
 
 File nanshe/util/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -308,7 +308,7 @@ File nanshe/imp/renorm.py
  Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
 
 File nanshe/imp/registration.py
- Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
+ Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
 
 File nanshe/imp/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -334,5 +334,5 @@ File nanshe/box/__init__.py
 
 
 Overall statistics for 35 files:
-Docstrings needed: 519; Docstrings exist: 291; Docstrings missing: 228
-Total docstring coverage: 56.1%;  Grade: not so bad
+Docstrings needed: 522; Docstrings exist: 294; Docstrings missing: 228
+Total docstring coverage: 56.3%;  Grade: not so bad
