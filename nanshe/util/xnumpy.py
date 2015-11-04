@@ -2896,6 +2896,9 @@ def blocks_split(space_shape, block_shape, block_halo=None):
             <BLANKLINE>
              [(slice(0, 1, 1),), (slice(0, 1, 1),)])
 
+            >>> blocks_split((2,), (-1,))
+            ([(slice(0, 2, 1),)], [(slice(0, 2, 1),)], [(slice(0, 2, 1),)])
+
             >>> blocks_split(
             ...     (2, 3,), (1, 1,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
