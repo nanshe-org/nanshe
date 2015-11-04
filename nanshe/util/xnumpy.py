@@ -2896,6 +2896,9 @@ def blocks_split(space_shape, block_shape, block_halo=None):
             <BLANKLINE>
              [(slice(0, 1, 1),), (slice(0, 1, 1),)])
 
+            >>> blocks_split((2,), (-1,))
+            ([(slice(0, 2, 1),)], [(slice(0, 2, 1),)], [(slice(0, 2, 1),)])
+
             >>> blocks_split(
             ...     (2, 3,), (1, 1,)
             ... )  #doctest: +NORMALIZE_WHITESPACE
@@ -3091,6 +3094,9 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
     for each_dim in xrange(len(space_shape)):
         # Construct each block using the block size given. Allow to spill over.
+        if block_shape[each_dim] == -1:
+            block_shape[each_dim] = space_shape[each_dim]
+
         a_range = numpy.arange(0, space_shape[each_dim], block_shape[each_dim])
         a_range = expand_view(a_range, reps_before=2).copy()
         a_range[1] += block_shape[each_dim]
