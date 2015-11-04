@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy &mdash; nanshe 0.1.0a31 documentation</title>
+    <title>nanshe.util.xnumpy &mdash; nanshe 0.1.0a32 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a31',
+        VERSION:     '0.1.0a32',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a31 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a32 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a31 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a32 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -2956,6 +2956,9 @@
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">             [(slice(0, 1, 1),), (slice(0, 1, 1),)])</span>
 
+<span class="sd">            &gt;&gt;&gt; blocks_split((2,), (-1,))</span>
+<span class="sd">            ([(slice(0, 2, 1),)], [(slice(0, 2, 1),)], [(slice(0, 2, 1),)])</span>
+
 <span class="sd">            &gt;&gt;&gt; blocks_split(</span>
 <span class="sd">            ...     (2, 3,), (1, 1,)</span>
 <span class="sd">            ... )  #doctest: +NORMALIZE_WHITESPACE</span>
@@ -3151,6 +3154,9 @@
 
     <span class="k">for</span> <span class="n">each_dim</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">space_shape</span><span class="p">)):</span>
         <span class="c"># Construct each block using the block size given. Allow to spill over.</span>
+        <span class="k">if</span> <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">space_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span>
+
         <span class="n">a_range</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">space_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">],</span> <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">])</span>
         <span class="n">a_range</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">a_range</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">a_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span>
@@ -5462,7 +5468,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a31 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a32 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
