@@ -400,6 +400,25 @@ def class_decorate_methods(**method_decorators):
     return(metaclass(MetaMethodsDecorator))
 
 
+def unwrap(a_callable):
+    """
+        Returns the underlying function that was wrapped.
+
+        Args:
+            a_callable(callable):     some wrapped (or not) callable.
+
+        Returns:
+            (callable):               the callable that is no longer wrapped.
+    """
+
+    unwrapped_callable = a_callable
+
+    while hasattr(unwrapped_callable, "__wrapped__"):
+        unwrapped_callable = unwrapped_callable.__wrapped__
+
+    return(unwrapped_callable)
+
+
 def with_setup_state(setup=None, teardown=None):
     """
         Adds setup and teardown callable to a function s.t. they can mutate it.
