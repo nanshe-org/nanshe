@@ -26,6 +26,8 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jul 23, 2014 16:24:36 EDT$"
 
 
+import collections
+import inspect
 import itertools
 import functools
 import types
@@ -417,6 +419,41 @@ def unwrap(a_callable):
         unwrapped_callable = unwrapped_callable.__wrapped__
 
     return(unwrapped_callable)
+
+
+def tied_call_args(a_callable, *args, **kwargs):
+    """
+        Ties all the args to their respective variable names.
+
+        Args:
+            a_callable(callable):     some callable.
+            *args(callable):          positional arguments for the callable.
+            **kwargs(callable):       keyword arguments for the callable.
+
+        Returns:
+            args (tuple):             ordered dictionary of arguments name and
+                                      their values, all variadic position
+                                      arguments, all variadic keyword
+                                      arguments.
+    """
+
+    sig = inspect.getargspec(a_callable)
+
+    unsorted_callargs = inspect.getcallargs(a_callable, *args, **kwargs)
+
+    new_args = tuple()
+    if (sig.varargs is not None):
+        new_args = unsorted_callargs[sig.varargs]
+
+    new_kwargs = dict()
+    if (sig.keywords is not None):
+        new_kwargs = unsorted_callargs[sig.keywords]
+
+    callargs = collections.OrderedDict()
+    for each_arg in sig.args:
+        callargs[each_arg] = unsorted_callargs[each_arg]
+
+    return(callargs, new_args, new_kwargs)
 
 
 def with_setup_state(setup=None, teardown=None):
