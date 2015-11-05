@@ -275,6 +275,31 @@ class TestWrappers(object):
         assert nanshe.util.wrappers.unwrap(func_2) != func_1
         assert nanshe.util.wrappers.unwrap(func_2) == func_0
 
+    def test_tied_call_args(self):
+        def func_0(a, b=5, *v, **k):
+            return(a + b + sum(v) + sum(k.values()))
+
+        tied_args, args, kwargs = nanshe.util.wrappers.tied_call_args(
+            func_0, 1
+        )
+        assert tied_args.items() == [("a", 1), ("b", 5)]
+        assert args == tuple()
+        assert kwargs.items() == []
+
+        tied_args, args, kwargs = nanshe.util.wrappers.tied_call_args(
+            func_0, a=1, c=7
+        )
+        assert tied_args.items() == [("a", 1), ("b", 5)]
+        assert args == tuple()
+        assert kwargs.items() == [("c", 7)]
+
+        tied_args, args, kwargs = nanshe.util.wrappers.tied_call_args(
+            func_0, 1, 2, 3, c=7
+        )
+        assert tied_args.items() == [("a", 1), ("b", 2)]
+        assert args == (3,)
+        assert kwargs.items() == [("c", 7)]
+
 
 def setup_with_setup_state_2(a_callable):
     print("setup_2")
