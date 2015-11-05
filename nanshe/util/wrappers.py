@@ -456,6 +456,32 @@ def tied_call_args(a_callable, *args, **kwargs):
     return(callargs, new_args, new_kwargs)
 
 
+def repack_call_args(a_callable, *args, **kwargs):
+    """
+        Reorganizes args and kwargs to match the given callables signature.
+
+        Args:
+            a_callable(callable):     some callable.
+            *args(callable):          positional arguments for the callable.
+            **kwargs(callable):       keyword arguments for the callable.
+
+        Returns:
+            args (tuple):             all arguments as passed as position
+                                      arguments, all default arguments and
+                                      all arguments passed as keyword
+                                      arguments.
+    """
+
+    callargs, new_args, new_kwargs = tied_call_args(
+        a_callable, *args, **kwargs
+    )
+
+    new_args = tuple(callargs.values()[:len(args)]) + new_args
+    new_kwargs.update(dict(callargs.items()[len(args):]))
+
+    return(new_args, new_kwargs)
+
+
 def with_setup_state(setup=None, teardown=None):
     """
         Adds setup and teardown callable to a function s.t. they can mutate it.
