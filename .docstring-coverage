@@ -171,7 +171,7 @@ File nanshe/util/wrappers.py
  - No docstring for MetaMethodsDecorator.__new__!
  - No docstring for with_setup_state_wrapper.stages!
  - No docstring for with_setup_state_wrapper.a_stage!
- Needed: 27; Exist: 21; Missing: 6; Coverage: 77.8%
+ Needed: 30; Exist: 24; Missing: 6; Coverage: 80.0%
 
 File nanshe/util/prof.py
  Needed: 10; Exist: 10; Missing: 0; Coverage: 100.0%
@@ -334,5 +334,5 @@ File nanshe/box/__init__.py
 
 
 Overall statistics for 35 files:
-Docstrings needed: 522; Docstrings exist: 294; Docstrings missing: 228
-Total docstring coverage: 56.3%;  Grade: not so bad
+Docstrings needed: 525; Docstrings exist: 297; Docstrings missing: 228
+Total docstring coverage: 56.6%;  Grade: not so bad

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.wrappers &mdash; nanshe 0.1.0a32 documentation</title>
+    <title>nanshe.util.wrappers &mdash; nanshe 0.1.0a33 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a32',
+        VERSION:     '0.1.0a33',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a32 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a33 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a32 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a33 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -86,6 +86,8 @@
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Jul 23, 2014 16:24:36 EDT$&quot;</span>
 
 
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">types</span>
@@ -460,6 +462,86 @@
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaMethodsDecorator</span><span class="p">))</span>
 
 </div>
+<div class="viewcode-block" id="unwrap"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.unwrap">[docs]</a><span class="k">def</span> <span class="nf">unwrap</span><span class="p">(</span><span class="n">a_callable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the underlying function that was wrapped.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_callable(callable):     some wrapped (or not) callable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (callable):               the callable that is no longer wrapped.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">unwrapped_callable</span> <span class="o">=</span> <span class="n">a_callable</span>
+
+    <span class="k">while</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">unwrapped_callable</span><span class="p">,</span> <span class="s">&quot;__wrapped__&quot;</span><span class="p">):</span>
+        <span class="n">unwrapped_callable</span> <span class="o">=</span> <span class="n">unwrapped_callable</span><span class="o">.</span><span class="n">__wrapped__</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">unwrapped_callable</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="tied_call_args"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.tied_call_args">[docs]</a><span class="k">def</span> <span class="nf">tied_call_args</span><span class="p">(</span><span class="n">a_callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ties all the args to their respective variable names.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_callable(callable):     some callable.</span>
+<span class="sd">            *args(callable):          positional arguments for the callable.</span>
+<span class="sd">            **kwargs(callable):       keyword arguments for the callable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            args (tuple):             ordered dictionary of arguments name and</span>
+<span class="sd">                                      their values, all variadic position</span>
+<span class="sd">                                      arguments, all variadic keyword</span>
+<span class="sd">                                      arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">a_callable</span><span class="p">)</span>
+
+    <span class="n">unsorted_callargs</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getcallargs</span><span class="p">(</span><span class="n">a_callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">new_args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">varargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="n">new_args</span> <span class="o">=</span> <span class="n">unsorted_callargs</span><span class="p">[</span><span class="n">sig</span><span class="o">.</span><span class="n">varargs</span><span class="p">]</span>
+
+    <span class="n">new_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">keywords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="n">new_kwargs</span> <span class="o">=</span> <span class="n">unsorted_callargs</span><span class="p">[</span><span class="n">sig</span><span class="o">.</span><span class="n">keywords</span><span class="p">]</span>
+
+    <span class="n">callargs</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">each_arg</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+        <span class="n">callargs</span><span class="p">[</span><span class="n">each_arg</span><span class="p">]</span> <span class="o">=</span> <span class="n">unsorted_callargs</span><span class="p">[</span><span class="n">each_arg</span><span class="p">]</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">callargs</span><span class="p">,</span> <span class="n">new_args</span><span class="p">,</span> <span class="n">new_kwargs</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="repack_call_args"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.repack_call_args">[docs]</a><span class="k">def</span> <span class="nf">repack_call_args</span><span class="p">(</span><span class="n">a_callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reorganizes args and kwargs to match the given callables signature.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_callable(callable):     some callable.</span>
+<span class="sd">            *args(callable):          positional arguments for the callable.</span>
+<span class="sd">            **kwargs(callable):       keyword arguments for the callable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            args (tuple):             all arguments as passed as position</span>
+<span class="sd">                                      arguments, all default arguments and</span>
+<span class="sd">                                      all arguments passed as keyword</span>
+<span class="sd">                                      arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">callargs</span><span class="p">,</span> <span class="n">new_args</span><span class="p">,</span> <span class="n">new_kwargs</span> <span class="o">=</span> <span class="n">tied_call_args</span><span class="p">(</span>
+        <span class="n">a_callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span>
+
+    <span class="n">new_args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">callargs</span><span class="o">.</span><span class="n">values</span><span class="p">()[:</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)])</span> <span class="o">+</span> <span class="n">new_args</span>
+    <span class="n">new_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">callargs</span><span class="o">.</span><span class="n">items</span><span class="p">()[</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">):]))</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">new_args</span><span class="p">,</span> <span class="n">new_kwargs</span><span class="p">)</span>
+
+</div>
 <div class="viewcode-block" id="with_setup_state"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.with_setup_state">[docs]</a><span class="k">def</span> <span class="nf">with_setup_state</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">teardown</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds setup and teardown callable to a function s.t. they can mutate it.</span>
@@ -576,7 +658,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a32 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a33 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
