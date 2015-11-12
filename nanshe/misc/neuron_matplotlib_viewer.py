@@ -87,11 +87,11 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
                 new_neuron_images(numpy.ndarray):     array of images (first
                                                       index is which image)
         """
-        if (new_neuron_images.ndim > 3):
+        if (len(new_neuron_images.shape) > 3):
             raise ValueError(
                 "Dimensions cannot be greater than 3. " +
                 "Was provided new_neuron_images with \"" +
-                str(new_neuron_images.ndim) + "\" dimensions."
+                str(len(new_neuron_images.shape)) + "\" dimensions."
             )
 
         self.neuron_images = new_neuron_images
@@ -103,7 +103,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         else:
             viewer_show_method = self.viewer.imshow
 
-        if (self.neuron_images.ndim == 3):
+        if (len(self.neuron_images.shape) == 3):
             #self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             self.image_view = viewer_show_method(
                 self.neuron_images[0],
@@ -123,7 +123,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         self.image_view_colorbar = self.colorbar(
             self.image_view, ax=self.viewer)
 
-        if (self.neuron_images.ndim == 3):
+        if (len(self.neuron_images.shape) == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
 
             self.time_nav_cid = self.time_nav.on_time_update(self.time_update)
@@ -133,7 +133,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             Method to be called by the TimeNavigator when the time changes.
             Updates image displayed.
         """
-        if (self.neuron_images.ndim == 3):
+        if (len(self.neuron_images.shape) == 3):
             self.image_view.set_array(
                 self.neuron_images[self.time_nav.stime.val])
             self.canvas.draw_idle()
