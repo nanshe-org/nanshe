@@ -358,6 +358,11 @@ def convert_tiffs(new_tiff_filenames,
 
         new_hdf5_dataset_axis_pos = 0
         for each_new_tiff_filename in new_tiff_filenames:
+            # Log the filename in case something goes wrong.
+            trace_logger.info(
+                "Now appending TIFF: \"" + str(each_new_tiff_filename) + "\""
+            )
+
             # Read the data in the format specified.
             each_new_tiff_array = get_standard_tiff_array(
                 each_new_tiff_filename,
