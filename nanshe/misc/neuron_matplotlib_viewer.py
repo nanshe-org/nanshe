@@ -115,22 +115,12 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         else:
             viewer_show_method = self.viewer.imshow
 
-        if (len(self.neuron_images.shape) == 3):
-            #self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(
-                self.get_image(0).astype(float),
-                cmap=self.cmap,
-                vmin=self.vmin,
-                vmax=self.vmax
-            )
-        else:
-            #self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
-            self.image_view = viewer_show_method(
-                self.get_image().astype(float),
-                cmap=self.cmap,
-                vmin=self.vmin,
-                vmax=self.vmax
-            )
+        self.image_view = viewer_show_method(
+            self.get_image(0).astype(float),
+            cmap=self.cmap,
+            vmin=self.vmin,
+            vmax=self.vmax
+        )
 
         self.image_view_colorbar = self.colorbar(
             self.image_view, ax=self.viewer)
