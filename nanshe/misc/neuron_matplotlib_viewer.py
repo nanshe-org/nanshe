@@ -118,7 +118,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         if (len(self.neuron_images.shape) == 3):
             #self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             self.image_view = viewer_show_method(
-                self.neuron_images[0],
+                self.neuron_images[0].astype(float),
                 cmap=self.cmap,
                 vmin=self.vmin,
                 vmax=self.vmax
@@ -126,7 +126,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         else:
             #self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             self.image_view = viewer_show_method(
-                self.neuron_images,
+                self.neuron_images.astype(float),
                 cmap=self.cmap,
                 vmin=self.vmin,
                 vmax=self.vmax
@@ -164,7 +164,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             Updates image displayed.
         """
         if (len(self.neuron_images.shape) == 3):
-            self.image_view.set_array(self.get_current_image())
+            self.image_view.set_array(self.get_current_image().astype(float))
             self.canvas.draw_idle()
 
     def format_coord(self, x, y):
