@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.misc.neuron_matplotlib_viewer &mdash; nanshe 0.1.0a33+4.g16aa1a4 documentation</title>
+    <title>nanshe.misc.neuron_matplotlib_viewer &mdash; nanshe 0.1.0a33+9.gc8a5bc0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a33+4.g16aa1a4',
+        VERSION:     '0.1.0a33+9.gc8a5bc0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a33+4.g16aa1a4 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a33+9.gc8a5bc0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a33+4.g16aa1a4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a33+9.gc8a5bc0 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -92,6 +92,8 @@
 <span class="c"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
 
+<span class="c"># To get type info.</span>
+<span class="kn">from</span> <span class="nn">nanshe.util.xnumpy</span> <span class="kn">import</span> <span class="n">info</span>
 
 <span class="c"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -139,7 +141,9 @@
 <div class="viewcode-block" id="NeuronMatplotlibViewer.set_images"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.set_images">[docs]</a>    <span class="k">def</span> <span class="nf">set_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                    <span class="n">new_neuron_images</span><span class="p">,</span>
                    <span class="n">cmap</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">,</span>
-                   <span class="n">use_matshow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                   <span class="n">use_matshow</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                   <span class="n">vmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="n">vmax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sets the images to be viewed.</span>
 
@@ -147,15 +151,23 @@
 <span class="sd">                new_neuron_images(numpy.ndarray):     array of images (first</span>
 <span class="sd">                                                      index is which image)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">new_neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_neuron_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s">&quot;Dimensions cannot be greater than 3. &quot;</span> <span class="o">+</span>
                 <span class="s">&quot;Was provided new_neuron_images with </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-                <span class="nb">str</span><span class="p">(</span><span class="n">new_neuron_images</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> dimensions.&quot;</span>
+                <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_neuron_images</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> dimensions.&quot;</span>
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span> <span class="o">=</span> <span class="n">new_neuron_images</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vmin</span> <span class="o">=</span> <span class="n">vmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vmax</span> <span class="o">=</span> <span class="n">vmax</span>
+
+        <span class="n">type_info</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="n">new_neuron_images</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vmin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+           <span class="bp">self</span><span class="o">.</span><span class="n">vmin</span> <span class="o">=</span> <span class="n">type_info</span><span class="o">.</span><span class="n">min</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vmax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+           <span class="bp">self</span><span class="o">.</span><span class="n">vmax</span> <span class="o">=</span> <span class="n">type_info</span><span class="o">.</span><span class="n">max</span>
 
         <span class="n">viewer_show_method</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">if</span> <span class="n">use_matshow</span><span class="p">:</span>
@@ -163,39 +175,54 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">viewer_show_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">imshow</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
             <span class="c">#self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span> <span class="o">=</span> <span class="n">viewer_show_method</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                 <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span>
-                <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
-                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+                <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vmin</span><span class="p">,</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vmax</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c">#self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span> <span class="o">=</span> <span class="n">viewer_show_method</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">,</span>
                 <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span>
-                <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
-                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+                <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vmin</span><span class="p">,</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vmax</span>
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">image_view_colorbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time_nav</span> <span class="o">=</span> <span class="n">TimeNavigator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">time_nav_cid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_nav</span><span class="o">.</span><span class="n">on_time_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_update</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="NeuronMatplotlibViewer.get_current_image"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.get_current_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Gets the current image or the image if it is a projection.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                numpy.ndarray:      the current image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">cur_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="n">cur_img</span> <span class="o">=</span> <span class="n">cur_img</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">time_nav</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">cur_img</span> <span class="o">=</span> <span class="n">cur_img</span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">cur_img</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="NeuronMatplotlibViewer.time_update"><a class="viewcode-back" href="../../../nanshe.misc.neuron_matplotlib_viewer.html#nanshe.misc.neuron_matplotlib_viewer.NeuronMatplotlibViewer.time_update">[docs]</a>    <span class="k">def</span> <span class="nf">time_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Method to be called by the TimeNavigator when the time changes.</span>
 <span class="sd">            Updates image displayed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">time_nav</span><span class="o">.</span><span class="n">stime</span><span class="o">.</span><span class="n">val</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">neuron_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_view</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_current_image</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span>
 
 </div></div>
@@ -488,7 +515,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a33+4.g16aa1a4 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a33+9.gc8a5bc0 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
