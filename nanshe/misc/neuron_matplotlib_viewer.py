@@ -162,8 +162,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             Updates image displayed.
         """
         if (len(self.neuron_images.shape) == 3):
-            self.image_view.set_array(
-                self.neuron_images[self.time_nav.stime.val])
+            self.image_view.set_array(self.get_current_image())
             self.canvas.draw_idle()
 
 
