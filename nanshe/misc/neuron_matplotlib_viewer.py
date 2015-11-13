@@ -80,7 +80,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
     def set_images(self,
                    new_neuron_images,
-                   cmap=mpl.cm.RdBu,
+                   cmap=mpl.cm.Greys_r,
                    use_matshow=False,
                    vmin=None,
                    vmax=None):
