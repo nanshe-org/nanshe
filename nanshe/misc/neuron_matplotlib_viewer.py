@@ -118,7 +118,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         if (len(self.neuron_images.shape) == 3):
             #self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             self.image_view = viewer_show_method(
-                self.neuron_images[0].astype(float),
+                self.get_image(0).astype(float),
                 cmap=self.cmap,
                 vmin=self.vmin,
                 vmax=self.vmax
@@ -126,7 +126,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         else:
             #self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             self.image_view = viewer_show_method(
-                self.neuron_images.astype(float),
+                self.get_image().astype(float),
                 cmap=self.cmap,
                 vmin=self.vmin,
                 vmax=self.vmax
@@ -142,9 +142,12 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
         self.viewer.format_coord = self.format_coord
 
-    def get_current_image(self):
+    def get_image(self, i=None):
         """
             Gets the current image or the image if it is a projection.
+
+            Args:
+                i(int):             image to retrieve (defaults to selection).
 
             Returns:
                 numpy.ndarray:      the current image.
@@ -164,7 +167,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             Updates image displayed.
         """
         if (len(self.neuron_images.shape) == 3):
-            self.image_view.set_array(self.get_current_image().astype(float))
+            self.image_view.set_array(self.get_image().astype(float))
             self.canvas.draw_idle()
 
     def format_coord(self, x, y):
@@ -182,7 +185,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             xi = int(round(x))
             yi = int(round(y))
 
-            z = float(self.get_current_image()[yi, xi])
+            z = float(self.get_image()[yi, xi])
 
             return 'x=%1.4f, y=%1.4f, z=%1.4f'%(x, y, z)
         except:
