@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy &mdash; nanshe 0.1.0a33+2.g5962e77 documentation</title>
+    <title>nanshe.util.xnumpy &mdash; nanshe 0.1.0a33+4.g16aa1a4 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a33+2.g5962e77',
+        VERSION:     '0.1.0a33+4.g16aa1a4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a33+2.g5962e77 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a33+4.g16aa1a4 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a33+2.g5962e77 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a33+4.g16aa1a4 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -113,6 +113,43 @@
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
+<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="info"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.info">[docs]</a><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="n">a_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a ``numpy.dtype`` or any type that can be converted to a</span>
+<span class="sd">        ``numpy.dtype`` and returns its info.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            a_type(type):                  the type to find info for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (np.core.getlimits.info):      info about the type.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; info(float)</span>
+<span class="sd">            finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
+
+<span class="sd">            &gt;&gt;&gt; info(numpy.float64)</span>
+<span class="sd">            finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
+
+<span class="sd">            &gt;&gt;&gt; info(numpy.float32)</span>
+<span class="sd">            finfo(resolution=1e-06, min=-3.4028235e+38, max=3.4028235e+38, dtype=float32)</span>
+
+<span class="sd">            &gt;&gt;&gt; info(complex)</span>
+<span class="sd">            finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
+
+<span class="sd">            &gt;&gt;&gt; info(int)</span>
+<span class="sd">            iinfo(min=-9223372036854775808, max=9223372036854775807, dtype=int64)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">a_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">a_type</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+
+    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">a_type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">a_type</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">a_type</span><span class="p">))</span>
+
+</div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="to_ctype"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.to_ctype">[docs]</a><span class="k">def</span> <span class="nf">to_ctype</span><span class="p">(</span><span class="n">a_type</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -5468,7 +5505,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a33+2.g5962e77 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a33+4.g16aa1a4 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

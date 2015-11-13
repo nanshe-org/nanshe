@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy module &mdash; nanshe 0.1.0a33+2.g5962e77 documentation</title>
+    <title>nanshe.util.xnumpy module &mdash; nanshe 0.1.0a33+4.g16aa1a4 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a33+2.g5962e77',
+        VERSION:     '0.1.0a33+4.g16aa1a4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a33+2.g5962e77 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a33+4.g16aa1a4 documentation" href="index.html" />
     <link rel="next" title="nanshe.viewer module" href="nanshe.viewer.html" />
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a33+2.g5962e77 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a33+4.g16aa1a4 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -2544,6 +2544,46 @@ original array.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">index_axis_at_pos</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">19</span>
 <span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.util.xnumpy.info">
+<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">info</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a <code class="docutils literal"><span class="pre">numpy.dtype</span></code> or any type that can be converted to a
+<code class="docutils literal"><span class="pre">numpy.dtype</span></code> and returns its info.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a_type</strong> (<em>type</em>) &#8211; the type to find info for.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">info about the type.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(np.core.getlimits.info)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="go">finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="go">finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="go">finfo(resolution=1e-06, min=-3.4028235e+38, max=3.4028235e+38, dtype=float32)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+<span class="go">finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">iinfo(min=-9223372036854775808, max=9223372036854775807, dtype=int64)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -5235,7 +5275,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a33+2.g5962e77 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a33+4.g16aa1a4 documentation</a> &raquo;</li>
  
       </ul>
     </div>
