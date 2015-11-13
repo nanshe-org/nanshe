@@ -140,6 +140,22 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
             self.time_nav_cid = self.time_nav.on_time_update(self.time_update)
 
+    def get_current_image(self):
+        """
+            Gets the current image or the image if it is a projection.
+
+            Returns:
+                numpy.ndarray:      the current image.
+        """
+
+        cur_img = self.neuron_images
+        if (len(self.neuron_images.shape) == 3):
+            cur_img = cur_img[self.time_nav.stime.val]
+        elif (len(self.neuron_images.shape) == 2):
+            cur_img = cur_img[...]
+
+        return(cur_img)
+
     def time_update(self):
         """
             Method to be called by the TimeNavigator when the time changes.
