@@ -32,6 +32,8 @@ warnings.warn(
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
+# To get type info.
+from nanshe.util.xnumpy import info
 
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
@@ -79,7 +81,9 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
     def set_images(self,
                    new_neuron_images,
                    cmap=mpl.cm.RdBu,
-                   use_matshow=False):
+                   use_matshow=False,
+                   vmin=None,
+                   vmax=None):
         """
             Sets the images to be viewed.
 
@@ -87,15 +91,23 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
                 new_neuron_images(numpy.ndarray):     array of images (first
                                                       index is which image)
         """
-        if (new_neuron_images.ndim > 3):
+        if (len(new_neuron_images.shape) > 3):
             raise ValueError(
                 "Dimensions cannot be greater than 3. " +
                 "Was provided new_neuron_images with \"" +
-                str(new_neuron_images.ndim) + "\" dimensions."
+                str(len(new_neuron_images.shape)) + "\" dimensions."
             )
 
         self.neuron_images = new_neuron_images
         self.cmap = cmap
+        self.vmin = vmin
+        self.vmax = vmax
+
+        type_info = info(new_neuron_images.dtype)
+        if self.vmin is None:
+           self.vmin = type_info.min
+        if self.vmax is None:
+           self.vmax = type_info.max
 
         viewer_show_method = None
         if use_matshow:
@@ -103,39 +115,54 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         else:
             viewer_show_method = self.viewer.imshow
 
-        if (self.neuron_images.ndim == 3):
+        if (len(self.neuron_images.shape) == 3):
             #self.image_view = self.viewer.imshow(self.neuron_images[0], cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             self.image_view = viewer_show_method(
                 self.neuron_images[0],
                 cmap=self.cmap,
-                vmin=self.neuron_images.min(),
-                vmax=self.neuron_images.max()
+                vmin=self.vmin,
+                vmax=self.vmax
             )
         else:
             #self.image_view = self.viewer.imshow(self.neuron_images, cmap = self.cmap, vmin = self.neuron_images.min(), vmax = self.neuron_images.max())
             self.image_view = viewer_show_method(
                 self.neuron_images,
                 cmap=self.cmap,
-                vmin=self.neuron_images.min(),
-                vmax=self.neuron_images.max()
+                vmin=self.vmin,
+                vmax=self.vmax
             )
 
         self.image_view_colorbar = self.colorbar(
             self.image_view, ax=self.viewer)
 
-        if (self.neuron_images.ndim == 3):
+        if (len(self.neuron_images.shape) == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
 
             self.time_nav_cid = self.time_nav.on_time_update(self.time_update)
+
+    def get_current_image(self):
+        """
+            Gets the current image or the image if it is a projection.
+
+            Returns:
+                numpy.ndarray:      the current image.
+        """
+
+        cur_img = self.neuron_images
+        if (len(self.neuron_images.shape) == 3):
+            cur_img = cur_img[self.time_nav.stime.val]
+        elif (len(self.neuron_images.shape) == 2):
+            cur_img = cur_img[...]
+
+        return(cur_img)
 
     def time_update(self):
         """
             Method to be called by the TimeNavigator when the time changes.
             Updates image displayed.
         """
-        if (self.neuron_images.ndim == 3):
-            self.image_view.set_array(
-                self.neuron_images[self.time_nav.stime.val])
+        if (len(self.neuron_images.shape) == 3):
+            self.image_view.set_array(self.get_current_image())
             self.canvas.draw_idle()
 
 
