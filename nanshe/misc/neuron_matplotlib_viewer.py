@@ -155,9 +155,12 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
         cur_img = self.neuron_images
         if (len(self.neuron_images.shape) == 3):
-            cur_img = cur_img[self.time_nav.stime.val]
-        elif (len(self.neuron_images.shape) == 2):
+            i = self.time_nav.stime.val if i is None else i
+            cur_img = cur_img[i]
+        else:
             cur_img = cur_img[...]
+
+        cur_img = cur_img[...]
 
         return(cur_img)
 
