@@ -140,6 +140,8 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
             self.time_nav_cid = self.time_nav.on_time_update(self.time_update)
 
+        self.viewer.format_coord = self.format_coord
+
     def get_current_image(self):
         """
             Gets the current image or the image if it is a projection.
@@ -164,6 +166,27 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         if (len(self.neuron_images.shape) == 3):
             self.image_view.set_array(self.get_current_image())
             self.canvas.draw_idle()
+
+    def format_coord(self, x, y):
+        """
+            Include intensity when showing coordinates during mouseover.
+
+            Args:
+                x(float):    cursor's x position within the image.
+                y(float):    cursor's y position within the image.
+
+            Returns:
+                str:         coordinates and intensity if it can be gotten.
+        """
+        try:
+            xi = int(round(x))
+            yi = int(round(y))
+
+            z = float(self.get_current_image()[yi, xi])
+
+            return 'x=%1.4f, y=%1.4f, z=%1.4f'%(x, y, z)
+        except:
+            return 'x=%1.4f, y=%1.4f'%(x, y)
 
 
 @prof.log_class(trace_logger)
