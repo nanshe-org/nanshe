@@ -116,7 +116,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             viewer_show_method = self.viewer.imshow
 
         self.image_view = viewer_show_method(
-            self.get_image(0).astype(float),
+            self.get_image(0),
             cmap=self.cmap,
             vmin=self.vmin,
             vmax=self.vmax
@@ -152,6 +152,8 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
         cur_img = cur_img[...]
 
+        cur_img = cur_img.astype(float)
+
         return(cur_img)
 
     def time_update(self):
@@ -160,7 +162,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             Updates image displayed.
         """
         if (len(self.neuron_images.shape) == 3):
-            self.image_view.set_array(self.get_image().astype(float))
+            self.image_view.set_array(self.get_image())
             self.canvas.draw_idle()
 
     def format_coord(self, x, y):
@@ -178,7 +180,7 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
             xi = int(round(x))
             yi = int(round(y))
 
-            z = float(self.get_image()[yi, xi])
+            z = self.get_image()[yi, xi]
 
             return 'x=%1.4f, y=%1.4f, z=%1.4f'%(x, y, z)
         except:
