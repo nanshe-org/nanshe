@@ -152,6 +152,8 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
         cur_img = cur_img[...]
 
+        cur_img = cur_img.astype(float)
+
         return(cur_img)
 
     def time_update(self):
