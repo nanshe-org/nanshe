@@ -41,8 +41,9 @@ logger = prof.logging.getLogger(__name__)
 
 import matplotlib as mpl
 import matplotlib.figure
+import matplotlib.colors
 
-from matplotlib.widgets import Slider, Button
+from matplotlib.widgets import Slider, Button, SpanSelector
 
 
 @prof.log_class(trace_logger)
@@ -109,6 +110,9 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         if self.vmax is None:
            self.vmax = type_info.max
 
+        self.svmin = self.vmin
+        self.svmax = self.vmax
+
         viewer_show_method = None
         if use_matshow:
             viewer_show_method = self.viewer.matshow
@@ -124,6 +128,13 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
 
         self.image_view_colorbar = self.colorbar(
             self.image_view, ax=self.viewer)
+
+        self.image_view_colorbar_selector = SpanSelector(
+            self.image_view_colorbar.ax,
+            self.color_range_update, 'vertical',
+            useblit=True,
+            rectprops=dict(alpha=0.3, facecolor='yellow')
+        )
 
         if (len(self.neuron_images.shape) == 3):
             self.time_nav = TimeNavigator(self, len(self.neuron_images) - 1)
@@ -155,6 +166,28 @@ class NeuronMatplotlibViewer(matplotlib.figure.Figure):
         cur_img = cur_img.astype(float)
 
         return(cur_img)
+
+    def color_range_update(self, vmin, vmax):
+        """
+            Handles an update to the vmin and vmax range based on the selection
+            provided.
+
+            Args:
+                vmin         the min value selected
+                vmax         the max value selected
+        """
+        if vmin != vmax:
+            self.svmin = (self.svmax - self.svmin) * vmin + self.svmin
+            self.svmax = (self.svmax - self.svmin) * vmax + self.svmin
+        else:
+            self.svmin = self.vmin
+            self.svmax = self.vmax
+
+        norm = matplotlib.colors.Normalize(self.svmin, self.svmax)
+        self.image_view_colorbar.set_norm(norm)
+        self.image_view.set_norm(norm)
+
+        self.canvas.draw_idle()
 
     def time_update(self):
         """
