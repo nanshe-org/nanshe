@@ -277,10 +277,9 @@ def register_mean_offsets(frames2reg,
         this_space_shift_mean[...] = 0
         for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
             this_space_shift_mean += this_space_shift[range_ij].sum(axis=0)
-        numpy.round(
-            this_space_shift_mean.astype(float_type) / len(this_space_shift),
-            out=this_space_shift_mean
-        )
+        this_space_shift_mean[...] = numpy.round(
+            this_space_shift_mean.astype(float_type) / len(this_space_shift)
+        ).astype(this_space_shift_mean.dtype)
         for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
             this_space_shift[range_ij] = xnumpy.find_relative_offsets(
                 this_space_shift[range_ij],
