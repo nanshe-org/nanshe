@@ -171,31 +171,23 @@ def get_standard_tiff_array(new_tiff_filename,
                                                 is 1 so changes nothing)
 
         Returns:
-            (numpy.ndarray):                    an array with the axis order
+            (numpy.memmap):                     an array with the axis order
                                                 specified.
     """
 
     assert (pages_to_channel > 0)
 
-    # Get the shape and dtype information
-    shape, dtype = get_multipage_tiff_shape_dtype(new_tiff_filename).values()
+    with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
+        new_tiff_array = new_tiff_file.asarray(memmap=True)
 
-    # Read the image into a NumPy array.
-    if shape[-2] > 1:
-        # Our algorithm expect double precision
-        new_tiff_array = vigra.impex.readVolume(
-            new_tiff_filename, dtype=dtype
-        )
-        # Convert to normal array
-        new_tiff_array = new_tiff_array.view(numpy.ndarray)
-    else:
-        # Our algorithm expect double precision
-        new_tiff_array = vigra.impex.readImage(
-            new_tiff_filename, dtype=dtype)
-        # Convert to normal array
-        new_tiff_array = new_tiff_array.view(numpy.ndarray)
-        # Need to add singleton time dimension before channel
-        new_tiff_array = xnumpy.add_singleton_axis_pos(new_tiff_array, -2)
+    # Add a singleton channel if none is present.
+    if new_tiff_array.ndim == 3:
+        new_tiff_array = new_tiff_array[None]
+
+    # Fit the old VIGRA style array. (may try to remove in the future)
+    new_tiff_array = new_tiff_array.transpose(
+        tuple(xrange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
+    )
 
     # Check to make sure the dimensions are ok
     if (new_tiff_array.ndim == 5):
