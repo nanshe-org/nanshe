@@ -2356,12 +2356,13 @@ def enumerate_masks_max(new_masks, axis=0):
 
     for i in xrange(new_masks.shape[axis]):
         i = new_enumerated_masks_max.dtype.type(i)
+        one = new_enumerated_masks_max.dtype.type(1)
         numpy.maximum(
             new_enumerated_masks_max,
-            (i+1) * add_singleton_axis_pos(
-                        index_axis_at_pos(new_masks, axis, i),
-                        axis
-                    ),
+            (i + one) * add_singleton_axis_pos(
+                            index_axis_at_pos(new_masks, axis, i),
+                            axis
+                        ),
             out=new_enumerated_masks_max
         )
 
