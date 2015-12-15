@@ -2,5 +2,6 @@
     "axis" : 0,               "__comment__axis" :             "Which axis to concatenate TIFFs along.",
     "channel" : 0,            "__comment__channel" :          "Which channel to use.",
     "z_index" : 0,            "__comment__z_index" :          "Which z-index to use.",
-    "pages_to_channel" : 2,   "__comment__pages_to_channel" : "How many channels are present."
+    "pages_to_channel" : 2,   "__comment__pages_to_channel" : "How many channels are present.",
+    "memmap" : false,         "__comment__memmap" :           "Whether to memory map TIFF files during conversion."
 }
