@@ -371,23 +371,19 @@ def convert_tiffs(new_tiff_filenames,
             # Extract the descriptions.
             each_new_tiff_description = []
             each_new_tiff_file = None
-            try:
-                each_new_tiff_file = libtiff.TiffFile(
-                    each_new_tiff_filename, 'r'
-                )
-
+            with tifffile.TiffFile(each_new_tiff_filename) as each_new_tiff_file:
                 for i in xrange(
                         channel,
-                        each_new_tiff_file.get_depth(),
+                        len(each_new_tiff_file),
                         pages_to_channel
                 ):
-                    page_i = each_new_tiff_file.IFD[i]
-                    metadata_i = page_i.entries_dict
+                    page_i = each_new_tiff_file[i]
+                    metadata_i = page_i.tags
                     desc_i = u""
 
                     try:
                         desc_i = unicode(
-                            metadata_i["ImageDescription"].human()
+                            metadata_i["image_description"].value
                         )
                     except KeyError:
                         pass
@@ -395,9 +391,6 @@ def convert_tiffs(new_tiff_filenames,
                     each_new_tiff_description.append(
                         desc_i
                     )
-            finally:
-                if each_new_tiff_file:
-                    each_new_tiff_file.close()
 
                 each_new_tiff_file = None
 
