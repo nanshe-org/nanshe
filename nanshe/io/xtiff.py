@@ -378,7 +378,11 @@ def convert_tiffs(new_tiff_filenames,
                     each_new_tiff_filename, 'r'
                 )
 
-                for i in xrange(each_new_tiff_file.get_depth()):
+                for i in xrange(
+                        channel,
+                        each_new_tiff_file.get_depth(),
+                        pages_to_channel
+                ):
                     metadata_i = each_new_tiff_file.IFD[i].entries_dict
 
                     desc_i = u""

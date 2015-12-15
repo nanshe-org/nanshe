@@ -29,8 +29,9 @@ class TestXTiff(object):
         self.filedata = collections.OrderedDict()
         self.offsets = None
         self.data = None
+        self.pages_to_channel = 2
 
-        self.data = numpy.random.random_integers(0, 255, (1000, 1, 102, 101, 1)).astype(numpy.uint8)
+        self.data = numpy.random.random_integers(0, 255, (500, 1, 102, 101, 2)).astype(numpy.uint8)
 
         self.offsets = list(xrange(0, self.data.shape[0] + 100 - 1, 100))
 
@@ -47,7 +48,9 @@ class TestXTiff(object):
 
             self.filedata[each_filename] = each_data
 
-            vigra.impex.writeVolume(nanshe.util.xnumpy.tagging_reorder_array(each_data, to_axis_order="czyxt")[0, 0],
+            each_data_shaped = nanshe.util.xnumpy.tagging_reorder_array(each_data, to_axis_order="zyxtc")
+            each_data_shaped = each_data_shaped.reshape(each_data_shaped.shape[:-2] + (-1,))
+            vigra.impex.writeVolume(each_data_shaped[0],
                                     os.path.join(self.temp_dir, "test_tiff_" + str(i) + ".tif"), "")
 
         self.offsets = self.offsets[:-1]
@@ -58,14 +61,23 @@ class TestXTiff(object):
 
             each_filedata = nanshe.util.xnumpy.tagging_reorder_array(each_filedata, to_axis_order="zyxtc")[0]
 
-            assert (each_shape_dtype["shape"] == each_filedata.shape)
+            print(each_shape_dtype["shape"])
+            print(each_filedata.shape)
+            assert (each_shape_dtype["shape"][:-2] == each_filedata.shape[:-2])
+            assert (
+                each_shape_dtype["shape"][-2] == numpy.prod(
+                    each_filedata.shape[-2:]
+                )
+            )
+            assert (each_shape_dtype["shape"][-1] == 1)
             assert (each_shape_dtype["dtype"] == each_filedata.dtype.type)
 
     def test_get_multipage_tiff_shape_dtype_transformed(self):
         for each_filename, each_filedata in self.filedata.items():
             each_shape_dtype = nanshe.io.xtiff.get_multipage_tiff_shape_dtype_transformed(
                 each_filename,
-                axis_order="tzyxc"
+                axis_order="tzyxc",
+                pages_to_channel=self.pages_to_channel
             )
 
             assert (each_shape_dtype["shape"] == each_filedata.shape)
@@ -73,7 +85,9 @@ class TestXTiff(object):
 
     def test_get_standard_tiff_array(self):
         for each_filename, each_filedata in self.filedata.items():
-            each_data = nanshe.io.xtiff.get_standard_tiff_array(each_filename)
+            each_data = nanshe.io.xtiff.get_standard_tiff_array(
+                each_filename, pages_to_channel=self.pages_to_channel
+            )
 
             assert (each_data.shape == each_filedata.shape)
             assert (each_data.dtype == each_filedata.dtype)
@@ -84,7 +98,11 @@ class TestXTiff(object):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
         hdf5_filepath = hdf5_filename + "/data"
 
-        nanshe.io.xtiff.convert_tiffs(self.filedata.keys(), hdf5_filepath)
+        nanshe.io.xtiff.convert_tiffs(
+            self.filedata.keys(),
+            hdf5_filepath,
+            pages_to_channel=self.pages_to_channel
+        )
 
         assert os.path.exists(hdf5_filename)
 
