@@ -30,13 +30,17 @@ import collections
 import numpy
 import h5py
 
-import libtiff
-
 import vigra
 import vigra.impex
 
 from nanshe.util import iters, xglob, prof,\
     xnumpy, pathHelpers
+
+try:
+    import tifffile
+except ImportError:
+    # scikit-image is bundled with tifffile so use it.
+    from skimage.external import tifffile
 
 
 
@@ -146,7 +150,8 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
 @prof.log_call(trace_logger)
 def get_standard_tiff_array(new_tiff_filename,
                             axis_order="tzyxc",
-                            pages_to_channel=1):
+                            pages_to_channel=1,
+                            memmap=False):
     """
         Reads a tiff file and returns a standard 5D array.
 
@@ -164,32 +169,29 @@ def get_standard_tiff_array(new_tiff_filename,
                                                 separate channels. (by default
                                                 is 1 so changes nothing)
 
+            memmap(bool):                       allows one to load the array
+                                                using a memory mapped file as
+                                                opposed to reading it directly.
+                                                (by default is False)
+
         Returns:
-            (numpy.ndarray):                    an array with the axis order
+            (numpy.ndarray or numpy.memmap):    an array with the axis order
                                                 specified.
     """
 
     assert (pages_to_channel > 0)
 
-    # Get the shape and dtype information
-    shape, dtype = get_multipage_tiff_shape_dtype(new_tiff_filename).values()
+    with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
+        new_tiff_array = new_tiff_file.asarray(memmap=memmap)
 
-    # Read the image into a NumPy array.
-    if shape[-2] > 1:
-        # Our algorithm expect double precision
-        new_tiff_array = vigra.impex.readVolume(
-            new_tiff_filename, dtype=dtype
-        )
-        # Convert to normal array
-        new_tiff_array = new_tiff_array.view(numpy.ndarray)
-    else:
-        # Our algorithm expect double precision
-        new_tiff_array = vigra.impex.readImage(
-            new_tiff_filename, dtype=dtype)
-        # Convert to normal array
-        new_tiff_array = new_tiff_array.view(numpy.ndarray)
-        # Need to add singleton time dimension before channel
-        new_tiff_array = xnumpy.add_singleton_axis_pos(new_tiff_array, -2)
+    # Add a singleton channel if none is present.
+    if new_tiff_array.ndim == 3:
+        new_tiff_array = new_tiff_array[None]
+
+    # Fit the old VIGRA style array. (may try to remove in the future)
+    new_tiff_array = new_tiff_array.transpose(
+        tuple(xrange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
+    )
 
     # Check to make sure the dimensions are ok
     if (new_tiff_array.ndim == 5):
@@ -229,7 +231,8 @@ def convert_tiffs(new_tiff_filenames,
                   axis=0,
                   channel=0,
                   z_index=0,
-                  pages_to_channel=1):
+                  pages_to_channel=1,
+                  memmap=False):
     """
         Convert a stack of tiffs to an HDF5 file.
 
@@ -257,6 +260,11 @@ def convert_tiffs(new_tiff_filenames,
                                                 but are stored as pages, then
                                                 this will split neighboring
                                                 pages into separate channels.
+
+            memmap(bool):                       allows one to load the array
+                                                using a memory mapped file as
+                                                opposed to reading it directly.
+                                                (by default is False)
     """
 
     assert (pages_to_channel > 0)
@@ -367,29 +375,26 @@ def convert_tiffs(new_tiff_filenames,
             each_new_tiff_array = get_standard_tiff_array(
                 each_new_tiff_filename,
                 axis_order="cztyx",
-                pages_to_channel=pages_to_channel
+                pages_to_channel=pages_to_channel,
+                memmap=memmap
             )
 
             # Extract the descriptions.
             each_new_tiff_description = []
             each_new_tiff_file = None
-            try:
-                each_new_tiff_file = libtiff.TiffFile(
-                    each_new_tiff_filename, 'r'
-                )
-
+            with tifffile.TiffFile(each_new_tiff_filename) as each_new_tiff_file:
                 for i in xrange(
                         channel,
-                        each_new_tiff_file.get_depth(),
+                        len(each_new_tiff_file),
                         pages_to_channel
                 ):
-                    page_i = each_new_tiff_file.IFD[i]
-                    metadata_i = page_i.entries_dict
+                    page_i = each_new_tiff_file[i]
+                    metadata_i = page_i.tags
                     desc_i = u""
 
                     try:
                         desc_i = unicode(
-                            metadata_i["ImageDescription"].human()
+                            metadata_i["image_description"].value
                         )
                     except KeyError:
                         pass
@@ -397,9 +402,6 @@ def convert_tiffs(new_tiff_filenames,
                     each_new_tiff_description.append(
                         desc_i
                     )
-            finally:
-                if each_new_tiff_file:
-                    each_new_tiff_file.close()
 
                 each_new_tiff_file = None
 
