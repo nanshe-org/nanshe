@@ -30,7 +30,7 @@ class TestXTiff(object):
         self.offsets = None
         self.data = None
 
-        self.data = numpy.random.random_integers(0, 255, (1000, 1, 102, 101, 1)).astype(numpy.uint8)
+        self.data = numpy.random.random_integers(0, 255, (500, 1, 102, 101, 2)).astype(numpy.uint8)
 
         self.offsets = list(xrange(0, self.data.shape[0] + 100 - 1, 100))
 
@@ -47,7 +47,9 @@ class TestXTiff(object):
 
             self.filedata[each_filename] = each_data
 
-            vigra.impex.writeVolume(nanshe.util.xnumpy.tagging_reorder_array(each_data, to_axis_order="czyxt")[0, 0],
+            each_data_shaped = nanshe.util.xnumpy.tagging_reorder_array(each_data, to_axis_order="zyxtc")
+            each_data_shaped = each_data_shaped.reshape(each_data_shaped.shape[:-2] + (-1,))
+            vigra.impex.writeVolume(each_data_shaped[0],
                                     os.path.join(self.temp_dir, "test_tiff_" + str(i) + ".tif"), "")
 
         self.offsets = self.offsets[:-1]
