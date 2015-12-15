@@ -150,7 +150,8 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
 @prof.log_call(trace_logger)
 def get_standard_tiff_array(new_tiff_filename,
                             axis_order="tzyxc",
-                            pages_to_channel=1):
+                            pages_to_channel=1,
+                            memmap=False):
     """
         Reads a tiff file and returns a standard 5D array.
 
@@ -168,15 +169,20 @@ def get_standard_tiff_array(new_tiff_filename,
                                                 separate channels. (by default
                                                 is 1 so changes nothing)
 
+            memmap(bool):                       allows one to load the array
+                                                using a memory mapped file as
+                                                opposed to reading it directly.
+                                                (by default is False)
+
         Returns:
-            (numpy.memmap):                     an array with the axis order
+            (numpy.ndarray or numpy.memmap):    an array with the axis order
                                                 specified.
     """
 
     assert (pages_to_channel > 0)
 
     with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
-        new_tiff_array = new_tiff_file.asarray(memmap=True)
+        new_tiff_array = new_tiff_file.asarray(memmap=memmap)
 
     # Add a singleton channel if none is present.
     if new_tiff_array.ndim == 3:
@@ -225,7 +231,8 @@ def convert_tiffs(new_tiff_filenames,
                   axis=0,
                   channel=0,
                   z_index=0,
-                  pages_to_channel=1):
+                  pages_to_channel=1,
+                  memmap=False):
     """
         Convert a stack of tiffs to an HDF5 file.
 
@@ -253,6 +260,11 @@ def convert_tiffs(new_tiff_filenames,
                                                 but are stored as pages, then
                                                 this will split neighboring
                                                 pages into separate channels.
+
+            memmap(bool):                       allows one to load the array
+                                                using a memory mapped file as
+                                                opposed to reading it directly.
+                                                (by default is False)
     """
 
     assert (pages_to_channel > 0)
@@ -363,7 +375,8 @@ def convert_tiffs(new_tiff_filenames,
             each_new_tiff_array = get_standard_tiff_array(
                 each_new_tiff_filename,
                 axis_order="cztyx",
-                pages_to_channel=pages_to_channel
+                pages_to_channel=pages_to_channel,
+                memmap=memmap
             )
 
             # Extract the descriptions.
