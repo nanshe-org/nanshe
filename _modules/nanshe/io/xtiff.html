@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a36+7.g2639f74 documentation</title>
+    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a37 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a36+7.g2639f74',
+        VERSION:     '0.1.0a37',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a36+7.g2639f74 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a37 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a36+7.g2639f74 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a37 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -90,13 +90,17 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">h5py</span>
 
-<span class="kn">import</span> <span class="nn">libtiff</span>
-
 <span class="kn">import</span> <span class="nn">vigra</span>
 <span class="kn">import</span> <span class="nn">vigra.impex</span>
 
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span><span class="p">,</span> <span class="n">xglob</span><span class="p">,</span> <span class="n">prof</span><span class="p">,</span>\
     <span class="n">xnumpy</span><span class="p">,</span> <span class="n">pathHelpers</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">tifffile</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c"># scikit-image is bundled with tifffile so use it.</span>
+    <span class="kn">from</span> <span class="nn">skimage.external</span> <span class="kn">import</span> <span class="n">tifffile</span>
 
 
 
@@ -206,7 +210,8 @@
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_standard_tiff_array"><a class="viewcode-back" href="../../../nanshe.io.xtiff.html#nanshe.io.xtiff.get_standard_tiff_array">[docs]</a><span class="k">def</span> <span class="nf">get_standard_tiff_array</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">,</span>
                             <span class="n">axis_order</span><span class="o">=</span><span class="s">&quot;tzyxc&quot;</span><span class="p">,</span>
-                            <span class="n">pages_to_channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                            <span class="n">pages_to_channel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">memmap</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads a tiff file and returns a standard 5D array.</span>
 
@@ -224,32 +229,29 @@
 <span class="sd">                                                separate channels. (by default</span>
 <span class="sd">                                                is 1 so changes nothing)</span>
 
+<span class="sd">            memmap(bool):                       allows one to load the array</span>
+<span class="sd">                                                using a memory mapped file as</span>
+<span class="sd">                                                opposed to reading it directly.</span>
+<span class="sd">                                                (by default is False)</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                    an array with the axis order</span>
+<span class="sd">            (numpy.ndarray or numpy.memmap):    an array with the axis order</span>
 <span class="sd">                                                specified.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
-    <span class="c"># Get the shape and dtype information</span>
-    <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">get_multipage_tiff_shape_dtype</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffFile</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_tiff_file</span><span class="p">:</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">memmap</span><span class="o">=</span><span class="n">memmap</span><span class="p">)</span>
 
-    <span class="c"># Read the image into a NumPy array.</span>
-    <span class="k">if</span> <span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="c"># Our algorithm expect double precision</span>
-        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">readVolume</span><span class="p">(</span>
-            <span class="n">new_tiff_filename</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span>
-        <span class="p">)</span>
-        <span class="c"># Convert to normal array</span>
-        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c"># Our algorithm expect double precision</span>
-        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">impex</span><span class="o">.</span><span class="n">readImage</span><span class="p">(</span>
-            <span class="n">new_tiff_filename</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="c"># Convert to normal array</span>
-        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
-        <span class="c"># Need to add singleton time dimension before channel</span>
-        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c"># Add a singleton channel if none is present.</span>
+    <span class="k">if</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+
+    <span class="c"># Fit the old VIGRA style array. (may try to remove in the future)</span>
+    <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="c"># Check to make sure the dimensions are ok</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">5</span><span class="p">):</span>
@@ -289,7 +291,8 @@
                   <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                   <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                   <span class="n">z_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                  <span class="n">pages_to_channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                  <span class="n">pages_to_channel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">memmap</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert a stack of tiffs to an HDF5 file.</span>
 
@@ -317,6 +320,11 @@
 <span class="sd">                                                but are stored as pages, then</span>
 <span class="sd">                                                this will split neighboring</span>
 <span class="sd">                                                pages into separate channels.</span>
+
+<span class="sd">            memmap(bool):                       allows one to load the array</span>
+<span class="sd">                                                using a memory mapped file as</span>
+<span class="sd">                                                opposed to reading it directly.</span>
+<span class="sd">                                                (by default is False)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
@@ -427,29 +435,26 @@
             <span class="n">each_new_tiff_array</span> <span class="o">=</span> <span class="n">get_standard_tiff_array</span><span class="p">(</span>
                 <span class="n">each_new_tiff_filename</span><span class="p">,</span>
                 <span class="n">axis_order</span><span class="o">=</span><span class="s">&quot;cztyx&quot;</span><span class="p">,</span>
-                <span class="n">pages_to_channel</span><span class="o">=</span><span class="n">pages_to_channel</span>
+                <span class="n">pages_to_channel</span><span class="o">=</span><span class="n">pages_to_channel</span><span class="p">,</span>
+                <span class="n">memmap</span><span class="o">=</span><span class="n">memmap</span>
             <span class="p">)</span>
 
             <span class="c"># Extract the descriptions.</span>
             <span class="n">each_new_tiff_description</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">each_new_tiff_file</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">each_new_tiff_file</span> <span class="o">=</span> <span class="n">libtiff</span><span class="o">.</span><span class="n">TiffFile</span><span class="p">(</span>
-                    <span class="n">each_new_tiff_filename</span><span class="p">,</span> <span class="s">&#39;r&#39;</span>
-                <span class="p">)</span>
-
+            <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffFile</span><span class="p">(</span><span class="n">each_new_tiff_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_new_tiff_file</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span>
                         <span class="n">channel</span><span class="p">,</span>
-                        <span class="n">each_new_tiff_file</span><span class="o">.</span><span class="n">get_depth</span><span class="p">(),</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="n">each_new_tiff_file</span><span class="p">),</span>
                         <span class="n">pages_to_channel</span>
                 <span class="p">):</span>
-                    <span class="n">page_i</span> <span class="o">=</span> <span class="n">each_new_tiff_file</span><span class="o">.</span><span class="n">IFD</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                    <span class="n">metadata_i</span> <span class="o">=</span> <span class="n">page_i</span><span class="o">.</span><span class="n">entries_dict</span>
+                    <span class="n">page_i</span> <span class="o">=</span> <span class="n">each_new_tiff_file</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">metadata_i</span> <span class="o">=</span> <span class="n">page_i</span><span class="o">.</span><span class="n">tags</span>
                     <span class="n">desc_i</span> <span class="o">=</span> <span class="s">u&quot;&quot;</span>
 
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">desc_i</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span>
-                            <span class="n">metadata_i</span><span class="p">[</span><span class="s">&quot;ImageDescription&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">human</span><span class="p">()</span>
+                            <span class="n">metadata_i</span><span class="p">[</span><span class="s">&quot;image_description&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
                         <span class="p">)</span>
                     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                         <span class="k">pass</span>
@@ -457,9 +462,6 @@
                     <span class="n">each_new_tiff_description</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                         <span class="n">desc_i</span>
                     <span class="p">)</span>
-            <span class="k">finally</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">each_new_tiff_file</span><span class="p">:</span>
-                    <span class="n">each_new_tiff_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
                 <span class="n">each_new_tiff_file</span> <span class="o">=</span> <span class="bp">None</span>
 
@@ -511,7 +513,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a36+7.g2639f74 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a37 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
