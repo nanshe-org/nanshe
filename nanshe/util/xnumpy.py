@@ -3109,7 +3109,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
             "The dimensions of `space_shape` and `block_shape` " + \
             "should be the same."
 
-        block_halo = numpy.zeros(space_shape.shape)
+        block_halo = numpy.zeros_like(space_shape)
 
     uneven_block_division = (space_shape % block_shape != 0)
 
