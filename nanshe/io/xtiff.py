@@ -383,9 +383,10 @@ def convert_tiffs(new_tiff_filenames,
                         each_new_tiff_file.get_depth(),
                         pages_to_channel
                 ):
-                    metadata_i = each_new_tiff_file.IFD[i].entries_dict
-
+                    page_i = each_new_tiff_file.IFD[i]
+                    metadata_i = page_i.entries_dict
                     desc_i = u""
+
                     try:
                         desc_i = unicode(
                             metadata_i["ImageDescription"].human()
