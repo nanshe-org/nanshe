@@ -38,6 +38,12 @@ import vigra.impex
 from nanshe.util import iters, xglob, prof,\
     xnumpy, pathHelpers
 
+try:
+    import tifffile
+except ImportError:
+    # scikit-image is bundled with tifffile so use it.
+    from skimage.external import tifffile
+
 
 
 # Get the logger
