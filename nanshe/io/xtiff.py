@@ -30,8 +30,6 @@ import collections
 import numpy
 import h5py
 
-import libtiff
-
 import vigra
 import vigra.impex
 
