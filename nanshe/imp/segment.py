@@ -695,11 +695,12 @@ def preprocess_data(new_data, out=None, **parameters):
             **parameters["remove_zeroed_lines"]
         )
         preprocess_data.recorders.array_debug_recorder["images_lines_removed"] = new_data_maybe_lines_removed
-        preprocess_data.recorders.array_debug_recorder["images_lines_removed_max"] = xnumpy.add_singleton_op(
-            numpy.max,
-            new_data_maybe_lines_removed,
-            axis=0
-        )
+        if preprocess_data.recorders.array_debug_recorder:
+            preprocess_data.recorders.array_debug_recorder["images_lines_removed_max"] = xnumpy.add_singleton_op(
+                numpy.max,
+                new_data_maybe_lines_removed,
+                axis=0
+            )
 
     new_data_maybe_f0_result = new_data_maybe_lines_removed
     if "extract_f0" in parameters:
@@ -710,11 +711,12 @@ def preprocess_data(new_data, out=None, **parameters):
             **parameters["extract_f0"]
         )
         preprocess_data.recorders.array_debug_recorder["images_f0"] = new_data_maybe_f0_result
-        preprocess_data.recorders.array_debug_recorder["images_f0_max"] = xnumpy.add_singleton_op(
-            numpy.max,
-            new_data_maybe_f0_result,
-            axis=0
-        )
+        if preprocess_data.recorders.array_debug_recorder:
+            preprocess_data.recorders.array_debug_recorder["images_f0_max"] = xnumpy.add_singleton_op(
+                numpy.max,
+                new_data_maybe_f0_result,
+                axis=0
+            )
 
     new_data_maybe_wavelet_result = new_data_maybe_f0_result
     if "wavelet.transform" in parameters:
@@ -727,11 +729,12 @@ def preprocess_data(new_data, out=None, **parameters):
             **parameters["wavelet.transform"]
         )
         preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed"] = new_data_maybe_wavelet_result
-        preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = xnumpy.add_singleton_op(
-            numpy.max,
-            new_data_maybe_wavelet_result,
-            axis=0
-        )
+        if preprocess_data.recorders.array_debug_recorder:
+            preprocess_data.recorders.array_debug_recorder["images_wavelet_transformed_max"] = xnumpy.add_singleton_op(
+                numpy.max,
+                new_data_maybe_wavelet_result,
+                axis=0
+            )
 
     new_data_normalized = new_data_maybe_wavelet_result
     normalize_data.recorders.array_debug_recorder = preprocess_data.recorders.array_debug_recorder
@@ -742,11 +745,12 @@ def preprocess_data(new_data, out=None, **parameters):
     )
 
     preprocess_data.recorders.array_debug_recorder["images_normalized"] = new_data_normalized
-    preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = xnumpy.add_singleton_op(
-        numpy.max,
-        new_data_normalized,
-        axis=0
-    )
+    if preprocess_data.recorders.array_debug_recorder:
+        preprocess_data.recorders.array_debug_recorder["images_normalized_max"] = xnumpy.add_singleton_op(
+            numpy.max,
+            new_data_normalized,
+            axis=0
+        )
 
     return(out)
 
