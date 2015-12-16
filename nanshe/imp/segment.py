@@ -2499,9 +2499,10 @@ def wavelet_denoising(new_image,
         **parameters["wavelet.transform"]
     )
 
-    for i in xrange(len(new_wavelet_transformed_image)):
-        wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = \
-            new_wavelet_transformed_image[i][None]
+    if wavelet_denoising.recorders.array_debug_recorder:
+        for i in xrange(len(new_wavelet_transformed_image)):
+            wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = \
+                new_wavelet_transformed_image[i][None]
 
     # Contains a bool array with significant values True and noise False for
     # all wavelet transforms.
@@ -2511,9 +2512,10 @@ def wavelet_denoising(new_image,
         **parameters["significant_mask"]
     )
 
-    for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
-        wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image_significant_mask"] = \
-            new_wavelet_transformed_image_significant_mask[i][None]
+    if wavelet_denoising.recorders.array_debug_recorder:
+        for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
+            wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image_significant_mask"] = \
+                new_wavelet_transformed_image_significant_mask[i][None]
 
     new_wavelet_image_mask = new_wavelet_transformed_image_significant_mask[-1].copy()
 
@@ -2639,25 +2641,28 @@ def wavelet_denoising(new_image,
         )
 
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
-        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
-            local_maxima.label_image > 0
-        )[None]
+        if wavelet_denoising.recorders.array_debug_recorder:
+            wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
+                local_maxima.label_image > 0
+            )[None]
 
         local_maxima = remove_low_intensity_local_maxima(
             local_maxima, **parameters["remove_low_intensity_local_maxima"]
         )
 
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
-        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
-                local_maxima.label_image > 0
-        )[None]
+        if wavelet_denoising.recorders.array_debug_recorder:
+            wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
+                    local_maxima.label_image > 0
+            )[None]
 
         local_maxima = remove_too_close_local_maxima(
             local_maxima, **parameters["remove_too_close_local_maxima"]
         )
 
         wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image"] = local_maxima.label_image[None]
-        wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
+        if wavelet_denoising.recorders.array_debug_recorder:
+            wavelet_denoising.recorders.array_debug_recorder["local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
                 local_maxima.label_image > 0
         )[None]
 
@@ -2687,9 +2692,10 @@ def wavelet_denoising(new_image,
             )
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation"] = new_wavelet_image_denoised_segmentation[None]
-            wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation_contours"] = xnumpy.generate_labeled_contours(
-                    new_wavelet_image_denoised_segmentation
-            )[None]
+            if wavelet_denoising.recorders.array_debug_recorder:
+                wavelet_denoising.recorders.array_debug_recorder["watershed_segmentation_contours"] = xnumpy.generate_labeled_contours(
+                        new_wavelet_image_denoised_segmentation
+                )[None]
 
             watershed_local_maxima = ExtendedRegionProps(
                 local_maxima.intensity_image,
@@ -2698,9 +2704,10 @@ def wavelet_denoising(new_image,
             )
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
-            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
-                watershed_local_maxima.label_image > 0
-            )[None]
+            if wavelet_denoising.recorders.array_debug_recorder:
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
+                    watershed_local_maxima.label_image > 0
+                )[None]
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
@@ -2767,9 +2774,10 @@ def wavelet_denoising(new_image,
             watershed_local_maxima.remove_prop_mask(~within_bound)
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
-            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
-                    watershed_local_maxima.label_image > 0
-            )[None]
+            if wavelet_denoising.recorders.array_debug_recorder:
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
+                        watershed_local_maxima.label_image > 0
+                )[None]
 
             if watershed_local_maxima.props.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_props"] = watershed_local_maxima.props
