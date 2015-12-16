@@ -2117,8 +2117,11 @@ class ExtendedRegionProps(object):
                 ExtendedRegionProps.recorders.array_debug_recorder["props"] = self.props
 
             ExtendedRegionProps.recorders.array_debug_recorder["count"] = self.count
-            ExtendedRegionProps.recorders.array_debug_recorder["masks"] = \
-                xnumpy.all_permutations_equal(failed_labels, self.label_image)
+            if ExtendedRegionProps.recorders.array_debug_recorder:
+                ExtendedRegionProps.recorders.array_debug_recorder["masks"] = \
+                    xnumpy.all_permutations_equal(
+                            failed_labels, self.label_image
+                    )
             ExtendedRegionProps.recorders.array_debug_recorder["masks_labels"] = failed_labels
 
             # Renumber labels.
