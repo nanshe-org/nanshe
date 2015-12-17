@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a37 documentation</title>
+    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a38 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a37',
+        VERSION:     '0.1.0a38',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a37 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a38 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a37 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a38 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -755,11 +755,12 @@
             <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;remove_zeroed_lines&quot;</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_lines_removed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data_maybe_lines_removed</span>
-        <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_lines_removed_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-            <span class="n">new_data_maybe_lines_removed</span><span class="p">,</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_lines_removed_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                <span class="n">new_data_maybe_lines_removed</span><span class="p">,</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+            <span class="p">)</span>
 
     <span class="n">new_data_maybe_f0_result</span> <span class="o">=</span> <span class="n">new_data_maybe_lines_removed</span>
     <span class="k">if</span> <span class="s">&quot;extract_f0&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
@@ -770,11 +771,12 @@
             <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;extract_f0&quot;</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_f0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data_maybe_f0_result</span>
-        <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_f0_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-            <span class="n">new_data_maybe_f0_result</span><span class="p">,</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_f0_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                <span class="n">new_data_maybe_f0_result</span><span class="p">,</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+            <span class="p">)</span>
 
     <span class="n">new_data_maybe_wavelet_result</span> <span class="o">=</span> <span class="n">new_data_maybe_f0_result</span>
     <span class="k">if</span> <span class="s">&quot;wavelet.transform&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
@@ -787,11 +789,12 @@
             <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;wavelet.transform&quot;</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_wavelet_transformed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data_maybe_wavelet_result</span>
-        <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_wavelet_transformed_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-            <span class="n">new_data_maybe_wavelet_result</span><span class="p">,</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_wavelet_transformed_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                <span class="n">new_data_maybe_wavelet_result</span><span class="p">,</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+            <span class="p">)</span>
 
     <span class="n">new_data_normalized</span> <span class="o">=</span> <span class="n">new_data_maybe_wavelet_result</span>
     <span class="n">normalize_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
@@ -802,11 +805,12 @@
     <span class="p">)</span>
 
     <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_normalized&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data_normalized</span>
-    <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_normalized_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-        <span class="n">new_data_normalized</span><span class="p">,</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;images_normalized_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+            <span class="n">new_data_normalized</span><span class="p">,</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
@@ -2173,8 +2177,11 @@
                 <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span>
 
             <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
-            <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;masks&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                <span class="n">xnumpy</span><span class="o">.</span><span class="n">all_permutations_equal</span><span class="p">(</span><span class="n">failed_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+                <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;masks&quot;</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="n">xnumpy</span><span class="o">.</span><span class="n">all_permutations_equal</span><span class="p">(</span>
+                            <span class="n">failed_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span>
+                    <span class="p">)</span>
             <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;masks_labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">failed_labels</span>
 
             <span class="c"># Renumber labels.</span>
@@ -2552,9 +2559,10 @@
         <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;wavelet.transform&quot;</span><span class="p">]</span>
     <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_wavelet_transformed_image</span><span class="p">)):</span>
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_wavelet_transformed_image&quot;</span><span class="p">]</span> <span class="o">=</span> \
-            <span class="n">new_wavelet_transformed_image</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_wavelet_transformed_image</span><span class="p">)):</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_wavelet_transformed_image&quot;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">new_wavelet_transformed_image</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
 
     <span class="c"># Contains a bool array with significant values True and noise False for</span>
     <span class="c"># all wavelet transforms.</span>
@@ -2564,9 +2572,10 @@
         <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;significant_mask&quot;</span><span class="p">]</span>
     <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_wavelet_transformed_image_significant_mask</span><span class="p">)):</span>
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_wavelet_transformed_image_significant_mask&quot;</span><span class="p">]</span> <span class="o">=</span> \
-            <span class="n">new_wavelet_transformed_image_significant_mask</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_wavelet_transformed_image_significant_mask</span><span class="p">)):</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_wavelet_transformed_image_significant_mask&quot;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">new_wavelet_transformed_image_significant_mask</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
 
     <span class="n">new_wavelet_image_mask</span> <span class="o">=</span> <span class="n">new_wavelet_transformed_image_significant_mask</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -2692,25 +2701,28 @@
         <span class="p">)</span>
 
         <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
-            <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
+                <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
         <span class="n">local_maxima</span> <span class="o">=</span> <span class="n">remove_low_intensity_local_maxima</span><span class="p">(</span>
             <span class="n">local_maxima</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;remove_low_intensity_local_maxima&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
         <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
-                <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
+                    <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
         <span class="n">local_maxima</span> <span class="o">=</span> <span class="n">remove_too_close_local_maxima</span><span class="p">(</span>
             <span class="n">local_maxima</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;remove_too_close_local_maxima&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
         <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
+        <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                 <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
@@ -2740,9 +2752,10 @@
             <span class="p">)</span>
 
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_segmentation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_wavelet_image_denoised_segmentation</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_segmentation_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
-                    <span class="n">new_wavelet_image_denoised_segmentation</span>
-            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+                <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_segmentation_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
+                        <span class="n">new_wavelet_image_denoised_segmentation</span>
+                <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
             <span class="n">watershed_local_maxima</span> <span class="o">=</span> <span class="n">ExtendedRegionProps</span><span class="p">(</span>
                 <span class="n">local_maxima</span><span class="o">.</span><span class="n">intensity_image</span><span class="p">,</span>
@@ -2751,9 +2764,10 @@
             <span class="p">)</span>
 
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
-                <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+                <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
+                    <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span>
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">count</span>
@@ -2820,9 +2834,10 @@
             <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">remove_prop_mask</span><span class="p">(</span><span class="o">~</span><span class="n">within_bound</span><span class="p">)</span>
 
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
-                    <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+                <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
+                        <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span>
@@ -3768,7 +3783,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a37 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a38 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
