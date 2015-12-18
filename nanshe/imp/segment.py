@@ -167,7 +167,7 @@ def remove_zeroed_lines(new_data,
 
             zero_mask_i_labeled_j_dilated = filters.masks.binary_dilation(
                 zero_mask_i_labeled_j, dilation_structure
-            ).astype(bool)
+            )
 
             zero_mask_i_labeled_j_outline = zero_mask_i_labeled_j_dilated - zero_mask_i_labeled_j
 
@@ -1877,7 +1877,7 @@ def generate_local_maxima_scikit_image(new_intensity_image,
     local_maxima_mask = skimage.feature.peak_local_max(
         new_intensity_image,
         footprint=local_maxima_neighborhood,
-        labels=(new_intensity_image > 0).astype(int),
+        labels=(new_intensity_image > 0),
         indices=False
     )
 
@@ -1948,7 +1948,7 @@ def extended_region_local_maxima_properties(
 
     # Count the local maxima and give them different labels
     local_maxima_labeled = scipy.ndimage.label(
-        local_maxima_mask.astype(int)
+        local_maxima_mask
     )[0]
 
     # Generate the properties of the labeled regions
