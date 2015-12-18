@@ -2091,7 +2091,7 @@ class ExtendedRegionProps(object):
         del background_maxima_mask
 
         # Stores the number of times a particular label maxima appears.
-        self.count = numpy.zeros(
+        self.count = numpy.empty(
             (self.label_image.max(),), dtype=[("label", int), ("count", int)])
         # Get all the labels used in the label image
         self.count["label"] = numpy.arange(1, self.label_image.max() + 1)
