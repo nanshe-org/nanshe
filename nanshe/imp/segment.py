@@ -2725,7 +2725,8 @@ def wavelet_denoising(new_image,
             )
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
-            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
+            if wavelet_denoising.recorders.array_debug_recorder:
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
                 watershed_local_maxima.label_image > 0
             )[None]
 
@@ -2914,8 +2915,9 @@ def fuse_neurons(neuron_1,
                                                 of fusing the two.
     """
 
-    fuse_neurons.recorders.array_debug_recorder["neuron_1"] = neuron_1
-    fuse_neurons.recorders.array_debug_recorder["neuron_2"] = neuron_2
+    if fuse_neurons.recorders.array_debug_recorder:
+        fuse_neurons.recorders.array_debug_recorder["neuron_1"] = neuron_1
+        fuse_neurons.recorders.array_debug_recorder["neuron_2"] = neuron_2
 
     assert (neuron_1.shape == neuron_2.shape == tuple())
     assert (neuron_1.dtype == neuron_2.dtype)
@@ -2946,7 +2948,8 @@ def fuse_neurons(neuron_1,
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
 
-    fuse_neurons.recorders.array_debug_recorder["new_neuron"] = new_neuron
+    if fuse_neurons.recorders.array_debug_recorder:
+        fuse_neurons.recorders.array_debug_recorder["new_neuron"] = new_neuron
 
     return(new_neuron)
 
@@ -3619,9 +3622,11 @@ def postprocess_data(new_dictionary, **parameters):
     new_neurons_set = get_empty_neuron(
         shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype
     )
-    unmerged_neuron_set = get_empty_neuron(
-        shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype
-    )
+    unmerged_neuron_set = None
+    if postprocess_data.recorders.array_debug_recorder:
+        unmerged_neuron_set = get_empty_neuron(
+            shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype
+        )
     for i, each_new_dictionary_image, each_array_debug_recorder in array_debug_recorder_enumerator(new_dictionary):
         wavelet_denoising.recorders.array_debug_recorder = postprocess_data.recorders.array_debug_recorder
         each_new_neuron_set = wavelet_denoising(
@@ -3634,9 +3639,10 @@ def postprocess_data(new_dictionary, **parameters):
             str(i + 1) + " of " + str(len(new_dictionary)) + "."
         )
 
-        unmerged_neuron_set = numpy.hstack(
-            [unmerged_neuron_set, each_new_neuron_set]
-        )
+        if postprocess_data.recorders.array_debug_recorder:
+            unmerged_neuron_set = numpy.hstack(
+                [unmerged_neuron_set, each_new_neuron_set]
+            )
 
         merge_neuron_sets.recorders.array_debug_recorder = postprocess_data.recorders.array_debug_recorder
         new_neurons_set = merge_neuron_sets(
@@ -3650,41 +3656,20 @@ def postprocess_data(new_dictionary, **parameters):
             str(i + 1) + " of " + str(len(new_dictionary)) + "."
         )
 
-    if unmerged_neuron_set.size:
-        postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
+    if postprocess_data.recorders.array_debug_recorder:
+        if unmerged_neuron_set.size:
+            postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
 
-        unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(
-            numpy.uint64
-        )
+            unmerged_neuron_set_contours = xnumpy.enumerate_masks_max(unmerged_neuron_set["contour"])
 
-        unmerged_neuron_set_contours *= xnumpy.expand_enumerate(
-            unmerged_neuron_set_contours, start=1
-        )
-        unmerged_neuron_set_contours = xnumpy.add_singleton_op(
-            numpy.max,
-            unmerged_neuron_set_contours,
-            axis=0
-        )
+            postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
 
-        postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
+        if new_neurons_set.size:
+            postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
 
-    if new_neurons_set.size:
-        postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
+            new_neurons_set_contours = xnumpy.enumerate_masks_max(new_neurons_set["contour"])
 
-        new_neurons_set_contours = new_neurons_set["contour"].astype(
-            numpy.uint64
-        )
-
-        new_neurons_set_contours *= xnumpy.expand_enumerate(
-            new_neurons_set_contours, start=1
-        )
-        new_neurons_set_contours = xnumpy.add_singleton_op(
-            numpy.max,
-            new_neurons_set_contours,
-            axis=0
-        )
-
-        postprocess_data.recorders.array_debug_recorder["new_neurons_set_contours"] = new_neurons_set_contours
+            postprocess_data.recorders.array_debug_recorder["new_neurons_set_contours"] = new_neurons_set_contours
 
 
     return(new_neurons_set)
