@@ -3620,9 +3620,11 @@ def postprocess_data(new_dictionary, **parameters):
     new_neurons_set = get_empty_neuron(
         shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype
     )
-    unmerged_neuron_set = get_empty_neuron(
-        shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype
-    )
+    unmerged_neuron_set = None
+    if postprocess_data.recorders.array_debug_recorder:
+        unmerged_neuron_set = get_empty_neuron(
+            shape=new_dictionary[0].shape, dtype=new_dictionary[0].dtype
+        )
     for i, each_new_dictionary_image, each_array_debug_recorder in array_debug_recorder_enumerator(new_dictionary):
         wavelet_denoising.recorders.array_debug_recorder = postprocess_data.recorders.array_debug_recorder
         each_new_neuron_set = wavelet_denoising(
@@ -3635,9 +3637,10 @@ def postprocess_data(new_dictionary, **parameters):
             str(i + 1) + " of " + str(len(new_dictionary)) + "."
         )
 
-        unmerged_neuron_set = numpy.hstack(
-            [unmerged_neuron_set, each_new_neuron_set]
-        )
+        if postprocess_data.recorders.array_debug_recorder:
+            unmerged_neuron_set = numpy.hstack(
+                [unmerged_neuron_set, each_new_neuron_set]
+            )
 
         merge_neuron_sets.recorders.array_debug_recorder = postprocess_data.recorders.array_debug_recorder
         new_neurons_set = merge_neuron_sets(
