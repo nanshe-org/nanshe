@@ -39,6 +39,8 @@ import scipy.stats.mstats
 
 import bottleneck
 
+import mahotas
+
 import vigra
 
 
@@ -4904,9 +4906,9 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
     lower_threshold = separation_distance - half_thickness
     upper_threshold = separation_distance + half_thickness
 
-    a_mask_transformed = scipy.ndimage.morphology.distance_transform_edt(
-        a_image
-    )
+    a_mask_transformed = mahotas.distance(
+            a_image
+    ).astype(a_image.dtype)
 
     above_lower_threshold = (lower_threshold <= a_mask_transformed)
     below_upper_threshold = (a_mask_transformed <= upper_threshold)
