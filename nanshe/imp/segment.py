@@ -2938,7 +2938,7 @@ def fuse_neurons(neuron_1,
 
     new_neuron["image"] = mean_neuron * new_neuron["mask"]
 
-    new_neuron["area"] = (new_neuron["mask"] > 0).sum()
+    new_neuron["area"] = new_neuron["mask"].sum()
 
     new_neuron["max_F"] = new_neuron["image"].max()
 
