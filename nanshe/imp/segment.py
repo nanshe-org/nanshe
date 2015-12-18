@@ -144,7 +144,7 @@ def remove_zeroed_lines(new_data,
     erosion_structure = numpy.ones(tuple(erosion_shape), dtype=bool)
     dilation_structure = numpy.ones(tuple(dilation_shape), dtype=bool)
 
-    zero_masks_eroded = numpy.zeros(new_data.shape, dtype=bool)
+    zero_masks_eroded = numpy.empty(new_data.shape, dtype=bool)
     zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
 
