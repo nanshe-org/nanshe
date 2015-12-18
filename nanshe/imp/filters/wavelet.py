@@ -188,7 +188,7 @@ def transform(im0,
 
         Args:
             im0(numpy.ndarray):                  the original image.
-            scale(int):                          the scale of wavelet transform
+            scale(int or tuple of ints):         the scale of wavelet transform
                                                  to apply.
 
             include_intermediates(bool):         whether to return
