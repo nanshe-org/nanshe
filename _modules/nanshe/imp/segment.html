@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a38+9.ga37daba documentation</title>
+    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a38+16.g0b52945 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a38+9.ga37daba',
+        VERSION:     '0.1.0a38+16.g0b52945',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a38+9.ga37daba documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a38+16.g0b52945 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a38+9.ga37daba documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a38+16.g0b52945 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -204,7 +204,7 @@
     <span class="n">erosion_structure</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">erosion_shape</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="n">dilation_structure</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">dilation_shape</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
-    <span class="n">zero_masks_eroded</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">zero_masks_eroded</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="n">zero_masks_dilated</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="n">zero_masks_outline</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
@@ -2151,7 +2151,7 @@
         <span class="k">del</span> <span class="n">background_maxima_mask</span>
 
         <span class="c"># Stores the number of times a particular label maxima appears.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_image</span><span class="o">.</span><span class="n">max</span><span class="p">(),),</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s">&quot;label&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;count&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)])</span>
         <span class="c"># Get all the labels used in the label image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">[</span><span class="s">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -2847,7 +2847,7 @@
 
             <span class="k">if</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="c"># Creates a NumPy structure array to store</span>
-                <span class="n">neurons</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="n">neurons</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
                     <span class="nb">len</span><span class="p">(</span><span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">neurons</span><span class="o">.</span><span class="n">dtype</span>
                 <span class="p">)</span>
 
@@ -2924,7 +2924,7 @@
 <span class="sd">                                                order as the masks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">neurons</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">neurons</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">neuron_masks</span><span class="p">),</span>
         <span class="n">dtype</span><span class="o">=</span><span class="n">get_neuron_dtype</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">new_image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_image</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="p">)</span>
@@ -2990,7 +2990,7 @@
     <span class="c"># Gaussian mixture model ??? Skipped this.</span>
 
     <span class="c"># Creates a NumPy structure array to store</span>
-    <span class="n">new_neuron</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">neuron_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">neuron_1</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">new_neuron</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">neuron_1</span><span class="p">)</span>
 
     <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_neuron_mask</span>
 
@@ -3768,7 +3768,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a38+9.ga37daba documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a38+16.g0b52945 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
