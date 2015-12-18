@@ -2930,7 +2930,7 @@ def fuse_neurons(neuron_1,
     # Gaussian mixture model ??? Skipped this.
 
     # Creates a NumPy structure array to store
-    new_neuron = numpy.zeros(neuron_1.shape, dtype=neuron_1.dtype)
+    new_neuron = numpy.empty(neuron_1.shape, dtype=neuron_1.dtype)
 
     new_neuron["mask"] = mean_neuron_mask
 
