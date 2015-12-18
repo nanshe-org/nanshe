@@ -3348,26 +3348,21 @@ def norm(new_vector_set, ord=2):
     # Needs to have at least one vector
     assert (new_vector_set.ndim >= 1)
 
-    new_vector_set_float = new_vector_set.astype(float)
-
-    # Wrap the order parameter so as to avoid passing through
-    # numpy.apply_along_axis and risk having it break. Also, makes sure the
-    # same function can be used in the two cases.
-    wrapped_norm = lambda a_vector_set: numpy.linalg.norm(
-        a_vector_set, ord=ord)
+    # Must be double.
+    if not issubclass(new_vector_set.dtype.type, numpy.float64):
+        new_vector_set = new_vector_set.astype(numpy.float64)
 
     result = None
 
     # Return a scalar NumPy array in the case of a single vector
     # Always return type float as the result.
     if 0 in new_vector_set.shape:
-        result = new_vector_set_float
-    elif new_vector_set.ndim == 1:
-        result = numpy.array(wrapped_norm(new_vector_set_float)).astype(float)
+        result = new_vector_set
     else:
-        result = numpy.apply_along_axis(
-            wrapped_norm, 1, new_vector_set_float
-        ).astype(float)
+        result = numpy.linalg.norm(new_vector_set, ord=ord, axis=-1)
+
+        if new_vector_set.ndim:
+            result = numpy.array(result)
 
     return(result)
 
@@ -4454,23 +4449,26 @@ def dot_product_partially_normalized(new_vector_set_1,
                     [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
     """
 
-    new_vector_set_1_float = new_vector_set_1.astype(float)
-    new_vector_set_2_float = new_vector_set_2.astype(float)
+    # Must be double.
+    if not issubclass(new_vector_set_1.dtype.type, numpy.float64):
+        new_vector_set_1 = new_vector_set_1.astype(numpy.float64)
+    if not issubclass(new_vector_set_2.dtype.type, numpy.float64):
+        new_vector_set_2 = new_vector_set_2.astype(numpy.float64)
 
     # Gets all of the norms
-    new_vector_set_1_norms = norm(new_vector_set_1_float, ord)
-    new_vector_set_2_norms = norm(new_vector_set_2_float, ord)
+    new_vector_set_1_norms = norm(new_vector_set_1, ord)
+    new_vector_set_2_norms = norm(new_vector_set_2, ord)
 
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
     new_vector_set_1_norms_expanded = expand_view(
-        new_vector_set_1_norms, reps_after=new_vector_set_2_float.shape[0])
+        new_vector_set_1_norms, reps_after=new_vector_set_2.shape[0])
     new_vector_set_2_norms_expanded = expand_view(
-        new_vector_set_2_norms, reps_before=new_vector_set_1_float.shape[0])
+        new_vector_set_2_norms, reps_before=new_vector_set_1.shape[0])
 
     # Measure the dot product between any two neurons
     # (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(
-        new_vector_set_1_float, new_vector_set_2_float.T)
+        new_vector_set_1, new_vector_set_2.T)
 
     vector_pairs_dot_product_1_normalized = vector_pairs_dot_product / \
         new_vector_set_1_norms_expanded
@@ -4551,20 +4549,22 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
             #        [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
     """
 
-    new_vector_set_float = new_vector_set.astype(float)
+    # Must be double.
+    if not issubclass(new_vector_set.dtype.type, numpy.float64):
+        new_vector_set = new_vector_set.astype(numpy.float64)
 
     # Gets all of the norms
-    new_vector_set_norms = norm(new_vector_set_float, ord)
+    new_vector_set_norms = norm(new_vector_set, ord)
 
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
     new_vector_set_norms_expanded = expand_view(
-        new_vector_set_norms, reps_after=new_vector_set_float.shape[0]
+        new_vector_set_norms, reps_after=new_vector_set.shape[0]
     )
 
     # Measure the dot product between any two neurons
     # (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(
-        new_vector_set_float, new_vector_set_float.T
+        new_vector_set, new_vector_set.T
     )
 
     vector_pairs_dot_product_normalized = vector_pairs_dot_product / new_vector_set_norms_expanded
@@ -4663,12 +4663,15 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
 
-    new_vector_set_1_float = new_vector_set_1.astype(float)
-    new_vector_set_2_float = new_vector_set_2.astype(float)
+    # Must be double.
+    if not issubclass(new_vector_set_1.dtype.type, numpy.float64):
+        new_vector_set_1 = new_vector_set_1.astype(numpy.float64)
+    if not issubclass(new_vector_set_2.dtype.type, numpy.float64):
+        new_vector_set_2 = new_vector_set_2.astype(numpy.float64)
 
     # Gets all of the norms
-    new_vector_set_1_norms = norm(new_vector_set_1_float, ord=ord)
-    new_vector_set_2_norms = norm(new_vector_set_2_float, ord=ord)
+    new_vector_set_1_norms = norm(new_vector_set_1, ord=ord)
+    new_vector_set_2_norms = norm(new_vector_set_2, ord=ord)
 
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(
@@ -4678,7 +4681,7 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
     # Measure the dot product between any two neurons
     # (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(
-        new_vector_set_1_float, new_vector_set_2_float.T
+        new_vector_set_1, new_vector_set_2.T
     )
 
     # Measure the dot product between any two neurons
@@ -4743,10 +4746,12 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
             array([[ 1.]])
     """
 
-    new_vector_set_float = new_vector_set.astype(float)
+    # Must be double.
+    if not issubclass(new_vector_set.dtype.type, numpy.float64):
+        new_vector_set = new_vector_set.astype(numpy.float64)
 
     # Gets all of the norms
-    new_vector_set_norms = norm(new_vector_set_float, ord=ord)
+    new_vector_set_norms = norm(new_vector_set, ord=ord)
 
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(
@@ -4756,7 +4761,7 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
     # Measure the dot product between any two neurons
     # (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(
-        new_vector_set_float, new_vector_set_float.T
+        new_vector_set, new_vector_set.T
     )
 
     # Measure the dot product between any two neurons
