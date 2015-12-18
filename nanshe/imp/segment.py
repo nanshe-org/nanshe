@@ -2915,8 +2915,9 @@ def fuse_neurons(neuron_1,
                                                 of fusing the two.
     """
 
-    fuse_neurons.recorders.array_debug_recorder["neuron_1"] = neuron_1
-    fuse_neurons.recorders.array_debug_recorder["neuron_2"] = neuron_2
+    if fuse_neurons.recorders.array_debug_recorder:
+        fuse_neurons.recorders.array_debug_recorder["neuron_1"] = neuron_1
+        fuse_neurons.recorders.array_debug_recorder["neuron_2"] = neuron_2
 
     assert (neuron_1.shape == neuron_2.shape == tuple())
     assert (neuron_1.dtype == neuron_2.dtype)
@@ -2947,7 +2948,8 @@ def fuse_neurons(neuron_1,
 
     new_neuron["centroid"] = new_neuron["gaussian_mean"]
 
-    fuse_neurons.recorders.array_debug_recorder["new_neuron"] = new_neuron
+    if fuse_neurons.recorders.array_debug_recorder:
+        fuse_neurons.recorders.array_debug_recorder["new_neuron"] = new_neuron
 
     return(new_neuron)
 
