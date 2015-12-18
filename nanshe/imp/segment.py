@@ -167,7 +167,7 @@ def remove_zeroed_lines(new_data,
 
             zero_mask_i_labeled_j_dilated = filters.masks.binary_dilation(
                 zero_mask_i_labeled_j, dilation_structure
-            ).astype(bool)
+            )
 
             zero_mask_i_labeled_j_outline = zero_mask_i_labeled_j_dilated - zero_mask_i_labeled_j
 
