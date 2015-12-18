@@ -3350,24 +3350,17 @@ def norm(new_vector_set, ord=2):
 
     new_vector_set_float = new_vector_set.astype(float)
 
-    # Wrap the order parameter so as to avoid passing through
-    # numpy.apply_along_axis and risk having it break. Also, makes sure the
-    # same function can be used in the two cases.
-    wrapped_norm = lambda a_vector_set: numpy.linalg.norm(
-        a_vector_set, ord=ord)
-
     result = None
 
     # Return a scalar NumPy array in the case of a single vector
     # Always return type float as the result.
     if 0 in new_vector_set.shape:
         result = new_vector_set_float
-    elif new_vector_set.ndim == 1:
-        result = numpy.array(wrapped_norm(new_vector_set_float)).astype(float)
     else:
-        result = numpy.apply_along_axis(
-            wrapped_norm, 1, new_vector_set_float
-        ).astype(float)
+        result = numpy.linalg.norm(new_vector_set_float, ord=ord, axis=-1)
+
+        if new_vector_set.ndim:
+            result = numpy.array(result)
 
     return(result)
 
