@@ -2725,7 +2725,8 @@ def wavelet_denoising(new_image,
             )
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
-            wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
+            if wavelet_denoising.recorders.array_debug_recorder:
+                wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image_contours"] = xnumpy.generate_labeled_contours(
                 watershed_local_maxima.label_image > 0
             )[None]
 
