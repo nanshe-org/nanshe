@@ -3651,14 +3651,14 @@ def postprocess_data(new_dictionary, **parameters):
             str(i + 1) + " of " + str(len(new_dictionary)) + "."
         )
 
-    if unmerged_neuron_set.size:
+    if postprocess_data.recorders.array_debug_recorder and unmerged_neuron_set.size:
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
 
         unmerged_neuron_set_contours = xnumpy.enumerate_masks_max(unmerged_neuron_set["contour"])
 
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
 
-    if new_neurons_set.size:
+    if postprocess_data.recorders.array_debug_recorder and new_neurons_set.size:
         postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
 
         new_neurons_set_contours = xnumpy.enumerate_masks_max(new_neurons_set["contour"])
