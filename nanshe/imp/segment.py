@@ -144,7 +144,7 @@ def remove_zeroed_lines(new_data,
     erosion_structure = numpy.ones(tuple(erosion_shape), dtype=bool)
     dilation_structure = numpy.ones(tuple(dilation_shape), dtype=bool)
 
-    zero_masks_eroded = numpy.zeros(new_data.shape, dtype=bool)
+    zero_masks_eroded = numpy.empty(new_data.shape, dtype=bool)
     zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
 
@@ -2091,7 +2091,7 @@ class ExtendedRegionProps(object):
         del background_maxima_mask
 
         # Stores the number of times a particular label maxima appears.
-        self.count = numpy.zeros(
+        self.count = numpy.empty(
             (self.label_image.max(),), dtype=[("label", int), ("count", int)])
         # Get all the labels used in the label image
         self.count["label"] = numpy.arange(1, self.label_image.max() + 1)
@@ -2787,7 +2787,7 @@ def wavelet_denoising(new_image,
 
             if watershed_local_maxima.props.size:
                 # Creates a NumPy structure array to store
-                neurons = numpy.zeros(
+                neurons = numpy.empty(
                     len(watershed_local_maxima.props), dtype=neurons.dtype
                 )
 
@@ -2864,7 +2864,7 @@ def extract_neurons(new_image, neuron_masks):
                                                 order as the masks.
     """
 
-    neurons = numpy.zeros(
+    neurons = numpy.empty(
         len(neuron_masks),
         dtype=get_neuron_dtype(shape=new_image.shape, dtype=new_image.dtype)
     )
@@ -2930,7 +2930,7 @@ def fuse_neurons(neuron_1,
     # Gaussian mixture model ??? Skipped this.
 
     # Creates a NumPy structure array to store
-    new_neuron = numpy.zeros(neuron_1.shape, dtype=neuron_1.dtype)
+    new_neuron = numpy.empty_like(neuron_1)
 
     new_neuron["mask"] = mean_neuron_mask
 
