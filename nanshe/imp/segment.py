@@ -2864,7 +2864,7 @@ def extract_neurons(new_image, neuron_masks):
                                                 order as the masks.
     """
 
-    neurons = numpy.zeros(
+    neurons = numpy.empty(
         len(neuron_masks),
         dtype=get_neuron_dtype(shape=new_image.shape, dtype=new_image.dtype)
     )
