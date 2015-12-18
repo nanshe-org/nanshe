@@ -1948,7 +1948,7 @@ def extended_region_local_maxima_properties(
 
     # Count the local maxima and give them different labels
     local_maxima_labeled = scipy.ndimage.label(
-        local_maxima_mask.astype(int)
+        local_maxima_mask
     )[0]
 
     # Generate the properties of the labeled regions
