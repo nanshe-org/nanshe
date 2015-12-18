@@ -2787,7 +2787,7 @@ def wavelet_denoising(new_image,
 
             if watershed_local_maxima.props.size:
                 # Creates a NumPy structure array to store
-                neurons = numpy.zeros(
+                neurons = numpy.empty(
                     len(watershed_local_maxima.props), dtype=neurons.dtype
                 )
 
