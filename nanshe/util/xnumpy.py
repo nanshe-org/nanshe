@@ -3348,16 +3348,18 @@ def norm(new_vector_set, ord=2):
     # Needs to have at least one vector
     assert (new_vector_set.ndim >= 1)
 
-    new_vector_set_float = new_vector_set.astype(float)
+    # Must be double.
+    if not issubclass(new_vector_set.dtype.type, numpy.float64):
+        new_vector_set = new_vector_set.astype(numpy.float64)
 
     result = None
 
     # Return a scalar NumPy array in the case of a single vector
     # Always return type float as the result.
     if 0 in new_vector_set.shape:
-        result = new_vector_set_float
+        result = new_vector_set
     else:
-        result = numpy.linalg.norm(new_vector_set_float, ord=ord, axis=-1)
+        result = numpy.linalg.norm(new_vector_set, ord=ord, axis=-1)
 
         if new_vector_set.ndim:
             result = numpy.array(result)
