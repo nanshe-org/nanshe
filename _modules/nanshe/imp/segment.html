@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a38+2.gff304d2 documentation</title>
+    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a38+9.ga37daba documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a38+2.gff304d2',
+        VERSION:     '0.1.0a38+9.ga37daba',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a38+2.gff304d2 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a38+9.ga37daba documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a38+2.gff304d2 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a38+9.ga37daba documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -2785,7 +2785,8 @@
             <span class="p">)</span>
 
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
+            <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+                <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                 <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
             <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
@@ -2974,8 +2975,9 @@
 <span class="sd">                                                of fusing the two.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;neuron_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neuron_1</span>
-    <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;neuron_2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neuron_2</span>
+    <span class="k">if</span> <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;neuron_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neuron_1</span>
+        <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;neuron_2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neuron_2</span>
 
     <span class="k">assert</span> <span class="p">(</span><span class="n">neuron_1</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">neuron_2</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">())</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">neuron_1</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">neuron_2</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -3006,7 +3008,8 @@
 
     <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;gaussian_mean&quot;</span><span class="p">]</span>
 
-    <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron</span>
+    <span class="k">if</span> <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="n">fuse_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neuron&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_neuron</span><span class="p">)</span>
 
@@ -3679,9 +3682,11 @@
     <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span>
         <span class="n">shape</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
     <span class="p">)</span>
-    <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span>
-        <span class="n">shape</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
-    <span class="p">)</span>
+    <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">each_new_dictionary_image</span><span class="p">,</span> <span class="n">each_array_debug_recorder</span> <span class="ow">in</span> <span class="n">array_debug_recorder_enumerator</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">):</span>
         <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">each_new_neuron_set</span> <span class="o">=</span> <span class="n">wavelet_denoising</span><span class="p">(</span>
@@ -3694,9 +3699,10 @@
             <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span>
         <span class="p">)</span>
 
-        <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">unmerged_neuron_set</span><span class="p">,</span> <span class="n">each_new_neuron_set</span><span class="p">]</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">unmerged_neuron_set</span><span class="p">,</span> <span class="n">each_new_neuron_set</span><span class="p">]</span>
+            <span class="p">)</span>
 
         <span class="n">merge_neuron_sets</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">merge_neuron_sets</span><span class="p">(</span>
@@ -3710,41 +3716,20 @@
             <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span>
         <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">unmerged_neuron_set</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-        <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;unmerged_neuron_set&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unmerged_neuron_set</span>
+    <span class="k">if</span> <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">unmerged_neuron_set</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;unmerged_neuron_set&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unmerged_neuron_set</span>
 
-        <span class="n">unmerged_neuron_set_contours</span> <span class="o">=</span> <span class="n">unmerged_neuron_set</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span>
-        <span class="p">)</span>
+            <span class="n">unmerged_neuron_set_contours</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">enumerate_masks_max</span><span class="p">(</span><span class="n">unmerged_neuron_set</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">])</span>
 
-        <span class="n">unmerged_neuron_set_contours</span> <span class="o">*=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">expand_enumerate</span><span class="p">(</span>
-            <span class="n">unmerged_neuron_set_contours</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span>
-        <span class="p">)</span>
-        <span class="n">unmerged_neuron_set_contours</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-            <span class="n">unmerged_neuron_set_contours</span><span class="p">,</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
+            <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;unmerged_neuron_set_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unmerged_neuron_set_contours</span>
 
-        <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;unmerged_neuron_set_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unmerged_neuron_set_contours</span>
+        <span class="k">if</span> <span class="n">new_neurons_set</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neurons_set&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neurons_set</span>
 
-    <span class="k">if</span> <span class="n">new_neurons_set</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-        <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neurons_set&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neurons_set</span>
+            <span class="n">new_neurons_set_contours</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">enumerate_masks_max</span><span class="p">(</span><span class="n">new_neurons_set</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">])</span>
 
-        <span class="n">new_neurons_set_contours</span> <span class="o">=</span> <span class="n">new_neurons_set</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span>
-        <span class="p">)</span>
-
-        <span class="n">new_neurons_set_contours</span> <span class="o">*=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">expand_enumerate</span><span class="p">(</span>
-            <span class="n">new_neurons_set_contours</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span>
-        <span class="p">)</span>
-        <span class="n">new_neurons_set_contours</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-            <span class="n">new_neurons_set_contours</span><span class="p">,</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
-
-        <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neurons_set_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neurons_set_contours</span>
+            <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;new_neurons_set_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neurons_set_contours</span>
 
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_neurons_set</span><span class="p">)</span></div>
@@ -3783,7 +3768,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a38+2.gff304d2 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a38+9.ga37daba documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
