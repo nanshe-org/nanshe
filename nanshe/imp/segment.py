@@ -3653,36 +3653,14 @@ def postprocess_data(new_dictionary, **parameters):
     if unmerged_neuron_set.size:
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
 
-        unmerged_neuron_set_contours = unmerged_neuron_set["contour"].astype(
-            numpy.uint64
-        )
-
-        unmerged_neuron_set_contours *= xnumpy.expand_enumerate(
-            unmerged_neuron_set_contours, start=1
-        )
-        unmerged_neuron_set_contours = xnumpy.add_singleton_op(
-            numpy.max,
-            unmerged_neuron_set_contours,
-            axis=0
-        )
+        unmerged_neuron_set_contours = xnumpy.enumerate_masks_max(unmerged_neuron_set["contour"])
 
         postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
 
     if new_neurons_set.size:
         postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
 
-        new_neurons_set_contours = new_neurons_set["contour"].astype(
-            numpy.uint64
-        )
-
-        new_neurons_set_contours *= xnumpy.expand_enumerate(
-            new_neurons_set_contours, start=1
-        )
-        new_neurons_set_contours = xnumpy.add_singleton_op(
-            numpy.max,
-            new_neurons_set_contours,
-            axis=0
-        )
+        new_neurons_set_contours = xnumpy.enumerate_masks_max(new_neurons_set["contour"])
 
         postprocess_data.recorders.array_debug_recorder["new_neurons_set_contours"] = new_neurons_set_contours
 
