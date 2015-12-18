@@ -2921,9 +2921,9 @@ def fuse_neurons(neuron_1,
 
     assert (neuron_1.shape == neuron_2.shape == tuple())
     assert (neuron_1.dtype == neuron_2.dtype)
+    assert issubclass(neuron_1["image"].dtype.type, numpy.floating)
 
-    mean_neuron = numpy.array(
-        [neuron_1["image"], neuron_2["image"]]).mean(axis=0)
+    mean_neuron = (neuron_1["image"] + neuron_2["image"]) / 2
     mean_neuron_mask = mean_neuron > (
         fraction_mean_neuron_max_threshold * mean_neuron.max())
 
