@@ -3651,19 +3651,20 @@ def postprocess_data(new_dictionary, **parameters):
             str(i + 1) + " of " + str(len(new_dictionary)) + "."
         )
 
-    if postprocess_data.recorders.array_debug_recorder and unmerged_neuron_set.size:
-        postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
+    if postprocess_data.recorders.array_debug_recorder:
+        if unmerged_neuron_set.size:
+            postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set"] = unmerged_neuron_set
 
-        unmerged_neuron_set_contours = xnumpy.enumerate_masks_max(unmerged_neuron_set["contour"])
+            unmerged_neuron_set_contours = xnumpy.enumerate_masks_max(unmerged_neuron_set["contour"])
 
-        postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
+            postprocess_data.recorders.array_debug_recorder["unmerged_neuron_set_contours"] = unmerged_neuron_set_contours
 
-    if postprocess_data.recorders.array_debug_recorder and new_neurons_set.size:
-        postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
+        if new_neurons_set.size:
+            postprocess_data.recorders.array_debug_recorder["new_neurons_set"] = new_neurons_set
 
-        new_neurons_set_contours = xnumpy.enumerate_masks_max(new_neurons_set["contour"])
+            new_neurons_set_contours = xnumpy.enumerate_masks_max(new_neurons_set["contour"])
 
-        postprocess_data.recorders.array_debug_recorder["new_neurons_set_contours"] = new_neurons_set_contours
+            postprocess_data.recorders.array_debug_recorder["new_neurons_set_contours"] = new_neurons_set_contours
 
 
     return(new_neurons_set)
