@@ -243,6 +243,14 @@ def transform(im0,
                    [-0.375  ,  0.625  , -0.375  ],
                    [-0.34375, -0.375  ,  0.59375]], dtype=float32)
 
+            >>> transform(numpy.eye(3, dtype = numpy.float32),
+            ...     scale = (0, 1),
+            ...     include_intermediates = False,
+            ...     include_lower_scales = False)
+            array([[ 0.625, -0.25 , -0.125],
+                   [-0.5  ,  0.5  , -0.5  ],
+                   [-0.125, -0.25 ,  0.625]], dtype=float32)
+
             >>> out = numpy.zeros((3, 3), dtype = numpy.float32)
             >>> transform(numpy.eye(3, dtype = numpy.float32),
             ...     scale = 1,
