@@ -1877,7 +1877,7 @@ def generate_local_maxima_scikit_image(new_intensity_image,
     local_maxima_mask = skimage.feature.peak_local_max(
         new_intensity_image,
         footprint=local_maxima_neighborhood,
-        labels=(new_intensity_image > 0).astype(int),
+        labels=(new_intensity_image > 0),
         indices=False
     )
 
