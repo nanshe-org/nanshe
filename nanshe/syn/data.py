@@ -131,11 +131,8 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
     ):
         space_index = numpy.indices(space)
 
-        each_point_offset = (
-            space_index - nanshe.util.xnumpy.expand_view(
-                each_center, tuple(space.tolist())
-            )
-        )
+        each_point_offset = space_index - each_center[(Ellipsis,) + (None,)*len(space)]
+
         each_point_offset_dist_2 = (each_point_offset**2).sum(axis=0)
 
         if include_boundary:
