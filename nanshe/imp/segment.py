@@ -2848,7 +2848,9 @@ def extract_neurons(new_image, neuron_masks):
     for i in xrange(len(neurons)):
         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
-        neurons["contour"][i] = xnumpy.generate_contour(neurons["mask"][i])
+        neurons["contour"][i] = xnumpy.generate_contour_fast(
+                neurons["mask"][i]
+        )
         neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(axis=1)
         neurons["gaussian_cov"][i] = numpy.cov(neuron_mask_i_points)
 
@@ -2905,7 +2907,7 @@ def fuse_neurons(neuron_1,
 
     new_neuron["mask"] = mean_neuron_mask
 
-    new_neuron["contour"] = xnumpy.generate_contour(new_neuron["mask"])
+    new_neuron["contour"] = xnumpy.generate_contour_fast(new_neuron["mask"])
 
     new_neuron["image"] = mean_neuron * new_neuron["mask"]
 
