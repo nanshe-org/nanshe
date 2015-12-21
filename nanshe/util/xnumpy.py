@@ -4902,36 +4902,23 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
                    [False,  True,  True, False, False, False, False]], dtype=bool)
     """
 
-    # Construct a structure that is the boundary of a sphere.
+    half_thickness = margin / 2
 
-    half_thickness = margin / 2.0
-    spatial_extent = math.ceil(separation_distance + margin)
+    lower_threshold = separation_distance - half_thickness
+    upper_threshold = separation_distance + half_thickness
 
-    structure_space = (2*spatial_extent+1,)*a_image.ndim
-    structure_center = (spatial_extent,)*a_image.ndim
+    a_mask_transformed = mahotas.distance(
+            a_image
+    ).astype(a_image.dtype)
 
-    structure = generate_hyperdisc_masks(
-            structure_space,
-            structure_center,
-            separation_distance + half_thickness,
-            True,
-            separation_distance - half_thickness,
-            True
-    )[0]
+    above_lower_threshold = (lower_threshold <= a_mask_transformed)
+    below_upper_threshold = (a_mask_transformed <= upper_threshold)
 
-
-    # Erode the image and then remove this erode region to leave the margin
-    a_image_inverted = (a_image == 0)
-    structure_inverted = ~structure
-
-    a_mask = mahotas.erode(
-            a_image_inverted, structure_inverted
-    )
-    a_mask ^= mahotas.dilate(
-            a_image_inverted, structure_inverted
+    a_mask_transformed_thresholded = (
+        above_lower_threshold & below_upper_threshold
     )
 
-    a_image_contours = a_image * a_mask
+    a_image_contours = a_image * a_mask_transformed_thresholded
 
     return(a_image_contours)
 
