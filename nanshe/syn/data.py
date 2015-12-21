@@ -122,6 +122,8 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
 
     radii_2 = radii**2
 
+    space_index = numpy.indices(space)
+
     # Create a hypersphere mask using a center and a radius.
     hypersphere_masks = numpy.zeros(
         radii.shape + tuple(space.tolist()), dtype=bool
@@ -129,8 +131,6 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
     for i, (each_center, each_radius_2) in enumerate(
             itertools.izip(centers, radii_2)
     ):
-        space_index = numpy.indices(space)
-
         each_point_offset = space_index - each_center[(Ellipsis,) + (None,)*len(space)]
 
         each_point_offset_dist_2 = (each_point_offset**2).sum(axis=0)
