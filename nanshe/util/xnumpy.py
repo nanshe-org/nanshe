@@ -40,6 +40,8 @@ import scipy.stats.mstats
 
 import bottleneck
 
+import mahotas
+
 import vigra
 
 
@@ -4919,12 +4921,14 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
 
 
     # Erode the image and then remove this erode region to leave the margin
+    a_image_inverted = (a_image == 0)
+    structure_inverted = ~structure
 
-    a_mask = scipy.ndimage.morphology.binary_dilation(
-            a_image, structure=structure, border_value=1
+    a_mask = mahotas.erode(
+            a_image_inverted, structure_inverted
     )
-    a_mask ^= scipy.ndimage.morphology.binary_erosion(
-            a_image, structure=structure, border_value=1
+    a_mask ^= mahotas.dilate(
+            a_image_inverted, structure_inverted
     )
 
     a_image_contours = a_image * a_mask
