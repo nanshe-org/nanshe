@@ -24,6 +24,7 @@ __date__ = "$May 20, 2014 09:46:45 EDT$"
 import collections
 import functools
 import itertools
+import math
 import operator
 import warnings
 
@@ -38,8 +39,6 @@ import scipy.stats
 import scipy.stats.mstats
 
 import bottleneck
-
-import mahotas
 
 import vigra
 
@@ -4901,23 +4900,34 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
                    [False,  True,  True, False, False, False, False]], dtype=bool)
     """
 
-    half_thickness = margin / 2
+    # Construct a structure that is the boundary of a sphere.
 
-    lower_threshold = separation_distance - half_thickness
-    upper_threshold = separation_distance + half_thickness
+    half_thickness = margin / 2.0
+    spatial_extent = math.ceil(separation_distance + margin)
 
-    a_mask_transformed = mahotas.distance(
-            a_image
-    ).astype(a_image.dtype)
+    structure_space = (2*spatial_extent+1,)*a_image.ndim
+    structure_center = (spatial_extent,)*a_image.ndim
 
-    above_lower_threshold = (lower_threshold <= a_mask_transformed)
-    below_upper_threshold = (a_mask_transformed <= upper_threshold)
+    structure = generate_hyperdisc_masks(
+            structure_space,
+            structure_center,
+            separation_distance + half_thickness,
+            True,
+            separation_distance - half_thickness,
+            True
+    )[0]
 
-    a_mask_transformed_thresholded = (
-        above_lower_threshold & below_upper_threshold
+
+    # Erode the image and then remove this erode region to leave the margin
+
+    a_mask = scipy.ndimage.morphology.binary_dilation(
+            a_image, structure=structure, border_value=1
+    )
+    a_mask ^= scipy.ndimage.morphology.binary_erosion(
+            a_image, structure=structure, border_value=1
     )
 
-    a_image_contours = a_image * a_mask_transformed_thresholded
+    a_image_contours = a_image * a_mask
 
     return(a_image_contours)
 
