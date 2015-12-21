@@ -121,7 +121,7 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
     assert (radii.shape == centers.shape[:1])
 
     # Create a hypersphere mask using a center and a radius.
-    hypersphere_mask = numpy.zeros(
+    hypersphere_masks = numpy.zeros(
         radii.shape + tuple(space.tolist()), dtype=bool
     )
     for i, (each_center, each_radius) in enumerate(
@@ -140,11 +140,11 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
         each_point_offset_dist = each_point_offset_sqd_sum.astype(float)**.5
 
         if include_boundary:
-            hypersphere_mask[i] = (each_point_offset_dist <= each_radius)
+            hypersphere_masks[i] = (each_point_offset_dist <= each_radius)
         else:
-            hypersphere_mask[i] = (each_point_offset_dist < each_radius)
+            hypersphere_masks[i] = (each_point_offset_dist < each_radius)
 
-    return(hypersphere_mask)
+    return(hypersphere_masks)
 
 
 def generate_gaussian_images(space, means, std_devs, magnitudes):
