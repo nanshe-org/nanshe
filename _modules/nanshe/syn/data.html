@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.syn.data &mdash; nanshe 0.1.0a39+4.gfa59f3e documentation</title>
+    <title>nanshe.syn.data &mdash; nanshe 0.1.0a39+13.g347d104 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a39+4.gfa59f3e',
+        VERSION:     '0.1.0a39+13.g347d104',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a39+4.gfa59f3e documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a39+13.g347d104 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a39+4.gfa59f3e documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a39+13.g347d104 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -159,52 +159,165 @@
 <span class="sd">                    [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">return</span><span class="p">(</span><span class="n">generate_hyperdisc_masks</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">include_boundary</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="generate_hyperdisc_masks"><a class="viewcode-back" href="../../../nanshe.syn.data.html#nanshe.syn.data.generate_hyperdisc_masks">[docs]</a><span class="k">def</span> <span class="nf">generate_hyperdisc_masks</span><span class="p">(</span><span class="n">space</span><span class="p">,</span>
+                             <span class="n">centers</span><span class="p">,</span>
+                             <span class="n">radii_max</span><span class="p">,</span>
+                             <span class="n">include_boundary_max</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                             <span class="n">radii_min</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                             <span class="n">include_boundary_min</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a stack of masks (first index indicates which mask); where,</span>
+<span class="sd">        each contains a hyperdisc constructed using a center and radius</span>
+<span class="sd">        provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            space(tuple of ints):                The size of the mask.</span>
+
+<span class="sd">            centers(list of tuples of numbers):  List of centers with one per</span>
+<span class="sd">                                                 hyperdisc.</span>
+
+<span class="sd">            radii_max(list of numbers):          List of max radii with one per</span>
+<span class="sd">                                                 hyperdisc.</span>
+
+<span class="sd">            include_boundary_max(bool):          Whether the mask should</span>
+<span class="sd">                                                 contain the max boundary of</span>
+<span class="sd">                                                 the hyperdisc or not.</span>
+
+<span class="sd">            radii_min(list of numbers):          List of min radii with one per</span>
+<span class="sd">                                                 hyperdisc.</span>
+
+<span class="sd">            include_boundary_min(bool):          Whether the mask should</span>
+<span class="sd">                                                 contain the min boundary of</span>
+<span class="sd">                                                 the hyperdisc or not.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray:                       A stack of masks (first index</span>
+<span class="sd">                                                 indicates which mask) with a</span>
+<span class="sd">                                                 filled hyperdisc using a</span>
+<span class="sd">                                                 center and radius for each</span>
+<span class="sd">                                                 mask.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; generate_hyperdisc_masks((3, 3), (1, 1), 1.25)</span>
+<span class="sd">            array([[[False,  True, False],</span>
+<span class="sd">                    [ True,  True,  True],</span>
+<span class="sd">                    [False,  True, False]]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; generate_hyperdisc_masks((3, 3), (1, 1), 1.25, radii_min=0.0, include_boundary_min=False)</span>
+<span class="sd">            array([[[False,  True, False],</span>
+<span class="sd">                    [ True, False,  True],</span>
+<span class="sd">                    [False,  True, False]]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; generate_hyperdisc_masks((3, 3, 3), (1, 1, 1), 1.25)</span>
+<span class="sd">            array([[[[False, False, False],</span>
+<span class="sd">                     [False,  True, False],</span>
+<span class="sd">                     [False, False, False]],</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">                    [[False,  True, False],</span>
+<span class="sd">                     [ True,  True,  True],</span>
+<span class="sd">                     [False,  True, False]],</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">                    [[False, False, False],</span>
+<span class="sd">                     [False,  True, False],</span>
+<span class="sd">                     [False, False, False]]]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; generate_hyperdisc_masks((9, 9), (4, 4), 5)</span>
+<span class="sd">            array([[[False, False,  True,  True,  True,  True,  True, False, False],</span>
+<span class="sd">                    [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="sd">                    [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; generate_hyperdisc_masks(</span>
+<span class="sd">            ...     (9, 9), (4, 4), 5, include_boundary_max=True</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[[False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="sd">                    [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)</span>
+
+<span class="sd">            &gt;&gt;&gt; generate_hyperdisc_masks(</span>
+<span class="sd">            ...     (9, 9), (4, 4), 5, True, 4, True</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[[False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="sd">                    [ True,  True, False, False, False, False, False,  True,  True],</span>
+<span class="sd">                    [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="sd">                    [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="sd">                    [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="sd">                    [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="sd">                    [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="sd">                    [ True,  True, False, False, False, False, False,  True,  True],</span>
+<span class="sd">                    [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c"># Convert to arrays</span>
     <span class="n">space</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">space</span><span class="p">)</span>
     <span class="n">centers</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span>
-    <span class="n">radii</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
+    <span class="n">radii_max</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radii_max</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">radii_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">radii_min</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radii_min</span><span class="p">)</span>
 
     <span class="c"># Add a singleton dimension if there is only one of each.</span>
     <span class="k">if</span> <span class="n">centers</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">centers</span> <span class="o">=</span> <span class="n">centers</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">radii</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">radii</span> <span class="o">=</span> <span class="n">radii</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">radii_max</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">radii_max</span> <span class="o">=</span> <span class="n">radii_max</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">radii_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">radii_min</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">radii_min</span> <span class="o">=</span> <span class="n">radii_min</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
     <span class="c"># Validate the dimensions</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">centers</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="p">(</span><span class="n">radii</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">radii_max</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">radii_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">radii_min</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="c"># Validate the shapes</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-    <span class="k">assert</span> <span class="p">(</span><span class="n">radii</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">radii_max</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">radii_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">radii_min</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
 
-    <span class="c"># Create a hypersphere mask using a center and a radius.</span>
-    <span class="n">hypersphere_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-        <span class="n">radii</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">tolist</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span>
-    <span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">each_center</span><span class="p">,</span> <span class="n">each_radius</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
-            <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">centers</span><span class="p">,</span> <span class="n">radii</span><span class="p">)</span>
-    <span class="p">):</span>
-        <span class="n">space_index</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">space</span><span class="p">)</span>
+    <span class="n">radii_max_2</span> <span class="o">=</span> <span class="n">radii_max</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">radii_max_2</span> <span class="o">=</span> <span class="n">radii_max_2</span><span class="p">[(</span><span class="bp">Ellipsis</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">None</span><span class="p">,)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">space</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">radii_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">radii_min_2</span> <span class="o">=</span> <span class="n">radii_min</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">radii_min_2</span> <span class="o">=</span> <span class="n">radii_min_2</span><span class="p">[(</span><span class="bp">Ellipsis</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">None</span><span class="p">,)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">space</span><span class="p">)]</span>
 
-        <span class="n">each_point_offset</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">space_index</span> <span class="o">-</span> <span class="n">nanshe</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">xnumpy</span><span class="o">.</span><span class="n">expand_view</span><span class="p">(</span>
-                <span class="n">each_center</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
+    <span class="n">space_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">space</span><span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
 
-        <span class="n">each_point_offset_sqd_sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">each_point_offset</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c"># Create a hyperdisc mask using a center and a radius.</span>
+    <span class="n">hyperdisc_masks</span> <span class="o">=</span> <span class="bp">None</span>
 
-        <span class="n">each_point_offset_dist</span> <span class="o">=</span> <span class="n">each_point_offset_sqd_sum</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">**.</span><span class="mi">5</span>
+    <span class="n">point_offsets_dist_2</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">space_indices</span> <span class="o">-</span> <span class="n">centers</span><span class="p">[(</span><span class="bp">Ellipsis</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">None</span><span class="p">,)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">space</span><span class="p">)])</span><span class="o">**</span><span class="mi">2</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">include_boundary</span><span class="p">:</span>
-            <span class="n">hypersphere_mask</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">each_point_offset_dist</span> <span class="o">&lt;=</span> <span class="n">each_radius</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">include_boundary_max</span><span class="p">:</span>
+        <span class="n">hyperdisc_masks</span> <span class="o">=</span> <span class="p">(</span><span class="n">point_offsets_dist_2</span> <span class="o">&lt;=</span> <span class="n">radii_max_2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">hyperdisc_masks</span> <span class="o">=</span> <span class="p">(</span><span class="n">point_offsets_dist_2</span> <span class="o">&lt;</span> <span class="n">radii_max_2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">radii_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">include_boundary_min</span><span class="p">:</span>
+            <span class="n">hyperdisc_masks</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">radii_min_2</span> <span class="o">&lt;=</span> <span class="n">point_offsets_dist_2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">hypersphere_mask</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">each_point_offset_dist</span> <span class="o">&lt;</span> <span class="n">each_radius</span><span class="p">)</span>
+            <span class="n">hyperdisc_masks</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">radii_min_2</span> <span class="o">&lt;</span> <span class="n">point_offsets_dist_2</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">hypersphere_mask</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">hyperdisc_masks</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="generate_gaussian_images"><a class="viewcode-back" href="../../../nanshe.syn.data.html#nanshe.syn.data.generate_gaussian_images">[docs]</a><span class="k">def</span> <span class="nf">generate_gaussian_images</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">means</span><span class="p">,</span> <span class="n">std_devs</span><span class="p">,</span> <span class="n">magnitudes</span><span class="p">):</span>
@@ -447,7 +560,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a39+4.gfa59f3e documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a39+13.g347d104 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

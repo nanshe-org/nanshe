@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.syn.data module &mdash; nanshe 0.1.0a39+4.gfa59f3e documentation</title>
+    <title>nanshe.syn.data module &mdash; nanshe 0.1.0a39+13.g347d104 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a39+4.gfa59f3e',
+        VERSION:     '0.1.0a39+13.g347d104',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a39+4.gfa59f3e documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a39+13.g347d104 documentation" href="index.html" />
     <link rel="next" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="prev" title="nanshe.syn.data module" href="" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="#" title="nanshe.syn.data module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a39+4.gfa59f3e documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a39+13.g347d104 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -177,6 +177,114 @@ radius for each mask.</p>
 <span class="gp">... </span>    <span class="mi">3</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">100.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nanshe.syn.data.generate_hyperdisc_masks">
+<code class="descclassname">nanshe.syn.data.</code><code class="descname">generate_hyperdisc_masks</code><span class="sig-paren">(</span><em>space</em>, <em>centers</em>, <em>radii_max</em>, <em>include_boundary_max=False</em>, <em>radii_min=None</em>, <em>include_boundary_min=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/syn/data.html#generate_hyperdisc_masks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.syn.data.generate_hyperdisc_masks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a stack of masks (first index indicates which mask); where,
+each contains a hyperdisc constructed using a center and radius
+provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>space</strong> (<em>tuple of ints</em>) &#8211; The size of the mask.</li>
+<li><strong>centers</strong> (<em>list of tuples of numbers</em>) &#8211; List of centers with one per
+hyperdisc.</li>
+<li><strong>radii_max</strong> (<em>list of numbers</em>) &#8211; List of max radii with one per
+hyperdisc.</li>
+<li><strong>include_boundary_max</strong> (<em>bool</em>) &#8211; Whether the mask should
+contain the max boundary of
+the hyperdisc or not.</li>
+<li><strong>radii_min</strong> (<em>list of numbers</em>) &#8211; List of min radii with one per
+hyperdisc.</li>
+<li><strong>include_boundary_min</strong> (<em>bool</em>) &#8211; Whether the mask should
+contain the min boundary of
+the hyperdisc or not.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A stack of masks (first index
+indicates which mask) with a
+filled hyperdisc using a
+center and radius for each
+mask.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<span class="go">array([[[False,  True, False],</span>
+<span class="go">        [ True,  True,  True],</span>
+<span class="go">        [False,  True, False]]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">,</span> <span class="n">radii_min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">include_boundary_min</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">array([[[False,  True, False],</span>
+<span class="go">        [ True, False,  True],</span>
+<span class="go">        [False,  True, False]]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<span class="go">array([[[[False, False, False],</span>
+<span class="go">         [False,  True, False],</span>
+<span class="go">         [False, False, False]],</span>
+
+<span class="go">        [[False,  True, False],</span>
+<span class="go">         [ True,  True,  True],</span>
+<span class="go">         [False,  True, False]],</span>
+
+<span class="go">        [[False, False, False],</span>
+<span class="go">         [False,  True, False],</span>
+<span class="go">         [False, False, False]]]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">array([[[False, False,  True,  True,  True,  True,  True, False, False],</span>
+<span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="go">        [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="n">include_boundary_max</span><span class="o">=</span><span class="bp">True</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">array([[[False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
+<span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="bp">True</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">array([[[False,  True,  True,  True,  True,  True,  True,  True, False],</span>
+<span class="go">        [ True,  True, False, False, False, False, False,  True,  True],</span>
+<span class="go">        [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="go">        [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="go">        [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="go">        [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="go">        [ True, False, False, False, False, False, False, False,  True],</span>
+<span class="go">        [ True,  True, False, False, False, False, False,  True,  True],</span>
+<span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -396,7 +504,7 @@ coordinate.</p>
         <li class="right" >
           <a href="#" title="nanshe.syn.data module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a39+4.gfa59f3e documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a39+13.g347d104 documentation</a> &raquo;</li>
  
       </ul>
     </div>

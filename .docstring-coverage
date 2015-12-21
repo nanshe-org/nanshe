@@ -289,7 +289,7 @@ File nanshe/syn/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/syn/data.py
- Needed: 4; Exist: 4; Missing: 0; Coverage: 100.0%
+ Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
 
 File nanshe/imp/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -334,5 +334,5 @@ File nanshe/misc/random_dictionary_learning_data.py
 
 
 Overall statistics for 35 files:
-Docstrings needed: 529; Docstrings exist: 301; Docstrings missing: 228
-Total docstring coverage: 56.9%;  Grade: not so bad
+Docstrings needed: 530; Docstrings exist: 302; Docstrings missing: 228
+Total docstring coverage: 57.0%;  Grade: not so bad
