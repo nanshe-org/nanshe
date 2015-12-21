@@ -2786,42 +2786,13 @@ def wavelet_denoising(new_image,
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
 
             if watershed_local_maxima.props.size:
-                # Creates a NumPy structure array to store
-                neurons = numpy.empty(
-                    len(watershed_local_maxima.props), dtype=neurons.dtype
+                neurons = extract_neurons(
+                        new_image,
+                        xnumpy.all_permutations_equal(
+                            watershed_local_maxima.props["label"],
+                            watershed_local_maxima.label_image
+                        )
                 )
-
-                # Get masks for all cells
-                neurons["mask"] = xnumpy.all_permutations_equal(
-                    watershed_local_maxima.props["label"],
-                    watershed_local_maxima.label_image
-                )
-
-                neurons["image"] = new_image * neurons["mask"]
-
-                neurons["area"] = watershed_local_maxima.props["area"]
-
-                neurons["max_F"] = xnumpy.array_to_matrix(
-                    neurons["image"]
-                ).max(axis=1)
-
-                for i in xrange(len(neurons)):
-                    neuron_mask_i_points = numpy.array(
-                        neurons["mask"][i].nonzero()
-                    )
-
-                    neurons["contour"][i] = xnumpy.generate_contour(
-                        neurons["mask"][i]
-                    )
-                    neurons["gaussian_mean"][i] = neuron_mask_i_points.mean(
-                        axis=1
-                    )
-                    neurons["gaussian_cov"][i] = numpy.cov(
-                        neuron_mask_i_points
-                    )
-
-                neurons["centroid"] = watershed_local_maxima.props["centroid"]
-
                 if len(neurons) > 1:
                     logger.debug(
                         "Extracted neurons. Found " +
