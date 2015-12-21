@@ -99,44 +99,165 @@ def generate_hypersphere_masks(space, centers, radii, include_boundary=False):
                     [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)
     """
 
+    return(generate_hyperdisc_masks(space, centers, radii, include_boundary))
+
+
+def generate_hyperdisc_masks(space,
+                             centers,
+                             radii_max,
+                             include_boundary_max=False,
+                             radii_min=None,
+                             include_boundary_min=False):
+    """
+        Generate a stack of masks (first index indicates which mask); where,
+        each contains a hyperdisc constructed using a center and radius
+        provided.
+
+        Args:
+            space(tuple of ints):                The size of the mask.
+
+            centers(list of tuples of numbers):  List of centers with one per
+                                                 hyperdisc.
+
+            radii_max(list of numbers):          List of max radii with one per
+                                                 hyperdisc.
+
+            include_boundary_max(bool):          Whether the mask should
+                                                 contain the max boundary of
+                                                 the hyperdisc or not.
+
+            radii_min(list of numbers):          List of min radii with one per
+                                                 hyperdisc.
+
+            include_boundary_min(bool):          Whether the mask should
+                                                 contain the min boundary of
+                                                 the hyperdisc or not.
+
+        Returns:
+            numpy.ndarray:                       A stack of masks (first index
+                                                 indicates which mask) with a
+                                                 filled hyperdisc using a
+                                                 center and radius for each
+                                                 mask.
+
+        Examples:
+            >>> generate_hyperdisc_masks((3, 3), (1, 1), 1.25)
+            array([[[False,  True, False],
+                    [ True,  True,  True],
+                    [False,  True, False]]], dtype=bool)
+
+            >>> generate_hyperdisc_masks((3, 3), (1, 1), 1.25, radii_min=0.0, include_boundary_min=False)
+            array([[[False,  True, False],
+                    [ True, False,  True],
+                    [False,  True, False]]], dtype=bool)
+
+            >>> generate_hyperdisc_masks((3, 3, 3), (1, 1, 1), 1.25)
+            array([[[[False, False, False],
+                     [False,  True, False],
+                     [False, False, False]],
+            <BLANKLINE>
+                    [[False,  True, False],
+                     [ True,  True,  True],
+                     [False,  True, False]],
+            <BLANKLINE>
+                    [[False, False, False],
+                     [False,  True, False],
+                     [False, False, False]]]], dtype=bool)
+
+            >>> generate_hyperdisc_masks((9, 9), (4, 4), 5)
+            array([[[False, False,  True,  True,  True,  True,  True, False, False],
+                    [False,  True,  True,  True,  True,  True,  True,  True, False],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [False,  True,  True,  True,  True,  True,  True,  True, False],
+                    [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)
+
+            >>> generate_hyperdisc_masks(
+            ...     (9, 9), (4, 4), 5, include_boundary_max=True
+            ... )
+            array([[[False,  True,  True,  True,  True,  True,  True,  True, False],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [ True,  True,  True,  True,  True,  True,  True,  True,  True],
+                    [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)
+
+            >>> generate_hyperdisc_masks(
+            ...     (9, 9), (4, 4), 5, True, 4, True
+            ... )
+            array([[[False,  True,  True,  True,  True,  True,  True,  True, False],
+                    [ True,  True, False, False, False, False, False,  True,  True],
+                    [ True, False, False, False, False, False, False, False,  True],
+                    [ True, False, False, False, False, False, False, False,  True],
+                    [ True, False, False, False, False, False, False, False,  True],
+                    [ True, False, False, False, False, False, False, False,  True],
+                    [ True, False, False, False, False, False, False, False,  True],
+                    [ True,  True, False, False, False, False, False,  True,  True],
+                    [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)
+    """
+
     # Convert to arrays
     space = numpy.array(space)
     centers = numpy.array(centers)
-    radii = numpy.array(radii)
+    radii_max = numpy.array(radii_max)
+    if radii_min is not None:
+        radii_min = numpy.array(radii_min)
 
     # Add a singleton dimension if there is only one of each.
     if centers.ndim == 1:
         centers = centers[None]
 
-    if radii.ndim == 0:
-        radii = radii[None]
+    if radii_max.ndim == 0:
+        radii_max = radii_max[None]
+
+    if (radii_min is not None) and (radii_min.ndim == 0):
+            radii_min = radii_min[None]
 
     # Validate the dimensions
     assert (space.ndim == 1)
     assert (centers.ndim == 2)
-    assert (radii.ndim == 1)
+    assert (radii_max.ndim == 1)
+    if radii_min is not None:
+        assert (radii_min.ndim == 1)
 
     # Validate the shapes
     assert (space.shape == centers.shape[1:])
-    assert (radii.shape == centers.shape[:1])
+    assert (radii_max.shape == centers.shape[:1])
+    if radii_min is not None:
+        assert (radii_min.shape == centers.shape[:1])
 
-    radii_2 = radii**2
+    radii_max_2 = radii_max**2
+    radii_max_2 = radii_max_2[(Ellipsis,) + (None,)*len(space)]
+    if radii_min is not None:
+        radii_min_2 = radii_min**2
+        radii_min_2 = radii_min_2[(Ellipsis,) + (None,)*len(space)]
 
     space_indices = numpy.indices(space)[None]
 
-    # Create a hypersphere mask using a center and a radius.
-    hypersphere_masks = None
+    # Create a hyperdisc mask using a center and a radius.
+    hyperdisc_masks = None
 
     point_offsets_dist_2 = (
         (space_indices - centers[(Ellipsis,) + (None,)*len(space)])**2
     ).sum(axis=1)
 
-    if include_boundary:
-        hypersphere_masks = (point_offsets_dist_2 <= radii_2)
+    if include_boundary_max:
+        hyperdisc_masks = (point_offsets_dist_2 <= radii_max_2)
     else:
-        hypersphere_masks = (point_offsets_dist_2 < radii_2)
+        hyperdisc_masks = (point_offsets_dist_2 < radii_max_2)
+    if radii_min is not None:
+        if include_boundary_min:
+            hyperdisc_masks &= (radii_min_2 <= point_offsets_dist_2)
+        else:
+            hyperdisc_masks &= (radii_min_2 < point_offsets_dist_2)
 
-    return(hypersphere_masks)
+    return(hyperdisc_masks)
 
 
 def generate_gaussian_images(space, means, std_devs, magnitudes):
