@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a39+13.g347d104 documentation</title>
+    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a39+23.g936b696 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a39+13.g347d104',
+        VERSION:     '0.1.0a39+23.g936b696',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a39+13.g347d104 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a39+23.g936b696 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a39+13.g347d104 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a39+23.g936b696 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -2908,7 +2908,9 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neurons</span><span class="p">)):</span>
         <span class="n">neuron_mask_i_points</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">neurons</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">nonzero</span><span class="p">())</span>
 
-        <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_contour</span><span class="p">(</span><span class="n">neurons</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_contour_fast</span><span class="p">(</span>
+                <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;gaussian_mean&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">neuron_mask_i_points</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">neurons</span><span class="p">[</span><span class="s">&quot;gaussian_cov&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">neuron_mask_i_points</span><span class="p">)</span>
 
@@ -2965,7 +2967,7 @@
 
     <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_neuron_mask</span>
 
-    <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_contour</span><span class="p">(</span><span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">])</span>
+    <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_contour_fast</span><span class="p">(</span><span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">])</span>
 
     <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_neuron</span> <span class="o">*</span> <span class="n">new_neuron</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span>
 
@@ -3739,7 +3741,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a39+13.g347d104 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a39+23.g936b696 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
