@@ -2043,7 +2043,7 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
     return(numpy.lib.stride_tricks.as_strided(
         new_array,
         reps_before + new_array.shape + reps_after,
-        len(reps_before) * (0,) + new_array.strides + len(reps_after) * (0,)
+        (0,) * len(reps_before) + new_array.strides + (0,) * len(reps_after)
     ))
 
 
