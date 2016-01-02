@@ -24,7 +24,6 @@ __date__ = "$May 20, 2014 09:46:45 EDT$"
 import collections
 import functools
 import itertools
-import math
 import operator
 import warnings
 
