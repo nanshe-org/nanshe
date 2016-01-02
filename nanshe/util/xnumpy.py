@@ -24,7 +24,6 @@ __date__ = "$May 20, 2014 09:46:45 EDT$"
 import collections
 import functools
 import itertools
-import math
 import operator
 import warnings
 
@@ -32,9 +31,9 @@ import numpy
 import scipy
 
 import scipy.misc
-import scipy.spatial
 import scipy.ndimage
 import scipy.ndimage.morphology
+import scipy.spatial
 import scipy.stats
 import scipy.stats.mstats
 
