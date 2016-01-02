@@ -31,9 +31,9 @@ import numpy
 import scipy
 
 import scipy.misc
-import scipy.spatial
 import scipy.ndimage
 import scipy.ndimage.morphology
+import scipy.spatial
 import scipy.stats
 import scipy.stats.mstats
 
