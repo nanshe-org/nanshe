@@ -481,45 +481,18 @@ def convert_tiffs(new_tiff_filenames,
             )
 
             # Read the data in the format specified.
-            each_new_tiff_array = get_standard_tiff_array(
+            each_new_tiff_array, each_new_tiff_description = get_standard_tiff_data(
                 each_new_tiff_filename,
                 axis_order="cztyx",
                 pages_to_channel=pages_to_channel,
                 memmap=memmap
             )
 
-            # Extract the descriptions.
-            each_new_tiff_description = []
-            each_new_tiff_file = None
-            with tifffile.TiffFile(each_new_tiff_filename) as each_new_tiff_file:
-                for i in xrange(
-                        channel,
-                        len(each_new_tiff_file),
-                        pages_to_channel
-                ):
-                    page_i = each_new_tiff_file[i]
-                    metadata_i = page_i.tags
-                    desc_i = u""
-
-                    try:
-                        desc_i = unicode(
-                            metadata_i["image_description"].value
-                        )
-                    except KeyError:
-                        pass
-
-                    each_new_tiff_description.append(
-                        desc_i
-                    )
-
-                each_new_tiff_file = None
-
-            each_new_tiff_description = numpy.array(each_new_tiff_description)
-
             # Take channel and z selection
             # TODO: Could we drop the channel constraint?
             # TODO: Want to drop z constraint.
             each_new_tiff_array = each_new_tiff_array[channel, z_index]
+            each_new_tiff_description = each_new_tiff_description[channel]
 
             # Store into the current slice and go to the next one.
             new_hdf5_dataset_axis_pos_next = new_hdf5_dataset_axis_pos + \
