@@ -226,6 +226,115 @@ def get_standard_tiff_array(new_tiff_filename,
 
 
 @prof.log_call(trace_logger)
+def get_standard_tiff_data(new_tiff_filename,
+                           axis_order="tzyxc",
+                           pages_to_channel=1,
+                           memmap=False):
+    """
+        Reads a tiff file and returns a standard 5D array and the metadata.
+
+        Args:
+            new_tiff_filename(str):             the TIFF file to read in
+
+            axis_order(int):                    how to order the axes (by
+                                                default returns "tzyxc").
+
+            pages_to_channel(int):              if channels are not normally
+                                                stored in the channel variable,
+                                                but are stored as pages (or as
+                                                a mixture), then this will
+                                                split neighboring pages into
+                                                separate channels. (by default
+                                                is 1 so changes nothing)
+
+            memmap(bool):                       allows one to load the array
+                                                using a memory mapped file as
+                                                opposed to reading it directly.
+                                                (by default is False)
+
+        Returns:
+            (ndarray/memmap, ndarray):          an array with the axis order
+                                                specified and description
+                                                metadata.
+    """
+
+    assert (pages_to_channel > 0)
+
+    new_tiff_description = []
+    with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
+        new_tiff_array = new_tiff_file.asarray(memmap=memmap)
+
+        for i in xrange(
+                0,
+                len(new_tiff_file),
+                pages_to_channel
+        ):
+            new_tiff_description.append([])
+            for j in xrange(pages_to_channel):
+                each_page = new_tiff_file[i + j]
+                each_metadata = each_page.tags
+                each_desc = u""
+
+                try:
+                    each_desc = unicode(
+                        each_metadata["image_description"].value
+                    )
+                except KeyError:
+                    pass
+
+                new_tiff_description[-1].append(
+                    each_desc
+                )
+
+    new_tiff_description = numpy.array(new_tiff_description)
+
+
+    # Add a singleton channel if none is present.
+    if new_tiff_array.ndim == 3:
+        new_tiff_array = new_tiff_array[None]
+
+    # Fit the old VIGRA style array. (may try to remove in the future)
+    new_tiff_array = new_tiff_array.transpose(
+        tuple(xrange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
+    )
+
+    # Check to make sure the dimensions are ok
+    if (new_tiff_array.ndim == 5):
+        pass
+    elif (new_tiff_array.ndim == 4):
+        # Has no z. So, add this.
+        new_tiff_array = xnumpy.add_singleton_axis_beginning(new_tiff_array)
+    else:
+        raise Exception(
+            "Invalid dimensionality for TIFF. Found shape to be \"" +
+            repr(new_tiff_array.shape) + "\"."
+        )
+
+    # Some people use pages to hold time and channel data. So, we need to
+    # restructure it. However, if they are properly structuring their TIFF
+    # file, then they shouldn't incur a penalty.
+    if pages_to_channel > 1:
+        new_tiff_array = new_tiff_array.reshape(
+            new_tiff_array.shape[:-2] +
+            (new_tiff_array.shape[-2] / pages_to_channel,
+             pages_to_channel * new_tiff_array.shape[-1],)
+        )
+
+    new_tiff_array = xnumpy.tagging_reorder_array(
+        new_tiff_array,
+        from_axis_order="zyxtc",
+        to_axis_order=axis_order,
+        to_copy=True
+    )
+
+    # Currently is `tc` order so convert it to the expected order.
+    if axis_order.index("t") > axis_order.index("c"):
+        new_tiff_description = new_tiff_description.T.copy()
+
+    return(new_tiff_array, new_tiff_description)
+
+
+@prof.log_call(trace_logger)
 def convert_tiffs(new_tiff_filenames,
                   new_hdf5_pathname,
                   axis=0,
@@ -372,45 +481,18 @@ def convert_tiffs(new_tiff_filenames,
             )
 
             # Read the data in the format specified.
-            each_new_tiff_array = get_standard_tiff_array(
+            each_new_tiff_array, each_new_tiff_description = get_standard_tiff_data(
                 each_new_tiff_filename,
                 axis_order="cztyx",
                 pages_to_channel=pages_to_channel,
                 memmap=memmap
             )
 
-            # Extract the descriptions.
-            each_new_tiff_description = []
-            each_new_tiff_file = None
-            with tifffile.TiffFile(each_new_tiff_filename) as each_new_tiff_file:
-                for i in xrange(
-                        channel,
-                        len(each_new_tiff_file),
-                        pages_to_channel
-                ):
-                    page_i = each_new_tiff_file[i]
-                    metadata_i = page_i.tags
-                    desc_i = u""
-
-                    try:
-                        desc_i = unicode(
-                            metadata_i["image_description"].value
-                        )
-                    except KeyError:
-                        pass
-
-                    each_new_tiff_description.append(
-                        desc_i
-                    )
-
-                each_new_tiff_file = None
-
-            each_new_tiff_description = numpy.array(each_new_tiff_description)
-
             # Take channel and z selection
             # TODO: Could we drop the channel constraint?
             # TODO: Want to drop z constraint.
             each_new_tiff_array = each_new_tiff_array[channel, z_index]
+            each_new_tiff_description = each_new_tiff_description[channel]
 
             # Store into the current slice and go to the next one.
             new_hdf5_dataset_axis_pos_next = new_hdf5_dataset_axis_pos + \

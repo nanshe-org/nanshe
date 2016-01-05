@@ -94,6 +94,24 @@ class TestXTiff(object):
 
             assert (each_data == each_filedata).all()
 
+    def test_get_standard_tiff_data(self):
+        for each_filename, each_filedata in self.filedata.items():
+            each_data, each_metadata = nanshe.io.xtiff.get_standard_tiff_data(
+                each_filename, pages_to_channel=self.pages_to_channel
+            )
+
+            assert (each_data.shape == each_filedata.shape)
+            assert (each_data.dtype == each_filedata.dtype)
+
+            assert (
+                each_metadata.shape == (
+                    each_filedata.shape[:1] + each_filedata.shape[-1:]
+                )
+            )
+            assert (each_metadata.dtype.type == numpy.dtype(unicode).type)
+
+            assert (each_data == each_filedata).all()
+
     def test_convert_tiffs(self):
         hdf5_filename = os.path.join(self.temp_dir, "test.h5")
         hdf5_filepath = hdf5_filename + "/data"
