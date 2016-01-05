@@ -4963,8 +4963,9 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
     upper_threshold = separation_distance + half_thickness
 
     a_mask_transformed = mahotas.distance(
-            a_image
-    ).astype(a_image.dtype)
+            a_image,
+            "euclidean"
+    )
 
     above_lower_threshold = (lower_threshold <= a_mask_transformed)
     below_upper_threshold = (a_mask_transformed <= upper_threshold)
