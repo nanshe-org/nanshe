@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xtiff module &mdash; nanshe 0.1.0a41 documentation</title>
+    <title>nanshe.io.xtiff module &mdash; nanshe 0.1.0a42 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a41',
+        VERSION:     '0.1.0a42',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a41 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a42 documentation" href="index.html" />
     <link rel="next" title="nanshe.learner module" href="nanshe.learner.html" />
     <link rel="prev" title="nanshe.io.xjson module" href="nanshe.io.xjson.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.io.xjson.html" title="nanshe.io.xjson module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a41 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a42 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -206,6 +206,44 @@ specified.</p>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="nanshe.io.xtiff.get_standard_tiff_data">
+<code class="descclassname">nanshe.io.xtiff.</code><code class="descname">get_standard_tiff_data</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/io/xtiff.html#get_standard_tiff_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.io.xtiff.get_standard_tiff_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a tiff file and returns a standard 5D array and the metadata.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>new_tiff_filename</strong> (<em>str</em>) &#8211; the TIFF file to read in</li>
+<li><strong>axis_order</strong> (<em>int</em>) &#8211; how to order the axes (by
+default returns &#8220;tzyxc&#8221;).</li>
+<li><strong>pages_to_channel</strong> (<em>int</em>) &#8211; if channels are not normally
+stored in the channel variable,
+but are stored as pages (or as
+a mixture), then this will
+split neighboring pages into
+separate channels. (by default
+is 1 so changes nothing)</li>
+<li><strong>memmap</strong> (<em>bool</em>) &#8211; allows one to load the array
+using a memory mapped file as
+opposed to reading it directly.
+(by default is False)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an array with the axis order
+specified and description
+metadata.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(ndarray/memmap, ndarray)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
@@ -276,7 +314,7 @@ specified.</p>
         <li class="right" >
           <a href="nanshe.io.xjson.html" title="nanshe.io.xjson module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a41 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a42 documentation</a> &raquo;</li>
  
       </ul>
     </div>

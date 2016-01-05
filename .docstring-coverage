@@ -212,7 +212,7 @@ File nanshe/io/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/io/xtiff.py
- Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
+ Needed: 6; Exist: 6; Missing: 0; Coverage: 100.0%
 
 File nanshe/io/hdf5/search.py
  - No docstring for get_matching_paths_groups.get_matching_paths_groups_recursive!
@@ -334,5 +334,5 @@ File nanshe/misc/random_dictionary_learning_data.py
 
 
 Overall statistics for 35 files:
-Docstrings needed: 531; Docstrings exist: 303; Docstrings missing: 228
+Docstrings needed: 532; Docstrings exist: 304; Docstrings missing: 228
 Total docstring coverage: 57.1%;  Grade: not so bad
