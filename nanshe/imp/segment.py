@@ -1769,7 +1769,7 @@ def get_one_neuron(shape, dtype):
 
         Examples:
             >>> get_one_neuron(
-            ...     (3,), numpy.float
+            ...     (3,), numpy.float64
             ... ) #doctest: +NORMALIZE_WHITESPACE
             array([ ([False, False, False],
                      [False, False, False],
@@ -1789,7 +1789,7 @@ def get_one_neuron(shape, dtype):
                           ('centroid', '<f8', (1,))])
 
             >>> get_one_neuron(
-            ...     (2, 3), numpy.float
+            ...     (2, 3), numpy.float64
             ... ) #doctest: +NORMALIZE_WHITESPACE
             array([ ([[False, False, False],
                       [False, False, False]],
