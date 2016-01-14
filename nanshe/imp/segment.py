@@ -1690,15 +1690,17 @@ def get_neuron_dtype(shape, dtype):
     """
 
     ndim = len(shape)
+    dtype = numpy.dtype(dtype)
+    dtype_type = dtype.type
 
     neurons_dtype = [("mask", numpy.bool8, shape),
                      ("contour", numpy.bool8, shape),
-                     ("image", numpy.dtype(dtype).type, shape),
+                     ("image", dtype_type, shape),
                      ("area", numpy.float64),
                      ("max_F", numpy.float64),
                      ("gaussian_mean", numpy.float64, (ndim,)),
                      ("gaussian_cov", numpy.float64, (ndim, ndim,)),
-                     ("centroid", numpy.dtype(dtype).type, (ndim,))]
+                     ("centroid", dtype_type, (ndim,))]
 
     return(neurons_dtype)
 
