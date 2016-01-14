@@ -3353,7 +3353,7 @@ def norm(new_vector_set, ord=2):
     assert (new_vector_set.ndim >= 1)
 
     # Must be double.
-    if not issubclass(new_vector_set.dtype.type, numpy.float64):
+    if not issubclass(new_vector_set.dtype.type, numpy.floating):
         new_vector_set = new_vector_set.astype(numpy.float64)
 
     result = None
