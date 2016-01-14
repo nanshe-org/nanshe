@@ -3226,13 +3226,13 @@ def dot_product(new_vector_set_1, new_vector_set_2):
             array([[ 1.]])
     """
 
-    new_vector_set_1_float = new_vector_set_1.astype(float)
-    new_vector_set_2_float = new_vector_set_2.astype(float)
+    new_vector_set_1 = new_vector_set_1.astype(float)
+    new_vector_set_2 = new_vector_set_2.astype(float)
 
     # Measure the dot product between any two neurons
     # (i.e. related to the angle of separation)
     vector_pairs_dot_product = numpy.dot(
-        new_vector_set_1_float, new_vector_set_2_float.T
+        new_vector_set_1, new_vector_set_2.T
     )
 
     return(vector_pairs_dot_product)
@@ -4838,13 +4838,13 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
 
-    new_vector_set_1_float = new_vector_set_1.astype(float)
-    new_vector_set_2_float = new_vector_set_2.astype(float)
+    new_vector_set_1 = new_vector_set_1.astype(float)
+    new_vector_set_2 = new_vector_set_2.astype(float)
 
     # Measure the angle between any two neurons
     # (i.e. related to the angle of separation)
-    vector_pairs_cosine_angle = 1 - scipy.spatial.distance.cdist(new_vector_set_1_float,
-                                                                 new_vector_set_2_float,
+    vector_pairs_cosine_angle = 1 - scipy.spatial.distance.cdist(new_vector_set_1,
+                                                                 new_vector_set_2,
                                                                  "cosine")
 
     return(vector_pairs_cosine_angle)
