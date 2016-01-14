@@ -3050,8 +3050,8 @@ def merge_neuron_sets_once(new_neuron_set_1,
         # Measure the distance between the two masks
         # (note distance relative to the total mask content of each mask individually)
         new_neuron_set_masks_overlaid_1, new_neuron_set_masks_overlaid_2 = xnumpy.dot_product_partially_normalized(
-            new_neuron_set_1_flattened_mask,
-            new_neuron_set_2_flattened_mask,
+            new_neuron_set_1_flattened_mask.astype(numpy.float32),
+            new_neuron_set_2_flattened_mask.astype(numpy.float32),
             ord=1
         )
 
@@ -3327,7 +3327,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         # (note distance relative to the total mask content of each mask
         # individually)
         new_neuron_set_masks_overlaid = xnumpy.pair_dot_product_partially_normalized(
-            new_neuron_set_flattened_mask, ord=1
+            new_neuron_set_flattened_mask.astype(numpy.float32), ord=1
         )
         numpy.fill_diagonal(new_neuron_set_masks_overlaid, 0)
 
