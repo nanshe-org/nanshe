@@ -3226,8 +3226,8 @@ def dot_product(new_vector_set_1, new_vector_set_2):
             array([[ 1.]])
     """
 
-    new_vector_set_1 = new_vector_set_1.astype(float)
-    new_vector_set_2 = new_vector_set_2.astype(float)
+    new_vector_set_1 = new_vector_set_1.astype(numpy.float64)
+    new_vector_set_2 = new_vector_set_2.astype(numpy.float64)
 
     # Measure the dot product between any two neurons
     # (i.e. related to the angle of separation)
@@ -4347,7 +4347,7 @@ def masks_overlap_normalized(a, b):
     assert (a.ndim == b.ndim == 2)
     assert (a.shape[1] == b.shape[1])
 
-    out = masks_intersection(a, b).astype(float)
+    out = masks_intersection(a, b).astype(numpy.float64)
     out /= masks_union(a, b)
 
     out[numpy.isnan(out)] = 0
@@ -4838,8 +4838,8 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
 
-    new_vector_set_1 = new_vector_set_1.astype(float)
-    new_vector_set_2 = new_vector_set_2.astype(float)
+    new_vector_set_1 = new_vector_set_1.astype(numpy.float64)
+    new_vector_set_2 = new_vector_set_2.astype(numpy.float64)
 
     # Measure the angle between any two neurons
     # (i.e. related to the angle of separation)
