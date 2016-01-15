@@ -4546,11 +4546,20 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
             ... )
             array([[ 1.]])
 
-            # >>> pair_dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE
-            # (array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],
-            #        [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),
-            #  array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],
-            #        [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.arange(6).reshape((2,3)),
+            ...     2
+            ... )
+            array([[ 2.23606798,  6.26099034],
+                   [ 1.97989899,  7.07106781]])
+
+            >>> pair_dot_product_partially_normalized(
+            ...     numpy.array([[ True, False, False],
+            ...                  [ True, False,  True]]),
+            ...     3
+            ... )
+            array([[ 1.        ,  1.        ],
+                   [ 0.79370053,  1.58740105]])
     """
 
     # Must be double.
@@ -4748,6 +4757,21 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
             ...     numpy.array([[ True,  False]]),
             ... )
             array([[ 1.]])
+
+            >>> pair_dot_product_normalized(
+            ...     numpy.arange(6).reshape((2,3)),
+            ...     2
+            ... )
+            array([[ 1.        ,  0.88543774],
+                   [ 0.88543774,  1.        ]])
+
+            >>> pair_dot_product_normalized(
+            ...     numpy.array([[ True, False, False],
+            ...                  [ True, False,  True]]),
+            ...     3
+            ... )
+            array([[ 1.        ,  0.79370053],
+                   [ 0.79370053,  1.25992105]])
     """
 
     # Must be double.
