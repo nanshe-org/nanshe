@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy module &mdash; nanshe 0.1.0a43 documentation</title>
+    <title>nanshe.util.xnumpy module &mdash; nanshe 0.1.0a44 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a43',
+        VERSION:     '0.1.0a44',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a43 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a44 documentation" href="index.html" />
     <link rel="next" title="nanshe.viewer module" href="nanshe.viewer.html" />
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a43 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -3742,6 +3742,7 @@ divides them by the norm of the two.</p>
 <li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</li>
 <li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
 as numpy.linalg.norm.</li>
+<li><strong>float_type</strong> (<em>type</em>) &#8211; some form of float</li>
 </ul>
 </td>
 </tr>
@@ -3800,6 +3801,23 @@ of vectors.</p>
 <span class="go">array([[ 1.]])</span>
 </pre></div>
 </div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pair_dot_product_normalized</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="mi">2</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">array([[ 1.        ,  0.88543774],</span>
+<span class="go">       [ 0.88543774,  1.        ]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pair_dot_product_normalized</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="p">[</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">]]),</span>
+<span class="gp">... </span>    <span class="mi">3</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">array([[ 1.        ,  0.79370053],</span>
+<span class="go">       [ 0.79370053,  1.25992105]])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -3816,6 +3834,7 @@ other.</p>
 <li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</li>
 <li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same argument
 as numpy.linalg.norm</li>
+<li><strong>float_type</strong> (<em>type</em>) &#8211; some form of float</li>
 </ul>
 </td>
 </tr>
@@ -3880,11 +3899,23 @@ of vectors.</p>
 <span class="go">array([[ 1.]])</span>
 </pre></div>
 </div>
-<p># &gt;&gt;&gt; pair_dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE
-# (array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],
-#        [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),
-#  array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],
-#        [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pair_dot_product_partially_normalized</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="mi">2</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">array([[ 2.23606798,  6.26099034],</span>
+<span class="go">       [ 1.97989899,  7.07106781]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pair_dot_product_partially_normalized</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="p">[</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span>  <span class="bp">True</span><span class="p">]]),</span>
+<span class="gp">... </span>    <span class="mi">3</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">array([[ 1.        ,  1.        ],</span>
+<span class="go">       [ 0.79370053,  1.58740105]])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -5329,7 +5360,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a43 documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
  
       </ul>
     </div>

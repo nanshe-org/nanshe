@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy &mdash; nanshe 0.1.0a43 documentation</title>
+    <title>nanshe.util.xnumpy &mdash; nanshe 0.1.0a44 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a43',
+        VERSION:     '0.1.0a44',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a43 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a44 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a43 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -3409,6 +3409,8 @@
 <span class="sd">            array([], shape=(2, 0), dtype=float64)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">assert</span> <span class="nb">ord</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
     <span class="c"># Needs to have at least one vector</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -4513,6 +4515,8 @@
 <span class="sd">                    [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">assert</span> <span class="nb">ord</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
     <span class="c"># Must be double.</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
         <span class="n">new_vector_set_1</span> <span class="o">=</span> <span class="n">new_vector_set_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -4546,7 +4550,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="pair_dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="pair_dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the two pairs of vectors from each</span>
 <span class="sd">        set and creates a tuple with the dot product divided by one norm or the</span>
@@ -4557,6 +4561,8 @@
 
 <span class="sd">            ord(optional):                        basically the same argument</span>
 <span class="sd">                                                  as numpy.linalg.norm</span>
+
+<span class="sd">            float_type(type):                     some form of float</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (numpy.ndarray):                      an array with the normalized</span>
@@ -4606,19 +4612,57 @@
 <span class="sd">            ... )</span>
 <span class="sd">            array([[ 1.]])</span>
 
-<span class="sd">            # &gt;&gt;&gt; pair_dot_product_partially_normalized( numpy.arange(6).reshape((2,3)), numpy.arange(5, 17).reshape((4,3)), 2 )  #doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            # (array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],</span>
-<span class="sd">            #        [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),</span>
-<span class="sd">            #  array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],</span>
-<span class="sd">            #        [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))</span>
+<span class="sd">            &gt;&gt;&gt; pair_dot_product_partially_normalized(</span>
+<span class="sd">            ...     numpy.arange(6).reshape((2,3)),</span>
+<span class="sd">            ...     2</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[ 2.23606798,  6.26099034],</span>
+<span class="sd">                   [ 1.97989899,  7.07106781]])</span>
+
+<span class="sd">            &gt;&gt;&gt; pair_dot_product_partially_normalized(</span>
+<span class="sd">            ...     numpy.array([[ True, False, False],</span>
+<span class="sd">            ...                  [ True, False,  True]]),</span>
+<span class="sd">            ...     3</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[ 1.        ,  1.        ],</span>
+<span class="sd">                   [ 0.79370053,  1.58740105]])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Must be double.</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-        <span class="n">new_vector_set</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">ord</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="n">is_bool</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">float_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">float_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">float_type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">float_type</span><span class="p">):</span>
+            <span class="n">new_vector_set</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">float_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+            <span class="n">new_vector_set</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">float_type</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+
+    <span class="c"># Measure the dot product between any two neurons</span>
+    <span class="c"># (i.e. related to the angle of separation)</span>
+    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">new_vector_set</span><span class="p">,</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span>
 
     <span class="c"># Gets all of the norms</span>
-    <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_bool</span><span class="p">:</span>
+        <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">ord</span> <span class="o">!=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+            <span class="n">inv_ord</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">float_type</span><span class="p">(</span><span class="nb">ord</span><span class="p">)</span>
+            <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">new_vector_set_norms</span> <span class="o">**</span> <span class="n">inv_ord</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_vector_set_norms</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">ord</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vector_pairs_dot_product</span><span class="o">.</span><span class="n">diagonal</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
 
     <span class="c"># Expand the norms to have a shape equivalent to vector_pairs_dot_product</span>
     <span class="n">new_vector_set_norms_expanded</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span>
@@ -4627,13 +4671,9 @@
 
     <span class="c"># Measure the dot product between any two neurons</span>
     <span class="c"># (i.e. related to the angle of separation)</span>
-    <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-        <span class="n">new_vector_set</span><span class="p">,</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">T</span>
-    <span class="p">)</span>
-
     <span class="n">vector_pairs_dot_product_normalized</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span> <span class="o">/</span> <span class="n">new_vector_set_norms_expanded</span>
 
-    <span class="k">return</span><span class="p">((</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">)</span>
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -4727,6 +4767,8 @@
 <span class="sd">                   [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">assert</span> <span class="nb">ord</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
     <span class="c"># Must be double.</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
         <span class="n">new_vector_set_1</span> <span class="o">=</span> <span class="n">new_vector_set_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -4756,7 +4798,7 @@
 
 </div>
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="pair_dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="pair_dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between a pair of vectors from each set and</span>
 <span class="sd">        divides them by the norm of the two.</span>
@@ -4766,6 +4808,8 @@
 
 <span class="sd">            ord(optional):                        basically the same arguments</span>
 <span class="sd">                                                  as numpy.linalg.norm.</span>
+
+<span class="sd">            float_type(type):                     some form of float</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            (numpy.ndarray):                      an array with the normalized</span>
@@ -4808,24 +4852,62 @@
 <span class="sd">            ...     numpy.array([[ True,  False]]),</span>
 <span class="sd">            ... )</span>
 <span class="sd">            array([[ 1.]])</span>
+
+<span class="sd">            &gt;&gt;&gt; pair_dot_product_normalized(</span>
+<span class="sd">            ...     numpy.arange(6).reshape((2,3)),</span>
+<span class="sd">            ...     2</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[ 1.        ,  0.88543774],</span>
+<span class="sd">                   [ 0.88543774,  1.        ]])</span>
+
+<span class="sd">            &gt;&gt;&gt; pair_dot_product_normalized(</span>
+<span class="sd">            ...     numpy.array([[ True, False, False],</span>
+<span class="sd">            ...                  [ True, False,  True]]),</span>
+<span class="sd">            ...     3</span>
+<span class="sd">            ... )</span>
+<span class="sd">            array([[ 1.        ,  0.79370053],</span>
+<span class="sd">                   [ 0.79370053,  1.25992105]])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Must be double.</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-        <span class="n">new_vector_set</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">ord</span> <span class="o">&gt;</span> <span class="mi">0</span>
 
-    <span class="c"># Gets all of the norms</span>
-    <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
+    <span class="n">is_bool</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">)</span>
 
-    <span class="c"># Finds the product of each combination for normalization</span>
-    <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span>
-        <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">new_vector_set_norms</span>
-    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">float_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">float_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">float_type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">float_type</span><span class="p">):</span>
+            <span class="n">new_vector_set</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">float_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+            <span class="n">new_vector_set</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">float_type</span> <span class="o">=</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
 
     <span class="c"># Measure the dot product between any two neurons</span>
     <span class="c"># (i.e. related to the angle of separation)</span>
     <span class="n">vector_pairs_dot_product</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
         <span class="n">new_vector_set</span><span class="p">,</span> <span class="n">new_vector_set</span><span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span>
+
+    <span class="c"># Gets all of the norms</span>
+    <span class="k">if</span> <span class="n">is_bool</span><span class="p">:</span>
+        <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">vector_pairs_dot_product</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">ord</span> <span class="o">!=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+            <span class="n">inv_ord</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">float_type</span><span class="p">(</span><span class="nb">ord</span><span class="p">)</span>
+            <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">new_vector_set_norms</span> <span class="o">**</span> <span class="n">inv_ord</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_vector_set_norms</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">float_type</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">ord</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vector_pairs_dot_product</span><span class="o">.</span><span class="n">diagonal</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_vector_set_norms</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span>
+
+    <span class="c"># Finds the product of each combination for normalization</span>
+    <span class="n">norm_products</span> <span class="o">=</span> <span class="n">all_permutations_operation</span><span class="p">(</span>
+        <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">new_vector_set_norms</span><span class="p">,</span> <span class="n">new_vector_set_norms</span>
     <span class="p">)</span>
 
     <span class="c"># Measure the dot product between any two neurons</span>
@@ -5575,7 +5657,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a43 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
