@@ -4795,7 +4795,10 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
     )
 
     # Gets all of the norms
-    new_vector_set_norms = norm(new_vector_set, ord=ord)
+    if ord == 2:
+        new_vector_set_norms = numpy.sqrt(vector_pairs_dot_product.diagonal())
+    else:
+        new_vector_set_norms = norm(new_vector_set, ord=ord)
 
     # Finds the product of each combination for normalization
     norm_products = all_permutations_operation(
