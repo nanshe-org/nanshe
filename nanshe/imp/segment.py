@@ -1690,15 +1690,17 @@ def get_neuron_dtype(shape, dtype):
     """
 
     ndim = len(shape)
+    dtype = numpy.dtype(dtype)
+    dtype_type = dtype.type
 
     neurons_dtype = [("mask", numpy.bool8, shape),
                      ("contour", numpy.bool8, shape),
-                     ("image", numpy.dtype(dtype).type, shape),
+                     ("image", dtype_type, shape),
                      ("area", numpy.float64),
-                     ("max_F", numpy.float64),
+                     ("max_F", dtype_type),
                      ("gaussian_mean", numpy.float64, (ndim,)),
                      ("gaussian_cov", numpy.float64, (ndim, ndim,)),
-                     ("centroid", numpy.dtype(dtype).type, (ndim,))]
+                     ("centroid", numpy.float64, (ndim,))]
 
     return(neurons_dtype)
 
@@ -1767,7 +1769,7 @@ def get_one_neuron(shape, dtype):
 
         Examples:
             >>> get_one_neuron(
-            ...     (3,), numpy.float
+            ...     (3,), numpy.float64
             ... ) #doctest: +NORMALIZE_WHITESPACE
             array([ ([False, False, False],
                      [False, False, False],
@@ -1787,7 +1789,7 @@ def get_one_neuron(shape, dtype):
                           ('centroid', '<f8', (1,))])
 
             >>> get_one_neuron(
-            ...     (2, 3), numpy.float
+            ...     (2, 3), numpy.float64
             ... ) #doctest: +NORMALIZE_WHITESPACE
             array([ ([[False, False, False],
                       [False, False, False]],
@@ -2214,7 +2216,7 @@ class ExtendedRegionProps(object):
 
         # Take a subset of the label props that does not include the removal
         # mask (copying may not be necessary as the mask may be as effective).
-        self.props = self.props[~remove_prop_indices_mask].copy()
+        self.props = self.props[~remove_prop_indices_mask]
         # Reduce the count by the number of each label
         self.count["count"] -= label_count_to_remove
 
@@ -3048,8 +3050,8 @@ def merge_neuron_sets_once(new_neuron_set_1,
         # Measure the distance between the two masks
         # (note distance relative to the total mask content of each mask individually)
         new_neuron_set_masks_overlaid_1, new_neuron_set_masks_overlaid_2 = xnumpy.dot_product_partially_normalized(
-            new_neuron_set_1_flattened_mask,
-            new_neuron_set_2_flattened_mask,
+            new_neuron_set_1_flattened_mask.astype(numpy.float32),
+            new_neuron_set_2_flattened_mask.astype(numpy.float32),
             ord=1
         )
 
@@ -3325,7 +3327,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
         # (note distance relative to the total mask content of each mask
         # individually)
         new_neuron_set_masks_overlaid = xnumpy.pair_dot_product_partially_normalized(
-            new_neuron_set_flattened_mask, ord=1
+            new_neuron_set_flattened_mask.astype(numpy.float32), ord=1
         )
         numpy.fill_diagonal(new_neuron_set_masks_overlaid, 0)
 
@@ -3485,7 +3487,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
             new_neuron_set_kept[j] = False
 
-        new_neuron_set = new_neuron_set[new_neuron_set_kept].copy()
+        new_neuron_set = new_neuron_set[new_neuron_set_kept]
 
         logger.debug(
             "Fused \"" + repr(len(new_neuron_set_all_j_fuse)) +
