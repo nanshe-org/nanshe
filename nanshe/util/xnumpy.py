@@ -4579,7 +4579,10 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
     )
 
     # Gets all of the norms
-    new_vector_set_norms = norm(new_vector_set, ord)
+    if ord == 2:
+        new_vector_set_norms = numpy.sqrt(vector_pairs_dot_product.diagonal())
+    else:
+        new_vector_set_norms = norm(new_vector_set, ord=ord)
 
     # Expand the norms to have a shape equivalent to vector_pairs_dot_product
     new_vector_set_norms_expanded = expand_view(
