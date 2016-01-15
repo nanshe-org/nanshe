@@ -3349,6 +3349,8 @@ def norm(new_vector_set, ord=2):
             array([], shape=(2, 0), dtype=float64)
     """
 
+    assert ord > 0
+
     # Needs to have at least one vector
     assert (new_vector_set.ndim >= 1)
 
@@ -4453,6 +4455,8 @@ def dot_product_partially_normalized(new_vector_set_1,
                     [ 7.05562316,  7.02764221,  7.00822427,  6.99482822]]))
     """
 
+    assert ord > 0
+
     # Must be double.
     if not issubclass(new_vector_set_1.dtype.type, numpy.floating):
         new_vector_set_1 = new_vector_set_1.astype(numpy.float64)
@@ -4561,6 +4565,8 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
             array([[ 1.        ,  1.        ],
                    [ 0.79370053,  1.58740105]])
     """
+
+    assert ord > 0
 
     # Must be double.
     if not issubclass(new_vector_set.dtype.type, numpy.floating):
@@ -4676,6 +4682,8 @@ def dot_product_normalized(new_vector_set_1, new_vector_set_2, ord=2):
                    [ 0.9978158 ,  0.99385869,  0.99111258,  0.98921809]])
     """
 
+    assert ord > 0
+
     # Must be double.
     if not issubclass(new_vector_set_1.dtype.type, numpy.floating):
         new_vector_set_1 = new_vector_set_1.astype(numpy.float64)
@@ -4773,6 +4781,8 @@ def pair_dot_product_normalized(new_vector_set, ord=2):
             array([[ 1.        ,  0.79370053],
                    [ 0.79370053,  1.25992105]])
     """
+
+    assert ord > 0
 
     # Must be double.
     if not issubclass(new_vector_set.dtype.type, numpy.floating):
