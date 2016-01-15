@@ -3487,7 +3487,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
             new_neuron_set_kept[j] = False
 
-        new_neuron_set = new_neuron_set[new_neuron_set_kept].copy()
+        new_neuron_set = new_neuron_set[new_neuron_set_kept]
 
         logger.debug(
             "Fused \"" + repr(len(new_neuron_set_all_j_fuse)) +
