@@ -4490,7 +4490,7 @@ def dot_product_partially_normalized(new_vector_set_1,
 
 
 @prof.log_call(trace_logger)
-def pair_dot_product_partially_normalized(new_vector_set, ord=2):
+def pair_dot_product_partially_normalized(new_vector_set, ord=2, float_type=None):
     """
         Determines the dot product between the two pairs of vectors from each
         set and creates a tuple with the dot product divided by one norm or the
@@ -4501,6 +4501,8 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
 
             ord(optional):                        basically the same argument
                                                   as numpy.linalg.norm
+
+            float_type(type):                     some form of float
 
         Returns:
             (numpy.ndarray):                      an array with the normalized
@@ -4570,9 +4572,18 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
 
     is_bool = (new_vector_set.dtype == bool)
 
-    # Must be double.
-    if not issubclass(new_vector_set.dtype.type, numpy.floating):
-        new_vector_set = new_vector_set.astype(numpy.float64)
+    if float_type is not None:
+        float_type = numpy.dtype(float_type).type
+        assert issubclass(float_type, numpy.floating)
+
+        if not issubclass(new_vector_set.dtype.type, float_type):
+            new_vector_set = new_vector_set.astype(float_type)
+    else:
+        float_type = numpy.float64
+        if not issubclass(new_vector_set.dtype.type, numpy.floating):
+            new_vector_set = new_vector_set.astype(float_type)
+        else:
+            float_type = new_vector_set.dtype.type
 
     # Measure the dot product between any two neurons
     # (i.e. related to the angle of separation)
