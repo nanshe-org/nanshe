@@ -4582,7 +4582,7 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
 
     vector_pairs_dot_product_normalized = vector_pairs_dot_product / new_vector_set_norms_expanded
 
-    return((vector_pairs_dot_product_normalized))
+    return(vector_pairs_dot_product_normalized)
 
 
 @prof.log_call(trace_logger)
