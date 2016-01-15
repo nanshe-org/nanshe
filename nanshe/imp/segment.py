@@ -1700,7 +1700,7 @@ def get_neuron_dtype(shape, dtype):
                      ("max_F", dtype_type),
                      ("gaussian_mean", numpy.float64, (ndim,)),
                      ("gaussian_cov", numpy.float64, (ndim, ndim,)),
-                     ("centroid", dtype_type, (ndim,))]
+                     ("centroid", numpy.float64, (ndim,))]
 
     return(neurons_dtype)
 
