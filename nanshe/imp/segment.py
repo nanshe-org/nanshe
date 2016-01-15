@@ -2216,7 +2216,7 @@ class ExtendedRegionProps(object):
 
         # Take a subset of the label props that does not include the removal
         # mask (copying may not be necessary as the mask may be as effective).
-        self.props = self.props[~remove_prop_indices_mask].copy()
+        self.props = self.props[~remove_prop_indices_mask]
         # Reduce the count by the number of each label
         self.count["count"] -= label_count_to_remove
 
