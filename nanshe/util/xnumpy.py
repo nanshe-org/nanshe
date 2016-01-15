@@ -4568,6 +4568,8 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
 
     assert ord > 0
 
+    is_bool = (new_vector_set.dtype == bool)
+
     # Must be double.
     if not issubclass(new_vector_set.dtype.type, numpy.floating):
         new_vector_set = new_vector_set.astype(numpy.float64)
@@ -4579,7 +4581,14 @@ def pair_dot_product_partially_normalized(new_vector_set, ord=2):
     )
 
     # Gets all of the norms
-    if ord == 2:
+    if is_bool:
+        new_vector_set_norms = vector_pairs_dot_product.diagonal()
+        if ord != numpy.inf:
+            inv_ord = 1.0 / float_type(ord)
+            new_vector_set_norms = new_vector_set_norms ** inv_ord
+        else:
+            new_vector_set_norms = (new_vector_set_norms > 0).astype(float_type)
+    elif ord == 2:
         new_vector_set_norms = numpy.sqrt(vector_pairs_dot_product.diagonal())
     else:
         new_vector_set_norms = norm(new_vector_set, ord=ord)
