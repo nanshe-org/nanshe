@@ -12,6 +12,7 @@ import sys
 
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+from setuptools.dist import Distribution
 
 import versioneer
 
@@ -38,6 +39,8 @@ if len(sys.argv) == 1:
 elif ("--help" in sys.argv) or ("-h" in sys.argv):
     pass
 elif sys.argv[1] == "bdist_conda":
+    from distutils.command.bdist_conda import CondaDistribution as Distribution
+
     build_requires = [
         "openblas",
         "fftw",
@@ -149,6 +152,7 @@ setup(
     scripts=glob("bin/*"),
     py_modules=["versioneer"],
     packages=find_packages(exclude=["tests*"]),
+    distclass=Distribution,
     cmdclass=dict(sum([_.items() for _ in [
         versioneer.get_cmdclass(),
         {"test": NoseTestCommand}
