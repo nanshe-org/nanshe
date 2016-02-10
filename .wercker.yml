@@ -19,6 +19,8 @@ build:
             name: Create Conda Environment with package and dependencies.
             code: |-
                 conda create -y --use-local -n testenv nomkl nanshe==$(python setup.py --version)
+                conda update -y --use-local -n testenv --all
+                conda install -y --use-local -n testenv nanshe==$(python setup.py --version)
                 source activate testenv
 
         - script:
