@@ -162,7 +162,8 @@ setup(
     tests_require=tests_require,
     test_suite="nose.collector",
     zip_safe=True,
-    conda_import_tests=False
+    conda_import_tests=False,
+    conda_command_tests=False
 )
 
 if sphinx_build_pdf:
