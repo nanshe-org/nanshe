@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.renorm &mdash; nanshe 0.1.0a44 documentation</title>
+    <title>nanshe.imp.renorm &mdash; nanshe 0.1.0a45 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a44',
+        VERSION:     '0.1.0a45',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a44 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a45 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a45 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -78,18 +78,18 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
-<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 30, 2014 17:14:50 EDT$&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;$Apr 30, 2014 17:14:50 EDT$&quot;</span>
 
 
-<span class="c"># Generally useful and fast to import so done immediately.</span>
+<span class="c1"># Generally useful and fast to import so done immediately.</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
-<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="c1"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
 
 
-<span class="c"># Get the logger</span>
+<span class="c1"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
@@ -182,22 +182,22 @@
 
         <span class="n">output_array</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_array</span>
 
-    <span class="c"># start with means having the same contents as the given images</span>
+    <span class="c1"># start with means having the same contents as the given images</span>
     <span class="n">means</span> <span class="o">=</span> <span class="n">output_array</span>
 
-    <span class="c"># take the mean while we haven&#39;t gotten one mean for each image.</span>
+    <span class="c1"># take the mean while we haven&#39;t gotten one mean for each image.</span>
     <span class="k">while</span> <span class="n">means</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c"># reshape means until it has the right number of dimensions to broadcast.</span>
+    <span class="c1"># reshape means until it has the right number of dimensions to broadcast.</span>
     <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">means</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="n">means</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
 
-    <span class="c"># broadcast and subtract the means so that the mean of all values is zero</span>
+    <span class="c1"># broadcast and subtract the means so that the mean of all values is zero</span>
     <span class="n">output_array</span><span class="p">[:]</span> <span class="o">-=</span> <span class="n">means</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">output_array</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">output_array</span><span class="p">)</span></div>
 
-</div>
+
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -281,10 +281,10 @@
 
         <span class="n">output_array</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_array</span>
 
-    <span class="c"># Unfortunately, our version of numpy&#39;s function numpy.linalg.norm</span>
-    <span class="c"># does not support the axis keyword. So, we must use a for loop.</span>
-    <span class="c"># Take each image at each time and turn the image into a vector.</span>
-    <span class="c"># Then, find the norm and divide each image by this norm.</span>
+    <span class="c1"># Unfortunately, our version of numpy&#39;s function numpy.linalg.norm</span>
+    <span class="c1"># does not support the axis keyword. So, we must use a for loop.</span>
+    <span class="c1"># Take each image at each time and turn the image into a vector.</span>
+    <span class="c1"># Then, find the norm and divide each image by this norm.</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">output_array_i</span> <span class="o">=</span> <span class="n">output_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">output_array_i_norm</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
@@ -330,7 +330,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a45 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -339,7 +339,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

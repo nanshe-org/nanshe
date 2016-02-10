@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.learner &mdash; nanshe 0.1.0a44 documentation</title>
+    <title>nanshe.learner &mdash; nanshe 0.1.0a45 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a44',
+        VERSION:     '0.1.0a45',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a44 documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a45 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a45 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -81,8 +81,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
-<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Apr 09, 2014 16:00:40 EDT$&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;$Apr 09, 2014 16:00:40 EDT$&quot;</span>
 
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -92,14 +92,14 @@
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="c"># Generally useful and fast to import so done immediately.</span>
+<span class="c1"># Generally useful and fast to import so done immediately.</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
 <span class="kn">import</span> <span class="nn">h5py</span>
 
 <span class="kn">import</span> <span class="nn">nanshe</span>
 
-<span class="c"># Need in order to have logging information no matter what.</span>
+<span class="c1"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
 
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span><span class="p">,</span> <span class="n">xnumpy</span><span class="p">,</span>\
@@ -107,14 +107,14 @@
 
 <span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">hdf5</span>
 
-<span class="c"># Short function to process image data.</span>
+<span class="c1"># Short function to process image data.</span>
 <span class="kn">from</span> <span class="nn">nanshe.imp</span> <span class="kn">import</span> <span class="n">segment</span>
 
-<span class="c"># For IO. Right now, just includes read_parameters for reading a config file.</span>
+<span class="c1"># For IO. Right now, just includes read_parameters for reading a config file.</span>
 <span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">xjson</span>
 
 
-<span class="c"># Get the loggers</span>
+<span class="c1"># Get the loggers</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
@@ -138,37 +138,37 @@
 <span class="sd">            parameters_filename     JSON filename with parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Extract and validate file extensions.</span>
+    <span class="c1"># Extract and validate file extensions.</span>
 
-    <span class="c"># Parse parameter filename and validate that the name is acceptable</span>
+    <span class="c1"># Parse parameter filename and validate that the name is acceptable</span>
     <span class="n">parameters_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span>
         <span class="n">parameters_filename</span>
     <span class="p">)</span>
     <span class="n">parameters_filename_ext</span> <span class="o">=</span> <span class="n">parameters_filename_details</span><span class="o">.</span><span class="n">extension</span>
     <span class="n">parameters_filename_ext</span> <span class="o">=</span> <span class="n">parameters_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="c"># Clean up the extension so it fits the standard.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">parameters_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;json&quot;</span><span class="p">]):</span>
+    <span class="c1"># Clean up the extension so it fits the standard.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">parameters_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;json&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s">&quot;Parameter file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">parameters_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">parameters_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;supported format, please run the given file through &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;nanshe_converter first before proceeding.&quot;</span>
+            <span class="s2">&quot;Parameter file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">parameters_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="n">parameters_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;supported format, please run the given file through &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;nanshe_converter first before proceeding.&quot;</span>
         <span class="p">)</span>
 
-    <span class="c"># Parse the parameters from the json file.</span>
+    <span class="c1"># Parse the parameters from the json file.</span>
     <span class="n">parameters</span> <span class="o">=</span> <span class="n">xjson</span><span class="o">.</span><span class="n">read_parameters</span><span class="p">(</span><span class="n">parameters_filename</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s">&quot;generate_neurons_blocks&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;generate_neurons_blocks&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">):</span>
         <span class="n">generate_neurons_blocks</span><span class="p">(</span>
             <span class="n">input_filename</span><span class="p">,</span>
             <span class="n">output_filename</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons_blocks&quot;</span><span class="p">]</span>
+            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;generate_neurons_blocks&quot;</span><span class="p">]</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">generate_neurons_a_block</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="n">generate_neurons_a_block</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">)</span></div>
 
-</div>
+
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_neurons_a_block"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_a_block">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_a_block</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span>
                              <span class="n">output_filename</span><span class="p">,</span>
@@ -188,101 +188,101 @@
 <span class="sd">            parameters              how the run should be configured.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Extract and validate file extensions.</span>
+    <span class="c1"># Extract and validate file extensions.</span>
 
-    <span class="c"># Parse input filename and validate that the name is acceptable</span>
+    <span class="c1"># Parse input filename and validate that the name is acceptable</span>
     <span class="n">input_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
-    <span class="c"># Clean up the extension so it fits the standard.</span>
+    <span class="c1"># Clean up the extension so it fits the standard.</span>
     <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span>
     <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;nanshe_converter first before proceeding.&quot;</span>
+            <span class="s2">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;nanshe_converter first before proceeding.&quot;</span>
         <span class="p">)</span>
 
-    <span class="c"># Parse output filename and validate that the name is acceptable</span>
+    <span class="c1"># Parse output filename and validate that the name is acceptable</span>
     <span class="n">output_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
-    <span class="c"># Clean up the extension so it fits the standard.</span>
+    <span class="c1"># Clean up the extension so it fits the standard.</span>
     <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span>
     <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;first before proceeding.&quot;</span>
+            <span class="s2">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;first before proceeding.&quot;</span>
         <span class="p">)</span>
 
-    <span class="c"># Where the original images are.</span>
+    <span class="c1"># Where the original images are.</span>
     <span class="n">input_dataset_name</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
 
-    <span class="c"># Name of the group where all data will be stored.</span>
+    <span class="c1"># Name of the group where all data will be stored.</span>
     <span class="n">output_group_name</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
 
 
-    <span class="c"># Read the input data.</span>
+    <span class="c1"># Read the input data.</span>
     <span class="n">original_images</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
         <span class="n">original_images</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span>
             <span class="n">input_file_handle</span><span class="p">,</span> <span class="n">input_dataset_name</span><span class="p">)</span>
         <span class="n">original_images</span> <span class="o">=</span> <span class="n">original_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
-    <span class="c"># Write out the output.</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
-        <span class="c"># Create a new output directory if doesn&#39;t exists.</span>
+    <span class="c1"># Write out the output.</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
+        <span class="c1"># Create a new output directory if doesn&#39;t exists.</span>
         <span class="n">output_file_handle</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
 
-        <span class="c"># Group where all data will be stored.</span>
+        <span class="c1"># Group where all data will be stored.</span>
         <span class="n">output_group</span> <span class="o">=</span> <span class="n">output_file_handle</span><span class="p">[</span><span class="n">output_group_name</span><span class="p">]</span>
 
-        <span class="c"># Create a soft link to the original images. But use the appropriate type of soft link depending on whether</span>
-        <span class="c"># the input and output file are the same.</span>
-        <span class="k">if</span> <span class="s">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">:</span>
+        <span class="c1"># Create a soft link to the original images. But use the appropriate type of soft link depending on whether</span>
+        <span class="c1"># the input and output file are the same.</span>
+        <span class="k">if</span> <span class="s2">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">==</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">:</span>
-                <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">SoftLink</span><span class="p">(</span>
+                <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">SoftLink</span><span class="p">(</span>
                     <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
+                <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
                     <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
 
-        <span class="c"># Get a debug logger for the HDF5 file (if needed)</span>
+        <span class="c1"># Get a debug logger for the HDF5 file (if needed)</span>
         <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
             <span class="n">output_group</span><span class="p">,</span>
-            <span class="n">group_name</span><span class="o">=</span><span class="s">&quot;debug&quot;</span><span class="p">,</span>
+            <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
             <span class="n">enable</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
             <span class="n">overwrite_group</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
             <span class="n">recorder_constructor</span><span class="o">=</span><span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">HDF5EnumeratedArrayRecorder</span>
         <span class="p">)</span>
 
-        <span class="c"># Saves intermediate result to make resuming easier</span>
+        <span class="c1"># Saves intermediate result to make resuming easier</span>
         <span class="n">resume_logger</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
             <span class="n">output_group</span><span class="p">,</span>
             <span class="n">recorder_constructor</span><span class="o">=</span><span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">HDF5ArrayRecorder</span><span class="p">,</span>
             <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span>
         <span class="p">)</span>
 
-        <span class="c"># Generate the neurons and attempt to resume if possible</span>
+        <span class="c1"># Generate the neurons and attempt to resume if possible</span>
         <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span> <span class="o">=</span> <span class="n">resume_logger</span>
         <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">array_debug_recorder</span>
         <span class="n">generate_neurons</span><span class="p">(</span>
-            <span class="n">original_images</span><span class="o">=</span><span class="n">original_images</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">]</span>
+            <span class="n">original_images</span><span class="o">=</span><span class="n">original_images</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;generate_neurons&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
-        <span class="c"># Save the configuration parameters in the attributes as a string.</span>
-        <span class="k">if</span> <span class="s">&quot;parameters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
-            <span class="c"># Write the configuration parameters in the attributes as a string.</span>
-            <span class="n">output_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span>
-                <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="o">+</span> <span class="p">[(</span><span class="s">&quot;debug&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="p">)])</span>
-            <span class="p">)</span>
+        <span class="c1"># Save the configuration parameters in the attributes as a string.</span>
+        <span class="k">if</span> <span class="s2">&quot;parameters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="c1"># Write the configuration parameters in the attributes as a string.</span>
+            <span class="n">output_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="o">+</span> <span class="p">[(</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="p">)])</span>
+            <span class="p">)</span></div>
 
-</div>
+
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_neurons_blocks"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons_blocks">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons_blocks</span><span class="p">(</span><span class="n">input_filename</span><span class="p">,</span>
                             <span class="n">output_filename</span><span class="p">,</span>
@@ -295,58 +295,58 @@
                             <span class="n">num_drmaa_cores</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
                             <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                             <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
-    <span class="c"># TODO: Move function into new module with its own command line interface.</span>
-    <span class="c"># TODO: Heavy refactoring required on this function.</span>
+    <span class="c1"># TODO: Move function into new module with its own command line interface.</span>
+    <span class="c1"># TODO: Heavy refactoring required on this function.</span>
 
-    <span class="c"># Extract and validate file extensions.</span>
+    <span class="c1"># Extract and validate file extensions.</span>
 
-    <span class="c"># Parse input filename and validate that the name is acceptable</span>
+    <span class="c1"># Parse input filename and validate that the name is acceptable</span>
     <span class="n">input_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
-    <span class="c"># Clean up the extension so it fits the standard.</span>
+    <span class="c1"># Clean up the extension so it fits the standard.</span>
     <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span>
     <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;nanshe_converter first before proceeding.&quot;</span>
+            <span class="s2">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;nanshe_converter first before proceeding.&quot;</span>
         <span class="p">)</span>
 
-    <span class="c"># Parse output filename and validate that the name is acceptable</span>
+    <span class="c1"># Parse output filename and validate that the name is acceptable</span>
     <span class="n">output_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
-    <span class="c"># Clean up the extension so it fits the standard.</span>
+    <span class="c1"># Clean up the extension so it fits the standard.</span>
     <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span>
     <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s">&quot;he5&quot;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="s">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
-            <span class="s">&quot;first before proceeding.&quot;</span>
+            <span class="s2">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;first before proceeding.&quot;</span>
         <span class="p">)</span>
 
-    <span class="c"># Where the original images are.</span>
+    <span class="c1"># Where the original images are.</span>
     <span class="n">input_dataset_name</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
 
-    <span class="c"># Name of the group where all data will be stored.</span>
+    <span class="c1"># Name of the group where all data will be stored.</span>
     <span class="n">output_group_name</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
 
-    <span class="c"># Directory where individual block runs will be stored.</span>
+    <span class="c1"># Directory where individual block runs will be stored.</span>
     <span class="n">intermediate_output_dir</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span>
-        <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;_blocks&quot;</span>
+        <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_blocks&quot;</span>
 
 
-    <span class="c"># Read the input data.</span>
+    <span class="c1"># Read the input data.</span>
     <span class="n">original_images_shape_array</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
         <span class="n">original_images_shape_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="n">input_file_handle</span><span class="p">[</span><span class="n">input_dataset_name</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
         <span class="p">)</span>
 
-    <span class="c"># Get the amount of the border to slice</span>
+    <span class="c1"># Get the amount of the border to slice</span>
     <span class="n">half_border_shape_array</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">if</span> <span class="n">half_border_shape</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">half_border_shape_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
@@ -357,22 +357,22 @@
 
         <span class="n">half_border_shape_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">half_border_shape</span><span class="p">)</span>
 
-        <span class="c"># Should be of type integer</span>
+        <span class="c1"># Should be of type integer</span>
         <span class="k">assert</span> <span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">half_border_shape_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span>
 
-        <span class="c"># Should not cut along temporal portion.</span>
-        <span class="c"># Maybe replace with a warning.</span>
+        <span class="c1"># Should not cut along temporal portion.</span>
+        <span class="c1"># Maybe replace with a warning.</span>
         <span class="k">assert</span> <span class="p">(</span><span class="n">half_border_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 
-    <span class="c"># TODO: Refactor to expanded_numpy.</span>
-    <span class="c"># Cuts boundaries from original_images_shape</span>
+    <span class="c1"># TODO: Refactor to expanded_numpy.</span>
+    <span class="c1"># Cuts boundaries from original_images_shape</span>
     <span class="n">original_images_pared_shape_array</span> <span class="o">=</span> <span class="n">original_images_shape_array</span> <span class="o">-</span> \
                                         <span class="mi">2</span><span class="o">*</span><span class="n">half_border_shape_array</span>
 
-    <span class="c"># At least one of them must be specified. If not some mixture of both.</span>
+    <span class="c1"># At least one of them must be specified. If not some mixture of both.</span>
     <span class="k">assert</span> <span class="p">((</span><span class="n">block_shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">num_blocks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">))</span>
 
-    <span class="c"># Size of the block to use by pixels</span>
+    <span class="c1"># Size of the block to use by pixels</span>
     <span class="n">block_shape_array</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">block_shape_array_undefined</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">if</span> <span class="n">block_shape</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -383,17 +383,17 @@
             <span class="n">original_images_pared_shape_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># Should have the same number of values in each</span>
+        <span class="c1"># Should have the same number of values in each</span>
         <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">original_images_pared_shape_array</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">block_shape</span><span class="p">))</span>
 
         <span class="n">block_shape_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">block_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-        <span class="c"># Should be of type integer</span>
+        <span class="c1"># Should be of type integer</span>
         <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">block_shape_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span>
 
         <span class="n">block_shape_array_undefined</span> <span class="o">=</span> <span class="p">(</span><span class="n">block_shape_array</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c"># Number of</span>
+    <span class="c1"># Number of</span>
     <span class="n">num_blocks_array</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">num_blocks_array_undefined</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">if</span> <span class="n">num_blocks</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -402,47 +402,47 @@
         <span class="n">num_blocks_array_undefined</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
             <span class="n">original_images_pared_shape_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># Should have the same number of values in each</span>
+        <span class="c1"># Should have the same number of values in each</span>
         <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">original_images_pared_shape_array</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">num_blocks</span><span class="p">))</span>
 
         <span class="n">num_blocks_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">num_blocks</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-        <span class="c"># Should be of type integer</span>
+        <span class="c1"># Should be of type integer</span>
         <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">num_blocks_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span>
 
         <span class="n">num_blocks_array_undefined</span> <span class="o">=</span> <span class="p">(</span><span class="n">num_blocks_array</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c"># Want to ensure that both aren&#39;t defined.</span>
+    <span class="c1"># Want to ensure that both aren&#39;t defined.</span>
     <span class="k">assert</span> <span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="n">block_shape_array_undefined</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">num_blocks_array_undefined</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
-    <span class="c"># If both are undefined, then the block should span that dimension</span>
+    <span class="c1"># If both are undefined, then the block should span that dimension</span>
     <span class="n">missing_both</span> <span class="o">=</span> <span class="p">(</span><span class="n">block_shape_array_undefined</span> <span class="o">&amp;</span> <span class="n">num_blocks_array_undefined</span><span class="p">)</span>
     <span class="n">block_shape_array</span><span class="p">[</span>
         <span class="n">missing_both</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_images_pared_shape_array</span><span class="p">[</span><span class="n">missing_both</span><span class="p">]</span>
     <span class="n">num_blocks_array</span><span class="p">[</span><span class="n">missing_both</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c"># Thus, we have resolved these values and can continue.</span>
+    <span class="c1"># Thus, we have resolved these values and can continue.</span>
     <span class="n">block_shape_array_undefined</span><span class="p">[</span><span class="n">missing_both</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
     <span class="n">num_blocks_array_undefined</span><span class="p">[</span><span class="n">missing_both</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
 
-    <span class="c"># Replace undefined values in block_shape_array</span>
+    <span class="c1"># Replace undefined values in block_shape_array</span>
     <span class="n">missing_block_shape_array</span><span class="p">,</span> <span class="n">block_shape_array_remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span>
         <span class="n">original_images_pared_shape_array</span><span class="p">[</span><span class="n">block_shape_array_undefined</span><span class="p">],</span>
         <span class="n">num_blocks_array</span><span class="p">[</span><span class="n">block_shape_array_undefined</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="c"># Block shape must be well defined.</span>
+    <span class="c1"># Block shape must be well defined.</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">block_shape_array_remainder</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="n">missing_block_shape_array</span> <span class="o">=</span> <span class="n">missing_block_shape_array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">block_shape_array</span><span class="p">[</span><span class="n">block_shape_array_undefined</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing_block_shape_array</span>
 
-    <span class="c"># Replace undefined values in num_blocks_array</span>
+    <span class="c1"># Replace undefined values in num_blocks_array</span>
     <span class="n">missing_num_blocks_array</span><span class="p">,</span> <span class="n">num_blocks_array_remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span>
         <span class="n">original_images_pared_shape_array</span><span class="p">[</span><span class="n">num_blocks_array_undefined</span><span class="p">],</span>
         <span class="n">block_shape_array</span><span class="p">[</span><span class="n">num_blocks_array_undefined</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="c"># Allow some blocks to be smaller</span>
+    <span class="c1"># Allow some blocks to be smaller</span>
     <span class="n">missing_num_blocks_array</span> <span class="o">+=</span> <span class="p">(</span><span class="n">num_blocks_array_remainder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">num_blocks_array</span><span class="p">[</span><span class="n">num_blocks_array_undefined</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing_num_blocks_array</span>
-    <span class="c"># Get the overlap window</span>
+    <span class="c1"># Get the overlap window</span>
     <span class="n">half_window_shape_array</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">if</span> <span class="n">half_window_shape</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">half_window_shape_array</span> <span class="o">=</span> <span class="n">block_shape_array</span> <span class="o">/</span> <span class="mf">2.0</span>
@@ -454,14 +454,14 @@
 
         <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">half_window_shape_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span>
 
-    <span class="c"># Want to make our window size is at least as large as the one used for</span>
-    <span class="c"># the f0 calculation.</span>
-    <span class="k">if</span> <span class="s">&quot;extract_f0&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">]:</span>
-        <span class="c">#assert (parameters[&quot;generate_neurons&quot;][&quot;preprocess_data&quot;][&quot;extract_f0&quot;][&quot;half_window_size&quot;] == half_window_shape_array[0])</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">][</span><span class="s">&quot;extract_f0&quot;</span><span class="p">][</span><span class="s">&quot;half_window_size&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">half_window_shape_array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># Want to make our window size is at least as large as the one used for</span>
+    <span class="c1"># the f0 calculation.</span>
+    <span class="k">if</span> <span class="s2">&quot;extract_f0&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s2">&quot;preprocess_data&quot;</span><span class="p">]:</span>
+        <span class="c1">#assert (parameters[&quot;generate_neurons&quot;][&quot;preprocess_data&quot;][&quot;extract_f0&quot;][&quot;half_window_size&quot;] == half_window_shape_array[0])</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s2">&quot;preprocess_data&quot;</span><span class="p">][</span><span class="s2">&quot;extract_f0&quot;</span><span class="p">][</span><span class="s2">&quot;half_window_size&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">half_window_shape_array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-    <span class="c"># Estimate bounds for each slice. Uses typical python [begin, end) for the</span>
-    <span class="c"># indices.</span>
+    <span class="c1"># Estimate bounds for each slice. Uses typical python [begin, end) for the</span>
+    <span class="c1"># indices.</span>
     <span class="n">estimated_bounds</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
         <span class="nb">tuple</span><span class="p">(</span><span class="n">num_blocks_array</span><span class="p">),</span>
         <span class="n">dtype</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">original_images_pared_shape_array</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
@@ -478,150 +478,150 @@
 
     <span class="n">original_images_pared_slices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
         <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s">&quot;actual&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
-               <span class="p">(</span><span class="s">&quot;windowed&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
-               <span class="p">(</span><span class="s">&quot;windowed_stack_selection&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
-               <span class="p">(</span><span class="s">&quot;windowed_block_selection&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])])</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;actual&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
+               <span class="p">(</span><span class="s2">&quot;windowed&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
+               <span class="p">(</span><span class="s2">&quot;windowed_stack_selection&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
+               <span class="p">(</span><span class="s2">&quot;windowed_block_selection&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])])</span>
 
-    <span class="c"># Get the slice that is within bounds</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estimated_bounds</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-        <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="c1"># Get the slice that is within bounds</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estimated_bounds</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
         <span class="mi">0</span>
     <span class="p">)</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">original_images_pared_shape_array</span><span class="p">,</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">original_images_pared_shape_array</span><span class="p">,</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
         <span class="n">original_images_pared_shape_array</span>
     <span class="p">)</span>
 
-    <span class="c"># Gets the defined half_window_size.</span>
+    <span class="c1"># Gets the defined half_window_size.</span>
     <span class="n">window_addition</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">estimated_bounds</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">window_addition</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">half_window_shape_array</span>
     <span class="n">window_addition</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">half_window_shape_array</span>
 
-    <span class="c"># Get the slice with a window added.</span>
+    <span class="c1"># Get the slice with a window added.</span>
     <span class="n">original_images_pared_slices</span><span class="p">[</span>
-        <span class="s">&quot;windowed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estimated_bounds</span> <span class="o">+</span> <span class="n">window_addition</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-        <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="s2">&quot;windowed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estimated_bounds</span> <span class="o">+</span> <span class="n">window_addition</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
         <span class="mi">0</span>
     <span class="p">)</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">original_images_pared_shape_array</span><span class="p">,</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">original_images_pared_shape_array</span><span class="p">,</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
         <span class="n">original_images_pared_shape_array</span>
     <span class="p">)</span>
 
-    <span class="c"># Get the slice information to get the windowed block from the original</span>
-    <span class="c"># image stack.</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed_stack_selection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">]</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed_stack_selection&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">expand_view</span><span class="p">(</span>
+    <span class="c1"># Get the slice information to get the windowed block from the original</span>
+    <span class="c1"># image stack.</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed_stack_selection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">]</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed_stack_selection&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">expand_view</span><span class="p">(</span>
         <span class="n">half_border_shape_array</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="mi">2</span>
     <span class="p">)</span>
 
-    <span class="c"># Get slice information for the portion within</span>
-    <span class="c"># `original_images_pared_slices[&quot;windowed&quot;]`, which corresponds to</span>
-    <span class="c"># `original_images_pared_slices[&quot;actual&quot;]`.</span>
-    <span class="c">#original_images_pared_slices[&quot;windowed_block_selection&quot;][..., 0] = 0</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed_block_selection&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Get slice information for the portion within</span>
+    <span class="c1"># `original_images_pared_slices[&quot;windowed&quot;]`, which corresponds to</span>
+    <span class="c1"># `original_images_pared_slices[&quot;actual&quot;]`.</span>
+    <span class="c1">#original_images_pared_slices[&quot;windowed_block_selection&quot;][..., 0] = 0</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed_block_selection&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed_block_selection&quot;</span><span class="p">][:]</span> <span class="o">+=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">expand_view</span><span class="p">(</span>
-        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed_block_selection&quot;</span><span class="p">][:]</span> <span class="o">+=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">expand_view</span><span class="p">(</span>
+        <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;actual&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">original_images_pared_slices</span><span class="p">[</span><span class="s2">&quot;windowed&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
         <span class="n">reps_after</span><span class="o">=</span><span class="mi">2</span>
     <span class="p">)</span>
 
-    <span class="c"># Get a directory for intermediate results.</span>
+    <span class="c1"># Get a directory for intermediate results.</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">intermediate_output_dir</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-        <span class="c"># If it already exists, that is fine.</span>
+        <span class="c1"># If it already exists, that is fine.</span>
         <span class="k">pass</span>
 
-    <span class="n">intermediate_config</span> <span class="o">=</span> <span class="n">intermediate_output_dir</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="s">&quot;config.json&quot;</span>
+    <span class="n">intermediate_config</span> <span class="o">=</span> <span class="n">intermediate_output_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;config.json&quot;</span>
 
-    <span class="c"># Overwrite the config file always</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">intermediate_config</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+    <span class="c1"># Overwrite the config file always</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">intermediate_config</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span>
-            <span class="nb">dict</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span> <span class="p">{</span><span class="s">&quot;debug&quot;</span> <span class="p">:</span> <span class="n">debug</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span>
+            <span class="nb">dict</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span> <span class="p">{</span><span class="s2">&quot;debug&quot;</span> <span class="p">:</span> <span class="n">debug</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span>
             <span class="n">fid</span><span class="p">,</span>
             <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-            <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="s">&quot; : &quot;</span><span class="p">)</span>
+            <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot; : &quot;</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="c"># Construct an HDF5 file for each block</span>
+    <span class="c1"># Construct an HDF5 file for each block</span>
     <span class="n">input_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">output_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">stdout_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">stderr_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
-        <span class="c"># Create a new output directory if doesn&#39;t exists.</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
+        <span class="c1"># Create a new output directory if doesn&#39;t exists.</span>
         <span class="n">output_file_handle</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
 
         <span class="n">output_group</span> <span class="o">=</span> <span class="n">output_file_handle</span><span class="p">[</span><span class="n">output_group_name</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="s">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">==</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">:</span>
-                <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">SoftLink</span><span class="p">(</span>
+                <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">SoftLink</span><span class="p">(</span>
                     <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
+                <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
                     <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span>
-                    <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">input_dataset_name</span>
+                    <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
 
-        <span class="n">output_group</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="s">&quot;blocks&quot;</span><span class="p">)</span>
+        <span class="n">output_group</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="s2">&quot;blocks&quot;</span><span class="p">)</span>
 
-        <span class="n">output_group_blocks</span> <span class="o">=</span> <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;blocks&quot;</span><span class="p">]</span>
+        <span class="n">output_group_blocks</span> <span class="o">=</span> <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;blocks&quot;</span><span class="p">]</span>
 
         <span class="n">input_file_handle</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="c"># Skipping using region refs.</span>
+            <span class="c1"># Skipping using region refs.</span>
             <span class="n">input_file_handle</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span>
-                <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;r&quot;</span>
+                <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
-            <span class="c"># File is already open</span>
+            <span class="c1"># File is already open</span>
             <span class="n">input_file_handle</span> <span class="o">=</span> <span class="n">output_file_handle</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="n">sequential_block_i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">filled_stringify_enumerate</span><span class="p">(</span>
                 <span class="n">original_images_pared_slices</span><span class="o">.</span><span class="n">flat</span>
         <span class="p">):</span>
-            <span class="n">intermediate_basename_i</span> <span class="o">=</span> <span class="n">intermediate_output_dir</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">i_str</span>
+            <span class="n">intermediate_basename_i</span> <span class="o">=</span> <span class="n">intermediate_output_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">i_str</span>
 
-            <span class="c"># Hold redirected stdout and stderr for each subprocess.</span>
+            <span class="c1"># Hold redirected stdout and stderr for each subprocess.</span>
             <span class="n">stdout_filename_block</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">intermediate_basename_i</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s">&quot;out&quot;</span><span class="p">)</span>
+                <span class="n">intermediate_basename_i</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s2">&quot;out&quot;</span><span class="p">)</span>
             <span class="n">stderr_filename_block</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">intermediate_basename_i</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s">&quot;err&quot;</span><span class="p">)</span>
+                <span class="n">intermediate_basename_i</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s2">&quot;err&quot;</span><span class="p">)</span>
 
-            <span class="c"># Ensure that the blocks are corrected to deal with trimming of the image stack</span>
-            <span class="c"># Must be done after the calculation of</span>
-            <span class="c"># original_images_pared_slices[&quot;windowed_block_selection&quot;].</span>
-            <span class="n">sequential_block_i_windowed</span> <span class="o">=</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s">&quot;windowed_stack_selection&quot;</span><span class="p">]</span>
+            <span class="c1"># Ensure that the blocks are corrected to deal with trimming of the image stack</span>
+            <span class="c1"># Must be done after the calculation of</span>
+            <span class="c1"># original_images_pared_slices[&quot;windowed_block_selection&quot;].</span>
+            <span class="n">sequential_block_i_windowed</span> <span class="o">=</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s2">&quot;windowed_stack_selection&quot;</span><span class="p">]</span>
             <span class="n">slice_i</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
                 <span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">sequential_block_i_windowed</span>
             <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">i_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group_blocks</span><span class="p">:</span>
                 <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;filename&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_file_handle</span><span class="o">.</span><span class="n">filename</span>
-                <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_dataset_name</span>
-                <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;slice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slice_i</span><span class="p">)</span>
+                <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_file_handle</span><span class="o">.</span><span class="n">filename</span>
+                <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_dataset_name</span>
+                <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;slice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slice_i</span><span class="p">)</span>
 
             <span class="n">block_i</span> <span class="o">=</span> <span class="n">output_group_blocks</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span>
 
-            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">intermediate_basename_i</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s">&quot;h5&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
-                <span class="c"># Create a soft link to the original images. But use the</span>
-                <span class="c"># appropriate type of soft link depending on whether</span>
-                <span class="c"># the input and output file are the same.</span>
-                <span class="k">if</span> <span class="s">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
-                    <span class="n">each_block_file_handle</span><span class="p">[</span><span class="s">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
+            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">intermediate_basename_i</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
+                <span class="c1"># Create a soft link to the original images. But use the</span>
+                <span class="c1"># appropriate type of soft link depending on whether</span>
+                <span class="c1"># the input and output file are the same.</span>
+                <span class="k">if</span> <span class="s2">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
+                    <span class="n">each_block_file_handle</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
                         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span>
                             <span class="n">block_i</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">intermediate_output_dir</span>
                         <span class="p">),</span>
@@ -629,10 +629,10 @@
                     <span class="p">)</span>
 
                 <span class="n">input_filename_block</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">each_block_file_handle</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="s">&quot;original_images&quot;</span>
+                    <span class="n">each_block_file_handle</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;original_images&quot;</span>
                 <span class="p">)</span>
                 <span class="n">output_filename_block</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">each_block_file_handle</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span>
+                    <span class="n">each_block_file_handle</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
                 <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">input_file_handle</span> <span class="o">!=</span> <span class="n">output_file_handle</span><span class="p">:</span>
@@ -641,24 +641,24 @@
     <span class="n">cur_module_dirpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">nanshe</span><span class="o">.</span><span class="n">__file__</span><span class="p">))</span>
     <span class="n">cur_module_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">cur_module_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">cur_module_filepath</span><span class="p">,</span> <span class="n">cur_module_dirpath</span><span class="p">)</span>
-    <span class="n">cur_module_name</span> <span class="o">=</span> <span class="n">cur_module_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">)</span>
-    <span class="n">cur_module_filepath</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s">&quot;py&quot;</span>
+    <span class="n">cur_module_name</span> <span class="o">=</span> <span class="n">cur_module_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">cur_module_filepath</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s2">&quot;py&quot;</span>
 
     <span class="kn">import</span> <span class="nn">sys</span>
 
     <span class="n">python</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span>
 
-    <span class="n">executable_run</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-    <span class="n">executable_run</span> <span class="o">+=</span> <span class="s">&quot;from sys import argv, path, exit; &quot;</span>
+    <span class="n">executable_run</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">executable_run</span> <span class="o">+=</span> <span class="s2">&quot;from sys import argv, path, exit; &quot;</span>
 
-    <span class="n">executable_run</span> <span class="o">+=</span> <span class="s">&quot;path[:] = [</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s">] + [_ for _ in path if _ != </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s">]; &quot;</span> <span class="o">%</span> \
+    <span class="n">executable_run</span> <span class="o">+=</span> <span class="s2">&quot;path[:] = [</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">] + [_ for _ in path if _ != </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">]; &quot;</span> <span class="o">%</span> \
                       <span class="p">(</span><span class="n">cur_module_dirpath</span><span class="p">,</span> <span class="n">cur_module_dirpath</span><span class="p">,)</span>
-    <span class="n">executable_run</span> <span class="o">+=</span> <span class="s">&quot;from </span><span class="si">%s</span><span class="s"> import main; exit(main(*argv))&quot;</span> <span class="o">%</span> \
+    <span class="n">executable_run</span> <span class="o">+=</span> <span class="s2">&quot;from </span><span class="si">%s</span><span class="s2"> import main; exit(main(*argv))&quot;</span> <span class="o">%</span> \
                       <span class="p">(</span><span class="n">cur_module_name</span><span class="p">,)</span>
 
     <span class="n">block_process_args_gen</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span>
         <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">python</span><span class="p">),</span>
-        <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s">&quot;-c&quot;</span><span class="p">),</span>
+        <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">),</span>
         <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">executable_run</span><span class="p">),</span>
         <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">intermediate_config</span><span class="p">),</span>
         <span class="n">input_filename_block</span><span class="p">,</span>
@@ -668,31 +668,31 @@
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">use_drmaa</span><span class="p">:</span>
-        <span class="c"># Attempt to import drmaa.</span>
-        <span class="c"># If it fails to import, either the user has no intent in using it or</span>
-        <span class="c"># forgot to install it. If it imports, but fails to find symbols,</span>
-        <span class="c"># then the user has not set DRMAA_LIBRARY_PATH or</span>
-        <span class="c"># does not have libdrmaa.so.</span>
+        <span class="c1"># Attempt to import drmaa.</span>
+        <span class="c1"># If it fails to import, either the user has no intent in using it or</span>
+        <span class="c1"># forgot to install it. If it imports, but fails to find symbols,</span>
+        <span class="c1"># then the user has not set DRMAA_LIBRARY_PATH or</span>
+        <span class="c1"># does not have libdrmaa.so.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">drmaa</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-            <span class="c"># python-drmaa is not installed.</span>
+            <span class="c1"># python-drmaa is not installed.</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s">&quot;Was not able to import drmaa. &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;If this is meant to be run using the OpenGrid submission &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;system, then drmaa needs to be installed via pip or &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;easy_install.&quot;</span>
+                <span class="s2">&quot;Was not able to import drmaa. &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;If this is meant to be run using the OpenGrid submission &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;system, then drmaa needs to be installed via pip or &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;easy_install.&quot;</span>
             <span class="p">)</span>
             <span class="k">raise</span>
         <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
-            <span class="c"># The drmaa library was not specified, but python-drmaa is</span>
-            <span class="c"># installed.</span>
+            <span class="c1"># The drmaa library was not specified, but python-drmaa is</span>
+            <span class="c1"># installed.</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s">&quot;Was able to import drmaa. &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;However, the drmaa library could not be found. Please &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;either specify the location of libdrmaa.so using the &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;DRMAA_LIBRARY_PATH environment variable or disable/remove &quot;</span> <span class="o">+</span>
-                <span class="s">&quot;use_drmaa from the config file.&quot;</span>
+                <span class="s2">&quot;Was able to import drmaa. &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;However, the drmaa library could not be found. Please &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;either specify the location of libdrmaa.so using the &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;DRMAA_LIBRARY_PATH environment variable or disable/remove &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;use_drmaa from the config file.&quot;</span>
             <span class="p">)</span>
             <span class="k">raise</span>
 
@@ -704,17 +704,17 @@
             <span class="n">ready_processes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">each_arg_pack</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">createJobTemplate</span><span class="p">()))</span>
             <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">jobName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">cur_module_filepath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.h5&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.h5&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.h5&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.h5&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">remoteCommand</span> <span class="o">=</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
             <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">jobEnvironment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
-            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">inputPath</span> <span class="o">=</span> <span class="s">&quot;localhost:&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">devnull</span>
-            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">=</span> <span class="s">&quot;localhost:&quot;</span> <span class="o">+</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">errorPath</span> <span class="o">=</span> <span class="s">&quot;localhost:&quot;</span> <span class="o">+</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">inputPath</span> <span class="o">=</span> <span class="s2">&quot;localhost:&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">devnull</span>
+            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">=</span> <span class="s2">&quot;localhost:&quot;</span> <span class="o">+</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">errorPath</span> <span class="o">=</span> <span class="s2">&quot;localhost:&quot;</span> <span class="o">+</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">workingDirectory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">nativeSpecification</span> <span class="o">=</span> <span class="s">&quot;-pe batch &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_drmaa_cores</span><span class="p">)</span>
+            <span class="n">ready_processes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">nativeSpecification</span> <span class="o">=</span> <span class="s2">&quot;-pe batch &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_drmaa_cores</span><span class="p">)</span>
 
 
         <span class="n">running_processes</span> <span class="o">=</span> <span class="p">[]</span>
@@ -724,27 +724,27 @@
                 <span class="p">(</span><span class="n">each_arg_pack</span><span class="p">,</span> <span class="n">each_process_id</span><span class="p">,</span> <span class="n">each_process_template</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s">&quot;Started new process ( </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> ).&quot;</span>
+                <span class="s2">&quot;Started new process ( </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> ).&quot;</span>
             <span class="p">)</span>
 
         <span class="n">start_queue_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Waiting for queued jobs to complete.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for queued jobs to complete.&quot;</span><span class="p">)</span>
 
-        <span class="c">#finished_processes = []</span>
+        <span class="c1">#finished_processes = []</span>
         <span class="k">for</span> <span class="n">each_arg_pack</span><span class="p">,</span> <span class="n">each_process_id</span><span class="p">,</span> <span class="n">each_process_template</span> <span class="ow">in</span> <span class="n">running_processes</span><span class="p">:</span>
             <span class="n">each_process_status</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">each_process_id</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">each_process_status</span><span class="o">.</span><span class="n">hasExited</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                    <span class="s">&quot;The process (</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span>
-                    <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">) has exited prematurely.&quot;</span>
+                    <span class="s2">&quot;The process (</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span>
+                    <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">) has exited prematurely.&quot;</span>
                 <span class="p">)</span>
 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s">&quot;Finished process ( </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> ).&quot;</span>
+                <span class="s2">&quot;Finished process ( </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> ).&quot;</span>
             <span class="p">)</span>
             <span class="n">s</span><span class="o">.</span><span class="n">deleteJobTemplate</span><span class="p">(</span><span class="n">each_process_template</span><span class="p">)</span>
-            <span class="c">#finished_processes.append((each_arg_pack, each_process_id))</span>
+            <span class="c1">#finished_processes.append((each_arg_pack, each_process_id))</span>
 
         <span class="n">s</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
@@ -752,12 +752,12 @@
         <span class="n">diff_queue_time</span> <span class="o">=</span> <span class="n">end_queue_time</span> <span class="o">-</span> <span class="n">start_queue_time</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="s">&quot;Run time for queued jobs to complete is </span><span class="se">\&quot;</span><span class="s">&quot;</span>
-            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">diff_queue_time</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; s</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
+            <span class="s2">&quot;Run time for queued jobs to complete is </span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">diff_queue_time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; s</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># TODO: Refactor into a separate class (have it return futures somehow)</span>
-        <span class="c">#finished_processes = []</span>
+        <span class="c1"># TODO: Refactor into a separate class (have it return futures somehow)</span>
+        <span class="c1">#finished_processes = []</span>
         <span class="n">running_processes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pool_tasks_empty</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pool_tasks_empty</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">running_processes</span><span class="p">):</span>
@@ -767,14 +767,14 @@
                     <span class="n">each_arg_pack</span><span class="p">,</span> <span class="n">each_stdout_filename</span><span class="p">,</span> <span class="n">each_stderr_filename</span> <span class="o">=</span> <span class="n">each_arg_pack</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">each_arg_pack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                     <span class="n">each_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
                         <span class="n">each_arg_pack</span><span class="p">,</span>
-                        <span class="n">stdout</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">each_stdout_filename</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">),</span>
-                        <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">each_stderr_filename</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">each_stdout_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),</span>
+                        <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">each_stderr_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
                     <span class="p">)</span>
 
                     <span class="n">running_processes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">each_arg_pack</span><span class="p">,</span> <span class="n">each_process</span><span class="p">,))</span>
 
                     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                        <span class="s">&quot;Started new process ( </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> ).&quot;</span>
+                        <span class="s2">&quot;Started new process ( </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">each_arg_pack</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> ).&quot;</span>
                     <span class="p">)</span>
                 <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
                     <span class="n">pool_tasks_empty</span> <span class="o">=</span> <span class="bp">True</span>
@@ -788,22 +788,22 @@
                 <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">running_processes</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">running_processes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                            <span class="s">&quot;Finished process ( </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
-                            <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">running_processes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> ).&quot;</span>
+                            <span class="s2">&quot;Finished process ( </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
+                            <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">running_processes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> ).&quot;</span>
                         <span class="p">)</span>
 
-                        <span class="c">#finished_processes.append(running_processes[i])</span>
+                        <span class="c1">#finished_processes.append(running_processes[i])</span>
                         <span class="k">del</span> <span class="n">running_processes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="c"># finished_processes = None</span>
+        <span class="c1"># finished_processes = None</span>
 
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Starting merge over all blocks.&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting merge over all blocks.&quot;</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
         <span class="n">output_group</span> <span class="o">=</span> <span class="n">output_file_handle</span><span class="p">[</span><span class="n">output_group_name</span><span class="p">]</span>
 
         <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get_empty_neuron</span><span class="p">(</span>
@@ -813,24 +813,24 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="p">(</span><span class="n">output_filename_block_i</span><span class="p">,</span> <span class="n">sequential_block_i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">filled_stringify_enumerate</span><span class="p">(</span>
                 <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">output_filename_block</span><span class="p">,</span> <span class="n">original_images_pared_slices</span><span class="o">.</span><span class="n">flat</span><span class="p">)):</span>
             <span class="n">windowed_slice_i</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-                <span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="p">[(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)]</span> <span class="o">+</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s">&quot;windowed_stack_selection&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="p">[(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)]</span> <span class="o">+</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s2">&quot;windowed_stack_selection&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
             <span class="p">)</span>
             <span class="n">window_trimmed_i</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-                <span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s">&quot;windowed_block_selection&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="nb">slice</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s2">&quot;windowed_block_selection&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
             <span class="p">)</span>
-            <span class="n">output_filename_block_i</span> <span class="o">=</span> <span class="n">output_filename_block_i</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+            <span class="n">output_filename_block_i</span> <span class="o">=</span> <span class="n">output_filename_block_i</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
 
-            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_block_i</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s">&quot;neurons&quot;</span> <span class="ow">in</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_block_i</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;neurons&quot;</span> <span class="ow">in</span> <span class="n">each_block_file_handle</span><span class="p">:</span>
                     <span class="n">neurons_block_i_smaller</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span>
-                        <span class="n">each_block_file_handle</span><span class="p">,</span> <span class="s">&quot;/neurons&quot;</span>
+                        <span class="n">each_block_file_handle</span><span class="p">,</span> <span class="s2">&quot;/neurons&quot;</span>
                     <span class="p">)</span>
 
                     <span class="n">neurons_block_i_windowed_count</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span>
                         <span class="n">numpy</span><span class="o">.</span><span class="n">apply_over_axes</span><span class="p">(</span>
                             <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
-                            <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
-                            <span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
+                            <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                            <span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
                         <span class="p">)</span>
                     <span class="p">)</span>
 
@@ -841,8 +841,8 @@
                     <span class="n">neurons_block_i_non_windowed_count</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span>
                         <span class="n">numpy</span><span class="o">.</span><span class="n">apply_over_axes</span><span class="p">(</span>
                             <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
-                            <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="n">window_trimmed_i</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
-                            <span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
+                            <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">][</span><span class="n">window_trimmed_i</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                            <span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
                         <span class="p">)</span>
                     <span class="p">)</span>
 
@@ -852,35 +852,35 @@
                         <span class="p">)</span>
 
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neurons_block_i_non_windowed_count</span><span class="p">):</span>
-                        <span class="c"># Find ones that are inside the margins by more than</span>
-                        <span class="c"># half</span>
+                        <span class="c1"># Find ones that are inside the margins by more than</span>
+                        <span class="c1"># half</span>
                         <span class="n">neurons_block_i_acceptance</span> <span class="o">=</span> <span class="p">(</span>
                             <span class="p">(</span><span class="n">neurons_block_i_non_windowed_count</span> <span class="o">/</span> <span class="n">neurons_block_i_windowed_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
                         <span class="p">)</span>
 
-                        <span class="c"># Take a subset of our previous neurons that are within</span>
-                        <span class="c"># the margins by half</span>
+                        <span class="c1"># Take a subset of our previous neurons that are within</span>
+                        <span class="c1"># the margins by half</span>
                         <span class="n">neurons_block_i_accepted</span> <span class="o">=</span> <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="n">neurons_block_i_acceptance</span><span class="p">]</span>
 
                         <span class="n">neurons_block_i</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
                             <span class="n">neurons_block_i_accepted</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_neurons_set</span><span class="o">.</span><span class="n">dtype</span>
                         <span class="p">)</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">][</span><span class="n">windowed_slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;mask&quot;</span><span class="p">]</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">][</span><span class="n">windowed_slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;contour&quot;</span><span class="p">]</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">][</span><span class="n">windowed_slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">][</span><span class="n">windowed_slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;contour&quot;</span><span class="p">][</span><span class="n">windowed_slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;contour&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="n">windowed_slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
 
-                        <span class="c"># Copy other properties</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;area&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;area&quot;</span><span class="p">]</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;max_F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;max_F&quot;</span><span class="p">]</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;gaussian_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;gaussian_mean&quot;</span><span class="p">]</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;gaussian_cov&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;gaussian_cov&quot;</span><span class="p">]</span>
-                        <span class="c"># TODO: Correct centroid to larger block position.</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span>
-                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s">&quot;windowed_stack_selection&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+                        <span class="c1"># Copy other properties</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;max_F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;max_F&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;gaussian_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;gaussian_mean&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;gaussian_cov&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;gaussian_cov&quot;</span><span class="p">]</span>
+                        <span class="c1"># TODO: Correct centroid to larger block position.</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neurons_block_i_accepted</span><span class="p">[</span><span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
+                        <span class="n">neurons_block_i</span><span class="p">[</span><span class="s2">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sequential_block_i</span><span class="p">[</span><span class="s2">&quot;windowed_stack_selection&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
 
                         <span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">generate_HDF5_array_recorder</span><span class="p">(</span>
                             <span class="n">output_group</span><span class="p">,</span>
-                            <span class="n">group_name</span><span class="o">=</span><span class="s">&quot;debug&quot;</span><span class="p">,</span>
+                            <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
                             <span class="n">enable</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
                             <span class="n">overwrite_group</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                             <span class="n">recorder_constructor</span><span class="o">=</span><span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">HDF5EnumeratedArrayRecorder</span>
@@ -890,124 +890,124 @@
                         <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">merge_neuron_sets</span><span class="p">(</span>
                             <span class="n">new_neurons_set</span><span class="p">,</span>
                             <span class="n">neurons_block_i</span><span class="p">,</span>
-                            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s">&quot;postprocess_data&quot;</span><span class="p">][</span><span class="s">&quot;merge_neuron_sets&quot;</span><span class="p">]</span>
+                            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s2">&quot;postprocess_data&quot;</span><span class="p">][</span><span class="s2">&quot;merge_neuron_sets&quot;</span><span class="p">]</span>
                         <span class="p">)</span>
 
         <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span>
-            <span class="n">output_group</span><span class="p">,</span> <span class="s">&quot;neurons&quot;</span><span class="p">,</span> <span class="n">new_neurons_set</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">output_group</span><span class="p">,</span> <span class="s2">&quot;neurons&quot;</span><span class="p">,</span> <span class="n">new_neurons_set</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s">&quot;parameters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;neurons&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
-            <span class="n">output_group</span><span class="p">[</span><span class="s">&quot;neurons&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="k">if</span> <span class="s2">&quot;parameters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;neurons&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;neurons&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
                 <span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="o">+</span>
-                <span class="p">[(</span><span class="s">&quot;block_shape&quot;</span><span class="p">,</span> <span class="n">block_shape</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&quot;num_blocks&quot;</span><span class="p">,</span> <span class="n">num_blocks</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&quot;half_window_shape&quot;</span><span class="p">,</span> <span class="n">half_window_shape</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&quot;half_border_shape&quot;</span><span class="p">,</span> <span class="n">half_border_shape</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&quot;use_drmaa&quot;</span><span class="p">,</span> <span class="n">use_drmaa</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&quot;num_drmaa_cores&quot;</span><span class="p">,</span> <span class="n">num_drmaa_cores</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&quot;debug&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="p">)]</span>
+                <span class="p">[(</span><span class="s2">&quot;block_shape&quot;</span><span class="p">,</span> <span class="n">block_shape</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s2">&quot;num_blocks&quot;</span><span class="p">,</span> <span class="n">num_blocks</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s2">&quot;half_window_shape&quot;</span><span class="p">,</span> <span class="n">half_window_shape</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s2">&quot;half_border_shape&quot;</span><span class="p">,</span> <span class="n">half_border_shape</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s2">&quot;use_drmaa&quot;</span><span class="p">,</span> <span class="n">use_drmaa</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s2">&quot;num_drmaa_cores&quot;</span><span class="p">,</span> <span class="n">num_drmaa_cores</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="p">)]</span>
             <span class="p">))</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Finished merge over all blocks.&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Finished merge over all blocks.&quot;</span><span class="p">)</span>
     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
     <span class="n">diff_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-        <span class="s">&quot;Run time for merge over all blocks is </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">diff_time</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; s</span><span class="se">\&quot;</span><span class="s">.&quot;</span>
-    <span class="p">)</span>
+        <span class="s2">&quot;Run time for merge over all blocks is </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">diff_time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; s</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
 
-</div>
+
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_subgrouping_array_recorders</span><span class="p">(</span><span class="n">array_debug_recorder</span><span class="o">=</span><span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">EmptyArrayRecorder</span><span class="p">())</span>
 <span class="nd">@wrappers.static_variables</span><span class="p">(</span><span class="n">resume_logger</span><span class="o">=</span><span class="n">hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">EmptyArrayRecorder</span><span class="p">())</span>
-<div class="viewcode-block" id="generate_neurons"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons</span><span class="p">(</span><span class="n">original_images</span><span class="p">,</span> <span class="n">run_stage</span><span class="o">=</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s">&quot;original_images_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
-        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;original_images_max_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+<div class="viewcode-block" id="generate_neurons"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.generate_neurons">[docs]</a><span class="k">def</span> <span class="nf">generate_neurons</span><span class="p">(</span><span class="n">original_images</span><span class="p">,</span> <span class="n">run_stage</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;original_images_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;original_images_max_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
             <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
             <span class="n">original_images</span><span class="p">,</span>
             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
 
-    <span class="k">if</span> <span class="s">&quot;original_images_mean_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
-        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;original_images_mean_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+    <span class="k">if</span> <span class="s2">&quot;original_images_mean_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;original_images_mean_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
             <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span>
             <span class="n">original_images</span><span class="p">,</span>
             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
 
-    <span class="c"># Preprocess images</span>
+    <span class="c1"># Preprocess images</span>
     <span class="n">new_preprocessed_images</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s">&quot;preprocessed_images&quot;</span><span class="p">,</span> <span class="bp">None</span>
+        <span class="s2">&quot;preprocessed_images&quot;</span><span class="p">,</span> <span class="bp">None</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">new_preprocessed_images</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> \
-            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;preprocessing&quot;</span><span class="p">)</span> <span class="ow">or</span> \
-            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;preprocessing&quot;</span><span class="p">)</span> <span class="ow">or</span> \
+            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">):</span>
         <span class="n">new_preprocessed_images</span> <span class="o">=</span> <span class="n">original_images</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">segment</span><span class="o">.</span><span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">new_preprocessed_images</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">preprocess_data</span><span class="p">(</span>
             <span class="n">new_preprocessed_images</span><span class="p">,</span>
             <span class="n">out</span><span class="o">=</span><span class="n">new_preprocessed_images</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;preprocess_data&quot;</span><span class="p">]</span>
+            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;preprocess_data&quot;</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s">&quot;preprocessed_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_preprocessed_images</span>
+        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s2">&quot;preprocessed_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_preprocessed_images</span>
 
-        <span class="k">if</span> <span class="s">&quot;preprocessed_images_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
-            <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;preprocessed_images_max_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+        <span class="k">if</span> <span class="s2">&quot;preprocessed_images_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;preprocessed_images_max_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
             <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
             <span class="n">new_preprocessed_images</span><span class="p">,</span>
             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;preprocessing&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;preprocessing&quot;</span><span class="p">:</span>
         <span class="k">return</span>
 
-    <span class="c"># Find the dictionary</span>
-    <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;dictionary&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="c1"># Find the dictionary</span>
+    <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">new_dictionary</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> \
-            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;dictionary&quot;</span><span class="p">)</span> <span class="ow">or</span> \
-            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;dictionary&quot;</span><span class="p">)</span> <span class="ow">or</span> \
+            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">):</span>
         <span class="n">segment</span><span class="o">.</span><span class="n">generate_dictionary</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">generate_dictionary</span><span class="p">(</span>
             <span class="n">new_preprocessed_images</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;generate_dictionary&quot;</span><span class="p">]</span>
+            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;generate_dictionary&quot;</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s">&quot;dictionary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_dictionary</span>
+        <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s2">&quot;dictionary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_dictionary</span>
 
-        <span class="k">if</span> <span class="s">&quot;dictionary_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
-            <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s">&quot;dictionary_max_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
+        <span class="k">if</span> <span class="s2">&quot;dictionary_max_projection&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
+            <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;dictionary_max_projection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">add_singleton_op</span><span class="p">(</span>
                 <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
                 <span class="n">new_dictionary</span><span class="p">,</span>
                 <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
             <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;dictionary&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;dictionary&quot;</span><span class="p">:</span>
         <span class="k">return</span>
 
-    <span class="c"># Find the neurons</span>
+    <span class="c1"># Find the neurons</span>
     <span class="n">new_neurons</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_neurons</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;neurons&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">new_neurons</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;neurons&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">new_neurons</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> \
-            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;postprocessing&quot;</span><span class="p">)</span> <span class="ow">or</span> \
-            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;postprocessing&quot;</span><span class="p">)</span> <span class="ow">or</span> \
+            <span class="p">(</span><span class="n">run_stage</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">):</span>
         <span class="n">segment</span><span class="o">.</span><span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">generate_neurons</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">new_neurons</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">postprocess_data</span><span class="p">(</span>
             <span class="n">new_dictionary</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;postprocess_data&quot;</span><span class="p">]</span>
+            <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;postprocess_data&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">new_neurons</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-            <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s">&quot;neurons&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neurons</span>
+            <span class="n">generate_neurons</span><span class="o">.</span><span class="n">resume_logger</span><span class="p">[</span><span class="s2">&quot;neurons&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neurons</span>
 
     <span class="k">if</span> <span class="n">new_neurons</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;No neurons were found in the data.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No neurons were found in the data.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="s">&quot;Found </span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_neurons</span><span class="p">))</span> <span class="o">+</span>
-            <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> neurons were found in the data.&quot;</span>
-        <span class="p">)</span>
+            <span class="s2">&quot;Found </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_neurons</span><span class="p">))</span> <span class="o">+</span>
+            <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> neurons were found in the data.&quot;</span>
+        <span class="p">)</span></div>
 
-</div>
+
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../nanshe.learner.html#nanshe.learner.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1021,8 +1021,8 @@
 <span class="sd">            int:            exit code (0 if success)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Only necessary if running main (normally if calling command line).</span>
-    <span class="c"># No point in importing otherwise.</span>
+    <span class="c1"># Only necessary if running main (normally if calling command line).</span>
+    <span class="c1"># No point in importing otherwise.</span>
     <span class="kn">import</span> <span class="nn">argparse</span>
     <span class="kn">import</span> <span class="nn">threading</span>
 
@@ -1034,48 +1034,48 @@
 
     <span class="n">argv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
 
-    <span class="c"># Creates command line parser</span>
+    <span class="c1"># Creates command line parser</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line for a batch job.&quot;</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parses input from the command line for a batch job.&quot;</span>
     <span class="p">)</span>
 
-    <span class="c"># Takes a config file and then a series of one or more HDF5 files.</span>
+    <span class="c1"># Takes a config file and then a series of one or more HDF5 files.</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;config_filename&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides configuration options &quot;</span> <span class="o">+</span>
-             <span class="s">&quot;for how to use dictionary learning on the input files.&quot;</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;JSON file that provides configuration options &quot;</span> <span class="o">+</span>
+             <span class="s2">&quot;for how to use dictionary learning on the input files.&quot;</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s">&quot;input_file&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;input_file&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file with an array of images. &quot;</span> <span class="o">+</span>
-             <span class="s">&quot;A dataset or video will be expected at the internal path. &quot;</span> <span class="o">+</span>
-             <span class="s">&quot;Time must be the first dimension.&quot;</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;HDF5 file with an array of images. &quot;</span> <span class="o">+</span>
+             <span class="s2">&quot;A dataset or video will be expected at the internal path. &quot;</span> <span class="o">+</span>
+             <span class="s2">&quot;Time must be the first dimension.&quot;</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s">&quot;output_file&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;output_file&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file(s) to write output. &quot;</span> <span class="o">+</span>
-             <span class="s">&quot;If a specific group is desired, &quot;</span> <span class="o">+</span>
-             <span class="s">&quot;that should be included in the filename.&quot;</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;HDF5 file(s) to write output. &quot;</span> <span class="o">+</span>
+             <span class="s2">&quot;If a specific group is desired, &quot;</span> <span class="o">+</span>
+             <span class="s2">&quot;that should be included in the filename.&quot;</span>
     <span class="p">)</span>
 
-    <span class="c"># Results of parsing arguments</span>
-    <span class="c"># (ignore the first one as it is the command line call).</span>
+    <span class="c1"># Results of parsing arguments</span>
+    <span class="c1"># (ignore the first one as it is the command line call).</span>
     <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
-    <span class="c"># Remove args from singleton lists</span>
+    <span class="c1"># Remove args from singleton lists</span>
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="c"># Runs the dictionary learning algorithm on each file with</span>
-    <span class="c"># the given parameters and saves the results in the given files.</span>
+    <span class="c1"># Runs the dictionary learning algorithm on each file with</span>
+    <span class="c1"># the given parameters and saves the results in the given files.</span>
     <span class="n">generate_neurons_io_handler</span><span class="p">(</span>
         <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span>
         <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span>
@@ -1118,7 +1118,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a45 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -1127,7 +1127,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

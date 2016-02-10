@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.registerer &mdash; nanshe 0.1.0a44 documentation</title>
+    <title>nanshe.registerer &mdash; nanshe 0.1.0a45 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a44',
+        VERSION:     '0.1.0a45',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a44 documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a45 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a45 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -77,8 +77,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
-<span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;$Feb 20, 2015 13:00:51 EST$&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
+<span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;$Feb 20, 2015 13:00:51 EST$&quot;</span>
 
 
 <span class="kn">import</span> <span class="nn">itertools</span>
@@ -93,7 +93,7 @@
 
 
 
-<span class="c"># Get the logger</span>
+<span class="c1"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
@@ -111,47 +111,47 @@
 <span class="sd">            int:            exit code (0 if success)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># Only necessary if running main (normally if calling command line). No</span>
-    <span class="c"># point in importing otherwise.</span>
+    <span class="c1"># Only necessary if running main (normally if calling command line). No</span>
+    <span class="c1"># point in importing otherwise.</span>
     <span class="kn">import</span> <span class="nn">argparse</span>
 
     <span class="n">argv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
 
-    <span class="c"># Creates command line parser</span>
+    <span class="c1"># Creates command line parser</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">description</span><span class="o">=</span><span class="s">&quot;Parses input from the command line &quot;</span> <span class="o">+</span>
-                    <span class="s">&quot;for a registration job.&quot;</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parses input from the command line &quot;</span> <span class="o">+</span>
+                    <span class="s2">&quot;for a registration job.&quot;</span>
     <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config_filename&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;config_filename&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;CONFIG_FILE&quot;</span><span class="p">,</span>
                         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;JSON file that provides configuration options &quot;</span> <span class="o">+</span>
-                             <span class="s">&quot;for how to import TIFF(s).&quot;</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;JSON file that provides configuration options &quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;for how to import TIFF(s).&quot;</span>
     <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;input_filenames&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file to import (this should include a &quot;</span> <span class="o">+</span>
-                             <span class="s">&quot;path to where the internal dataset should be &quot;</span> <span class="o">+</span>
-                             <span class="s">&quot;stored).&quot;</span>
-    <span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;output_filenames&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_filenames&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;INPUT_FILE&quot;</span><span class="p">,</span>
                         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
                         <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s">&quot;HDF5 file to export (this should include a &quot;</span> <span class="o">+</span>
-                             <span class="s">&quot;path to where the internal dataset should be &quot;</span> <span class="o">+</span>
-                             <span class="s">&quot;stored).&quot;</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;HDF5 file to import (this should include a &quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;path to where the internal dataset should be &quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;stored).&quot;</span>
     <span class="p">)</span>
 
-    <span class="c"># Results of parsing arguments</span>
-    <span class="c"># (ignore the first one as it is the command line call).</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;output_filenames&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;OUTPUT_FILE&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;HDF5 file to export (this should include a &quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;path to where the internal dataset should be &quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;stored).&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Results of parsing arguments</span>
+    <span class="c1"># (ignore the first one as it is the command line call).</span>
     <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
-    <span class="c"># Go ahead and stuff in parameters with the other parsed_args</span>
+    <span class="c1"># Go ahead and stuff in parameters with the other parsed_args</span>
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">xjson</span><span class="o">.</span><span class="n">read_parameters</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">config_filename</span><span class="p">)</span>
 
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file_components</span> <span class="o">=</span> <span class="p">[]</span>
@@ -168,35 +168,35 @@
 
     <span class="k">for</span> <span class="n">each_input_filename_components</span><span class="p">,</span> <span class="n">each_output_filename_components</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span>
             <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_file_components</span><span class="p">,</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">output_file_components</span><span class="p">):</span>
-        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">input_file</span><span class="p">[</span><span class="n">each_input_filename_components</span><span class="o">.</span><span class="n">internalPath</span><span class="p">]</span>
                 <span class="n">result_filename</span> <span class="o">=</span> <span class="n">registration</span><span class="o">.</span><span class="n">register_mean_offsets</span><span class="p">(</span>
                     <span class="n">data</span><span class="p">,</span> <span class="n">to_truncate</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span>
                 <span class="p">)</span>
-                <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">result_filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">result_file</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">result_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">result_file</span><span class="p">:</span>
                     <span class="n">result_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
-                        <span class="s">&quot;reg_frames&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;reg_frames&quot;</span><span class="p">,</span>
                         <span class="n">output_file</span><span class="p">[</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDirectory</span><span class="p">],</span>
                         <span class="n">name</span><span class="o">=</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span>
                     <span class="p">)</span>
 
-                    <span class="k">if</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;include_shift&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;include_shift&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
                         <span class="n">result_file</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
-                            <span class="s">&quot;space_shift&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;space_shift&quot;</span><span class="p">,</span>
                             <span class="n">output_file</span><span class="p">[</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDirectory</span><span class="p">],</span>
-                            <span class="n">name</span><span class="o">=</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span> <span class="o">+</span> <span class="s">&quot;_shift&quot;</span>
+                            <span class="n">name</span><span class="o">=</span><span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span> <span class="o">+</span> <span class="s2">&quot;_shift&quot;</span>
                         <span class="p">)</span>
 
-                <span class="c"># Copy all attributes from raw data to the final result.</span>
+                <span class="c1"># Copy all attributes from raw data to the final result.</span>
                 <span class="n">output</span> <span class="o">=</span> <span class="n">output_file</span><span class="p">[</span>
                     <span class="n">each_output_filename_components</span><span class="o">.</span><span class="n">internalDatasetName</span>
                 <span class="p">]</span>
                 <span class="k">for</span> <span class="n">each_attr_name</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
                     <span class="n">output</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">each_attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">each_attr_name</span><span class="p">]</span>
 
-                <span class="c"># Only remove the directory if our input or output files are</span>
-                <span class="c"># not stored there.</span>
+                <span class="c1"># Only remove the directory if our input or output files are</span>
+                <span class="c1"># not stored there.</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">result_filename</span><span class="p">)</span>
                 <span class="n">in_out_dirnames</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="p">[</span>
@@ -243,7 +243,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a44 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a45 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
@@ -252,7 +252,7 @@
 
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
