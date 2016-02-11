@@ -42,6 +42,7 @@ elif sys.argv[1] == "bdist_conda":
     from distutils.command.bdist_conda import CondaDistribution as Distribution
 
     build_requires = [
+        "nomkl",
         "openblas",
         "fftw",
         "setuptools",
@@ -63,6 +64,7 @@ elif sys.argv[1] == "bdist_conda":
     ]
 
     install_requires = [
+        "nomkl",
         "openblas",
         "fftw",
         "setuptools",
