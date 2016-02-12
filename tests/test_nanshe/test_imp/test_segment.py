@@ -1273,7 +1273,7 @@ class TestSegment(object):
                     "n_components" : len(g),
                     "n_iter" : 20,
                     "batch_size" : 256,
-                    "alpha" : 0.2,
+                    "alpha" : 0.2
                 }
             }
         )
@@ -1319,7 +1319,7 @@ class TestSegment(object):
                     "n_components" : len(g),
                     "n_iter" : 20,
                     "batch_size" : 256,
-                    "alpha" : 0.2,
+                    "alpha" : 0.2
                 }
             }
         )
@@ -1365,7 +1365,7 @@ class TestSegment(object):
                     "n_components" : len(g),
                     "n_iter" : 20,
                     "batch_size" : 256,
-                    "alpha" : 0.2,
+                    "alpha" : 0.2
                 }
             }
         )
@@ -1414,7 +1414,7 @@ class TestSegment(object):
                     "n_components" : len(g),
                     "n_iter" : 20,
                     "batch_size" : 256,
-                    "alpha" : 0.2,
+                    "alpha" : 0.2
                 }
             }
         )
