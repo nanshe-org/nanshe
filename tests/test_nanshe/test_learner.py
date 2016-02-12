@@ -104,20 +104,12 @@ def setup_2d(a_callable):
                 }
             },
             "generate_dictionary" : {
-                "spams.trainDL" : {
-                    "gamma2" : 0,
-                    "gamma1" : 0,
-                    "numThreads" : 1,
-                    "K" : 10,
-                    "iter" : 100,
-                    "modeD" : 0,
-                    "posAlpha" : True,
-                    "clean" : True,
-                    "posD" : True,
-                    "batchsize" : 256,
-                    "lambda1" : 0.2,
-                    "lambda2" : 0,
-                    "mode" : 2
+                "sklearn.decomposition.dict_learning_online" : {
+                    "n_jobs" : 1,
+                    "n_components" : 10,
+                    "n_iter" : 100,
+                    "batch_size" : 256,
+                    "alpha" : 0.2
                 }
             }
         }
@@ -544,20 +536,12 @@ def setup_3d(a_callable):
                 }
             },
             "generate_dictionary" : {
-                "spams.trainDL" : {
-                    "gamma2" : 0,
-                    "gamma1" : 0,
-                    "numThreads" : 1,
-                    "K" : 10,
-                    "iter" : 100,
-                    "modeD" : 0,
-                    "posAlpha" : True,
-                    "clean" : True,
-                    "posD" : True,
-                    "batchsize" : 256,
-                    "lambda1" : 0.2,
-                    "lambda2" : 0,
-                    "mode" : 2
+                "sklearn.decomposition.dict_learning_online" : {
+                    "n_jobs" : 1,
+                    "n_components" : 10,
+                    "n_iter" : 100,
+                    "batch_size" : 256,
+                    "alpha" : 0.2
                 }
             }
         }
