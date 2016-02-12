@@ -796,7 +796,7 @@ def generate_dictionary(new_data, initial_dictionary=None, **parameters):
     # Want to support NumPy types in parameters. However, SPAMS expects normal
     # C types. So, we convert them in advance. This was needed for the
     # Ilastik-based GUI.
-    for _k, _v in parameters["spams.trainDL"].items():
+    for _k, _v in parameters.get("spams.trainDL", {}).items():
         _v = numpy.array(_v)[()] # Convert to NumPy type
         if isinstance(_v, numpy.integer):
             _v = int(_v)
@@ -813,10 +813,11 @@ def generate_dictionary(new_data, initial_dictionary=None, **parameters):
     # Reshape data into a matrix (each image is now a column vector)
     new_data_processed = xnumpy.array_to_matrix(new_data_processed)
     new_data_processed = numpy.asmatrix(new_data_processed)
-    new_data_processed = new_data_processed.transpose()
 
     # Spams requires all matrices to be fortran.
-    new_data_processed = numpy.asfortranarray(new_data_processed)
+    if "spams.trainDL" in parameters:
+        new_data_processed = new_data_processed.transpose()
+        new_data_processed = numpy.asfortranarray(new_data_processed)
 
     # If there is an initial dictionary provided, go ahead and process it.
     initial_dictionary_processed = initial_dictionary
@@ -834,24 +835,48 @@ def generate_dictionary(new_data, initial_dictionary=None, **parameters):
         initial_dictionary_processed = numpy.asmatrix(
             initial_dictionary_processed
         )
-        initial_dictionary_processed = initial_dictionary_processed.transpose()
 
-        # Spams requires all matrices to be fortran.
-        initial_dictionary_processed = numpy.asfortranarray(
-            initial_dictionary_processed
-        )
+        if "spams.trainDL" in parameters:
+            initial_dictionary_processed = initial_dictionary_processed.transpose()
+
+            # Spams requires all matrices to be fortran.
+            initial_dictionary_processed = numpy.asfortranarray(
+                initial_dictionary_processed
+            )
 
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary,
     # spams.nmf? (may be too slow))
-    new_dictionary = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
-        X=new_data_processed, D=initial_dictionary_processed,
-        **parameters["spams.trainDL"]
-    )
+    if "sklearn.decomposition.dict_learning_online" in parameters:
+        # sklearn needs to be boxed so it doesn't cause us issues.
+        import sklearn
+        import sklearn.decomposition
 
-    # Fix dictionary so that the first index will be the particular image.
-    # The rest will be the shape of an image (same as input shape).
-    new_dictionary = new_dictionary.transpose()
+        parameters["sklearn.decomposition.dict_learning_online"]["return_code"] = parameters["sklearn.decomposition.dict_learning_online"].get("return_code", False)
+        assert not parameters["sklearn.decomposition.dict_learning_online"]["return_code"],\
+            "Returning the sparse code is not supported by this function's API."
+
+        parameters["sklearn.decomposition.dict_learning_online"]["return_inner_stats"] = parameters["sklearn.decomposition.dict_learning_online"].get("return_inner_stats", False)
+        assert not parameters["sklearn.decomposition.dict_learning_online"]["return_inner_stats"],\
+            "Returning the internal stats is not supported by this function's API."
+
+        new_dictionary = sklearn.decomposition.dict_learning_online(
+            X=new_data_processed, dict_init=initial_dictionary_processed,
+            **parameters["sklearn.decomposition.dict_learning_online"]
+        )
+    elif "spams.trainDL" in parameters:
+        new_dictionary = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
+            X=new_data_processed, D=initial_dictionary_processed,
+            **parameters["spams.trainDL"]
+        )
+
+        # Fix dictionary so that the first index will be the particular image.
+        new_dictionary = new_dictionary.transpose()
+    else:
+        assert False,\
+            "Must select a supported matrix factorization algorithm."
+
+    # Fix the rest will be the shape of an image (same as input shape).
     new_dictionary = numpy.asarray(new_dictionary, dtype=new_data.dtype.type)
     new_dictionary = new_dictionary.reshape(
         (-1,) + new_data.shape[1:]

@@ -815,7 +815,7 @@ class TestSegment(object):
 
         nanshe.imp.segment.preprocess_data(image_stack, **config)
 
-    def test_generate_dictionary_0(self):
+    def test_generate_dictionary_00(self):
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -868,7 +868,7 @@ class TestSegment(object):
 
         assert (len(unmatched_g) == 0)
 
-    def test_generate_dictionary_1(self):
+    def test_generate_dictionary_01(self):
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -922,7 +922,7 @@ class TestSegment(object):
         assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
-    def test_generate_dictionary_2(self):
+    def test_generate_dictionary_02(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
@@ -976,7 +976,7 @@ class TestSegment(object):
         assert (len(unmatched_g) == 0)
 
     @nose.plugins.attrib.attr("3D")
-    def test_generate_dictionary_3(self):
+    def test_generate_dictionary_03(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
@@ -1029,7 +1029,7 @@ class TestSegment(object):
 
         assert (len(unmatched_g) == 0)
 
-    def test_generate_dictionary_4(self):
+    def test_generate_dictionary_04(self):
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -1085,7 +1085,7 @@ class TestSegment(object):
 
         assert (g.astype(bool) == d.astype(bool)).all()
 
-    def test_generate_dictionary_5(self):
+    def test_generate_dictionary_05(self):
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -1142,7 +1142,7 @@ class TestSegment(object):
         assert (g.astype(bool) == d.astype(bool)).all()
 
     @nose.plugins.attrib.attr("3D")
-    def test_generate_dictionary_6(self):
+    def test_generate_dictionary_06(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
@@ -1199,7 +1199,7 @@ class TestSegment(object):
         assert (g.astype(bool) == d.astype(bool)).all()
 
     @nose.plugins.attrib.attr("3D")
-    def test_generate_dictionary_7(self):
+    def test_generate_dictionary_07(self):
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
@@ -1227,6 +1227,194 @@ class TestSegment(object):
                     "lambda1" : 0.2,
                     "lambda2" : 0,
                     "mode" : 2
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+        assert (g.astype(bool) == d.astype(bool)).all()
+
+    def test_generate_dictionary_08(self):
+        p = numpy.array([[27, 51],
+                         [66, 85],
+                         [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            **{
+                "sklearn.decomposition.dict_learning_online" : {
+                    "n_jobs" : 1,
+                    "n_components" : len(g),
+                    "n_iter" : 20,
+                    "batch_size" : 256,
+                    "alpha" : 0.2,
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+    @nose.plugins.attrib.attr("3D")
+    def test_generate_dictionary_09(self):
+        p = numpy.array([[27, 51, 87],
+                         [66, 85, 55],
+                         [77, 45, 26]])
+
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            **{
+                "sklearn.decomposition.dict_learning_online" : {
+                    "n_jobs" : 1,
+                    "n_components" : len(g),
+                    "n_iter" : 20,
+                    "batch_size" : 256,
+                    "alpha" : 0.2,
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+    def test_generate_dictionary_10(self):
+        p = numpy.array([[27, 51],
+                         [66, 85],
+                         [77, 45]])
+
+        space = numpy.array((100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            g.astype(float),
+            **{
+                "sklearn.decomposition.dict_learning_online" : {
+                    "n_jobs" : 1,
+                    "n_components" : len(g),
+                    "n_iter" : 20,
+                    "batch_size" : 256,
+                    "alpha" : 0.2,
+                }
+            }
+        )
+        d = (d != 0)
+
+        assert (g.shape == d.shape)
+
+        assert (g.astype(bool).max(axis=0) == d.astype(bool).max(axis=0)).all()
+
+        unmatched_g = range(len(g))
+        matched = dict()
+
+        for i in xrange(len(d)):
+            new_unmatched_g = []
+            for j in unmatched_g:
+                if not (d[i] == g[j]).all():
+                    new_unmatched_g.append(j)
+                else:
+                    matched[i] = j
+
+            unmatched_g = new_unmatched_g
+
+        print(unmatched_g)
+
+        assert (len(unmatched_g) == 0)
+
+        assert (g.astype(bool) == d.astype(bool)).all()
+
+    @nose.plugins.attrib.attr("3D")
+    def test_generate_dictionary_11(self):
+        p = numpy.array([[27, 51, 87],
+                         [66, 85, 55],
+                         [77, 45, 26]])
+
+        space = numpy.array((100, 100, 100))
+        radii = numpy.array((5, 6, 7))
+
+        g = nanshe.syn.data.generate_hypersphere_masks(space, p, radii)
+
+        d = nanshe.imp.segment.generate_dictionary(
+            g.astype(float),
+            g.astype(float),
+            **{
+                "sklearn.decomposition.dict_learning_online" : {
+                    "n_jobs" : 1,
+                    "n_components" : len(g),
+                    "n_iter" : 20,
+                    "batch_size" : 256,
+                    "alpha" : 0.2,
                 }
             }
         )
