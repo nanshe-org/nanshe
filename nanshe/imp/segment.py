@@ -848,6 +848,7 @@ def generate_dictionary(new_data, initial_dictionary=None, **parameters):
     # Need to look into generating the sparse code given the dictionary,
     # spams.nmf? (may be too slow))
     if "sklearn.decomposition.dict_learning_online" in parameters:
+        # sklearn needs to be boxed so it doesn't cause us issues.
         import sklearn
         import sklearn.decomposition
 
