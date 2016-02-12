@@ -847,7 +847,23 @@ def generate_dictionary(new_data, initial_dictionary=None, **parameters):
     # Simply trains the dictionary. Does not return sparse code.
     # Need to look into generating the sparse code given the dictionary,
     # spams.nmf? (may be too slow))
-    if "spams.trainDL" in parameters:
+    if "sklearn.decomposition.dict_learning_online" in parameters:
+        import sklearn
+        import sklearn.decomposition
+
+        parameters["sklearn.decomposition.dict_learning_online"]["return_code"] = parameters["sklearn.decomposition.dict_learning_online"].get("return_code", False)
+        assert not parameters["sklearn.decomposition.dict_learning_online"]["return_code"],\
+            "Returning the sparse code is not supported by this function's API."
+
+        parameters["sklearn.decomposition.dict_learning_online"]["return_inner_stats"] = parameters["sklearn.decomposition.dict_learning_online"].get("return_inner_stats", False)
+        assert not parameters["sklearn.decomposition.dict_learning_online"]["return_inner_stats"],\
+            "Returning the internal stats is not supported by this function's API."
+
+        new_dictionary = sklearn.decomposition.dict_learning_online(
+            X=new_data_processed, dict_init=initial_dictionary_processed,
+            **parameters["sklearn.decomposition.dict_learning_online"]
+        )
+    elif "spams.trainDL" in parameters:
         new_dictionary = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
             X=new_data_processed, D=initial_dictionary_processed,
             **parameters["spams.trainDL"]
