@@ -31,10 +31,10 @@ def setup_2d(a_callable):
             "postprocess_data" : {
                 "wavelet_denoising" : {
                     "remove_low_intensity_local_maxima" : {
-                        "percentage_pixels_below_max" : 0
+                        "percentage_pixels_below_max" : 0.8
                     },
                     "wavelet.transform" : {
-                        "scale" : 4
+                        "scale" : 3
                     },
                     "accepted_region_shape_constraints" : {
                         "major_axis_length" : {
@@ -49,17 +49,17 @@ def setup_2d(a_callable):
                         },
                         "area" : {
                             "max" : 600,
-                            "min" : 30
+                            "min" : 25
                         }
                     },
                     "estimate_noise" : {
                         "significance_threshold" : 3.0
                     },
                     "significant_mask" : {
-                        "noise_threshold" : 3.0
+                        "noise_threshold" : 2.0
                     },
                     "remove_too_close_local_maxima" : {
-                        "min_local_max_distance" : 100.0
+                        "min_local_max_distance" : 16.0
                     },
                     "use_watershed" : True
                 },
@@ -79,13 +79,14 @@ def setup_2d(a_callable):
                     }
                 },
                 "extract_f0" : {
-                    "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                    "spatial_smoothing_gaussian_filter_window_size" : 5.0,
+                    "temporal_smoothing_gaussian_filter_stdev" : 0.0,
+                    "temporal_smoothing_gaussian_filter_window_size" : 0.0,
+
+                    "half_window_size" : 100,
                     "which_quantile" : 0.5,
-                    "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                    "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-                    "half_window_size" : 1,
-                    "bias" : 100
+
+                    "spatial_smoothing_gaussian_filter_stdev" : 0.0,
+                    "spatial_smoothing_gaussian_filter_window_size" : 0.0
                 },
                 "remove_zeroed_lines" : {
                     "erosion_shape" : [
@@ -98,11 +99,7 @@ def setup_2d(a_callable):
                     ]
                 },
                 "wavelet.transform" : {
-                    "scale" : [
-                        3,
-                        4,
-                        4
-                    ]
+                    "scale" : 3
                 }
             },
             "generate_dictionary" : {
@@ -145,20 +142,18 @@ def setup_2d(a_callable):
                     },
 
                     "extract_f0" : {
-                        "bias" : 100,
+                        "temporal_smoothing_gaussian_filter_stdev" : 0.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 0.0,
 
-                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-
-                        "half_window_size" : 1,
+                        "half_window_size" : 50,
                         "which_quantile" : 0.5,
 
-                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                        "spatial_smoothing_gaussian_filter_window_size" : 5.0
+                        "spatial_smoothing_gaussian_filter_stdev" : 0.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 0.0
                     },
 
                     "wavelet.transform" : {
-                        "scale" : [3, 4, 4]
+                        "scale" : 3
                     },
 
                     "normalize_data" : {
@@ -197,11 +192,11 @@ def setup_2d(a_callable):
                         },
 
                         "significant_mask" : {
-                            "noise_threshold" : 3.0
+                            "noise_threshold" : 2.0
                         },
 
                         "wavelet.transform" : {
-                            "scale" : 4
+                            "scale" : 3
                         },
 
                         "accepted_region_shape_constraints" : {
@@ -212,7 +207,7 @@ def setup_2d(a_callable):
                         },
 
                         "remove_low_intensity_local_maxima" : {
-                            "percentage_pixels_below_max" : 0
+                            "percentage_pixels_below_max" : 0.8
 
                         },
 
@@ -224,7 +219,7 @@ def setup_2d(a_callable):
 
                         "accepted_neuron_shape_constraints" : {
                             "area" : {
-                                "min" : 30,
+                                "min" : 25,
                                 "max" : 600
                             },
 
@@ -272,20 +267,18 @@ def setup_2d(a_callable):
                     },
 
                     "extract_f0" : {
-                        "bias" : 100,
+                        "temporal_smoothing_gaussian_filter_stdev" : 0.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 0.0,
 
-                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-
-                        "half_window_size" : 1,
+                        "half_window_size" : 50,
                         "which_quantile" : 0.5,
 
-                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                        "spatial_smoothing_gaussian_filter_window_size" : 5.0
+                        "spatial_smoothing_gaussian_filter_stdev" : 0.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 0.0
                     },
 
                     "wavelet.transform" : {
-                        "scale" : [3, 4, 4]
+                        "scale" : 3
                     },
 
                     "normalize_data" : {
@@ -324,11 +317,11 @@ def setup_2d(a_callable):
                         },
 
                         "significant_mask" : {
-                            "noise_threshold" : 3.0
+                            "noise_threshold" : 2.0
                         },
 
                         "wavelet.transform" : {
-                            "scale" : 4
+                            "scale" : 3
                         },
 
                         "accepted_region_shape_constraints" : {
@@ -339,7 +332,7 @@ def setup_2d(a_callable):
                         },
 
                         "remove_low_intensity_local_maxima" : {
-                            "percentage_pixels_below_max" : 0
+                            "percentage_pixels_below_max" : 0.8
 
                         },
 
@@ -351,7 +344,7 @@ def setup_2d(a_callable):
 
                         "accepted_neuron_shape_constraints" : {
                             "area" : {
-                                "min" : 30,
+                                "min" : 25,
                                 "max" : 600
                             },
 
@@ -488,10 +481,10 @@ def setup_3d(a_callable):
             "postprocess_data" : {
                 "wavelet_denoising" : {
                     "remove_low_intensity_local_maxima" : {
-                        "percentage_pixels_below_max" : 0
+                        "percentage_pixels_below_max" : 0.8
                     },
                     "wavelet.transform" : {
-                        "scale" : 4
+                        "scale" : 3
                     },
                     "accepted_region_shape_constraints" : {
                         "major_axis_length" : {
@@ -506,17 +499,17 @@ def setup_3d(a_callable):
                         },
                         "area" : {
                             "max" : 15000,
-                            "min" : 150
+                            "min" : 100
                         }
                     },
                     "estimate_noise" : {
                         "significance_threshold" : 3.0
                     },
                     "significant_mask" : {
-                        "noise_threshold" : 3.0
+                        "noise_threshold" : 2.0
                     },
                     "remove_too_close_local_maxima" : {
-                        "min_local_max_distance" : 100.0
+                        "min_local_max_distance" : 16.0
                     },
                     "use_watershed" : True
                 },
@@ -536,21 +529,17 @@ def setup_3d(a_callable):
                     }
                 },
                 "extract_f0" : {
-                    "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                    "spatial_smoothing_gaussian_filter_window_size" : 5.0,
+                    "temporal_smoothing_gaussian_filter_stdev" : 0.0,
+                    "temporal_smoothing_gaussian_filter_window_size" : 0.0,
+
+                    "half_window_size" : 50,
                     "which_quantile" : 0.5,
-                    "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                    "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-                    "half_window_size" : 1,
-                    "bias" : 100
+
+                    "spatial_smoothing_gaussian_filter_stdev" : 0.0,
+                    "spatial_smoothing_gaussian_filter_window_size" : 0.0
                 },
                 "wavelet.transform" : {
-                    "scale" : [
-                        3,
-                        4,
-                        4,
-                        4
-                    ]
+                    "scale" : 3
                 }
             },
             "generate_dictionary" : {
@@ -587,10 +576,10 @@ def setup_3d(a_callable):
                 "postprocess_data" : {
                     "wavelet_denoising" : {
                         "remove_low_intensity_local_maxima" : {
-                            "percentage_pixels_below_max" : 0
+                            "percentage_pixels_below_max" : 0.8
                         },
                         "wavelet.transform" : {
-                            "scale" : 4
+                            "scale" : 3
                         },
                         "accepted_region_shape_constraints" : {
                             "major_axis_length" : {
@@ -605,7 +594,7 @@ def setup_3d(a_callable):
                             },
                             "area" : {
                                 "max" : 15000,
-                                "min" : 150
+                                "min" : 100
                             }
                         },
                         "estimate_noise" : {
@@ -615,7 +604,7 @@ def setup_3d(a_callable):
                             "noise_threshold" : 2.0
                         },
                         "remove_too_close_local_maxima" : {
-                            "min_local_max_distance" : 100.0
+                            "min_local_max_distance" : 16.0
                         },
                         "use_watershed" : True
                     },
@@ -635,21 +624,17 @@ def setup_3d(a_callable):
                         }
                     },
                     "extract_f0" : {
-                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                        "spatial_smoothing_gaussian_filter_window_size" : 5.0,
+                        "temporal_smoothing_gaussian_filter_stdev" : 0.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 0.0,
+
+                        "half_window_size" : 50,
                         "which_quantile" : 0.5,
-                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-                        "half_window_size" : 1,
-                        "bias" : 100
+
+                        "spatial_smoothing_gaussian_filter_stdev" : 0.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 0.0
                     },
                     "wavelet.transform" : {
-                        "scale" : [
-                            3,
-                            4,
-                            4,
-                            4
-                        ]
+                        "scale" : 3
                     }
                 },
                 "generate_dictionary" : {
@@ -690,10 +675,10 @@ def setup_3d(a_callable):
                 "postprocess_data" : {
                     "wavelet_denoising" : {
                         "remove_low_intensity_local_maxima" : {
-                            "percentage_pixels_below_max" : 0
+                            "percentage_pixels_below_max" : 0.8
                         },
                         "wavelet.transform" : {
-                            "scale" : 4
+                            "scale" : 3
                         },
                         "accepted_region_shape_constraints" : {
                             "major_axis_length" : {
@@ -708,7 +693,7 @@ def setup_3d(a_callable):
                             },
                             "area" : {
                                 "max" : 15000,
-                                "min" : 150
+                                "min" : 100
                             }
                         },
                         "estimate_noise" : {
@@ -718,7 +703,7 @@ def setup_3d(a_callable):
                             "noise_threshold" : 2.0
                         },
                         "remove_too_close_local_maxima" : {
-                            "min_local_max_distance" : 100.0
+                            "min_local_max_distance" : 16.0
                         },
                         "use_watershed" : True
                     },
@@ -738,21 +723,17 @@ def setup_3d(a_callable):
                         }
                     },
                     "extract_f0" : {
-                        "spatial_smoothing_gaussian_filter_stdev" : 5.0,
-                        "spatial_smoothing_gaussian_filter_window_size" : 5.0,
+                        "temporal_smoothing_gaussian_filter_stdev" : 0.0,
+                        "temporal_smoothing_gaussian_filter_window_size" : 0.0,
+
+                        "half_window_size" : 50,
                         "which_quantile" : 0.5,
-                        "temporal_smoothing_gaussian_filter_stdev" : 5.0,
-                        "temporal_smoothing_gaussian_filter_window_size" : 5.0,
-                        "half_window_size" : 1,
-                        "bias" : 100
+
+                        "spatial_smoothing_gaussian_filter_stdev" : 0.0,
+                        "spatial_smoothing_gaussian_filter_window_size" : 0.0
                     },
                     "wavelet.transform" : {
-                        "scale" : [
-                            3,
-                            4,
-                            4,
-                            4
-                        ]
+                        "scale" : 3
                     }
                 },
                 "generate_dictionary" : {
