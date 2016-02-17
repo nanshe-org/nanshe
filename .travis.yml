@@ -41,7 +41,7 @@ install:
    - export SGE_ROOT=/var/lib/gridengine
    - export SGE_CELL=default
    - export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
-   #- conda install drmaa
+   - conda install drmaa
    # Install sphinx 1.3 and friends to build documentation.
    - echo "sphinx 1.3.*" >> $HOME/miniconda/envs/testenv/conda-meta/pinned
    - conda install sphinx
