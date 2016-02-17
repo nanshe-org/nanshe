@@ -126,7 +126,7 @@ def setup_2d(a_callable):
         "generate_neurons_blocks" : {
             "num_processes" : 4,
             "block_shape" : [10000, -1, -1],
-            "num_blocks" : [-1, 5, 5],
+            "num_blocks" : [-1, 2, 2],
             "half_border_shape" : [0, 5, 5],
             "half_window_shape" : [50, 20, 20],
 
@@ -248,7 +248,7 @@ def setup_2d(a_callable):
         "generate_neurons_blocks" : {
             "num_processes" : 4,
             "block_shape" : [10000, -1, -1],
-            "num_blocks" : [-1, 5, 5],
+            "num_blocks" : [-1, 2, 2],
             "half_border_shape" : [0, 5, 5],
             "half_window_shape" : [50, 20, 20],
 
