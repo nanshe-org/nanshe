@@ -757,7 +757,10 @@ def preprocess_data(new_data, out=None, **parameters):
 
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
-def generate_dictionary(new_data, initial_dictionary=None, **parameters):
+def generate_dictionary(new_data,
+                        initial_dictionary=None,
+                        n_components=None,
+                        **parameters):
     """
         Generates a dictionary using the data and parameters given for trainDL.
 
@@ -769,6 +772,9 @@ def generate_dictionary(new_data, initial_dictionary=None, **parameters):
             initial_dictionary(numpy.ndarray):  dictionary to start the
                                                 algorithm with.
 
+            n_components(int):                  number of components for the
+                                                dictionary to use.
+
             **parameters(dict):                 passed directly to
                                                 spams.trainDL.
 
@@ -777,6 +783,29 @@ def generate_dictionary(new_data, initial_dictionary=None, **parameters):
     """
 
     import nanshe.box
+
+    # Sync the number of components with the method.
+    if n_components is None:
+        if "spams.trainDL" in parameters:
+            n_components = parameters["spams.trainDL"]["K"]
+        elif "sklearn.decomposition.dict_learning_online" in parameters:
+            n_components = parameters["sklearn.decomposition.dict_learning_online"]["n_components"]
+        else:
+            assert False, "Unknown algorithm must define `n_components`."
+    else:
+        if "spams.trainDL" in parameters:
+            assert parameters["spams.trainDL"].get("K", n_components) == n_components,\
+                "If `n_components` and `spams.trainDL[\"K\"]` are defined," \
+                " they should be defined the same."
+            parameters["spams.trainDL"]["K"] = n_components
+        elif "sklearn.decomposition.dict_learning_online" in parameters:
+            assert parameters["sklearn.decomposition.dict_learning_online"].get("n_components", n_components) == n_components,\
+                "If `n_components` and " \
+                "`sklearn.decomposition.dict_learning_online[\"n_components\"]`" \
+                " are defined, they should be defined the same."
+            parameters["sklearn.decomposition.dict_learning_online"]["n_components"] = n_components
+        else:
+            assert False, "Unknown algorithm cannot use `n_components`."
 
     # Needs to be floating point.
     # However, it need not be double precision as there is single precision

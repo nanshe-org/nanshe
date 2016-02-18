@@ -1042,12 +1042,12 @@ class TestSegment(object):
         d = nanshe.imp.segment.generate_dictionary(
             g.astype(numpy.float32),
             g.astype(numpy.float32),
+            len(g),
             **{
                 "spams.trainDL" : {
                     "gamma2" : 0,
                     "gamma1" : 0,
                     "numThreads" : 1,
-                    "K" : len(g),
                     "iter" : 10,
                     "modeD" : 0,
                     "posAlpha" : True,
@@ -1098,12 +1098,12 @@ class TestSegment(object):
         d = nanshe.imp.segment.generate_dictionary(
             g.astype(float),
             g.astype(float),
+            len(g),
             **{
                 "spams.trainDL" : {
                     "gamma2" : 0,
                     "gamma1" : 0,
                     "numThreads" : 1,
-                    "K" : len(g),
                     "iter" : 10,
                     "modeD" : 0,
                     "posAlpha" : True,
@@ -1155,12 +1155,12 @@ class TestSegment(object):
         d = nanshe.imp.segment.generate_dictionary(
             g.astype(numpy.float32),
             g.astype(numpy.float32),
+            len(g),
             **{
                 "spams.trainDL" : {
                     "gamma2" : 0,
                     "gamma1" : 0,
                     "numThreads" : 1,
-                    "K" : len(g),
                     "iter" : 10,
                     "modeD" : 0,
                     "posAlpha" : True,
@@ -1212,12 +1212,12 @@ class TestSegment(object):
         d = nanshe.imp.segment.generate_dictionary(
             g.astype(float),
             g.astype(float),
+            len(g),
             **{
                 "spams.trainDL" : {
                     "gamma2" : 0,
                     "gamma1" : 0,
                     "numThreads" : 1,
-                    "K" : len(g),
                     "iter" : 10,
                     "modeD" : 0,
                     "posAlpha" : True,
@@ -1359,10 +1359,10 @@ class TestSegment(object):
         d = nanshe.imp.segment.generate_dictionary(
             g.astype(float),
             g.astype(float),
+            len(g),
             **{
                 "sklearn.decomposition.dict_learning_online" : {
                     "n_jobs" : 1,
-                    "n_components" : len(g),
                     "n_iter" : 20,
                     "batch_size" : 256,
                     "alpha" : 0.2
@@ -1408,10 +1408,10 @@ class TestSegment(object):
         d = nanshe.imp.segment.generate_dictionary(
             g.astype(float),
             g.astype(float),
+            len(g),
             **{
                 "sklearn.decomposition.dict_learning_online" : {
                     "n_jobs" : 1,
-                    "n_components" : len(g),
                     "n_iter" : 20,
                     "batch_size" : 256,
                     "alpha" : 0.2
