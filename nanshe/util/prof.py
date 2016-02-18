@@ -157,14 +157,14 @@ def log_call(logger,
             to_print_time(bool):           Prints the time it took to run the
                                            wrapped callable.
 
-            to_print_exception  (bool):    Whether to print the traceback when
+            to_print_exception(bool):      Whether to print the traceback when
                                            an exception is raise. It will be
                                            stored as a global variable on the
                                            function, which can be changed at
                                            runtime.
 
         Returns:
-            log_call_decorator (for wrapping)
+            log_call_decorator:            For performing the actual wrapping.
     """
 
     def log_call_decorator(callable):
@@ -215,7 +215,8 @@ def log_call(logger,
                 )
 
                 # Output arguments and keyword arguments if acceptable.
-                # This allows keyword arguments to be turned on or off at runtime.
+                # This allows keyword arguments to be turned on or off at
+                # runtime.
                 #
                 # Note: We have used log_call_callable_wrapped.to_print_args.
                 # However, we cannot define this until after as wrapping will
@@ -226,9 +227,9 @@ def log_call(logger,
                         "Keyword Arguments: \"" + str(kwargs) + "\"."
                     )
 
-                # We don't return immediately. Why? We want to know if this succeeded or failed.
-                # So, we want the log message below to print after the function
-                # runs.
+                # We don't return immediately. Why? We want to know if this
+                # succeeded or failed. So, we want the log message below to
+                # print after the function runs.
                 diff_time = 0.0
                 start_time = time.time()
                 try:
@@ -252,7 +253,6 @@ def log_call(logger,
                     )
             else:
                 result = callable(*args, **kwargs)
-
 
             # Return the result even None.
             return(result)
