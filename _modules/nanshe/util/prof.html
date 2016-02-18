@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.prof &mdash; nanshe 0.1.0a46+20.gedd1c1b documentation</title>
+    <title>nanshe.util.prof &mdash; nanshe 0.1.0a46+25.ge983110 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a46+20.gedd1c1b',
+        VERSION:     '0.1.0a46+25.ge983110',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a46+20.gedd1c1b documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a46+25.ge983110 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a46+20.gedd1c1b documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a46+25.ge983110 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -217,14 +217,14 @@
 <span class="sd">            to_print_time(bool):           Prints the time it took to run the</span>
 <span class="sd">                                           wrapped callable.</span>
 
-<span class="sd">            to_print_exception  (bool):    Whether to print the traceback when</span>
+<span class="sd">            to_print_exception(bool):      Whether to print the traceback when</span>
 <span class="sd">                                           an exception is raise. It will be</span>
 <span class="sd">                                           stored as a global variable on the</span>
 <span class="sd">                                           function, which can be changed at</span>
 <span class="sd">                                           runtime.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            log_call_decorator (for wrapping)</span>
+<span class="sd">            log_call_decorator:            For performing the actual wrapping.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">log_call_decorator</span><span class="p">(</span><span class="nb">callable</span><span class="p">):</span>
@@ -275,7 +275,8 @@
                 <span class="p">)</span>
 
                 <span class="c1"># Output arguments and keyword arguments if acceptable.</span>
-                <span class="c1"># This allows keyword arguments to be turned on or off at runtime.</span>
+                <span class="c1"># This allows keyword arguments to be turned on or off at</span>
+                <span class="c1"># runtime.</span>
                 <span class="c1">#</span>
                 <span class="c1"># Note: We have used log_call_callable_wrapped.to_print_args.</span>
                 <span class="c1"># However, we cannot define this until after as wrapping will</span>
@@ -286,9 +287,9 @@
                         <span class="s2">&quot;Keyword Arguments: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
                     <span class="p">)</span>
 
-                <span class="c1"># We don&#39;t return immediately. Why? We want to know if this succeeded or failed.</span>
-                <span class="c1"># So, we want the log message below to print after the function</span>
-                <span class="c1"># runs.</span>
+                <span class="c1"># We don&#39;t return immediately. Why? We want to know if this</span>
+                <span class="c1"># succeeded or failed. So, we want the log message below to</span>
+                <span class="c1"># print after the function runs.</span>
                 <span class="n">diff_time</span> <span class="o">=</span> <span class="mf">0.0</span>
                 <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -312,7 +313,6 @@
                     <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="nb">callable</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
 
             <span class="c1"># Return the result even None.</span>
             <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
@@ -493,7 +493,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a46+20.gedd1c1b documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a46+25.ge983110 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
