@@ -882,7 +882,13 @@ def test_main_1():
     assert (len(test_main_1.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -921,7 +927,13 @@ def test_main_2():
     assert (len(test_main_2.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -973,7 +985,13 @@ def test_main_3():
     assert (len(test_main_3.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1013,7 +1031,13 @@ def test_main_4():
     assert (len(test_main_4.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1053,7 +1077,13 @@ def test_main_5():
     assert (len(test_main_5.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1105,7 +1135,13 @@ def test_main_6():
     assert (len(test_main_6.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1140,7 +1176,13 @@ def test_generate_neurons_io_handler_1():
     assert (len(test_generate_neurons_io_handler_1.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1175,7 +1217,13 @@ def test_generate_neurons_io_handler_2():
     assert (len(test_generate_neurons_io_handler_2.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1223,7 +1271,13 @@ def test_generate_neurons_io_handler_3():
     assert (len(test_generate_neurons_io_handler_3.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1259,7 +1313,13 @@ def test_generate_neurons_io_handler_4():
     assert (len(test_generate_neurons_io_handler_4.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1295,7 +1355,13 @@ def test_generate_neurons_io_handler_5():
     assert (len(test_generate_neurons_io_handler_5.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1343,7 +1409,13 @@ def test_generate_neurons_io_handler_6():
     assert (len(test_generate_neurons_io_handler_6.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1378,7 +1450,13 @@ def test_generate_neurons_a_block_1():
     assert (len(test_generate_neurons_a_block_1.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1414,7 +1492,13 @@ def test_generate_neurons_a_block_2():
     assert (len(test_generate_neurons_a_block_2.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1449,7 +1533,13 @@ def test_generate_neurons_blocks_1():
     assert (len(test_generate_neurons_blocks_1.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1497,7 +1587,13 @@ def test_generate_neurons_blocks_2():
     assert (len(test_generate_neurons_blocks_2.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1533,7 +1629,13 @@ def test_generate_neurons_blocks_3():
     assert (len(test_generate_neurons_blocks_3.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1581,7 +1683,13 @@ def test_generate_neurons_blocks_4():
     assert (len(test_generate_neurons_blocks_4.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
@@ -1644,7 +1752,13 @@ def test_generate_neurons_1():
     assert (len(test_generate_neurons_1.points) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=0.5
@@ -1708,7 +1822,13 @@ def test_generate_neurons_2():
     assert (len(test_generate_neurons_2.points3) == len(neurons))
 
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
-    neuron_max_points = numpy.array(neuron_maxes.nonzero())[1:].T.copy()
+
+    neuron_max_points = []
+    for i in xrange(len(neuron_maxes)):
+        neuron_max_points.append(
+            numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
+        )
+    neuron_max_points = numpy.array(neuron_max_points)
 
     assert numpy.allclose(
         neurons["centroid"], neuron_max_points, rtol=0.0, atol=2.0
