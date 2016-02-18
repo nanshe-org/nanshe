@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a46+25.ge983110 documentation</title>
+    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a47 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a46+25.ge983110',
+        VERSION:     '0.1.0a47',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a46+25.ge983110 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a47 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a46+25.ge983110 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a47 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -817,7 +817,10 @@
 
 <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <span class="nd">@hdf5.record.static_array_debug_recorder</span>
-<div class="viewcode-block" id="generate_dictionary"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_dictionary">[docs]</a><span class="k">def</span> <span class="nf">generate_dictionary</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">initial_dictionary</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_dictionary"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_dictionary">[docs]</a><span class="k">def</span> <span class="nf">generate_dictionary</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
+                        <span class="n">initial_dictionary</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                        <span class="n">n_components</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a dictionary using the data and parameters given for trainDL.</span>
 
@@ -829,6 +832,9 @@
 <span class="sd">            initial_dictionary(numpy.ndarray):  dictionary to start the</span>
 <span class="sd">                                                algorithm with.</span>
 
+<span class="sd">            n_components(int):                  number of components for the</span>
+<span class="sd">                                                dictionary to use.</span>
+
 <span class="sd">            **parameters(dict):                 passed directly to</span>
 <span class="sd">                                                spams.trainDL.</span>
 
@@ -837,6 +843,29 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="kn">import</span> <span class="nn">nanshe.box</span>
+
+    <span class="c1"># Sync the number of components with the method.</span>
+    <span class="k">if</span> <span class="n">n_components</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;spams.trainDL&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="n">n_components</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;spams.trainDL&quot;</span><span class="p">][</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="n">n_components</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;n_components&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;Unknown algorithm must define `n_components`.&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;spams.trainDL&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;spams.trainDL&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_components</span><span class="p">,</span>\
+                <span class="s2">&quot;If `n_components` and `spams.trainDL[</span><span class="se">\&quot;</span><span class="s2">K</span><span class="se">\&quot;</span><span class="s2">]` are defined,&quot;</span> \
+                <span class="s2">&quot; they should be defined the same.&quot;</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;spams.trainDL&quot;</span><span class="p">][</span><span class="s2">&quot;K&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="k">elif</span> <span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_components&quot;</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_components</span><span class="p">,</span>\
+                <span class="s2">&quot;If `n_components` and &quot;</span> \
+                <span class="s2">&quot;`sklearn.decomposition.dict_learning_online[</span><span class="se">\&quot;</span><span class="s2">n_components</span><span class="se">\&quot;</span><span class="s2">]`&quot;</span> \
+                <span class="s2">&quot; are defined, they should be defined the same.&quot;</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;n_components&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;Unknown algorithm cannot use `n_components`.&quot;</span>
 
     <span class="c1"># Needs to be floating point.</span>
     <span class="c1"># However, it need not be double precision as there is single precision</span>
@@ -3770,7 +3799,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a46+25.ge983110 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a47 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
