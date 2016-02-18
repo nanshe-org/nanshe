@@ -798,6 +798,14 @@ def generate_neurons_blocks(input_filename,
                             (neurons_block_i_non_windowed_count / neurons_block_i_windowed_count) > 0.5
                         )
 
+                        logger.info(
+                            "Accepted the following neurons %s from block %s."
+                            % (
+                                str(neurons_block_i_acceptance.nonzero()[0].tolist()),
+                                i_str
+                            )
+                        )
+
                         # Take a subset of our previous neurons that are within
                         # the margins by half
                         neurons_block_i_accepted = neurons_block_i_smaller[neurons_block_i_acceptance]
@@ -832,6 +840,20 @@ def generate_neurons_blocks(input_filename,
                             neurons_block_i,
                             **parameters["generate_neurons"]["postprocess_data"]["merge_neuron_sets"]
                         )
+                    else:
+                        logger.info(
+                            "Accepted the following neurons %s from block %s." %
+                            (
+                                str([]),
+                                i_str
+                            )
+                        )
+                else:
+                    logger.info(
+                        "No neurons accepted as none were found for block"
+                        " %s." %
+                        i_str
+                    )
 
         hdf5.serializers.create_numpy_structured_array_in_HDF5(
             output_group, "neurons", new_neurons_set, overwrite=True)
