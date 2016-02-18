@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.learner &mdash; nanshe 0.1.0a46+18.ga5ddd6a documentation</title>
+    <title>nanshe.learner &mdash; nanshe 0.1.0a46+20.gedd1c1b documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a46+18.ga5ddd6a',
+        VERSION:     '0.1.0a46+20.gedd1c1b',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a46+18.ga5ddd6a documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a46+20.gedd1c1b documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a46+18.ga5ddd6a documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a46+20.gedd1c1b documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -858,6 +858,14 @@
                             <span class="p">(</span><span class="n">neurons_block_i_non_windowed_count</span> <span class="o">/</span> <span class="n">neurons_block_i_windowed_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
                         <span class="p">)</span>
 
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                            <span class="s2">&quot;Accepted the following neurons </span><span class="si">%s</span><span class="s2"> from block </span><span class="si">%s</span><span class="s2">.&quot;</span>
+                            <span class="o">%</span> <span class="p">(</span>
+                                <span class="nb">str</span><span class="p">(</span><span class="n">neurons_block_i_acceptance</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()),</span>
+                                <span class="n">i_str</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+
                         <span class="c1"># Take a subset of our previous neurons that are within</span>
                         <span class="c1"># the margins by half</span>
                         <span class="n">neurons_block_i_accepted</span> <span class="o">=</span> <span class="n">neurons_block_i_smaller</span><span class="p">[</span><span class="n">neurons_block_i_acceptance</span><span class="p">]</span>
@@ -892,6 +900,20 @@
                             <span class="n">neurons_block_i</span><span class="p">,</span>
                             <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;generate_neurons&quot;</span><span class="p">][</span><span class="s2">&quot;postprocess_data&quot;</span><span class="p">][</span><span class="s2">&quot;merge_neuron_sets&quot;</span><span class="p">]</span>
                         <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                            <span class="s2">&quot;Accepted the following neurons </span><span class="si">%s</span><span class="s2"> from block </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span>
+                            <span class="p">(</span>
+                                <span class="nb">str</span><span class="p">([]),</span>
+                                <span class="n">i_str</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;No neurons accepted as none were found for block&quot;</span>
+                        <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span>
+                        <span class="n">i_str</span>
+                    <span class="p">)</span>
 
         <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">create_numpy_structured_array_in_HDF5</span><span class="p">(</span>
             <span class="n">output_group</span><span class="p">,</span> <span class="s2">&quot;neurons&quot;</span><span class="p">,</span> <span class="n">new_neurons_set</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -1118,7 +1140,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a46+18.ga5ddd6a documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a46+20.gedd1c1b documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
