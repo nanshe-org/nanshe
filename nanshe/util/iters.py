@@ -27,6 +27,12 @@ import numpy
 from nanshe.util import prof
 
 
+try:
+    from itertools import izip
+except ImportError:
+    izip = zip
+
+
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
 
