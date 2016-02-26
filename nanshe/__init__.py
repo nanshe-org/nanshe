@@ -220,5 +220,3 @@ import syn
 import util
 # import viewer           # Must be commented as there is some segfault
                           # coming from Volumina.
-
-
