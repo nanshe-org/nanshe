@@ -1,31 +1,86 @@
 #!/bin/bash
-# This script installs and configures a Sun Grid Engine installation for use
-# on a Travis instance.
-#
-# Written by Dan Blanchard (dblanchard@ets.org), September 2013
 
-export SGE_CONFIG_DIR=$HOME/sge_config
-mkdir -p $SGE_CONFIG_DIR
-cp .travis_scripts/*_template $SGE_CONFIG_DIR
-sudo sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain $(hostname) /" /etc/hosts
-sudo apt-get update -qq
-echo "gridengine-master shared/gridenginemaster string localhost" | sudo debconf-set-selections
+export USER=$(whoami)
+export SGE_CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export SGE_ROOT=/var/lib/gridengine
+echo $SGE_CONFIG_DIR
+sudo sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain ${HOSTNAME} /" /etc/hosts
+sudo cp /etc/resolv.conf /etc/resolv.conf.orig
+sudo echo "domain ${HOSTNAME}" >> /etc/resolv.conf
+# Update everything.
+sudo apt-get -y update -qq
+echo "gridengine-master shared/gridenginemaster string ${HOSTNAME}" | sudo debconf-set-selections
 echo "gridengine-master shared/gridenginecell string default" | sudo debconf-set-selections
 echo "gridengine-master shared/gridengineconfig boolean true" | sudo debconf-set-selections
-sudo apt-get install gridengine-common gridengine-master
+sudo apt-get -y install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
-sudo apt-get install libdrmaa1.0 gridengine-client gridengine-exec
+sudo apt-get -y install libdrmaa1.0 gridengine-client gridengine-exec
+sudo cp ${SGE_ROOT}/default/common/act_qmaster ${SGE_ROOT}/default/common/act_qmaster.orig
+sudo bash -c "echo $HOSTNAME > ${SGE_ROOT}/default/common/act_qmaster"
+sudo service gridengine-master restart
+sudo service gridengine-exec restart
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
-sed -i -r "s/template/$USER/" $SGE_CONFIG_DIR/user_template
-sudo qconf -Auser $SGE_CONFIG_DIR/user_template
+sudo cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
+sudo sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
+qconf -suserl | xargs -r -I {} sudo qconf -du {} arusers
+qconf -suserl | xargs -r sudo qconf -duser
+sudo qconf -Auser $SGE_CONFIG_DIR/user.conf
 sudo qconf -au $USER arusers
-sudo qconf -as localhost
-export LOCALHOST_IN_SEL=$(qconf -sel | grep -c 'localhost')
-if [ $LOCALHOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host_template; else sudo qconf -Me $SGE_CONFIG_DIR/host_template; fi
-sed -i -r "s/UNDEFINED/$CORES/" $SGE_CONFIG_DIR/queue_template
-sudo qconf -Ap $SGE_CONFIG_DIR/batch_template
-sudo qconf -Aq $SGE_CONFIG_DIR/queue_template
+qconf -ss | xargs -r sudo qconf -ds
+qconf -sel | xargs -r sudo qconf -de
+sudo qconf -as $HOSTNAME
+sudo cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
+sudo sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
+export HOST_IN_SEL=$(qconf -sel | grep -c "${HOSTNAME}")
+if [ $HOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host.conf; else sudo qconf -Me $SGE_CONFIG_DIR/host.conf; fi
+sudo cp $SGE_CONFIG_DIR/queue.conf.tmpl $SGE_CONFIG_DIR/queue.conf
+sudo sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/queue.conf
+sudo sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
+sudo cp $SGE_CONFIG_DIR/batch.conf.tmpl $SGE_CONFIG_DIR/batch.conf
+qconf -sql | xargs -r sudo qconf -dq
+qconf -spl | grep -v "make" | xargs -r sudo qconf -dp
+sudo qconf -Ap $SGE_CONFIG_DIR/batch.conf
+sudo qconf -Aq $SGE_CONFIG_DIR/queue.conf
+sudo service gridengine-master restart
+sudo service gridengine-exec restart
 echo "Printing queue info to verify that things are working correctly."
 qstat -f -q all.q -explain a
 echo "You should see sge_execd and sge_qmaster running below:"
 ps aux | grep "sge"
+# Add a job based test to make sure the system really works.
+echo
+echo "Submit a simple job to make sure the submission system really works."
+
+mkdir /tmp/test_gridengine &>/dev/null
+pushd /tmp/test_gridengine &>/dev/null
+set -e
+
+echo "-------------- test.sh --------------"
+echo -e '#!/bin/bash\necho "stdout"\necho "stderr" 1>&2' | tee test.sh
+echo "-------------------------------------"
+echo
+chmod +x test.sh
+
+qsub -cwd -sync y test.sh
+echo
+
+echo "------------ test.sh.o1 -------------"
+cat test.sh.o*
+echo "-------------------------------------"
+echo
+
+echo "------------ test.sh.e1 -------------"
+cat test.sh.e*
+echo "-------------------------------------"
+echo
+
+grep stdout test.sh.o* &>/dev/null
+grep stderr test.sh.e* &>/dev/null
+
+rm test.sh*
+
+set +e
+popd &>/dev/null
+rm -rf /tmp/test_gridengine &>/dev/null
+# Clean apt-get so we don't have a bunch of junk left over from our build.
+sudo apt-get clean
