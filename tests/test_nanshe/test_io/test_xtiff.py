@@ -124,7 +124,7 @@ class TestXTiff(object):
         hdf5_filepath = hdf5_filename + "/data"
 
         nanshe.io.xtiff.convert_tiffs(
-            self.filedata.keys(),
+            list(self.filedata.keys()),
             hdf5_filepath,
             pages_to_channel=self.pages_to_channel
         )
@@ -150,7 +150,7 @@ class TestXTiff(object):
         self_data_h5 = nanshe.util.xnumpy.tagging_reorder_array(
             self.data, to_axis_order="cztyx"
         )[0, 0]
-        self_filenames = numpy.array(self.filedata.keys())
+        self_filenames = numpy.array(list(self.filedata.keys()))
 
         assert len(filenames) == len(self_filenames)
         assert (filenames == self_filenames).all()

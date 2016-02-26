@@ -97,7 +97,7 @@ class TestHDF5Searchers(object):
 
         assert (len(all_matched) == (len(TestHDF5Searchers.groups_0) * len(TestHDF5Searchers.groups_1)))
 
-        for _1, _2, _3 in nanshe.util.iters.izip(TestHDF5Searchers.get_matching_grouped_paths_gen(), all_matched.iterkeys(), all_matched.itervalues()):
+        for _1, _2, _3 in nanshe.util.iters.izip(TestHDF5Searchers.get_matching_grouped_paths_gen(), all_matched.keys(), all_matched.values()):
             assert (_1 == _2)
             assert ((_2 in self.temp_hdf5_file) == _3)
 

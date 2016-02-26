@@ -190,7 +190,7 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
 
         paths_found[each_path] = None
 
-    paths_found = paths_found.keys()
+    paths_found = list(paths_found.keys())
 
     return(paths_found)
 

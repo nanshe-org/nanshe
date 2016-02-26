@@ -168,7 +168,7 @@ setup(
     py_modules=["versioneer"],
     packages=find_packages(exclude=["tests*"]),
     distclass=Distribution,
-    cmdclass=dict(sum([_.items() for _ in [
+    cmdclass=dict(sum([list(_.items()) for _ in [
         versioneer.get_cmdclass(),
         {"test": NoseTestCommand}
     ]], [])),

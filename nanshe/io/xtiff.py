@@ -110,9 +110,9 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
     assert (len(axis_order) == 5)
     assert all([_ in axis_order for _ in "zyxtc"])
 
-    new_tiff_file_shape, new_tiff_file_dtype = get_multipage_tiff_shape_dtype(
+    new_tiff_file_shape, new_tiff_file_dtype = list(get_multipage_tiff_shape_dtype(
         new_tiff_filename
-    ).values()
+    ).values())
 
     # Correct if the tiff is missing dims by adding singletons
     if (len(new_tiff_file_shape) == 5):
@@ -411,11 +411,11 @@ def convert_tiffs(new_tiff_filenames,
         new_hdf5_dataset_offsets.append(new_hdf5_dataset_shape[axis])
 
         # Get the shape and type of each frame.
-        each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(
+        each_new_tiff_file_shape, each_new_tiff_file_dtype = list(get_multipage_tiff_shape_dtype_transformed(
             each_new_tiff_filename,
             axis_order="cztyx",
             pages_to_channel=pages_to_channel
-        ).values()
+        ).values())
         each_new_tiff_file_shape = each_new_tiff_file_shape[2:]
 
         # Find the increase on the merge axis. Find the largest shape for the

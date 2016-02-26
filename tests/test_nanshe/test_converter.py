@@ -68,7 +68,7 @@ class TestConverter(object):
             json.dump(params, fid)
             fid.write("\n")
 
-        main_args = ["./converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
+        main_args = ["./converter.py"] + ["tiff"] + [config_filename] + list(self.filedata.keys()) + [hdf5_filepath]
 
         assert (nanshe.converter.main(*main_args) == 0)
 

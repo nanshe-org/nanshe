@@ -475,8 +475,8 @@ def repack_call_args(a_callable, *args, **kwargs):
         a_callable, *args, **kwargs
     )
 
-    new_args = tuple(callargs.values()[:len(args)]) + new_args
-    new_kwargs.update(dict(callargs.items()[len(args):]))
+    new_args = tuple(list(callargs.values())[:len(args)]) + new_args
+    new_kwargs.update(dict(list(callargs.items())[len(args):]))
 
     return(new_args, new_kwargs)
 

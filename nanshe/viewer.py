@@ -2032,9 +2032,9 @@ def main(*argv):
             while isinstance(each_layer_source_location_dict_inner, dict):
                 assert (len(each_layer_source_location_dict_inner) == 1)
                 each_layer_source_operation_names.extend(
-                    each_layer_source_location_dict_inner.keys()
+                    list(each_layer_source_location_dict_inner.keys())
                 )
-                each_layer_source_location_dict_inner = each_layer_source_location_dict_inner.values()[0]
+                each_layer_source_location_dict_inner = list(each_layer_source_location_dict_inner.values())[0]
 
             if isinstance(each_layer_source_location_dict_inner, str):
                 each_layer_source_location_dict_inner = [

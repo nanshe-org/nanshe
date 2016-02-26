@@ -486,7 +486,7 @@ def generate_neurons_blocks(input_filename,
     # Overwrite the config file always
     with open(intermediate_config, "w") as fid:
         json.dump(
-            dict(parameters.items() + {"debug" : debug}.items()),
+            dict(list(parameters.items()) + list({"debug" : debug}.items())),
             fid,
             indent=4,
             separators=(",", " : ")

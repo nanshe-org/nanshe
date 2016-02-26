@@ -812,7 +812,7 @@ def unsquish(new_array, shape, axis=None):
 
         # Export how the new order will be changed
         # (as the old axis order will be how to transform the axes).
-        axis_order = tuple(axis_order_map.itervalues())
+        axis_order = tuple(axis_order_map.values())
 
         # Put all axes not part of the group in front and
         # stuff the rest at the back.

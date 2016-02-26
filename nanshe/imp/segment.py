@@ -1113,7 +1113,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         properties = ["area", "centroid"]
 
     if ((properties == "all") or (properties is None)):
-        properties = region_properties_type_dict.keys()
+        properties = list(region_properties_type_dict.keys())
 
     intensity_image = None
     if (len(args)) and (args[0]):
@@ -1464,7 +1464,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
         properties = ["area", "centroid"]
 
     if ((properties == "all") or (properties is None)):
-        properties = region_properties_type_dict.keys()
+        properties = list(region_properties_type_dict.keys())
 
     intensity_image = None
     if (len(args)) and (args[0]):
@@ -2597,7 +2597,7 @@ def wavelet_denoising(new_image,
         # For holding the label image properties
         new_wavelet_image_denoised_labeled_props = region_properties(
             new_wavelet_image_denoised_labeled,
-            properties=accepted_region_shape_constraints.keys()
+            properties=list(accepted_region_shape_constraints.keys())
         )
 
         logger.debug("Determined the properties of the label image.")
@@ -2756,7 +2756,7 @@ def wavelet_denoising(new_image,
             watershed_local_maxima = ExtendedRegionProps(
                 local_maxima.intensity_image,
                 new_wavelet_image_denoised_segmentation,
-                properties=["centroid"] + accepted_neuron_shape_constraints.keys()
+                properties=["centroid"] + list(accepted_neuron_shape_constraints.keys())
             )
 
             wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_label_image"] = watershed_local_maxima.label_image[None]
