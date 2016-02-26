@@ -82,17 +82,17 @@ from nanshe.util import prof
 from nanshe.util import xnumpy
 
 # Short function to process image data.
-import filters.masks
-from renorm import zeroed_mean_images, renormalized_images
+from nanshe.imp import filters
+from nanshe.imp.renorm import zeroed_mean_images, renormalized_images
 
 # Algorithms to register the data.
-import registration
+from nanshe.imp import registration
 
 # To remove noise from the basis images
-from filters.noise import estimate_noise, significant_mask
+from nanshe.imp.filters.noise import estimate_noise, significant_mask
 
 # Wavelet transformation operations
-from filters import wavelet
+from nanshe.imp.filters import wavelet
 
 from nanshe.io import hdf5
 

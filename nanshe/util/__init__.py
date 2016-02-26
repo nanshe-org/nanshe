@@ -18,9 +18,9 @@ __all__ = [
     "iters", "pathHelpers", "prof", "wrappers", "xglob", "xnumpy"
 ]
 
-import iters
-import pathHelpers
-import prof
-import wrappers
-import xglob
-import xnumpy
+from nanshe.util import iters
+from nanshe.util import pathHelpers
+from nanshe.util import prof
+from nanshe.util import wrappers
+from nanshe.util import xglob
+from nanshe.util import xnumpy

@@ -45,7 +45,7 @@ __date__ = "$Jun 04, 2014 11:10:55 EDT$"
 import numpy
 import h5py
 
-import serializers
+from nanshe.io.hdf5 import serializers
 from nanshe.util import wrappers
 
 

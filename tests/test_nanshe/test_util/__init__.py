@@ -6,7 +6,7 @@ __all__ = [
 ]
 
 
-import test_prof
-import test_wrappers
-import test_xglob
-import testPathHelpers
+from tests.test_nanshe.test_util import test_prof
+from tests.test_nanshe.test_util import test_wrappers
+from tests.test_nanshe.test_util import test_xglob
+from tests.test_nanshe.test_util import testPathHelpers

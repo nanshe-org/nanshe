@@ -44,11 +44,11 @@ import mahotas
 import vigra
 
 
-import iters
+from nanshe.util import iters
 
 
 # Need in order to have logging information no matter what.
-import prof
+from nanshe.util import prof
 
 
 # Get the logger

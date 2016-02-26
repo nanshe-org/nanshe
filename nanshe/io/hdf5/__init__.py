@@ -18,6 +18,6 @@ __date__ = "$Mar 27, 2015 09:32:02 EDT$"
 
 __all__ = ["record", "search", "serializers"]
 
-import record
-import search
-import serializers
+from nanshe.io.hdf5 import record
+from nanshe.io.hdf5 import search
+from nanshe.io.hdf5 import serializers

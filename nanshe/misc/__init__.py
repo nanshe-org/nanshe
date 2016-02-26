@@ -19,5 +19,5 @@ __all__ = [  # "neuron_matplotlib_viewer",
     "random_dictionary_learning_data"
 ]
 
-# import neuron_matplotlib_viewer
-import random_dictionary_learning_data
+# from nanshe.misc import neuron_matplotlib_viewer
+from nanshe.misc import random_dictionary_learning_data
