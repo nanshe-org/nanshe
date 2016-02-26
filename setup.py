@@ -57,7 +57,6 @@ elif sys.argv[1] == "bdist_conda":
         "scikit-learn",
         "mahotas",
         "vigra",
-        "spams",
         "rank_filter"
     ]
 
@@ -77,7 +76,6 @@ elif sys.argv[1] == "bdist_conda":
         "scikit-learn",
         "mahotas",
         "vigra",
-        "spams",
         "rank_filter"
     ]
 
@@ -90,10 +88,12 @@ elif sys.argv[1] == "bdist_conda":
         ]
     if sys.version_info < (3,):
         build_requires += [
+            "spams",
             "pyqt",
             "volumina"
         ]
         install_requires += [
+            "spams",
             "pyqt",
             "volumina"
         ]
