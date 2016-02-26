@@ -74,7 +74,6 @@ from nanshe.io import hdf5
 from nanshe.util import iters, xnumpy
 
 
-
 class HDF5DatasetNotFoundException(Exception):
     """
         An exception raised when a dataset is not found in an HDF5 file.
@@ -1161,7 +1160,7 @@ class ContourProjectionConstantSource(QObject):
         self._constant_source_cached = self.constant_source.request(
             slicing
         ).wait()
-        for i in xrange(self._constant_source_cached.shape[self.axis]):
+        for i in iters.irange(self._constant_source_cached.shape[self.axis]):
             _constant_source_cached_i = xnumpy.index_axis_at_pos(
                 self._constant_source_cached, self.axis, i
             )
@@ -2010,7 +2009,7 @@ def main(*argv):
 
     # Open all of the files and store their handles
     parsed_args.file_handles = []
-    for i in xrange(len(parsed_args.input_files)):
+    for i in iters.irange(len(parsed_args.input_files)):
         parsed_args.input_files[i] = parsed_args.input_files[i].rstrip("/")
         parsed_args.input_files[i] = os.path.abspath(
             parsed_args.input_files[i]
@@ -2024,7 +2023,7 @@ def main(*argv):
     # whether they were or not before. The key will be the operation to
     # perform and the values will be what to perform the operation on.
     # If the key is a null string, no operation is performed.
-    for i in xrange(len(parsed_args.parameters)):
+    for i in iters.irange(len(parsed_args.parameters)):
         for (each_layer_name, each_layer_source_location_dict) in parsed_args.parameters[i].items():
             each_layer_source_operation_names = []
             each_layer_source_location_list = []
@@ -2196,7 +2195,7 @@ def main(*argv):
 
     # Close and clean up files
     parsed_args.file_handles = []
-    for i in xrange(len(parsed_args.file_handles)):
+    for i in iters.irange(len(parsed_args.file_handles)):
         parsed_args.file_handles[i].close()
         parsed_args.file_handles[i] = None
 

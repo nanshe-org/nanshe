@@ -17,6 +17,7 @@ import scipy.spatial.distance
 
 import scipy.stats
 
+import nanshe.util.iters
 import nanshe.util.xnumpy
 
 import nanshe.imp.segment
@@ -854,7 +855,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -907,7 +908,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -961,7 +962,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1015,7 +1016,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1069,7 +1070,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1125,7 +1126,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1182,7 +1183,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1239,7 +1240,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1286,7 +1287,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1332,7 +1333,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1378,7 +1379,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1427,7 +1428,7 @@ class TestSegment(object):
         unmatched_g = range(len(g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in nanshe.util.iters.irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == g[j]).all():
@@ -1725,7 +1726,7 @@ class TestSegment(object):
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
-        for i in xrange(len(masks)):
+        for i in nanshe.util.iters.irange(len(masks)):
             pixels_below_max = (images.max(axis=0)[masks[i].nonzero()] < images.max(axis=0)[masks[i]].max()).sum()
             pixels = masks[i].sum()
 
@@ -1757,7 +1758,7 @@ class TestSegment(object):
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
-        for i in xrange(len(masks)):
+        for i in nanshe.util.iters.irange(len(masks)):
             pixels_below_max = (images.max(axis=0)[masks[i].nonzero()] < images.max(axis=0)[masks[i]].max()).sum()
             pixels = masks[i].sum()
 
@@ -1789,7 +1790,7 @@ class TestSegment(object):
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
-        for i in xrange(len(masks)):
+        for i in nanshe.util.iters.irange(len(masks)):
             pixels_below_max = (images.max(axis=0)[masks[i].nonzero()] < images.max(axis=0)[masks[i]].max()).sum()
             pixels = masks[i].sum()
 
@@ -1847,7 +1848,7 @@ class TestSegment(object):
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
-        for i in xrange(len(masks)):
+        for i in nanshe.util.iters.irange(len(masks)):
             pixels_below_max = (images.max(axis=0)[masks[i].nonzero()] < images.max(axis=0)[masks[i]].max()).sum()
             pixels = masks[i].sum()
 
@@ -1880,7 +1881,7 @@ class TestSegment(object):
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
-        for i in xrange(len(masks)):
+        for i in nanshe.util.iters.irange(len(masks)):
             pixels_below_max = (images.max(axis=0)[masks[i].nonzero()] < images.max(axis=0)[masks[i]].max()).sum()
             pixels = masks[i].sum()
 
@@ -1913,7 +1914,7 @@ class TestSegment(object):
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
         percentage_pixels_below_max = numpy.zeros((len(masks),), float)
-        for i in xrange(len(masks)):
+        for i in nanshe.util.iters.irange(len(masks)):
             pixels_below_max = (images.max(axis=0)[masks[i].nonzero()] < images.max(axis=0)[masks[i]].max()).sum()
             pixels = masks[i].sum()
 
@@ -2400,7 +2401,7 @@ class TestSegment(object):
 
         circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
         circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
+        for circle_mask_i in nanshe.util.iters.irange(len(circle_masks)):
             each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
 
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis=1)
@@ -2444,7 +2445,7 @@ class TestSegment(object):
 
         circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
         circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
+        for circle_mask_i in nanshe.util.iters.irange(len(circle_masks)):
             each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
 
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis=1)
@@ -2488,7 +2489,7 @@ class TestSegment(object):
 
         circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
         circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
+        for circle_mask_i in nanshe.util.iters.irange(len(circle_masks)):
             each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
 
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis=1)
@@ -2532,7 +2533,7 @@ class TestSegment(object):
 
         circle_mask_mean = numpy.zeros((len(circle_masks), image.ndim,))
         circle_mask_cov = numpy.zeros((len(circle_masks), image.ndim, image.ndim,))
-        for circle_mask_i in xrange(len(circle_masks)):
+        for circle_mask_i in nanshe.util.iters.irange(len(circle_masks)):
             each_circle_mask_points = numpy.array(circle_masks[circle_mask_i].nonzero(), dtype=float)
 
             circle_mask_mean[circle_mask_i] = each_circle_mask_points.mean(axis=1)
@@ -2747,7 +2748,7 @@ class TestSegment(object):
 
         matched = dict()
         unmatched_points = numpy.arange(len(points))
-        for i in xrange(len(neuron_points)):
+        for i in nanshe.util.iters.irange(len(neuron_points)):
             new_unmatched_points = []
             for j in unmatched_points:
                 if not (neuron_points[i] == points[j]).all():
@@ -2835,7 +2836,7 @@ class TestSegment(object):
 
         matched = dict()
         unmatched_points = numpy.arange(len(points))
-        for i in xrange(len(neuron_points)):
+        for i in nanshe.util.iters.irange(len(neuron_points)):
             new_unmatched_points = []
             for j in unmatched_points:
                 if not (neuron_points[i] == points[j]).all():
@@ -2926,7 +2927,7 @@ class TestSegment(object):
 
         matched = dict()
         unmatched_points = numpy.arange(len(points))
-        for i in xrange(len(neuron_points)):
+        for i in nanshe.util.iters.irange(len(neuron_points)):
             new_unmatched_points = []
             for j in unmatched_points:
                 if not (neuron_points[i] == points[j]).all():
@@ -3012,7 +3013,7 @@ class TestSegment(object):
 
         matched = dict()
         unmatched_points = numpy.arange(len(points))
-        for i in xrange(len(neuron_points)):
+        for i in nanshe.util.iters.irange(len(neuron_points)):
             new_unmatched_points = []
             for j in unmatched_points:
                 if not (neuron_points[i] == points[j]).all():

@@ -457,8 +457,8 @@ def generate_random_bound_points(space, radii):
 
     # Generate a random point for each radius.
     points = numpy.zeros(radii.shape + space.shape, dtype=int)
-    for i in xrange(len(radii)):
-        for j in xrange(len(space)):
+    for i in nanshe.util.iters.irange(len(radii)):
+        for j in nanshe.util.iters.irange(len(space)):
             points[i][j] = numpy.random.randint(
                 bound_space[i][j][0], bound_space[i][j][1]
             )

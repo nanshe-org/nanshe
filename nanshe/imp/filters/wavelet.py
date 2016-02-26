@@ -30,6 +30,7 @@ import numpy
 import vigra
 
 from nanshe.io import hdf5
+from nanshe.util.iters import irange
 from nanshe.util.xnumpy import binomial_coefficients
 
 
@@ -405,7 +406,7 @@ def transform(im0,
         imCur = im0.astype(numpy.float32)
 
 
-    for i in xrange(1, scale.max() + 1):
+    for i in irange(1, scale.max() + 1):
         if include_intermediates:
             imPrev = imCur
             imOut[i] = imOut[i - 1]
@@ -415,7 +416,7 @@ def transform(im0,
 
         h_ker = binomial_1D_vigra_kernel(i)
 
-        for d in xrange(len(scale)):
+        for d in irange(len(scale)):
             if i <= scale[d]:
                 vigra.filters.convolveOneDimension(imCur, d, h_ker, out=imCur)
 

@@ -79,9 +79,9 @@ def index_generator(*sizes):
             [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]
     """
 
-    # Creates a list of xrange generator objects over each respective
+    # Creates a list of irange generator objects over each respective
     # dimension of sizes
-    gens = [xrange(_) for _ in sizes]
+    gens = [irange(_) for _ in sizes]
 
     # Combines the generators to a single generator of indices that go
     # throughout sizes
@@ -129,9 +129,9 @@ def index_enumerator(*sizes):
             [(0, (0, 0)), (1, (0, 1)), (2, (1, 0)), (3, (1, 1)), (4, (2, 0)), (5, (2, 1))]
     """
 
-    # Creates a list of xrange generator objects over each respective
+    # Creates a list of irange generator objects over each respective
     # dimension of sizes
-    gens = [xrange(_) for _ in sizes]
+    gens = [irange(_) for _ in sizes]
 
     # Combines the generators to a single generator of indices that go
     # throughout sizes
@@ -244,22 +244,22 @@ def repeat_generator(a_iter, n=1):
                                    from the given iterator.
 
         Examples:
-            >>> repeat_generator(xrange(5)) #doctest: +ELLIPSIS
+            >>> repeat_generator(irange(5)) #doctest: +ELLIPSIS
             <generator object repeat_generator at 0x...>
 
-            >>> list(repeat_generator(xrange(0)))
+            >>> list(repeat_generator(irange(0)))
             []
 
-            >>> list(repeat_generator(xrange(5), 0))
+            >>> list(repeat_generator(irange(5), 0))
             []
 
-            >>> list(repeat_generator(xrange(5), 1))
+            >>> list(repeat_generator(irange(5), 1))
             [0, 1, 2, 3, 4]
 
-            >>> list(repeat_generator(xrange(5), 2))
+            >>> list(repeat_generator(irange(5), 2))
             [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
 
-            >>> list(repeat_generator(xrange(5), 3))
+            >>> list(repeat_generator(irange(5), 3))
             [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
     """
 
@@ -267,7 +267,7 @@ def repeat_generator(a_iter, n=1):
     assert ((n % 1) == 0), "n must be an integer, but got n = " + repr(n)
 
     for each_value in a_iter:
-        for i in xrange(n):
+        for i in irange(n):
             yield(each_value)
 
 
@@ -285,22 +285,22 @@ def cycle_generator(a_iter, n=1):
                                    a certain number of times.
 
         Examples:
-            >>> cycle_generator(xrange(5)) #doctest: +ELLIPSIS
+            >>> cycle_generator(irange(5)) #doctest: +ELLIPSIS
             <generator object cycle_generator at 0x...>
 
-            >>> list(cycle_generator(xrange(0)))
+            >>> list(cycle_generator(irange(0)))
             []
 
-            >>> list(cycle_generator(xrange(5), 0))
+            >>> list(cycle_generator(irange(5), 0))
             []
 
-            >>> list(cycle_generator(xrange(5), 1))
+            >>> list(cycle_generator(irange(5), 1))
             [0, 1, 2, 3, 4]
 
-            >>> list(cycle_generator(xrange(5), 2))
+            >>> list(cycle_generator(irange(5), 2))
             [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
 
-            >>> list(cycle_generator(xrange(5), 3))
+            >>> list(cycle_generator(irange(5), 3))
             [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
     """
 
@@ -331,28 +331,28 @@ def iter_with_skip_indices(a_iter, to_skip=None):
                                    indices in to_skip.
 
         Examples:
-            >>> iter_with_skip_indices(xrange(10)) #doctest: +ELLIPSIS
+            >>> iter_with_skip_indices(irange(10)) #doctest: +ELLIPSIS
             <generator object iter_with_skip_indices at 0x...>
 
-            >>> list(iter_with_skip_indices(xrange(10)))
+            >>> list(iter_with_skip_indices(irange(10)))
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_indices(xrange(10), to_skip = 2))
+            >>> list(iter_with_skip_indices(irange(10), to_skip = 2))
             [0, 1, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_indices(xrange(1, 10), to_skip = 2))
+            >>> list(iter_with_skip_indices(irange(1, 10), to_skip = 2))
             [1, 2, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_indices(xrange(10), to_skip = [2, 7]))
+            >>> list(iter_with_skip_indices(irange(10), to_skip = [2, 7]))
             [0, 1, 3, 4, 5, 6, 8, 9]
 
-            >>> list(iter_with_skip_indices(xrange(10), to_skip = [0]))
+            >>> list(iter_with_skip_indices(irange(10), to_skip = [0]))
             [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_indices(xrange(1, 10), to_skip = [0]))
+            >>> list(iter_with_skip_indices(irange(1, 10), to_skip = [0]))
             [2, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_indices(xrange(10), to_skip = [9]))
+            >>> list(iter_with_skip_indices(irange(10), to_skip = [9]))
             [0, 1, 2, 3, 4, 5, 6, 7, 8]
     """
 
@@ -397,28 +397,28 @@ def iter_with_skip_values(a_iter, to_skip=None):
             >>> iter_with_skip_values(10) #doctest: +ELLIPSIS
             <generator object iter_with_skip_values at 0x...>
 
-            >>> list(iter_with_skip_values(xrange(10)))
+            >>> list(iter_with_skip_values(irange(10)))
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_values(xrange(10)))
+            >>> list(iter_with_skip_values(irange(10)))
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_values(xrange(1, 10)))
+            >>> list(iter_with_skip_values(irange(1, 10)))
             [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_values(xrange(0, 10, 2)))
+            >>> list(iter_with_skip_values(irange(0, 10, 2)))
             [0, 2, 4, 6, 8]
 
-            >>> list(iter_with_skip_values(xrange(1, 10, 2)))
+            >>> list(iter_with_skip_values(irange(1, 10, 2)))
             [1, 3, 5, 7, 9]
 
-            >>> list(iter_with_skip_values(xrange(10), to_skip = 2))
+            >>> list(iter_with_skip_values(irange(10), to_skip = 2))
             [0, 1, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_values(xrange(1, 10), to_skip = 2))
+            >>> list(iter_with_skip_values(irange(1, 10), to_skip = 2))
             [1, 3, 4, 5, 6, 7, 8, 9]
 
-            >>> list(iter_with_skip_values(xrange(0, 10, 2), to_skip = [2,6]))
+            >>> list(iter_with_skip_values(irange(0, 10, 2), to_skip = [2,6]))
             [0, 4, 8]
     """
 
@@ -440,23 +440,23 @@ def iter_with_skip_values(a_iter, to_skip=None):
 @prof.log_call(trace_logger)
 def xrange_with_skip(start, stop=None, step=None, to_skip=None):
     """
-        Behaves as xrange does except allows for skipping arbitrary values, as
+        Behaves as irange does except allows for skipping arbitrary values, as
         well. These values to be skipped should be specified using some
         iterable.
 
         Args:
-            start(int):            start for xrange or if stop is not specified
+            start(int):            start for irange or if stop is not specified
                                    this will be stop.
 
-            stop(int):             stop for xrange.
+            stop(int):             stop for irange.
 
-            stop(int):             step for xrange.
+            stop(int):             step for irange.
 
             to_skip(iter):         some form of iterable or list of elements to
                                    skip (can be a single value as well).
 
         Returns:
-            (generator object):    an xrange-like generator that skips some
+            (generator object):    an irange-like generator that skips some
                                    values.
 
         Examples:
@@ -497,11 +497,11 @@ def xrange_with_skip(start, stop=None, step=None, to_skip=None):
     full = None
 
     if (stop is None):
-        full = iter(xrange(start))
+        full = iter(irange(start))
     elif (step is None):
-        full = iter(xrange(start, stop))
+        full = iter(irange(start, stop))
     else:
-        full = iter(xrange(start, stop, step))
+        full = iter(irange(start, stop, step))
 
     if to_skip is None:
         to_skip = iter([])
@@ -522,7 +522,7 @@ def xrange_with_skip(start, stop=None, step=None, to_skip=None):
 
 def splitting_xrange(a, b=None):
     """
-        Similar to xrange except that it recursively proceeds through the given
+        Similar to irange except that it recursively proceeds through the given
         range in such a way that values that follow each other are preferably
         not only non-sequential, but fairly different. This does not always
         work with small ranges, but works nicely with large ranges.
@@ -622,7 +622,7 @@ def subrange(start, stop=None, step=None, substep=None):
             substep(int):         Step within each range
 
         Yields:
-            (xrange):             A subrange within the larger range.
+            (irange):             A subrange within the larger range.
 
         Examples:
             >>> subrange(5) # doctest: +ELLIPSIS
@@ -657,10 +657,10 @@ def subrange(start, stop=None, step=None, substep=None):
     if substep is None:
         substep = 1
 
-    range_ends = itertools.chain(xrange(start, stop, step), [stop])
+    range_ends = itertools.chain(irange(start, stop, step), [stop])
 
     for i, j in lagged_generators_zipped(range_ends):
-        yield(xrange(i, j, substep))
+        yield(irange(i, j, substep))
 
 
 @prof.log_call(trace_logger)
@@ -669,7 +669,7 @@ def cumulative_generator(new_op, new_iter):
         Takes each value from new_iter and applies new_op to it with the result
         of previous values.
 
-        For instance cumulative_generator(op.mul, xrange(1,5)) will return all
+        For instance cumulative_generator(op.mul, irange(1,5)) will return all
         factorials up to and including the factorial of 4 (24).
 
         Args:
@@ -688,16 +688,16 @@ def cumulative_generator(new_op, new_iter):
             >>> cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS
             <generator object cumulative_generator at 0x...>
 
-            >>> list(cumulative_generator(operator.add, xrange(1,5)))
+            >>> list(cumulative_generator(operator.add, irange(1,5)))
             [1, 3, 6, 10]
 
-            >>> list(cumulative_generator(operator.add, xrange(5)))
+            >>> list(cumulative_generator(operator.add, irange(5)))
             [0, 1, 3, 6, 10]
 
-            >>> list(cumulative_generator(operator.mul, xrange(5)))
+            >>> list(cumulative_generator(operator.mul, irange(5)))
             [0, 0, 0, 0, 0]
 
-            >>> list(cumulative_generator(operator.mul, xrange(1,5)))
+            >>> list(cumulative_generator(operator.mul, irange(1,5)))
             [1, 2, 6, 24]
     """
 
@@ -725,11 +725,11 @@ def reverse_each_element(new_iter):
 
         Examples:
             >>> reverse_each_element(
-            ...     zip(xrange(5, 11), xrange(5))
+            ...     zip(irange(5, 11), irange(5))
             ... ) #doctest: +ELLIPSIS
             <generator object reverse_each_element at 0x...>
 
-            >>> list(reverse_each_element(zip(xrange(5, 11), xrange(5))))
+            >>> list(reverse_each_element(zip(irange(5, 11), irange(5))))
             [(0, 5), (1, 6), (2, 7), (3, 8), (4, 9)]
 
             >>> list(reverse_each_element(iter([[5]])))
@@ -763,25 +763,25 @@ def lagged_generators(new_iter, n=2):
                                             step in front of the others.
 
         Examples:
-            >>> lagged_generators(xrange(5), 1) #doctest: +ELLIPSIS
+            >>> lagged_generators(irange(5), 1) #doctest: +ELLIPSIS
             (<itertools.tee object at 0x...>,)
 
-            >>> list(izip(*lagged_generators(xrange(5), 1)))
+            >>> list(izip(*lagged_generators(irange(5), 1)))
             [(0,), (1,), (2,), (3,), (4,)]
 
-            >>> list(izip(*lagged_generators(xrange(5), 2)))
+            >>> list(izip(*lagged_generators(irange(5), 2)))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
 
-            >>> list(izip(*lagged_generators(xrange(5))))
+            >>> list(izip(*lagged_generators(irange(5))))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
 
-            >>> list(izip(*lagged_generators(xrange(5), 3)))
+            >>> list(izip(*lagged_generators(irange(5), 3)))
             [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
 
-            >>> list(itertools.izip_longest(*lagged_generators(xrange(5))))
+            >>> list(itertools.izip_longest(*lagged_generators(irange(5))))
             [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]
 
-            >>> list(itertools.izip_longest(*lagged_generators(xrange(5), 3)))
+            >>> list(itertools.izip_longest(*lagged_generators(irange(5), 3)))
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
@@ -796,7 +796,7 @@ def lagged_generators(new_iter, n=2):
     if n > 0:
         # Convert to the same type
         next_iter = itertools.tee(new_iter, 1)[0]
-        for i in xrange(1, n):
+        for i in irange(1, n):
             # Duplicate the iterator
             prev_iter, next_iter = itertools.tee(next_iter, 2)
 
@@ -840,25 +840,25 @@ def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
                                             values from each iterator.
 
         Examples:
-            >>> lagged_generators_zipped(xrange(5), 1) #doctest: +ELLIPSIS
+            >>> lagged_generators_zipped(irange(5), 1) #doctest: +ELLIPSIS
             <itertools.izip object at 0x...>
 
-            >>> list(lagged_generators_zipped(xrange(5)))
+            >>> list(lagged_generators_zipped(irange(5)))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
 
-            >>> list(lagged_generators_zipped(xrange(5), 1))
+            >>> list(lagged_generators_zipped(irange(5), 1))
             [(0,), (1,), (2,), (3,), (4,)]
 
-            >>> list(lagged_generators_zipped(xrange(5), 2))
+            >>> list(lagged_generators_zipped(irange(5), 2))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
 
-            >>> list(lagged_generators_zipped(xrange(5), 3))
+            >>> list(lagged_generators_zipped(irange(5), 3))
             [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
 
-            >>> list(lagged_generators_zipped(xrange(5), longest=True))
+            >>> list(lagged_generators_zipped(irange(5), longest=True))
             [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]
 
-            >>> list(lagged_generators_zipped(xrange(5), 3, True))
+            >>> list(lagged_generators_zipped(irange(5), 3, True))
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
@@ -892,7 +892,7 @@ def filled_stringify_numbers(new_iter, include_numbers=False):
             >>> list(filled_stringify_numbers([]))
             []
 
-            >>> list(filled_stringify_numbers(xrange(5)))
+            >>> list(filled_stringify_numbers(irange(5)))
             ['0', '1', '2', '3', '4']
 
             >>> list(filled_stringify_numbers([5]))
@@ -961,10 +961,10 @@ def filled_stringify_xrange(new_iter):
             >>> list(filled_stringify_xrange([]))
             []
 
-            >>> list(filled_stringify_xrange(xrange(5)))
+            >>> list(filled_stringify_xrange(irange(5)))
             [(0, '0'), (1, '1'), (2, '2'), (3, '3'), (4, '4')]
 
-            >>> list(filled_stringify_xrange(xrange(2, 5)))
+            >>> list(filled_stringify_xrange(irange(2, 5)))
             [(0, '0'), (1, '1'), (2, '2')]
 
             >>> list(filled_stringify_xrange([5]))
@@ -976,17 +976,17 @@ def filled_stringify_xrange(new_iter):
             >>> list(filled_stringify_xrange(iter([5, 7])))
             [(0, '0'), (1, '1')]
 
-            >>> list(filled_stringify_xrange(list(xrange(11))))
+            >>> list(filled_stringify_xrange(list(irange(11))))
             [(0, '00'), (1, '01'), (2, '02'), (3, '03'), (4, '04'), (5, '05'), (6, '06'), (7, '07'), (8, '08'), (9, '09'), (10, '10')]
     """
 
     new_list = new_iter
     new_list_index_gen = None
     try:
-        new_list_index_gen = xrange(len(new_list))
+        new_list_index_gen = irange(len(new_list))
     except TypeError:
         new_list = list(new_list)
-        new_list_index_gen = xrange(len(new_list))
+        new_list_index_gen = irange(len(new_list))
 
     new_list_index_gen_stringified = filled_stringify_numbers(
         new_list_index_gen, include_numbers=True
@@ -1014,10 +1014,10 @@ def filled_stringify_enumerate(new_iter):
             >>> list(filled_stringify_enumerate([]))
             []
 
-            >>> list(filled_stringify_enumerate(xrange(5)))
+            >>> list(filled_stringify_enumerate(irange(5)))
             [(0, '0', 0), (1, '1', 1), (2, '2', 2), (3, '3', 3), (4, '4', 4)]
 
-            >>> list(filled_stringify_enumerate(xrange(2, 5)))
+            >>> list(filled_stringify_enumerate(irange(2, 5)))
             [(0, '0', 2), (1, '1', 3), (2, '2', 4)]
 
             >>> list(filled_stringify_enumerate([5]))
@@ -1036,10 +1036,10 @@ def filled_stringify_enumerate(new_iter):
     new_list = new_iter
     new_list_index_gen = None
     try:
-        new_list_index_gen = xrange(len(new_list))
+        new_list_index_gen = irange(len(new_list))
     except TypeError:
         new_list = list(new_list)
-        new_list_index_gen = xrange(len(new_list))
+        new_list_index_gen = irange(len(new_list))
 
     new_list_index_gen_stringified = filled_stringify_numbers(
         new_list_index_gen, include_numbers=True

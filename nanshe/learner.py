@@ -770,7 +770,7 @@ def generate_neurons_blocks(input_filename,
                         numpy.apply_over_axes(
                             numpy.sum,
                             neurons_block_i_smaller["mask"].astype(float),
-                            tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))
+                            tuple(iters.irange(1, neurons_block_i_smaller["mask"].ndim))
                         )
                     )
 
@@ -782,7 +782,7 @@ def generate_neurons_blocks(input_filename,
                         numpy.apply_over_axes(
                             numpy.sum,
                             neurons_block_i_smaller["mask"][window_trimmed_i].astype(float),
-                            tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))
+                            tuple(iters.irange(1, neurons_block_i_smaller["mask"].ndim))
                         )
                     )
 

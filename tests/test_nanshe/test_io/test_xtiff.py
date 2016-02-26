@@ -32,7 +32,9 @@ class TestXTiff(object):
 
         self.data = numpy.random.random_integers(0, 255, (500, 1, 102, 101, 2)).astype(numpy.uint8)
 
-        self.offsets = list(xrange(0, self.data.shape[0] + 100 - 1, 100))
+        self.offsets = list(nanshe.util.iters.irange(
+            0, self.data.shape[0] + 100 - 1, 100
+        ))
 
         self.temp_dir = tempfile.mkdtemp()
         for i, i_str, (a_b, a_e) in nanshe.util.iters.filled_stringify_enumerate(

@@ -502,7 +502,7 @@ def translate_fourier(frame_fft, shift):
             array([[  0.,   1.,   2.,   3.],
                    [  4.,   5.,   6.,   7.],
                    [  8.,   9.,  10.,  11.]])
-            >>> af = fft.fftn(a, axes=tuple(xrange(a.ndim)))
+            >>> af = fft.fftn(a, axes=tuple(iters.irange(a.ndim)))
             >>> numpy.around(af, decimals=10)
             array([[ 66. +0.j        ,  -6. +6.j        ,  -6. +0.j        ,  -6. -6.j        ],
                    [-24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ],
@@ -517,7 +517,7 @@ def translate_fourier(frame_fft, shift):
                    [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]])
 
             >>> fft.ifftn(
-            ...     atf, axes=tuple(xrange(a.ndim))
+            ...     atf, axes=tuple(iters.irange(a.ndim))
             ... ).real.round().astype(int).astype(float)
             array([[  9.,  10.,  11.,   8.],
                    [  1.,   2.,   3.,   0.],
@@ -532,7 +532,7 @@ def translate_fourier(frame_fft, shift):
 
 
             >>> fft.ifftn(
-            ...     atf, axes=tuple(xrange(1, a.ndim))
+            ...     atf, axes=tuple(iters.irange(1, a.ndim))
             ... ).real.round().astype(int).astype(float)
             array([[[  9.,  10.,  11.,   8.],
                     [  1.,   2.,   3.,   0.],

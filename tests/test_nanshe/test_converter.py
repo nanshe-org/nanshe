@@ -34,7 +34,11 @@ class TestConverter(object):
         for i, i_str, (a_b, a_e) in nanshe.util.iters.filled_stringify_enumerate(
                                         nanshe.util.iters.izip(
                                                 *nanshe.util.iters.lagged_generators(
-                                                    xrange(0, self.data.shape[0] + 100 - 1, 100)
+                                                    nanshe.util.iters.irange(
+                                                        0,
+                                                        self.data.shape[0] + 100 - 1,
+                                                        100
+                                                    )
                                                 )
                                         )
                                     ):

@@ -43,7 +43,6 @@ except ImportError:
     from skimage.external import tifffile
 
 
-
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
 
@@ -190,7 +189,7 @@ def get_standard_tiff_array(new_tiff_filename,
 
     # Fit the old VIGRA style array. (may try to remove in the future)
     new_tiff_array = new_tiff_array.transpose(
-        tuple(xrange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
+        tuple(iters.irange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
     )
 
     # Check to make sure the dimensions are ok
@@ -264,13 +263,13 @@ def get_standard_tiff_data(new_tiff_filename,
     with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
         new_tiff_array = new_tiff_file.asarray(memmap=memmap)
 
-        for i in xrange(
+        for i in iters.irange(
                 0,
                 len(new_tiff_file),
                 pages_to_channel
         ):
             new_tiff_description.append([])
-            for j in xrange(pages_to_channel):
+            for j in iters.irange(pages_to_channel):
                 each_page = new_tiff_file[i + j]
                 each_metadata = each_page.tags
                 each_desc = u""
@@ -295,7 +294,7 @@ def get_standard_tiff_data(new_tiff_filename,
 
     # Fit the old VIGRA style array. (may try to remove in the future)
     new_tiff_array = new_tiff_array.transpose(
-        tuple(xrange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
+        tuple(iters.irange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
     )
 
     # Check to make sure the dimensions are ok
@@ -379,7 +378,9 @@ def convert_tiffs(new_tiff_filenames,
     assert (pages_to_channel > 0)
 
     # Get the axes that do not change
-    static_axes = numpy.array(list(iters.xrange_with_skip(3, to_skip=axis)))
+    static_axes = numpy.array(list(iters.xrange_with_skip(
+        3, to_skip=axis
+    )))
 
     # if it is only a single str, make it a singleton list
     if isinstance(new_tiff_filenames, str):

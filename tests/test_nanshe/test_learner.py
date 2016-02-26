@@ -15,6 +15,7 @@ import tempfile
 import h5py
 import numpy
 
+import nanshe.util.iters
 import nanshe.util.xnumpy
 import nanshe.util.wrappers
 import nanshe.io.hdf5.record
@@ -411,7 +412,7 @@ def setup_2d(a_callable):
 
     image_stack = numpy.zeros((bases_images.shape[0] * len(ramp),) + bases_images.shape[1:],
                                    dtype=bases_images.dtype)
-    for i in xrange(len(bases_images)):
+    for i in nanshe.util.iters.irange(len(bases_images)):
         image_stack_slice = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
         image_stack[image_stack_slice] = nanshe.util.xnumpy.all_permutations_operation(
@@ -801,7 +802,7 @@ def setup_3d(a_callable):
         (bases_images3.shape[0] * len(ramp),) + bases_images3.shape[1:],
         dtype=bases_images3.dtype
     )
-    for i in xrange(len(bases_images3)):
+    for i in nanshe.util.iters.irange(len(bases_images3)):
         image_stack_slice3 = slice(i * len(ramp), (i+1) * len(ramp), 1)
 
         image_stack3[image_stack_slice3] = nanshe.util.xnumpy.all_permutations_operation(
@@ -884,7 +885,7 @@ def test_main_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -896,7 +897,7 @@ def test_main_1():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_1.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_main_1.points[j]).all():
@@ -929,7 +930,7 @@ def test_main_2():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -941,7 +942,7 @@ def test_main_2():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_2.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_main_2.points[j]).all():
@@ -987,7 +988,7 @@ def test_main_3():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -999,7 +1000,7 @@ def test_main_3():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_3.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_main_3.points[j]).all():
@@ -1033,7 +1034,7 @@ def test_main_4():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1045,7 +1046,7 @@ def test_main_4():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_4.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_main_4.points3[j]).all():
@@ -1079,7 +1080,7 @@ def test_main_5():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1091,7 +1092,7 @@ def test_main_5():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_5.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_main_5.points3[j]).all():
@@ -1137,7 +1138,7 @@ def test_main_6():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1149,7 +1150,7 @@ def test_main_6():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_main_6.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_main_6.points3[j]).all():
@@ -1178,7 +1179,7 @@ def test_generate_neurons_io_handler_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1190,7 +1191,7 @@ def test_generate_neurons_io_handler_1():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_1.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_io_handler_1.points[j]).all():
@@ -1219,7 +1220,7 @@ def test_generate_neurons_io_handler_2():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1231,7 +1232,7 @@ def test_generate_neurons_io_handler_2():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_2.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_io_handler_2.points[j]).all():
@@ -1273,7 +1274,7 @@ def test_generate_neurons_io_handler_3():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1285,7 +1286,7 @@ def test_generate_neurons_io_handler_3():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_3.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_io_handler_3.points[j]).all():
@@ -1315,7 +1316,7 @@ def test_generate_neurons_io_handler_4():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1327,7 +1328,7 @@ def test_generate_neurons_io_handler_4():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_4.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_io_handler_4.points3[j]).all():
@@ -1357,7 +1358,7 @@ def test_generate_neurons_io_handler_5():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1369,7 +1370,7 @@ def test_generate_neurons_io_handler_5():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_5.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_io_handler_5.points3[j]).all():
@@ -1411,7 +1412,7 @@ def test_generate_neurons_io_handler_6():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1423,7 +1424,7 @@ def test_generate_neurons_io_handler_6():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_io_handler_6.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_io_handler_6.points3[j]).all():
@@ -1452,7 +1453,7 @@ def test_generate_neurons_a_block_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1464,7 +1465,7 @@ def test_generate_neurons_a_block_1():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_a_block_1.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_a_block_1.points[j]).all():
@@ -1494,7 +1495,7 @@ def test_generate_neurons_a_block_2():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1506,7 +1507,7 @@ def test_generate_neurons_a_block_2():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_a_block_2.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_a_block_2.points3[j]).all():
@@ -1535,7 +1536,7 @@ def test_generate_neurons_blocks_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1547,7 +1548,7 @@ def test_generate_neurons_blocks_1():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_blocks_1.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_blocks_1.points[j]).all():
@@ -1589,7 +1590,7 @@ def test_generate_neurons_blocks_2():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1601,7 +1602,7 @@ def test_generate_neurons_blocks_2():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_blocks_2.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_blocks_2.points[j]).all():
@@ -1631,7 +1632,7 @@ def test_generate_neurons_blocks_3():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1643,7 +1644,7 @@ def test_generate_neurons_blocks_3():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_blocks_3.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_blocks_3.points3[j]).all():
@@ -1685,7 +1686,7 @@ def test_generate_neurons_blocks_4():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1697,7 +1698,7 @@ def test_generate_neurons_blocks_4():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_blocks_4.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_blocks_4.points3[j]).all():
@@ -1754,7 +1755,7 @@ def test_generate_neurons_1():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1766,7 +1767,7 @@ def test_generate_neurons_1():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_1.points))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_1.points[j]).all():
@@ -1824,7 +1825,7 @@ def test_generate_neurons_2():
     neuron_maxes = (neurons["image"] == nanshe.util.xnumpy.expand_view(neurons["max_F"], neurons["image"].shape[1:]))
 
     neuron_max_points = []
-    for i in xrange(len(neuron_maxes)):
+    for i in nanshe.util.iters.irange(len(neuron_maxes)):
         neuron_max_points.append(
             numpy.array(neuron_maxes[i].nonzero()).mean(axis=1).round().astype(int)
         )
@@ -1836,7 +1837,7 @@ def test_generate_neurons_2():
 
     matched = dict()
     unmatched_points = numpy.arange(len(test_generate_neurons_2.points3))
-    for i in xrange(len(neuron_max_points)):
+    for i in nanshe.util.iters.irange(len(neuron_max_points)):
         new_unmatched_points = []
         for j in unmatched_points:
             if not (neuron_max_points[i] == test_generate_neurons_2.points3[j]).all():

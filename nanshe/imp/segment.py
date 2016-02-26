@@ -148,7 +148,7 @@ def remove_zeroed_lines(new_data,
     zero_masks_dilated = numpy.zeros(new_data.shape, dtype=bool)
     zero_masks_outline = numpy.zeros(new_data.shape, dtype=bool)
 
-    for i in xrange(new_data.shape[0]):
+    for i in iters.irange(new_data.shape[0]):
         new_data_i = new_data[i]
         zero_mask_i = (new_data_i == 0)
 
@@ -162,7 +162,7 @@ def remove_zeroed_lines(new_data,
             zero_mask_i
         )
 
-        for j in xrange(1, zero_mask_i_num_labels + 1):
+        for j in iters.irange(1, zero_mask_i_num_labels + 1):
             zero_mask_i_labeled_j = (zero_mask_i_labeled == j)
 
             zero_mask_i_labeled_j_dilated = filters.masks.binary_dilation(
@@ -397,7 +397,7 @@ def estimate_f0(new_data,
         vigra.filters.BorderTreatmentMode.BORDER_TREATMENT_REFLECT
     )
 
-    for d in xrange(1, new_data_f0_estimation.ndim):
+    for d in iters.irange(1, new_data_f0_estimation.ndim):
         vigra.filters.convolveOneDimension(
             new_data_f0_estimation,
             d,
@@ -1154,7 +1154,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
         )
 
         new_label_image_props_with_arrays = []
-        for i in xrange(len(new_label_image_props)):
+        for i in iters.irange(len(new_label_image_props)):
             new_label_image_props_with_arrays.append({})
 
             for each_key in properties:
@@ -1192,7 +1192,7 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
 
             # Store the values to place in NumPy structured array in order.
             new_label_image_props_with_arrays_values = []
-            for j in xrange(len(new_label_image_props_with_arrays)):
+            for j in iters.irange(len(new_label_image_props_with_arrays)):
                 # Add all values in order of keys from the dictionary.
                 new_label_image_props_with_arrays_values.append([])
                 for each_new_label_image_props_with_arrays_dtype in new_label_image_props_with_arrays_dtype:
@@ -1550,7 +1550,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
             new_label_image, intensity_image)
 
         new_label_image_props_with_arrays = []
-        for i in xrange(len(new_label_image_props)):
+        for i in iters.irange(len(new_label_image_props)):
             new_label_image_props_with_arrays.append({})
 
             for each_key in properties:
@@ -1587,7 +1587,7 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
             # Store the values to place in NumPy structured array in order.
             new_label_image_props_with_arrays_values = []
-            for j in xrange(len(new_label_image_props_with_arrays)):
+            for j in iters.irange(len(new_label_image_props_with_arrays)):
                 # Add all values in order of keys from the dictionary.
                 new_label_image_props_with_arrays_values.append([])
                 for each_new_label_image_props_with_arrays_dtype in new_label_image_props_with_arrays_dtype:
@@ -2398,7 +2398,7 @@ def remove_low_intensity_local_maxima(local_maxima,
     low_intensities__local_maxima_label_mask__to_remove = numpy.zeros(
         local_maxima.props.shape, dtype=bool
     )
-    for i in xrange(len(local_maxima.props)):
+    for i in iters.irange(len(local_maxima.props)):
         # Get the region with the label matching the maximum
         each_region_image_wavelet_mask = (
             local_maxima.label_image == local_maxima.props["label"][i]
@@ -2466,7 +2466,7 @@ def remove_too_close_local_maxima(local_maxima,
 
     # Find the distance between every local max (efficiently)
     local_maxima_pairs = numpy.array(
-        list(itertools.combinations(xrange(len(local_maxima.props)), 2)))
+        list(itertools.combinations(iters.irange(len(local_maxima.props)), 2)))
     local_maxima_distances = scipy.spatial.distance.pdist(
         local_maxima.props["local_max"], metric="euclidean")
 
@@ -2556,7 +2556,7 @@ def wavelet_denoising(new_image,
     )
 
     if wavelet_denoising.recorders.array_debug_recorder:
-        for i in xrange(len(new_wavelet_transformed_image)):
+        for i in iters.irange(len(new_wavelet_transformed_image)):
             wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = \
                 new_wavelet_transformed_image[i][None]
 
@@ -2569,7 +2569,7 @@ def wavelet_denoising(new_image,
     )
 
     if wavelet_denoising.recorders.array_debug_recorder:
-        for i in xrange(len(new_wavelet_transformed_image_significant_mask)):
+        for i in iters.irange(len(new_wavelet_transformed_image_significant_mask)):
             wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image_significant_mask"] = \
                 new_wavelet_transformed_image_significant_mask[i][None]
 
@@ -2901,7 +2901,7 @@ def extract_neurons(new_image, neuron_masks):
     neurons["area"] = xnumpy.array_to_matrix(neurons["mask"]).sum(axis=1)
     neurons["max_F"] = xnumpy.array_to_matrix(neurons["image"]).max(axis=1)
 
-    for i in xrange(len(neurons)):
+    for i in iters.irange(len(neurons)):
         neuron_mask_i_points = numpy.array(neurons["mask"][i].nonzero())
 
         neurons["contour"][i] = xnumpy.generate_contour_fast(
@@ -3574,7 +3574,7 @@ def expand_rois(new_data, roi_masks, **parameters):
 
     # Compute the area of each ROI in order to
     # properly compute the average activity of each ROI.
-    roi_areas = roi_masks.sum(axis=tuple(xrange(1, roi_masks.ndim)))
+    roi_areas = roi_masks.sum(axis=tuple(iters.irange(1, roi_masks.ndim)))
 
     # Add fake dimensions so that both arrays have dimensions number of ROIs
     # and then tyx or tzyx.
@@ -3594,7 +3594,7 @@ def expand_rois(new_data, roi_masks, **parameters):
     # the ROI
     time_traces = new_data_normalized_expanded * roi_masks_expanded
     time_traces = time_traces.sum(
-        axis=tuple(xrange(2, new_data_normalized_expanded.ndim))
+        axis=tuple(iters.irange(2, new_data_normalized_expanded.ndim))
     )
     time_traces /= roi_areas_expanded
 
