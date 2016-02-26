@@ -20,7 +20,7 @@ class TestXJson(object):
         dict_type = dict
 
         params = dict_type()
-        params["b"] = range(3)
+        params["b"] = list(xrange(3))
         params["c"] = "test"
         params["a"] = 5
         params["d"] = dict_type(params)
@@ -46,7 +46,7 @@ class TestXJson(object):
         dict_type = dict
 
         params = dict_type()
-        params["b"] = range(3)
+        params["b"] = list(xrange(3))
         params["b"].append("__comment__ to drop")
         params["c"] = "test"
         params["a"] = 5
@@ -84,7 +84,7 @@ class TestXJson(object):
         dict_type = collections.OrderedDict
 
         params = dict_type()
-        params["b"] = range(3)
+        params["b"] = list(xrange(3))
         params["c"] = "test"
         params["a"] = 5
         params["d"] = dict_type(params)
@@ -110,7 +110,7 @@ class TestXJson(object):
         dict_type = collections.OrderedDict
 
         params = dict_type()
-        params["b"] = range(3)
+        params["b"] = list(xrange(3))
         params["b"].append("__comment__ to drop")
         params["c"] = "test"
         params["a"] = 5

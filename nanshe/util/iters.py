@@ -965,7 +965,7 @@ def filled_stringify_xrange(new_iter):
             >>> list(filled_stringify_xrange(iter([5, 7])))
             [(0, '0'), (1, '1')]
 
-            >>> list(filled_stringify_xrange(range(11)))
+            >>> list(filled_stringify_xrange(list(xrange(11))))
             [(0, '00'), (1, '01'), (2, '02'), (3, '03'), (4, '04'), (5, '05'), (6, '06'), (7, '07'), (8, '08'), (9, '09'), (10, '10')]
     """
 

@@ -329,7 +329,7 @@ def add_singleton_axis_pos(a_array, axis=0):
     axis %= (a_array.ndim + 1)
 
     # Constructing the current ordering of axis and the singleton dime
-    new_array_shape = range(1, a_array.ndim + 1)
+    new_array_shape = list(xrange(1, a_array.ndim + 1))
     new_array_shape.insert(axis, 0)
     new_array_shape = tuple(new_array_shape)
 
@@ -517,7 +517,7 @@ def squish(new_array, axis=None, keepdims=False):
     # Convert the axes into a standard format that we can work with.
     axes = axis
     if axes is None:
-        axes = range(new_array.ndim)
+        axes = list(xrange(new_array.ndim))
     else:
         # If axes is some kind of iterable, convert it to a list.
         # If not assume, it is a single value.
@@ -764,7 +764,7 @@ def unsquish(new_array, shape, axis=None):
     # Convert the axes into a standard format that we can work with.
     axes = axis
     if axes is None:
-        axes = range(0, len(shape))
+        axes = list(xrange(0, len(shape)))
     else:
         # If axes is some kind of iterable, convert it to a list.
         # If not assume, it is a single value.
