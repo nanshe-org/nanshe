@@ -4,6 +4,8 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Aug 05, 2014 17:38:58 EDT$"
 
 
+import imp
+
 import nose
 import nose.plugins
 import nose.plugins.attrib
@@ -21,6 +23,14 @@ import numpy
 import nanshe.box.spams_sandbox
 
 import nanshe.syn.data
+
+
+has_spams = False
+try:
+    imp.find_module("spams")
+    has_spams = True
+except ImportError:
+    pass
 
 
 try:
@@ -62,6 +72,11 @@ class TestSpamsSandbox(object):
         self.g3 = numpy.asfortranarray(self.g3)
 
     def test_run_multiprocessing_queue_spams_trainDL_1(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
@@ -113,6 +128,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_queue_spams_trainDL_2(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
@@ -163,6 +183,11 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_run_multiprocessing_queue_spams_trainDL_3(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
@@ -216,6 +241,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_queue_spams_trainDL_4(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
@@ -268,6 +298,11 @@ class TestSpamsSandbox(object):
         assert (self.g3.astype(bool) == d3.astype(bool)).all()
 
     def test_call_multiprocessing_queue_spams_trainDL_1(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(
             self.g.astype(float),
             **{
@@ -314,6 +349,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_queue_spams_trainDL_2(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d3 = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(
             self.g3.astype(float),
             **{
@@ -359,6 +399,11 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_queue_spams_trainDL_3(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(
             self.g.astype(float),
             D=self.g.astype(float),
@@ -407,6 +452,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_queue_spams_trainDL_4(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d3 = nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL(
             self.g3.astype(float),
             D=self.g3.astype(float),
@@ -454,6 +504,11 @@ class TestSpamsSandbox(object):
         assert (self.g3.astype(bool) == d3.astype(bool)).all()
 
     def test_run_multiprocessing_array_spams_trainDL_1(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         float_type = numpy.float64
 
         g_array_type = numpy.ctypeslib.ndpointer(
@@ -545,6 +600,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_array_spams_trainDL_2(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         float_type = numpy.float64
 
         g3_array_type = numpy.ctypeslib.ndpointer(
@@ -635,6 +695,11 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_call_multiprocessing_array_spams_trainDL_1(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
             self.g.astype(float),
             **{
@@ -681,6 +746,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_multiprocessing_array_spams_trainDL_2(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d3 = nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL(
             self.g3.astype(float),
             **{
@@ -726,6 +796,11 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_run_multiprocessing_array_spams_trainDL_3(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         float_type = numpy.float64
 
         g_array_type = numpy.ctypeslib.ndpointer(
@@ -821,6 +896,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_array_spams_trainDL_4(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         float_type = numpy.float64
 
         g3_array_type = numpy.ctypeslib.ndpointer(
@@ -915,6 +995,11 @@ class TestSpamsSandbox(object):
         assert (self.g3.astype(bool) == d3.astype(bool)).all()
 
     def test_call_spams_trainDL_1(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d = nanshe.box.spams_sandbox.call_spams_trainDL(
             self.g.astype(float),
             **{
@@ -961,6 +1046,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_spams_trainDL_2(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d3 = nanshe.box.spams_sandbox.call_spams_trainDL(
             self.g3.astype(float),
             **{
@@ -1006,6 +1096,11 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_call_spams_trainDL_3(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d = nanshe.box.spams_sandbox.call_spams_trainDL(
             self.g.astype(float),
             D=self.g.astype(float),
@@ -1054,6 +1149,11 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_call_spams_trainDL_4(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test without SPAMS being installed."
+            )
+
         d3 = nanshe.box.spams_sandbox.call_spams_trainDL(
             self.g3.astype(float),
             D=self.g3.astype(float),

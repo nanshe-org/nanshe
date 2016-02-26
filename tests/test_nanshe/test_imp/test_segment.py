@@ -5,6 +5,8 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jul 30, 2014 19:35:11 EDT$"
 
 
+import imp
+
 import nose
 import nose.plugins
 import nose.plugins.attrib
@@ -23,6 +25,14 @@ import nanshe.util.xnumpy
 import nanshe.imp.segment
 
 import nanshe.syn.data
+
+
+has_spams = False
+try:
+    imp.find_module("spams")
+    has_spams = True
+except ImportError:
+    pass
 
 
 class TestSegment(object):
@@ -817,6 +827,11 @@ class TestSegment(object):
         nanshe.imp.segment.preprocess_data(image_stack, **config)
 
     def test_generate_dictionary_00(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -870,6 +885,11 @@ class TestSegment(object):
         assert (len(unmatched_g) == 0)
 
     def test_generate_dictionary_01(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -924,6 +944,11 @@ class TestSegment(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_02(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
@@ -978,6 +1003,11 @@ class TestSegment(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_03(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
@@ -1031,6 +1061,11 @@ class TestSegment(object):
         assert (len(unmatched_g) == 0)
 
     def test_generate_dictionary_04(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -1087,6 +1122,11 @@ class TestSegment(object):
         assert (g.astype(bool) == d.astype(bool)).all()
 
     def test_generate_dictionary_05(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51],
                          [66, 85],
                          [77, 45]])
@@ -1144,6 +1184,11 @@ class TestSegment(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_06(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
@@ -1201,6 +1246,11 @@ class TestSegment(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_generate_dictionary_07(self):
+        if not has_spams:
+            raise nose.SkipTest(
+                "Cannot run this test with SPAMS being installed"
+            )
+
         p = numpy.array([[27, 51, 87],
                          [66, 85, 55],
                          [77, 45, 26]])
