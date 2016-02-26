@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>README &mdash; nanshe 0.1.0a47+4.g702f6fa documentation</title>
+    <title>README &mdash; nanshe 0.1.0a47+6.g9799239 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a47+4.g702f6fa',
+        VERSION:     '0.1.0a47+6.g9799239',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+4.g702f6fa documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a47+6.g9799239 documentation" href="index.html" />
     <link rel="next" title="nanshe package" href="nanshe.html" />
     <link rel="prev" title="Welcome to nanshe’s documentation!" href="index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to nanshe’s documentation!"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a47+4.g702f6fa documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a47+6.g9799239 documentation</a> &raquo;</li>
  
       </ul>
     </div>
@@ -98,7 +98,7 @@ input images can be specified using a regex as can be seen below. The
 output file is an HDF5 with a dataset containing the result. Here,
 <code class="docutils literal"><span class="pre">output.h5</span></code> is the output file. The data is stored in the specified
 dataset, which is <code class="docutils literal"><span class="pre">/images</span></code> within root.</p>
-<div class="highlight-python"><div class="highlight"><pre>./nanshe_converter.py tiff config.json input_dir/*.tiff output.h5/images
+<div class="highlight-python"><div class="highlight"><pre><span></span>./nanshe_converter.py tiff config.json input_dir/*.tiff output.h5/images
 </pre></div>
 </div>
 </div>
@@ -130,7 +130,7 @@ neurons will indicate which neuron is selected. All remaining indices
 for different types follow C-order convention (excepting
 <code class="docutils literal"><span class="pre">gaussian_cov</span></code>, which is the covariance matrix and slightly differs
 for obvious reasons).</p>
-<div class="highlight-python"><div class="highlight"><pre>./nanshe_learner.py config.json input.h5/images output.h5/
+<div class="highlight-python"><div class="highlight"><pre><span></span>./nanshe_learner.py config.json input.h5/images output.h5/
 </pre></div>
 </div>
 </div>
@@ -151,7 +151,7 @@ the layers are ordered, grouped, and named. Also, they specify where to
 fetch the data for the layers. Lastly, they specify where this data is
 located in an HDF5 file. The input data is stored within the HDF5
 <code class="docutils literal"><span class="pre">input.h5</span></code>.</p>
-<div class="highlight-python"><div class="highlight"><pre>./nanshe_viewer.py config.json input.h5
+<div class="highlight-python"><div class="highlight"><pre><span></span>./nanshe_viewer.py config.json input.h5
 </pre></div>
 </div>
 </div>
@@ -166,7 +166,7 @@ the ones explicitly required and excluded from BuildEM.</p>
 <p>To run any of the above utilities, there is a <code class="docutils literal"><span class="pre">run_*.sh</span></code> command that
 will do this. For example, here is how you would call the
 nanshe_learner.</p>
-<div class="highlight-python"><div class="highlight"><pre>./nanshe-package/run_nanshe_learner.sh &quot;config.json&quot; &quot;input.h5/images&quot; &quot;output.h5/&quot;
+<div class="highlight-python"><div class="highlight"><pre><span></span>./nanshe-package/run_nanshe_learner.sh &quot;config.json&quot; &quot;input.h5/images&quot; &quot;output.h5/&quot;
 </pre></div>
 </div>
 <p>It is also possible to submit jobs to cluster using the Open Grid
@@ -175,7 +175,7 @@ commands as seen below. In the case of nanshe_learner, a special
 configure file is required, which can be found in the example directory.
 If DRMAA is not available, it is possible to run multiprocessing as
 mentioned above.</p>
-<div class="highlight-python"><div class="highlight"><pre>./nanshe-package/qrun_nanshe_learner.sh &quot;config.json&quot; &quot;input.h5/images&quot; &quot;output.h5/&quot;
+<div class="highlight-python"><div class="highlight"><pre><span></span>./nanshe-package/qrun_nanshe_learner.sh &quot;config.json&quot; &quot;input.h5/images&quot; &quot;output.h5/&quot;
 </pre></div>
 </div>
 </div>
@@ -290,7 +290,7 @@ If only one is specified, then only an upper or lower bound exists.</p>
         <li class="right" >
           <a href="index.html" title="Welcome to nanshe’s documentation!"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a47+4.g702f6fa documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a47+6.g9799239 documentation</a> &raquo;</li>
  
       </ul>
     </div>

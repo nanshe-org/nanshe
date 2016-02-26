@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.syn.data module &mdash; nanshe 0.1.0a47+4.g702f6fa documentation</title>
+    <title>nanshe.syn.data module &mdash; nanshe 0.1.0a47+6.g9799239 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a47+4.g702f6fa',
+        VERSION:     '0.1.0a47+6.g9799239',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+4.g702f6fa documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a47+6.g9799239 documentation" href="index.html" />
     <link rel="up" title="nanshe.syn package" href="nanshe.syn.html" />
     <link rel="next" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="prev" title="nanshe.syn package" href="nanshe.syn.html" /> 
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="nanshe.syn.html" title="nanshe.syn package"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a47+4.g702f6fa documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a47+6.g9799239 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.syn.html" accesskey="U">nanshe.syn package</a> &raquo;</li> 
@@ -115,7 +115,7 @@ radius for each mask.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
 <span class="go">array([[[ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08],</span>
 <span class="go">        [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],</span>
 <span class="go">        [ 2.07548550e-04, 8.37310610e-02, 6.18693507e-01, 8.37310610e-02, 2.07548550e-04],</span>
@@ -123,13 +123,13 @@ radius for each mask.</p>
 <span class="go">        [ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08]]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">3</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">1.0</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
 <span class="go">array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],</span>
 <span class="go">        [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],</span>
 <span class="go">        [ 0.00000000e+00, 3.35012940e-04, 9.98659499e-01, 3.35012940e-04, 0.00000000e+00],</span>
@@ -137,13 +137,13 @@ radius for each mask.</p>
 <span class="go">        [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">3</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">1.0</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">5</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],</span>
@@ -153,13 +153,13 @@ radius for each mask.</p>
 <span class="go">        [ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00]]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">3</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">5.0</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="go">array([[[[  3.76754623e-09,   1.12308970e-05,   3.76754623e-09],</span>
 <span class="go">         [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
 <span class="go">         [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]],</span>
@@ -173,7 +173,7 @@ radius for each mask.</p>
 <span class="go">         [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]]]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">generate_gaussian_images</span><span class="p">(</span>
 <span class="gp">... </span>        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">100</span>
 <span class="gp">... </span>    <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
@@ -224,19 +224,19 @@ mask.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
 <span class="go">array([[[False,  True, False],</span>
 <span class="go">        [ True,  True,  True],</span>
 <span class="go">        [False,  True, False]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">,</span> <span class="n">radii_min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">include_boundary_min</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">,</span> <span class="n">radii_min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">include_boundary_min</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="go">array([[[False,  True, False],</span>
 <span class="go">        [ True, False,  True],</span>
 <span class="go">        [False,  True, False]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
 <span class="go">array([[[[False, False, False],</span>
 <span class="go">         [False,  True, False],</span>
 <span class="go">         [False, False, False]],</span>
@@ -250,7 +250,7 @@ mask.</p>
 <span class="go">         [False, False, False]]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
 <span class="go">array([[[False, False,  True,  True,  True,  True,  True, False, False],</span>
 <span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
 <span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
@@ -262,7 +262,7 @@ mask.</p>
 <span class="go">        [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="n">include_boundary_max</span><span class="o">=</span><span class="bp">True</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[False,  True,  True,  True,  True,  True,  True,  True, False],</span>
@@ -276,7 +276,7 @@ mask.</p>
 <span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hyperdisc_masks</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="bp">True</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[False,  True,  True,  True,  True,  True,  True,  True, False],</span>
@@ -327,13 +327,13 @@ mask.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
 <span class="go">array([[[False,  True, False],</span>
 <span class="go">        [ True,  True,  True],</span>
 <span class="go">        [False,  True, False]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.25</span><span class="p">)</span>
 <span class="go">array([[[[False, False, False],</span>
 <span class="go">         [False,  True, False],</span>
 <span class="go">         [False, False, False]],</span>
@@ -347,7 +347,7 @@ mask.</p>
 <span class="go">         [False, False, False]]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
 <span class="go">array([[[False, False,  True,  True,  True,  True,  True, False, False],</span>
 <span class="go">        [False,  True,  True,  True,  True,  True,  True,  True, False],</span>
 <span class="go">        [ True,  True,  True,  True,  True,  True,  True,  True,  True],</span>
@@ -359,7 +359,7 @@ mask.</p>
 <span class="go">        [False, False,  True,  True,  True,  True,  True, False, False]]], dtype=bool)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_hypersphere_masks</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="n">include_boundary</span><span class="o">=</span><span class="bp">True</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[False,  True,  True,  True,  True,  True,  True,  True, False],</span>
@@ -413,23 +413,23 @@ coordinate.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
 <span class="go">array([[49, 52]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="go">array([[49, 52],</span>
 <span class="go">       [69, 72]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,))</span>
 <span class="go">array([[49, 52, 69]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generate_random_bound_points</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="go">array([[49, 52, 69],</span>
 <span class="go">       [72, 72, 14]])</span>
@@ -507,7 +507,7 @@ coordinate.</p>
         <li class="right" >
           <a href="nanshe.syn.html" title="nanshe.syn package"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a47+4.g702f6fa documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a47+6.g9799239 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.syn.html" >nanshe.syn package</a> &raquo;</li> 
