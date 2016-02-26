@@ -1,4 +1,4 @@
-language: python
+language: generic
 env:
    - PYTHON_VERSION="2.7"
 before_install:
@@ -6,7 +6,6 @@ before_install:
    - if [ -z $TRAVIS_TAG ]; then TRAVIS_TAG=`git tag --contains` ; fi
    - echo $TRAVIS_TAG
    # Move out of git directory to build root.
-   - deactivate
    - cd ../..
    - pwd
    # Fix the hostname to have fewer characters for SGE.
