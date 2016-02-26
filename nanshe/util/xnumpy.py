@@ -807,7 +807,7 @@ def unsquish(new_array, shape, axis=None):
 
         # Find how the old order relates to the new one
         axis_order_map = dict(
-            itertools.izip(old_axis_order_iter, current_axis_order_iter)
+            iters.izip(old_axis_order_iter, current_axis_order_iter)
         )
 
         # Export how the new order will be changed
@@ -2597,7 +2597,7 @@ def truncate_masked_frames(shifted_frames):
     #
     #shifted_frames_mask_reconstructed = numpy.pad(
     #    numpy.ones(shifted_frames_mask_shape[1:], dtype=bool),
-    #    [(_d, _e) for _d, _e in itertools.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],
+    #    [(_d, _e) for _d, _e in iters.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],
     #    "constant"
     #)
     #assert(

@@ -18,14 +18,13 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Aug 01, 2014 14:55:57 EDT$"
 
 
-import itertools
-
 import numpy
 
 import scipy
 import scipy.ndimage
 import scipy.ndimage.filters
 
+import nanshe.util.iters
 import nanshe.util.xnumpy
 
 
@@ -380,7 +379,7 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
         magnitudes.shape + tuple(space.tolist()), dtype=float
     )
     for i, (each_mean, each_std_dev, each_magnitude) in enumerate(
-            itertools.izip(means, std_devs, magnitudes)
+            nanshe.util.iters.izip(means, std_devs, magnitudes)
     ):
         images[i][tuple(each_mean)] = each_magnitude
         images[i] = scipy.ndimage.filters.gaussian_filter(

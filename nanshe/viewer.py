@@ -411,7 +411,7 @@ class HDF5DataRequest(object):
         # To construct the list requires a second pass either way.
         self.slicing = list()
         actual_slicing_dict = dict()
-        for i, (each_slice, each_axis) in enumerate(itertools.izip(slicing, self.axis_order)):
+        for i, (each_slice, each_axis) in enumerate(iters.izip(slicing, self.axis_order)):
             self.slicing.append(each_slice)
             if each_axis != -1:
                 actual_slicing_dict[each_axis] = each_slice
@@ -741,7 +741,7 @@ class HDF5DataFusedSource(QObject):
 
         fuse_slicing = None
         non_fuse_slicing = []
-        for i, (each_slicing, each_len) in enumerate(itertools.izip(slicing, self.data_shape)):
+        for i, (each_slicing, each_len) in enumerate(iters.izip(slicing, self.data_shape)):
             each_slicing_formatted = None
             if i == self.fuse_axis:
                 each_len = len(self.data_sources)
@@ -2076,7 +2076,7 @@ def main(*argv):
                     new_matches = hdf5.search.get_matching_grouped_paths(
                         each_file, each_layer_source_location
                     )
-                    new_matches_ldict = itertools.izip(
+                    new_matches_ldict = iters.izip(
                         new_matches, itertools.repeat(None)
                     )
                     parsed_args.parameters_expanded[-1][each_layer_name][-1].update(new_matches_ldict)

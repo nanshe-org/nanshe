@@ -347,7 +347,7 @@ def register_mean_offsets(frames2reg,
         space_shift_min[space_shift_min == 0] = None
         space_shift_min = tuple(space_shift_min)
         reg_frames_slice = tuple(
-            slice(_1, _2) for _1, _2 in itertools.izip(
+            slice(_1, _2) for _1, _2 in iters.izip(
                 space_shift_max, space_shift_min
             )
         )

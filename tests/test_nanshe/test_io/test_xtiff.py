@@ -3,7 +3,6 @@ __date__ = "$Aug 04, 2014 14:48:56 EDT$"
 
 
 import collections
-import itertools
 import json
 import os
 import os.path
@@ -37,7 +36,7 @@ class TestXTiff(object):
 
         self.temp_dir = tempfile.mkdtemp()
         for i, i_str, (a_b, a_e) in nanshe.util.iters.filled_stringify_enumerate(
-                                        itertools.izip(
+                                        nanshe.util.iters.izip(
                                                 *nanshe.util.iters.lagged_generators(
                                                     self.offsets
                                                 )

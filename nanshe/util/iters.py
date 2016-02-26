@@ -161,7 +161,7 @@ def list_indices_to_index_array(list_indices):
 
     # Combines the indices so that one dimension is represented by each list.
     # Then converts this to a tuple numpy.ndarrays.
-    return(tuple(numpy.array(zip(*list_indices))))
+    return(tuple(numpy.array(list(izip(*list_indices)))))
 
 
 @prof.log_call(trace_logger)
@@ -569,7 +569,7 @@ def splitting_xrange(a, b=None):
             if a < mid_1 and b > mid_2:
                 yield(mid_2)
 
-                for _1, _2 in itertools.izip(
+                for _1, _2 in izip(
                         splitting_xrange_helper(a, mid_1),
                         splitting_xrange_helper(mid_2, b)
                 ):
@@ -761,16 +761,16 @@ def lagged_generators(new_iter, n=2):
             >>> lagged_generators(xrange(5), 1) #doctest: +ELLIPSIS
             (<itertools.tee object at 0x...>,)
 
-            >>> zip(*lagged_generators(xrange(5), 1))
+            >>> list(izip(*lagged_generators(xrange(5), 1)))
             [(0,), (1,), (2,), (3,), (4,)]
 
-            >>> zip(*lagged_generators(xrange(5), 2))
+            >>> list(izip(*lagged_generators(xrange(5), 2)))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
 
-            >>> zip(*lagged_generators(xrange(5)))
+            >>> list(izip(*lagged_generators(xrange(5))))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
 
-            >>> zip(*lagged_generators(xrange(5), 3))
+            >>> list(izip(*lagged_generators(xrange(5), 3)))
             [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
 
             >>> list(itertools.izip_longest(*lagged_generators(xrange(5))))
@@ -863,7 +863,7 @@ def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
     if longest:
         zipped_iters = itertools.izip_longest(*all_iters, fillvalue=fillvalue)
     else:
-        zipped_iters = itertools.izip(*all_iters)
+        zipped_iters = izip(*all_iters)
 
     return(zipped_iters)
 
@@ -1040,7 +1040,7 @@ def filled_stringify_enumerate(new_iter):
         new_list_index_gen, include_numbers=True
     )
 
-    for (i, i_str), each in itertools.izip(new_list_index_gen_stringified, new_list):
+    for (i, i_str), each in izip(new_list_index_gen_stringified, new_list):
         yield ((i, i_str, each))
 
 

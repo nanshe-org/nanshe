@@ -596,7 +596,7 @@ def generate_neurons_blocks(input_filename,
     executable_run += "from %s import main; exit(main(*argv))" % \
                       (cur_module_name,)
 
-    block_process_args_gen = itertools.izip(
+    block_process_args_gen = iters.izip(
         itertools.repeat(python),
         itertools.repeat("-c"),
         itertools.repeat(executable_run),
@@ -751,7 +751,7 @@ def generate_neurons_blocks(input_filename,
         )
 
         for i, i_str, (output_filename_block_i, sequential_block_i) in iters.filled_stringify_enumerate(
-                itertools.izip(output_filename_block, original_images_pared_slices.flat)):
+                iters.izip(output_filename_block, original_images_pared_slices.flat)):
             windowed_slice_i = tuple(
                 slice(_1, _2, 1) for _1, _2 in [(None, None)] + sequential_block_i["windowed_stack_selection"].tolist()[1:]
             )

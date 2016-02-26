@@ -3224,7 +3224,7 @@ def merge_neuron_sets_once(new_neuron_set_1,
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the
         # new_neuron_set (composed of new_neuron_set_1)
-        for i, j in itertools.izip(
+        for i, j in iters.izip(
                 new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse
         ):
             #fuse_neurons.recorders.array_debug_recorder = hdf5.record.HDF5EnumeratedArrayRecorder(
@@ -3527,7 +3527,7 @@ def merge_neuron_sets_repeatedly(new_neuron_set_1,
 
         # Fuse all the neurons that can be from new_neuron_set_2 to the
         # new_neuron_set (composed of new_neuron_set_1)
-        for i, j in itertools.izip(
+        for i, j in iters.izip(
                 new_neuron_set_all_optimal_i, new_neuron_set_all_j_fuse
         ):
             #fuse_neurons.recorders.array_debug_recorder = hdf5.record.HDF5EnumeratedArrayRecorder(
