@@ -57,19 +57,19 @@ def estimate_noise(input_array, significance_threshold=3.0):
             >>> estimate_noise(numpy.eye(2), 3)
             0.5
 
-            >>> round(estimate_noise(numpy.eye(3), 3), 3)
+            >>> round(float(estimate_noise(numpy.eye(3), 3)), 3)
             0.471
 
             >>> numpy.random.seed(10)
-            >>> round(estimate_noise(numpy.random.random((2000,2000)), 1), 3)
+            >>> round(float(estimate_noise(numpy.random.random((2000,2000)), 1)), 3)
             0.167
 
             >>> numpy.random.seed(10)
-            >>> round(estimate_noise(numpy.random.random((2000,2000)), 2), 3)
+            >>> round(float(estimate_noise(numpy.random.random((2000,2000)), 2)), 3)
             0.289
 
             >>> numpy.random.seed(10)
-            >>> round(estimate_noise(numpy.random.random((2000,2000)), 3), 3)
+            >>> round(float(estimate_noise(numpy.random.random((2000,2000)), 3)), 3)
             0.289
     """
 
