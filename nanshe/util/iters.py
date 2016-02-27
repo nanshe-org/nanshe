@@ -28,6 +28,11 @@ from nanshe.util import prof
 
 
 try:
+    from itertools import izip_longest
+except ImportError:
+    from itertools import zip_longest as izip_longest
+
+try:
     from itertools import izip
 except ImportError:
     izip = zip
@@ -778,10 +783,10 @@ def lagged_generators(new_iter, n=2):
             >>> list(izip(*lagged_generators(irange(5), 3)))
             [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
 
-            >>> list(itertools.izip_longest(*lagged_generators(irange(5))))
+            >>> list(izip_longest(*lagged_generators(irange(5))))
             [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]
 
-            >>> list(itertools.izip_longest(*lagged_generators(irange(5), 3)))
+            >>> list(izip_longest(*lagged_generators(irange(5), 3)))
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
@@ -866,7 +871,7 @@ def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
 
     zipped_iters = None
     if longest:
-        zipped_iters = itertools.izip_longest(*all_iters, fillvalue=fillvalue)
+        zipped_iters = izip_longest(*all_iters, fillvalue=fillvalue)
     else:
         zipped_iters = izip(*all_iters)
 
