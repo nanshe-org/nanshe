@@ -1381,7 +1381,7 @@ def len_slices(slices, lengths=None):
             ...     slice(3, None),
             ...     slice(None, 5),
             ...     slice(None, None, 2)
-            ... ))
+            ... )) #doctest: +IGNORE_EXCEPTION_DETAIL
             Traceback (most recent call last):
             UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).
 
