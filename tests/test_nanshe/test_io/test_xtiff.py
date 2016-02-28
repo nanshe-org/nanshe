@@ -22,6 +22,12 @@ import nanshe.io.xtiff
 import nanshe.converter
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
 class TestXTiff(object):
     def setup(self):
         self.temp_dir = ""

@@ -26,6 +26,12 @@ __date__ = "$Apr 30, 2014 16:54:30 EDT$"
 from nanshe.util import prof
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
 logger = prof.logging.getLogger(__name__)

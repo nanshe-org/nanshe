@@ -43,6 +43,12 @@ except ImportError:
     from skimage.external import tifffile
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
 

@@ -30,6 +30,12 @@ from nanshe.util import wrappers
 from nanshe.util import prof
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
 
