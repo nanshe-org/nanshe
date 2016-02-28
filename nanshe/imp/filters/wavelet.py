@@ -164,7 +164,7 @@ def binomial_1D_vigra_kernel(i, n=4, border_treatment=vigra.filters.BorderTreatm
     h_kern = binomial_1D_array_kernel(i, n)
 
     # Determine the kernel center
-    h_kern_half_width = (h_kern.size - 1) / 2
+    h_kern_half_width = (h_kern.size - 1) // 2
 
     # Default kernel
     k = vigra.filters.Kernel1D()
