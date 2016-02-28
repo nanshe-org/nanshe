@@ -12,6 +12,11 @@ import nanshe.io.xjson
 
 
 try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
     xrange
 except NameError:
     xrange = range
@@ -81,7 +86,9 @@ class TestXJson(object):
         params["g"][-1][1] = params["g"][-1][1][:-1]
         del params["e"]
         del params["__comment__ e"]
-        params["f"] = params["f"].encode("utf-8")
+
+        if str != unicode:
+            params["f"] = params["f"].encode("utf-8")
 
         assert params == params_out
 
@@ -145,7 +152,9 @@ class TestXJson(object):
         params["g"][0][1] = params["g"][0][1][:-1]
         del params["e"]
         del params["__comment__ e"]
-        params["f"] = params["f"].encode("utf-8")
+
+        if str != unicode:
+            params["f"] = params["f"].encode("utf-8")
 
         assert params == params_out
 
