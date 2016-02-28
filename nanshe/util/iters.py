@@ -617,26 +617,23 @@ def subrange(start, stop=None, step=None, substep=None):
             >>> subrange(5) # doctest: +ELLIPSIS
             <generator object subrange at 0x...>
 
-            >>> list(subrange(5))
-            [xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]
+            >>> list(map(list, subrange(5)))
+            [[0], [1], [2], [3], [4]]
 
-            >>> list(subrange(0, 5))
-            [xrange(1), xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]
+            >>> list(map(list, subrange(0, 5)))
+            [[0], [1], [2], [3], [4]]
 
-            >>> list(subrange(1, 5))
-            [xrange(1, 2), xrange(2, 3), xrange(3, 4), xrange(4, 5)]
+            >>> list(map(list, subrange(1, 5)))
+            [[1], [2], [3], [4]]
 
-            >>> list(subrange(0, 10, 3))
-            [xrange(3), xrange(3, 6), xrange(6, 9), xrange(9, 10)]
+            >>> list(map(list, subrange(0, 10, 3)))
+            [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]
 
-            >>> list(subrange(0, 7, 3))
-            [xrange(3), xrange(3, 6), xrange(6, 7)]
+            >>> list(map(list, subrange(0, 7, 3)))
+            [[0, 1, 2], [3, 4, 5], [6]]
 
-            >>> [xrange(0, 3, 2), xrange(3, 6, 2), xrange(6, 7, 2)]
-            [xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]
-
-            >>> list(subrange(0, 7, 3, 2))
-            [xrange(0, 4, 2), xrange(3, 7, 2), xrange(6, 8, 2)]
+            >>> list(map(list, subrange(0, 7, 3, 2)))
+            [[0, 2], [3, 5], [6]]
     """
 
     if stop is None:
