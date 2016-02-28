@@ -327,8 +327,9 @@ class TestWrappers(object):
         args, kwargs = nanshe.util.wrappers.repack_call_args(
             func_0, a=1, c=7
         )
+
         assert args == tuple()
-        assert list(kwargs.items()) == [("a", 1), ("c", 7), ("b", 5)]
+        assert sorted(kwargs.items()) == [("a", 1), ("b", 5), ("c", 7)]
 
         args, kwargs = nanshe.util.wrappers.repack_call_args(
             func_0, 1, 2, 3, c=7
