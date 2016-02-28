@@ -6,6 +6,7 @@ __date__ = "$Mar 25, 2015 13:30:52 EDT$"
 
 
 import functools
+import sys
 
 import PyQt4
 import PyQt4.QtCore
@@ -211,7 +212,12 @@ class TestWrappers(object):
         assert ClassWrapped.__init__ != Class.__init__
         assert not hasattr(Class.__init__, "__wrapped__")
         assert hasattr(ClassWrapped.__init__, "__wrapped__")
-        assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+
+        if sys.version_info.major < 3:
+            assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+        else:
+            assert ClassWrapped.__init__.__wrapped__ == Class.__init__
+
         assert ClassWrapped.__wrapped__.__init__ == Class.__init__
 
 
@@ -232,7 +238,12 @@ class TestWrappers(object):
         assert ClassWrapped.__init__ != Class.__init__
         assert not hasattr(Class.__init__, "__wrapped__")
         assert hasattr(ClassWrapped.__init__, "__wrapped__")
-        assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+
+        if sys.version_info.major < 3:
+            assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+        else:
+            assert ClassWrapped.__init__.__wrapped__ == Class.__init__
+
         assert ClassWrapped.__wrapped__.__init__ == Class.__init__
 
 
@@ -261,7 +272,12 @@ class TestWrappers(object):
         assert ClassWrapped.func_0 != Class.func_0
         assert not hasattr(Class.func_0, "__wrapped__")
         assert hasattr(ClassWrapped.func_0, "__wrapped__")
-        assert ClassWrapped.func_0.__wrapped__ != Class.func_0
+
+        if sys.version_info.major < 3:
+            assert ClassWrapped.func_0.__wrapped__ != Class.func_0
+        else:
+            assert ClassWrapped.func_0.__wrapped__ == Class.func_0
+
         assert ClassWrapped.__wrapped__.func_0 == Class.func_0
 
     def test_unwrap(self):
