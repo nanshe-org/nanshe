@@ -32,6 +32,11 @@ try:
 except ImportError:
     izip = zip
 
+try:
+    irange = xrange
+except NameError:
+    irange = range
+
 
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
