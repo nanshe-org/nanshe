@@ -258,6 +258,7 @@ class TestProf(object):
         self.handler.flush()
         result_2 = self.stream.getvalue()
         self.stream.truncate(0)
+        result_2 = result_2.strip("\0")
 
         print(result_2)
 
@@ -301,6 +302,7 @@ class TestProf(object):
         self.handler.flush()
         result_2 = self.stream.getvalue()
         self.stream.truncate(0)
+        result_2 = result_2.strip("\0")
 
         print(result_2)
 
