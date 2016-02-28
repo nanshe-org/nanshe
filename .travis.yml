@@ -55,7 +55,6 @@ install:
    - echo "coverage 3.*" >> $HOME/miniconda/envs/testenv/conda-meta/pinned
    - conda install coverage
    - conda install docstring-coverage
-   - conda install python-coveralls
    # Clean up downloads as there are quite a few and they waste space/memory.
    - sudo apt-get clean
    - conda clean -tipsy
@@ -68,6 +67,8 @@ script:
    # Get info on docstring coverage.
    - docstring-coverage nanshe | tee .docstring-coverage
 after_success:
+   # Install packages for submitting coverage results when they are needed.
+   - conda install python-coveralls
    # Submit results to coveralls.io.
    - coveralls
    # Check to see if this is the right branch to build documentation from.
