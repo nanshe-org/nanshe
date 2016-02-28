@@ -82,7 +82,9 @@ def read_parameters(config_filename, maintain_order=False):
         """
 
         new_value = None
-        if not value.startswith("__comment__"):
+        if unicode == str and not value.startswith(u"__comment__"):
+            new_value = value
+        elif not value.startswith("__comment__"):
             new_value = value.encode("utf-8")
 
         return(new_value)
