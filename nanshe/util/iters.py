@@ -769,7 +769,7 @@ def lagged_generators(new_iter, n=2):
 
         Examples:
             >>> lagged_generators(irange(5), 1) #doctest: +ELLIPSIS
-            (<itertools.tee object at 0x...>,)
+            (<itertools... object at 0x...>,)
 
             >>> list(izip(*lagged_generators(irange(5), 1)))
             [(0,), (1,), (2,), (3,), (4,)]
@@ -845,8 +845,8 @@ def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
                                             values from each iterator.
 
         Examples:
-            >>> lagged_generators_zipped(irange(5), 1) #doctest: +ELLIPSIS
-            <itertools.izip object at 0x...>
+            >>> isinstance(lagged_generators_zipped(irange(5), 1), izip)
+            True
 
             >>> list(lagged_generators_zipped(irange(5)))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
