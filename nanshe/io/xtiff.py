@@ -405,7 +405,7 @@ def convert_tiffs(new_tiff_filenames,
     new_hdf5_dataset_dtype = bool
     for each_new_tiff_filename in new_tiff_filenames:
         # Add each filename.
-        new_hdf5_dataset_filenames.append(each_new_tiff_filename)
+        new_hdf5_dataset_filenames.append(unicode(each_new_tiff_filename))
 
         # Get all of the offsets.
         new_hdf5_dataset_offsets.append(new_hdf5_dataset_shape[axis])
@@ -466,7 +466,12 @@ def convert_tiffs(new_tiff_filenames,
             new_hdf5_dataset_dtype,
             chunks=True
         )
-        new_hdf5_dataset.attrs["filenames"] = new_hdf5_dataset_filenames
+        new_hdf5_dataset.attrs.create(
+            "filenames",
+            new_hdf5_dataset_filenames,
+            shape=new_hdf5_dataset_filenames.shape,
+            dtype=h5py.special_dtype(vlen=unicode)
+        )
         new_hdf5_dataset.attrs["offsets"] = new_hdf5_dataset_offsets
         # Workaround required due to this issue
         # ( https://github.com/h5py/h5py/issues/289 ).
