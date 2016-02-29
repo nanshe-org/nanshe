@@ -11,6 +11,12 @@ import tempfile
 import nanshe.io.xjson
 
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
+
 class TestXJson(object):
     def setup(self):
         self.temp_dir = tempfile.mkdtemp()

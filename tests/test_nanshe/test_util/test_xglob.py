@@ -5,6 +5,12 @@ __date__ = "$Jul 28, 2014 11:50:37 EDT$"
 import nanshe.util.xglob
 
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
+
 class TestXGlob(object):
     num_files = 10
 
