@@ -24,6 +24,12 @@
 
 
 
+
+
+
+
+
+
   
 
 
@@ -62,6 +68,8 @@
 
   
   
+
+
 
 
 
@@ -188,13 +196,6 @@ body
     
     
 
-
-
-    
-        
-    
-    
-    
 
 
     
@@ -1877,10 +1878,6 @@ table.indextable td > dl > dd > dl
 {
     
     
-            body {
-                font-size: ; optional base font size for screens bigger than <large_width>;
-            }
-        
 
 }
 
@@ -1942,7 +1939,7 @@ table.indextable td > dl > dd > dl
     
     
             body {
-                font-size: 75%; optional base font size for screens larger than <minimal_width>;
+                font-size: 75%;
             }
         
 
@@ -2052,4 +2049,7 @@ table.indextable td > dl > dd > dl
 
 
 }
+
+
+    
 

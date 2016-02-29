@@ -57,7 +57,9 @@ function abspath(path, base) {
 // * strips current document's scheme & host from internal urls (just path + fragment will be left)
 // * makes all internal url paths absolute
 // * external urls returned unchanged.
-var hosturl = document.location.href.match(/^[a-z0-9]+:(\/\/)?([^@]*@)?[^/]+/)[0],
+var // hosturl is url to root of host, without trailing '/'
+    // allowing netloc segment to be empty to support 'file:///' urls
+    hosturl = document.location.href.match(/^[a-z0-9]+:(?:\/\/)?(?:[^@]*@)?[^/]*/)[0],
     docpath = document.location.pathname;
 function shorten_url(url) {
   if (url.indexOf(hosturl) == 0) {
@@ -79,6 +81,8 @@ function csspx(elem, prop) {
 
 /* debugging
 window.CloudSphinxTheme = {
+  hosturl: hosturl,
+  docpath: docpath,
   shorten_url: shorten_url,
 };
 */
