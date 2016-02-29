@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.hdf5.search &mdash; nanshe 0.1.0a47+15.gd41b7b9 documentation</title>
+    <title>nanshe.io.hdf5.search &mdash; nanshe 0.1.0a48 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a47+15.gd41b7b9',
+        VERSION:     '0.1.0a48',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+15.gd41b7b9 documentation" href="../../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a48 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -86,6 +86,8 @@
 <span class="kn">import</span> <span class="nn">itertools</span>
 
 <span class="kn">import</span> <span class="nn">h5py</span>
+
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span>
 
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
@@ -213,7 +215,7 @@
     <span class="n">groups</span> <span class="o">=</span> <span class="n">get_matching_paths_groups_recursive</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">)</span>
 
     <span class="n">new_groups</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)):</span>
         <span class="n">new_groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
     <span class="n">groups</span> <span class="o">=</span> <span class="n">new_groups</span>
@@ -248,7 +250,7 @@
 
         <span class="n">paths_found</span><span class="p">[</span><span class="n">each_path</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="n">paths_found</span> <span class="o">=</span> <span class="n">paths_found</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">paths_found</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">paths_found</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span></div>
 
@@ -316,7 +318,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>

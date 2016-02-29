@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.wrappers &mdash; nanshe 0.1.0a47+15.gd41b7b9 documentation</title>
+    <title>nanshe.util.wrappers &mdash; nanshe 0.1.0a48 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a47+15.gd41b7b9',
+        VERSION:     '0.1.0a48',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+15.gd41b7b9 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a48 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -88,7 +88,6 @@
 
 <span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">types</span>
 
@@ -536,8 +535,8 @@
         <span class="n">a_callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span>
 
-    <span class="n">new_args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">callargs</span><span class="o">.</span><span class="n">values</span><span class="p">()[:</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)])</span> <span class="o">+</span> <span class="n">new_args</span>
-    <span class="n">new_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">callargs</span><span class="o">.</span><span class="n">items</span><span class="p">()[</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">):]))</span>
+    <span class="n">new_args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">callargs</span><span class="o">.</span><span class="n">values</span><span class="p">())[:</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)])</span> <span class="o">+</span> <span class="n">new_args</span>
+    <span class="n">new_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">callargs</span><span class="o">.</span><span class="n">items</span><span class="p">())[</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">):]))</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_args</span><span class="p">,</span> <span class="n">new_kwargs</span><span class="p">)</span></div>
 
@@ -587,9 +586,12 @@
 <span class="sd">                                        teardown globals.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">stage_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;setup&quot;</span><span class="p">:</span> <span class="n">setup</span><span class="p">,</span> <span class="s2">&quot;teardown&quot;</span><span class="p">:</span> <span class="n">teardown</span><span class="p">}</span>
+        <span class="n">stage_dict</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">([</span>
+            <span class="p">(</span><span class="s2">&quot;setup&quot;</span><span class="p">,</span> <span class="n">setup</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;teardown&quot;</span><span class="p">,</span> <span class="n">teardown</span><span class="p">)</span>
+        <span class="p">])</span>
         <span class="n">stage_orderer</span> <span class="o">=</span> <span class="p">[(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)),</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">))]</span>
-        <span class="n">stage_itr</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">stage_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">stage_orderer</span><span class="p">)</span>
+        <span class="n">stage_itr</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">stage_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">stage_orderer</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="p">(</span><span class="n">each_stage_name</span><span class="p">,</span> <span class="n">each_new_stage</span><span class="p">),</span> <span class="n">each_stage_orderer</span> <span class="ow">in</span> <span class="n">stage_itr</span><span class="p">:</span>
             <span class="n">each_old_stage</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">a_callable</span><span class="p">,</span> <span class="n">each_stage_name</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
@@ -658,7 +660,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

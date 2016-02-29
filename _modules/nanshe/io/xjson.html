@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xjson &mdash; nanshe 0.1.0a47+15.gd41b7b9 documentation</title>
+    <title>nanshe.io.xjson &mdash; nanshe 0.1.0a48 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a47+15.gd41b7b9',
+        VERSION:     '0.1.0a48',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+15.gd41b7b9 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a48 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -84,6 +84,12 @@
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">unicode</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="nb">unicode</span> <span class="o">=</span> <span class="nb">str</span>
 
 
 <span class="c1"># Get the logger</span>
@@ -136,7 +142,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">new_value</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__comment__&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">unicode</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">u&quot;__comment__&quot;</span><span class="p">):</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__comment__&quot;</span><span class="p">):</span>
             <span class="n">new_value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
@@ -161,8 +169,7 @@
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_dict</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_list</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)</span> <span class="ow">or</span> \
-                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)):</span>
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_str</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">new_each_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -260,7 +267,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

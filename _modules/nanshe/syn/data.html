@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.syn.data &mdash; nanshe 0.1.0a47+15.gd41b7b9 documentation</title>
+    <title>nanshe.syn.data &mdash; nanshe 0.1.0a48 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a47+15.gd41b7b9',
+        VERSION:     '0.1.0a48',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+15.gd41b7b9 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a48 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -78,14 +78,13 @@
 <span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;$Aug 01, 2014 14:55:57 EDT$&quot;</span>
 
 
-<span class="kn">import</span> <span class="nn">itertools</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span>
 
 <span class="kn">import</span> <span class="nn">scipy</span>
 <span class="kn">import</span> <span class="nn">scipy.ndimage</span>
 <span class="kn">import</span> <span class="nn">scipy.ndimage.filters</span>
 
+<span class="kn">import</span> <span class="nn">nanshe.util.iters</span>
 <span class="kn">import</span> <span class="nn">nanshe.util.xnumpy</span>
 
 
@@ -440,7 +439,7 @@
         <span class="n">magnitudes</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">tolist</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
     <span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">each_mean</span><span class="p">,</span> <span class="n">each_std_dev</span><span class="p">,</span> <span class="n">each_magnitude</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
-            <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">std_devs</span><span class="p">,</span> <span class="n">magnitudes</span><span class="p">)</span>
+            <span class="n">nanshe</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">iters</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">std_devs</span><span class="p">,</span> <span class="n">magnitudes</span><span class="p">)</span>
     <span class="p">):</span>
         <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="nb">tuple</span><span class="p">(</span><span class="n">each_mean</span><span class="p">)]</span> <span class="o">=</span> <span class="n">each_magnitude</span>
         <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span>
@@ -518,8 +517,8 @@
 
     <span class="c1"># Generate a random point for each radius.</span>
     <span class="n">points</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">radii</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="n">space</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">radii</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">space</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nanshe</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">radii</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">nanshe</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">space</span><span class="p">)):</span>
             <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
                 <span class="n">bound_space</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">bound_space</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
             <span class="p">)</span>
@@ -560,7 +559,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

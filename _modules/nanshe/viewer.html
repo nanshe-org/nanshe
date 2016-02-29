@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.viewer &mdash; nanshe 0.1.0a47+15.gd41b7b9 documentation</title>
+    <title>nanshe.viewer &mdash; nanshe 0.1.0a48 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a47+15.gd41b7b9',
+        VERSION:     '0.1.0a48',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+15.gd41b7b9 documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a48 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -132,7 +132,6 @@
 
 <span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">hdf5</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span><span class="p">,</span> <span class="n">xnumpy</span>
-
 
 
 <div class="viewcode-block" id="HDF5DatasetNotFoundException"><a class="viewcode-back" href="../../nanshe.viewer.html#nanshe.viewer.HDF5DatasetNotFoundException">[docs]</a><span class="k">class</span> <span class="nc">HDF5DatasetNotFoundException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -471,7 +470,7 @@
         <span class="c1"># To construct the list requires a second pass either way.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slicing</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">actual_slicing_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">each_slice</span><span class="p">,</span> <span class="n">each_axis</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">slicing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis_order</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">each_slice</span><span class="p">,</span> <span class="n">each_axis</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">slicing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis_order</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">slicing</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_slice</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">each_axis</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                 <span class="n">actual_slicing_dict</span><span class="p">[</span><span class="n">each_axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">each_slice</span>
@@ -801,7 +800,7 @@
 
         <span class="n">fuse_slicing</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">non_fuse_slicing</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">each_slicing</span><span class="p">,</span> <span class="n">each_len</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">slicing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_shape</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">each_slicing</span><span class="p">,</span> <span class="n">each_len</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">slicing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_shape</span><span class="p">)):</span>
             <span class="n">each_slicing_formatted</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuse_axis</span><span class="p">:</span>
                 <span class="n">each_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_sources</span><span class="p">)</span>
@@ -1221,7 +1220,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant_source</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
             <span class="n">slicing</span>
         <span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">]):</span>
             <span class="n">_constant_source_cached_i</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">index_axis_at_pos</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_constant_source_cached</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span> <span class="n">i</span>
             <span class="p">)</span>
@@ -2070,7 +2069,7 @@
 
     <span class="c1"># Open all of the files and store their handles</span>
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">)):</span>
         <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
         <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
             <span class="n">parsed_args</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -2084,7 +2083,7 @@
     <span class="c1"># whether they were or not before. The key will be the operation to</span>
     <span class="c1"># perform and the values will be what to perform the operation on.</span>
     <span class="c1"># If the key is a null string, no operation is performed.</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">)):</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">each_layer_name</span><span class="p">,</span> <span class="n">each_layer_source_location_dict</span><span class="p">)</span> <span class="ow">in</span> <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">each_layer_source_operation_names</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">each_layer_source_location_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2093,9 +2092,9 @@
             <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="n">each_layer_source_operation_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-                    <span class="n">each_layer_source_location_dict_inner</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                    <span class="nb">list</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
                 <span class="p">)</span>
-                <span class="n">each_layer_source_location_dict_inner</span> <span class="o">=</span> <span class="n">each_layer_source_location_dict_inner</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">each_layer_source_location_dict_inner</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">each_layer_source_location_dict_inner</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">each_layer_source_location_dict_inner</span> <span class="o">=</span> <span class="p">[</span>
@@ -2136,7 +2135,7 @@
                     <span class="n">new_matches</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">get_matching_grouped_paths</span><span class="p">(</span>
                         <span class="n">each_file</span><span class="p">,</span> <span class="n">each_layer_source_location</span>
                     <span class="p">)</span>
-                    <span class="n">new_matches_ldict</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span>
+                    <span class="n">new_matches_ldict</span> <span class="o">=</span> <span class="n">iters</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span>
                         <span class="n">new_matches</span><span class="p">,</span> <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
                     <span class="p">)</span>
                     <span class="n">parsed_args</span><span class="o">.</span><span class="n">parameters_expanded</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">each_layer_name</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_matches_ldict</span><span class="p">)</span>
@@ -2256,7 +2255,7 @@
 
     <span class="c1"># Close and clean up files</span>
     <span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span><span class="p">)):</span>
         <span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">parsed_args</span><span class="o">.</span><span class="n">file_handles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
 
@@ -2299,7 +2298,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>

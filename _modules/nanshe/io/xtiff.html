@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a47+15.gd41b7b9 documentation</title>
+    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a48 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a47+15.gd41b7b9',
+        VERSION:     '0.1.0a48',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a47+15.gd41b7b9 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a48 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -102,6 +102,11 @@
     <span class="c1"># scikit-image is bundled with tifffile so use it.</span>
     <span class="kn">from</span> <span class="nn">skimage.external</span> <span class="kn">import</span> <span class="n">tifffile</span>
 
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">unicode</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="nb">unicode</span> <span class="o">=</span> <span class="nb">str</span>
 
 
 <span class="c1"># Get the logger</span>
@@ -165,9 +170,9 @@
     <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis_order</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">_</span> <span class="ow">in</span> <span class="n">axis_order</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="s2">&quot;zyxtc&quot;</span><span class="p">])</span>
 
-    <span class="n">new_tiff_file_shape</span><span class="p">,</span> <span class="n">new_tiff_file_dtype</span> <span class="o">=</span> <span class="n">get_multipage_tiff_shape_dtype</span><span class="p">(</span>
+    <span class="n">new_tiff_file_shape</span><span class="p">,</span> <span class="n">new_tiff_file_dtype</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_multipage_tiff_shape_dtype</span><span class="p">(</span>
         <span class="n">new_tiff_filename</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
     <span class="c1"># Correct if the tiff is missing dims by adding singletons</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_tiff_file_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">):</span>
@@ -250,7 +255,7 @@
 
     <span class="c1"># Fit the old VIGRA style array. (may try to remove in the future)</span>
     <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
-        <span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Check to make sure the dimensions are ok</span>
@@ -324,13 +329,13 @@
     <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffFile</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_tiff_file</span><span class="p">:</span>
         <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">memmap</span><span class="o">=</span><span class="n">memmap</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span>
                 <span class="mi">0</span><span class="p">,</span>
                 <span class="nb">len</span><span class="p">(</span><span class="n">new_tiff_file</span><span class="p">),</span>
                 <span class="n">pages_to_channel</span>
         <span class="p">):</span>
             <span class="n">new_tiff_description</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">pages_to_channel</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="n">pages_to_channel</span><span class="p">):</span>
                 <span class="n">each_page</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
                 <span class="n">each_metadata</span> <span class="o">=</span> <span class="n">each_page</span><span class="o">.</span><span class="n">tags</span>
                 <span class="n">each_desc</span> <span class="o">=</span> <span class="s2">u&quot;&quot;</span>
@@ -355,7 +360,7 @@
 
     <span class="c1"># Fit the old VIGRA style array. (may try to remove in the future)</span>
     <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
-        <span class="nb">tuple</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Check to make sure the dimensions are ok</span>
@@ -439,10 +444,12 @@
     <span class="k">assert</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="c1"># Get the axes that do not change</span>
-    <span class="n">static_axes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="n">axis</span><span class="p">)))</span>
+    <span class="n">static_axes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">xrange_with_skip</span><span class="p">(</span>
+        <span class="mi">3</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="n">axis</span>
+    <span class="p">)))</span>
 
     <span class="c1"># if it is only a single str, make it a singleton list</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_tiff_filenames</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_tiff_filenames</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)):</span>
         <span class="n">new_tiff_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_tiff_filenames</span><span class="p">]</span>
 
     <span class="c1"># Expand any regex in path names</span>
@@ -458,17 +465,17 @@
     <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="nb">bool</span>
     <span class="k">for</span> <span class="n">each_new_tiff_filename</span> <span class="ow">in</span> <span class="n">new_tiff_filenames</span><span class="p">:</span>
         <span class="c1"># Add each filename.</span>
-        <span class="n">new_hdf5_dataset_filenames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_new_tiff_filename</span><span class="p">)</span>
+        <span class="n">new_hdf5_dataset_filenames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="n">each_new_tiff_filename</span><span class="p">))</span>
 
         <span class="c1"># Get all of the offsets.</span>
         <span class="n">new_hdf5_dataset_offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_hdf5_dataset_shape</span><span class="p">[</span><span class="n">axis</span><span class="p">])</span>
 
         <span class="c1"># Get the shape and type of each frame.</span>
-        <span class="n">each_new_tiff_file_shape</span><span class="p">,</span> <span class="n">each_new_tiff_file_dtype</span> <span class="o">=</span> <span class="n">get_multipage_tiff_shape_dtype_transformed</span><span class="p">(</span>
+        <span class="n">each_new_tiff_file_shape</span><span class="p">,</span> <span class="n">each_new_tiff_file_dtype</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_multipage_tiff_shape_dtype_transformed</span><span class="p">(</span>
             <span class="n">each_new_tiff_filename</span><span class="p">,</span>
             <span class="n">axis_order</span><span class="o">=</span><span class="s2">&quot;cztyx&quot;</span><span class="p">,</span>
             <span class="n">pages_to_channel</span><span class="o">=</span><span class="n">pages_to_channel</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="n">each_new_tiff_file_shape</span> <span class="o">=</span> <span class="n">each_new_tiff_file_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
 
         <span class="c1"># Find the increase on the merge axis. Find the largest shape for the</span>
@@ -519,7 +526,12 @@
             <span class="n">new_hdf5_dataset_dtype</span><span class="p">,</span>
             <span class="n">chunks</span><span class="o">=</span><span class="bp">True</span>
         <span class="p">)</span>
-        <span class="n">new_hdf5_dataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;filenames&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_filenames</span>
+        <span class="n">new_hdf5_dataset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="s2">&quot;filenames&quot;</span><span class="p">,</span>
+            <span class="n">new_hdf5_dataset_filenames</span><span class="p">,</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">new_hdf5_dataset_filenames</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">h5py</span><span class="o">.</span><span class="n">special_dtype</span><span class="p">(</span><span class="n">vlen</span><span class="o">=</span><span class="nb">unicode</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">new_hdf5_dataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;offsets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_hdf5_dataset_offsets</span>
         <span class="c1"># Workaround required due to this issue</span>
         <span class="c1"># ( https://github.com/h5py/h5py/issues/289 ).</span>
@@ -595,7 +607,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a47+15.gd41b7b9 documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a48 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
