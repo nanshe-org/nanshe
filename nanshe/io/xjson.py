@@ -109,8 +109,7 @@ def read_parameters(config_filename, maintain_order=False):
                 new_each_value = ascii_encode_dict(new_each_value)
             elif isinstance(new_each_value, list):
                 new_each_value = ascii_encode_list(new_each_value)
-            elif isinstance(new_each_value, unicode) or \
-                    isinstance(new_each_value, str):
+            elif isinstance(new_each_value, (bytes, unicode)):
                 new_each_value = ascii_encode_str(new_each_value)
 
             if new_each_value is not None:

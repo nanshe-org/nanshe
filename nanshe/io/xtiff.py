@@ -389,7 +389,7 @@ def convert_tiffs(new_tiff_filenames,
     )))
 
     # if it is only a single str, make it a singleton list
-    if isinstance(new_tiff_filenames, str):
+    if isinstance(new_tiff_filenames, (bytes, unicode)):
         new_tiff_filenames = [new_tiff_filenames]
 
     # Expand any regex in path names
