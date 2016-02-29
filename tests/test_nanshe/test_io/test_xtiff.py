@@ -3,7 +3,6 @@ __date__ = "$Aug 04, 2014 14:48:56 EDT$"
 
 
 import collections
-import itertools
 import json
 import os
 import os.path
@@ -23,6 +22,12 @@ import nanshe.io.xtiff
 import nanshe.converter
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
 class TestXTiff(object):
     def setup(self):
         self.temp_dir = ""
@@ -33,11 +38,13 @@ class TestXTiff(object):
 
         self.data = numpy.random.random_integers(0, 255, (500, 1, 102, 101, 2)).astype(numpy.uint8)
 
-        self.offsets = list(xrange(0, self.data.shape[0] + 100 - 1, 100))
+        self.offsets = list(nanshe.util.iters.irange(
+            0, self.data.shape[0] + 100 - 1, 100
+        ))
 
         self.temp_dir = tempfile.mkdtemp()
         for i, i_str, (a_b, a_e) in nanshe.util.iters.filled_stringify_enumerate(
-                                        itertools.izip(
+                                        nanshe.util.iters.izip(
                                                 *nanshe.util.iters.lagged_generators(
                                                     self.offsets
                                                 )
@@ -117,7 +124,7 @@ class TestXTiff(object):
         hdf5_filepath = hdf5_filename + "/data"
 
         nanshe.io.xtiff.convert_tiffs(
-            self.filedata.keys(),
+            list(self.filedata.keys()),
             hdf5_filepath,
             pages_to_channel=self.pages_to_channel
         )
@@ -143,7 +150,7 @@ class TestXTiff(object):
         self_data_h5 = nanshe.util.xnumpy.tagging_reorder_array(
             self.data, to_axis_order="cztyx"
         )[0, 0]
-        self_filenames = numpy.array(self.filedata.keys())
+        self_filenames = numpy.array(list(self.filedata.keys()))
 
         assert len(filenames) == len(self_filenames)
         assert (filenames == self_filenames).all()

@@ -6,6 +6,7 @@ __date__ = "$Mar 25, 2015 13:30:52 EDT$"
 
 
 import functools
+import sys
 
 import PyQt4
 import PyQt4.QtCore
@@ -211,7 +212,12 @@ class TestWrappers(object):
         assert ClassWrapped.__init__ != Class.__init__
         assert not hasattr(Class.__init__, "__wrapped__")
         assert hasattr(ClassWrapped.__init__, "__wrapped__")
-        assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+
+        if sys.version_info.major < 3:
+            assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+        else:
+            assert ClassWrapped.__init__.__wrapped__ == Class.__init__
+
         assert ClassWrapped.__wrapped__.__init__ == Class.__init__
 
 
@@ -232,7 +238,12 @@ class TestWrappers(object):
         assert ClassWrapped.__init__ != Class.__init__
         assert not hasattr(Class.__init__, "__wrapped__")
         assert hasattr(ClassWrapped.__init__, "__wrapped__")
-        assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+
+        if sys.version_info.major < 3:
+            assert ClassWrapped.__init__.__wrapped__ != Class.__init__
+        else:
+            assert ClassWrapped.__init__.__wrapped__ == Class.__init__
+
         assert ClassWrapped.__wrapped__.__init__ == Class.__init__
 
 
@@ -261,7 +272,12 @@ class TestWrappers(object):
         assert ClassWrapped.func_0 != Class.func_0
         assert not hasattr(Class.func_0, "__wrapped__")
         assert hasattr(ClassWrapped.func_0, "__wrapped__")
-        assert ClassWrapped.func_0.__wrapped__ != Class.func_0
+
+        if sys.version_info.major < 3:
+            assert ClassWrapped.func_0.__wrapped__ != Class.func_0
+        else:
+            assert ClassWrapped.func_0.__wrapped__ == Class.func_0
+
         assert ClassWrapped.__wrapped__.func_0 == Class.func_0
 
     def test_unwrap(self):
@@ -277,48 +293,49 @@ class TestWrappers(object):
 
     def test_tied_call_args(self):
         def func_0(a, b=5, *v, **k):
-            return(a + b + sum(v) + sum(k.values()))
+            return(a + b + sum(v) + sum(list(k.values())))
 
         tied_args, args, kwargs = nanshe.util.wrappers.tied_call_args(
             func_0, 1
         )
-        assert tied_args.items() == [("a", 1), ("b", 5)]
+        assert list(tied_args.items()) == [("a", 1), ("b", 5)]
         assert args == tuple()
-        assert kwargs.items() == []
+        assert list(kwargs.items()) == []
 
         tied_args, args, kwargs = nanshe.util.wrappers.tied_call_args(
             func_0, a=1, c=7
         )
-        assert tied_args.items() == [("a", 1), ("b", 5)]
+        assert list(tied_args.items()) == [("a", 1), ("b", 5)]
         assert args == tuple()
-        assert kwargs.items() == [("c", 7)]
+        assert list(kwargs.items()) == [("c", 7)]
 
         tied_args, args, kwargs = nanshe.util.wrappers.tied_call_args(
             func_0, 1, 2, 3, c=7
         )
-        assert tied_args.items() == [("a", 1), ("b", 2)]
+        assert list(tied_args.items()) == [("a", 1), ("b", 2)]
         assert args == (3,)
-        assert kwargs.items() == [("c", 7)]
+        assert list(kwargs.items()) == [("c", 7)]
 
     def test_repack_call_args(self):
         def func_0(a, b=5, *v, **k):
-            return(a + b + sum(v) + sum(k.values()))
+            return(a + b + sum(v) + sum(list(k.values())))
 
         args, kwargs = nanshe.util.wrappers.repack_call_args(func_0, 1)
         assert args == (1,)
-        assert kwargs.items() == [("b", 5)]
+        assert list(kwargs.items()) == [("b", 5)]
 
         args, kwargs = nanshe.util.wrappers.repack_call_args(
             func_0, a=1, c=7
         )
+
         assert args == tuple()
-        assert kwargs.items() == [("a", 1), ("c", 7), ("b", 5)]
+        assert sorted(kwargs.items()) == [("a", 1), ("b", 5), ("c", 7)]
 
         args, kwargs = nanshe.util.wrappers.repack_call_args(
             func_0, 1, 2, 3, c=7
         )
         assert args == (1, 2, 3)
-        assert kwargs.items() == [("c", 7)]
+        assert list(kwargs.items()) == [("c", 7)]
 
 
 def setup_with_setup_state_2(a_callable):

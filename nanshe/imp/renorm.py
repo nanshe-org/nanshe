@@ -25,6 +25,8 @@ __date__ = "$Apr 30, 2014 17:14:50 EDT$"
 # Generally useful and fast to import so done immediately.
 import numpy
 
+from nanshe.util import iters
+
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
@@ -225,7 +227,7 @@ def renormalized_images(input_array, ord=2, output_array=None):
     # does not support the axis keyword. So, we must use a for loop.
     # Take each image at each time and turn the image into a vector.
     # Then, find the norm and divide each image by this norm.
-    for i in xrange(output_array.shape[0]):
+    for i in iters.irange(output_array.shape[0]):
         output_array_i = output_array[i]
         output_array_i_norm = numpy.linalg.norm(
             output_array_i.ravel(), ord=ord

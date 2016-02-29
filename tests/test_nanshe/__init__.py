@@ -7,11 +7,11 @@ __all__ = [
 ]
 
 
-import test_box
-import test_converter
-import test_io
-import test_imp
-import test_learner
-import test_registerer
-import test_util
-# import test_viewer
+from tests.test_nanshe import test_box
+from tests.test_nanshe import test_converter
+from tests.test_nanshe import test_io
+from tests.test_nanshe import test_imp
+from tests.test_nanshe import test_learner
+from tests.test_nanshe import test_registerer
+from tests.test_nanshe import test_util
+# from tests.test_nanshe import test_viewer

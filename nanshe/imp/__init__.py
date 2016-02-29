@@ -15,7 +15,7 @@ __date__ = "$Apr 14, 2014 20:37:08 EDT$"
 
 __all__ = ["filters", "registration", "renorm", "segment"]
 
-import filters
-import registration
-import renorm
-import segment
+from nanshe.imp import filters
+from nanshe.imp import registration
+from nanshe.imp import renorm
+from nanshe.imp import segment

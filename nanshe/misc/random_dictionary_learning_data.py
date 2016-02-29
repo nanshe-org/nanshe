@@ -78,7 +78,7 @@ class MappingDiscreteUniformDistributionGenerator(object):
 
             results = [self.args[_] for _ in indices]
         else:
-            results = [None for _ in xrange(size)]
+            results = [None for _ in nanshe.util.iters.irange(size)]
 
         return(results)
 
@@ -169,7 +169,9 @@ class MappingDiscreteGeometricDistributionGenerator(object):
         group_sizes = numpy.random.geometric(p, size)
 
         # Using the sizes draw element to fill groups up to the right size
-        results = [uni_gen(group_sizes[i]) for i in xrange(size)]
+        results = [
+            uni_gen(group_sizes[i]) for i in nanshe.util.iters.irange(size)
+        ]
 
         return(results)
 
@@ -282,7 +284,7 @@ class DictionaryLearningRandomDataGenerator(object):
         # A list of DictionaryLearningRandomDataSample instances
         results = []
 
-        for i in xrange(num_runs):
+        for i in nanshe.util.iters.irange(num_runs):
             # Where the result will be stored
             each_result = DictionaryLearningRandomDataSample()
 
@@ -355,7 +357,7 @@ class DictionaryLearningRandomDataGenerator(object):
                 # Determines how much to spread each active point
                 # (self.object_spread is like the average spread)
                 sigma = 2 * self.object_spread * numpy.random.random()
-                for each_frame_num in xrange(self.num_frames):
+                for each_frame_num in nanshe.util.iters.irange(self.num_frames):
                     # Determines a linear rescaling of each image (where they
                     # slowly become dimmer)
                     rescale = float(

@@ -26,6 +26,12 @@ __date__ = "$Apr 30, 2014 16:54:30 EDT$"
 from nanshe.util import prof
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
 logger = prof.logging.getLogger(__name__)
@@ -76,7 +82,9 @@ def read_parameters(config_filename, maintain_order=False):
         """
 
         new_value = None
-        if not value.startswith("__comment__"):
+        if unicode == str and not value.startswith(u"__comment__"):
+            new_value = value
+        elif not value.startswith("__comment__"):
             new_value = value.encode("utf-8")
 
         return(new_value)
@@ -101,8 +109,7 @@ def read_parameters(config_filename, maintain_order=False):
                 new_each_value = ascii_encode_dict(new_each_value)
             elif isinstance(new_each_value, list):
                 new_each_value = ascii_encode_list(new_each_value)
-            elif isinstance(new_each_value, unicode) or \
-                    isinstance(new_each_value, str):
+            elif isinstance(new_each_value, (bytes, unicode)):
                 new_each_value = ascii_encode_str(new_each_value)
 
             if new_each_value is not None:

@@ -27,6 +27,8 @@ import itertools
 
 import h5py
 
+from nanshe.util import iters
+
 
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
@@ -153,7 +155,7 @@ def get_matching_paths_groups(a_filehandle, a_path_pattern):
     groups = get_matching_paths_groups_recursive(a_filehandle, a_path_pattern)
 
     new_groups = []
-    for i in xrange(len(groups)):
+    for i in iters.irange(len(groups)):
         new_groups.append(list(groups[i]))
 
     groups = new_groups
@@ -188,7 +190,7 @@ def get_matching_grouped_paths(a_filehandle, a_path_pattern):
 
         paths_found[each_path] = None
 
-    paths_found = paths_found.keys()
+    paths_found = list(paths_found.keys())
 
     return(paths_found)
 

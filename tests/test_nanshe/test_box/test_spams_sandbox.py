@@ -18,6 +18,12 @@ import nanshe.box.spams_sandbox
 import nanshe.syn.data
 
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
+
 class TestSpamsSandbox(object):
     def setup(self):
         self.p = numpy.array([[27, 51],

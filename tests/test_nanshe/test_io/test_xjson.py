@@ -11,6 +11,17 @@ import tempfile
 import nanshe.io.xjson
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    xrange
+except NameError:
+    xrange = range
+
+
 class TestXJson(object):
     def setup(self):
         self.temp_dir = tempfile.mkdtemp()
@@ -19,13 +30,17 @@ class TestXJson(object):
     def test0a(self):
         dict_type = dict
 
-        params = dict_type()
-        params["b"] = range(3)
+        params = collections.OrderedDict()
+        params["b"] = list(xrange(3))
         params["c"] = "test"
         params["a"] = 5
-        params["d"] = dict_type(params)
-        params["h"] = [dict_type(params["d"])]
+        params["d"] = collections.OrderedDict(params)
+        params["h"] = [collections.OrderedDict(params["d"])]
         params["g"] = [[_k, _v] for _k, _v in params["d"].items()]
+
+        params["d"] = dict_type(params["d"])
+        params["h"][0] = dict_type(params["h"][0])
+        params = dict_type(params)
 
         config_filename = os.path.join(self.temp_dir, "config.json")
         with open(config_filename, "w") as config_file:
@@ -45,17 +60,21 @@ class TestXJson(object):
     def test0b(self):
         dict_type = dict
 
-        params = dict_type()
-        params["b"] = range(3)
+        params = collections.OrderedDict()
+        params["b"] = list(xrange(3))
         params["b"].append("__comment__ to drop")
         params["c"] = "test"
         params["a"] = 5
-        params["d"] = dict_type(params)
-        params["h"] = [dict_type(params["d"])]
+        params["d"] = collections.OrderedDict(params)
+        params["h"] = [collections.OrderedDict(params["d"])]
         params["g"] = [[_k, _v] for _k, _v in params["d"].items()]
         params["e"] = "__comment__ will be removed"
         params["__comment__ e"] = "also will be removed"
         params["f"] = u"will not be unicode"
+
+        params["d"] = dict_type(params["d"])
+        params["h"][0] = dict_type(params["h"][0])
+        params = dict_type(params)
 
         config_filename = os.path.join(self.temp_dir, "config.json")
         with open(config_filename, "w") as config_file:
@@ -72,10 +91,12 @@ class TestXJson(object):
         params["b"] = params["b"][:-1]
         params["d"]["b"] = params["d"]["b"][:-1]
         params["h"][0]["b"] = params["h"][0]["b"][:-1]
-        params["g"][-1][1] = params["g"][-1][1][:-1]
+        params["g"][0][-1] = params["g"][0][-1][:-1]
         del params["e"]
         del params["__comment__ e"]
-        params["f"] = params["f"].encode("utf-8")
+
+        if str != unicode:
+            params["f"] = params["f"].encode("utf-8")
 
         assert params == params_out
 
@@ -83,13 +104,17 @@ class TestXJson(object):
     def test1a(self):
         dict_type = collections.OrderedDict
 
-        params = dict_type()
-        params["b"] = range(3)
+        params = collections.OrderedDict()
+        params["b"] = list(xrange(3))
         params["c"] = "test"
         params["a"] = 5
-        params["d"] = dict_type(params)
-        params["h"] = [dict_type(params["d"])]
+        params["d"] = collections.OrderedDict(params)
+        params["h"] = [collections.OrderedDict(params["d"])]
         params["g"] = [[_k, _v] for _k, _v in params["d"].items()]
+
+        params["d"] = dict_type(params["d"])
+        params["h"][0] = dict_type(params["h"][0])
+        params = dict_type(params)
 
         config_filename = os.path.join(self.temp_dir, "config.json")
         with open(config_filename, "w") as config_file:
@@ -109,17 +134,21 @@ class TestXJson(object):
     def test1b(self):
         dict_type = collections.OrderedDict
 
-        params = dict_type()
-        params["b"] = range(3)
+        params = collections.OrderedDict()
+        params["b"] = list(xrange(3))
         params["b"].append("__comment__ to drop")
         params["c"] = "test"
         params["a"] = 5
-        params["d"] = dict_type(params)
-        params["h"] = [dict_type(params["d"])]
+        params["d"] = collections.OrderedDict(params)
+        params["h"] = [collections.OrderedDict(params["d"])]
         params["g"] = [[_k, _v] for _k, _v in params["d"].items()]
         params["e"] = "__comment__ will be removed"
         params["__comment__ e"] = "also will be removed"
         params["f"] = u"will not be unicode"
+
+        params["d"] = dict_type(params["d"])
+        params["h"][0] = dict_type(params["h"][0])
+        params = dict_type(params)
 
         config_filename = os.path.join(self.temp_dir, "config.json")
         with open(config_filename, "w") as config_file:
@@ -139,7 +168,9 @@ class TestXJson(object):
         params["g"][0][1] = params["g"][0][1][:-1]
         del params["e"]
         del params["__comment__ e"]
-        params["f"] = params["f"].encode("utf-8")
+
+        if str != unicode:
+            params["f"] = params["f"].encode("utf-8")
 
         assert params == params_out
 

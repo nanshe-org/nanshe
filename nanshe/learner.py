@@ -486,7 +486,7 @@ def generate_neurons_blocks(input_filename,
     # Overwrite the config file always
     with open(intermediate_config, "w") as fid:
         json.dump(
-            dict(parameters.items() + {"debug" : debug}.items()),
+            dict(list(parameters.items()) + list({"debug" : debug}.items())),
             fid,
             indent=4,
             separators=(",", " : ")
@@ -596,7 +596,7 @@ def generate_neurons_blocks(input_filename,
     executable_run += "from %s import main; exit(main(*argv))" % \
                       (cur_module_name,)
 
-    block_process_args_gen = itertools.izip(
+    block_process_args_gen = iters.izip(
         itertools.repeat(python),
         itertools.repeat("-c"),
         itertools.repeat(executable_run),
@@ -751,7 +751,7 @@ def generate_neurons_blocks(input_filename,
         )
 
         for i, i_str, (output_filename_block_i, sequential_block_i) in iters.filled_stringify_enumerate(
-                itertools.izip(output_filename_block, original_images_pared_slices.flat)):
+                iters.izip(output_filename_block, original_images_pared_slices.flat)):
             windowed_slice_i = tuple(
                 slice(_1, _2, 1) for _1, _2 in [(None, None)] + sequential_block_i["windowed_stack_selection"].tolist()[1:]
             )
@@ -770,7 +770,7 @@ def generate_neurons_blocks(input_filename,
                         numpy.apply_over_axes(
                             numpy.sum,
                             neurons_block_i_smaller["mask"].astype(float),
-                            tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))
+                            tuple(iters.irange(1, neurons_block_i_smaller["mask"].ndim))
                         )
                     )
 
@@ -782,7 +782,7 @@ def generate_neurons_blocks(input_filename,
                         numpy.apply_over_axes(
                             numpy.sum,
                             neurons_block_i_smaller["mask"][window_trimmed_i].astype(float),
-                            tuple(xrange(1, neurons_block_i_smaller["mask"].ndim))
+                            tuple(iters.irange(1, neurons_block_i_smaller["mask"].ndim))
                         )
                     )
 

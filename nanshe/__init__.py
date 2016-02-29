@@ -210,13 +210,13 @@ __all__ = [
     # "viewer"
 ]
 
-import box
-import converter
-import io
-import imp
-import learner
-import registerer
-import syn
-import util
-# import viewer           # Must be commented as there is some segfault
-                          # coming from Volumina.
+from nanshe import box
+from nanshe import converter
+from nanshe import io
+from nanshe import imp
+from nanshe import learner
+from nanshe import registerer
+from nanshe import syn
+from nanshe import util
+# from nanshe import viewer    # Must be commented as there is some segfault
+                               # coming from Volumina.

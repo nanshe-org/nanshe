@@ -26,7 +26,7 @@ import os
 
 import h5py
 
-from nanshe.util import prof
+from nanshe.util import iters, prof
 from nanshe.io import xjson
 from nanshe.util.pathHelpers import PathComponents
 from nanshe.imp import registration
@@ -106,7 +106,7 @@ def main(*argv):
             PathComponents(each_output_filename)
         )
 
-    for each_input_filename_components, each_output_filename_components in itertools.izip(
+    for each_input_filename_components, each_output_filename_components in iters.izip(
             parsed_args.input_file_components, parsed_args.output_file_components):
         with h5py.File(each_input_filename_components.externalPath, "r") as input_file:
             with h5py.File(each_output_filename_components.externalPath, "a") as output_file:

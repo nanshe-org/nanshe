@@ -17,6 +17,12 @@ import nanshe.io.hdf5.serializers
 import nanshe.imp.registration
 
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
+
 class TestRegisterMeanOffsets(object):
     def test0a(self):
         a = numpy.zeros((20,10,11), dtype=int)

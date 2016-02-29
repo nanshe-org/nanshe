@@ -18,4 +18,4 @@ __date__ = "$Jun 20, 2014 12:01:08 EDT$"
 __all__ = ["spams_sandbox"]
 
 
-import spams_sandbox
+from nanshe.box import spams_sandbox

@@ -6,6 +6,6 @@ __all__ = [
 ]
 
 
-import test_extended_region_props
-import test_registration
-import test_segment
+from tests.test_nanshe.test_imp import test_extended_region_props
+from tests.test_nanshe.test_imp import test_registration
+from tests.test_nanshe.test_imp import test_segment

@@ -58,10 +58,7 @@ elif sys.argv[1] == "bdist_conda":
         "mahotas",
         "vigra",
         "spams",
-        "rank_filter",
-        "functools32",
-        "pyqt",
-        "volumina"
+        "rank_filter"
     ]
 
     install_requires = [
@@ -81,11 +78,25 @@ elif sys.argv[1] == "bdist_conda":
         "mahotas",
         "vigra",
         "spams",
-        "rank_filter",
-        "functools32",
-        "pyqt",
-        "volumina"
+        "rank_filter"
     ]
+
+    if sys.version_info < (3, 2):
+        build_requires += [
+            "functools32"
+        ]
+        install_requires += [
+            "functools32"
+        ]
+    if sys.version_info < (3,):
+        build_requires += [
+            "pyqt",
+            "volumina"
+        ]
+        install_requires += [
+            "pyqt",
+            "volumina"
+        ]
 elif sys.argv[1] == "build_sphinx":
     import sphinx.apidoc
 
@@ -157,7 +168,7 @@ setup(
     py_modules=["versioneer"],
     packages=find_packages(exclude=["tests*"]),
     distclass=Distribution,
-    cmdclass=dict(sum([_.items() for _ in [
+    cmdclass=dict(sum([list(_.items()) for _ in [
         versioneer.get_cmdclass(),
         {"test": NoseTestCommand}
     ]], [])),

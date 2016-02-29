@@ -43,6 +43,11 @@ except ImportError:
     from skimage.external import tifffile
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
@@ -105,9 +110,9 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
     assert (len(axis_order) == 5)
     assert all([_ in axis_order for _ in "zyxtc"])
 
-    new_tiff_file_shape, new_tiff_file_dtype = get_multipage_tiff_shape_dtype(
+    new_tiff_file_shape, new_tiff_file_dtype = list(get_multipage_tiff_shape_dtype(
         new_tiff_filename
-    ).values()
+    ).values())
 
     # Correct if the tiff is missing dims by adding singletons
     if (len(new_tiff_file_shape) == 5):
@@ -190,7 +195,7 @@ def get_standard_tiff_array(new_tiff_filename,
 
     # Fit the old VIGRA style array. (may try to remove in the future)
     new_tiff_array = new_tiff_array.transpose(
-        tuple(xrange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
+        tuple(iters.irange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
     )
 
     # Check to make sure the dimensions are ok
@@ -264,13 +269,13 @@ def get_standard_tiff_data(new_tiff_filename,
     with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
         new_tiff_array = new_tiff_file.asarray(memmap=memmap)
 
-        for i in xrange(
+        for i in iters.irange(
                 0,
                 len(new_tiff_file),
                 pages_to_channel
         ):
             new_tiff_description.append([])
-            for j in xrange(pages_to_channel):
+            for j in iters.irange(pages_to_channel):
                 each_page = new_tiff_file[i + j]
                 each_metadata = each_page.tags
                 each_desc = u""
@@ -295,7 +300,7 @@ def get_standard_tiff_data(new_tiff_filename,
 
     # Fit the old VIGRA style array. (may try to remove in the future)
     new_tiff_array = new_tiff_array.transpose(
-        tuple(xrange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
+        tuple(iters.irange(new_tiff_array.ndim - 1, 1, -1)) + (1, 0)
     )
 
     # Check to make sure the dimensions are ok
@@ -379,10 +384,12 @@ def convert_tiffs(new_tiff_filenames,
     assert (pages_to_channel > 0)
 
     # Get the axes that do not change
-    static_axes = numpy.array(list(iters.xrange_with_skip(3, to_skip=axis)))
+    static_axes = numpy.array(list(iters.xrange_with_skip(
+        3, to_skip=axis
+    )))
 
     # if it is only a single str, make it a singleton list
-    if isinstance(new_tiff_filenames, str):
+    if isinstance(new_tiff_filenames, (bytes, unicode)):
         new_tiff_filenames = [new_tiff_filenames]
 
     # Expand any regex in path names
@@ -398,17 +405,17 @@ def convert_tiffs(new_tiff_filenames,
     new_hdf5_dataset_dtype = bool
     for each_new_tiff_filename in new_tiff_filenames:
         # Add each filename.
-        new_hdf5_dataset_filenames.append(each_new_tiff_filename)
+        new_hdf5_dataset_filenames.append(unicode(each_new_tiff_filename))
 
         # Get all of the offsets.
         new_hdf5_dataset_offsets.append(new_hdf5_dataset_shape[axis])
 
         # Get the shape and type of each frame.
-        each_new_tiff_file_shape, each_new_tiff_file_dtype = get_multipage_tiff_shape_dtype_transformed(
+        each_new_tiff_file_shape, each_new_tiff_file_dtype = list(get_multipage_tiff_shape_dtype_transformed(
             each_new_tiff_filename,
             axis_order="cztyx",
             pages_to_channel=pages_to_channel
-        ).values()
+        ).values())
         each_new_tiff_file_shape = each_new_tiff_file_shape[2:]
 
         # Find the increase on the merge axis. Find the largest shape for the
@@ -459,7 +466,12 @@ def convert_tiffs(new_tiff_filenames,
             new_hdf5_dataset_dtype,
             chunks=True
         )
-        new_hdf5_dataset.attrs["filenames"] = new_hdf5_dataset_filenames
+        new_hdf5_dataset.attrs.create(
+            "filenames",
+            new_hdf5_dataset_filenames,
+            shape=new_hdf5_dataset_filenames.shape,
+            dtype=h5py.special_dtype(vlen=unicode)
+        )
         new_hdf5_dataset.attrs["offsets"] = new_hdf5_dataset_offsets
         # Workaround required due to this issue
         # ( https://github.com/h5py/h5py/issues/289 ).

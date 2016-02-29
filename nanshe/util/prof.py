@@ -34,7 +34,7 @@ import time
 
 import psutil
 
-import wrappers
+from nanshe.util import wrappers
 
 
 

@@ -23,7 +23,7 @@ __date__ = "$Jun 26, 2014 18:24:25 EDT$"
 
 import glob
 
-import prof
+from nanshe.util import prof
 
 
 

@@ -15,6 +15,6 @@ __date__ = "$Mar 29, 2015 23:03:14 EDT$"
 
 __all__ = ["hdf5", "xjson", "xtiff"]
 
-import hdf5
-import xjson
-import xtiff
+from nanshe.io import hdf5
+from nanshe.io import xjson
+from nanshe.io import xtiff

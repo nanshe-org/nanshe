@@ -13,6 +13,7 @@ import itertools
 
 import numpy
 
+import nanshe.util.iters
 import nanshe.util.xnumpy
 
 import nanshe.imp.segment
@@ -57,9 +58,9 @@ class TestSegment(object):
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()
 
@@ -104,9 +105,9 @@ class TestSegment(object):
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.array([1, 1, 2])).all()
 
@@ -152,9 +153,9 @@ class TestSegment(object):
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()
 
@@ -207,9 +208,9 @@ class TestSegment(object):
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()
 
@@ -266,9 +267,9 @@ class TestSegment(object):
                 nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()
 
@@ -310,9 +311,9 @@ class TestSegment(object):
             )
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()
 
@@ -359,9 +360,9 @@ class TestSegment(object):
             )
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.array([1, 1, 2])).all()
 
@@ -409,9 +410,9 @@ class TestSegment(object):
             )
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()
 
@@ -466,9 +467,9 @@ class TestSegment(object):
             )
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()
 
@@ -527,8 +528,8 @@ class TestSegment(object):
             )
         ).all()
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_index_array(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
 
-        assert all([(_1 == _2).all() for _1, _2 in itertools.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
+        assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_label_image().nonzero(), tuple(p.T))])
 
         assert (e.get_local_max_label_image()[e.get_local_max_label_image().nonzero()] == numpy.arange(1, len(m) + 1)).all()

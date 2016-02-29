@@ -44,11 +44,11 @@ import mahotas
 import vigra
 
 
-import iters
+from nanshe.util import iters
 
 
 # Need in order to have logging information no matter what.
-import prof
+from nanshe.util import prof
 
 
 # Get the logger
@@ -329,7 +329,7 @@ def add_singleton_axis_pos(a_array, axis=0):
     axis %= (a_array.ndim + 1)
 
     # Constructing the current ordering of axis and the singleton dime
-    new_array_shape = range(1, a_array.ndim + 1)
+    new_array_shape = list(iters.irange(1, a_array.ndim + 1))
     new_array_shape.insert(axis, 0)
     new_array_shape = tuple(new_array_shape)
 
@@ -517,7 +517,7 @@ def squish(new_array, axis=None, keepdims=False):
     # Convert the axes into a standard format that we can work with.
     axes = axis
     if axes is None:
-        axes = range(new_array.ndim)
+        axes = list(iters.irange(new_array.ndim))
     else:
         # If axes is some kind of iterable, convert it to a list.
         # If not assume, it is a single value.
@@ -527,7 +527,7 @@ def squish(new_array, axis=None, keepdims=False):
             axes = [axes]
 
         # Correct axes to be within the range [0, new_array.ndim).
-        for i in xrange(len(axes)):
+        for i in iters.irange(len(axes)):
             axes[i] %= new_array.ndim
 
     axes = tuple(axes)
@@ -764,7 +764,7 @@ def unsquish(new_array, shape, axis=None):
     # Convert the axes into a standard format that we can work with.
     axes = axis
     if axes is None:
-        axes = range(0, len(shape))
+        axes = list(iters.irange(0, len(shape)))
     else:
         # If axes is some kind of iterable, convert it to a list.
         # If not assume, it is a single value.
@@ -774,7 +774,7 @@ def unsquish(new_array, shape, axis=None):
             axes = [axes]
 
         # Correct axes to be within the range [0, len(shape)).
-        for i in xrange(len(axes)):
+        for i in iters.irange(len(axes)):
             axes[i] %= len(shape)
 
     axes = tuple(axes)
@@ -803,16 +803,16 @@ def unsquish(new_array, shape, axis=None):
             iters.xrange_with_skip(len(shape), to_skip=axes), axes
         )
         # Get the current axis order (i.e. in order)
-        current_axis_order_iter = xrange(len(shape))
+        current_axis_order_iter = iters.irange(len(shape))
 
         # Find how the old order relates to the new one
         axis_order_map = dict(
-            itertools.izip(old_axis_order_iter, current_axis_order_iter)
+            iters.izip(old_axis_order_iter, current_axis_order_iter)
         )
 
         # Export how the new order will be changed
         # (as the old axis order will be how to transform the axes).
-        axis_order = tuple(axis_order_map.itervalues())
+        axis_order = tuple(axis_order_map.values())
 
         # Put all axes not part of the group in front and
         # stuff the rest at the back.
@@ -1154,7 +1154,7 @@ def roll(new_array, shift, out=None, to_mask=False):
 
                 out.mask = numpy.ma.getmaskarray(out)
 
-    for i in xrange(len(shift)):
+    for i in iters.irange(len(shift)):
         if (shift[i] != 0):
             out[:] = numpy.roll(out, shift[i], i)
 
@@ -2356,7 +2356,7 @@ def enumerate_masks_max(new_masks, axis=0):
         dtype=numpy.uint64
     )
 
-    for i in xrange(new_masks.shape[axis]):
+    for i in iters.irange(new_masks.shape[axis]):
         i = new_enumerated_masks_max.dtype.type(i)
         one = new_enumerated_masks_max.dtype.type(1)
         numpy.maximum(
@@ -2469,11 +2469,11 @@ def cartesian_product(arrays):
                    [0, 0, 3]])
     """
 
-    for i in xrange(len(arrays)):
+    for i in iters.irange(len(arrays)):
         assert (arrays[
                 i].ndim == 1), "Must provide only 1D arrays to this function or a single 2D array."
 
-    array_shapes = tuple(len(arrays[i]) for i in xrange(len(arrays)))
+    array_shapes = tuple(len(arrays[i]) for i in iters.irange(len(arrays)))
 
     result_shape = [0, 0]
     result_shape[0] = numpy.product(array_shapes)
@@ -2481,11 +2481,11 @@ def cartesian_product(arrays):
     result_shape = tuple(result_shape)
 
     result_dtype = numpy.find_common_type(
-        [arrays[i].dtype for i in xrange(result_shape[1])], []
+        [arrays[i].dtype for i in iters.irange(result_shape[1])], []
     )
 
     result = numpy.empty(result_shape, dtype=result_dtype)
-    for i in xrange(result.shape[1]):
+    for i in iters.irange(result.shape[1]):
         repeated_array_i = expand_view(
             arrays[i],
             reps_before=array_shapes[:i],
@@ -2581,13 +2581,13 @@ def truncate_masked_frames(shifted_frames):
 
     # Find the shape
     shifted_frames_mask_shape = tuple(shifted_frames_mask.sum(
-        axis=_i).max() for _i in xrange(shifted_frames_mask.ndim)
+        axis=_i).max() for _i in iters.irange(shifted_frames_mask.ndim)
     )
     shifted_frames_mask_shape = (len(shifted_frames),) + shifted_frames_mask_shape
 
     # Assert that this is an acceptable mask
     #shifted_frames_mask_upper_offset = tuple(
-    #    (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(xrange(shifted_frames_mask.ndim))
+    #    (shifted_frames_mask.sum(axis=_i) != 0).argmax() for _i in reversed(iters.irange(shifted_frames_mask.ndim))
     #)
     #shifted_frames_mask_lower_offset = tuple(
     #    numpy.array(shifted_frames_mask.shape) - \
@@ -2597,7 +2597,7 @@ def truncate_masked_frames(shifted_frames):
     #
     #shifted_frames_mask_reconstructed = numpy.pad(
     #    numpy.ones(shifted_frames_mask_shape[1:], dtype=bool),
-    #    [(_d, _e) for _d, _e in itertools.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],
+    #    [(_d, _e) for _d, _e in iters.izip(shifted_frames_mask_upper_offset, shifted_frames_mask_lower_offset)],
     #    "constant"
     #)
     #assert(
@@ -3133,7 +3133,7 @@ def blocks_split(space_shape, block_shape, block_halo=None):
     haloed_ranges_per_dim = []
     trimmed_halos_per_dim = []
 
-    for each_dim in xrange(len(space_shape)):
+    for each_dim in iters.irange(len(space_shape)):
         # Construct each block using the block size given. Allow to spill over.
         if block_shape[each_dim] == -1:
             block_shape[each_dim] = space_shape[each_dim]
@@ -3161,13 +3161,13 @@ def blocks_split(space_shape, block_shape, block_halo=None):
 
         # Convert all ranges to slices for easier use.
         a_range = iters.reformat_slices([
-            slice(*a_range[i]) for i in xrange(len(a_range))
+            slice(*a_range[i]) for i in iters.irange(len(a_range))
         ])
         a_range_haloed = iters.reformat_slices([
-            slice(*a_range_haloed[i]) for i in xrange(len(a_range_haloed))
+            slice(*a_range_haloed[i]) for i in iters.irange(len(a_range_haloed))
         ])
         a_trimmed_halo = iters.reformat_slices([
-            slice(*a_trimmed_halo[i]) for i in xrange(len(a_trimmed_halo))
+            slice(*a_trimmed_halo[i]) for i in iters.irange(len(a_trimmed_halo))
         ])
 
         # Collect all blocks
@@ -3568,11 +3568,11 @@ def unique_mapping(mapping, out=None):
         out[:] = mapping
 
     injective_into = list()
-    for i in xrange(mapping.ndim):
+    for i in iters.irange(mapping.ndim):
         injective_into_i = (add_singleton_op(numpy.sum, mapping, i) == 1)
         injective_into.append(injective_into_i)
 
-    for i in xrange(mapping.ndim):
+    for i in iters.irange(mapping.ndim):
         out *= injective_into[i]
 
     return(out)
@@ -4124,14 +4124,14 @@ def matrix_reduced_op(a, b, op):
 
     assert (a.ndim == b.ndim)
 
-    for i in xrange(1, a.ndim):
+    for i in iters.irange(1, a.ndim):
         assert (a.shape[i] == b.shape[i])
 
     out = numpy.empty(
         (len(a), len(b)), dtype=numpy.promote_types(a.dtype, b.dtype)
     )
 
-    for i, j in itertools.product(xrange(out.shape[0]), xrange(out.shape[1])):
+    for i, j in itertools.product(iters.irange(out.shape[0]), iters.irange(out.shape[1])):
         out[i, j] = op(a[i], b[j])
 
     return(out)
@@ -4204,7 +4204,7 @@ def masks_intersection(a, b):
 
     out = numpy.empty((len(a), len(b)), dtype=numpy.uint64)
 
-    for i, j in itertools.product(xrange(out.shape[0]), xrange(out.shape[1])):
+    for i, j in itertools.product(iters.irange(out.shape[0]), iters.irange(out.shape[1])):
         out[i, j] = (a[i] & b[j]).sum()
 
     return(out)
@@ -4274,7 +4274,7 @@ def masks_union(a, b):
 
     out = numpy.empty((len(a), len(b)), dtype=numpy.uint64)
 
-    for i, j in itertools.product(xrange(out.shape[0]), xrange(out.shape[1])):
+    for i, j in itertools.product(iters.irange(out.shape[0]), iters.irange(out.shape[1])):
         out[i, j] = (a[i] | b[j]).sum()
 
     return(out)

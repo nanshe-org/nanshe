@@ -3,7 +3,6 @@ __date__ = "$Mar 30, 2015 08:25:33 EDT$"
 
 
 import collections
-import itertools
 import json
 import os
 import os.path
@@ -33,9 +32,13 @@ class TestConverter(object):
 
         self.temp_dir = tempfile.mkdtemp()
         for i, i_str, (a_b, a_e) in nanshe.util.iters.filled_stringify_enumerate(
-                                        itertools.izip(
+                                        nanshe.util.iters.izip(
                                                 *nanshe.util.iters.lagged_generators(
-                                                    xrange(0, self.data.shape[0] + 100 - 1, 100)
+                                                    nanshe.util.iters.irange(
+                                                        0,
+                                                        self.data.shape[0] + 100 - 1,
+                                                        100
+                                                    )
                                                 )
                                         )
                                     ):
@@ -65,7 +68,7 @@ class TestConverter(object):
             json.dump(params, fid)
             fid.write("\n")
 
-        main_args = ["./converter.py"] + ["tiff"] + [config_filename] + self.filedata.keys() + [hdf5_filepath]
+        main_args = ["./converter.py"] + ["tiff"] + [config_filename] + list(self.filedata.keys()) + [hdf5_filepath]
 
         assert (nanshe.converter.main(*main_args) == 0)
 

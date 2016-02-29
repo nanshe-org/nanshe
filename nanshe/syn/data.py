@@ -18,14 +18,13 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Aug 01, 2014 14:55:57 EDT$"
 
 
-import itertools
-
 import numpy
 
 import scipy
 import scipy.ndimage
 import scipy.ndimage.filters
 
+import nanshe.util.iters
 import nanshe.util.xnumpy
 
 
@@ -380,7 +379,7 @@ def generate_gaussian_images(space, means, std_devs, magnitudes):
         magnitudes.shape + tuple(space.tolist()), dtype=float
     )
     for i, (each_mean, each_std_dev, each_magnitude) in enumerate(
-            itertools.izip(means, std_devs, magnitudes)
+            nanshe.util.iters.izip(means, std_devs, magnitudes)
     ):
         images[i][tuple(each_mean)] = each_magnitude
         images[i] = scipy.ndimage.filters.gaussian_filter(
@@ -458,8 +457,8 @@ def generate_random_bound_points(space, radii):
 
     # Generate a random point for each radius.
     points = numpy.zeros(radii.shape + space.shape, dtype=int)
-    for i in xrange(len(radii)):
-        for j in xrange(len(space)):
+    for i in nanshe.util.iters.irange(len(radii)):
+        for j in nanshe.util.iters.irange(len(space)):
             points[i][j] = numpy.random.randint(
                 bound_space[i][j][0], bound_space[i][j][1]
             )

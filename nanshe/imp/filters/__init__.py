@@ -16,6 +16,6 @@ __date__ = "$Mar 31, 2015 22:29:31 EDT$"
 
 __all__ = ["noise", "masks", "wavelet"]
 
-import masks
-import noise
-import wavelet
+from nanshe.imp.filters import masks
+from nanshe.imp.filters import noise
+from nanshe.imp.filters import wavelet

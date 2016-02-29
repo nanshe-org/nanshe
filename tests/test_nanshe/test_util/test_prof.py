@@ -5,7 +5,11 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jul 30, 2014 16:57:43 EDT$"
 
 
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 import logging
 import re
 import sys
@@ -16,7 +20,7 @@ import nanshe.util.prof
 
 class TestProf(object):
     def setup(self):
-        self.stream = StringIO.StringIO()
+        self.stream = StringIO()
 
         self.handler = logging.StreamHandler(self.stream)
         self.handler.setFormatter(logging.Formatter(logging.BASIC_FORMAT))
@@ -199,7 +203,7 @@ class TestProf(object):
         def test(a, b=5):
             return(a + b)
 
-        expected_traceback = StringIO.StringIO()
+        expected_traceback = StringIO()
 
         try:
             test("c")
@@ -258,6 +262,7 @@ class TestProf(object):
         self.handler.flush()
         result_2 = self.stream.getvalue()
         self.stream.truncate(0)
+        result_2 = result_2.strip("\0")
 
         print(result_2)
 
@@ -301,6 +306,7 @@ class TestProf(object):
         self.handler.flush()
         result_2 = self.stream.getvalue()
         self.stream.truncate(0)
+        result_2 = result_2.strip("\0")
 
         print(result_2)
 
