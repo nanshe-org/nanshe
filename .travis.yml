@@ -1,8 +1,10 @@
 language: generic
 env:
-   - PYTHON_VERSION="2.7"
+   - PYTHON_VERSION="2.7" DEPLOY_DOCS=true
    - PYTHON_VERSION="3.5"
 before_install:
+   # If `$DEPLOY_DOCS` is unset, make it `false` by default.
+   - if [ -z $DEPLOY_DOCS ]; then DEPLOY_DOCS=false; fi
    # Get the tag if it wasn't provided. Travis doesn't provide this if it isn't a tagged build.
    - if [ -z $TRAVIS_TAG ]; then TRAVIS_TAG=`git tag --contains` ; fi
    - echo $TRAVIS_TAG
@@ -98,7 +100,7 @@ after_success:
    # Commit changes and push. Reference commit used and tag if relevant.
    - git add -A
    - if [ -z $TRAVIS_TAG ]; then git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT})." --allow-empty ; else git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT}) and tag (${TRAVIS_TAG})." --allow-empty ; fi
-   - git push -q origin gh-pages > /dev/null 2>&1; echo $?
+   - $DEPLOY_DOCS && (git push -q origin gh-pages > /dev/null 2>&1; echo $?)
    # Check to see if this is a release. If so, create and upload binaries.
    - if [ -z $TRAVIS_TAG ]; then exit 0 ; fi
    - git checkout $TRAVIS_TAG
