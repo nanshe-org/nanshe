@@ -28,7 +28,6 @@ __date__ = "$Jul 23, 2014 16:24:36 EDT$"
 
 import collections
 import inspect
-import itertools
 import functools
 import types
 
@@ -529,7 +528,7 @@ def with_setup_state(setup=None, teardown=None):
 
         stage_dict = {"setup": setup, "teardown": teardown}
         stage_orderer = [(lambda a, b: (a, b)), (lambda a, b: (b, a))]
-        stage_itr = itertools.izip(stage_dict.items(), stage_orderer)
+        stage_itr = zip(stage_dict.items(), stage_orderer)
 
         for (each_stage_name, each_new_stage), each_stage_orderer in stage_itr:
             each_old_stage = getattr(a_callable, each_stage_name, None)
