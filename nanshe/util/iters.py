@@ -23,10 +23,9 @@ import math
 
 import numpy
 
-
-
 # Need in order to have logging information no matter what.
 import prof
+
 
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
