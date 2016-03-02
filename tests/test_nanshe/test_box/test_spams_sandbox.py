@@ -11,6 +11,11 @@ import nose.plugins.attrib
 import ctypes
 import multiprocessing
 
+try:
+    from queue import Queue
+except ImportError:
+    from Queue import Queue
+
 import numpy
 
 import nanshe.box.spams_sandbox
@@ -57,7 +62,7 @@ class TestSpamsSandbox(object):
         self.g3 = numpy.asfortranarray(self.g3)
 
     def test_run_multiprocessing_queue_spams_trainDL_1(self):
-        out_queue = multiprocessing.Queue()
+        out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
             out_queue,
@@ -108,7 +113,7 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_queue_spams_trainDL_2(self):
-        out_queue = multiprocessing.Queue()
+        out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
             out_queue,
@@ -158,7 +163,7 @@ class TestSpamsSandbox(object):
         assert (len(unmatched_g3) == 0)
 
     def test_run_multiprocessing_queue_spams_trainDL_3(self):
-        out_queue = multiprocessing.Queue()
+        out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
             out_queue,
@@ -211,7 +216,7 @@ class TestSpamsSandbox(object):
 
     @nose.plugins.attrib.attr("3D")
     def test_run_multiprocessing_queue_spams_trainDL_4(self):
-        out_queue = multiprocessing.Queue()
+        out_queue = Queue()
 
         nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL(
             out_queue,
