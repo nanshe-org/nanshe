@@ -1,7 +1,10 @@
 language: generic
 env:
-   - PYTHON_VERSION="2.7"
+   - PYTHON_VERSION="2.7" DEPLOY_DOCS=true
+   - PYTHON_VERSION="3.5"
 before_install:
+   # If `$DEPLOY_DOCS` is unset, make it `false` by default.
+   - if [ -z $DEPLOY_DOCS ]; then DEPLOY_DOCS=false; fi
    # Get the tag if it wasn't provided. Travis doesn't provide this if it isn't a tagged build.
    - if [ -z $TRAVIS_TAG ]; then TRAVIS_TAG=`git tag --contains` ; fi
    - echo $TRAVIS_TAG
@@ -54,7 +57,7 @@ install:
    - conda install nose-timer
    - echo "coverage 3.*" >> $HOME/miniconda/envs/testenv/conda-meta/pinned
    - conda install coverage
-   - conda install docstring-coverage
+   - conda install docstring-coverage || true
    # Clean up downloads as there are quite a few and they waste space/memory.
    - sudo apt-get clean
    - conda clean -tipsy
@@ -65,7 +68,7 @@ script:
    # Build documentation.
    - python setup.py build_sphinx
    # Get info on docstring coverage.
-   - docstring-coverage nanshe | tee .docstring-coverage
+   - (hash docstring-coverage && docstring-coverage nanshe | tee .docstring-coverage) || true
 after_success:
    # Install packages for submitting coverage results when they are needed.
    - conda install python-coveralls
@@ -75,7 +78,7 @@ after_success:
    - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_REPO_SLUG != "nanshe-org/nanshe" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.
    - mv build/sphinx/html ../nanshe-git-docs
-   - mv .docstring-coverage ../nanshe-git-docs
+   - mv .docstring-coverage ../nanshe-git-docs || true
    # Update credentials
    - git config --global user.name "Travis CI"
    - git config --global user.email "noreply@travis-ci.org"
@@ -91,13 +94,13 @@ after_success:
    - rm -rf * .*
    - mv ../nanshe-git-docs/.nojekyll .
    - mv ../nanshe-git-docs/.git .
-   - mv ../nanshe-git-docs/.docstring-coverage .
+   - mv ../nanshe-git-docs/.docstring-coverage . || true
    - mv ../nanshe-git-docs/* .
    - rm -rf ../nanshe-git-docs
    # Commit changes and push. Reference commit used and tag if relevant.
    - git add -A
    - if [ -z $TRAVIS_TAG ]; then git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT})." --allow-empty ; else git commit -m "Rebuilt documentation for commit (${TRAVIS_COMMIT}) and tag (${TRAVIS_TAG})." --allow-empty ; fi
-   - git push -q origin gh-pages > /dev/null 2>&1; echo $?
+   - $DEPLOY_DOCS && (git push -q origin gh-pages > /dev/null 2>&1; echo $?)
    # Check to see if this is a release. If so, create and upload binaries.
    - if [ -z $TRAVIS_TAG ]; then exit 0 ; fi
    - git checkout $TRAVIS_TAG
