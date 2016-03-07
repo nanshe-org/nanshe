@@ -907,7 +907,7 @@ def test_main_1():
 def test_main_2():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
@@ -958,7 +958,7 @@ def test_main_2():
 def test_main_3():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     # Attempt to import drmaa.
@@ -1067,7 +1067,7 @@ def test_main_4():
 def test_main_5():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     executable = os.path.splitext(nanshe.learner.__file__)[0] + os.extsep + "py"
@@ -1118,7 +1118,7 @@ def test_main_5():
 def test_main_6():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     # Attempt to import drmaa.
@@ -1221,7 +1221,7 @@ def test_generate_neurons_io_handler_1():
 def test_generate_neurons_io_handler_2():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_2.hdf5_input_filepath, test_generate_neurons_io_handler_2.hdf5_output_filepath, test_generate_neurons_io_handler_2.config_blocks_filename)
@@ -1268,7 +1268,7 @@ def test_generate_neurons_io_handler_2():
 def test_generate_neurons_io_handler_3():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     # Attempt to import drmaa.
@@ -1369,7 +1369,7 @@ def test_generate_neurons_io_handler_4():
 def test_generate_neurons_io_handler_5():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     nanshe.learner.generate_neurons_io_handler(test_generate_neurons_io_handler_5.hdf5_input_3D_filepath, test_generate_neurons_io_handler_5.hdf5_output_3D_filepath, test_generate_neurons_io_handler_5.config_blocks_3D_filename)
@@ -1416,7 +1416,7 @@ def test_generate_neurons_io_handler_5():
 def test_generate_neurons_io_handler_6():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     # Attempt to import drmaa.
@@ -1557,7 +1557,7 @@ def test_generate_neurons_a_block_2():
 def test_generate_neurons_blocks_1():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     nanshe.learner.generate_neurons_blocks(test_generate_neurons_blocks_1.hdf5_input_filepath, test_generate_neurons_blocks_1.hdf5_output_filepath, **test_generate_neurons_blocks_1.config_blocks["generate_neurons_blocks"])
@@ -1604,7 +1604,7 @@ def test_generate_neurons_blocks_1():
 def test_generate_neurons_blocks_2():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     # Attempt to import drmaa.
@@ -1663,7 +1663,7 @@ def test_generate_neurons_blocks_2():
 def test_generate_neurons_blocks_3():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     nanshe.learner.generate_neurons_blocks(test_generate_neurons_blocks_3.hdf5_input_3D_filepath, test_generate_neurons_blocks_3.hdf5_output_3D_filepath, **test_generate_neurons_blocks_3.config_blocks_3D["generate_neurons_blocks"])
@@ -1710,7 +1710,7 @@ def test_generate_neurons_blocks_3():
 def test_generate_neurons_blocks_4():
     if not has_spams:
         raise nose.SkipTest(
-            "Cannot run this test with SPAMS being installed"
+            "Cannot run this test without SPAMS being installed."
         )
 
     # Attempt to import drmaa.

@@ -829,7 +829,7 @@ class TestSegment(object):
     def test_generate_dictionary_00(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51],
@@ -887,7 +887,7 @@ class TestSegment(object):
     def test_generate_dictionary_01(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51],
@@ -946,7 +946,7 @@ class TestSegment(object):
     def test_generate_dictionary_02(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51, 87],
@@ -1005,7 +1005,7 @@ class TestSegment(object):
     def test_generate_dictionary_03(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51, 87],
@@ -1063,7 +1063,7 @@ class TestSegment(object):
     def test_generate_dictionary_04(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51],
@@ -1124,7 +1124,7 @@ class TestSegment(object):
     def test_generate_dictionary_05(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51],
@@ -1186,7 +1186,7 @@ class TestSegment(object):
     def test_generate_dictionary_06(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51, 87],
@@ -1248,7 +1248,7 @@ class TestSegment(object):
     def test_generate_dictionary_07(self):
         if not has_spams:
             raise nose.SkipTest(
-                "Cannot run this test with SPAMS being installed"
+                "Cannot run this test without SPAMS being installed."
             )
 
         p = numpy.array([[27, 51, 87],
