@@ -262,11 +262,10 @@ def register_mean_offsets(frames2reg,
 
         template_fft[:] = 0
         for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
-            frames2reg_shifted_fft_ij = translate_fourier(
+            template_fft += translate_fourier(
                 frames2reg_fft[range_ij] / len(frames2reg),
                 space_shift[range_ij]
-            )
-            template_fft += frames2reg_shifted_fft_ij.sum(axis=0)
+            ).sum(axis=0)
 
         for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
             this_space_shift[range_ij] = find_offsets(
