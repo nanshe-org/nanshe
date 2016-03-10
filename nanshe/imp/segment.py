@@ -1160,10 +1160,13 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
             for each_key in properties:
                 if each_key in array_properties:
                     new_label_image_props_with_arrays[i][each_key] = numpy.array(
-                        new_label_image_props[i][each_key]
+                        new_label_image_props[i][each_key],
+                        dtype=region_properties_type_dict[each_key]
                     )
                 else:
-                    new_label_image_props_with_arrays[i][each_key] = new_label_image_props[i][each_key]
+                    new_label_image_props_with_arrays[i][each_key] = region_properties_type_dict[each_key](
+                        new_label_image_props[i][each_key]
+                    )
 
         # Holds the values from props.
         new_label_image_props_with_arrays_values = []
