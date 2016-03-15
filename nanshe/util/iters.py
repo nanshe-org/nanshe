@@ -33,6 +33,11 @@ except ImportError:
     from itertools import zip_longest as izip_longest
 
 try:
+    from itertools import imap
+except ImportError:
+    imap = map
+
+try:
     from itertools import izip
 except ImportError:
     izip = zip
@@ -633,22 +638,22 @@ def subrange(start, stop=None, step=None, substep=None):
             >>> subrange(5) # doctest: +ELLIPSIS
             <generator object subrange at 0x...>
 
-            >>> list(map(list, subrange(5)))
+            >>> list(imap(list, subrange(5)))
             [[0], [1], [2], [3], [4]]
 
-            >>> list(map(list, subrange(0, 5)))
+            >>> list(imap(list, subrange(0, 5)))
             [[0], [1], [2], [3], [4]]
 
-            >>> list(map(list, subrange(1, 5)))
+            >>> list(imap(list, subrange(1, 5)))
             [[1], [2], [3], [4]]
 
-            >>> list(map(list, subrange(0, 10, 3)))
+            >>> list(imap(list, subrange(0, 10, 3)))
             [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]
 
-            >>> list(map(list, subrange(0, 7, 3)))
+            >>> list(imap(list, subrange(0, 7, 3)))
             [[0, 1, 2], [3, 4, 5], [6]]
 
-            >>> list(map(list, subrange(0, 7, 3, 2)))
+            >>> list(imap(list, subrange(0, 7, 3, 2)))
             [[0, 2], [3, 5], [6]]
     """
 
