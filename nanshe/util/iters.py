@@ -33,6 +33,11 @@ except ImportError:
     from itertools import zip_longest as izip_longest
 
 try:
+    from itertools import imap
+except ImportError:
+    imap = map
+
+try:
     from itertools import izip
 except ImportError:
     izip = zip
