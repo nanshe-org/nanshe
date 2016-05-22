@@ -88,12 +88,12 @@ elif sys.argv[1] == "bdist_conda":
         ]
     if sys.version_info < (3,):
         build_requires += [
-            "spams",
+            "python-spams",
             "pyqt",
             "volumina"
         ]
         install_requires += [
-            "spams",
+            "python-spams",
             "pyqt",
             "volumina"
         ]
