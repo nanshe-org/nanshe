@@ -42,13 +42,14 @@ elif sys.argv[1] == "bdist_conda":
     from distutils.command.bdist_conda import CondaDistribution as Distribution
 
     build_requires = [
-        "nomkl",
+        "blas==1.1",
         "openblas",
         "fftw",
         "setuptools",
         "psutil",
         "numpy",
         "scipy",
+        "hdf5>=1.8.15,<1.8.16",
         "h5py",
         "bottleneck",
         "matplotlib",
@@ -61,13 +62,14 @@ elif sys.argv[1] == "bdist_conda":
     ]
 
     install_requires = [
-        "nomkl",
+        "blas==1.1",
         "openblas",
         "fftw",
         "setuptools",
         "psutil",
         "numpy",
         "scipy",
+        "hdf5>=1.8.15,<1.8.16",
         "h5py",
         "bottleneck",
         "matplotlib",
@@ -88,12 +90,12 @@ elif sys.argv[1] == "bdist_conda":
         ]
     if sys.version_info < (3,):
         build_requires += [
-            "spams",
+            "python-spams",
             "pyqt",
             "volumina"
         ]
         install_requires += [
-            "spams",
+            "python-spams",
             "pyqt",
             "volumina"
         ]
