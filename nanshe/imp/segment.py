@@ -2497,6 +2497,75 @@ def remove_too_close_local_maxima(local_maxima,
 
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
+def wavelet_thresholding(new_image,
+                         significance_threshold,
+                         wavelet_scale,
+                         noise_threshold):
+    """
+        Finds a thresholding using a noise estimate and the wavelet transform.
+
+        Args:
+            new_image(numpy.ndarray):                   image to threshold.
+
+            significance_threshold(float):              threshold above which
+                                                        everything is
+                                                        considered significant
+                                                        for the purpose of
+                                                        noise estimation.
+
+            wavelet_scale(int):                         the scale of wavelet
+                                                        transform to use.
+
+            noise_threshold(float):                     a ratio to which the
+                                                        noise estimate scales
+                                                        (e.g. 1.0 means the
+                                                        noise computed is the
+                                                        noise used).
+
+        Returns:
+            tuple of numpy.ndarray:                     a wavelet transformed
+                                                        array and a mask.
+    """
+
+    new_wavelet_transformed_image = None
+    new_wavelet_transformed_image_significant_mask = None
+
+    # Contains a bool array with significant values True and noise False.
+    new_image_noise_estimate = estimate_noise(
+        new_image,
+        significance_threshold=significance_threshold
+    )
+
+    # Dictionary with wavelet transform applied. Wavelet transform is the
+    # first index.
+    new_wavelet_transformed_image = wavelet.transform(
+        new_image,
+        include_intermediates=False,
+        include_lower_scales=True,
+        scale=wavelet_scale
+    )
+
+    if wavelet_thresholding.recorders.array_debug_recorder:
+        for i in iters.irange(len(new_wavelet_transformed_image)):
+            wavelet_thresholding.recorders.array_debug_recorder["new_wavelet_transformed_image"] = \
+                new_wavelet_transformed_image[i][None]
+
+    # Contains a bool array with significant values True and noise False for
+    # all wavelet transforms.
+    new_wavelet_transformed_image_significant_mask = significant_mask(
+        new_wavelet_transformed_image,
+        noise_estimate=new_image_noise_estimate,
+        noise_threshold=noise_threshold
+    )
+
+    return(
+        new_wavelet_transformed_image,
+        new_wavelet_transformed_image_significant_mask
+    )
+
+
+@prof.log_call(trace_logger)
+@hdf5.record.static_array_debug_recorder
 def wavelet_denoising(new_image,
                       accepted_region_shape_constraints,
                       accepted_neuron_shape_constraints,
@@ -2546,35 +2615,12 @@ def wavelet_denoising(new_image,
     logger.debug("Removing noise...")
 
     # Contains a bool array with significant values True and noise False.
-    new_image_noise_estimate = estimate_noise(new_image,
-                                              **parameters["estimate_noise"])
-
-    # Dictionary with wavelet transform applied. Wavelet transform is the
-    # first index.
-    new_wavelet_transformed_image = wavelet.transform(
+    new_wavelet_transformed_image, new_wavelet_transformed_image_significant_mask = wavelet_thresholding(
         new_image,
-        include_intermediates=False,
-        include_lower_scales=True,
-        **parameters["wavelet.transform"]
+        significance_threshold=parameters["estimate_noise"]["significance_threshold"],
+        wavelet_scale=parameters["wavelet.transform"]["scale"],
+        noise_threshold=parameters["significant_mask"]["noise_threshold"]
     )
-
-    if wavelet_denoising.recorders.array_debug_recorder:
-        for i in iters.irange(len(new_wavelet_transformed_image)):
-            wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image"] = \
-                new_wavelet_transformed_image[i][None]
-
-    # Contains a bool array with significant values True and noise False for
-    # all wavelet transforms.
-    new_wavelet_transformed_image_significant_mask = significant_mask(
-        new_wavelet_transformed_image,
-        noise_estimate=new_image_noise_estimate,
-        **parameters["significant_mask"]
-    )
-
-    if wavelet_denoising.recorders.array_debug_recorder:
-        for i in iters.irange(len(new_wavelet_transformed_image_significant_mask)):
-            wavelet_denoising.recorders.array_debug_recorder["new_wavelet_transformed_image_significant_mask"] = \
-                new_wavelet_transformed_image_significant_mask[i][None]
 
     new_wavelet_image_mask = new_wavelet_transformed_image_significant_mask[-1].copy()
 
