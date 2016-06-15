@@ -2223,6 +2223,26 @@ class TestSegment(object):
 
         assert (points[magnitudes == magnitudes.max()] == e2.props["local_max"][0]).all()
 
+    def test_wavelet_thresholding_1(self):
+        params = {
+            "significance_threshold" : 3.0,
+            "wavelet_scale" : 5,
+            "noise_threshold" : 3.0
+        }
+
+        shape = numpy.array((500, 500))
+
+        neuron_centers = numpy.array([[177,  52], [127, 202], [343, 271]])
+        original_neurons_image = nanshe.syn.data.generate_gaussian_images(shape, neuron_centers, (50.0/3.0,)*len(neuron_centers), (1.0/3.0,)*len(neuron_centers)).sum(axis=0)
+        original_neurons_mask = (original_neurons_image >= 0.00014218114898827068)
+
+        wtt_image, wtt_mask = nanshe.imp.segment.wavelet_thresholding(
+            original_neurons_image, **params
+        )
+
+        assert (wtt_mask[-2] == original_neurons_mask).all()
+        assert ((wtt_mask[-1] & original_neurons_mask) == original_neurons_mask).all()
+
     def test_wavelet_denoising_1(self):
         params = {
             "remove_low_intensity_local_maxima" : {
