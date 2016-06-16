@@ -2566,6 +2566,62 @@ def wavelet_thresholding(new_image,
 
 @prof.log_call(trace_logger)
 @hdf5.record.static_array_debug_recorder
+def match_regions_properties(props, constraints):
+    """
+        Returns a mask selecting the regions with matching properties.
+
+        Args:
+            props(numpy.ndarray):           properties of each labeled region.
+
+            constraints(dict):              dictionary containing each property
+                                            with optional ``min`` and ``max``
+                                            for each value.
+
+        Returns:
+            numpy.ndarray:                  mask with each region property that
+                                            matches marked as ``True`` and the
+                                            rest marked as ``False``.
+    """
+
+    within_bound = numpy.ones(props.shape, dtype=bool)
+
+    # Go through each property and make sure they are within the bounds
+    for each_prop, each_prop_constraints in constraints.items():
+        # If there is a lower bound, checks to see which are above it.
+        is_lower_bounded_maybe = None
+        if "min" in each_prop_constraints:
+            lower_bound = each_prop_constraints["min"]
+            is_lower_bounded_maybe = (
+                lower_bound <= props[each_prop]
+            )
+        else:
+            is_lower_bounded_maybe = numpy.ones(
+                props.shape, dtype=bool
+            )
+
+        # If there is an upper bound, checks to see which are below it.
+        is_upper_bounded_maybe = None
+        if "max" in each_prop_constraints:
+            upper_bound = each_prop_constraints["max"]
+            is_upper_bounded_maybe = (
+                props[each_prop] <= upper_bound
+            )
+        else:
+            is_upper_bounded_maybe = numpy.ones(
+                props.shape, dtype=bool
+            )
+
+        # See whether both or neither bound is satisfied.
+        is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
+
+        # Collect the unbounded ones
+        within_bound &= is_within_bound
+
+    return(within_bound)
+
+
+@prof.log_call(trace_logger)
+@hdf5.record.static_array_debug_recorder
 def wavelet_denoising(new_image,
                       accepted_region_shape_constraints,
                       accepted_neuron_shape_constraints,
@@ -2655,41 +2711,10 @@ def wavelet_denoising(new_image,
             "Finding regions that fail to meet some shape constraints..."
         )
 
-        within_bound = numpy.ones(
-            new_wavelet_image_denoised_labeled_props.shape, dtype=bool
+        within_bound = match_regions_properties(
+            new_wavelet_image_denoised_labeled_props,
+            accepted_region_shape_constraints
         )
-
-        # Go through each property and make sure they are within the bounds
-        for each_prop, each_prop_constraints in accepted_region_shape_constraints.items():
-            # If there is a lower bound, checks to see which are above it.
-            is_lower_bounded_maybe = None
-            if "min" in each_prop_constraints:
-                lower_bound = each_prop_constraints["min"]
-                is_lower_bounded_maybe = (
-                    lower_bound <= new_wavelet_image_denoised_labeled_props[each_prop]
-                )
-            else:
-                is_lower_bounded_maybe = numpy.ones(
-                    new_wavelet_image_denoised_labeled_props.shape, dtype=bool
-                )
-
-            # If there is an upper bound, checks to see which are below it.
-            is_upper_bounded_maybe = None
-            if "max" in each_prop_constraints:
-                upper_bound = each_prop_constraints["max"]
-                is_upper_bounded_maybe = (
-                    new_wavelet_image_denoised_labeled_props[each_prop] <= upper_bound
-                )
-            else:
-                is_upper_bounded_maybe = numpy.ones(
-                    new_wavelet_image_denoised_labeled_props.shape, dtype=bool
-                )
-
-            # See whether both or neither bound is satisfied.
-            is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
-
-            # Collect the unbounded ones
-            within_bound &= is_within_bound
 
         logger.debug("Found regions that fail to meet some shape constraints.")
 
@@ -2840,41 +2865,10 @@ def wavelet_denoising(new_image,
             if watershed_local_maxima.count.size:
                 wavelet_denoising.recorders.array_debug_recorder["watershed_local_maxima_count"] = watershed_local_maxima.count
 
-            within_bound = numpy.ones(
-                watershed_local_maxima.props.shape, dtype=bool
+            within_bound = match_regions_properties(
+                watershed_local_maxima.props,
+                accepted_neuron_shape_constraints
             )
-
-            # Go through each property and make sure they are within the bounds
-            for each_prop, each_prop_constraints in accepted_neuron_shape_constraints.items():
-                # If there is a lower bound, checks to see which are above it.
-                is_lower_bounded_maybe = None
-                if "min" in each_prop_constraints:
-                    lower_bound = each_prop_constraints["min"]
-                    is_lower_bounded_maybe = (
-                        lower_bound <= watershed_local_maxima.props[each_prop]
-                    )
-                else:
-                    is_lower_bounded_maybe = numpy.ones(
-                        watershed_local_maxima.props.shape, dtype=bool
-                    )
-
-                # If there is an upper bound, checks to see which are below it.
-                is_upper_bounded_maybe = None
-                if "max" in each_prop_constraints:
-                    upper_bound = each_prop_constraints["max"]
-                    is_upper_bounded_maybe = (
-                        watershed_local_maxima.props[each_prop] <= upper_bound
-                    )
-                else:
-                    is_upper_bounded_maybe = numpy.ones(
-                        watershed_local_maxima.props.shape, dtype=bool
-                    )
-
-                # See whether both or neither bound is satisfied.
-                is_within_bound = is_lower_bounded_maybe & is_upper_bounded_maybe
-
-                # Collect the unbounded ones
-                within_bound &= is_within_bound
 
             # Get labels outside of bounds and remove them
             watershed_local_maxima.remove_prop_mask(~within_bound)
