@@ -331,7 +331,7 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     # Create a shared array to contain the result
     result_array = multiprocessing.Array(
         result_array_ctype,
-        numpy.product(result_array_type._shape_),
+        int(numpy.product(result_array_type._shape_)),
         lock=False
     )
 
