@@ -522,7 +522,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         g_array = multiprocessing.Array(
             g_array_ctype,
-            numpy.product(g_array_type._shape_),
+            int(numpy.product(g_array_type._shape_)),
             lock=False
         )
 
@@ -543,7 +543,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         result_array = multiprocessing.Array(
             result_array_ctype,
-            numpy.product(result_array_type._shape_),
+            int(numpy.product(result_array_type._shape_)),
             lock=False
         )
 
@@ -618,7 +618,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         g3_array = multiprocessing.Array(
             g3_array_ctype,
-            numpy.product(g3_array_type._shape_),
+            int(numpy.product(g3_array_type._shape_)),
             lock=False
         )
 
@@ -639,7 +639,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         result_array = multiprocessing.Array(
             result_array_ctype,
-            numpy.product(result_array_type._shape_),
+            int(numpy.product(result_array_type._shape_)),
             lock=False
         )
 
@@ -814,7 +814,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         g_array = multiprocessing.Array(
             g_array_ctype,
-            numpy.product(g_array_type._shape_),
+            int(numpy.product(g_array_type._shape_)),
             lock=False
         )
 
@@ -835,7 +835,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         result_array = multiprocessing.Array(
             result_array_ctype,
-            numpy.product(result_array_type._shape_),
+            int(numpy.product(result_array_type._shape_)),
             lock=False
         )
 
@@ -914,7 +914,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         g3_array = multiprocessing.Array(
             g3_array_ctype,
-            numpy.product(g3_array_type._shape_),
+            int(numpy.product(g3_array_type._shape_)),
             lock=False
         )
 
@@ -935,7 +935,7 @@ class TestSpamsSandbox(object):
         ).type(0)[()]))
         result_array = multiprocessing.Array(
             result_array_ctype,
-            numpy.product(result_array_type._shape_),
+            int(numpy.product(result_array_type._shape_)),
             lock=False
         )
 
