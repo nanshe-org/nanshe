@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment module &mdash; nanshe 0.1.0a52+4.g69d2fbd documentation</title>
+    <title>nanshe.imp.segment module &mdash; nanshe 0.1.0a53 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a52+4.g69d2fbd',
+        VERSION:     '0.1.0a53',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a52+4.g69d2fbd documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a53 documentation" href="index.html" />
     <link rel="up" title="nanshe.imp package" href="nanshe.imp.html" />
     <link rel="next" title="nanshe.io package" href="nanshe.io.html" />
     <link rel="prev" title="nanshe.imp.renorm module" href="nanshe.imp.renorm.html" /> 
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a52+4.g69d2fbd documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a53 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" accesskey="U">nanshe.imp package</a> &raquo;</li> 
@@ -781,6 +781,34 @@ get_neuron_dtype.</td>
 </dd></dl>
 
 <dl class="function">
+<dt id="nanshe.imp.segment.match_regions_properties">
+<code class="descclassname">nanshe.imp.segment.</code><code class="descname">match_regions_properties</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#match_regions_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.match_regions_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a mask selecting the regions with matching properties.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>props</strong> (<em>numpy.ndarray</em>) &#8211; properties of each labeled region.</li>
+<li><strong>constraints</strong> (<em>dict</em>) &#8211; dictionary containing each property
+with optional <code class="docutils literal"><span class="pre">min</span></code> and <code class="docutils literal"><span class="pre">max</span></code>
+for each value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mask with each region property that
+matches marked as <code class="docutils literal"><span class="pre">True</span></code> and the
+rest marked as <code class="docutils literal"><span class="pre">False</span></code>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="nanshe.imp.segment.merge_neuron_sets">
 <code class="descclassname">nanshe.imp.segment.</code><code class="descname">merge_neuron_sets</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#merge_neuron_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.merge_neuron_sets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1421,6 +1449,42 @@ candidate neurons.</p>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="nanshe.imp.segment.wavelet_thresholding">
+<code class="descclassname">nanshe.imp.segment.</code><code class="descname">wavelet_thresholding</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#wavelet_thresholding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.wavelet_thresholding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a thresholding using a noise estimate and the wavelet transform.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>new_image</strong> (<em>numpy.ndarray</em>) &#8211; image to threshold.</li>
+<li><strong>significance_threshold</strong> (<em>float</em>) &#8211; threshold above which
+everything is
+considered significant
+for the purpose of
+noise estimation.</li>
+<li><strong>wavelet_scale</strong> (<em>int</em>) &#8211; the scale of wavelet
+transform to use.</li>
+<li><strong>noise_threshold</strong> (<em>float</em>) &#8211; a ratio to which the
+noise estimate scales
+(e.g. 1.0 means the
+noise computed is the
+noise used).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a wavelet transformed
+array and a mask.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple of numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
@@ -1491,7 +1555,7 @@ candidate neurons.</p>
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a52+4.g69d2fbd documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a53 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &raquo;</li> 

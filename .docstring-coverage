@@ -305,7 +305,7 @@ File nanshe/imp/segment.py
  - No docstring for merge_neuron_sets!
  - No docstring for expand_rois!
  - No docstring for postprocess_data.array_debug_recorder_enumerator!
- Needed: 40; Exist: 33; Missing: 7; Coverage: 82.5%
+ Needed: 42; Exist: 35; Missing: 7; Coverage: 83.3%
 
 File nanshe/imp/renorm.py
  Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
@@ -334,5 +334,5 @@ File nanshe/misc/random_dictionary_learning_data.py
 
 
 Overall statistics for 35 files:
-Docstrings needed: 532; Docstrings exist: 304; Docstrings missing: 228
-Total docstring coverage: 57.1%;  Grade: not so bad
+Docstrings needed: 534; Docstrings exist: 306; Docstrings missing: 228
+Total docstring coverage: 57.3%;  Grade: not so bad
