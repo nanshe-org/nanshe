@@ -2243,6 +2243,33 @@ class TestSegment(object):
         assert (wtt_mask[-2] == original_neurons_mask).all()
         assert ((wtt_mask[-1] & original_neurons_mask) == original_neurons_mask).all()
 
+    def test_match_regions_properties_1(self):
+        props = numpy.array(
+            [
+                (1, 1990.0, [3.7402010050251255, 127.0, 202.0], 0.9990127357638044, 39.484721299262105),
+                (2, 1988.0, [3.7399396378269616, 177.0, 52.021126760563384], 0.9990128314664918, 39.49948424388854),
+                (3, 1990.0, [3.7402010050251255, 343.0, 271.0], 0.9990127357638044, 39.484721299262105)
+            ],
+            dtype=[
+                ('label', '<i8'),
+                ('area', '<f8'),
+                ('centroid', '<f8', (3,)),
+                ('eccentricity', '<f8'),
+                ('major_axis_length', '<f8')
+            ]
+        )
+
+        params = {
+            "area": {
+                "min" : 1990, "max" : 2000
+            }
+        }
+
+        matches = nanshe.imp.segment.match_regions_properties(props, params)
+
+        assert len(matches) == len(props)
+        assert (matches == numpy.array([ True, False,  True])).all()
+
     def test_wavelet_denoising_1(self):
         params = {
             "remove_low_intensity_local_maxima" : {
