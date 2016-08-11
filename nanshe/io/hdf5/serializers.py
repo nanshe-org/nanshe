@@ -23,7 +23,6 @@ import os
 import numpy
 import h5py
 
-from nanshe.util.pathHelpers import PathComponents
 from nanshe.util import wrappers
 
 # Need in order to have logging information no matter what.
@@ -279,9 +278,7 @@ def hdf5_wrapper(hdf5_args=[], hdf5_kwargs=[], hdf5_result=""):
                 each_new_arg = each_arg
 
                 if i in hdf5_wrapped.hdf5_args:
-                    each_arg_pc = PathComponents(each_arg)
-                    each_filename, each_datasetpath = each_arg_pc.externalPath, \
-                                                      each_arg_pc.internalPath
+                    each_filename, each_datasetpath = split_hdf5_path(each_arg)
                     with h5py.File(each_filename, "r") as each_file:
                         each_new_arg = each_file[each_datasetpath][...]
 
@@ -292,9 +289,7 @@ def hdf5_wrapper(hdf5_args=[], hdf5_kwargs=[], hdf5_result=""):
                 each_new_kwarg = each_kwarg
 
                 if each_key in hdf5_wrapped.hdf5_kwargs:
-                    each_kwarg_pc = PathComponents(each_kwarg)
-                    each_filename, each_datasetpath = each_kwarg_pc.externalPath, \
-                                                      each_kwarg_pc.internalPath
+                    each_filename, each_datasetpath = split_hdf5_path(each_kwarg)
                     with h5py.File(each_filename, "r") as each_file:
                         each_new_kwarg = each_file[each_datasetpath][...]
 
@@ -303,9 +298,7 @@ def hdf5_wrapper(hdf5_args=[], hdf5_kwargs=[], hdf5_result=""):
             result = a_callable(*new_args, **new_kwargs)
 
             if hdf5_wrapped.hdf5_result:
-                result_pc = PathComponents(hdf5_wrapped.hdf5_result)
-                result_filename, result_datasetpath = result_pc.externalPath, \
-                                                      result_pc.internalPath
+                result_filename, result_datasetpath = split_hdf5_path(hdf5_wrapped.hdf5_result)
                 with h5py.File(result_filename, "a") as result_file:
                     result_file[result_datasetpath] = result
 
