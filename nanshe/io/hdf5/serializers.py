@@ -41,6 +41,32 @@ trace_logger = prof.getTraceLogger(__name__)
 
 
 @prof.log_call(trace_logger)
+def split_hdf5_path(path):
+    """
+        Splits an HDF5 path (e.g. `a.h5/b`) into its internal and external
+        components.
+
+        Args:
+            path(HDF5 path): a path to the HDF5.
+
+        Note:
+            TODO: Write doctests.
+
+        Returns:
+            tuple: the external and internal paths for the HDF5 file.
+    """
+
+    ext = os.path.extsep + "h5"
+
+    ext_path, int_path = path.split(ext, 1)
+    ext_path += ext
+
+    assert int_path, "Internal path was not specified."
+
+    return(ext_path, int_path)
+
+
+@prof.log_call(trace_logger)
 def create_numpy_structured_array_in_HDF5(file_handle,
                                           internalPath,
                                           data,
