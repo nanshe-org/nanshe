@@ -28,9 +28,19 @@ class TestSerializers(object):
         else:
             assert False
 
-    def test_split_hdf5_path_1(self):
+    def test_split_hdf5_path_1a(self):
         ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.h5/")
         assert ext_path == "test.h5"
+        assert int_path == "/"
+
+    def test_split_hdf5_path_1b(self):
+        ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.hdf5/")
+        assert ext_path == "test.hdf5"
+        assert int_path == "/"
+
+    def test_split_hdf5_path_1c(self):
+        ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.he5/")
+        assert ext_path == "test.he5"
         assert int_path == "/"
 
     def test_split_hdf5_path_2(self):
