@@ -20,10 +20,18 @@ class TestSerializers(object):
 
         self.temp_hdf5_file = h5py.File(os.path.join(self.temp_dir, "test.h5"), "w")
 
-    def test_split_hdf5_path_0(self):
+    def test_split_hdf5_path_0a(self):
         try:
             ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.h5")
         except AssertionError:
+            assert True
+        else:
+            assert False
+
+    def test_split_hdf5_path_0b(self):
+        try:
+            ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.eg/")
+        except ValueError:
             assert True
         else:
             assert False
