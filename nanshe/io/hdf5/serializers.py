@@ -55,10 +55,17 @@ def split_hdf5_path(path):
             tuple: the external and internal paths for the HDF5 file.
     """
 
-    ext = os.path.extsep + "h5"
+    exts = ["h5", "hdf5", "he5"]
 
-    ext_path, int_path = path.split(ext, 1)
-    ext_path += ext
+    for each_ext in exts:
+        try:
+            each_ext = os.path.extsep + each_ext
+            ext_path, int_path = path.split(each_ext, 1)
+            ext_path += each_ext
+            break
+        except ValueError:
+            # Could not split with that extension.
+            pass
 
     assert int_path, "Internal path was not specified."
 
