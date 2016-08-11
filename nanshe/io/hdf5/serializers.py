@@ -67,7 +67,16 @@ def split_hdf5_path(path):
             # Could not split with that extension.
             pass
 
-    assert int_path, "Internal path was not specified."
+    try:
+        assert int_path, "Internal path was not specified."
+    except AssertionError:
+        raise
+    except UnboundLocalError:
+        raise ValueError(
+            "Input file with filename: \"" + path + "\"" +
+            " provided with an unknown file extension."
+        )
+
 
     return(ext_path, int_path)
 
