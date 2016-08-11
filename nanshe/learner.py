@@ -81,10 +81,7 @@ def generate_neurons_io_handler(input_filename,
     # Extract and validate file extensions.
 
     # Parse parameter filename and validate that the name is acceptable
-    parameters_filename_details = pathHelpers.PathComponents(
-        parameters_filename
-    )
-    parameters_filename_ext = parameters_filename_details.extension
+    parameters_filename_ext = os.path.splitext(parameters_filename)[1]
     parameters_filename_ext = parameters_filename_ext.lower().lstrip(os.extsep)
     # Clean up the extension so it fits the standard.
     if (parameters_filename_ext not in ["json"]):
