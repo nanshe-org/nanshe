@@ -26,5 +26,4 @@ Submodules
    nanshe.converter
    nanshe.learner
    nanshe.registerer
-   nanshe.viewer
 
