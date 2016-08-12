@@ -26,6 +26,7 @@ __date__ = "$Jun 26, 2014 11:40:54 EDT$"
 
 
 import collections
+import os
 
 import numpy
 import h5py
@@ -33,8 +34,8 @@ import h5py
 import vigra
 import vigra.impex
 
-from nanshe.util import iters, xglob, prof,\
-    xnumpy, pathHelpers
+from nanshe.util import iters, xglob, prof, xnumpy
+from nanshe.io import hdf5
 
 try:
     import tifffile
@@ -452,10 +453,8 @@ def convert_tiffs(new_tiff_filenames,
     new_hdf5_dataset_dtype = numpy.dtype(new_hdf5_dataset_dtype)
 
     # Get all the needed locations for the HDF5 file and dataset
-    new_hdf5_path_components = pathHelpers.PathComponents(new_hdf5_pathname)
-    new_hdf5_filename = new_hdf5_path_components.externalPath
-    new_hdf5_groupname = new_hdf5_path_components.internalDirectory
-    new_hdf5_dataset_name = new_hdf5_path_components.internalPath
+    new_hdf5_filename, new_hdf5_dataset_name = hdf5.serializers.split_hdf5_path(new_hdf5_pathname)
+    new_hdf5_groupname = os.path.dirname(new_hdf5_dataset_name)
 
     # Dump all datasets to the file
     with h5py.File(new_hdf5_filename, "a") as new_hdf5_file:

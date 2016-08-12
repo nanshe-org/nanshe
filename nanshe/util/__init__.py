@@ -19,7 +19,6 @@ __all__ = [
 ]
 
 from nanshe.util import iters
-from nanshe.util import pathHelpers
 from nanshe.util import prof
 from nanshe.util import wrappers
 from nanshe.util import xglob

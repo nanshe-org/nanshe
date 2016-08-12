@@ -20,6 +20,46 @@ class TestSerializers(object):
 
         self.temp_hdf5_file = h5py.File(os.path.join(self.temp_dir, "test.h5"), "w")
 
+    def test_split_hdf5_path_0a(self):
+        try:
+            ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.h5")
+        except AssertionError:
+            assert True
+        else:
+            assert False
+
+    def test_split_hdf5_path_0b(self):
+        try:
+            ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.eg/")
+        except ValueError:
+            assert True
+        else:
+            assert False
+
+    def test_split_hdf5_path_1a(self):
+        ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.h5/")
+        assert ext_path == "test.h5"
+        assert int_path == "/"
+
+    def test_split_hdf5_path_1b(self):
+        ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.hdf5/")
+        assert ext_path == "test.hdf5"
+        assert int_path == "/"
+
+    def test_split_hdf5_path_1c(self):
+        ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.he5/")
+        assert ext_path == "test.he5"
+        assert int_path == "/"
+
+    def test_split_hdf5_path_2(self):
+        ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("test.h5/a/b/c")
+        assert ext_path == "test.h5"
+        assert int_path == "/a/b/c"
+
+    def test_split_hdf5_path_3(self):
+        ext_path, int_path = nanshe.io.hdf5.serializers.split_hdf5_path("my_dir/test.h5/a/b/c")
+        assert ext_path == "my_dir/test.h5"
+        assert int_path == "/a/b/c"
 
     def test_create_numpy_structured_array_in_HDF5_1(self):
         data1 = numpy.random.random((10, 10))

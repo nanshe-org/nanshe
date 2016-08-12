@@ -27,8 +27,7 @@ import os
 import h5py
 
 from nanshe.util import iters, prof
-from nanshe.io import xjson
-from nanshe.util.pathHelpers import PathComponents
+from nanshe.io import hdf5, xjson
 from nanshe.imp import registration
 
 
@@ -97,40 +96,40 @@ def main(*argv):
     parsed_args.input_file_components = []
     for each_input_filename in parsed_args.input_filenames:
         parsed_args.input_file_components.append(
-            PathComponents(each_input_filename)
+            hdf5.serializers.split_hdf5_path(each_input_filename)
         )
 
     parsed_args.output_file_components = []
     for each_output_filename in parsed_args.output_filenames:
         parsed_args.output_file_components.append(
-            PathComponents(each_output_filename)
+            hdf5.serializers.split_hdf5_path(each_output_filename)
         )
 
     for each_input_filename_components, each_output_filename_components in iters.izip(
             parsed_args.input_file_components, parsed_args.output_file_components):
-        with h5py.File(each_input_filename_components.externalPath, "r") as input_file:
-            with h5py.File(each_output_filename_components.externalPath, "a") as output_file:
-                data = input_file[each_input_filename_components.internalPath]
+        with h5py.File(each_input_filename_components[0], "r") as input_file:
+            with h5py.File(each_output_filename_components[0], "a") as output_file:
+                data = input_file[each_input_filename_components[1]]
                 result_filename = registration.register_mean_offsets(
                     data, to_truncate=True, **parsed_args.parameters
                 )
                 with h5py.File(result_filename, "r") as result_file:
                     result_file.copy(
                         "reg_frames",
-                        output_file[each_output_filename_components.internalDirectory],
-                        name=each_output_filename_components.internalDatasetName
+                        output_file[os.path.dirname(each_output_filename_components[1])],
+                        name=each_output_filename_components[1]
                     )
 
                     if parsed_args.parameters.get("include_shift", False):
                         result_file.copy(
                             "space_shift",
-                            output_file[each_output_filename_components.internalDirectory],
-                            name=each_output_filename_components.internalDatasetName + "_shift"
+                            output_file[os.path.dirname(each_output_filename_components[1])],
+                            name=each_output_filename_components[1] + "_shift"
                         )
 
                 # Copy all attributes from raw data to the final result.
                 output = output_file[
-                    each_output_filename_components.internalDatasetName
+                    each_output_filename_components[1]
                 ]
                 for each_attr_name in data.attrs:
                     output.attrs[each_attr_name] = data.attrs[each_attr_name]

@@ -42,8 +42,7 @@ import nanshe
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
-from nanshe.util import iters, xnumpy,\
-    wrappers, pathHelpers
+from nanshe.util import iters, xnumpy, wrappers
 
 from nanshe.io import hdf5
 
@@ -81,10 +80,7 @@ def generate_neurons_io_handler(input_filename,
     # Extract and validate file extensions.
 
     # Parse parameter filename and validate that the name is acceptable
-    parameters_filename_details = pathHelpers.PathComponents(
-        parameters_filename
-    )
-    parameters_filename_ext = parameters_filename_details.extension
+    parameters_filename_ext = os.path.splitext(parameters_filename)[1]
     parameters_filename_ext = parameters_filename_ext.lower().lstrip(os.extsep)
     # Clean up the extension so it fits the standard.
     if (parameters_filename_ext not in ["json"]):
@@ -131,49 +127,21 @@ def generate_neurons_a_block(input_filename,
     # Extract and validate file extensions.
 
     # Parse input filename and validate that the name is acceptable
-    input_filename_details = pathHelpers.PathComponents(input_filename)
-    # Clean up the extension so it fits the standard.
-    input_filename_ext = input_filename_details.extension
-    input_filename_ext = input_filename_ext.lower().lstrip(os.extsep)
-    if (input_filename_ext not in ["h5", "hdf5", "he5"]):
-        raise Exception(
-            "Input file with filename: \"" + input_filename + "\"" +
-            " provided with an unknown file extension: \"" +
-            input_filename_ext + "\". If it is a supported " +
-            "format, please run the given file through " +
-            "nanshe_converter first before proceeding."
-        )
+    input_filename_ext, input_dataset_name = hdf5.serializers.split_hdf5_path(input_filename)
 
     # Parse output filename and validate that the name is acceptable
-    output_filename_details = pathHelpers.PathComponents(output_filename)
-    # Clean up the extension so it fits the standard.
-    output_filename_ext = output_filename_details.extension
-    output_filename_ext = output_filename_ext.lower().lstrip(os.extsep)
-    if (output_filename_ext not in ["h5", "hdf5", "he5"]):
-        raise Exception(
-            "Output file with filename: \"" + output_filename + "\"" +
-            " provided with an unknown file extension: \"" +
-            output_filename_ext + "\". If it is a supported " +
-            "format, please run the given file through nanshe_converter " +
-            "first before proceeding."
-        )
-
-    # Where the original images are.
-    input_dataset_name = input_filename_details.internalPath
-
-    # Name of the group where all data will be stored.
-    output_group_name = output_filename_details.internalPath
+    output_filename_ext, output_group_name = hdf5.serializers.split_hdf5_path(output_filename)
 
 
     # Read the input data.
     original_images = None
-    with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
+    with h5py.File(input_filename_ext, "r") as input_file_handle:
         original_images = hdf5.serializers.read_numpy_structured_array_from_HDF5(
             input_file_handle, input_dataset_name)
         original_images = original_images.astype(numpy.float32)
 
     # Write out the output.
-    with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
+    with h5py.File(output_filename_ext, "a") as output_file_handle:
         # Create a new output directory if doesn't exists.
         output_file_handle.require_group(output_group_name)
 
@@ -183,13 +151,13 @@ def generate_neurons_a_block(input_filename,
         # Create a soft link to the original images. But use the appropriate type of soft link depending on whether
         # the input and output file are the same.
         if "original_images" not in output_group:
-            if input_filename_details.externalPath == output_filename_details.externalPath:
+            if input_filename_ext == output_filename_ext:
                 output_group["original_images"] = h5py.SoftLink(
                     input_dataset_name
                 )
             else:
                 output_group["original_images"] = h5py.ExternalLink(
-                    input_filename_details.externalPath, input_dataset_name
+                    input_filename_ext, input_dataset_name
                 )
 
         # Get a debug logger for the HDF5 file (if needed)
@@ -241,47 +209,20 @@ def generate_neurons_blocks(input_filename,
     # Extract and validate file extensions.
 
     # Parse input filename and validate that the name is acceptable
-    input_filename_details = pathHelpers.PathComponents(input_filename)
-    # Clean up the extension so it fits the standard.
-    input_filename_ext = input_filename_details.extension
-    input_filename_ext = input_filename_ext.lower().lstrip(os.extsep)
-    if (input_filename_ext not in ["h5", "hdf5", "he5"]):
-        raise Exception(
-            "Input file with filename: \"" + input_filename + "\"" +
-            " provided with an unknown file extension: \"" +
-            input_filename_ext + "\". If it is a supported " +
-            "format, please run the given file through " +
-            "nanshe_converter first before proceeding."
-        )
+    input_filename_ext, input_dataset_name = hdf5.serializers.split_hdf5_path(input_filename)
 
     # Parse output filename and validate that the name is acceptable
-    output_filename_details = pathHelpers.PathComponents(output_filename)
-    # Clean up the extension so it fits the standard.
-    output_filename_ext = output_filename_details.extension
-    output_filename_ext = output_filename_ext.lower().lstrip(os.extsep)
-    if (output_filename_ext not in ["h5", "hdf5", "he5"]):
-        raise Exception(
-            "Output file with filename: \"" + output_filename + "\"" +
-            " provided with an unknown file extension: \"" +
-            output_filename_ext + "\". If it is a supported " +
-            "format, please run the given file through nanshe_converter " +
-            "first before proceeding."
-        )
+    output_filename_ext, output_group_name = hdf5.serializers.split_hdf5_path(output_filename)
 
-    # Where the original images are.
-    input_dataset_name = input_filename_details.internalPath
-
-    # Name of the group where all data will be stored.
-    output_group_name = output_filename_details.internalPath
 
     # Directory where individual block runs will be stored.
-    intermediate_output_dir = output_filename_details.externalPath.rsplit(
-        output_filename_details.extension, 1)[0] + "_blocks"
+    intermediate_output_dir = output_filename_ext.rsplit(
+        os.path.splitext(output_filename_ext)[1], 1)[0] + "_blocks"
 
 
     # Read the input data.
     original_images_shape_array = None
-    with h5py.File(input_filename_details.externalPath, "r") as input_file_handle:
+    with h5py.File(input_filename_ext, "r") as input_file_handle:
         original_images_shape_array = numpy.array(
             input_file_handle[input_dataset_name].shape
         )
@@ -498,20 +439,20 @@ def generate_neurons_blocks(input_filename,
     output_filename_block = []
     stdout_filename_block = []
     stderr_filename_block = []
-    with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
+    with h5py.File(output_filename_ext, "a") as output_file_handle:
         # Create a new output directory if doesn't exists.
         output_file_handle.require_group(output_group_name)
 
         output_group = output_file_handle[output_group_name]
 
         if "original_images" not in output_group:
-            if input_filename_details.externalPath == output_filename_details.externalPath:
+            if input_filename_ext == output_filename_ext:
                 output_group["original_images"] = h5py.SoftLink(
                     input_dataset_name
                 )
             else:
                 output_group["original_images"] = h5py.ExternalLink(
-                    input_filename_details.externalPath,
+                    input_filename_ext,
                     "/" + input_dataset_name
                 )
 
@@ -523,7 +464,7 @@ def generate_neurons_blocks(input_filename,
         try:
             # Skipping using region refs.
             input_file_handle = h5py.File(
-                input_filename_details.externalPath, "r"
+                input_filename_ext, "r"
             )
         except IOError:
             # File is already open
@@ -743,7 +684,7 @@ def generate_neurons_blocks(input_filename,
     start_time = time.time()
     logger.info("Starting merge over all blocks.")
 
-    with h5py.File(output_filename_details.externalPath, "a") as output_file_handle:
+    with h5py.File(output_filename_ext, "a") as output_file_handle:
         output_group = output_file_handle[output_group_name]
 
         new_neurons_set = segment.get_empty_neuron(
