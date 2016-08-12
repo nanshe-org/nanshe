@@ -90,14 +90,10 @@ elif sys.argv[1] == "bdist_conda":
         ]
     if sys.version_info < (3,):
         build_requires += [
-            "python-spams",
-            "pyqt",
-            "volumina"
+            "python-spams"
         ]
         install_requires += [
-            "python-spams",
-            "pyqt",
-            "volumina"
+            "python-spams"
         ]
 elif sys.argv[1] == "build_sphinx":
     import sphinx.apidoc
