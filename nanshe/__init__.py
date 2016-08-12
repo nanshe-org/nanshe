@@ -206,8 +206,7 @@ del get_versions
 
 
 __all__ = [
-    "box", "converter", "io", "imp", "learner", "registerer", "syn", "util",
-    # "viewer"
+    "box", "converter", "io", "imp", "learner", "registerer", "syn", "util"
 ]
 
 from nanshe import box
@@ -218,5 +217,3 @@ from nanshe import learner
 from nanshe import registerer
 from nanshe import syn
 from nanshe import util
-# from nanshe import viewer    # Must be commented as there is some segfault
-                               # coming from Volumina.
