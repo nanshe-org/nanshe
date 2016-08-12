@@ -12,7 +12,6 @@ Submodules
 .. toctree::
 
    nanshe.util.iters
-   nanshe.util.pathHelpers
    nanshe.util.prof
    nanshe.util.wrappers
    nanshe.util.xglob

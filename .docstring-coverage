@@ -220,21 +220,6 @@ File nanshe/util/xnumpy.py
 File nanshe/util/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
-File nanshe/util/pathHelpers.py
- - No module dostring!
- - No docstring for PathComponents._init!
- - No docstring for PathComponents.externalPath!
- - No docstring for PathComponents.externalDirectory!
- - No docstring for PathComponents.filename!
- - No docstring for PathComponents.filenameBase!
- - No docstring for PathComponents.extension!
- - No docstring for PathComponents.internalPath!
- - No docstring for PathComponents.internalDatasetName!
- - No docstring for PathComponents.internalDirectory!
- - No docstring for areOnSameDrive!
- - No docstring for isUrl!
- Needed: 26; Exist: 14; Missing: 12; Coverage: 53.8%
-
 File nanshe/box/spams_sandbox.py
  - No docstring for SPAMSException!
  Needed: 7; Exist: 6; Missing: 1; Coverage: 85.7%
@@ -320,7 +305,7 @@ File nanshe/io/hdf5/serializers.py
  - No docstring for HDF5MaskedDataset.__getitem__!
  - No docstring for HDF5MaskedDataset.__setitem__!
  - No docstring for HDF5MaskedDataset.__array__!
- Needed: 27; Exist: 7; Missing: 20; Coverage: 25.9%
+ Needed: 28; Exist: 8; Missing: 20; Coverage: 28.6%
 
 File nanshe/misc/neuron_matplotlib_viewer.py
  - No docstring for TimeNavigator!
@@ -333,6 +318,6 @@ File nanshe/misc/random_dictionary_learning_data.py
  Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
 
 
-Overall statistics for 35 files:
-Docstrings needed: 534; Docstrings exist: 306; Docstrings missing: 228
-Total docstring coverage: 57.3%;  Grade: not so bad
+Overall statistics for 34 files:
+Docstrings needed: 509; Docstrings exist: 293; Docstrings missing: 216
+Total docstring coverage: 57.6%;  Grade: not so bad

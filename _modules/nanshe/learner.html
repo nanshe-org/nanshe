@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.learner &mdash; nanshe 0.1.0a53+2.g045c99e documentation</title>
+    <title>nanshe.learner &mdash; nanshe 0.1.0a53+15.g6ddadd0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.0a53+2.g045c99e',
+        VERSION:     '0.1.0a53+15.g6ddadd0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+2.g045c99e documentation" href="../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+15.g6ddadd0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a53+2.g045c99e documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a53+15.g6ddadd0 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -102,8 +102,7 @@
 <span class="c1"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
 
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span><span class="p">,</span> <span class="n">xnumpy</span><span class="p">,</span>\
-    <span class="n">wrappers</span><span class="p">,</span> <span class="n">pathHelpers</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span><span class="p">,</span> <span class="n">xnumpy</span><span class="p">,</span> <span class="n">wrappers</span>
 
 <span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">hdf5</span>
 
@@ -141,10 +140,7 @@
     <span class="c1"># Extract and validate file extensions.</span>
 
     <span class="c1"># Parse parameter filename and validate that the name is acceptable</span>
-    <span class="n">parameters_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span>
-        <span class="n">parameters_filename</span>
-    <span class="p">)</span>
-    <span class="n">parameters_filename_ext</span> <span class="o">=</span> <span class="n">parameters_filename_details</span><span class="o">.</span><span class="n">extension</span>
+    <span class="n">parameters_filename_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">parameters_filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">parameters_filename_ext</span> <span class="o">=</span> <span class="n">parameters_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
     <span class="c1"># Clean up the extension so it fits the standard.</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">parameters_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;json&quot;</span><span class="p">]):</span>
@@ -191,49 +187,21 @@
     <span class="c1"># Extract and validate file extensions.</span>
 
     <span class="c1"># Parse input filename and validate that the name is acceptable</span>
-    <span class="n">input_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
-    <span class="c1"># Clean up the extension so it fits the standard.</span>
-    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span>
-    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s2">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;nanshe_converter first before proceeding.&quot;</span>
-        <span class="p">)</span>
+    <span class="n">input_filename_ext</span><span class="p">,</span> <span class="n">input_dataset_name</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">split_hdf5_path</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
 
     <span class="c1"># Parse output filename and validate that the name is acceptable</span>
-    <span class="n">output_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
-    <span class="c1"># Clean up the extension so it fits the standard.</span>
-    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span>
-    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s2">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;first before proceeding.&quot;</span>
-        <span class="p">)</span>
-
-    <span class="c1"># Where the original images are.</span>
-    <span class="n">input_dataset_name</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
-
-    <span class="c1"># Name of the group where all data will be stored.</span>
-    <span class="n">output_group_name</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
+    <span class="n">output_filename_ext</span><span class="p">,</span> <span class="n">output_group_name</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">split_hdf5_path</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
 
 
     <span class="c1"># Read the input data.</span>
     <span class="n">original_images</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_ext</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
         <span class="n">original_images</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">read_numpy_structured_array_from_HDF5</span><span class="p">(</span>
             <span class="n">input_file_handle</span><span class="p">,</span> <span class="n">input_dataset_name</span><span class="p">)</span>
         <span class="n">original_images</span> <span class="o">=</span> <span class="n">original_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
     <span class="c1"># Write out the output.</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_ext</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
         <span class="c1"># Create a new output directory if doesn&#39;t exists.</span>
         <span class="n">output_file_handle</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
 
@@ -243,13 +211,13 @@
         <span class="c1"># Create a soft link to the original images. But use the appropriate type of soft link depending on whether</span>
         <span class="c1"># the input and output file are the same.</span>
         <span class="k">if</span> <span class="s2">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">==</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">input_filename_ext</span> <span class="o">==</span> <span class="n">output_filename_ext</span><span class="p">:</span>
                 <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">SoftLink</span><span class="p">(</span>
                     <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
-                    <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="n">input_dataset_name</span>
+                    <span class="n">input_filename_ext</span><span class="p">,</span> <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
 
         <span class="c1"># Get a debug logger for the HDF5 file (if needed)</span>
@@ -301,47 +269,20 @@
     <span class="c1"># Extract and validate file extensions.</span>
 
     <span class="c1"># Parse input filename and validate that the name is acceptable</span>
-    <span class="n">input_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
-    <span class="c1"># Clean up the extension so it fits the standard.</span>
-    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">extension</span>
-    <span class="n">input_filename_ext</span> <span class="o">=</span> <span class="n">input_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">input_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s2">&quot;Input file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">input_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="n">input_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;format, please run the given file through &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;nanshe_converter first before proceeding.&quot;</span>
-        <span class="p">)</span>
+    <span class="n">input_filename_ext</span><span class="p">,</span> <span class="n">input_dataset_name</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">split_hdf5_path</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
 
     <span class="c1"># Parse output filename and validate that the name is acceptable</span>
-    <span class="n">output_filename_details</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
-    <span class="c1"># Clean up the extension so it fits the standard.</span>
-    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span>
-    <span class="n">output_filename_ext</span> <span class="o">=</span> <span class="n">output_filename_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">output_filename_ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;he5&quot;</span><span class="p">]):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s2">&quot;Output file with filename: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">output_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="s2">&quot; provided with an unknown file extension: </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span>
-            <span class="n">output_filename_ext</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. If it is a supported &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;format, please run the given file through nanshe_converter &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;first before proceeding.&quot;</span>
-        <span class="p">)</span>
+    <span class="n">output_filename_ext</span><span class="p">,</span> <span class="n">output_group_name</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">split_hdf5_path</span><span class="p">(</span><span class="n">output_filename</span><span class="p">)</span>
 
-    <span class="c1"># Where the original images are.</span>
-    <span class="n">input_dataset_name</span> <span class="o">=</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
-
-    <span class="c1"># Name of the group where all data will be stored.</span>
-    <span class="n">output_group_name</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">internalPath</span>
 
     <span class="c1"># Directory where individual block runs will be stored.</span>
-    <span class="n">intermediate_output_dir</span> <span class="o">=</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span>
-        <span class="n">output_filename_details</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_blocks&quot;</span>
+    <span class="n">intermediate_output_dir</span> <span class="o">=</span> <span class="n">output_filename_ext</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output_filename_ext</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_blocks&quot;</span>
 
 
     <span class="c1"># Read the input data.</span>
     <span class="n">original_images_shape_array</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">input_filename_ext</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_file_handle</span><span class="p">:</span>
         <span class="n">original_images_shape_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="n">input_file_handle</span><span class="p">[</span><span class="n">input_dataset_name</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
         <span class="p">)</span>
@@ -558,20 +499,20 @@
     <span class="n">output_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">stdout_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">stderr_filename_block</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_ext</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
         <span class="c1"># Create a new output directory if doesn&#39;t exists.</span>
         <span class="n">output_file_handle</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">output_group_name</span><span class="p">)</span>
 
         <span class="n">output_group</span> <span class="o">=</span> <span class="n">output_file_handle</span><span class="p">[</span><span class="n">output_group_name</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="s2">&quot;original_images&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_group</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span> <span class="o">==</span> <span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">input_filename_ext</span> <span class="o">==</span> <span class="n">output_filename_ext</span><span class="p">:</span>
                 <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">SoftLink</span><span class="p">(</span>
                     <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">output_group</span><span class="p">[</span><span class="s2">&quot;original_images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span>
-                    <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span>
+                    <span class="n">input_filename_ext</span><span class="p">,</span>
                     <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">input_dataset_name</span>
                 <span class="p">)</span>
 
@@ -583,7 +524,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Skipping using region refs.</span>
             <span class="n">input_file_handle</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span>
-                <span class="n">input_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span>
+                <span class="n">input_filename_ext</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
             <span class="c1"># File is already open</span>
@@ -803,7 +744,7 @@
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting merge over all blocks.&quot;</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_details</span><span class="o">.</span><span class="n">externalPath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_filename_ext</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file_handle</span><span class="p">:</span>
         <span class="n">output_group</span> <span class="o">=</span> <span class="n">output_file_handle</span><span class="p">[</span><span class="n">output_group_name</span><span class="p">]</span>
 
         <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get_empty_neuron</span><span class="p">(</span>
@@ -1140,7 +1081,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../index.html">nanshe 0.1.0a53+2.g045c99e documentation</a> &raquo;</li>
+    <li><a href="../../index.html">nanshe 0.1.0a53+15.g6ddadd0 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>

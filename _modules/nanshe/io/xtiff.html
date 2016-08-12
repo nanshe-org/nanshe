@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a53+2.g045c99e documentation</title>
+    <title>nanshe.io.xtiff &mdash; nanshe 0.1.0a53+15.g6ddadd0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+2.g045c99e',
+        VERSION:     '0.1.0a53+15.g6ddadd0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+2.g045c99e documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+15.g6ddadd0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+2.g045c99e documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+15.g6ddadd0 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -86,6 +86,7 @@
 
 
 <span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">h5py</span>
@@ -93,8 +94,8 @@
 <span class="kn">import</span> <span class="nn">vigra</span>
 <span class="kn">import</span> <span class="nn">vigra.impex</span>
 
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span><span class="p">,</span> <span class="n">xglob</span><span class="p">,</span> <span class="n">prof</span><span class="p">,</span>\
-    <span class="n">xnumpy</span><span class="p">,</span> <span class="n">pathHelpers</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span><span class="p">,</span> <span class="n">xglob</span><span class="p">,</span> <span class="n">prof</span><span class="p">,</span> <span class="n">xnumpy</span>
+<span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">hdf5</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">tifffile</span>
@@ -512,10 +513,8 @@
     <span class="n">new_hdf5_dataset_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">new_hdf5_dataset_dtype</span><span class="p">)</span>
 
     <span class="c1"># Get all the needed locations for the HDF5 file and dataset</span>
-    <span class="n">new_hdf5_path_components</span> <span class="o">=</span> <span class="n">pathHelpers</span><span class="o">.</span><span class="n">PathComponents</span><span class="p">(</span><span class="n">new_hdf5_pathname</span><span class="p">)</span>
-    <span class="n">new_hdf5_filename</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">externalPath</span>
-    <span class="n">new_hdf5_groupname</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">internalDirectory</span>
-    <span class="n">new_hdf5_dataset_name</span> <span class="o">=</span> <span class="n">new_hdf5_path_components</span><span class="o">.</span><span class="n">internalPath</span>
+    <span class="n">new_hdf5_filename</span><span class="p">,</span> <span class="n">new_hdf5_dataset_name</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">split_hdf5_path</span><span class="p">(</span><span class="n">new_hdf5_pathname</span><span class="p">)</span>
+    <span class="n">new_hdf5_groupname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">new_hdf5_dataset_name</span><span class="p">)</span>
 
     <span class="c1"># Dump all datasets to the file</span>
     <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">new_hdf5_filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_hdf5_file</span><span class="p">:</span>
@@ -607,7 +606,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+2.g045c99e documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+15.g6ddadd0 documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

@@ -1,7 +1,0 @@
-nanshe.util.pathHelpers module
-==============================
-
-.. automodule:: nanshe.util.pathHelpers
-    :members:
-    :undoc-members:
-    :show-inheritance:
