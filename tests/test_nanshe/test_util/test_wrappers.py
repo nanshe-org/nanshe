@@ -8,9 +8,6 @@ __date__ = "$Mar 25, 2015 13:30:52 EDT$"
 import functools
 import sys
 
-import PyQt4
-import PyQt4.QtCore
-
 import nanshe.util.wrappers
 
 
@@ -201,32 +198,6 @@ class TestWrappers(object):
                 pass
 
         ClassWrapped = nanshe.util.wrappers.class_decorate_all_methods(
-            nanshe.util.wrappers.identity_wrapper
-        )(Class)
-
-        assert ClassWrapped != Class
-        assert not hasattr(Class, "__wrapped__")
-        assert hasattr(ClassWrapped, "__wrapped__")
-        assert ClassWrapped.__wrapped__ == Class
-
-        assert ClassWrapped.__init__ != Class.__init__
-        assert not hasattr(Class.__init__, "__wrapped__")
-        assert hasattr(ClassWrapped.__init__, "__wrapped__")
-
-        if sys.version_info.major < 3:
-            assert ClassWrapped.__init__.__wrapped__ != Class.__init__
-        else:
-            assert ClassWrapped.__init__.__wrapped__ == Class.__init__
-
-        assert ClassWrapped.__wrapped__.__init__ == Class.__init__
-
-
-    def test_qt_class_decorate_all_methods(self):
-        class Class(PyQt4.QtCore.QObject):
-            def __init__(self):
-                pass
-
-        ClassWrapped = nanshe.util.wrappers.qt_class_decorate_all_methods(
             nanshe.util.wrappers.identity_wrapper
         )(Class)
 
