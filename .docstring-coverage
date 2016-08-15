@@ -75,7 +75,7 @@ File nanshe/syn/data.py
  Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/prof.py
- Needed: 10; Exist: 10; Missing: 0; Coverage: 100.0%
+ Needed: 9; Exist: 9; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/iters.py
  - No docstring for splitting_xrange.splitting_xrange_helper!
@@ -87,11 +87,10 @@ File nanshe/util/xglob.py
 File nanshe/util/wrappers.py
  - No docstring for MetaStaticVariables.__new__!
  - No docstring for MetaAllMethodsDecorator.__new__!
- - No docstring for MetaAllMethodsDecorator.__new__!
  - No docstring for MetaMethodsDecorator.__new__!
  - No docstring for with_setup_state_wrapper.stages!
  - No docstring for with_setup_state_wrapper.a_stage!
- Needed: 30; Exist: 24; Missing: 6; Coverage: 80.0%
+ Needed: 27; Exist: 22; Missing: 5; Coverage: 81.5%
 
 File nanshe/util/xnumpy.py
  Needed: 60; Exist: 60; Missing: 0; Coverage: 100.0%
@@ -198,5 +197,5 @@ File nanshe/misc/random_dictionary_learning_data.py
 
 
 Overall statistics for 33 files:
-Docstrings needed: 364; Docstrings exist: 266; Docstrings missing: 98
+Docstrings needed: 360; Docstrings exist: 263; Docstrings missing: 97
 Total docstring coverage: 73.1%;  Grade: very good

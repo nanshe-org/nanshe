@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.wrappers module &mdash; nanshe 0.1.0a53+19.ga37060d documentation</title>
+    <title>nanshe.util.wrappers module &mdash; nanshe 0.1.0a53+21.gd9ed11e documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a53+19.ga37060d',
+        VERSION:     '0.1.0a53+21.gd9ed11e',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+19.ga37060d documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+21.gd9ed11e documentation" href="index.html" />
     <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" />
     <link rel="prev" title="nanshe.util.prof module" href="nanshe.util.prof.html" /> 
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="nanshe.util.prof.html" title="nanshe.util.prof module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+19.ga37060d documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+21.gd9ed11e documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &raquo;</li> 
@@ -75,10 +75,8 @@
 particular, it is ensured all wrapped functions contain an attribute
 <code class="docutils literal"><span class="pre">__wrapped__</span></code>, which points back to the original function before the wrapper
 was applied. Also, the ability to wrap classes with a decorator to apply a
-<code class="docutils literal"><span class="pre">metaclass</span></code> or series of <code class="docutils literal"><span class="pre">metaclass``es</span> <span class="pre">is</span> <span class="pre">provided.</span> <span class="pre">Making</span> <span class="pre">it</span> <span class="pre">much</span> <span class="pre">easier</span>
-<span class="pre">to</span> <span class="pre">transform</span> <span class="pre">classes</span> <span class="pre">without</span> <span class="pre">mucking</span> <span class="pre">in</span> <span class="pre">their</span> <span class="pre">internals.</span> <span class="pre">For</span> <span class="pre">classes</span> <span class="pre">inheriting</span>
-<span class="pre">from</span> <span class="pre">``Qt</span></code> objects a special decorator is provided to make sure they
-participate in the correct inheritance scheme.</p>
+<code class="docutils literal"><span class="pre">metaclass</span></code> or series of <a href="#id1"><span class="problematic" id="id2">``</span></a>metaclass``es is provided. Making it much easier
+to transform classes without mucking in their internals.</p>
 </div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
@@ -198,25 +196,6 @@ metaclasses are applied.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*metas</strong> (<a class="reference internal" href="#nanshe.util.wrappers.metaclasses" title="nanshe.util.wrappers.metaclasses"><em>metaclasses</em></a>) &#8211; metaclasses to apply to a given class.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a decorator for the class.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(decorator)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.wrappers.qt_class_decorate_all_methods">
-<code class="descclassname">nanshe.util.wrappers.</code><code class="descname">qt_class_decorate_all_methods</code><span class="sig-paren">(</span><em>*decorators</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/wrappers.html#qt_class_decorate_all_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.wrappers.qt_class_decorate_all_methods" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a decorator that decorates a class such that all its methods
-are decorated by the decorators provided.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*decorators</strong> (<em>tuple</em>) &#8211; decorators to decorate all methods with.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a decorator for the class.</td>
 </tr>
@@ -500,7 +479,7 @@ contain wrapped.</p>
         <li class="right" >
           <a href="nanshe.util.prof.html" title="nanshe.util.prof module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+19.ga37060d documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+21.gd9ed11e documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &raquo;</li> 

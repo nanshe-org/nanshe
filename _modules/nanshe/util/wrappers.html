@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.wrappers &mdash; nanshe 0.1.0a53+19.ga37060d documentation</title>
+    <title>nanshe.util.wrappers &mdash; nanshe 0.1.0a53+21.gd9ed11e documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+19.ga37060d',
+        VERSION:     '0.1.0a53+21.gd9ed11e',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+19.ga37060d documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+21.gd9ed11e documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+19.ga37060d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+21.gd9ed11e documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -69,9 +69,7 @@
 <span class="sd">``__wrapped__``, which points back to the original function before the wrapper</span>
 <span class="sd">was applied. Also, the ability to wrap classes with a decorator to apply a</span>
 <span class="sd">``metaclass`` or series of ``metaclass``es is provided. Making it much easier</span>
-<span class="sd">to transform classes without mucking in their internals. For classes inheriting</span>
-<span class="sd">from ``Qt`` objects a special decorator is provided to make sure they</span>
-<span class="sd">participate in the correct inheritance scheme.</span>
+<span class="sd">to transform classes without mucking in their internals.</span>
 
 <span class="sd">.. |functools| replace:: ``functools``</span>
 <span class="sd">.. _functools: http://docs.python.org/2/library/functools.html</span>
@@ -90,8 +88,6 @@
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">types</span>
-
-<span class="kn">import</span> <span class="nn">PyQt4.QtCore</span>
 
 
 <div class="viewcode-block" id="update_wrapper"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.update_wrapper">[docs]</a><span class="k">def</span> <span class="nf">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span>
@@ -381,44 +377,6 @@
     <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="qt_class_decorate_all_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.qt_class_decorate_all_methods">[docs]</a><span class="k">def</span> <span class="nf">qt_class_decorate_all_methods</span><span class="p">(</span><span class="o">*</span><span class="n">decorators</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a decorator that decorates a class such that all its methods</span>
-<span class="sd">        are decorated by the decorators provided.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            *decorators(tuple):     decorators to decorate all methods with.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (decorator):            a decorator for the class.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">class</span> <span class="nc">MetaAllMethodsDecorator</span><span class="p">(</span><span class="n">PyQt4</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtWrapperType</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Metaclass, which decorates all methods with the list of decorators</span>
-<span class="sd">            in order.</span>
-
-<span class="sd">            Inherits from PyQt4.QtCore.pyqtWrapperType based on this</span>
-<span class="sd">            ( http://www.gulon.co.uk/2012/12/28/pyqt4-qobjects-and-metaclasses/ ).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="c1"># Are all of FunctionType at this point.</span>
-                <span class="c1"># Will be of MethodType at a later step.</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">):</span>
-                    <span class="k">for</span> <span class="n">each_decorator</span> <span class="ow">in</span> <span class="n">decorators</span><span class="p">:</span>
-                        <span class="n">_v</span> <span class="o">=</span> <span class="n">each_decorator</span><span class="p">(</span><span class="n">_v</span><span class="p">)</span>
-
-                <span class="n">dct</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span>
-
-            <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span>
-                <span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span>
-            <span class="p">))</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">metaclass</span><span class="p">(</span><span class="n">MetaAllMethodsDecorator</span><span class="p">))</span></div>
-
-
 <div class="viewcode-block" id="class_decorate_methods"><a class="viewcode-back" href="../../../nanshe.util.wrappers.html#nanshe.util.wrappers.class_decorate_methods">[docs]</a><span class="k">def</span> <span class="nf">class_decorate_methods</span><span class="p">(</span><span class="o">**</span><span class="n">method_decorators</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a decorator that decorates a class such that specified methods</span>
@@ -660,7 +618,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+19.ga37060d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+21.gd9ed11e documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.prof &mdash; nanshe 0.1.0a53+19.ga37060d documentation</title>
+    <title>nanshe.util.prof &mdash; nanshe 0.1.0a53+21.gd9ed11e documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+19.ga37060d',
+        VERSION:     '0.1.0a53+21.gd9ed11e',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+19.ga37060d documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+21.gd9ed11e documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+19.ga37060d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+21.gd9ed11e documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
@@ -67,9 +67,8 @@
 <span class="sd">The module ``prof`` provides a few primitives for tracing function calls and</span>
 <span class="sd">memory usage. In particular, it provides a trace logger that gives us feedback</span>
 <span class="sd">about arguments passed, the run time, the exception raised, etc. Decorators are</span>
-<span class="sd">available for wrapping functions and classes (all methods). The special case of</span>
-<span class="sd">``Qt`` inheriting classes is handled by a separate decorator. In addition to</span>
-<span class="sd">the trace logger, a memory profiler is also provided, which can be run in a</span>
+<span class="sd">available for wrapping functions and classes (all methods). In addition to the</span>
+<span class="sd">trace logger, a memory profiler is also provided, which can be run in a</span>
 <span class="sd">separate thread to get information about memory usage. The memory profiler</span>
 <span class="sd">requires |psutil|_.</span>
 
@@ -380,62 +379,6 @@
     <span class="p">)))</span></div>
 
 
-<div class="viewcode-block" id="qt_log_class"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.qt_log_class">[docs]</a><span class="k">def</span> <span class="nf">qt_log_class</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span>
-                 <span class="n">to_log_call</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                 <span class="n">to_print_args</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">to_print_time</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                 <span class="n">to_print_exception</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a given logger and uses it to log entering and leaving all</span>
-<span class="sd">        methods of the decorated class. Intended to be used as a decorator that</span>
-<span class="sd">        takes a few arguments.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            logger(Logger):                Used for logging entry, exit and</span>
-<span class="sd">                                           possibly arguments.</span>
-
-<span class="sd">        Keyword Args:</span>
-<span class="sd">            to_log_call(bool):             Whether to log call or not. This</span>
-<span class="sd">                                           overrides all other arguments. It</span>
-<span class="sd">                                           will be stored as a global variable</span>
-<span class="sd">                                           on the methods, which can be changed</span>
-<span class="sd">                                           at runtime.</span>
-
-<span class="sd">            to_print_args(bool):           Whether to output the arguments and</span>
-<span class="sd">                                           keyword arguments passed to the</span>
-<span class="sd">                                           function. This should not</span>
-<span class="sd">                                           automatically be true as some</span>
-<span class="sd">                                           arguments may not be printable or</span>
-<span class="sd">                                           may be expensive to print. Thus, it</span>
-<span class="sd">                                           should be up to the developer to use</span>
-<span class="sd">                                           their own discretion. Further, we</span>
-<span class="sd">                                           don&#39;t want to break their existing</span>
-<span class="sd">                                           code. It will be stored as a global</span>
-<span class="sd">                                           variable on the methods, which can</span>
-<span class="sd">                                           be changed at runtime.</span>
-
-<span class="sd">            to_print_time(bool):           Prints the time it took to run the</span>
-<span class="sd">                                           wrapped callable.</span>
-
-<span class="sd">            to_print_exception(bool):      Whether to print the traceback when</span>
-<span class="sd">                                           an exception is raise. It will be</span>
-<span class="sd">                                           stored as a global variable on the</span>
-<span class="sd">                                           methods, which can be changed at</span>
-<span class="sd">                                           runtime.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            log_call_decorator(for wrapping)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">wrappers</span><span class="o">.</span><span class="n">qt_class_decorate_all_methods</span><span class="p">(</span><span class="n">log_call</span><span class="p">(</span>
-        <span class="n">logger</span><span class="p">,</span>
-        <span class="n">to_log_call</span><span class="o">=</span><span class="n">to_log_call</span><span class="p">,</span>
-        <span class="n">to_print_args</span><span class="o">=</span><span class="n">to_print_args</span><span class="p">,</span>
-        <span class="n">to_print_time</span><span class="o">=</span><span class="n">to_print_time</span><span class="p">,</span>
-        <span class="n">to_print_exception</span><span class="o">=</span><span class="n">to_print_exception</span>
-    <span class="p">)))</span></div>
-
-
 <span class="nd">@wrappers.static_variables</span><span class="p">(</span><span class="n">to_run</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="memory_profiler"><a class="viewcode-back" href="../../../nanshe.util.prof.html#nanshe.util.prof.memory_profiler">[docs]</a><span class="k">def</span> <span class="nf">memory_profiler</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -493,7 +436,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+19.ga37060d documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+21.gd9ed11e documentation</a> &raquo;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
