@@ -9,9 +9,7 @@ particular, it is ensured all wrapped functions contain an attribute
 ``__wrapped__``, which points back to the original function before the wrapper
 was applied. Also, the ability to wrap classes with a decorator to apply a
 ``metaclass`` or series of ``metaclass``es is provided. Making it much easier
-to transform classes without mucking in their internals. For classes inheriting
-from ``Qt`` objects a special decorator is provided to make sure they
-participate in the correct inheritance scheme.
+to transform classes without mucking in their internals.
 
 .. |functools| replace:: ``functools``
 .. _functools: http://docs.python.org/2/library/functools.html
@@ -30,8 +28,6 @@ import collections
 import inspect
 import functools
 import types
-
-import PyQt4.QtCore
 
 
 def update_wrapper(wrapper,
@@ -302,44 +298,6 @@ def class_decorate_all_methods(*decorators):
         """
             Metaclass, which decorates all methods with the list of decorators
             in order.
-        """
-
-        def __new__(meta, name, bases, dct):
-            for _k, _v in dct.items():
-                # Are all of FunctionType at this point.
-                # Will be of MethodType at a later step.
-                if isinstance(_v, types.FunctionType):
-                    for each_decorator in decorators:
-                        _v = each_decorator(_v)
-
-                dct[_k] = _v
-
-            return(super(MetaAllMethodsDecorator, meta).__new__(
-                meta, name, bases, dct
-            ))
-
-    return(metaclass(MetaAllMethodsDecorator))
-
-
-def qt_class_decorate_all_methods(*decorators):
-    """
-        Returns a decorator that decorates a class such that all its methods
-        are decorated by the decorators provided.
-
-        Args:
-            *decorators(tuple):     decorators to decorate all methods with.
-
-        Returns:
-            (decorator):            a decorator for the class.
-    """
-
-    class MetaAllMethodsDecorator(PyQt4.QtCore.pyqtWrapperType):
-        """
-            Metaclass, which decorates all methods with the list of decorators
-            in order.
-
-            Inherits from PyQt4.QtCore.pyqtWrapperType based on this
-            ( http://www.gulon.co.uk/2012/12/28/pyqt4-qobjects-and-metaclasses/ ).
         """
 
         def __new__(meta, name, bases, dct):

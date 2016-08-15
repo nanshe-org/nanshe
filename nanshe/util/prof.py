@@ -7,9 +7,8 @@ Overview
 The module ``prof`` provides a few primitives for tracing function calls and
 memory usage. In particular, it provides a trace logger that gives us feedback
 about arguments passed, the run time, the exception raised, etc. Decorators are
-available for wrapping functions and classes (all methods). The special case of
-``Qt`` inheriting classes is handled by a separate decorator. In addition to
-the trace logger, a memory profiler is also provided, which can be run in a
+available for wrapping functions and classes (all methods). In addition to the
+trace logger, a memory profiler is also provided, which can be run in a
 separate thread to get information about memory usage. The memory profiler
 requires |psutil|_.
 
@@ -312,62 +311,6 @@ def log_class(logger,
     """
 
     return(wrappers.class_decorate_all_methods(log_call(
-        logger,
-        to_log_call=to_log_call,
-        to_print_args=to_print_args,
-        to_print_time=to_print_time,
-        to_print_exception=to_print_exception
-    )))
-
-
-def qt_log_class(logger,
-                 to_log_call=True,
-                 to_print_args=False,
-                 to_print_time=True,
-                 to_print_exception=False):
-    """
-        Takes a given logger and uses it to log entering and leaving all
-        methods of the decorated class. Intended to be used as a decorator that
-        takes a few arguments.
-
-        Args:
-            logger(Logger):                Used for logging entry, exit and
-                                           possibly arguments.
-
-        Keyword Args:
-            to_log_call(bool):             Whether to log call or not. This
-                                           overrides all other arguments. It
-                                           will be stored as a global variable
-                                           on the methods, which can be changed
-                                           at runtime.
-
-            to_print_args(bool):           Whether to output the arguments and
-                                           keyword arguments passed to the
-                                           function. This should not
-                                           automatically be true as some
-                                           arguments may not be printable or
-                                           may be expensive to print. Thus, it
-                                           should be up to the developer to use
-                                           their own discretion. Further, we
-                                           don't want to break their existing
-                                           code. It will be stored as a global
-                                           variable on the methods, which can
-                                           be changed at runtime.
-
-            to_print_time(bool):           Prints the time it took to run the
-                                           wrapped callable.
-
-            to_print_exception(bool):      Whether to print the traceback when
-                                           an exception is raise. It will be
-                                           stored as a global variable on the
-                                           methods, which can be changed at
-                                           runtime.
-
-        Returns:
-            log_call_decorator(for wrapping)
-    """
-
-    return(wrappers.qt_class_decorate_all_methods(log_call(
         logger,
         to_log_call=to_log_call,
         to_print_args=to_print_args,
