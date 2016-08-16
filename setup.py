@@ -44,7 +44,6 @@ elif sys.argv[1] == "bdist_conda":
     build_requires = [
         "blas==1.1",
         "openblas",
-        "fftw",
         "setuptools",
         "psutil",
         "numpy",
@@ -53,7 +52,6 @@ elif sys.argv[1] == "bdist_conda":
         "h5py",
         "bottleneck",
         "matplotlib",
-        "pyfftw",
         "scikit-image",
         "scikit-learn",
         "mahotas",
@@ -64,7 +62,6 @@ elif sys.argv[1] == "bdist_conda":
     install_requires = [
         "blas==1.1",
         "openblas",
-        "fftw",
         "setuptools",
         "psutil",
         "numpy",
@@ -73,7 +70,6 @@ elif sys.argv[1] == "bdist_conda":
         "h5py",
         "bottleneck",
         "matplotlib",
-        "pyfftw",
         "scikit-image",
         "scikit-learn",
         "mahotas",
