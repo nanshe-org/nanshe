@@ -84,13 +84,6 @@ elif sys.argv[1] == "bdist_conda":
         install_requires += [
             "functools32"
         ]
-    if sys.version_info < (3,):
-        build_requires += [
-            "python-spams"
-        ]
-        install_requires += [
-            "python-spams"
-        ]
 elif sys.argv[1] == "build_sphinx":
     import sphinx.apidoc
 
