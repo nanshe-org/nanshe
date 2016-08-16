@@ -4,8 +4,10 @@ addons:
        - travis
    hostname: travis
 env:
-   - PYTHON_VERSION="2.7" DEPLOY_DOCS=true
-   - PYTHON_VERSION="3.5"
+   - PYTHON_VERSION="2.7" USE_GPL=false DEPLOY_DOCS=true
+   - PYTHON_VERSION="2.7" USE_GPL=true
+   - PYTHON_VERSION="3.5" USE_GPL=false
+   - PYTHON_VERSION="3.5" USE_GPL=true
 before_install:
    # If `$DEPLOY_DOCS` is unset, make it `false` by default.
    - if [ -z $DEPLOY_DOCS ]; then DEPLOY_DOCS=false; fi
@@ -42,6 +44,9 @@ install:
    - conda update --use-local -n testenv --all
    - conda install --use-local -n testenv nanshe==$(python setup.py --version)
    - source activate testenv
+   # Optionally install GPL dependencies.
+   - if [[ $USE_GPL == true ]]; then conda install --use-local -n testenv pyfftw; fi
+   - if [[ $PYTHON_VERSION == "2.7" ]] && [[ $USE_GPL == true ]]; then conda install --use-local -n testenv python-spams; fi
    # Install DRMAA with Python support.
    - .travis_scripts/install_sge.sh
    - export SGE_ROOT=/var/lib/gridengine
