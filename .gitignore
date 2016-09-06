@@ -25,3 +25,4 @@ nbproject/private
 _builds/
 _projects/
 _steps/
+.wercker/
