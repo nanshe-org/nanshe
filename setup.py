@@ -152,7 +152,6 @@ setup(
     author="John Kirkham",
     author_email="kirkhamj@janelia.hhmi.org",
     scripts=glob("bin/*"),
-    py_modules=["versioneer"],
     packages=find_packages(exclude=["tests*"]),
     distclass=Distribution,
     cmdclass=dict(sum([list(_.items()) for _ in [
