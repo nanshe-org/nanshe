@@ -33,6 +33,7 @@ install:
    - echo "python ${PYTHON_VERSION}.*" >> $HOME/miniconda/conda-meta/pinned
    - conda install python=$PYTHON_VERSION
    # Install basic conda dependencies.
+   - echo "conda-build 1.*" >> $HOME/miniconda/conda-meta/pinned
    - conda install conda-build
    # Build the conda package for nanshe.
    - cd $TRAVIS_REPO_SLUG
