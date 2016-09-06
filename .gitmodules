@@ -1,0 +1,3 @@
+[submodule "nanshe/_vendor/_metawrap"]
+	path = nanshe/_vendor/_metawrap
+	url = https://github.com/jakirkham/metawrap.git

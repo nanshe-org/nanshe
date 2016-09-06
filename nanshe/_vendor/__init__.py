@@ -14,4 +14,7 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Sep 06, 2016 09:57:10 EDT$"
 
 __all__ = [
+              "metawrap",
 ]
+
+from nanshe._vendor import metawrap
