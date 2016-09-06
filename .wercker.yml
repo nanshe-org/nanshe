@@ -5,6 +5,7 @@ build:
             name: Ensure clean repo.
             code: |-
                 git update-index -q --refresh
+                git submodule update --init --recursive
 
         - script:
             name: Build Conda Package.
