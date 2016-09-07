@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io package &mdash; nanshe 0.1.0a53+35.g1067d16 documentation</title>
+    <title>nanshe.vendored package &mdash; nanshe 0.1.0a53+35.g1067d16 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -30,8 +30,8 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="top" title="nanshe 0.1.0a53+35.g1067d16 documentation" href="index.html" />
     <link rel="up" title="nanshe package" href="nanshe.html" />
-    <link rel="next" title="nanshe.io.hdf5 package" href="nanshe.io.hdf5.html" />
-    <link rel="prev" title="nanshe.imp.segment module" href="nanshe.imp.segment.html" /> 
+    <link rel="next" title="nanshe.converter module" href="nanshe.converter.html" />
+    <link rel="prev" title="nanshe.util.xnumpy module" href="nanshe.util.xnumpy.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body role="document">
@@ -47,10 +47,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.io.hdf5.html" title="nanshe.io.hdf5 package"
+          <a href="nanshe.converter.html" title="nanshe.converter module"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.imp.segment.html" title="nanshe.imp.segment module"
+          <a href="nanshe.util.xnumpy.html" title="nanshe.util.xnumpy module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">nanshe 0.1.0a53+35.g1067d16 documentation</a> &raquo;</li>
 
@@ -65,60 +65,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-nanshe.io">
-<span id="nanshe-io-package"></span><h1>nanshe.io package<a class="headerlink" href="#module-nanshe.io" title="Permalink to this headline">¶</a></h1>
-<p>The package <code class="docutils literal"><span class="pre">io</span></code> provides support for various IO operations.</p>
+  <div class="section" id="module-nanshe.vendored">
+<span id="nanshe-vendored-package"></span><h1>nanshe.vendored package<a class="headerlink" href="#module-nanshe.vendored" title="Permalink to this headline">¶</a></h1>
+<p>This package exists to provided vendored copies of libraries.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The package <code class="docutils literal"><span class="pre">io</span></code> contains a variety helper functions and methods to address
-IO operations. Particular focus is given to HDF5. Support is also provided in
-using JSON as a configuration format and conversion of TIFF to HDF5.</p>
-</div>
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.io.hdf5.html">nanshe.io.hdf5 package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.io.hdf5.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.io.hdf5.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.io.hdf5.record.html">nanshe.io.hdf5.record module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.record.html#overview">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.record.html#api">API</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.io.hdf5.search.html">nanshe.io.hdf5.search module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.search.html#overview">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.search.html#api">API</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="nanshe.io.hdf5.serializers.html">nanshe.io.hdf5.serializers module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.serializers.html#overview">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nanshe.io.hdf5.serializers.html#api">API</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.io.xjson.html">nanshe.io.xjson module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.io.xjson.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.io.xjson.html#api">API</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="nanshe.io.xtiff.html">nanshe.io.xtiff module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.io.xtiff.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nanshe.io.xtiff.html#api">API</a></li>
-</ul>
-</li>
-</ul>
-</div>
+<p>The <code class="docutils literal"><span class="pre">vendored</span></code> package exists to hold git submodules for various dependencies
+that have since been refactored out of this library or written from scratch and
+added as dependencies. This is not intended to exist for the long term.</p>
 </div>
 </div>
 
@@ -130,10 +84,8 @@ using JSON as a configuration format and conversion of TIFF to HDF5.</p>
         <div class="sphinxsidebarwrapper"><div class="sphinxlocaltoc">
     <h3><a href="index.html">Page contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">nanshe.io package</a><ul>
+<li><a class="reference internal" href="#">nanshe.vendored package</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </li>
 </ul>
@@ -141,18 +93,18 @@ using JSON as a configuration format and conversion of TIFF to HDF5.</p>
   </div>
   <div class="sphinxprev">
     <h4>Previous page</h4>
-    <p class="topless"><a href="nanshe.imp.segment.html"
-                          title="Previous page">&larr; nanshe.imp.segment module</a></p>
+    <p class="topless"><a href="nanshe.util.xnumpy.html"
+                          title="Previous page">&larr; nanshe.util.xnumpy module</a></p>
   </div>
   <div class="sphinxnext">
     <h4>Next page</h4>
-    <p class="topless"><a href="nanshe.io.hdf5.html"
-                          title="Next page">&rarr; nanshe.io.hdf5 package</a></p>
+    <p class="topless"><a href="nanshe.converter.html"
+                          title="Next page">&rarr; nanshe.converter module</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/nanshe.io.txt"
+      <li><a href="_sources/nanshe.vendored.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -185,10 +137,10 @@ using JSON as a configuration format and conversion of TIFF to HDF5.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.io.hdf5.html" title="nanshe.io.hdf5 package"
+          <a href="nanshe.converter.html" title="nanshe.converter module"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="nanshe.imp.segment.html" title="nanshe.imp.segment module"
+          <a href="nanshe.util.xnumpy.html" title="nanshe.util.xnumpy module"
              >previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">nanshe 0.1.0a53+35.g1067d16 documentation</a> &raquo;</li>
 

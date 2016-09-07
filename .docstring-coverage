@@ -164,6 +164,9 @@ File nanshe/io/hdf5/serializers.py
  - No docstring for HDF5MaskedDataset.__array__!
  Needed: 28; Exist: 8; Missing: 20; Coverage: 28.6%
 
+File nanshe/vendored/__init__.py
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
+
 File nanshe/misc/neuron_matplotlib_viewer.py
  - No docstring for TimeNavigator!
  Needed: 18; Exist: 17; Missing: 1; Coverage: 94.4%
@@ -175,6 +178,6 @@ File nanshe/misc/random_dictionary_learning_data.py
  Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
 
 
-Overall statistics for 33 files:
-Docstrings needed: 360; Docstrings exist: 284; Docstrings missing: 76
+Overall statistics for 34 files:
+Docstrings needed: 361; Docstrings exist: 285; Docstrings missing: 76
 Total docstring coverage: 78.9%;  Grade: very good
