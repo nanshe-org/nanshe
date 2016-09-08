@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.iters module &#8212; nanshe 0.1.0a53+50.g90404d3 documentation</title>
+    <title>nanshe.util.iters module &#8212; nanshe 0.1.0a53+52.g983f5ca documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a53+50.g90404d3',
+        VERSION:     '0.1.0a53+52.g983f5ca',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+50.g90404d3 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+52.g983f5ca documentation" href="index.html" />
     <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.util.prof module" href="nanshe.util.prof.html" />
     <link rel="prev" title="nanshe.util package" href="nanshe.util.html" /> 
@@ -52,7 +52,7 @@
         <li class="right" >
           <a href="nanshe.util.html" title="nanshe.util package"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+50.g90404d3 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+52.g983f5ca documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -72,18 +72,12 @@
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The module <code class="docutils literal"><span class="pre">iters</span></code> provides a variety of functions targeted at working with
-or creating generators. It also contains some functions targeted at working
-with slices and tuples of slices.</p>
+or creating generators. It also borrows some functions from <code class="docutils literal"><span class="pre">kenjutsu</span></code>
+targeted at working with slices and tuples of slices. However, this borrowed
+API should be considered deprecated and is subject to removal.</p>
 </div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<dl class="exception">
-<dt id="nanshe.util.iters.UnknownSliceLengthException">
-<em class="property">exception </em><code class="descclassname">nanshe.util.iters.</code><code class="descname">UnknownSliceLengthException</code><a class="reference internal" href="_modules/nanshe/util/iters.html#UnknownSliceLengthException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.UnknownSliceLengthException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
-<p>Raised if a slice does not have a known length.</p>
-</dd></dl>
-
 <dl class="function">
 <dt id="nanshe.util.iters.cumulative_generator">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">cumulative_generator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#cumulative_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.cumulative_generator" title="Permalink to this definition">¶</a></dt>
@@ -712,145 +706,6 @@ shorter than the longest.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="nanshe.util.iters.len_slice">
-<code class="descclassname">nanshe.util.iters.</code><code class="descname">len_slice</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#len_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.len_slice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines how many elements a slice will contain.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
-<li><a class="reference internal" href="#nanshe.util.iters.UnknownSliceLengthException" title="nanshe.util.iters.UnknownSliceLengthException"><code class="xref py py-exc docutils literal"><span class="pre">UnknownSliceLengthException</span></code></a> &#8211; Will raise an exception if</li>
-<li>a_slice.stop and a_length is None.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_slice</strong> (<em>slice</em>) &#8211; a slice to reformat.</li>
-<li><strong>a_length</strong> (<em>int</em>) &#8211; a length to fill for stopping if not
-provided.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>a new slice with as many values filled in as</dt>
-<dd><p class="first last">possible.</p>
-</dd>
-</dl>
-</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span> 
-<span class="gt">Traceback (most recent call last):</span>
-<span class="gr">UnknownSliceLengthException</span>: <span class="n">Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">10</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[:])</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">8</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:])</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">8</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:])</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="go">4</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="go">4</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="go">2</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.iters.len_slices">
-<code class="descclassname">nanshe.util.iters.</code><code class="descname">len_slices</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#len_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.len_slices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a tuple of slices and reformats them to fill in as many undefined
-values as possible.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>slices</strong> (<em>tuple(slice</em>) &#8211; a tuple of slices to reformat.</li>
-<li><strong>lengths</strong> (<em>tuple(int</em>) &#8211; a tuple of lengths to fill.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>a tuple of slices with all default</dt>
-<dd><p class="first last">values filled if possible.</p>
-</dd>
-</dl>
-</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slices</span><span class="p">((</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">))</span> 
-<span class="gt">Traceback (most recent call last):</span>
-<span class="gr">UnknownSliceLengthException</span>: <span class="n">Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">len_slices</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">(</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="p">),</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">(10, 10, 5, 10)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
 <dt id="nanshe.util.iters.list_indices_to_index_array">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">list_indices_to_index_array</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#list_indices_to_index_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.list_indices_to_index_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a list of tuple indices to numpy index array.</p>
@@ -946,194 +801,6 @@ otherwise).</p>
 <span class="go">array([[ True, False,  True, False],</span>
 <span class="go">       [False,  True, False, False],</span>
 <span class="go">       [False, False, False,  True]], dtype=bool)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.iters.reformat_slice">
-<code class="descclassname">nanshe.util.iters.</code><code class="descname">reformat_slice</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#reformat_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.reformat_slice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a slice and reformats it to fill in as many undefined values as
-possible.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_slice</strong> (<em>slice</em>) &#8211; a slice to reformat.</li>
-<li><strong>a_length</strong> (<em>int</em>) &#8211; a length to fill for stopping if not
-provided.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>a new slice with as many values filled in as</dt>
-<dd><p class="first last">possible.</p>
-</dd>
-</dl>
-</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
-<span class="go">slice(0, None, 1)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">slice(0, 10, 1)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-<span class="go">slice(2, None, 1)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">slice(2, 10, 1)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-<span class="go">slice(2, None, 1)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">slice(2, 10, 1)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">slice(2, 9, 1)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">))]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[:]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">))]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">))]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">))]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[:]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">6</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">20</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="o">-</span><span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="n">reformat_slice</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">==</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.iters.reformat_slices">
-<code class="descclassname">nanshe.util.iters.</code><code class="descname">reformat_slices</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#reformat_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.reformat_slices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a tuple of slices and reformats them to fill in as many undefined
-values as possible.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>slices</strong> (<em>tuple(slice</em>) &#8211; a tuple of slices to reformat.</li>
-<li><strong>lengths</strong> (<em>tuple(int</em>) &#8211; a tuple of lengths to fill.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>a tuple of slices with all default</dt>
-<dd><p class="first last">values filled if possible.</p>
-</dd>
-</dl>
-</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(slice)</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
-<span class="go">(slice(0, None, 1),)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">((</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),))</span>
-<span class="go">(slice(0, None, 1),)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">((</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">))</span>
-<span class="go">(slice(0, None, 1), slice(3, None, 1), slice(0, 5, 1), slice(0, None, 2))</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_slices</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">(</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="p">),</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">(slice(0, 10, 1), slice(3, 13, 1), slice(0, 5, 1), slice(0, 20, 2))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1502,7 +1169,7 @@ skip (can be a single value as well).</li>
         <li class="right" >
           <a href="nanshe.util.html" title="nanshe.util package"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+50.g90404d3 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+52.g983f5ca documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.iters &#8212; nanshe 0.1.0a53+50.g90404d3 documentation</title>
+    <title>nanshe.util.iters &#8212; nanshe 0.1.0a53+52.g983f5ca documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+50.g90404d3',
+        VERSION:     '0.1.0a53+52.g983f5ca',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+50.g90404d3 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+52.g983f5ca documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+50.g90404d3 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+52.g983f5ca documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -65,8 +65,9 @@
 <span class="sd">Overview</span>
 <span class="sd">===============================================================================</span>
 <span class="sd">The module ``iters`` provides a variety of functions targeted at working with</span>
-<span class="sd">or creating generators. It also contains some functions targeted at working</span>
-<span class="sd">with slices and tuples of slices.</span>
+<span class="sd">or creating generators. It also borrows some functions from ``kenjutsu``</span>
+<span class="sd">targeted at working with slices and tuples of slices. However, this borrowed</span>
+<span class="sd">API should be considered deprecated and is subject to removal.</span>
 
 <span class="sd">===============================================================================</span>
 <span class="sd">API</span>
@@ -82,6 +83,8 @@
 <span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">nanshe._vendor.kenjutsu.kenjutsu</span> <span class="k">import</span> <span class="o">*</span>
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
@@ -1117,361 +1120,6 @@
 
     <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">),</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span><span class="n">new_list_index_gen_stringified</span><span class="p">,</span> <span class="n">new_list</span><span class="p">):</span>
         <span class="k">yield</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="n">each</span><span class="p">))</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="reformat_slice"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slice">[docs]</a><span class="k">def</span> <span class="nf">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a slice and reformats it to fill in as many undefined values as</span>
-<span class="sd">        possible.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            a_slice(slice):        a slice to reformat.</span>
-
-<span class="sd">            a_length(int):         a length to fill for stopping if not</span>
-<span class="sd">                                   provided.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (slice):               a new slice with as many values filled in as</span>
-<span class="sd">                                   possible.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(None))</span>
-<span class="sd">            slice(0, None, 1)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(None), 10)</span>
-<span class="sd">            slice(0, 10, 1)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None))</span>
-<span class="sd">            slice(2, None, 1)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None), 10)</span>
-<span class="sd">            slice(2, 10, 1)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None, None))</span>
-<span class="sd">            slice(2, None, 1)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, None, None), 10)</span>
-<span class="sd">            slice(2, 10, 1)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slice(slice(2, -1, None), 10)</span>
-<span class="sd">            slice(2, 9, 1)</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(None))] == range(10)[:]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None))] == range(10)[2:]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6))] == range(10)[2:6]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6, 3))] == range(10)[2:6:3]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None, 3))] == range(10)[2::3]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(None), 10)] == range(10)[:]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None), 10)] == range(10)[2:]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6), 10)] == range(10)[2:6]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 6, 3), 10)] == range(10)[2:6:3]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, None, 3), 10)] == range(10)[2::3]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, -6, 3), 10)] == range(10)[2:-6:3]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, -1), 10)] == range(10)[2:-1]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, 20), 10)] == range(10)[2:20]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(2, -20), 10)] == range(10)[2:-20]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(20, -1), 10)] == range(10)[20:-1]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(-20, -1), 10)] == range(10)[-20:-1]</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; range(10)[reformat_slice(slice(-5, -1), 10)] == range(10)[-5:-1]</span>
-<span class="sd">            True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">assert</span> <span class="p">(</span><span class="n">a_slice</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span> <span class="s2">&quot;err&quot;</span>
-
-    <span class="c1"># Fill unknown values.</span>
-
-    <span class="n">new_slice_step</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">step</span>
-    <span class="k">if</span> <span class="n">new_slice_step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">new_slice_step</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">start</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="n">new_slice_start</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">stop</span>
-
-
-    <span class="c1"># Make adjustments for length</span>
-
-    <span class="k">if</span> <span class="n">a_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">):</span>
-            <span class="n">new_slice_step</span> <span class="o">=</span> <span class="o">-</span><span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">):</span>
-            <span class="n">new_slice_step</span> <span class="o">=</span> <span class="n">a_length</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">pass</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">+=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">+=</span> <span class="n">a_length</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">pass</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&gt;=</span> <span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
-
-
-    <span class="c1"># Build new slice and return.</span>
-
-    <span class="n">new_slice</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">new_slice_start</span><span class="p">,</span> <span class="n">new_slice_stop</span><span class="p">,</span> <span class="n">new_slice_step</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="reformat_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slices">[docs]</a><span class="k">def</span> <span class="nf">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined</span>
-<span class="sd">        values as possible.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            slices(tuple(slice)):        a tuple of slices to reformat.</span>
-<span class="sd">            lengths(tuple(int)):         a tuple of lengths to fill.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (slice):                     a tuple of slices with all default</span>
-<span class="sd">                                         values filled if possible.</span>
-
-<span class="sd">        Examples:</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slices(slice(None))</span>
-<span class="sd">            (slice(0, None, 1),)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slices((slice(None),))</span>
-<span class="sd">            (slice(0, None, 1),)</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slices((</span>
-<span class="sd">            ...     slice(None),</span>
-<span class="sd">            ...     slice(3, None),</span>
-<span class="sd">            ...     slice(None, 5),</span>
-<span class="sd">            ...     slice(None, None, 2)</span>
-<span class="sd">            ... ))</span>
-<span class="sd">            (slice(0, None, 1), slice(3, None, 1), slice(0, 5, 1), slice(0, None, 2))</span>
-
-<span class="sd">            &gt;&gt;&gt; reformat_slices(</span>
-<span class="sd">            ...     (</span>
-<span class="sd">            ...         slice(None),</span>
-<span class="sd">            ...         slice(3, None),</span>
-<span class="sd">            ...         slice(None, 5),</span>
-<span class="sd">            ...         slice(None, None, 2)</span>
-<span class="sd">            ...     ),</span>
-<span class="sd">            ...     (10, 13, 15, 20)</span>
-<span class="sd">            ... )</span>
-<span class="sd">            (slice(0, 10, 1), slice(3, 13, 1), slice(0, 5, 1), slice(0, 20, 2))</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-        <span class="n">slices</span> <span class="o">=</span> <span class="p">(</span><span class="n">slices</span><span class="p">,)</span>
-
-    <span class="n">new_lengths</span> <span class="o">=</span> <span class="n">lengths</span>
-    <span class="k">if</span> <span class="n">new_lengths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">new_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="nb">len</span><span class="p">(</span><span class="n">new_lengths</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-        <span class="n">new_lengths</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_lengths</span><span class="p">,)</span>
-
-    <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_lengths</span><span class="p">))</span>
-
-    <span class="n">new_slices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">each_length</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">new_lengths</span><span class="p">):</span>
-        <span class="n">new_slices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">reformat_slice</span><span class="p">(</span><span class="n">new_slices</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">each_length</span><span class="p">)</span>
-
-    <span class="n">new_slices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_slices</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">new_slices</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="UnknownSliceLengthException"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.UnknownSliceLengthException">[docs]</a><span class="k">class</span> <span class="nc">UnknownSliceLengthException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Raised if a slice does not have a known length.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="len_slice"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.len_slice">[docs]</a><span class="k">def</span> <span class="nf">len_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines how many elements a slice will contain.</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            UnknownSliceLengthException: Will raise an exception if</span>
-<span class="sd">            a_slice.stop and a_length is None.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            a_slice(slice):        a slice to reformat.</span>
-
-<span class="sd">            a_length(int):         a length to fill for stopping if not</span>
-<span class="sd">                                   provided.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (slice):               a new slice with as many values filled in as</span>
-<span class="sd">                                   possible.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(None)) #doctest: +IGNORE_EXCEPTION_DETAIL</span>
-<span class="sd">            Traceback (most recent call last):</span>
-<span class="sd">            UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(None), 10)</span>
-<span class="sd">            10</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(None), 10) == len(range(10)[:])</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None), 10)</span>
-<span class="sd">            8</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None), 10) == len(range(10)[2:])</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None, None), 10)</span>
-<span class="sd">            8</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, None, None), 10) == len(range(10)[2:])</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6))</span>
-<span class="sd">            4</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6), 1000)</span>
-<span class="sd">            4</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6), 10) == len(range(10)[2:6])</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6, 3))</span>
-<span class="sd">            2</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slice(slice(2, 6, 3), 10) == len(range(10)[2:6:3])</span>
-<span class="sd">            True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">new_slice</span> <span class="o">=</span> <span class="n">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">UnknownSliceLengthException</span><span class="p">(</span>
-            <span class="s2">&quot;Cannot determine slice length without a defined end point. &quot;</span> <span class="o">+</span>
-            <span class="s2">&quot;The reformatted slice was &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
-        <span class="p">)</span>
-
-    <span class="n">new_slice_diff</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_slice</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
-
-    <span class="n">new_slice_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">new_slice_diff</span> <span class="o">/</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">step</span><span class="p">))</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">new_slice_size</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="len_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.len_slices">[docs]</a><span class="k">def</span> <span class="nf">len_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined</span>
-<span class="sd">        values as possible.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            slices(tuple(slice)):        a tuple of slices to reformat.</span>
-<span class="sd">            lengths(tuple(int)):         a tuple of lengths to fill.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (slice):                     a tuple of slices with all default</span>
-<span class="sd">                                         values filled if possible.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; len_slices((</span>
-<span class="sd">            ...     slice(None),</span>
-<span class="sd">            ...     slice(3, None),</span>
-<span class="sd">            ...     slice(None, 5),</span>
-<span class="sd">            ...     slice(None, None, 2)</span>
-<span class="sd">            ... )) #doctest: +IGNORE_EXCEPTION_DETAIL</span>
-<span class="sd">            Traceback (most recent call last):</span>
-<span class="sd">            UnknownSliceLengthException: Cannot determine slice length without a defined end point. The reformatted slice was slice(0, None, 1).</span>
-
-<span class="sd">            &gt;&gt;&gt; len_slices(</span>
-<span class="sd">            ...     (</span>
-<span class="sd">            ...         slice(None),</span>
-<span class="sd">            ...         slice(3, None),</span>
-<span class="sd">            ...         slice(None, 5),</span>
-<span class="sd">            ...         slice(None, None, 2)</span>
-<span class="sd">            ...     ),</span>
-<span class="sd">            ...     (10, 13, 15, 20)</span>
-<span class="sd">            ... )</span>
-<span class="sd">            (10, 10, 5, 10)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">new_slices</span> <span class="o">=</span> <span class="n">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
-
-    <span class="n">lens</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">each_slice</span> <span class="ow">in</span> <span class="n">new_slices</span><span class="p">:</span>
-        <span class="n">lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">len_slice</span><span class="p">(</span><span class="n">each_slice</span><span class="p">))</span>
-
-    <span class="n">lens</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">lens</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">lens</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -1504,7 +1152,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+50.g90404d3 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+52.g983f5ca documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
