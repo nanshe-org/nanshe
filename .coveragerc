@@ -15,7 +15,7 @@ exclude_lines =
 omit =
     */python?.?/*
     */site-packages/*
-    */ilastik/*
     *tests/*
     */versioneer.py
     */_version.py
+    */_vendor/*
