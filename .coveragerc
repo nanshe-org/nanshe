@@ -18,3 +18,4 @@ omit =
     *tests/*
     */versioneer.py
     */_version.py
+    */_vendor/*
