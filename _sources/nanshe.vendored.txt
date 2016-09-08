@@ -1,8 +1,0 @@
-nanshe.vendored package
-=======================
-
-.. automodule:: nanshe.vendored
-    :members:
-    :undoc-members:
-    :show-inheritance:
-

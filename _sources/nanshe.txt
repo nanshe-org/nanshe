@@ -17,7 +17,6 @@ Subpackages
     nanshe.misc
     nanshe.syn
     nanshe.util
-    nanshe.vendored
 
 Submodules
 ----------

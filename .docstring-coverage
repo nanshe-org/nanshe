@@ -47,6 +47,9 @@ File nanshe/imp/filters/__init__.py
 File nanshe/imp/filters/masks.py
  Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
 
+File nanshe/_vendor/__init__.py
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
+
 File nanshe/syn/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
@@ -163,9 +166,6 @@ File nanshe/io/hdf5/serializers.py
  - No docstring for HDF5MaskedDataset.__setitem__!
  - No docstring for HDF5MaskedDataset.__array__!
  Needed: 28; Exist: 8; Missing: 20; Coverage: 28.6%
-
-File nanshe/vendored/__init__.py
- Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/misc/neuron_matplotlib_viewer.py
  - No docstring for TimeNavigator!
