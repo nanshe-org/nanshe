@@ -50,6 +50,122 @@ File nanshe/imp/filters/masks.py
 File nanshe/_vendor/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
+File nanshe/_vendor/_metawrap/versioneer.py
+ - No docstring for get_config_from_root.get!
+ - No docstring for get_cmdclass.cmd_version!
+ - No docstring for cmd_version.initialize_options!
+ - No docstring for cmd_version.finalize_options!
+ - No docstring for cmd_version.run!
+ - No docstring for get_cmdclass.cmd_build_py!
+ - No docstring for cmd_build_py.run!
+ - No docstring for get_cmdclass.cmd_build_exe!
+ - No docstring for cmd_build_exe.run!
+ - No docstring for get_cmdclass.cmd_sdist!
+ - No docstring for cmd_sdist.run!
+ - No docstring for cmd_sdist.make_release_tree!
+ Needed: 41; Exist: 29; Missing: 12; Coverage: 70.7%
+
+File nanshe/_vendor/_metawrap/setup.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/_vendor/_metawrap/travis_pypi_setup.py
+ - No docstring for load_yaml_config!
+ - No docstring for save_yaml_config!
+ - No docstring for main!
+ Needed: 9; Exist: 6; Missing: 3; Coverage: 66.7%
+
+File nanshe/_vendor/_metawrap/docs/conf.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
+File nanshe/_vendor/_metawrap/tests/test_metawrap.py
+ - No docstring for TestWrappers!
+ - No docstring for TestWrappers.setUp!
+ - No docstring for setUp.setup_with_setup_state_2!
+ - No docstring for setUp.setup_with_setup_state_1!
+ - No docstring for setUp.teardown_with_setup_state_1!
+ - No docstring for setUp.teardown_with_setup_state_2!
+ - No docstring for TestWrappers.tearDown!
+ - No docstring for TestWrappers.test_update_wrapper!
+ - No docstring for test_update_wrapper.wrapper!
+ - No docstring for wrapper.wrapped!
+ - No docstring for test_update_wrapper.func!
+ - No docstring for TestWrappers.test_wraps!
+ - No docstring for test_wraps.wrapper!
+ - No docstring for wrapper.wrapped!
+ - No docstring for test_wraps.func!
+ - No docstring for TestWrappers.test_identity_wrapper!
+ - No docstring for test_identity_wrapper.func!
+ - No docstring for TestWrappers.test_static_variables!
+ - No docstring for test_static_variables.func!
+ - No docstring for TestWrappers.test_metaclass_0!
+ - No docstring for test_metaclass_0.Meta!
+ - No docstring for test_metaclass_0.Class!
+ - No docstring for TestWrappers.test_metaclass_1!
+ - No docstring for test_metaclass_1.Meta!
+ - No docstring for test_metaclass_1.Class!
+ - No docstring for Class.__init__!
+ - No docstring for TestWrappers.test_metaclasses_0!
+ - No docstring for test_metaclasses_0.Meta1!
+ - No docstring for test_metaclasses_0.Meta2!
+ - No docstring for test_metaclasses_0.Class!
+ - No docstring for TestWrappers.test_metaclasses_1!
+ - No docstring for test_metaclasses_1.Meta1!
+ - No docstring for test_metaclasses_1.Meta2!
+ - No docstring for test_metaclasses_1.Class!
+ - No docstring for Class.__init__!
+ - No docstring for TestWrappers.test_class_static_variables!
+ - No docstring for test_class_static_variables.Class!
+ - No docstring for TestWrappers.test_class_decorate_all_methods!
+ - No docstring for test_class_decorate_all_methods.Class!
+ - No docstring for Class.__init__!
+ - No docstring for TestWrappers.test_class_decorate_methods!
+ - No docstring for test_class_decorate_methods.Class!
+ - No docstring for Class.__init__!
+ - No docstring for Class.func_0!
+ - No docstring for TestWrappers.test_unwrap!
+ - No docstring for test_unwrap.func_0!
+ - No docstring for TestWrappers.test_tied_call_args!
+ - No docstring for test_tied_call_args.func_0!
+ - No docstring for TestWrappers.test_repack_call_args!
+ - No docstring for test_repack_call_args.func_0!
+ - No docstring for TestWrappers.test_with_setup_state_1a!
+ - No docstring for test_with_setup_state_1a.wrapped!
+ - No docstring for TestWrappers.test_with_setup_state_1b!
+ - No docstring for test_with_setup_state_1b.func!
+ - No docstring for TestWrappers.test_with_setup_state_2a!
+ - No docstring for test_with_setup_state_2a.func!
+ - No docstring for TestWrappers.test_with_setup_state_2b!
+ - No docstring for test_with_setup_state_2b.func!
+ - No docstring for TestWrappers.test_with_setup_state_2c!
+ - No docstring for test_with_setup_state_2c.func!
+ - No docstring for TestWrappers.test_with_setup_state_2d!
+ - No docstring for test_with_setup_state_2d.func!
+ - No docstring for TestWrappers.test_with_setup_state_6!
+ - No docstring for test_with_setup_state_6.func!
+ Needed: 65; Exist: 1; Missing: 64; Coverage: 1.5%
+
+File nanshe/_vendor/_metawrap/tests/__init__.py
+ - File is empty.
+ Needed: 0; Exist: 0; Missing: 0; Coverage: 0.0%
+
+File nanshe/_vendor/_metawrap/metawrap/metawrap.py
+ - No docstring for MetaStaticVariables.__new__!
+ - No docstring for MetaAllMethodsDecorator.__new__!
+ - No docstring for MetaMethodsDecorator.__new__!
+ - No docstring for with_setup_state_wrapper.stages!
+ - No docstring for with_setup_state_wrapper.a_stage!
+ - No docstring for with_setup_state_handler.wrapped!
+ Needed: 29; Exist: 23; Missing: 6; Coverage: 79.3%
+
+File nanshe/_vendor/_metawrap/metawrap/_version.py
+ Needed: 21; Exist: 21; Missing: 0; Coverage: 100.0%
+
+File nanshe/_vendor/_metawrap/metawrap/__init__.py
+ - No module dostring!
+ Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+
 File nanshe/syn/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
@@ -67,12 +183,7 @@ File nanshe/util/xglob.py
  Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/wrappers.py
- - No docstring for MetaStaticVariables.__new__!
- - No docstring for MetaAllMethodsDecorator.__new__!
- - No docstring for MetaMethodsDecorator.__new__!
- - No docstring for with_setup_state_wrapper.stages!
- - No docstring for with_setup_state_wrapper.a_stage!
- Needed: 27; Exist: 22; Missing: 5; Coverage: 81.5%
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/xnumpy.py
  Needed: 60; Exist: 60; Missing: 0; Coverage: 100.0%
@@ -178,6 +289,6 @@ File nanshe/misc/random_dictionary_learning_data.py
  Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
 
 
-Overall statistics for 34 files:
-Docstrings needed: 361; Docstrings exist: 285; Docstrings missing: 76
-Total docstring coverage: 78.9%;  Grade: very good
+Overall statistics for 43 files (1 files are empty):
+Docstrings needed: 503; Docstrings exist: 344; Docstrings missing: 159
+Total docstring coverage: 68.4%;  Grade: good
