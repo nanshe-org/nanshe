@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.renorm &mdash; nanshe 0.1.0a53+46.g648a28f documentation</title>
+    <title>nanshe.imp.renorm &#8212; nanshe 0.1.0a53+48.gc43e40f documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+46.g648a28f',
+        VERSION:     '0.1.0a53+48.gc43e40f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+46.g648a28f documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+48.gc43e40f documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,9 +44,9 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -85,18 +85,18 @@
 <span class="c1"># Generally useful and fast to import so done immediately.</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">iters</span>
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
 
 
 <span class="c1"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="zeroed_mean_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.zeroed_mean_images">[docs]</a><span class="k">def</span> <span class="nf">zeroed_mean_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="zeroed_mean_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.zeroed_mean_images">[docs]</a><span class="k">def</span> <span class="nf">zeroed_mean_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and finds the mean for each image. Where each image is</span>
 <span class="sd">        new_numpy_array[i] with some index i.</span>
@@ -175,7 +175,7 @@
 
     <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">input_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">output_array</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">output_array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">output_array</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">output_array</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
@@ -200,8 +200,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">output_array</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="renormalized_images"><a class="viewcode-back" href="../../../nanshe.imp.renorm.html#nanshe.imp.renorm.renormalized_images">[docs]</a><span class="k">def</span> <span class="nf">renormalized_images</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_array</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes and divide each image by its norm. Where each image is</span>
 <span class="sd">        new_numpy_array[i] with some index i.</span>
@@ -274,7 +274,7 @@
 
     <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">input_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">output_array</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">output_array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">output_array</span> <span class="o">=</span> <span class="n">input_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">output_array</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">output_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">)</span>
@@ -307,14 +307,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -332,16 +329,16 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2014-2015, John A. Kirkham.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

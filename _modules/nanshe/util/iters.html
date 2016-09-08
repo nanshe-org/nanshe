@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.iters &mdash; nanshe 0.1.0a53+46.g648a28f documentation</title>
+    <title>nanshe.util.iters &#8212; nanshe 0.1.0a53+48.gc43e40f documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+46.g648a28f',
+        VERSION:     '0.1.0a53+48.gc43e40f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+46.g648a28f documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+48.gc43e40f documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,9 +44,9 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -84,26 +84,26 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
 
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">izip_longest</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">izip_longest</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">zip_longest</span> <span class="k">as</span> <span class="n">izip_longest</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">zip_longest</span> <span class="k">as</span> <span class="n">izip_longest</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">imap</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">imap</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">imap</span> <span class="o">=</span> <span class="nb">map</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">izip</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">izip</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">izip</span> <span class="o">=</span> <span class="nb">zip</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">irange</span> <span class="o">=</span> <span class="nb">xrange</span>
+    <span class="n">irange</span> <span class="o">=</span> <span class="n">xrange</span>
 <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
     <span class="n">irange</span> <span class="o">=</span> <span class="nb">range</span>
 
@@ -112,7 +112,7 @@
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="index_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.index_generator">[docs]</a><span class="k">def</span> <span class="nf">index_generator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to</span>
@@ -160,7 +160,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="index_enumerator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.index_enumerator">[docs]</a><span class="k">def</span> <span class="nf">index_enumerator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to</span>
@@ -210,7 +210,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="list_indices_to_index_array"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.list_indices_to_index_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_index_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts a list of tuple indices to numpy index array.</span>
@@ -239,7 +239,7 @@
     <span class="k">return</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">list_indices</span><span class="p">)))))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="list_indices_to_numpy_bool_array"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.list_indices_to_numpy_bool_array">[docs]</a><span class="k">def</span> <span class="nf">list_indices_to_numpy_bool_array</span><span class="p">(</span><span class="n">list_indices</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Much like list_indices_to_index_array except that it constructs</span>
@@ -292,12 +292,12 @@
 
     <span class="c1"># Sets the given indices to True</span>
     <span class="k">if</span> <span class="n">index_array</span> <span class="o">!=</span> <span class="p">():</span>
-        <span class="n">result</span><span class="p">[</span><span class="n">index_array</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">index_array</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="repeat_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.repeat_generator">[docs]</a><span class="k">def</span> <span class="nf">repeat_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Repeats each value on an iterator given n-times before proceeding to</span>
@@ -341,7 +341,7 @@
             <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="cycle_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.cycle_generator">[docs]</a><span class="k">def</span> <span class="nf">cycle_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cycles through an iterator n-times.</span>
@@ -383,8 +383,8 @@
         <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="iter_with_skip_indices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.iter_with_skip_indices">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_indices</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="iter_with_skip_indices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.iter_with_skip_indices">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_indices</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary</span>
 <span class="sd">        values, as well. These values to be skipped should be specified by</span>
@@ -429,7 +429,7 @@
     <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">a_iter</span><span class="p">)</span>
     <span class="n">full_enum</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -437,17 +437,17 @@
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="n">to_skip</span><span class="p">])</span>
 
-    <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">full_enum</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">next_to_skip</span><span class="p">:</span>
             <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span></div>
+            <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="iter_with_skip_values"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.iter_with_skip_values">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_values</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="iter_with_skip_values"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.iter_with_skip_values">[docs]</a><span class="k">def</span> <span class="nf">iter_with_skip_values</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves as a normal iterator except allows for skipping arbitrary</span>
 <span class="sd">        values, as well. These values to be skipped should be specified by</span>
@@ -494,7 +494,7 @@
 
     <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">a_iter</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">to_skip</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -507,8 +507,8 @@
             <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="xrange_with_skip"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.xrange_with_skip">[docs]</a><span class="k">def</span> <span class="nf">xrange_with_skip</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="xrange_with_skip"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.xrange_with_skip">[docs]</a><span class="k">def</span> <span class="nf">xrange_with_skip</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_skip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves as irange does except allows for skipping arbitrary values, as</span>
 <span class="sd">        well. These values to be skipped should be specified using some</span>
@@ -564,16 +564,16 @@
 <span class="sd">            [0, 1, 2, 3, 4, 5, 6, 7, 8]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">full</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">full</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">step</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">full</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">to_skip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -581,16 +581,16 @@
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="n">to_skip</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="n">to_skip</span><span class="p">])</span>
 
-    <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">full</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">each</span> <span class="o">!=</span> <span class="n">next_to_skip</span><span class="p">:</span>
             <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span></div>
+            <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="splitting_xrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.splitting_xrange">[docs]</a><span class="k">def</span> <span class="nf">splitting_xrange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="splitting_xrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.splitting_xrange">[docs]</a><span class="k">def</span> <span class="nf">splitting_xrange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Similar to irange except that it recursively proceeds through the given</span>
 <span class="sd">        range in such a way that values that follow each other are preferably</span>
@@ -660,7 +660,7 @@
                 <span class="k">for</span> <span class="n">_1</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mid_2</span><span class="p">):</span>
                     <span class="k">yield</span><span class="p">(</span><span class="n">_1</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
         <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -676,8 +676,8 @@
         <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="subrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.subrange">[docs]</a><span class="k">def</span> <span class="nf">subrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">substep</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="subrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.subrange">[docs]</a><span class="k">def</span> <span class="nf">subrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">substep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates start and stop values for each subrange.</span>
 
@@ -717,14 +717,14 @@
 <span class="sd">            [[0, 2], [3, 5], [6]]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span>
         <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="k">if</span> <span class="n">substep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">substep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">substep</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="n">range_ends</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="p">[</span><span class="n">stop</span><span class="p">])</span>
@@ -733,7 +733,7 @@
         <span class="k">yield</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">substep</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="cumulative_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.cumulative_generator">[docs]</a><span class="k">def</span> <span class="nf">cumulative_generator</span><span class="p">(</span><span class="n">new_op</span><span class="p">,</span> <span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each value from new_iter and applies new_op to it with the result</span>
@@ -781,7 +781,7 @@
         <span class="k">yield</span> <span class="p">(</span><span class="n">cur</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="reverse_each_element"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reverse_each_element">[docs]</a><span class="k">def</span> <span class="nf">reverse_each_element</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
@@ -815,7 +815,7 @@
         <span class="k">yield</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">each</span><span class="p">)(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">each</span><span class="p">)))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="lagged_generators"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.lagged_generators">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a tuple of generators with each next generator one step ahead</span>
@@ -886,8 +886,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">all_iters</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="lagged_generators_zipped"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.lagged_generators_zipped">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators_zipped</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">longest</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="lagged_generators_zipped"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.lagged_generators_zipped">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators_zipped</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">longest</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a tuple of generators with each next generator one step ahead</span>
 <span class="sd">        of the previous generator.</span>
@@ -934,7 +934,7 @@
 
     <span class="n">all_iters</span> <span class="o">=</span> <span class="n">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
-    <span class="n">zipped_iters</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">zipped_iters</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">longest</span><span class="p">:</span>
         <span class="n">zipped_iters</span> <span class="o">=</span> <span class="n">izip_longest</span><span class="p">(</span><span class="o">*</span><span class="n">all_iters</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="n">fillvalue</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -943,8 +943,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">zipped_iters</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="filled_stringify_numbers"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.filled_stringify_numbers">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">include_numbers</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="filled_stringify_numbers"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.filled_stringify_numbers">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_numbers</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">include_numbers</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Like enumerate except it also returns a string with the number from</span>
 <span class="sd">        enumeration with left padding by zero.</span>
@@ -989,15 +989,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
-    <span class="n">new_list_len</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_list_max</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_list_len</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_list_max</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">new_list_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
-        <span class="n">new_list_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">new_list_len</span> <span class="k">else</span> <span class="bp">None</span>
+        <span class="n">new_list_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">new_list_len</span> <span class="k">else</span> <span class="kc">None</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
         <span class="n">new_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
         <span class="n">new_list_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
-        <span class="n">new_list_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">new_list_len</span> <span class="k">else</span> <span class="bp">None</span>
+        <span class="n">new_list_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">new_list_len</span> <span class="k">else</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="n">new_list_len</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">new_list_max</span><span class="p">:</span>
@@ -1013,7 +1013,7 @@
             <span class="k">yield</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">each</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">digits</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="filled_stringify_xrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.filled_stringify_xrange">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_xrange</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
@@ -1051,7 +1051,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
-    <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
@@ -1059,14 +1059,14 @@
         <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
 
     <span class="n">new_list_index_gen_stringified</span> <span class="o">=</span> <span class="n">filled_stringify_numbers</span><span class="p">(</span>
-        <span class="n">new_list_index_gen</span><span class="p">,</span> <span class="n">include_numbers</span><span class="o">=</span><span class="bp">True</span>
+        <span class="n">new_list_index_gen</span><span class="p">,</span> <span class="n">include_numbers</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">i_str</span> <span class="ow">in</span> <span class="n">new_list_index_gen_stringified</span><span class="p">:</span>
         <span class="k">yield</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="filled_stringify_enumerate"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.filled_stringify_enumerate">[docs]</a><span class="k">def</span> <span class="nf">filled_stringify_enumerate</span><span class="p">(</span><span class="n">new_iter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes each element yielded by new_iter and reverses it using reversed.</span>
@@ -1104,7 +1104,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_list</span> <span class="o">=</span> <span class="n">new_iter</span>
-    <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
@@ -1112,15 +1112,15 @@
         <span class="n">new_list_index_gen</span> <span class="o">=</span> <span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_list</span><span class="p">))</span>
 
     <span class="n">new_list_index_gen_stringified</span> <span class="o">=</span> <span class="n">filled_stringify_numbers</span><span class="p">(</span>
-        <span class="n">new_list_index_gen</span><span class="p">,</span> <span class="n">include_numbers</span><span class="o">=</span><span class="bp">True</span>
+        <span class="n">new_list_index_gen</span><span class="p">,</span> <span class="n">include_numbers</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
     <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">),</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span><span class="n">new_list_index_gen_stringified</span><span class="p">,</span> <span class="n">new_list</span><span class="p">):</span>
         <span class="k">yield</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="n">each</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="reformat_slice"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slice">[docs]</a><span class="k">def</span> <span class="nf">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reformat_slice"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slice">[docs]</a><span class="k">def</span> <span class="nf">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a slice and reformats it to fill in as many undefined values as</span>
 <span class="sd">        possible.</span>
@@ -1209,16 +1209,16 @@
 <span class="sd">            True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">assert</span> <span class="p">(</span><span class="n">a_slice</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">),</span> <span class="s2">&quot;err&quot;</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">a_slice</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span> <span class="s2">&quot;err&quot;</span>
 
     <span class="c1"># Fill unknown values.</span>
 
     <span class="n">new_slice_step</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">step</span>
-    <span class="k">if</span> <span class="n">new_slice_step</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">new_slice_step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">new_slice_step</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">start</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
         <span class="n">new_slice_start</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_slice</span><span class="o">.</span><span class="n">stop</span>
@@ -1226,15 +1226,15 @@
 
     <span class="c1"># Make adjustments for length</span>
 
-    <span class="k">if</span> <span class="n">a_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">a_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">):</span>
             <span class="n">new_slice_step</span> <span class="o">=</span> <span class="o">-</span><span class="n">a_length</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="n">a_length</span><span class="p">):</span>
             <span class="n">new_slice_step</span> <span class="o">=</span> <span class="n">a_length</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="k">pass</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">new_slice_start</span> <span class="o">=</span> <span class="n">a_length</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">new_slice_start</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1249,14 +1249,14 @@
         <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_start</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">new_slice_start</span> <span class="o">+=</span> <span class="n">a_length</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="n">a_length</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="k">pass</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">a_length</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">new_slice_stop</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">new_slice_stop</span> <span class="o">+=</span> <span class="n">a_length</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">new_slice_stop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_slice_step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
@@ -1278,8 +1278,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="reformat_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slices">[docs]</a><span class="k">def</span> <span class="nf">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="reformat_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.reformat_slices">[docs]</a><span class="k">def</span> <span class="nf">reformat_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined</span>
 <span class="sd">        values as possible.</span>
@@ -1326,8 +1326,8 @@
         <span class="n">slices</span> <span class="o">=</span> <span class="p">(</span><span class="n">slices</span><span class="p">,)</span>
 
     <span class="n">new_lengths</span> <span class="o">=</span> <span class="n">lengths</span>
-    <span class="k">if</span> <span class="n">new_lengths</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">new_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_lengths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">new_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">new_lengths</span><span class="p">)</span>
@@ -1353,8 +1353,8 @@
     <span class="k">pass</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="len_slice"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.len_slice">[docs]</a><span class="k">def</span> <span class="nf">len_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="len_slice"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.len_slice">[docs]</a><span class="k">def</span> <span class="nf">len_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines how many elements a slice will contain.</span>
 
@@ -1413,7 +1413,7 @@
 
     <span class="n">new_slice</span> <span class="o">=</span> <span class="n">reformat_slice</span><span class="p">(</span><span class="n">a_slice</span><span class="p">,</span> <span class="n">a_length</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">new_slice</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">UnknownSliceLengthException</span><span class="p">(</span>
             <span class="s2">&quot;Cannot determine slice length without a defined end point. &quot;</span> <span class="o">+</span>
             <span class="s2">&quot;The reformatted slice was &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
@@ -1426,8 +1426,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_slice_size</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="len_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.len_slices">[docs]</a><span class="k">def</span> <span class="nf">len_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="len_slices"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.len_slices">[docs]</a><span class="k">def</span> <span class="nf">len_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a tuple of slices and reformats them to fill in as many undefined</span>
 <span class="sd">        values as possible.</span>
@@ -1482,14 +1482,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1507,16 +1504,16 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2014-2015, John A. Kirkham.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

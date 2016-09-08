@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.filters.wavelet module &mdash; nanshe 0.1.0a53+46.g648a28f documentation</title>
+    <title>nanshe.imp.filters.wavelet module &#8212; nanshe 0.1.0a53+48.gc43e40f documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a53+46.g648a28f',
+        VERSION:     '0.1.0a53+48.gc43e40f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+46.g648a28f documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+48.gc43e40f documentation" href="index.html" />
     <link rel="up" title="nanshe.imp.filters package" href="nanshe.imp.filters.html" />
     <link rel="next" title="nanshe.imp.registration module" href="nanshe.imp.registration.html" />
     <link rel="prev" title="nanshe.imp.filters.noise module" href="nanshe.imp.filters.noise.html" /> 
@@ -52,11 +52,11 @@
         <li class="right" >
           <a href="nanshe.imp.filters.noise.html" title="nanshe.imp.filters.noise module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &raquo;</li>
-          <li class="nav-item nav-item-3"><a href="nanshe.imp.filters.html" accesskey="U">nanshe.imp.filters package</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="nanshe.imp.filters.html" accesskey="U">nanshe.imp.filters package</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -94,11 +94,12 @@ transform.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>r</strong> &#8211;
-a 1D numpy array to use as the wavelet</p>
-<blockquote>
-<div><p>transform kernel.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>r</strong> &#8211;</p>
+<dl class="docutils">
+<dt>a 1D numpy array to use as the wavelet</dt>
+<dd><p class="first last">transform kernel.</p>
+</dd>
+</dl>
 </p>
 </td>
 </tr>
@@ -108,38 +109,38 @@ a 1D numpy array to use as the wavelet</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([], dtype=float64)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">array([ 1.])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="go">array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">array([ 0.0625,  0.25  ,  0.375 ,  0.25  ,  0.0625])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">array([ 0.0625,  0.    ,  0.25  ,  0.    ,  0.375 ,  0.    ,  0.25  ,</span>
 <span class="go">        0.    ,  0.0625])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,  0.    ,</span>
 <span class="go">        0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.25  ,  0.    ,</span>
 <span class="go">        0.    ,  0.    ,  0.0625])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">array([ 0.0625,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,</span>
 <span class="go">        0.    ,  0.25  ,  0.    ,  0.    ,  0.    ,  0.    ,  0.    ,</span>
 <span class="go">        0.    ,  0.    ,  0.375 ,  0.    ,  0.    ,  0.    ,  0.    ,</span>
@@ -147,7 +148,7 @@ a 1D numpy array to use as the wavelet</p>
 <span class="go">        0.    ,  0.    ,  0.    ,  0.    ,  0.0625])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_array_kernel</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">array([ 0.5,  0. ,  0.5])</span>
 </pre></div>
 </div>
@@ -176,15 +177,16 @@ borders.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>k</strong> &#8211;
-a 1D vigra</p>
-<blockquote>
-<div><p>kernel to
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>k</strong> &#8211;</p>
+<dl class="docutils">
+<dt>a 1D vigra</dt>
+<dd><p class="first last">kernel to
 aid in
 computing
 the wavelet
 transform.</p>
-</div></blockquote>
+</dd>
+</dl>
 </p>
 </td>
 </tr>
@@ -194,7 +196,7 @@ transform.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_vigra_kernel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_1D_vigra_kernel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
 <span class="go">&lt;vigra.filters.Kernel1D object at 0x...&gt;</span>
 </pre></div>
 </div>
@@ -227,13 +229,14 @@ will be raised.)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>W, out</strong> &#8211;
-returns the final result of</p>
-<blockquote>
-<div><p>the wavelet transform and
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>W, out</strong> &#8211;</p>
+<dl class="docutils">
+<dt>returns the final result of</dt>
+<dd><p class="first last">the wavelet transform and
 possibly other scales. Also,
 may return the intermediates.</p>
-</div></blockquote>
+</dd>
+</dl>
 </p>
 </td>
 </tr>
@@ -243,10 +246,10 @@ may return the intermediates.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> 
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> 
 <span class="go">(array([[[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">         [-0.375  ,  0.625  , -0.375  ],</span>
 <span class="go">         [-0.34375, -0.375  ,  0.59375]]], dtype=float32),</span>
@@ -258,38 +261,38 @@ may return the intermediates.</p>
 <span class="go">         [ 0.34375,  0.375  ,  0.40625]]], dtype=float32))</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="go">array([[[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">        [-0.375  ,  0.625  , -0.375  ],</span>
 <span class="go">        [-0.34375, -0.375  ,  0.59375]]], dtype=float32)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 <span class="go">array([[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">       [-0.375  ,  0.625  , -0.375  ],</span>
 <span class="go">       [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 <span class="go">array([[ 0.625, -0.25 , -0.125],</span>
 <span class="go">       [-0.5  ,  0.5  , -0.5  ],</span>
 <span class="go">       [-0.125, -0.25 ,  0.625]], dtype=float32)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span>
 <span class="go">array([[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">       [-0.375  ,  0.625  , -0.375  ],</span>
@@ -300,11 +303,11 @@ may return the intermediates.</p>
 <span class="go">       [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">out</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span>
 <span class="go">array([[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">       [-0.375  ,  0.625  , -0.375  ],</span>
@@ -315,11 +318,11 @@ may return the intermediates.</p>
 <span class="go">       [-0.34375, -0.375  ,  0.59375]], dtype=float32)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span> 
 <span class="go">array([[[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">        [-0.375  ,  0.625  , -0.375  ],</span>
@@ -330,11 +333,11 @@ may return the intermediates.</p>
 <span class="go">        [-0.34375, -0.375  ,  0.59375]]], dtype=float32)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span> 
 <span class="go">array([[[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">        [-0.375  ,  0.625  , -0.375  ],</span>
@@ -345,11 +348,11 @@ may return the intermediates.</p>
 <span class="go">        [-0.34375, -0.375  ,  0.59375]]])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">out</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_intermediates</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">include_lower_scales</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span>
 <span class="go">array([[ 0.59375, -0.375  , -0.34375],</span>
 <span class="go">       [-0.375  ,  0.625  , -0.375  ],</span>
@@ -401,14 +404,11 @@ may return the intermediates.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -432,18 +432,18 @@ may return the intermediates.</p>
         <li class="right" >
           <a href="nanshe.imp.filters.noise.html" title="nanshe.imp.filters.noise module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &raquo;</li>
-          <li class="nav-item nav-item-3"><a href="nanshe.imp.filters.html" >nanshe.imp.filters package</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="nanshe.imp.filters.html" >nanshe.imp.filters package</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2014-2015, John A. Kirkham.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment &mdash; nanshe 0.1.0a53+46.g648a28f documentation</title>
+    <title>nanshe.imp.segment &#8212; nanshe 0.1.0a53+48.gc43e40f documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+46.g648a28f',
+        VERSION:     '0.1.0a53+48.gc43e40f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+46.g648a28f documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+48.gc43e40f documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,9 +44,9 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -120,7 +120,7 @@
 <span class="kn">import</span> <span class="nn">skimage.morphology</span>
 <span class="kn">import</span> <span class="nn">skimage.segmentation</span>
 
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">iters</span>
 
 <span class="c1"># To allow for more advanced iteration patterns</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
@@ -137,24 +137,24 @@
 <span class="kn">import</span> <span class="nn">rank_filter</span>
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
 
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">xnumpy</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">xnumpy</span>
 
 <span class="c1"># Short function to process image data.</span>
-<span class="kn">from</span> <span class="nn">nanshe.imp</span> <span class="kn">import</span> <span class="n">filters</span>
-<span class="kn">from</span> <span class="nn">nanshe.imp.renorm</span> <span class="kn">import</span> <span class="n">zeroed_mean_images</span><span class="p">,</span> <span class="n">renormalized_images</span>
+<span class="kn">from</span> <span class="nn">nanshe.imp</span> <span class="k">import</span> <span class="n">filters</span>
+<span class="kn">from</span> <span class="nn">nanshe.imp.renorm</span> <span class="k">import</span> <span class="n">zeroed_mean_images</span><span class="p">,</span> <span class="n">renormalized_images</span>
 
 <span class="c1"># Algorithms to register the data.</span>
-<span class="kn">from</span> <span class="nn">nanshe.imp</span> <span class="kn">import</span> <span class="n">registration</span>
+<span class="kn">from</span> <span class="nn">nanshe.imp</span> <span class="k">import</span> <span class="n">registration</span>
 
 <span class="c1"># To remove noise from the basis images</span>
-<span class="kn">from</span> <span class="nn">nanshe.imp.filters.noise</span> <span class="kn">import</span> <span class="n">estimate_noise</span><span class="p">,</span> <span class="n">significant_mask</span>
+<span class="kn">from</span> <span class="nn">nanshe.imp.filters.noise</span> <span class="k">import</span> <span class="n">estimate_noise</span><span class="p">,</span> <span class="n">significant_mask</span>
 
 <span class="c1"># Wavelet transformation operations</span>
-<span class="kn">from</span> <span class="nn">nanshe.imp.filters</span> <span class="kn">import</span> <span class="n">wavelet</span>
+<span class="kn">from</span> <span class="nn">nanshe.imp.filters</span> <span class="k">import</span> <span class="n">wavelet</span>
 
-<span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="kn">import</span> <span class="n">hdf5</span>
+<span class="kn">from</span> <span class="nn">nanshe.io</span> <span class="k">import</span> <span class="n">hdf5</span>
 
 
 <span class="c1"># Get the logger</span>
@@ -162,12 +162,12 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="remove_zeroed_lines"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_zeroed_lines">[docs]</a><span class="k">def</span> <span class="nf">remove_zeroed_lines</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
                         <span class="n">erosion_shape</span><span class="p">,</span>
                         <span class="n">dilation_shape</span><span class="p">,</span>
-                        <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                        <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Due to registration errors, there will sometimes be lines that are</span>
@@ -195,7 +195,7 @@
 <span class="sd">                                                lines interpolated away.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">out</span><span class="p">):</span>
         <span class="n">out</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">new_data</span>
@@ -231,8 +231,8 @@
 
             <span class="n">zero_mask_i_labeled_j_outline</span> <span class="o">=</span> <span class="n">zero_mask_i_labeled_j_dilated</span> <span class="o">-</span> <span class="n">zero_mask_i_labeled_j</span>
 
-            <span class="n">zero_masks_dilated</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">zero_mask_i_labeled_j_dilated</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
-            <span class="n">zero_masks_outline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">zero_mask_i_labeled_j_outline</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">zero_masks_dilated</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">zero_mask_i_labeled_j_dilated</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">zero_masks_outline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">zero_mask_i_labeled_j_outline</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="k">if</span> <span class="n">zero_mask_i_labeled_j_outline</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
                 <span class="c1"># Get the points that correspond to those</span>
@@ -296,8 +296,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="estimate_f0"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.estimate_f0">[docs]</a><span class="k">def</span> <span class="nf">estimate_f0</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
                 <span class="n">half_window_size</span><span class="p">,</span>
                 <span class="n">which_quantile</span><span class="p">,</span>
@@ -305,7 +305,7 @@
                 <span class="n">temporal_smoothing_gaussian_filter_window_size</span><span class="p">,</span>
                 <span class="n">spatial_smoothing_gaussian_filter_stdev</span><span class="p">,</span>
                 <span class="n">spatial_smoothing_gaussian_filter_window_size</span><span class="p">,</span>
-                <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Estimates F_0 using a rank order filter with some smoothing.</span>
@@ -384,9 +384,9 @@
             <span class="ne">RuntimeWarning</span>
         <span class="p">)</span>
 
-    <span class="n">converted_out</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="n">new_data_f0_estimation</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">converted_out</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">new_data_f0_estimation</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">new_data_f0_estimation</span> <span class="o">=</span> <span class="n">out</span>
     <span class="k">else</span><span class="p">:</span>
@@ -403,7 +403,7 @@
                 <span class="ne">RuntimeWarning</span>
             <span class="p">)</span>
 
-            <span class="n">converted_out</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">converted_out</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">new_data_f0_estimation</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_data_f0_estimation</span> <span class="o">=</span> <span class="n">out</span>
@@ -426,7 +426,7 @@
     <span class="p">)</span>
 
 
-    <span class="n">which_quantile_len</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">which_quantile_len</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">which_quantile_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">which_quantile</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
@@ -473,8 +473,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="extract_f0"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.extract_f0">[docs]</a><span class="k">def</span> <span class="nf">extract_f0</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
                <span class="n">half_window_size</span><span class="p">,</span>
                <span class="n">which_quantile</span><span class="p">,</span>
@@ -482,9 +482,9 @@
                <span class="n">temporal_smoothing_gaussian_filter_window_size</span><span class="p">,</span>
                <span class="n">spatial_smoothing_gaussian_filter_stdev</span><span class="p">,</span>
                <span class="n">spatial_smoothing_gaussian_filter_window_size</span><span class="p">,</span>
-               <span class="n">bias</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-               <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-               <span class="n">return_f0</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+               <span class="n">bias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">return_f0</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attempts to find an estimate for dF/F.</span>
@@ -577,8 +577,8 @@
             <span class="ne">RuntimeWarning</span>
         <span class="p">)</span>
 
-    <span class="n">new_data_df_over_f</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">new_data_df_over_f</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">new_data_df_over_f</span> <span class="o">=</span> <span class="n">out</span>
     <span class="k">else</span><span class="p">:</span>
@@ -598,7 +598,7 @@
         <span class="n">new_data_df_over_f</span> <span class="o">=</span> <span class="n">out</span>
 
     <span class="c1"># Find the bias parameter if not provided</span>
-    <span class="k">if</span> <span class="n">bias</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">bias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">bias</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">new_data</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 
     <span class="n">new_data_f0_estimation</span> <span class="o">=</span> <span class="n">new_data_df_over_f</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -628,9 +628,9 @@
         <span class="k">return</span><span class="p">(</span><span class="n">new_data_df_over_f</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
-<div class="viewcode-block" id="normalize_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.normalize_data">[docs]</a><span class="k">def</span> <span class="nf">normalize_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
+<div class="viewcode-block" id="normalize_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.normalize_data">[docs]</a><span class="k">def</span> <span class="nf">normalize_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes the mean from each image and normalizes each image as if they</span>
 <span class="sd">        were vectors.</span>
@@ -696,7 +696,7 @@
 
     <span class="c1"># Make a copy of new_data or copy its contents if both arrays are not the</span>
     <span class="c1"># same.</span>
-    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">out</span><span class="p">):</span>
         <span class="n">out</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">new_data</span>
@@ -717,9 +717,9 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
-<div class="viewcode-block" id="preprocess_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.preprocess_data">[docs]</a><span class="k">def</span> <span class="nf">preprocess_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
+<div class="viewcode-block" id="preprocess_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.preprocess_data">[docs]</a><span class="k">def</span> <span class="nf">preprocess_data</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs all preprocessing steps that are specified.</span>
 
@@ -740,7 +740,7 @@
 <span class="sd">            dict:                               the dictionary found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span><span class="n">out</span><span class="p">):</span>
         <span class="n">out</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">new_data</span>
@@ -783,8 +783,8 @@
         <span class="n">wavelet</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span> <span class="o">=</span> <span class="n">preprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span>
         <span class="n">wavelet</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
             <span class="n">new_data_maybe_wavelet_result</span><span class="p">,</span>
-            <span class="n">include_intermediates</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-            <span class="n">include_lower_scales</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">include_intermediates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">include_lower_scales</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">out</span><span class="o">=</span><span class="n">new_data_maybe_wavelet_result</span><span class="p">,</span>
             <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;wavelet.transform&quot;</span><span class="p">]</span>
         <span class="p">)</span>
@@ -815,11 +815,11 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="generate_dictionary"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_dictionary">[docs]</a><span class="k">def</span> <span class="nf">generate_dictionary</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span>
-                        <span class="n">initial_dictionary</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                        <span class="n">n_components</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                        <span class="n">initial_dictionary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a dictionary using the data and parameters given for trainDL.</span>
@@ -845,13 +845,13 @@
     <span class="kn">import</span> <span class="nn">nanshe.box</span>
 
     <span class="c1"># Sync the number of components with the method.</span>
-    <span class="k">if</span> <span class="n">n_components</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">n_components</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;spams.trainDL&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="n">n_components</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;spams.trainDL&quot;</span><span class="p">][</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
         <span class="k">elif</span> <span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="n">n_components</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;n_components&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;Unknown algorithm must define `n_components`.&quot;</span>
+            <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unknown algorithm must define `n_components`.&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;spams.trainDL&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;spams.trainDL&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_components</span><span class="p">,</span>\
@@ -865,13 +865,13 @@
                 <span class="s2">&quot; are defined, they should be defined the same.&quot;</span>
             <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;n_components&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_components</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;Unknown algorithm cannot use `n_components`.&quot;</span>
+            <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unknown algorithm cannot use `n_components`.&quot;</span>
 
     <span class="c1"># Needs to be floating point.</span>
     <span class="c1"># However, it need not be double precision as there is single precision</span>
     <span class="c1"># function signature.</span>
-    <span class="n">float_dtype</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">float_ctype</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">float_dtype</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">float_ctype</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">new_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
         <span class="n">float_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">float_ctype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_float</span>
@@ -910,7 +910,7 @@
 
     <span class="c1"># If there is an initial dictionary provided, go ahead and process it.</span>
     <span class="n">initial_dictionary_processed</span> <span class="o">=</span> <span class="n">initial_dictionary</span>
-    <span class="k">if</span> <span class="n">initial_dictionary_processed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">initial_dictionary_processed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># Go ahead and make the dictionary the same type as the input data.</span>
         <span class="c1"># TODO: Add a warning if it needs to be down cast</span>
         <span class="n">initial_dictionary_processed</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
@@ -941,11 +941,11 @@
         <span class="kn">import</span> <span class="nn">sklearn</span>
         <span class="kn">import</span> <span class="nn">sklearn.decomposition</span>
 
-        <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;return_code&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;return_code&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;return_code&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;return_code&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;return_code&quot;</span><span class="p">],</span>\
             <span class="s2">&quot;Returning the sparse code is not supported by this function&#39;s API.&quot;</span>
 
-        <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;return_inner_stats&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;return_inner_stats&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;return_inner_stats&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;return_inner_stats&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;sklearn.decomposition.dict_learning_online&quot;</span><span class="p">][</span><span class="s2">&quot;return_inner_stats&quot;</span><span class="p">],</span>\
             <span class="s2">&quot;Returning the internal stats is not supported by this function&#39;s API.&quot;</span>
 
@@ -962,7 +962,7 @@
         <span class="c1"># Fix dictionary so that the first index will be the particular image.</span>
         <span class="n">new_dictionary</span> <span class="o">=</span> <span class="n">new_dictionary</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="bp">False</span><span class="p">,</span>\
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span>\
             <span class="s2">&quot;Must select a supported matrix factorization algorithm.&quot;</span>
 
     <span class="c1"># Fix the rest will be the shape of an image (same as input shape).</span>
@@ -974,7 +974,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="region_properties_scikit_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.region_properties_scikit_image">[docs]</a><span class="k">def</span> <span class="nf">region_properties_scikit_image</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grabs region properties from a label image.</span>
@@ -1155,12 +1155,12 @@
         <span class="n">_k</span> <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">region_properties_shape_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">_v</span>
     <span class="p">]</span>
 
-    <span class="n">new_label_image_props</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_label_image_props_with_arrays</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_label_image_props_with_arrays_values</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_label_image_props_with_arrays_dtype</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_label_image_props</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_label_image_props_with_arrays</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_label_image_props_with_arrays_values</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_label_image_props_with_arrays_dtype</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">properties</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">properties</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">]</span>
@@ -1172,10 +1172,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="p">((</span><span class="n">properties</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">properties</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">region_properties_type_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-    <span class="n">intensity_image</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">intensity_image</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">intensity_image</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -1301,7 +1301,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_label_image_props_with_arrays</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="region_properties_vigra"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.region_properties_vigra">[docs]</a><span class="k">def</span> <span class="nf">region_properties_vigra</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grabs region properties from a label image.</span>
@@ -1509,12 +1509,12 @@
         <span class="n">_k</span> <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">region_properties_shape_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">_v</span>
     <span class="p">]</span>
 
-    <span class="n">new_label_image_props</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_label_image_props_with_arrays</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_label_image_props_with_arrays_values</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_label_image_props_with_arrays_dtype</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_label_image_props</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_label_image_props_with_arrays</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_label_image_props_with_arrays_values</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_label_image_props_with_arrays_dtype</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">properties</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">properties</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">]</span>
@@ -1526,10 +1526,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="p">((</span><span class="n">properties</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">properties</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">properties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">region_properties_type_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-    <span class="n">intensity_image</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">intensity_image</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">intensity_image</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -1557,11 +1557,11 @@
 
 
     <span class="k">class</span> <span class="nc">VigraProperties</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_image</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_image</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span> <span class="o">=</span> <span class="n">label_image</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">intensity_image</span> <span class="o">=</span> <span class="n">intensity_image</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">intensity_image</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">intensity_image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">intensity_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">extractRegionFeatures</span><span class="p">(</span>
@@ -1574,7 +1574,7 @@
             <span class="k">return</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -1597,7 +1597,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;RegionRadii&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Should have already checked and removed these.</span>
-                <span class="k">assert</span> <span class="bp">False</span>
+                <span class="k">assert</span> <span class="kc">False</span>
 
             <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
@@ -1698,7 +1698,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_label_image_props_with_arrays</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="region_properties"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.region_properties">[docs]</a><span class="k">def</span> <span class="nf">region_properties</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grabs region properties from a label image.</span>
@@ -1765,7 +1765,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">region_properties_vigra</span><span class="p">(</span><span class="n">new_label_image</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_neuron_dtype"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_neuron_dtype">[docs]</a><span class="k">def</span> <span class="nf">get_neuron_dtype</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the type based on properties of an image.</span>
@@ -1822,7 +1822,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons_dtype</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_empty_neuron"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_empty_neuron">[docs]</a><span class="k">def</span> <span class="nf">get_empty_neuron</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that</span>
@@ -1869,7 +1869,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_one_neuron"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.get_one_neuron">[docs]</a><span class="k">def</span> <span class="nf">get_one_neuron</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a numpy structured array using the type from get_neuron_dtype that</span>
@@ -1936,7 +1936,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima_vigra"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima_vigra">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima_vigra</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima</span>
@@ -1955,7 +1955,7 @@
 <span class="sd">            numpy.ndarray:                          A mask of the local maxima.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">local_maxima_mask</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">local_maxima_mask</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">new_intensity_image</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">local_maxima_mask</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">extendedLocalMaxima</span><span class="p">(</span>
             <span class="n">new_intensity_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
@@ -1963,12 +1963,12 @@
         <span class="n">local_maxima_mask</span> <span class="o">=</span> <span class="n">vigra</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">extendedLocalMaxima3D</span><span class="p">(</span>
             <span class="n">new_intensity_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="bp">False</span>
+        <span class="k">assert</span> <span class="kc">False</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">local_maxima_mask</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima_scikit_image"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima_scikit_image">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima_scikit_image</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">,</span>
                                        <span class="n">local_max_neighborhood_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1997,13 +1997,13 @@
         <span class="n">new_intensity_image</span><span class="p">,</span>
         <span class="n">footprint</span><span class="o">=</span><span class="n">local_maxima_neighborhood</span><span class="p">,</span>
         <span class="n">labels</span><span class="o">=</span><span class="p">(</span><span class="n">new_intensity_image</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
-        <span class="n">indices</span><span class="o">=</span><span class="bp">False</span>
+        <span class="n">indices</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">local_maxima_mask</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="generate_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.generate_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">generate_local_maxima</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a mask the same size as the intensity image with local maxima</span>
@@ -2023,7 +2023,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">generate_local_maxima_vigra</span><span class="p">(</span><span class="n">new_intensity_image</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="extended_region_local_maxima_properties"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.extended_region_local_maxima_properties">[docs]</a><span class="k">def</span> <span class="nf">extended_region_local_maxima_properties</span><span class="p">(</span>
         <span class="n">new_intensity_image</span><span class="p">,</span>
         <span class="n">new_label_image</span><span class="p">,</span>
@@ -2126,8 +2126,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">local_maxima_props</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.class_static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">class_static_array_debug_recorder</span>
 <div class="viewcode-block" id="ExtendedRegionProps"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.ExtendedRegionProps">[docs]</a><span class="k">class</span> <span class="nc">ExtendedRegionProps</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Using the results of extended_region_local_maxima_properties with given</span>
@@ -2182,8 +2182,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span> <span class="o">=</span> <span class="n">new_label_image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">image_mask</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Finding the local maxima and properties...&quot;</span><span class="p">)</span>
 
@@ -2229,8 +2229,8 @@
 
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">failed_label_msg</span><span class="p">)</span>
 
-            <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;intensity_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intensity_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-            <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;intensity_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intensity_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+            <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="n">ExtendedRegionProps</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span>
@@ -2278,7 +2278,7 @@
         <span class="p">)</span>
 
         <span class="c1"># Set the given local maxima to be the same as their labels</span>
-        <span class="n">new_local_max_mask</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_local_max_index_array</span><span class="p">()]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">new_local_max_mask</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_local_max_index_array</span><span class="p">()]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">new_local_max_mask</span><span class="p">)</span></div>
 
@@ -2373,7 +2373,7 @@
 
         <span class="c1"># A mask of the indices to remove</span>
         <span class="n">remove_prop_indices_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">),),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-        <span class="n">remove_prop_indices_mask</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">remove_prop_indices_mask</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_prop_mask</span><span class="p">(</span><span class="n">remove_prop_indices_mask</span><span class="p">)</span></div>
 
@@ -2432,7 +2432,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">reverse_label_mapping</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="remove_low_intensity_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_low_intensity_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">remove_low_intensity_local_maxima</span><span class="p">(</span><span class="n">local_maxima</span><span class="p">,</span>
                                       <span class="n">percentage_pixels_below_max</span><span class="p">,</span>
                                       <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
@@ -2501,7 +2501,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_local_maxima</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="remove_too_close_local_maxima"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.remove_too_close_local_maxima">[docs]</a><span class="k">def</span> <span class="nf">remove_too_close_local_maxima</span><span class="p">(</span><span class="n">local_maxima</span><span class="p">,</span>
                                   <span class="n">min_local_max_distance</span><span class="p">,</span>
                                   <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
@@ -2542,9 +2542,9 @@
 
         <span class="k">if</span> <span class="p">(</span><span class="n">local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">][</span><span class="n">first_props_index</span><span class="p">]</span> <span class="o">==</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">][</span><span class="n">second_props_index</span><span class="p">]):</span>
             <span class="k">if</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;intensity&quot;</span><span class="p">][</span><span class="n">first_props_index</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;intensity&quot;</span><span class="p">][</span><span class="n">second_props_index</span><span class="p">]:</span>
-                <span class="n">too_close__local_maxima_label_mask__to_remove</span><span class="p">[</span><span class="n">first_props_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">too_close__local_maxima_label_mask__to_remove</span><span class="p">[</span><span class="n">first_props_index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">too_close__local_maxima_label_mask__to_remove</span><span class="p">[</span><span class="n">second_props_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">too_close__local_maxima_label_mask__to_remove</span><span class="p">[</span><span class="n">second_props_index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">new_local_maxima</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">local_maxima</span><span class="p">)</span>
 
@@ -2555,8 +2555,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_local_maxima</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="wavelet_thresholding"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.wavelet_thresholding">[docs]</a><span class="k">def</span> <span class="nf">wavelet_thresholding</span><span class="p">(</span><span class="n">new_image</span><span class="p">,</span>
                          <span class="n">significance_threshold</span><span class="p">,</span>
                          <span class="n">wavelet_scale</span><span class="p">,</span>
@@ -2587,8 +2587,8 @@
 <span class="sd">                                                        array and a mask.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">new_wavelet_transformed_image</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">new_wavelet_transformed_image_significant_mask</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_wavelet_transformed_image</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">new_wavelet_transformed_image_significant_mask</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Contains a bool array with significant values True and noise False.</span>
     <span class="n">new_image_noise_estimate</span> <span class="o">=</span> <span class="n">estimate_noise</span><span class="p">(</span>
@@ -2600,15 +2600,15 @@
     <span class="c1"># first index.</span>
     <span class="n">new_wavelet_transformed_image</span> <span class="o">=</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
         <span class="n">new_image</span><span class="p">,</span>
-        <span class="n">include_intermediates</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-        <span class="n">include_lower_scales</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">include_intermediates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">include_lower_scales</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">scale</span><span class="o">=</span><span class="n">wavelet_scale</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">wavelet_thresholding</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_wavelet_transformed_image</span><span class="p">)):</span>
             <span class="n">wavelet_thresholding</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;new_wavelet_transformed_image&quot;</span><span class="p">]</span> <span class="o">=</span> \
-                <span class="n">new_wavelet_transformed_image</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">None</span><span class="p">]</span>
+                <span class="n">new_wavelet_transformed_image</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="kc">None</span><span class="p">]</span>
 
     <span class="c1"># Contains a bool array with significant values True and noise False for</span>
     <span class="c1"># all wavelet transforms.</span>
@@ -2624,8 +2624,8 @@
     <span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="match_regions_properties"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.match_regions_properties">[docs]</a><span class="k">def</span> <span class="nf">match_regions_properties</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">constraints</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a mask selecting the regions with matching properties.</span>
@@ -2648,7 +2648,7 @@
     <span class="c1"># Go through each property and make sure they are within the bounds</span>
     <span class="k">for</span> <span class="n">each_prop</span><span class="p">,</span> <span class="n">each_prop_constraints</span> <span class="ow">in</span> <span class="n">constraints</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="c1"># If there is a lower bound, checks to see which are above it.</span>
-        <span class="n">is_lower_bounded_maybe</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">is_lower_bounded_maybe</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="s2">&quot;min&quot;</span> <span class="ow">in</span> <span class="n">each_prop_constraints</span><span class="p">:</span>
             <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">each_prop_constraints</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span>
             <span class="n">is_lower_bounded_maybe</span> <span class="o">=</span> <span class="p">(</span>
@@ -2660,7 +2660,7 @@
             <span class="p">)</span>
 
         <span class="c1"># If there is an upper bound, checks to see which are below it.</span>
-        <span class="n">is_upper_bounded_maybe</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">is_upper_bounded_maybe</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="s2">&quot;max&quot;</span> <span class="ow">in</span> <span class="n">each_prop_constraints</span><span class="p">:</span>
             <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">each_prop_constraints</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span>
             <span class="n">is_upper_bounded_maybe</span> <span class="o">=</span> <span class="p">(</span>
@@ -2680,8 +2680,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">within_bound</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="wavelet_denoising"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.wavelet_denoising">[docs]</a><span class="k">def</span> <span class="nf">wavelet_denoising</span><span class="p">(</span><span class="n">new_image</span><span class="p">,</span>
                       <span class="n">accepted_region_shape_constraints</span><span class="p">,</span>
                       <span class="n">accepted_neuron_shape_constraints</span><span class="p">,</span>
@@ -2725,7 +2725,7 @@
 
     <span class="n">neurons</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">new_image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_image</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-    <span class="n">new_wavelet_image_denoised_segmentation</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_wavelet_image_denoised_segmentation</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Started wavelet denoising.&quot;</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Removing noise...&quot;</span><span class="p">)</span>
@@ -2744,7 +2744,7 @@
     <span class="n">new_wavelet_image_denoised</span> <span class="o">=</span> <span class="n">new_wavelet_transformed_image</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">new_wavelet_image_denoised</span> <span class="o">*=</span> <span class="n">new_wavelet_image_mask</span>
 
-    <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;new_wavelet_image_denoised&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_wavelet_image_denoised</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+    <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;new_wavelet_image_denoised&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_wavelet_image_denoised</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Noise removed.&quot;</span><span class="p">)</span>
 
@@ -2830,31 +2830,31 @@
             <span class="n">new_wavelet_image_denoised</span><span class="p">,</span> <span class="n">new_wavelet_image_denoised_label_image</span>
         <span class="p">)</span>
 
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                 <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="p">)[</span><span class="kc">None</span><span class="p">]</span>
 
         <span class="n">local_maxima</span> <span class="o">=</span> <span class="n">remove_low_intensity_local_maxima</span><span class="p">(</span>
             <span class="n">local_maxima</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;remove_low_intensity_local_maxima&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                     <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="p">)[</span><span class="kc">None</span><span class="p">]</span>
 
         <span class="n">local_maxima</span> <span class="o">=</span> <span class="n">remove_too_close_local_maxima</span><span class="p">(</span>
             <span class="n">local_maxima</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;remove_too_close_local_maxima&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
-        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                 <span class="n">local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="p">)[</span><span class="kc">None</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">local_maxima</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Entering watershed segmentation.&quot;</span><span class="p">)</span>
@@ -2881,11 +2881,11 @@
                 <span class="n">mask</span><span class="o">=</span><span class="p">(</span><span class="n">local_maxima</span><span class="o">.</span><span class="n">intensity_image</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
             <span class="p">)</span>
 
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_segmentation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_wavelet_image_denoised_segmentation</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_segmentation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_wavelet_image_denoised_segmentation</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_segmentation_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                         <span class="n">new_wavelet_image_denoised_segmentation</span>
-                <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+                <span class="p">)[</span><span class="kc">None</span><span class="p">]</span>
 
             <span class="n">watershed_local_maxima</span> <span class="o">=</span> <span class="n">ExtendedRegionProps</span><span class="p">(</span>
                 <span class="n">local_maxima</span><span class="o">.</span><span class="n">intensity_image</span><span class="p">,</span>
@@ -2893,11 +2893,11 @@
                 <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;centroid&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">accepted_neuron_shape_constraints</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
             <span class="p">)</span>
 
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                     <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+                <span class="p">)[</span><span class="kc">None</span><span class="p">]</span>
 
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span>
             <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">count</span>
@@ -2914,11 +2914,11 @@
                 <span class="n">new_watershed_local_maxima_props_duplicates_mask</span>
             <span class="p">)</span>
 
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                 <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-            <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="p">)[</span><span class="kc">None</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span>
@@ -2933,11 +2933,11 @@
             <span class="c1"># Get labels outside of bounds and remove them</span>
             <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">remove_prop_mask</span><span class="p">(</span><span class="o">~</span><span class="n">within_bound</span><span class="p">)</span>
 
-            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+            <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_label_image_contours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">generate_labeled_contours</span><span class="p">(</span>
                         <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">label_image</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                <span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
+                <span class="p">)[</span><span class="kc">None</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="n">wavelet_denoising</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;watershed_local_maxima_props&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">watershed_local_maxima</span><span class="o">.</span><span class="n">props</span>
@@ -2975,8 +2975,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="extract_neurons"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.extract_neurons">[docs]</a><span class="k">def</span> <span class="nf">extract_neurons</span><span class="p">(</span><span class="n">new_image</span><span class="p">,</span> <span class="n">neuron_masks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extracts neurons from an image using a stack of masks.</span>
@@ -3018,8 +3018,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">neurons</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="fuse_neurons"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.fuse_neurons">[docs]</a><span class="k">def</span> <span class="nf">fuse_neurons</span><span class="p">(</span><span class="n">neuron_1</span><span class="p">,</span>
                  <span class="n">neuron_2</span><span class="p">,</span>
                  <span class="n">fraction_mean_neuron_max_threshold</span><span class="p">,</span>
@@ -3086,8 +3086,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_neuron</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="merge_neuron_sets"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.merge_neuron_sets">[docs]</a><span class="k">def</span> <span class="nf">merge_neuron_sets</span><span class="p">(</span><span class="n">new_neuron_set_1</span><span class="p">,</span>
                       <span class="n">new_neuron_set_2</span><span class="p">,</span>
                       <span class="n">alignment_min_threshold</span><span class="p">,</span>
@@ -3104,8 +3104,8 @@
     <span class="p">))</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="merge_neuron_sets_once"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.merge_neuron_sets_once">[docs]</a><span class="k">def</span> <span class="nf">merge_neuron_sets_once</span><span class="p">(</span><span class="n">new_neuron_set_1</span><span class="p">,</span>
                            <span class="n">new_neuron_set_2</span><span class="p">,</span>
                            <span class="n">alignment_min_threshold</span><span class="p">,</span>
@@ -3274,16 +3274,16 @@
 
         <span class="c1"># Get masks that indicate which measurements have the best matching</span>
         <span class="c1"># neuron</span>
-        <span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes</span> <span class="o">&gt;</span> <span class="n">alignment_min_threshold</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes</span> <span class="o">&gt;</span> <span class="n">alignment_min_threshold</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">[</span>
             <span class="o">~</span><span class="n">new_neuron_set_angle_maxes_significant</span> <span class="o">&amp;</span>
             <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_2_maxes</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span><span class="p">[</span>
             <span class="o">~</span><span class="n">new_neuron_set_angle_maxes_significant</span> <span class="o">&amp;</span>
             <span class="o">~</span><span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span> <span class="o">&amp;</span>
             <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_1_maxes</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;new_neuron_set_angle_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
         <span class="n">merge_neuron_sets_once</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;new_neuron_set_masks_overlaid_1_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
@@ -3376,8 +3376,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_neuron_set</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="merge_neuron_sets_repeatedly"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.merge_neuron_sets_repeatedly">[docs]</a><span class="k">def</span> <span class="nf">merge_neuron_sets_repeatedly</span><span class="p">(</span><span class="n">new_neuron_set_1</span><span class="p">,</span>
                                  <span class="n">new_neuron_set_2</span><span class="p">,</span>
                                  <span class="n">alignment_min_threshold</span><span class="p">,</span>
@@ -3566,27 +3566,27 @@
 
         <span class="c1"># Get masks that indicate which measurements have the best matching</span>
         <span class="c1"># neuron</span>
-        <span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes</span> <span class="o">&gt;</span> <span class="n">alignment_min_threshold</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes</span> <span class="o">&gt;</span> <span class="n">alignment_min_threshold</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">already_matched</span> <span class="o">|=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
         <span class="n">already_matched</span><span class="p">[</span>
             <span class="n">new_neuron_set_angle_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_angle_maxes_significant</span><span class="p">]</span>
-        <span class="p">]</span> <span class="o">|=</span> <span class="bp">True</span>
+        <span class="p">]</span> <span class="o">|=</span> <span class="kc">True</span>
 
         <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">[</span>
             <span class="o">~</span><span class="n">already_matched</span> <span class="o">&amp;</span>
             <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_1_maxes</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">already_matched</span> <span class="o">|=</span> <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
         <span class="n">already_matched</span><span class="p">[</span>
             <span class="n">new_neuron_set_masks_overlaid_1_all_optimal_i</span><span class="p">[</span><span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span><span class="p">]</span>
-        <span class="p">]</span> <span class="o">|=</span> <span class="bp">True</span>
+        <span class="p">]</span> <span class="o">|=</span> <span class="kc">True</span>
 
         <span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span><span class="p">[</span>
             <span class="o">~</span><span class="n">already_matched</span> <span class="o">&amp;</span>
             <span class="p">(</span><span class="n">new_neuron_set_masks_overlaid_2_maxes_significant</span> <span class="o">&gt;</span> <span class="n">overlap_min_threshold</span><span class="p">)</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;new_neuron_set_angle_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_angle_maxes_significant</span>
         <span class="n">merge_neuron_sets_repeatedly</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;new_neuron_set_masks_overlaid_1_maxes_significant_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_neuron_set_masks_overlaid_1_maxes_significant</span>
@@ -3644,7 +3644,7 @@
                 <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;fuse_neurons&quot;</span><span class="p">]</span>
             <span class="p">)</span>
 
-            <span class="n">new_neuron_set_kept</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">new_neuron_set_kept</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">new_neuron_set</span> <span class="o">=</span> <span class="n">new_neuron_set</span><span class="p">[</span><span class="n">new_neuron_set_kept</span><span class="p">]</span>
 
@@ -3659,8 +3659,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_neuron_set</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="expand_rois"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.expand_rois">[docs]</a><span class="k">def</span> <span class="nf">expand_rois</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">roi_masks</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="c1"># Find time traces: spatial mean of activity for each ROI</span>
     <span class="c1"># Normalize time traces: subtract mean from each time trace and</span>
@@ -3721,8 +3721,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">correlation_map</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<span class="nd">@hdf5.record.static_array_debug_recorder</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@hdf5</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">static_array_debug_recorder</span>
 <div class="viewcode-block" id="postprocess_data"><a class="viewcode-back" href="../../../nanshe.imp.segment.html#nanshe.imp.segment.postprocess_data">[docs]</a><span class="k">def</span> <span class="nf">postprocess_data</span><span class="p">(</span><span class="n">new_dictionary</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates neurons from the dictionary.</span>
@@ -3739,24 +3739,24 @@
 <span class="sd">                                                  neuron found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># TODO: Remove this as it is already accomplished using the HDF5EnumeratedArrayRecorder.</span>
     <span class="c1"># Puts each dictionary basis debug log into a separate group depending on</span>
     <span class="c1"># which basis image it was a part of.</span>
     <span class="k">def</span> <span class="nf">array_debug_recorder_enumerator</span><span class="p">(</span><span class="n">new_list</span><span class="p">):</span>
-        <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;neuron_sets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;neuron_sets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">neuron_sets_array_debug_recorder</span> <span class="o">=</span> <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">[</span><span class="s2">&quot;neuron_sets&quot;</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">i_str</span><span class="p">,</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">filled_stringify_enumerate</span><span class="p">(</span><span class="n">new_list</span><span class="p">):</span>
-            <span class="n">neuron_sets_array_debug_recorder</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">neuron_sets_array_debug_recorder</span><span class="p">[</span><span class="n">i_str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">yield</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">each</span><span class="p">,</span> <span class="n">neuron_sets_array_debug_recorder</span><span class="p">[</span><span class="n">i_str</span><span class="p">]))</span>
 
     <span class="c1"># Get all neurons for all images</span>
     <span class="n">new_neurons_set</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span>
         <span class="n">shape</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
     <span class="p">)</span>
-    <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">postprocess_data</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">array_debug_recorder</span><span class="p">:</span>
         <span class="n">unmerged_neuron_set</span> <span class="o">=</span> <span class="n">get_empty_neuron</span><span class="p">(</span>
             <span class="n">shape</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">new_dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
@@ -3817,14 +3817,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -3842,16 +3839,16 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2014-2015, John A. Kirkham.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

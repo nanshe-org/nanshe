@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.xjson &mdash; nanshe 0.1.0a53+46.g648a28f documentation</title>
+    <title>nanshe.io.xjson &#8212; nanshe 0.1.0a53+48.gc43e40f documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+46.g648a28f',
+        VERSION:     '0.1.0a53+48.gc43e40f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+46.g648a28f documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+48.gc43e40f documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,9 +44,9 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -83,13 +83,13 @@
 
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
 
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="nb">unicode</span>
+    <span class="n">unicode</span>
 <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
-    <span class="nb">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
 
 
 <span class="c1"># Get the logger</span>
@@ -97,8 +97,8 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../../nanshe.io.xjson.html#nanshe.io.xjson.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<div class="viewcode-block" id="read_parameters"><a class="viewcode-back" href="../../../nanshe.io.xjson.html#nanshe.io.xjson.read_parameters">[docs]</a><span class="k">def</span> <span class="nf">read_parameters</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">maintain_order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads the contents of a json config file and returns the parameters.</span>
 
@@ -120,7 +120,7 @@
     <span class="kn">import</span> <span class="nn">json</span>
 
     <span class="c1"># Get the type of dictionary to use.</span>
-    <span class="n">json_dict</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">json_dict</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">maintain_order</span><span class="p">:</span>
         <span class="c1"># only relevant if reading parameter file and maintaining order.</span>
         <span class="kn">import</span> <span class="nn">collections</span>
@@ -129,7 +129,7 @@
         <span class="n">json_dict</span> <span class="o">=</span> <span class="nb">dict</span>
 
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+    <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_str</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">json_dict</span><span class="o">=</span><span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the str.</span>
@@ -141,8 +141,8 @@
 <span class="sd">                str:            Properly encoded str.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">new_value</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">if</span> <span class="nb">unicode</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">u&quot;__comment__&quot;</span><span class="p">):</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">unicode</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">u&quot;__comment__&quot;</span><span class="p">):</span>
             <span class="n">new_value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__comment__&quot;</span><span class="p">):</span>
             <span class="n">new_value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
@@ -150,7 +150,7 @@
         <span class="k">return</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
 
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+    <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span><span class="o">=</span><span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the list (and its contents).</span>
@@ -169,16 +169,16 @@
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_dict</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_list</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)):</span>
                 <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_str</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">new_each_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">new_each_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">transformed_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">transformed_list</span><span class="p">)</span>
 
 
-    <span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+    <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">ascii_encode_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">json_dict</span><span class="o">=</span><span class="n">json_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Encodes the dict (and its contents).</span>
@@ -198,16 +198,16 @@
             <span class="n">new_each_key</span> <span class="o">=</span> <span class="n">ascii_encode_str</span><span class="p">(</span><span class="n">each_key</span><span class="p">)</span>
 
             <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">each_value</span>
-            <span class="k">if</span> <span class="n">new_each_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">new_each_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="n">json_dict</span><span class="p">):</span>
                     <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_dict</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                     <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_list</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)</span> <span class="ow">or</span> \
                         <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                     <span class="n">new_each_value</span> <span class="o">=</span> <span class="n">ascii_encode_str</span><span class="p">(</span><span class="n">new_each_value</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">new_each_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">new_each_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">transformed_dict</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_each_key</span><span class="p">,</span> <span class="n">new_each_value</span><span class="p">))</span>
 
         <span class="n">transformed_dict</span> <span class="o">=</span> <span class="n">json_dict</span><span class="p">(</span><span class="n">transformed_dict</span><span class="p">)</span>
@@ -217,7 +217,7 @@
 
     <span class="c1"># gets parameters out of the file and dumps them in the dictionary. just</span>
     <span class="c1"># that simple.</span>
-    <span class="n">parameters</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
             <span class="s2">&quot;Opened configure file named </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">config_filename</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
@@ -242,14 +242,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -267,16 +264,16 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2014-2015, John A. Kirkham.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

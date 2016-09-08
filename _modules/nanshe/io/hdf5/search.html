@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.hdf5.search &mdash; nanshe 0.1.0a53+46.g648a28f documentation</title>
+    <title>nanshe.io.hdf5.search &#8212; nanshe 0.1.0a53+48.gc43e40f documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a53+46.g648a28f',
+        VERSION:     '0.1.0a53+48.gc43e40f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../../_static/cloud.js"></script>
-    <link rel="top" title="nanshe 0.1.0a53+46.g648a28f documentation" href="../../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+48.gc43e40f documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -44,9 +44,9 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
@@ -87,18 +87,18 @@
 
 <span class="kn">import</span> <span class="nn">h5py</span>
 
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">iters</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">iters</span>
 
 
 <span class="c1"># Need in order to have logging information no matter what.</span>
-<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="kn">import</span> <span class="n">prof</span>
+<span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
 
 
 <span class="c1"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_paths"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.search.html#nanshe.io.hdf5.search.get_matching_paths">[docs]</a><span class="k">def</span> <span class="nf">get_matching_paths</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
@@ -130,7 +130,7 @@
         <span class="n">current_pattern_group_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">current_path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">each_group</span> <span class="ow">in</span> <span class="n">current_group</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">current_pattern_group_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">each_group</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_pattern_group_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">each_group</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">next_group</span> <span class="o">=</span> <span class="n">current_group</span><span class="p">[</span><span class="n">each_group</span><span class="p">]</span>
 
                 <span class="n">next_pattern_group_matches</span> <span class="o">=</span> <span class="n">get_matching_paths</span><span class="p">(</span>
@@ -147,7 +147,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_paths_groups"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.search.html#nanshe.io.hdf5.search.get_matching_paths_groups">[docs]</a><span class="k">def</span> <span class="nf">get_matching_paths_groups</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for parts of the path pattern and tries to match them in order.</span>
@@ -188,14 +188,14 @@
             <span class="n">current_pattern_group_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">current_path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">each_group</span> <span class="ow">in</span> <span class="n">current_group</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">current_pattern_group_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">each_group</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_pattern_group_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">each_group</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">next_group</span> <span class="o">=</span> <span class="n">current_group</span><span class="p">[</span><span class="n">each_group</span><span class="p">]</span>
 
                     <span class="n">next_pattern_group_matches</span> <span class="o">=</span> <span class="n">get_matching_paths_groups_recursive</span><span class="p">(</span>
                         <span class="n">next_group</span><span class="p">,</span> <span class="n">next_path</span>
                     <span class="p">)</span>
 
-                    <span class="n">current_pattern_group_matches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">each_group</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="n">current_pattern_group_matches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">each_group</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
                     <span class="k">while</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">next_pattern_group_matches</span><span class="p">):</span>
                         <span class="n">current_pattern_group_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
@@ -206,7 +206,7 @@
                             <span class="n">next_pattern_group_matches</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span>
                     <span class="p">):</span>
                         <span class="k">for</span> <span class="n">each_next_pattern_group_match</span> <span class="ow">in</span> <span class="n">each_next_pattern_group_matches</span><span class="p">:</span>
-                            <span class="n">current_pattern_group_matches</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">each_next_pattern_group_match</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+                            <span class="n">current_pattern_group_matches</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">each_next_pattern_group_match</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">current_pattern_group_matches</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -223,7 +223,7 @@
     <span class="k">return</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_grouped_paths"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.search.html#nanshe.io.hdf5.search.get_matching_grouped_paths">[docs]</a><span class="k">def</span> <span class="nf">get_matching_grouped_paths</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
@@ -248,14 +248,14 @@
     <span class="p">):</span>
         <span class="n">each_path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">each_path_components</span><span class="p">])</span>
 
-        <span class="n">paths_found</span><span class="p">[</span><span class="n">each_path</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">paths_found</span><span class="p">[</span><span class="n">each_path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">paths_found</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">paths_found</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof.log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="get_matching_grouped_paths_found"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.search.html#nanshe.io.hdf5.search.get_matching_grouped_paths_found">[docs]</a><span class="k">def</span> <span class="nf">get_matching_grouped_paths_found</span><span class="p">(</span><span class="n">a_filehandle</span><span class="p">,</span> <span class="n">a_path_pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Looks for existing paths that match the full provide pattern path.</span>
@@ -293,14 +293,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -318,16 +315,16 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a53+46.g648a28f documentation</a> &raquo;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a53+48.gc43e40f documentation</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2014-2015, John A. Kirkham.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
