@@ -77,7 +77,9 @@ File nanshe/_vendor/_metawrap/travis_pypi_setup.py
 
 File nanshe/_vendor/_metawrap/docs/conf.py
  - No module dostring!
- Needed: 1; Exist: 0; Missing: 1; Coverage: 0.0%
+ - No docstring for run_apidoc!
+ - No docstring for setup!
+ Needed: 3; Exist: 0; Missing: 3; Coverage: 0.0%
 
 File nanshe/_vendor/_metawrap/tests/test_metawrap.py
  - No docstring for TestWrappers!
@@ -290,5 +292,5 @@ File nanshe/misc/random_dictionary_learning_data.py
 
 
 Overall statistics for 43 files (1 files are empty):
-Docstrings needed: 503; Docstrings exist: 344; Docstrings missing: 159
-Total docstring coverage: 68.4%;  Grade: good
+Docstrings needed: 505; Docstrings exist: 344; Docstrings missing: 161
+Total docstring coverage: 68.1%;  Grade: good
