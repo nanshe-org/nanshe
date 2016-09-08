@@ -1,3 +1,6 @@
 [submodule "nanshe/_vendor/_metawrap"]
 	path = nanshe/_vendor/_metawrap
 	url = https://github.com/jakirkham/metawrap.git
+[submodule "nanshe/_vendor/_kenjutsu"]
+	path = nanshe/_vendor/_kenjutsu
+	url = https://github.com/jakirkham/kenjutsu.git
