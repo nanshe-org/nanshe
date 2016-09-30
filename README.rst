@@ -161,8 +161,8 @@ If only one is specified, then only an upper or lower bound exists.
    :target: https://coveralls.io/github/nanshe-org/nanshe?branch=master
 .. |Code Health| image:: https://landscape.io/github/nanshe-org/nanshe/master/landscape.svg?style=flat
    :target: https://landscape.io/github/nanshe-org/nanshe/master
-.. |License| image:: http://img.shields.io/badge/license-GPLv3-blue.svg
-   :target: https://www.gnu.org/copyleft/gpl.html
+.. |License| image:: https://img.shields.io/github/license/nanshe-org/nanshe.svg
+   :target: ./LICENSE.txt
 .. |Documentation| image:: https://img.shields.io/badge/docs-current-9F21E9.svg
    :target: http://nanshe-org.github.io/nanshe/
 .. |Anaconda Release| image:: https://anaconda.org/nanshe/nanshe/badges/version.svg

@@ -148,7 +148,7 @@ setup(
     version=versioneer.get_version(),
     description="An image processing toolkit.",
     url="https://github.com/nanshe-org/nanshe",
-    license="GPLv3",
+    license="BSD 3-Clause",
     author="John Kirkham",
     author_email="kirkhamj@janelia.hhmi.org",
     scripts=glob("bin/*"),
