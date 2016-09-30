@@ -41,6 +41,9 @@ from nanshe.util import wrappers
 # unless otherwise specified, in which case this does nothing.
 logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
 
+# Suppress TRACE logging by default.
+logging.getLogger("TRACE").setLevel(logging.INFO)
+
 
 def getSpecialLogger(logger_prefix, name, *args, **kwargs):
     """
