@@ -42,21 +42,7 @@ elif sys.argv[1] == "bdist_conda":
     from distutils.command.bdist_conda import CondaDistribution as Distribution
 
     build_requires = [
-        "blas==1.1",
-        "openblas",
         "setuptools",
-        "psutil",
-        "numpy",
-        "scipy",
-        "hdf5>=1.8.17,<1.8.18",
-        "h5py",
-        "bottleneck",
-        "matplotlib",
-        "scikit-image",
-        "scikit-learn",
-        "mahotas",
-        "vigra",
-        "rank_filter"
     ]
 
     install_requires = [
