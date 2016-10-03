@@ -56,6 +56,8 @@ elif sys.argv[1] == "bdist_conda":
         "h5py",
         "bottleneck",
         "matplotlib",
+        "metawrap",
+        "kenjutsu",
         "scikit-image",
         "scikit-learn",
         "mahotas",

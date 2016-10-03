@@ -24,7 +24,7 @@ import math
 
 import numpy
 
-from nanshe._vendor.kenjutsu.kenjutsu import *
+from kenjutsu.kenjutsu import *
 
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
