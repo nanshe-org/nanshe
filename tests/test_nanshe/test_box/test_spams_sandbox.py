@@ -19,6 +19,7 @@ except ImportError:
     from Queue import Queue
 
 import numpy
+import npctypes
 
 import nanshe.box.spams_sandbox
 
@@ -511,46 +512,15 @@ class TestSpamsSandbox(object):
 
         float_type = numpy.float64
 
-        g_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=self.g.ndim,
-            shape=self.g.shape,
-            flags=self.g.flags
-        )
-        g_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            g_array_type._dtype_.type
-        ).type(0)[()]))
-        g_array = multiprocessing.Array(
-            g_array_ctype,
-            int(numpy.product(g_array_type._shape_)),
-            lock=False
-        )
+        g_array = npctypes.shared.ndarray(self.g.shape, float_type, "F")
+        with npctypes.shared.as_ndarray(g_array) as g_array_numpy:
+            g_array_numpy[...] = self.g
+        del g_array_numpy
 
-        g_numpy_array = numpy.frombuffer(
-            g_array,
-            dtype=g_array_type._dtype_
-        ).reshape(g_array_type._shape_)
-        g_numpy_array[:] = self.g
-        g_numpy_array = None
-
-        result_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=2,
-            shape=(self.g.shape[0], self.g.shape[1])
-        )
-        result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            result_array_type._dtype_.type
-        ).type(0)[()]))
-        result_array = multiprocessing.Array(
-            result_array_ctype,
-            int(numpy.product(result_array_type._shape_)),
-            lock=False
-        )
+        result_array = npctypes.shared.ndarray((self.g.shape[0], self.g.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
-            result_array_type,
             result_array,
-            g_array_type,
             g_array,
             **{
                 "gamma2" : 0,
@@ -568,11 +538,10 @@ class TestSpamsSandbox(object):
                 "mode" : 2
             }
         )
-        d = numpy.frombuffer(
-            result_array,
-            dtype=float_type
-        ).reshape(result_array_type._shape_).copy()
-        d = (d != 0)
+
+        d = None
+        with npctypes.shared.as_ndarray(result_array) as d:
+            d = (d != 0)
 
         self.g = self.g.transpose()
         d = d.transpose()
@@ -607,46 +576,15 @@ class TestSpamsSandbox(object):
 
         float_type = numpy.float64
 
-        g3_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=self.g3.ndim,
-            shape=self.g3.shape,
-            flags=self.g3.flags
-        )
-        g3_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            g3_array_type._dtype_.type
-        ).type(0)[()]))
-        g3_array = multiprocessing.Array(
-            g3_array_ctype,
-            int(numpy.product(g3_array_type._shape_)),
-            lock=False
-        )
+        g3_array = npctypes.shared.ndarray(self.g3.shape, float_type, "F")
+        with npctypes.shared.as_ndarray(g3_array) as g3_array_numpy:
+            g3_array_numpy[...] = self.g3
+        del g3_array_numpy
 
-        g3_numpy_array = numpy.frombuffer(
-            g3_array,
-            dtype=g3_array_type._dtype_
-        ).reshape(g3_array_type._shape_)
-        g3_numpy_array[:] = self.g3
-        g3_numpy_array = None
-
-        result_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=2,
-            shape=(self.g3.shape[0], self.g3.shape[1])
-        )
-        result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            result_array_type._dtype_.type
-        ).type(0)[()]))
-        result_array = multiprocessing.Array(
-            result_array_ctype,
-            int(numpy.product(result_array_type._shape_)),
-            lock=False
-        )
+        result_array = npctypes.shared.ndarray((self.g3.shape[0], self.g3.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
-            result_array_type,
             result_array,
-            g3_array_type,
             g3_array,
             **{
                 "gamma2" : 0,
@@ -664,11 +602,10 @@ class TestSpamsSandbox(object):
                 "mode" : 2
             }
         )
-        d3 = numpy.frombuffer(
-            result_array,
-            dtype=float_type
-        ).reshape(result_array_type._shape_).copy()
-        d3 = (d3 != 0)
+
+        d3 = None
+        with npctypes.shared.as_ndarray(result_array) as d3:
+            d3 = (d3 != 0)
 
         self.g3 = self.g3.transpose()
         d3 = d3.transpose()
@@ -803,54 +740,23 @@ class TestSpamsSandbox(object):
 
         float_type = numpy.float64
 
-        g_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=self.g.ndim,
-            shape=self.g.shape,
-            flags=self.g.flags
-        )
-        g_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            g_array_type._dtype_.type
-        ).type(0)[()]))
-        g_array = multiprocessing.Array(
-            g_array_ctype,
-            int(numpy.product(g_array_type._shape_)),
-            lock=False
-        )
+        g_array = npctypes.shared.ndarray(self.g.shape, float_type, "F")
+        with npctypes.shared.as_ndarray(g_array) as g_array_numpy:
+            g_array_numpy[...] = self.g
+        del g_array_numpy
 
-        g_numpy_array = numpy.frombuffer(
-            g_array,
-            dtype=g_array_type._dtype_
-        ).reshape(g_array_type._shape_)
-        g_numpy_array[:] = self.g
-        g_numpy_array = None
-
-        result_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=2,
-            shape=(self.g.shape[0], self.g.shape[1])
-        )
-        result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            result_array_type._dtype_.type
-        ).type(0)[()]))
-        result_array = multiprocessing.Array(
-            result_array_ctype,
-            int(numpy.product(result_array_type._shape_)),
-            lock=False
-        )
+        result_array = npctypes.shared.ndarray((self.g.shape[0], self.g.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
-            result_array_type,
             result_array,
-            g_array_type,
             g_array,
             False,
-            g_array_type,
             g_array,
             **{
                 "gamma2" : 0,
                 "gamma1" : 0,
                 "numThreads" : 1,
+                "K" : self.g.shape[1],
                 "iter" : 10,
                 "modeD" : 0,
                 "posAlpha" : True,
@@ -862,11 +768,10 @@ class TestSpamsSandbox(object):
                 "mode" : 2
             }
         )
-        d = numpy.frombuffer(
-            result_array,
-            dtype=float_type
-        ).reshape(result_array_type._shape_).copy()
-        d = (d != 0)
+
+        d = None
+        with npctypes.shared.as_ndarray(result_array) as d:
+            d = (d != 0)
 
         self.g = self.g.transpose()
         d = d.transpose()
@@ -903,49 +808,17 @@ class TestSpamsSandbox(object):
 
         float_type = numpy.float64
 
-        g3_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=self.g3.ndim,
-            shape=self.g3.shape,
-            flags=self.g3.flags
-        )
-        g3_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            g3_array_type._dtype_.type
-        ).type(0)[()]))
-        g3_array = multiprocessing.Array(
-            g3_array_ctype,
-            int(numpy.product(g3_array_type._shape_)),
-            lock=False
-        )
+        g3_array = npctypes.shared.ndarray(self.g3.shape, float_type, "F")
+        with npctypes.shared.as_ndarray(g3_array) as g3_array_numpy:
+            g3_array_numpy[...] = self.g3
+        del g3_array_numpy
 
-        g3_numpy_array = numpy.frombuffer(
-            g3_array,
-            dtype=g3_array_type._dtype_
-        ).reshape(g3_array_type._shape_)
-        g3_numpy_array[:] = self.g3
-        g3_numpy_array = None
-
-        result_array_type = numpy.ctypeslib.ndpointer(
-            dtype=float_type,
-            ndim=2,
-            shape=(self.g3.shape[0], self.g3.shape[1])
-        )
-        result_array_ctype = type(numpy.ctypeslib.as_ctypes(numpy.dtype(
-            result_array_type._dtype_.type
-        ).type(0)[()]))
-        result_array = multiprocessing.Array(
-            result_array_ctype,
-            int(numpy.product(result_array_type._shape_)),
-            lock=False
-        )
+        result_array = npctypes.shared.ndarray((self.g3.shape[0], self.g3.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
-            result_array_type,
             result_array,
-            g3_array_type,
             g3_array,
             False,
-            g3_array_type,
             g3_array,
             **{
                 "gamma2" : 0,
@@ -962,11 +835,10 @@ class TestSpamsSandbox(object):
                 "mode" : 2
             }
         )
-        d3 = numpy.frombuffer(
-            result_array,
-            dtype=float_type
-        ).reshape(result_array_type._shape_).copy()
-        d3 = (d3 != 0)
+
+        d3 = None
+        with npctypes.shared.as_ndarray(result_array) as d3:
+            d3 = (d3 != 0)
 
         self.g3 = self.g3.transpose()
         d3 = d3.transpose()

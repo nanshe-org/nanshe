@@ -116,12 +116,9 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     return(result)
 
 
-def run_multiprocessing_array_spams_trainDL(result_array_type,
-                                            result_array,
-                                            X_array_type,
+def run_multiprocessing_array_spams_trainDL(result_array,
                                             X_array,
                                             D_is_arg=False,
-                                            D_array_type=None,
                                             D_array=None,
                                             *args,
                                             **kwargs):
@@ -141,17 +138,9 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
 
 
         Args:
-            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with
-                                                            properties needed
-                                                            by result_array.
-
             result_array(multiprocessing.RawArray):         shared memory array
                                                             to store results
                                                             in.
-
-            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with
-                                                            properties needed
-                                                            by X_array.
 
             X_array(numpy.ndarray):                         currently uses
                                                             numpy ndarray as
@@ -189,56 +178,18 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
     # Also, it is not needed outside of calling this function.
     import spams
 
-    as_ordered_array_dict = {
-        "F_CONTIGUOUS": numpy.asfortranarray,
-        "C_CONTIGUOUS": numpy.ascontiguousarray
-    }
+    with npctypes.shared.as_ndarray(X_array) as X:
+        with npctypes.shared.as_ndarray(result_array) as result:
+            if D_array is not None:
+                with npctypes.shared.as_ndarray(D_array) as D:
+                    if D_is_arg:
+                        args[3] = D
+                    else:
+                        kwargs["D"] = D
 
-    # Construct X from shared array.
-    X_dtype = X_array_type._dtype_
-    X_shape = X_array_type._shape_
-    X_flags = numpy.core.multiarray.flagsobj(X_array_type._flags_)
-
-    X = numpy.frombuffer(X_array, dtype=X_dtype).reshape(X_shape)
-    X.setflags(X_flags)
-
-    for order_name, as_ordered_array in as_ordered_array_dict.items():
-        if order_name in X_array_type.__name__:
-            X = as_ordered_array(X)
-
-    # Construct D from shared array.
-    if (D_array_type is not None) and (D_array is not None):
-        D_dtype = D_array_type._dtype_
-        D_shape = D_array_type._shape_
-        D_flags = numpy.core.multiarray.flagsobj(D_array_type._flags_)
-
-        D = numpy.frombuffer(D_array, dtype=D_dtype).reshape(D_shape)
-        D.setflags(D_flags)
-
-        for order_name, as_ordered_array in as_ordered_array_dict.items():
-            if order_name in D_array_type.__name__:
-                D = as_ordered_array(D)
-
-        if D_is_arg:
-            args[3] = D
-        else:
-            kwargs["D"] = D
-
-    # Construct the result to use the shared buffer.
-    result_dtype = result_array_type._dtype_
-    result_shape = result_array_type._shape_
-    result_flags = numpy.core.multiarray.flagsobj(result_array_type._flags_)
-
-    result = numpy.frombuffer(
-        result_array, dtype=result_dtype
-    ).reshape(result_shape)
-    result.setflags(result_flags)
-
-    for order_name, as_ordered_array in as_ordered_array_dict.items():
-        if order_name in result_array_type.__name__:
-            result = as_ordered_array(result)
-
-    result[:] = spams.trainDL(X, *args, **kwargs)
+                    result[:] = spams.trainDL(X, *args, **kwargs)
+            else:
+                result[:] = spams.trainDL(X, *args, **kwargs)
 
 
 def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
@@ -316,12 +267,12 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     result_array = npctypes.shared.ndarray((X.shape[0], len_D), X.dtype, "F")
 
     new_args = (
-        type(result_array), result_array,
-        type(X_array), X_array,
+        result_array,
+        X_array,
     )
     if D is not None:
         new_args = new_args + (
-            D_is_arg, type(D_array), D_array,
+            D_is_arg, D_array,
         )
     p = multiprocessing.Process(
         target=run_multiprocessing_array_spams_trainDL,
