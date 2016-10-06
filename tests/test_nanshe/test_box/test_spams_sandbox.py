@@ -520,7 +520,9 @@ class TestSpamsSandbox(object):
         result_array = npctypes.shared.ndarray((self.g.shape[0], self.g.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
+            type(result_array),
             result_array,
+            type(g_array),
             g_array,
             **{
                 "gamma2" : 0,
@@ -584,7 +586,9 @@ class TestSpamsSandbox(object):
         result_array = npctypes.shared.ndarray((self.g3.shape[0], self.g3.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
+            type(result_array),
             result_array,
+            type(g3_array),
             g3_array,
             **{
                 "gamma2" : 0,
@@ -748,9 +752,12 @@ class TestSpamsSandbox(object):
         result_array = npctypes.shared.ndarray((self.g.shape[0], self.g.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
+            type(result_array),
             result_array,
+            type(g_array),
             g_array,
             False,
+            type(g_array),
             g_array,
             **{
                 "gamma2" : 0,
@@ -816,9 +823,12 @@ class TestSpamsSandbox(object):
         result_array = npctypes.shared.ndarray((self.g3.shape[0], self.g3.shape[1]), float_type, "F")
 
         nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL(
+            type(result_array),
             result_array,
+            type(g3_array),
             g3_array,
             False,
+            type(g3_array),
             g3_array,
             **{
                 "gamma2" : 0,

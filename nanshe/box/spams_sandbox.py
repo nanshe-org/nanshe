@@ -116,9 +116,12 @@ def call_multiprocessing_queue_spams_trainDL(*args, **kwargs):
     return(result)
 
 
-def run_multiprocessing_array_spams_trainDL(result_array,
+def run_multiprocessing_array_spams_trainDL(result_array_type,
+                                            result_array,
+                                            X_array_type,
                                             X_array,
                                             D_is_arg=False,
+                                            D_array_type=None,
                                             D_array=None,
                                             *args,
                                             **kwargs):
@@ -138,9 +141,19 @@ def run_multiprocessing_array_spams_trainDL(result_array,
 
 
         Args:
+            result_array_type(numpy.ctypeslib.ndpointer):   Unused will drop.
+                                                            A pointer type with
+                                                            properties needed
+                                                            by result_array.
+
             result_array(multiprocessing.RawArray):         shared memory array
                                                             to store results
                                                             in.
+
+            X_array_type(numpy.ctypeslib.ndpointer):        Unused will drop.
+                                                            a pointer type with
+                                                            properties needed
+                                                            by X_array.
 
             X_array(numpy.ndarray):                         currently uses
                                                             numpy ndarray as
@@ -150,7 +163,8 @@ def run_multiprocessing_array_spams_trainDL(result_array,
                                                             an arg and/or
                                                             should be an arg.
 
-            D_array_type(numpy.ctypeslib.ndpointer):        a pointer type with
+            D_array_type(numpy.ctypeslib.ndpointer):        Unused will drop.
+                                                            a pointer type with
                                                             properties needed
                                                             by D_array.
 
@@ -267,12 +281,14 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     result_array = npctypes.shared.ndarray((X.shape[0], len_D), X.dtype, "F")
 
     new_args = (
+        type(result_array),
         result_array,
+        type(X_array),
         X_array,
     )
     if D is not None:
         new_args = new_args + (
-            D_is_arg, D_array,
+            D_is_arg, type(D_array), D_array,
         )
     p = multiprocessing.Process(
         target=run_multiprocessing_array_spams_trainDL,
