@@ -19,6 +19,9 @@ __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Jun 20, 2014 12:07:48 EDT$"
 
 
+import npctypes
+import npctypes.shared
+
 
 class SPAMSException(Exception):
     pass
@@ -138,7 +141,8 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
 
 
         Args:
-            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with
+            result_array_type(numpy.ctypeslib.ndpointer):   Unused will drop.
+                                                            A pointer type with
                                                             properties needed
                                                             by result_array.
 
@@ -146,7 +150,8 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
                                                             to store results
                                                             in.
 
-            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with
+            X_array_type(numpy.ctypeslib.ndpointer):        Unused will drop.
+                                                            a pointer type with
                                                             properties needed
                                                             by X_array.
 
@@ -158,7 +163,8 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
                                                             an arg and/or
                                                             should be an arg.
 
-            D_array_type(numpy.ctypeslib.ndpointer):        a pointer type with
+            D_array_type(numpy.ctypeslib.ndpointer):        Unused will drop.
+                                                            a pointer type with
                                                             properties needed
                                                             by D_array.
 
@@ -186,56 +192,18 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
     # Also, it is not needed outside of calling this function.
     import spams
 
-    as_ordered_array_dict = {
-        "F_CONTIGUOUS": numpy.asfortranarray,
-        "C_CONTIGUOUS": numpy.ascontiguousarray
-    }
+    with npctypes.shared.as_ndarray(X_array) as X:
+        with npctypes.shared.as_ndarray(result_array) as result:
+            if D_array is not None:
+                with npctypes.shared.as_ndarray(D_array) as D:
+                    if D_is_arg:
+                        args[3] = D
+                    else:
+                        kwargs["D"] = D
 
-    # Construct X from shared array.
-    X_dtype = X_array_type._dtype_
-    X_shape = X_array_type._shape_
-    X_flags = numpy.core.multiarray.flagsobj(X_array_type._flags_)
-
-    X = numpy.frombuffer(X_array, dtype=X_dtype).reshape(X_shape)
-    X.setflags(X_flags)
-
-    for order_name, as_ordered_array in as_ordered_array_dict.items():
-        if order_name in X_array_type.__name__:
-            X = as_ordered_array(X)
-
-    # Construct D from shared array.
-    if (D_array_type is not None) and (D_array is not None):
-        D_dtype = D_array_type._dtype_
-        D_shape = D_array_type._shape_
-        D_flags = numpy.core.multiarray.flagsobj(D_array_type._flags_)
-
-        D = numpy.frombuffer(D_array, dtype=D_dtype).reshape(D_shape)
-        D.setflags(D_flags)
-
-        for order_name, as_ordered_array in as_ordered_array_dict.items():
-            if order_name in D_array_type.__name__:
-                D = as_ordered_array(D)
-
-        if D_is_arg:
-            args[3] = D
-        else:
-            kwargs["D"] = D
-
-    # Construct the result to use the shared buffer.
-    result_dtype = result_array_type._dtype_
-    result_shape = result_array_type._shape_
-    result_flags = numpy.core.multiarray.flagsobj(result_array_type._flags_)
-
-    result = numpy.frombuffer(
-        result_array, dtype=result_dtype
-    ).reshape(result_shape)
-    result.setflags(result_flags)
-
-    for order_name, as_ordered_array in as_ordered_array_dict.items():
-        if order_name in result_array_type.__name__:
-            result = as_ordered_array(result)
-
-    result[:] = spams.trainDL(X, *args, **kwargs)
+                    result[:] = spams.trainDL(X, *args, **kwargs)
+            else:
+                result[:] = spams.trainDL(X, *args, **kwargs)
 
 
 def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
@@ -289,72 +257,38 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     else:
         D = kwargs.pop("D", None)
 
-    # Types for X_array
-    X_array_type = numpy.ctypeslib.ndpointer(
-        dtype=X.dtype, ndim=X.ndim, shape=X.shape, flags=X.flags
-    )
-    X_array_ctype = type(
-        numpy.ctypeslib.as_ctypes(X_array_type._dtype_.type(0)[()])
-    )
-
     # Create a shared array to contain X
-    X_array = multiprocessing.Array(X_array_ctype,
-                                    X.size,
-                                    lock=False)
+    X_array = npctypes.shared.ndarray(X.shape, X.dtype, "F")
 
     # Copy over the contents of X.
-    X_array_numpy = numpy.frombuffer(
-        X_array, dtype=X_array_type._dtype_
-    ).reshape(X_array_type._shape_)
-    X_array_numpy[:] = X
-    X_array_numpy = None
+    with npctypes.shared.as_ndarray(X_array) as X_array_numpy:
+        X_array_numpy[...] = X
+    del X_array_numpy
 
     len_D = kwargs.get("K", None)
     if D is not None:
-        # Types for D_array
-        D_array_type = numpy.ctypeslib.ndpointer(
-            dtype=D.dtype, ndim=D.ndim, shape=D.shape, flags=D.flags
-        )
-        D_array_ctype = type(
-            numpy.ctypeslib.as_ctypes(D_array_type._dtype_.type(0)[()])
-        )
-
         # Create a shared array to contain D
-        D_array = multiprocessing.Array(D_array_ctype,
-                                        D.size,
-                                        lock=False)
+        D_array = npctypes.shared.ndarray(D.shape, D.dtype, "F")
 
         # Copy over the contents of D.
-        D_array_numpy = numpy.frombuffer(
-            D_array, dtype=D_array_type._dtype_
-        ).reshape(D_array_type._shape_)
-        D_array_numpy[:] = D
-        D_array_numpy = None
+        with npctypes.shared.as_ndarray(D_array) as D_array_numpy:
+            D_array_numpy[...] = D
+        del D_array_numpy
 
         len_D = D.shape[-1]
 
-    # Types for result_array
-    result_array_type = numpy.ctypeslib.ndpointer(
-        dtype=X.dtype, ndim=X.ndim, shape=(X.shape[0], len_D)
-    )
-    result_array_ctype = type(
-        numpy.ctypeslib.as_ctypes(result_array_type._dtype_.type(0)[()])
-    )
-
     # Create a shared array to contain the result
-    result_array = multiprocessing.Array(
-        result_array_ctype,
-        int(numpy.product(result_array_type._shape_)),
-        lock=False
-    )
+    result_array = npctypes.shared.ndarray((X.shape[0], len_D), X.dtype, "F")
 
     new_args = (
-        result_array_type, result_array,
-        X_array_type, X_array,
+        type(result_array),
+        result_array,
+        type(X_array),
+        X_array,
     )
     if D is not None:
         new_args = new_args + (
-            D_is_arg, D_array_type, D_array,
+            D_is_arg, type(D_array), D_array,
         )
     p = multiprocessing.Process(
         target=run_multiprocessing_array_spams_trainDL,
@@ -369,10 +303,9 @@ def call_multiprocessing_array_spams_trainDL(X, *args, **kwargs):
     )
 
     # Reconstruct the result from the output array
-    result = numpy.frombuffer(
-        result_array, dtype=result_array_type._dtype_
-    ).reshape(result_array_type._shape_)
-    result = result.copy()
+    result = None
+    with npctypes.shared.as_ndarray(result_array) as result:
+        result = result.copy()
 
     return(result)
 
