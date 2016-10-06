@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.box.spams_sandbox &#8212; nanshe 0.1.0a53+66.gd10ff81 documentation</title>
+    <title>nanshe.box.spams_sandbox &#8212; nanshe 0.1.0a53+70.g6fd4214 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+66.gd10ff81',
+        VERSION:     '0.1.0a53+70.g6fd4214',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="nanshe 0.1.0a53+66.gd10ff81 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+70.g6fd4214 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -46,7 +46,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+66.gd10ff81 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+70.g6fd4214 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -80,6 +80,9 @@
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;$Jun 20, 2014 12:07:48 EDT$&quot;</span>
 
+
+<span class="kn">import</span> <span class="nn">npctypes</span>
+<span class="kn">import</span> <span class="nn">npctypes.shared</span>
 
 
 <div class="viewcode-block" id="SPAMSException"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.SPAMSException">[docs]</a><span class="k">class</span> <span class="nc">SPAMSException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -200,7 +203,8 @@
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            result_array_type(numpy.ctypeslib.ndpointer):   a pointer type with</span>
+<span class="sd">            result_array_type(numpy.ctypeslib.ndpointer):   Unused will drop.</span>
+<span class="sd">                                                            A pointer type with</span>
 <span class="sd">                                                            properties needed</span>
 <span class="sd">                                                            by result_array.</span>
 
@@ -208,7 +212,8 @@
 <span class="sd">                                                            to store results</span>
 <span class="sd">                                                            in.</span>
 
-<span class="sd">            X_array_type(numpy.ctypeslib.ndpointer):        a pointer type with</span>
+<span class="sd">            X_array_type(numpy.ctypeslib.ndpointer):        Unused will drop.</span>
+<span class="sd">                                                            a pointer type with</span>
 <span class="sd">                                                            properties needed</span>
 <span class="sd">                                                            by X_array.</span>
 
@@ -220,7 +225,8 @@
 <span class="sd">                                                            an arg and/or</span>
 <span class="sd">                                                            should be an arg.</span>
 
-<span class="sd">            D_array_type(numpy.ctypeslib.ndpointer):        a pointer type with</span>
+<span class="sd">            D_array_type(numpy.ctypeslib.ndpointer):        Unused will drop.</span>
+<span class="sd">                                                            a pointer type with</span>
 <span class="sd">                                                            properties needed</span>
 <span class="sd">                                                            by D_array.</span>
 
@@ -248,56 +254,18 @@
     <span class="c1"># Also, it is not needed outside of calling this function.</span>
     <span class="kn">import</span> <span class="nn">spams</span>
 
-    <span class="n">as_ordered_array_dict</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;F_CONTIGUOUS&quot;</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">,</span>
-        <span class="s2">&quot;C_CONTIGUOUS&quot;</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ascontiguousarray</span>
-    <span class="p">}</span>
+    <span class="k">with</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">X_array</span><span class="p">)</span> <span class="k">as</span> <span class="n">X</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">result_array</span><span class="p">)</span> <span class="k">as</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">D_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">D_array</span><span class="p">)</span> <span class="k">as</span> <span class="n">D</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">D_is_arg</span><span class="p">:</span>
+                        <span class="n">args</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
 
-    <span class="c1"># Construct X from shared array.</span>
-    <span class="n">X_dtype</span> <span class="o">=</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
-    <span class="n">X_shape</span> <span class="o">=</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">_shape_</span>
-    <span class="n">X_flags</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">multiarray</span><span class="o">.</span><span class="n">flagsobj</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_flags_</span><span class="p">)</span>
-
-    <span class="n">X</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">X_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_shape</span><span class="p">)</span>
-    <span class="n">X</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">X_flags</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">order_name</span> <span class="ow">in</span> <span class="n">X_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">as_ordered_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-
-    <span class="c1"># Construct D from shared array.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">D_array_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">D_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="n">D_dtype</span> <span class="o">=</span> <span class="n">D_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
-        <span class="n">D_shape</span> <span class="o">=</span> <span class="n">D_array_type</span><span class="o">.</span><span class="n">_shape_</span>
-        <span class="n">D_flags</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">multiarray</span><span class="o">.</span><span class="n">flagsobj</span><span class="p">(</span><span class="n">D_array_type</span><span class="o">.</span><span class="n">_flags_</span><span class="p">)</span>
-
-        <span class="n">D</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">D_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">D_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">D_shape</span><span class="p">)</span>
-        <span class="n">D</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">D_flags</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">order_name</span> <span class="ow">in</span> <span class="n">D_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
-                <span class="n">D</span> <span class="o">=</span> <span class="n">as_ordered_array</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">D_is_arg</span><span class="p">:</span>
-            <span class="n">args</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
-
-    <span class="c1"># Construct the result to use the shared buffer.</span>
-    <span class="n">result_dtype</span> <span class="o">=</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
-    <span class="n">result_shape</span> <span class="o">=</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span>
-    <span class="n">result_flags</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">multiarray</span><span class="o">.</span><span class="n">flagsobj</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_flags_</span><span class="p">)</span>
-
-    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
-        <span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_dtype</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)</span>
-    <span class="n">result</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">result_flags</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">order_name</span><span class="p">,</span> <span class="n">as_ordered_array</span> <span class="ow">in</span> <span class="n">as_ordered_array_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">order_name</span> <span class="ow">in</span> <span class="n">result_array_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">as_ordered_array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-    <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+                    <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="call_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -351,72 +319,38 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">D</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="c1"># Types for X_array</span>
-    <span class="n">X_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">flags</span>
-    <span class="p">)</span>
-    <span class="n">X_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()])</span>
-    <span class="p">)</span>
-
     <span class="c1"># Create a shared array to contain X</span>
-    <span class="n">X_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">X_array_ctype</span><span class="p">,</span>
-                                    <span class="n">X</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
-                                    <span class="n">lock</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">X_array</span> <span class="o">=</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">ndarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">)</span>
 
     <span class="c1"># Copy over the contents of X.</span>
-    <span class="n">X_array_numpy</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
-        <span class="n">X_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
-    <span class="n">X_array_numpy</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">X</span>
-    <span class="n">X_array_numpy</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">with</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">X_array</span><span class="p">)</span> <span class="k">as</span> <span class="n">X_array_numpy</span><span class="p">:</span>
+        <span class="n">X_array_numpy</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="k">del</span> <span class="n">X_array_numpy</span>
 
     <span class="n">len_D</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># Types for D_array</span>
-        <span class="n">D_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span>
-            <span class="n">dtype</span><span class="o">=</span><span class="n">D</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">D</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">D</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">D</span><span class="o">.</span><span class="n">flags</span>
-        <span class="p">)</span>
-        <span class="n">D_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
-            <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">D_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()])</span>
-        <span class="p">)</span>
-
         <span class="c1"># Create a shared array to contain D</span>
-        <span class="n">D_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">D_array_ctype</span><span class="p">,</span>
-                                        <span class="n">D</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
-                                        <span class="n">lock</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">D_array</span> <span class="o">=</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">ndarray</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">D</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">)</span>
 
         <span class="c1"># Copy over the contents of D.</span>
-        <span class="n">D_array_numpy</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
-            <span class="n">D_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">D_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">D_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
-        <span class="n">D_array_numpy</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">D</span>
-        <span class="n">D_array_numpy</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">with</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">D_array</span><span class="p">)</span> <span class="k">as</span> <span class="n">D_array_numpy</span><span class="p">:</span>
+            <span class="n">D_array_numpy</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
+        <span class="k">del</span> <span class="n">D_array_numpy</span>
 
         <span class="n">len_D</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="c1"># Types for result_array</span>
-    <span class="n">result_array_type</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">len_D</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">result_array_ctype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)[()])</span>
-    <span class="p">)</span>
-
     <span class="c1"># Create a shared array to contain the result</span>
-    <span class="n">result_array</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span>
-        <span class="n">result_array_ctype</span><span class="p">,</span>
-        <span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)),</span>
-        <span class="n">lock</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span>
+    <span class="n">result_array</span> <span class="o">=</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">ndarray</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">len_D</span><span class="p">),</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">)</span>
 
     <span class="n">new_args</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">result_array_type</span><span class="p">,</span> <span class="n">result_array</span><span class="p">,</span>
-        <span class="n">X_array_type</span><span class="p">,</span> <span class="n">X_array</span><span class="p">,</span>
+        <span class="nb">type</span><span class="p">(</span><span class="n">result_array</span><span class="p">),</span>
+        <span class="n">result_array</span><span class="p">,</span>
+        <span class="nb">type</span><span class="p">(</span><span class="n">X_array</span><span class="p">),</span>
+        <span class="n">X_array</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">new_args</span> <span class="o">=</span> <span class="n">new_args</span> <span class="o">+</span> <span class="p">(</span>
-            <span class="n">D_is_arg</span><span class="p">,</span> <span class="n">D_array_type</span><span class="p">,</span> <span class="n">D_array</span><span class="p">,</span>
+            <span class="n">D_is_arg</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">D_array</span><span class="p">),</span> <span class="n">D_array</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
         <span class="n">target</span><span class="o">=</span><span class="n">run_multiprocessing_array_spams_trainDL</span><span class="p">,</span>
@@ -431,10 +365,9 @@
     <span class="p">)</span>
 
     <span class="c1"># Reconstruct the result from the output array</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
-        <span class="n">result_array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_dtype_</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">result_array_type</span><span class="o">.</span><span class="n">_shape_</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">with</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">result_array</span><span class="p">)</span> <span class="k">as</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
@@ -497,7 +430,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+66.gd10ff81 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+70.g6fd4214 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
