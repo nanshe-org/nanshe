@@ -154,6 +154,19 @@ def run_multiprocessing_array_spams_trainDL(result_array_type,
                                                             numpy ndarray as
                                                             input.
 
+            D_is_arg(bool):                                 Whether D either is
+                                                            an arg and/or
+                                                            should be an arg.
+
+            D_array_type(numpy.ctypeslib.ndpointer):        a pointer type with
+                                                            properties needed
+                                                            by D_array.
+
+            D_array(numpy.ndarray):                         currently uses
+                                                            numpy ndarray as
+                                                            the initial
+                                                            dictionary.
+
             *args(list):                                    a list of position
                                                             arguments to pass
                                                             to spams.trainDL.
