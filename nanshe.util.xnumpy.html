@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a53+72.gaa0d8ea documentation</title>
+    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a53+74.g486699f documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a53+72.gaa0d8ea',
+        VERSION:     '0.1.0a53+74.g486699f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="nanshe 0.1.0a53+72.gaa0d8ea documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+74.g486699f documentation" href="index.html" />
     <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.converter module" href="nanshe.converter.html" />
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
@@ -54,7 +54,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+72.gaa0d8ea documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+74.g486699f documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -2690,46 +2690,6 @@ axis.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="nanshe.util.xnumpy.info">
-<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">info</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a <code class="docutils literal"><span class="pre">numpy.dtype</span></code> or any type that can be converted to a
-<code class="docutils literal"><span class="pre">numpy.dtype</span></code> and returns its info.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a_type</strong> (<em>type</em>) &#8211; the type to find info for.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">info about the type.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(np.core.getlimits.info)</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="go">finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-<span class="go">finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-<span class="go">finfo(resolution=1e-06, min=-3.4028235e+38, max=3.4028235e+38, dtype=float32)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
-<span class="go">finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="go">iinfo(min=-9223372036854775808, max=9223372036854775807, dtype=int64)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
 <dt id="nanshe.util.xnumpy.line_filter">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">line_filter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#line_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.line_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a boolean array mask for a line. This mask has size for the
@@ -4991,46 +4951,6 @@ threshold</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="nanshe.util.xnumpy.to_ctype">
-<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">to_ctype</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#to_ctype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.to_ctype" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a numpy.dtype or any type that can be converted to a numpy.dtype
-and returns its equivalent ctype.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a_type</strong> (<em>type</em>) &#8211; the type to find an equivalent ctype to.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the ctype equivalent to the dtype provided.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(ctype)</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to_ctype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="go">&lt;class &#39;ctypes.c_double&#39;&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to_ctype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-<span class="go">&lt;class &#39;ctypes.c_double&#39;&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to_ctype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-<span class="go">&lt;class &#39;ctypes.c_float&#39;&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to_ctype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-<span class="go">&lt;class &#39;ctypes.c_float&#39;&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to_ctype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="go">&lt;class &#39;ctypes.c_long&#39;&gt;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
 <dt id="nanshe.util.xnumpy.truncate_masked_frames">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">truncate_masked_frames</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#truncate_masked_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.truncate_masked_frames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes frames that have been shifted and truncates out the portion,
@@ -5501,7 +5421,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+72.gaa0d8ea documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+74.g486699f documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
