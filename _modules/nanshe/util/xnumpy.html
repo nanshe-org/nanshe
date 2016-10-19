@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a53+76.g4eff6ca documentation</title>
+    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a53+83.g04d215e documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+76.g4eff6ca',
+        VERSION:     '0.1.0a53+83.g04d215e',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="nanshe 0.1.0a53+76.g4eff6ca documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+83.g04d215e documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -46,7 +46,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+76.g4eff6ca documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+83.g04d215e documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -77,6 +77,8 @@
 <span class="sd">API</span>
 <span class="sd">===============================================================================</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;John Kirkham &lt;kirkhamj@janelia.hhmi.org&gt;&quot;</span>
@@ -109,6 +111,13 @@
 <span class="kn">import</span> <span class="nn">npctypes.types</span>
 <span class="kn">from</span> <span class="nn">npctypes.types</span> <span class="k">import</span> <span class="n">tinfo</span> <span class="k">as</span> <span class="n">info</span>
 <span class="kn">from</span> <span class="nn">npctypes.types</span> <span class="k">import</span> <span class="n">ctype</span> <span class="k">as</span> <span class="n">to_ctype</span>
+
+<span class="kn">import</span> <span class="nn">xnumpy</span>
+<span class="kn">import</span> <span class="nn">xnumpy.core</span>
+<span class="kn">from</span> <span class="nn">xnumpy.core</span> <span class="k">import</span> <span class="n">expand</span> <span class="k">as</span> <span class="n">_expand_view</span>
+<span class="kn">from</span> <span class="nn">xnumpy.core</span> <span class="k">import</span> <span class="n">anumerate</span> <span class="k">as</span> <span class="n">expand_enumerate</span>
+<span class="kn">from</span> <span class="nn">xnumpy.core</span> <span class="k">import</span> <span class="n">product</span> <span class="k">as</span> <span class="n">cartesian_product</span>
+<span class="kn">from</span> <span class="nn">xnumpy.core</span> <span class="k">import</span> <span class="n">permute_op</span> <span class="k">as</span> <span class="n">all_permutations_operation</span>
 
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">iters</span>
 
@@ -2030,16 +2039,10 @@
 <span class="sd">                     [3, 4, 5]]]])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reps_after</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="n">reps_after</span> <span class="o">=</span> <span class="p">(</span><span class="n">reps_after</span><span class="p">,)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reps_before</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="n">reps_before</span> <span class="o">=</span> <span class="p">(</span><span class="n">reps_before</span><span class="p">,)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">stride_tricks</span><span class="o">.</span><span class="n">as_strided</span><span class="p">(</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">_expand_view</span><span class="p">(</span>
         <span class="n">new_array</span><span class="p">,</span>
-        <span class="n">reps_before</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="n">reps_after</span><span class="p">,</span>
-        <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">reps_before</span><span class="p">)</span> <span class="o">+</span> <span class="n">new_array</span><span class="o">.</span><span class="n">strides</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">reps_after</span><span class="p">)</span>
+        <span class="n">shape_before</span><span class="o">=</span><span class="n">reps_before</span><span class="p">,</span>
+        <span class="n">shape_after</span><span class="o">=</span><span class="n">reps_after</span>
     <span class="p">))</span></div>
 
 
@@ -2131,85 +2134,6 @@
     <span class="k">return</span><span class="p">(</span><span class="n">an_arange</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="expand_enumerate"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_enumerate">[docs]</a><span class="k">def</span> <span class="nf">expand_enumerate</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Builds on expand_arange, which has the same shape as the original</span>
-<span class="sd">        array. Specifies the increments to occur along the given axis, which by</span>
-<span class="sd">        default is the zeroth axis.</span>
-
-<span class="sd">        Provides mechanisms for changing the starting value and also the</span>
-<span class="sd">        increment.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to enumerate</span>
-
-<span class="sd">            axis(int):                           axis to enumerate along (0 by</span>
-<span class="sd">                                                 default).</span>
-<span class="sd">            start(int):                          starting point (0 by default).</span>
-
-<span class="sd">            step(int):                           size of steps to take between</span>
-<span class="sd">                                                 value (1 by default).</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a view of a numpy arange with</span>
-<span class="sd">                                                 tiling in various dimension.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)))</span>
-<span class="sd">            array([[0, 0, 0, 0, 0],</span>
-<span class="sd">                   [1, 1, 1, 1, 1],</span>
-<span class="sd">                   [2, 2, 2, 2, 2],</span>
-<span class="sd">                   [3, 3, 3, 3, 3]], dtype=uint64)</span>
-
-<span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)), axis=0)</span>
-<span class="sd">            array([[0, 0, 0, 0, 0],</span>
-<span class="sd">                   [1, 1, 1, 1, 1],</span>
-<span class="sd">                   [2, 2, 2, 2, 2],</span>
-<span class="sd">                   [3, 3, 3, 3, 3]], dtype=uint64)</span>
-
-<span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)), axis=0, start=1)</span>
-<span class="sd">            array([[1, 1, 1, 1, 1],</span>
-<span class="sd">                   [2, 2, 2, 2, 2],</span>
-<span class="sd">                   [3, 3, 3, 3, 3],</span>
-<span class="sd">                   [4, 4, 4, 4, 4]], dtype=uint64)</span>
-
-<span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)), axis=0, start=1, step=2)</span>
-<span class="sd">            array([[1, 1, 1, 1, 1],</span>
-<span class="sd">                   [3, 3, 3, 3, 3],</span>
-<span class="sd">                   [5, 5, 5, 5, 5],</span>
-<span class="sd">                   [7, 7, 7, 7, 7]], dtype=uint64)</span>
-
-<span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)), axis=1)</span>
-<span class="sd">            array([[0, 1, 2, 3, 4],</span>
-<span class="sd">                   [0, 1, 2, 3, 4],</span>
-<span class="sd">                   [0, 1, 2, 3, 4],</span>
-<span class="sd">                   [0, 1, 2, 3, 4]], dtype=uint64)</span>
-
-<span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)), axis=1, start=1)</span>
-<span class="sd">            array([[1, 2, 3, 4, 5],</span>
-<span class="sd">                   [1, 2, 3, 4, 5],</span>
-<span class="sd">                   [1, 2, 3, 4, 5],</span>
-<span class="sd">                   [1, 2, 3, 4, 5]], dtype=uint64)</span>
-
-<span class="sd">            &gt;&gt;&gt; expand_enumerate(numpy.ones((4,5)), axis=1, start=1, step=2)</span>
-<span class="sd">            array([[1, 3, 5, 7, 9],</span>
-<span class="sd">                   [1, 3, 5, 7, 9],</span>
-<span class="sd">                   [1, 3, 5, 7, 9],</span>
-<span class="sd">                   [1, 3, 5, 7, 9]], dtype=uint64)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">an_enumeration</span> <span class="o">=</span> <span class="n">expand_arange</span><span class="p">(</span>
-        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
-        <span class="n">stop</span><span class="o">=</span><span class="n">start</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">],</span>
-        <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
-        <span class="n">reps_before</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">],</span>
-        <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[(</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span>
-    <span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">an_enumeration</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="enumerate_masks"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.enumerate_masks">[docs]</a><span class="k">def</span> <span class="nf">enumerate_masks</span><span class="p">(</span><span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a mask stack and replaces them by an enumerated stack. In other</span>
@@ -2284,8 +2208,8 @@
 <span class="sd">                    [0, 0, 0, 4]]], dtype=uint64)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">new_enumerated_masks</span> <span class="o">=</span> <span class="n">new_masks</span> <span class="o">*</span> <span class="n">expand_enumerate</span><span class="p">(</span>
-        <span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">new_enumerated_masks</span> <span class="o">=</span> <span class="n">new_masks</span> <span class="o">*</span> <span class="n">xnumpy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">anumerate</span><span class="p">(</span>
+        <span class="n">new_masks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span>
     <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_enumerated_masks</span><span class="p">)</span></div>
@@ -2365,132 +2289,6 @@
         <span class="p">)</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">new_enumerated_masks_max</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="cartesian_product"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.cartesian_product">[docs]</a><span class="k">def</span> <span class="nf">cartesian_product</span><span class="p">(</span><span class="n">arrays</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes the cartesian product between the elements in each array.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            arrays(collections.Sequence of numpy.ndarrays):     A sequence of</span>
-<span class="sd">                                                                1-D arrays or a</span>
-<span class="sd">                                                                2-D array.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                                    an array</span>
-<span class="sd">                                                                containing the</span>
-<span class="sd">                                                                result of the</span>
-<span class="sd">                                                                cartesian</span>
-<span class="sd">                                                                product of each</span>
-<span class="sd">                                                                array.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; cartesian_product([numpy.arange(2), numpy.arange(3)])</span>
-<span class="sd">            array([[0, 0],</span>
-<span class="sd">                   [0, 1],</span>
-<span class="sd">                   [0, 2],</span>
-<span class="sd">                   [1, 0],</span>
-<span class="sd">                   [1, 1],</span>
-<span class="sd">                   [1, 2]])</span>
-
-<span class="sd">            &gt;&gt;&gt; cartesian_product([</span>
-<span class="sd">            ...     numpy.arange(2, dtype=float),</span>
-<span class="sd">            ...     numpy.arange(3)</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            array([[ 0.,  0.],</span>
-<span class="sd">                   [ 0.,  1.],</span>
-<span class="sd">                   [ 0.,  2.],</span>
-<span class="sd">                   [ 1.,  0.],</span>
-<span class="sd">                   [ 1.,  1.],</span>
-<span class="sd">                   [ 1.,  2.]])</span>
-
-<span class="sd">            &gt;&gt;&gt; cartesian_product([</span>
-<span class="sd">            ...     numpy.arange(2),</span>
-<span class="sd">            ...     numpy.arange(3),</span>
-<span class="sd">            ...     numpy.arange(4)</span>
-<span class="sd">            ... ])</span>
-<span class="sd">            array([[0, 0, 0],</span>
-<span class="sd">                   [0, 0, 1],</span>
-<span class="sd">                   [0, 0, 2],</span>
-<span class="sd">                   [0, 0, 3],</span>
-<span class="sd">                   [0, 1, 0],</span>
-<span class="sd">                   [0, 1, 1],</span>
-<span class="sd">                   [0, 1, 2],</span>
-<span class="sd">                   [0, 1, 3],</span>
-<span class="sd">                   [0, 2, 0],</span>
-<span class="sd">                   [0, 2, 1],</span>
-<span class="sd">                   [0, 2, 2],</span>
-<span class="sd">                   [0, 2, 3],</span>
-<span class="sd">                   [1, 0, 0],</span>
-<span class="sd">                   [1, 0, 1],</span>
-<span class="sd">                   [1, 0, 2],</span>
-<span class="sd">                   [1, 0, 3],</span>
-<span class="sd">                   [1, 1, 0],</span>
-<span class="sd">                   [1, 1, 1],</span>
-<span class="sd">                   [1, 1, 2],</span>
-<span class="sd">                   [1, 1, 3],</span>
-<span class="sd">                   [1, 2, 0],</span>
-<span class="sd">                   [1, 2, 1],</span>
-<span class="sd">                   [1, 2, 2],</span>
-<span class="sd">                   [1, 2, 3]])</span>
-
-<span class="sd">            &gt;&gt;&gt; cartesian_product(numpy.diag((1, 2, 3)))</span>
-<span class="sd">            array([[1, 0, 0],</span>
-<span class="sd">                   [1, 0, 0],</span>
-<span class="sd">                   [1, 0, 3],</span>
-<span class="sd">                   [1, 2, 0],</span>
-<span class="sd">                   [1, 2, 0],</span>
-<span class="sd">                   [1, 2, 3],</span>
-<span class="sd">                   [1, 0, 0],</span>
-<span class="sd">                   [1, 0, 0],</span>
-<span class="sd">                   [1, 0, 3],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 3],</span>
-<span class="sd">                   [0, 2, 0],</span>
-<span class="sd">                   [0, 2, 0],</span>
-<span class="sd">                   [0, 2, 3],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 3],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 3],</span>
-<span class="sd">                   [0, 2, 0],</span>
-<span class="sd">                   [0, 2, 0],</span>
-<span class="sd">                   [0, 2, 3],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 0],</span>
-<span class="sd">                   [0, 0, 3]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">)):</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="n">arrays</span><span class="p">[</span>
-                <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;Must provide only 1D arrays to this function or a single 2D array.&quot;</span>
-
-    <span class="n">array_shapes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">)))</span>
-
-    <span class="n">result_shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">result_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">array_shapes</span><span class="p">)</span>
-    <span class="n">result_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span>
-    <span class="n">result_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result_shape</span><span class="p">)</span>
-
-    <span class="n">result_dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">find_common_type</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="n">result_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span> <span class="p">[]</span>
-    <span class="p">)</span>
-
-    <span class="n">result</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">result_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">result_dtype</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">repeated_array_i</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span>
-            <span class="n">arrays</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-            <span class="n">reps_before</span><span class="o">=</span><span class="n">array_shapes</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span>
-            <span class="n">reps_after</span><span class="o">=</span><span class="n">array_shapes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">repeated_array_i_j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">repeated_array_i</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
-            <span class="n">result</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">repeated_array_i_j</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -2608,115 +2406,6 @@
     <span class="n">truncated_shifted_frames</span> <span class="o">=</span> <span class="n">truncated_shifted_frames</span><span class="o">.</span><span class="n">data</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">truncated_shifted_frames</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="all_permutations_operation"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.all_permutations_operation">[docs]</a><span class="k">def</span> <span class="nf">all_permutations_operation</span><span class="p">(</span><span class="n">new_op</span><span class="p">,</span> <span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes two arrays and constructs a new array that contains the result</span>
-<span class="sd">        of new_op on every permutation of elements in each array (like</span>
-<span class="sd">        broadcasting).</span>
-
-<span class="sd">        Suppose that new_result contained the result, then one would find that</span>
-<span class="sd">        the result of the following operation on the specific indices.</span>
-
-<span class="sd">        new_op( new_array_1[ i_1_1, i_1_2, ... ],</span>
-<span class="sd">        new_array_2[ i_2_1, i_2_2, ... ] )</span>
-
-<span class="sd">        would be found in new_result as shown</span>
-
-<span class="sd">        new_result[ i_1_1, i_1_2, ..., i_2_1, i_2_2, ... ]</span>
-
-
-<span class="sd">        Args:</span>
-<span class="sd">            new_array(numpy.ndarray):            array to add the singleton</span>
-<span class="sd">                                                 axis to.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (numpy.ndarray):                     a numpy array with the</span>
-<span class="sd">                                                 singleton axis added at the</span>
-<span class="sd">                                                 end.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; all_permutations_operation(</span>
-<span class="sd">            ...     operator.add, numpy.ones((1,3)), numpy.eye(2)</span>
-<span class="sd">            ... ).shape</span>
-<span class="sd">            (1, 3, 2, 2)</span>
-
-<span class="sd">            &gt;&gt;&gt; all_permutations_operation(</span>
-<span class="sd">            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)</span>
-<span class="sd">            ... ).shape</span>
-<span class="sd">            (2, 2, 2, 2)</span>
-
-<span class="sd">            &gt;&gt;&gt; all_permutations_operation(</span>
-<span class="sd">            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)</span>
-<span class="sd">            ... )</span>
-<span class="sd">            array([[[[ 2.,  1.],</span>
-<span class="sd">                     [ 1.,  2.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[ 2.,  1.],</span>
-<span class="sd">                     [ 1.,  2.]]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                   [[[ 2.,  1.],</span>
-<span class="sd">                     [ 1.,  2.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[ 2.,  1.],</span>
-<span class="sd">                     [ 1.,  2.]]]])</span>
-
-<span class="sd">            &gt;&gt;&gt; all_permutations_operation(</span>
-<span class="sd">            ...     operator.sub, numpy.ones((2,2)), numpy.eye(2)</span>
-<span class="sd">            ... )</span>
-<span class="sd">            array([[[[ 0.,  1.],</span>
-<span class="sd">                     [ 1.,  0.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[ 0.,  1.],</span>
-<span class="sd">                     [ 1.,  0.]]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                   [[[ 0.,  1.],</span>
-<span class="sd">                     [ 1.,  0.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[ 0.,  1.],</span>
-<span class="sd">                     [ 1.,  0.]]]])</span>
-
-<span class="sd">            &gt;&gt;&gt; all_permutations_operation(</span>
-<span class="sd">            ...     operator.sub, numpy.ones((2,2)), numpy.fliplr(numpy.eye(2))</span>
-<span class="sd">            ... )</span>
-<span class="sd">            array([[[[ 1.,  0.],</span>
-<span class="sd">                     [ 0.,  1.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[ 1.,  0.],</span>
-<span class="sd">                     [ 0.,  1.]]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                   [[[ 1.,  0.],</span>
-<span class="sd">                     [ 0.,  1.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[ 1.,  0.],</span>
-<span class="sd">                     [ 0.,  1.]]]])</span>
-
-<span class="sd">            &gt;&gt;&gt; all_permutations_operation(</span>
-<span class="sd">            ...     operator.sub, numpy.zeros((2,2)), numpy.eye(2)</span>
-<span class="sd">            ... )</span>
-<span class="sd">            array([[[[-1.,  0.],</span>
-<span class="sd">                     [ 0., -1.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[-1.,  0.],</span>
-<span class="sd">                     [ 0., -1.]]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                   [[[-1.,  0.],</span>
-<span class="sd">                     [ 0., -1.]],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">                    [[-1.,  0.],</span>
-<span class="sd">                     [ 0., -1.]]]])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">new_array_1_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="n">new_array_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">new_array_2_tiled</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">new_array_2</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="n">new_array_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">new_op</span><span class="p">(</span><span class="n">new_array_1_tiled</span><span class="p">,</span> <span class="n">new_array_2_tiled</span><span class="p">))</span></div>
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -5590,7 +5279,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+76.g4eff6ca documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a53+83.g04d215e documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>

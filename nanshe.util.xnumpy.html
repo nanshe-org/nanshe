@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a53+76.g4eff6ca documentation</title>
+    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a53+83.g04d215e documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a53+76.g4eff6ca',
+        VERSION:     '0.1.0a53+83.g04d215e',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="nanshe 0.1.0a53+76.g4eff6ca documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+83.g04d215e documentation" href="index.html" />
     <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.converter module" href="nanshe.converter.html" />
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
@@ -54,7 +54,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+76.g4eff6ca documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+83.g04d215e documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -404,119 +404,6 @@ end.</dd>
 </dd></dl>
 
 <dl class="function">
-<dt id="nanshe.util.xnumpy.all_permutations_operation">
-<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">all_permutations_operation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#all_permutations_operation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.all_permutations_operation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes two arrays and constructs a new array that contains the result
-of new_op on every permutation of elements in each array (like
-broadcasting).</p>
-<p>Suppose that new_result contained the result, then one would find that
-the result of the following operation on the specific indices.</p>
-<p>new_op( new_array_1[ i_1_1, i_1_2, ... ],
-new_array_2[ i_2_1, i_2_2, ... ] )</p>
-<p>would be found in new_result as shown</p>
-<p>new_result[ i_1_1, i_1_2, ..., i_2_1, i_2_2, ... ]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
-axis to.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>a numpy array with the</dt>
-<dd>singleton axis added at the
-end.</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_operation</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(1, 3, 2, 2)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_operation</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(2, 2, 2, 2)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_operation</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">array([[[[ 2.,  1.],</span>
-<span class="go">         [ 1.,  2.]],</span>
-
-<span class="go">        [[ 2.,  1.],</span>
-<span class="go">         [ 1.,  2.]]],</span>
-
-
-<span class="go">       [[[ 2.,  1.],</span>
-<span class="go">         [ 1.,  2.]],</span>
-
-<span class="go">        [[ 2.,  1.],</span>
-<span class="go">         [ 1.,  2.]]]])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_operation</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">array([[[[ 0.,  1.],</span>
-<span class="go">         [ 1.,  0.]],</span>
-
-<span class="go">        [[ 0.,  1.],</span>
-<span class="go">         [ 1.,  0.]]],</span>
-
-
-<span class="go">       [[[ 0.,  1.],</span>
-<span class="go">         [ 1.,  0.]],</span>
-
-<span class="go">        [[ 0.,  1.],</span>
-<span class="go">         [ 1.,  0.]]]])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_operation</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">array([[[[ 1.,  0.],</span>
-<span class="go">         [ 0.,  1.]],</span>
-
-<span class="go">        [[ 1.,  0.],</span>
-<span class="go">         [ 0.,  1.]]],</span>
-
-
-<span class="go">       [[[ 1.,  0.],</span>
-<span class="go">         [ 0.,  1.]],</span>
-
-<span class="go">        [[ 1.,  0.],</span>
-<span class="go">         [ 0.,  1.]]]])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_operation</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">array([[[[-1.,  0.],</span>
-<span class="go">         [ 0., -1.]],</span>
-
-<span class="go">        [[-1.,  0.],</span>
-<span class="go">         [ 0., -1.]]],</span>
-
-
-<span class="go">       [[[-1.,  0.],</span>
-<span class="go">         [ 0., -1.]],</span>
-
-<span class="go">        [[-1.,  0.],</span>
-<span class="go">         [ 0., -1.]]]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
 <dt id="nanshe.util.xnumpy.array_to_matrix">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">array_to_matrix</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#array_to_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.array_to_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flattens an array so that the row is the only original shape kept.</p>
@@ -814,117 +701,6 @@ a warning, which can be converted to an exception, if needed.</p>
 <span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
 <span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
 <span class="go">   (slice(4, 7, 1), slice(3, 5, 1))])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.xnumpy.cartesian_product">
-<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">cartesian_product</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#cartesian_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.cartesian_product" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes the cartesian product between the elements in each array.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arrays</strong> (<em>collections.Sequence of numpy.ndarrays</em>) &#8211; A sequence of
-1-D arrays or a
-2-D array.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>an array</dt>
-<dd>containing the
-result of the
-cartesian
-product of each
-array.</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cartesian_product</span><span class="p">([</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)])</span>
-<span class="go">array([[0, 0],</span>
-<span class="go">       [0, 1],</span>
-<span class="go">       [0, 2],</span>
-<span class="go">       [1, 0],</span>
-<span class="go">       [1, 1],</span>
-<span class="go">       [1, 2]])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cartesian_product</span><span class="p">([</span>
-<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">])</span>
-<span class="go">array([[ 0.,  0.],</span>
-<span class="go">       [ 0.,  1.],</span>
-<span class="go">       [ 0.,  2.],</span>
-<span class="go">       [ 1.,  0.],</span>
-<span class="go">       [ 1.,  1.],</span>
-<span class="go">       [ 1.,  2.]])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cartesian_product</span><span class="p">([</span>
-<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">])</span>
-<span class="go">array([[0, 0, 0],</span>
-<span class="go">       [0, 0, 1],</span>
-<span class="go">       [0, 0, 2],</span>
-<span class="go">       [0, 0, 3],</span>
-<span class="go">       [0, 1, 0],</span>
-<span class="go">       [0, 1, 1],</span>
-<span class="go">       [0, 1, 2],</span>
-<span class="go">       [0, 1, 3],</span>
-<span class="go">       [0, 2, 0],</span>
-<span class="go">       [0, 2, 1],</span>
-<span class="go">       [0, 2, 2],</span>
-<span class="go">       [0, 2, 3],</span>
-<span class="go">       [1, 0, 0],</span>
-<span class="go">       [1, 0, 1],</span>
-<span class="go">       [1, 0, 2],</span>
-<span class="go">       [1, 0, 3],</span>
-<span class="go">       [1, 1, 0],</span>
-<span class="go">       [1, 1, 1],</span>
-<span class="go">       [1, 1, 2],</span>
-<span class="go">       [1, 1, 3],</span>
-<span class="go">       [1, 2, 0],</span>
-<span class="go">       [1, 2, 1],</span>
-<span class="go">       [1, 2, 2],</span>
-<span class="go">       [1, 2, 3]])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cartesian_product</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
-<span class="go">array([[1, 0, 0],</span>
-<span class="go">       [1, 0, 0],</span>
-<span class="go">       [1, 0, 3],</span>
-<span class="go">       [1, 2, 0],</span>
-<span class="go">       [1, 2, 0],</span>
-<span class="go">       [1, 2, 3],</span>
-<span class="go">       [1, 0, 0],</span>
-<span class="go">       [1, 0, 0],</span>
-<span class="go">       [1, 0, 3],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 3],</span>
-<span class="go">       [0, 2, 0],</span>
-<span class="go">       [0, 2, 0],</span>
-<span class="go">       [0, 2, 3],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 3],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 3],</span>
-<span class="go">       [0, 2, 0],</span>
-<span class="go">       [0, 2, 0],</span>
-<span class="go">       [0, 2, 3],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 0],</span>
-<span class="go">       [0, 0, 3]])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1751,93 +1527,6 @@ into tuple).</li>
 <span class="go">        [1, 1],</span>
 <span class="go">        [2, 2],</span>
 <span class="go">        [3, 3]]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.xnumpy.expand_enumerate">
-<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">expand_enumerate</code><span class="sig-paren">(</span><em>new_array</em>, <em>axis=0</em>, <em>start=0</em>, <em>step=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#expand_enumerate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.expand_enumerate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Builds on expand_arange, which has the same shape as the original
-array. Specifies the increments to occur along the given axis, which by
-default is the zeroth axis.</p>
-<p>Provides mechanisms for changing the starting value and also the
-increment.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to enumerate</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by
-default).</li>
-<li><strong>start</strong> (<em>int</em>) &#8211; starting point (0 by default).</li>
-<li><strong>step</strong> (<em>int</em>) &#8211; size of steps to take between
-value (1 by default).</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>a view of a numpy arange with</dt>
-<dd><p class="first last">tiling in various dimension.</p>
-</dd>
-</dl>
-</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(numpy.ndarray)</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_enumerate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
-<span class="go">array([[0, 0, 0, 0, 0],</span>
-<span class="go">       [1, 1, 1, 1, 1],</span>
-<span class="go">       [2, 2, 2, 2, 2],</span>
-<span class="go">       [3, 3, 3, 3, 3]], dtype=uint64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_enumerate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="go">array([[0, 0, 0, 0, 0],</span>
-<span class="go">       [1, 1, 1, 1, 1],</span>
-<span class="go">       [2, 2, 2, 2, 2],</span>
-<span class="go">       [3, 3, 3, 3, 3]], dtype=uint64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_enumerate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">array([[1, 1, 1, 1, 1],</span>
-<span class="go">       [2, 2, 2, 2, 2],</span>
-<span class="go">       [3, 3, 3, 3, 3],</span>
-<span class="go">       [4, 4, 4, 4, 4]], dtype=uint64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_enumerate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">array([[1, 1, 1, 1, 1],</span>
-<span class="go">       [3, 3, 3, 3, 3],</span>
-<span class="go">       [5, 5, 5, 5, 5],</span>
-<span class="go">       [7, 7, 7, 7, 7]], dtype=uint64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_enumerate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">array([[0, 1, 2, 3, 4],</span>
-<span class="go">       [0, 1, 2, 3, 4],</span>
-<span class="go">       [0, 1, 2, 3, 4],</span>
-<span class="go">       [0, 1, 2, 3, 4]], dtype=uint64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_enumerate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">array([[1, 2, 3, 4, 5],</span>
-<span class="go">       [1, 2, 3, 4, 5],</span>
-<span class="go">       [1, 2, 3, 4, 5],</span>
-<span class="go">       [1, 2, 3, 4, 5]], dtype=uint64)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_enumerate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">array([[1, 3, 5, 7, 9],</span>
-<span class="go">       [1, 3, 5, 7, 9],</span>
-<span class="go">       [1, 3, 5, 7, 9],</span>
-<span class="go">       [1, 3, 5, 7, 9]], dtype=uint64)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -5421,7 +5110,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+76.g4eff6ca documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+83.g04d215e documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
