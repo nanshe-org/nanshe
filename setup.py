@@ -59,6 +59,7 @@ elif sys.argv[1] == "bdist_conda":
         "metawrap",
         "kenjutsu",
         "npctypes",
+        "xnumpy",
         "scikit-image",
         "scikit-learn",
         "mahotas",
