@@ -16,6 +16,8 @@ API
 ===============================================================================
 """
 
+from __future__ import absolute_import
+
 
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 20, 2014 09:46:45 EDT$"
@@ -47,6 +49,9 @@ import npctypes
 import npctypes.types
 from npctypes.types import tinfo as info
 from npctypes.types import ctype as to_ctype
+
+import xnumpy
+import xnumpy.core
 
 from nanshe.util import iters
 
