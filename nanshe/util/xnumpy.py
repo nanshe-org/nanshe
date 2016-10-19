@@ -16,6 +16,8 @@ API
 ===============================================================================
 """
 
+from __future__ import absolute_import
+
 
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$May 20, 2014 09:46:45 EDT$"
@@ -47,6 +49,13 @@ import npctypes
 import npctypes.types
 from npctypes.types import tinfo as info
 from npctypes.types import ctype as to_ctype
+
+import xnumpy
+import xnumpy.core
+from xnumpy.core import expand as _expand_view
+from xnumpy.core import anumerate as expand_enumerate
+from xnumpy.core import product as cartesian_product
+from xnumpy.core import permute_op as all_permutations_operation
 
 from nanshe.util import iters
 
@@ -1968,16 +1977,10 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                      [3, 4, 5]]]])
     """
 
-    if not isinstance(reps_after, tuple):
-        reps_after = (reps_after,)
-
-    if not isinstance(reps_before, tuple):
-        reps_before = (reps_before,)
-
-    return(numpy.lib.stride_tricks.as_strided(
+    return(_expand_view(
         new_array,
-        reps_before + new_array.shape + reps_after,
-        (0,) * len(reps_before) + new_array.strides + (0,) * len(reps_after)
+        shape_before=reps_before,
+        shape_after=reps_after
     ))
 
 
@@ -2069,85 +2072,6 @@ def expand_arange(start,
     return(an_arange)
 
 
-def expand_enumerate(new_array, axis=0, start=0, step=1):
-    """
-        Builds on expand_arange, which has the same shape as the original
-        array. Specifies the increments to occur along the given axis, which by
-        default is the zeroth axis.
-
-        Provides mechanisms for changing the starting value and also the
-        increment.
-
-        Args:
-            new_array(numpy.ndarray):            array to enumerate
-
-            axis(int):                           axis to enumerate along (0 by
-                                                 default).
-            start(int):                          starting point (0 by default).
-
-            step(int):                           size of steps to take between
-                                                 value (1 by default).
-
-        Returns:
-            (numpy.ndarray):                     a view of a numpy arange with
-                                                 tiling in various dimension.
-
-        Examples:
-            >>> expand_enumerate(numpy.ones((4,5)))
-            array([[0, 0, 0, 0, 0],
-                   [1, 1, 1, 1, 1],
-                   [2, 2, 2, 2, 2],
-                   [3, 3, 3, 3, 3]], dtype=uint64)
-
-            >>> expand_enumerate(numpy.ones((4,5)), axis=0)
-            array([[0, 0, 0, 0, 0],
-                   [1, 1, 1, 1, 1],
-                   [2, 2, 2, 2, 2],
-                   [3, 3, 3, 3, 3]], dtype=uint64)
-
-            >>> expand_enumerate(numpy.ones((4,5)), axis=0, start=1)
-            array([[1, 1, 1, 1, 1],
-                   [2, 2, 2, 2, 2],
-                   [3, 3, 3, 3, 3],
-                   [4, 4, 4, 4, 4]], dtype=uint64)
-
-            >>> expand_enumerate(numpy.ones((4,5)), axis=0, start=1, step=2)
-            array([[1, 1, 1, 1, 1],
-                   [3, 3, 3, 3, 3],
-                   [5, 5, 5, 5, 5],
-                   [7, 7, 7, 7, 7]], dtype=uint64)
-
-            >>> expand_enumerate(numpy.ones((4,5)), axis=1)
-            array([[0, 1, 2, 3, 4],
-                   [0, 1, 2, 3, 4],
-                   [0, 1, 2, 3, 4],
-                   [0, 1, 2, 3, 4]], dtype=uint64)
-
-            >>> expand_enumerate(numpy.ones((4,5)), axis=1, start=1)
-            array([[1, 2, 3, 4, 5],
-                   [1, 2, 3, 4, 5],
-                   [1, 2, 3, 4, 5],
-                   [1, 2, 3, 4, 5]], dtype=uint64)
-
-            >>> expand_enumerate(numpy.ones((4,5)), axis=1, start=1, step=2)
-            array([[1, 3, 5, 7, 9],
-                   [1, 3, 5, 7, 9],
-                   [1, 3, 5, 7, 9],
-                   [1, 3, 5, 7, 9]], dtype=uint64)
-    """
-
-    an_enumeration = expand_arange(
-        start=start,
-        stop=start + step * new_array.shape[axis],
-        step=step,
-        dtype=numpy.uint64,
-        reps_before=new_array.shape[:axis],
-        reps_after=new_array.shape[(axis+1):]
-    )
-
-    return(an_enumeration)
-
-
 def enumerate_masks(new_masks, axis=0):
     """
         Takes a mask stack and replaces them by an enumerated stack. In other
@@ -2222,8 +2146,8 @@ def enumerate_masks(new_masks, axis=0):
                     [0, 0, 0, 4]]], dtype=uint64)
     """
 
-    new_enumerated_masks = new_masks * expand_enumerate(
-        new_masks, axis=axis, start=1, step=1
+    new_enumerated_masks = new_masks * xnumpy.core.anumerate(
+        new_masks, axis=axis, start=1, step=1, dtype=numpy.uint64
     )
 
     return(new_enumerated_masks)
@@ -2303,132 +2227,6 @@ def enumerate_masks_max(new_masks, axis=0):
         )
 
     return(new_enumerated_masks_max)
-
-
-@prof.log_call(trace_logger)
-def cartesian_product(arrays):
-    """
-        Takes the cartesian product between the elements in each array.
-
-        Args:
-            arrays(collections.Sequence of numpy.ndarrays):     A sequence of
-                                                                1-D arrays or a
-                                                                2-D array.
-
-        Returns:
-            (numpy.ndarray):                                    an array
-                                                                containing the
-                                                                result of the
-                                                                cartesian
-                                                                product of each
-                                                                array.
-
-        Examples:
-            >>> cartesian_product([numpy.arange(2), numpy.arange(3)])
-            array([[0, 0],
-                   [0, 1],
-                   [0, 2],
-                   [1, 0],
-                   [1, 1],
-                   [1, 2]])
-
-            >>> cartesian_product([
-            ...     numpy.arange(2, dtype=float),
-            ...     numpy.arange(3)
-            ... ])
-            array([[ 0.,  0.],
-                   [ 0.,  1.],
-                   [ 0.,  2.],
-                   [ 1.,  0.],
-                   [ 1.,  1.],
-                   [ 1.,  2.]])
-
-            >>> cartesian_product([
-            ...     numpy.arange(2),
-            ...     numpy.arange(3),
-            ...     numpy.arange(4)
-            ... ])
-            array([[0, 0, 0],
-                   [0, 0, 1],
-                   [0, 0, 2],
-                   [0, 0, 3],
-                   [0, 1, 0],
-                   [0, 1, 1],
-                   [0, 1, 2],
-                   [0, 1, 3],
-                   [0, 2, 0],
-                   [0, 2, 1],
-                   [0, 2, 2],
-                   [0, 2, 3],
-                   [1, 0, 0],
-                   [1, 0, 1],
-                   [1, 0, 2],
-                   [1, 0, 3],
-                   [1, 1, 0],
-                   [1, 1, 1],
-                   [1, 1, 2],
-                   [1, 1, 3],
-                   [1, 2, 0],
-                   [1, 2, 1],
-                   [1, 2, 2],
-                   [1, 2, 3]])
-
-            >>> cartesian_product(numpy.diag((1, 2, 3)))
-            array([[1, 0, 0],
-                   [1, 0, 0],
-                   [1, 0, 3],
-                   [1, 2, 0],
-                   [1, 2, 0],
-                   [1, 2, 3],
-                   [1, 0, 0],
-                   [1, 0, 0],
-                   [1, 0, 3],
-                   [0, 0, 0],
-                   [0, 0, 0],
-                   [0, 0, 3],
-                   [0, 2, 0],
-                   [0, 2, 0],
-                   [0, 2, 3],
-                   [0, 0, 0],
-                   [0, 0, 0],
-                   [0, 0, 3],
-                   [0, 0, 0],
-                   [0, 0, 0],
-                   [0, 0, 3],
-                   [0, 2, 0],
-                   [0, 2, 0],
-                   [0, 2, 3],
-                   [0, 0, 0],
-                   [0, 0, 0],
-                   [0, 0, 3]])
-    """
-
-    for i in iters.irange(len(arrays)):
-        assert (arrays[
-                i].ndim == 1), "Must provide only 1D arrays to this function or a single 2D array."
-
-    array_shapes = tuple(len(arrays[i]) for i in iters.irange(len(arrays)))
-
-    result_shape = [0, 0]
-    result_shape[0] = numpy.product(array_shapes)
-    result_shape[1] = len(arrays)
-    result_shape = tuple(result_shape)
-
-    result_dtype = numpy.find_common_type(
-        [arrays[i].dtype for i in iters.irange(result_shape[1])], []
-    )
-
-    result = numpy.empty(result_shape, dtype=result_dtype)
-    for i in iters.irange(result.shape[1]):
-        repeated_array_i = expand_view(
-            arrays[i],
-            reps_before=array_shapes[:i],
-            reps_after=array_shapes[i+1:]
-        )
-        for j, repeated_array_i_j in enumerate(repeated_array_i.flat):
-            result[j, i] = repeated_array_i_j
-
-    return(result)
 
 
 @prof.log_call(trace_logger)
@@ -2546,115 +2344,6 @@ def truncate_masked_frames(shifted_frames):
     truncated_shifted_frames = truncated_shifted_frames.data
 
     return(truncated_shifted_frames)
-
-
-@prof.log_call(trace_logger)
-def all_permutations_operation(new_op, new_array_1, new_array_2):
-    """
-        Takes two arrays and constructs a new array that contains the result
-        of new_op on every permutation of elements in each array (like
-        broadcasting).
-
-        Suppose that new_result contained the result, then one would find that
-        the result of the following operation on the specific indices.
-
-        new_op( new_array_1[ i_1_1, i_1_2, ... ],
-        new_array_2[ i_2_1, i_2_2, ... ] )
-
-        would be found in new_result as shown
-
-        new_result[ i_1_1, i_1_2, ..., i_2_1, i_2_2, ... ]
-
-
-        Args:
-            new_array(numpy.ndarray):            array to add the singleton
-                                                 axis to.
-
-        Returns:
-            (numpy.ndarray):                     a numpy array with the
-                                                 singleton axis added at the
-                                                 end.
-
-        Examples:
-            >>> all_permutations_operation(
-            ...     operator.add, numpy.ones((1,3)), numpy.eye(2)
-            ... ).shape
-            (1, 3, 2, 2)
-
-            >>> all_permutations_operation(
-            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)
-            ... ).shape
-            (2, 2, 2, 2)
-
-            >>> all_permutations_operation(
-            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)
-            ... )
-            array([[[[ 2.,  1.],
-                     [ 1.,  2.]],
-            <BLANKLINE>
-                    [[ 2.,  1.],
-                     [ 1.,  2.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[ 2.,  1.],
-                     [ 1.,  2.]],
-            <BLANKLINE>
-                    [[ 2.,  1.],
-                     [ 1.,  2.]]]])
-
-            >>> all_permutations_operation(
-            ...     operator.sub, numpy.ones((2,2)), numpy.eye(2)
-            ... )
-            array([[[[ 0.,  1.],
-                     [ 1.,  0.]],
-            <BLANKLINE>
-                    [[ 0.,  1.],
-                     [ 1.,  0.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[ 0.,  1.],
-                     [ 1.,  0.]],
-            <BLANKLINE>
-                    [[ 0.,  1.],
-                     [ 1.,  0.]]]])
-
-            >>> all_permutations_operation(
-            ...     operator.sub, numpy.ones((2,2)), numpy.fliplr(numpy.eye(2))
-            ... )
-            array([[[[ 1.,  0.],
-                     [ 0.,  1.]],
-            <BLANKLINE>
-                    [[ 1.,  0.],
-                     [ 0.,  1.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[ 1.,  0.],
-                     [ 0.,  1.]],
-            <BLANKLINE>
-                    [[ 1.,  0.],
-                     [ 0.,  1.]]]])
-
-            >>> all_permutations_operation(
-            ...     operator.sub, numpy.zeros((2,2)), numpy.eye(2)
-            ... )
-            array([[[[-1.,  0.],
-                     [ 0., -1.]],
-            <BLANKLINE>
-                    [[-1.,  0.],
-                     [ 0., -1.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[-1.,  0.],
-                     [ 0., -1.]],
-            <BLANKLINE>
-                    [[-1.,  0.],
-                     [ 0., -1.]]]])
-    """
-
-    new_array_1_tiled = expand_view(new_array_1, reps_after=new_array_2.shape)
-    new_array_2_tiled = expand_view(new_array_2, reps_before=new_array_1.shape)
-
-    return(new_op(new_array_1_tiled, new_array_2_tiled))
 
 
 @prof.log_call(trace_logger)
