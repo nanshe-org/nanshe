@@ -43,6 +43,8 @@ import mahotas
 
 import vigra
 
+import npctypes
+import npctypes.types
 from npctypes.types import tinfo as info
 from npctypes.types import ctype as to_ctype
 
