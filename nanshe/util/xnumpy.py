@@ -52,6 +52,7 @@ from npctypes.types import ctype as to_ctype
 
 import xnumpy
 import xnumpy.core
+from xnumpy.core import expand as _expand_view
 
 from nanshe.util import iters
 
@@ -1973,16 +1974,10 @@ def expand_view(new_array, reps_after=tuple(), reps_before=tuple()):
                      [3, 4, 5]]]])
     """
 
-    if not isinstance(reps_after, tuple):
-        reps_after = (reps_after,)
-
-    if not isinstance(reps_before, tuple):
-        reps_before = (reps_before,)
-
-    return(numpy.lib.stride_tricks.as_strided(
+    return(_expand_view(
         new_array,
-        reps_before + new_array.shape + reps_after,
-        (0,) * len(reps_before) + new_array.strides + (0,) * len(reps_after)
+        shape_before=reps_before,
+        shape_after=reps_after
     ))
 
 
