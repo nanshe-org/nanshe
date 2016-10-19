@@ -55,6 +55,7 @@ import xnumpy.core
 from xnumpy.core import expand as _expand_view
 from xnumpy.core import anumerate as expand_enumerate
 from xnumpy.core import product as cartesian_product
+from xnumpy.core import permute_op as all_permutations_operation
 
 from nanshe.util import iters
 
@@ -2343,115 +2344,6 @@ def truncate_masked_frames(shifted_frames):
     truncated_shifted_frames = truncated_shifted_frames.data
 
     return(truncated_shifted_frames)
-
-
-@prof.log_call(trace_logger)
-def all_permutations_operation(new_op, new_array_1, new_array_2):
-    """
-        Takes two arrays and constructs a new array that contains the result
-        of new_op on every permutation of elements in each array (like
-        broadcasting).
-
-        Suppose that new_result contained the result, then one would find that
-        the result of the following operation on the specific indices.
-
-        new_op( new_array_1[ i_1_1, i_1_2, ... ],
-        new_array_2[ i_2_1, i_2_2, ... ] )
-
-        would be found in new_result as shown
-
-        new_result[ i_1_1, i_1_2, ..., i_2_1, i_2_2, ... ]
-
-
-        Args:
-            new_array(numpy.ndarray):            array to add the singleton
-                                                 axis to.
-
-        Returns:
-            (numpy.ndarray):                     a numpy array with the
-                                                 singleton axis added at the
-                                                 end.
-
-        Examples:
-            >>> all_permutations_operation(
-            ...     operator.add, numpy.ones((1,3)), numpy.eye(2)
-            ... ).shape
-            (1, 3, 2, 2)
-
-            >>> all_permutations_operation(
-            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)
-            ... ).shape
-            (2, 2, 2, 2)
-
-            >>> all_permutations_operation(
-            ...     operator.add, numpy.ones((2,2)), numpy.eye(2)
-            ... )
-            array([[[[ 2.,  1.],
-                     [ 1.,  2.]],
-            <BLANKLINE>
-                    [[ 2.,  1.],
-                     [ 1.,  2.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[ 2.,  1.],
-                     [ 1.,  2.]],
-            <BLANKLINE>
-                    [[ 2.,  1.],
-                     [ 1.,  2.]]]])
-
-            >>> all_permutations_operation(
-            ...     operator.sub, numpy.ones((2,2)), numpy.eye(2)
-            ... )
-            array([[[[ 0.,  1.],
-                     [ 1.,  0.]],
-            <BLANKLINE>
-                    [[ 0.,  1.],
-                     [ 1.,  0.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[ 0.,  1.],
-                     [ 1.,  0.]],
-            <BLANKLINE>
-                    [[ 0.,  1.],
-                     [ 1.,  0.]]]])
-
-            >>> all_permutations_operation(
-            ...     operator.sub, numpy.ones((2,2)), numpy.fliplr(numpy.eye(2))
-            ... )
-            array([[[[ 1.,  0.],
-                     [ 0.,  1.]],
-            <BLANKLINE>
-                    [[ 1.,  0.],
-                     [ 0.,  1.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[ 1.,  0.],
-                     [ 0.,  1.]],
-            <BLANKLINE>
-                    [[ 1.,  0.],
-                     [ 0.,  1.]]]])
-
-            >>> all_permutations_operation(
-            ...     operator.sub, numpy.zeros((2,2)), numpy.eye(2)
-            ... )
-            array([[[[-1.,  0.],
-                     [ 0., -1.]],
-            <BLANKLINE>
-                    [[-1.,  0.],
-                     [ 0., -1.]]],
-            <BLANKLINE>
-            <BLANKLINE>
-                   [[[-1.,  0.],
-                     [ 0., -1.]],
-            <BLANKLINE>
-                    [[-1.,  0.],
-                     [ 0., -1.]]]])
-    """
-
-    new_array_1_tiled = expand_view(new_array_1, reps_after=new_array_2.shape)
-    new_array_2_tiled = expand_view(new_array_2, reps_before=new_array_1.shape)
-
-    return(new_op(new_array_1_tiled, new_array_2_tiled))
 
 
 @prof.log_call(trace_logger)
