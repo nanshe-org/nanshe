@@ -845,8 +845,6 @@ def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
                                             values from each iterator.
 
         Examples:
-            >>> isinstance(lagged_generators_zipped(irange(5), 1), izip)
-            True
 
             >>> list(lagged_generators_zipped(irange(5)))
             [(0, 1), (1, 2), (2, 3), (3, 4)]
