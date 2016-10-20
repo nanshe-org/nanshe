@@ -407,7 +407,7 @@ def iter_with_skip_values(a_iter, to_skip=None):
                                    indices in to_skip.
 
         Examples:
-            >>> iter_with_skip_values(10) #doctest: +ELLIPSIS
+            >>> iter_with_skip_values(irange(10)) #doctest: +ELLIPSIS
             <generator object iter_with_skip_values at 0x...>
 
             >>> list(iter_with_skip_values(irange(10)))
