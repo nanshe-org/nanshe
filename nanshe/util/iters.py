@@ -41,61 +41,16 @@ from yail.core import (
 )
 
 # Import replacement functions for compatibility.
-from yail import (
+from yail.core import (
     accumulate as cumulative_generator,
+    cycles as cycle_generator,
+    duplicate as repeat_generator,
+    indices as index_generator,
 )
 
 
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
-
-
-@prof.log_call(trace_logger)
-def index_generator(*sizes):
-    """
-        Takes an argument list of sizes and iterates through them from 0 up to
-        (but not including) each size.
-
-        Args:
-            *sizes(int):            an argument list of ints for the max sizes
-                                    in each index.
-
-        Returns:
-            chain_gen(generator):   a generator over every possible coordinated
-
-
-        Examples:
-            >>> index_generator(0) #doctest: +ELLIPSIS
-            <itertools.product object at 0x...>
-
-            >>> list(index_generator(0))
-            []
-
-            >>> list(index_generator(0, 2))
-            []
-
-            >>> list(index_generator(2, 0))
-            []
-
-            >>> list(index_generator(2, 1))
-            [(0, 0), (1, 0)]
-
-            >>> list(index_generator(1, 2))
-            [(0, 0), (0, 1)]
-
-            >>> list(index_generator(3, 2))
-            [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]
-    """
-
-    # Creates a list of irange generator objects over each respective
-    # dimension of sizes
-    gens = [irange(_) for _ in sizes]
-
-    # Combines the generators to a single generator of indices that go
-    # throughout sizes
-    chain_gen = itertools.product(*gens)
-
-    return(chain_gen)
 
 
 @prof.log_call(trace_logger)
@@ -225,92 +180,6 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
         result[index_array] = True
 
     return(result)
-
-
-@prof.log_call(trace_logger)
-def repeat_generator(a_iter, n=1):
-    """
-        Repeats each value on an iterator given n-times before proceeding to
-        the next value.
-
-        Args:
-            a_iter(iter):          an iterator that will have its values
-                                   repeated contiguously
-
-            n(int):                number of times to repeat each value
-
-        Returns:
-            (generator object):    a generator that contiguously repeats value
-                                   from the given iterator.
-
-        Examples:
-            >>> repeat_generator(irange(5)) #doctest: +ELLIPSIS
-            <generator object repeat_generator at 0x...>
-
-            >>> list(repeat_generator(irange(0)))
-            []
-
-            >>> list(repeat_generator(irange(5), 0))
-            []
-
-            >>> list(repeat_generator(irange(5), 1))
-            [0, 1, 2, 3, 4]
-
-            >>> list(repeat_generator(irange(5), 2))
-            [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
-
-            >>> list(repeat_generator(irange(5), 3))
-            [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
-    """
-
-    assert (n >= 0), "n must be positive, but got n = " + repr(n)
-    assert ((n % 1) == 0), "n must be an integer, but got n = " + repr(n)
-
-    for each_value in a_iter:
-        for i in irange(n):
-            yield(each_value)
-
-
-@prof.log_call(trace_logger)
-def cycle_generator(a_iter, n=1):
-    """
-        Cycles through an iterator n-times.
-
-        Args:
-            a_iter(iter):          an iterator that will be repeated
-            n(int):                number of times to repeat the iterator
-
-        Returns:
-            (generator object):    a generator that repeats the given iterator
-                                   a certain number of times.
-
-        Examples:
-            >>> cycle_generator(irange(5)) #doctest: +ELLIPSIS
-            <generator object cycle_generator at 0x...>
-
-            >>> list(cycle_generator(irange(0)))
-            []
-
-            >>> list(cycle_generator(irange(5), 0))
-            []
-
-            >>> list(cycle_generator(irange(5), 1))
-            [0, 1, 2, 3, 4]
-
-            >>> list(cycle_generator(irange(5), 2))
-            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
-
-            >>> list(cycle_generator(irange(5), 3))
-            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
-    """
-
-    assert (n >= 0), "n must be positive, but got n = " + repr(n)
-    assert ((n % 1) == 0), "n must be an integer, but got n = " + repr(n)
-
-    a_iter = itertools.chain(*itertools.tee(a_iter, n))
-
-    for each_value in a_iter:
-        yield(each_value)
 
 
 @prof.log_call(trace_logger)
