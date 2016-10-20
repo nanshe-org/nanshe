@@ -24,7 +24,8 @@ import math
 
 import numpy
 
-import toolz
+import yail
+import yail.core
 
 from kenjutsu.kenjutsu import *
 
@@ -32,7 +33,7 @@ from kenjutsu.kenjutsu import *
 from nanshe.util import prof
 
 # Import Python 2/3 compatibility functions.
-from toolz.compatibility import (
+from yail.core import (
     range as irange,
     map as imap,
     zip as izip,
@@ -40,7 +41,7 @@ from toolz.compatibility import (
 )
 
 # Import replacement functions for compatibility.
-from toolz import (
+from yail import (
     accumulate as cumulative_generator,
 )
 

@@ -62,7 +62,7 @@ elif sys.argv[1] == "bdist_conda":
         "xnumpy",
         "scikit-image",
         "scikit-learn",
-        "toolz",
+        "yail",
         "mahotas",
         "vigra",
         "rank_filter"
