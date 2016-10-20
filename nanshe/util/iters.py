@@ -142,15 +142,7 @@ def index_enumerator(*sizes):
             [(0, (0, 0)), (1, (0, 1)), (2, (1, 0)), (3, (1, 1)), (4, (2, 0)), (5, (2, 1))]
     """
 
-    # Creates a list of irange generator objects over each respective
-    # dimension of sizes
-    gens = [irange(_) for _ in sizes]
-
-    # Combines the generators to a single generator of indices that go
-    # throughout sizes
-    chain_gen = enumerate(itertools.product(*gens))
-
-    return(chain_gen)
+    return(enumerate(index_generator(*sizes)))
 
 
 @prof.log_call(trace_logger)
