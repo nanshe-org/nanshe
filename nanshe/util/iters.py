@@ -21,6 +21,7 @@ __date__ = "$Apr 17, 2014 13:43:56 EDT$"
 
 import itertools
 import math
+import warnings
 
 import numpy
 
@@ -46,6 +47,7 @@ from yail.core import (
     cycles as cycle_generator,
     duplicate as repeat_generator,
     indices as index_generator,
+    sliding_window,
 )
 
 
@@ -606,6 +608,10 @@ def lagged_generators(new_iter, n=2):
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
+    warnings.warn(
+        "Please use `lagged_generators_zipped` instead.", DeprecationWarning
+    )
+
     assert (n >= 0), \
         "Only a positive semi-definite number of generators can be created."
 
@@ -681,15 +687,10 @@ def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
-    all_iters = lagged_generators(new_iter, n=n)
-
-    zipped_iters = None
     if longest:
-        zipped_iters = izip_longest(*all_iters, fillvalue=fillvalue)
-    else:
-        zipped_iters = izip(*all_iters)
+        new_iter = yail.core.pad(new_iter, after=(n - 1), fill=fillvalue)
 
-    return(zipped_iters)
+    return(sliding_window(n, new_iter))
 
 
 @prof.log_call(trace_logger)
