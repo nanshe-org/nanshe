@@ -24,31 +24,25 @@ import math
 
 import numpy
 
+import toolz
+
 from kenjutsu.kenjutsu import *
 
 # Need in order to have logging information no matter what.
 from nanshe.util import prof
 
+# Import Python 2/3 compatibility functions.
+from toolz.compatibility import (
+    range as irange,
+    map as imap,
+    zip as izip,
+    zip_longest as izip_longest,
+)
 
-try:
-    from itertools import izip_longest
-except ImportError:
-    from itertools import zip_longest as izip_longest
-
-try:
-    from itertools import imap
-except ImportError:
-    imap = map
-
-try:
-    from itertools import izip
-except ImportError:
-    izip = zip
-
-try:
-    irange = xrange
-except NameError:
-    irange = range
+# Import replacement functions for compatibility.
+from toolz import (
+    accumulate as cumulative_generator,
+)
 
 
 # Get the logger
@@ -666,54 +660,6 @@ def subrange(start, stop=None, step=None, substep=None):
 
     for i, j in lagged_generators_zipped(range_ends):
         yield(irange(i, j, substep))
-
-
-@prof.log_call(trace_logger)
-def cumulative_generator(new_op, new_iter):
-    """
-        Takes each value from new_iter and applies new_op to it with the result
-        of previous values.
-
-        For instance cumulative_generator(op.mul, irange(1,5)) will return all
-        factorials up to and including the factorial of 4 (24).
-
-        Args:
-            new_op(callabel):      something that can be called on two values
-                                   and return a result with a type that is a
-                                   permissible argument.
-
-            new_iter(iter):        an iterator or something that can be turned
-                                   into an iterator.
-
-        Returns:
-            (generator object):    an iterator over the intermediate results.
-
-        Examples:
-            >>> import operator
-            >>> cumulative_generator(operator.add, 10) #doctest: +ELLIPSIS
-            <generator object cumulative_generator at 0x...>
-
-            >>> list(cumulative_generator(operator.add, irange(1,5)))
-            [1, 3, 6, 10]
-
-            >>> list(cumulative_generator(operator.add, irange(5)))
-            [0, 1, 3, 6, 10]
-
-            >>> list(cumulative_generator(operator.mul, irange(5)))
-            [0, 0, 0, 0, 0]
-
-            >>> list(cumulative_generator(operator.mul, irange(1,5)))
-            [1, 2, 6, 24]
-    """
-
-    new_iter = iter(new_iter)
-
-    cur = next(new_iter)
-    yield (cur)
-
-    for each in new_iter:
-        cur = new_op(cur, each)
-        yield (cur)
 
 
 @prof.log_call(trace_logger)
