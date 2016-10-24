@@ -58,7 +58,7 @@ File nanshe/util/prof.py
 
 File nanshe/util/iters.py
  - No docstring for splitting_xrange.splitting_xrange_helper!
- Needed: 20; Exist: 19; Missing: 1; Coverage: 95.0%
+ Needed: 19; Exist: 18; Missing: 1; Coverage: 94.7%
 
 File nanshe/util/xglob.py
  Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
@@ -171,5 +171,5 @@ File nanshe/misc/random_dictionary_learning_data.py
 
 
 Overall statistics for 33 files:
-Docstrings needed: 324; Docstrings exist: 253; Docstrings missing: 71
-Total docstring coverage: 78.1%;  Grade: very good
+Docstrings needed: 323; Docstrings exist: 252; Docstrings missing: 71
+Total docstring coverage: 78.0%;  Grade: very good

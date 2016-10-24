@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.iters module &#8212; nanshe 0.1.0a53+88.g3c24ef7 documentation</title>
+    <title>nanshe.util.iters module &#8212; nanshe 0.1.0a53+91.ga7ab362 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a53+88.g3c24ef7',
+        VERSION:     '0.1.0a53+91.ga7ab362',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="nanshe 0.1.0a53+88.g3c24ef7 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a53+91.ga7ab362 documentation" href="index.html" />
     <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.util.prof module" href="nanshe.util.prof.html" />
     <link rel="prev" title="nanshe.util package" href="nanshe.util.html" /> 
@@ -54,7 +54,7 @@
         <li class="right" >
           <a href="nanshe.util.html" title="nanshe.util package"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+88.g3c24ef7 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+91.ga7ab362 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -80,58 +80,6 @@ API should be considered deprecated and is subject to removal.</p>
 </div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="nanshe.util.iters.cumulative_generator">
-<code class="descclassname">nanshe.util.iters.</code><code class="descname">cumulative_generator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#cumulative_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.cumulative_generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes each value from new_iter and applies new_op to it with the result
-of previous values.</p>
-<p>For instance cumulative_generator(op.mul, irange(1,5)) will return all
-factorials up to and including the factorial of 4 (24).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_op</strong> (<em>callabel</em>) &#8211; something that can be called on two values
-and return a result with a type that is a
-permissible argument.</li>
-<li><strong>new_iter</strong> (<em>iter</em>) &#8211; an iterator or something that can be turned
-into an iterator.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an iterator over the intermediate results.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(generator object)</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> 
-<span class="go">&lt;generator object cumulative_generator at 0x...&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">irange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
-<span class="go">[1, 3, 6, 10]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">irange</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
-<span class="go">[0, 1, 3, 6, 10]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">irange</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
-<span class="go">[0, 0, 0, 0, 0]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cumulative_generator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">irange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
-<span class="go">[1, 2, 6, 24]</span>
-</pre></div>
-</div>
-</dd></dl>
-
 <dl class="function">
 <dt id="nanshe.util.iters.cycle_generator">
 <code class="descclassname">nanshe.util.iters.</code><code class="descname">cycle_generator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/iters.html#cycle_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.iters.cycle_generator" title="Permalink to this definition">¶</a></dt>
@@ -1167,7 +1115,7 @@ skip (can be a single value as well).</li>
         <li class="right" >
           <a href="nanshe.util.html" title="nanshe.util package"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a53+88.g3c24ef7 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a53+91.ga7ab362 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
