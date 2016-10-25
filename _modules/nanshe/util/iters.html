@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.iters &#8212; nanshe 0.1.0a53+91.ga7ab362 documentation</title>
+    <title>nanshe.util.iters &#8212; nanshe 0.1.0a54 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a53+91.ga7ab362',
+        VERSION:     '0.1.0a54',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="nanshe 0.1.0a53+91.ga7ab362 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a54 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -46,7 +46,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+91.ga7ab362 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a54 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -83,10 +83,12 @@
 
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 
-<span class="kn">import</span> <span class="nn">toolz</span>
+<span class="kn">import</span> <span class="nn">yail</span>
+<span class="kn">import</span> <span class="nn">yail.core</span>
 
 <span class="kn">from</span> <span class="nn">kenjutsu.kenjutsu</span> <span class="k">import</span> <span class="o">*</span>
 
@@ -94,7 +96,7 @@
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
 
 <span class="c1"># Import Python 2/3 compatibility functions.</span>
-<span class="kn">from</span> <span class="nn">toolz.compatibility</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">yail.core</span> <span class="k">import</span> <span class="p">(</span>
     <span class="nb">range</span> <span class="k">as</span> <span class="n">irange</span><span class="p">,</span>
     <span class="nb">map</span> <span class="k">as</span> <span class="n">imap</span><span class="p">,</span>
     <span class="nb">zip</span> <span class="k">as</span> <span class="n">izip</span><span class="p">,</span>
@@ -102,61 +104,20 @@
 <span class="p">)</span>
 
 <span class="c1"># Import replacement functions for compatibility.</span>
-<span class="kn">from</span> <span class="nn">toolz</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">yail.core</span> <span class="k">import</span> <span class="p">(</span>
     <span class="n">accumulate</span> <span class="k">as</span> <span class="n">cumulative_generator</span><span class="p">,</span>
+    <span class="n">cycles</span> <span class="k">as</span> <span class="n">cycle_generator</span><span class="p">,</span>
+    <span class="n">disperse</span><span class="p">,</span>
+    <span class="n">duplicate</span> <span class="k">as</span> <span class="n">repeat_generator</span><span class="p">,</span>
+    <span class="n">indices</span> <span class="k">as</span> <span class="n">index_generator</span><span class="p">,</span>
+    <span class="n">subrange</span><span class="p">,</span>
+    <span class="n">sliding_window</span><span class="p">,</span>
+    <span class="n">sliding_window_filled</span><span class="p">,</span>
 <span class="p">)</span>
 
 
 <span class="c1"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="index_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.index_generator">[docs]</a><span class="k">def</span> <span class="nf">index_generator</span><span class="p">(</span><span class="o">*</span><span class="n">sizes</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes an argument list of sizes and iterates through them from 0 up to</span>
-<span class="sd">        (but not including) each size.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            *sizes(int):            an argument list of ints for the max sizes</span>
-<span class="sd">                                    in each index.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            chain_gen(generator):   a generator over every possible coordinated</span>
-
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; index_generator(0) #doctest: +ELLIPSIS</span>
-<span class="sd">            &lt;itertools.product object at 0x...&gt;</span>
-
-<span class="sd">            &gt;&gt;&gt; list(index_generator(0))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(index_generator(0, 2))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(index_generator(2, 0))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(index_generator(2, 1))</span>
-<span class="sd">            [(0, 0), (1, 0)]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(index_generator(1, 2))</span>
-<span class="sd">            [(0, 0), (0, 1)]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(index_generator(3, 2))</span>
-<span class="sd">            [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># Creates a list of irange generator objects over each respective</span>
-    <span class="c1"># dimension of sizes</span>
-    <span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="n">irange</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">]</span>
-
-    <span class="c1"># Combines the generators to a single generator of indices that go</span>
-    <span class="c1"># throughout sizes</span>
-    <span class="n">chain_gen</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">gens</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">chain_gen</span><span class="p">)</span></div>
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -286,92 +247,6 @@
         <span class="n">result</span><span class="p">[</span><span class="n">index_array</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="repeat_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.repeat_generator">[docs]</a><span class="k">def</span> <span class="nf">repeat_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Repeats each value on an iterator given n-times before proceeding to</span>
-<span class="sd">        the next value.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            a_iter(iter):          an iterator that will have its values</span>
-<span class="sd">                                   repeated contiguously</span>
-
-<span class="sd">            n(int):                number of times to repeat each value</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (generator object):    a generator that contiguously repeats value</span>
-<span class="sd">                                   from the given iterator.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; repeat_generator(irange(5)) #doctest: +ELLIPSIS</span>
-<span class="sd">            &lt;generator object repeat_generator at 0x...&gt;</span>
-
-<span class="sd">            &gt;&gt;&gt; list(repeat_generator(irange(0)))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(repeat_generator(irange(5), 0))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(repeat_generator(irange(5), 1))</span>
-<span class="sd">            [0, 1, 2, 3, 4]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(repeat_generator(irange(5), 2))</span>
-<span class="sd">            [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(repeat_generator(irange(5), 3))</span>
-<span class="sd">            [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;n must be positive, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="p">((</span><span class="n">n</span> <span class="o">%</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;n must be an integer, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">each_value</span> <span class="ow">in</span> <span class="n">a_iter</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">irange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-            <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="cycle_generator"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.cycle_generator">[docs]</a><span class="k">def</span> <span class="nf">cycle_generator</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Cycles through an iterator n-times.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            a_iter(iter):          an iterator that will be repeated</span>
-<span class="sd">            n(int):                number of times to repeat the iterator</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (generator object):    a generator that repeats the given iterator</span>
-<span class="sd">                                   a certain number of times.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; cycle_generator(irange(5)) #doctest: +ELLIPSIS</span>
-<span class="sd">            &lt;generator object cycle_generator at 0x...&gt;</span>
-
-<span class="sd">            &gt;&gt;&gt; list(cycle_generator(irange(0)))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(cycle_generator(irange(5), 0))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(cycle_generator(irange(5), 1))</span>
-<span class="sd">            [0, 1, 2, 3, 4]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(cycle_generator(irange(5), 2))</span>
-<span class="sd">            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(cycle_generator(irange(5), 3))</span>
-<span class="sd">            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;n must be positive, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="p">((</span><span class="n">n</span> <span class="o">%</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;n must be an integer, but got n = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-
-    <span class="n">a_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">itertools</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">a_iter</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
-
-    <span class="k">for</span> <span class="n">each_value</span> <span class="ow">in</span> <span class="n">a_iter</span><span class="p">:</span>
-        <span class="k">yield</span><span class="p">(</span><span class="n">each_value</span><span class="p">)</span></div>
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -581,147 +456,7 @@
             <span class="n">next_to_skip</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">to_skip</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="splitting_xrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.splitting_xrange">[docs]</a><span class="k">def</span> <span class="nf">splitting_xrange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Similar to irange except that it recursively proceeds through the given</span>
-<span class="sd">        range in such a way that values that follow each other are preferably</span>
-<span class="sd">        not only non-sequential, but fairly different. This does not always</span>
-<span class="sd">        work with small ranges, but works nicely with large ranges.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            a(int):              the lower bound of the range</span>
-<span class="sd">            b(int):              the upper bound of the range</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            result(generator):   a generator that can be used to iterate</span>
-<span class="sd">                                 through the sequence.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; splitting_xrange(0, 0) #doctest: +ELLIPSIS</span>
-<span class="sd">            &lt;generator object splitting_xrange at 0x...&gt;</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 0))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(5, 5))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(5, 0))</span>
-<span class="sd">            []</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 1))</span>
-<span class="sd">            [0]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 2))</span>
-<span class="sd">            [0, 1]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 3))</span>
-<span class="sd">            [0, 2, 1]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(10))</span>
-<span class="sd">            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(splitting_xrange(0, 10))</span>
-<span class="sd">            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">:</span>
-            <span class="n">half_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
-
-            <span class="n">mid_1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">half_diff</span><span class="p">))</span>
-            <span class="n">mid_2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">half_diff</span><span class="p">))</span>
-
-            <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">mid_1</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">mid_2</span><span class="p">:</span>
-                <span class="k">yield</span><span class="p">(</span><span class="n">mid_2</span><span class="p">)</span>
-
-                <span class="k">for</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span>
-                        <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mid_1</span><span class="p">),</span>
-                        <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">mid_2</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-                <span class="p">):</span>
-                    <span class="k">yield</span><span class="p">(</span><span class="n">_2</span><span class="p">)</span>
-                    <span class="k">yield</span><span class="p">(</span><span class="n">_1</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">mid_1</span> <span class="o">!=</span> <span class="n">mid_2</span><span class="p">:</span>
-                    <span class="k">yield</span><span class="p">(</span><span class="n">mid_1</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">mid_1</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">_2</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">mid_1</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-                    <span class="k">yield</span><span class="p">(</span><span class="n">_2</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">mid_2</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">_1</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mid_2</span><span class="p">):</span>
-                    <span class="k">yield</span><span class="p">(</span><span class="n">_1</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span><span class="p">:</span>
-        <span class="k">return</span>
-
-    <span class="k">yield</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">splitting_xrange_helper</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="k">yield</span><span class="p">(</span><span class="n">each</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="subrange"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.subrange">[docs]</a><span class="k">def</span> <span class="nf">subrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">substep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates start and stop values for each subrange.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            start(int):           First value in range (or last if only</span>
-<span class="sd">                                  specified value)</span>
-
-<span class="sd">            stop(int):            Last value in range</span>
-
-<span class="sd">            step(int):            Step between each range</span>
-
-<span class="sd">            substep(int):         Step within each range</span>
-
-<span class="sd">        Yields:</span>
-<span class="sd">            (irange):             A subrange within the larger range.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; subrange(5) # doctest: +ELLIPSIS</span>
-<span class="sd">            &lt;generator object subrange at 0x...&gt;</span>
-
-<span class="sd">            &gt;&gt;&gt; list(imap(list, subrange(5)))</span>
-<span class="sd">            [[0], [1], [2], [3], [4]]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(imap(list, subrange(0, 5)))</span>
-<span class="sd">            [[0], [1], [2], [3], [4]]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(imap(list, subrange(1, 5)))</span>
-<span class="sd">            [[1], [2], [3], [4]]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(imap(list, subrange(0, 10, 3)))</span>
-<span class="sd">            [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(imap(list, subrange(0, 7, 3)))</span>
-<span class="sd">            [[0, 1, 2], [3, 4, 5], [6]]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(imap(list, subrange(0, 7, 3, 2)))</span>
-<span class="sd">            [[0, 2], [3, 5], [6]]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="k">if</span> <span class="n">substep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">substep</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="n">range_ends</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="p">[</span><span class="n">stop</span><span class="p">])</span>
-
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">lagged_generators_zipped</span><span class="p">(</span><span class="n">range_ends</span><span class="p">):</span>
-        <span class="k">yield</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">substep</span><span class="p">))</span></div>
+<span class="n">splitting_xrange</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">disperse</span><span class="p">(</span><span class="n">irange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -798,6 +533,10 @@
 <span class="sd">            [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="s2">&quot;Please use `lagged_generators_zipped` instead.&quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span>
+    <span class="p">)</span>
+
     <span class="k">assert</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> \
         <span class="s2">&quot;Only a positive semi-definite number of generators can be created.&quot;</span>
 
@@ -829,59 +568,11 @@
     <span class="k">return</span><span class="p">(</span><span class="n">all_iters</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="lagged_generators_zipped"><a class="viewcode-back" href="../../../nanshe.util.iters.html#nanshe.util.iters.lagged_generators_zipped">[docs]</a><span class="k">def</span> <span class="nf">lagged_generators_zipped</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">longest</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a tuple of generators with each next generator one step ahead</span>
-<span class="sd">        of the previous generator.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            new_iter(iter):                 an iterator or something that can</span>
-<span class="sd">                                            be turned into an iterator</span>
-
-<span class="sd">            n(int):                         number of generators to create as</span>
-<span class="sd">                                            lagged</span>
-
-<span class="sd">            longest(bool):                  whether to continue zipping along</span>
-<span class="sd">                                            the longest generator</span>
-
-<span class="sd">            fillvalue:                      value to use to fill generators</span>
-<span class="sd">                                            shorter than the longest.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            generator object:               a generator object that will return</span>
-<span class="sd">                                            values from each iterator.</span>
-
-<span class="sd">        Examples:</span>
-
-<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(irange(5)))</span>
-<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4)]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(irange(5), 1))</span>
-<span class="sd">            [(0,), (1,), (2,), (3,), (4,)]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(irange(5), 2))</span>
-<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4)]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(irange(5), 3))</span>
-<span class="sd">            [(0, 1, 2), (1, 2, 3), (2, 3, 4)]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(irange(5), longest=True))</span>
-<span class="sd">            [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]</span>
-
-<span class="sd">            &gt;&gt;&gt; list(lagged_generators_zipped(irange(5), 3, True))</span>
-<span class="sd">            [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">all_iters</span> <span class="o">=</span> <span class="n">lagged_generators</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-
-    <span class="n">zipped_iters</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="n">longest</span><span class="p">:</span>
-        <span class="n">zipped_iters</span> <span class="o">=</span> <span class="n">izip_longest</span><span class="p">(</span><span class="o">*</span><span class="n">all_iters</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="n">fillvalue</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">zipped_iters</span> <span class="o">=</span> <span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">all_iters</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">zipped_iters</span><span class="p">)</span></div>
+<span class="n">lagged_generators_zipped</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">new_iter</span><span class="p">,</span> \
+                                  <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> \
+                                  <span class="n">longest</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> \
+                                  <span class="n">fillvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> \
+    <span class="n">sliding_window_filled</span><span class="p">(</span><span class="n">new_iter</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">longest</span><span class="p">,</span> <span class="n">fillvalue</span><span class="p">)</span>
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -1090,7 +781,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a53+91.ga7ab362 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a54 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
