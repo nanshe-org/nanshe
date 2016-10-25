@@ -21,10 +21,12 @@ __date__ = "$Apr 17, 2014 13:43:56 EDT$"
 
 import itertools
 import math
+import warnings
 
 import numpy
 
-import toolz
+import yail
+import yail.core
 
 from kenjutsu.kenjutsu import *
 
@@ -32,7 +34,7 @@ from kenjutsu.kenjutsu import *
 from nanshe.util import prof
 
 # Import Python 2/3 compatibility functions.
-from toolz.compatibility import (
+from yail.core import (
     range as irange,
     map as imap,
     zip as izip,
@@ -40,61 +42,20 @@ from toolz.compatibility import (
 )
 
 # Import replacement functions for compatibility.
-from toolz import (
+from yail.core import (
     accumulate as cumulative_generator,
+    cycles as cycle_generator,
+    disperse,
+    duplicate as repeat_generator,
+    indices as index_generator,
+    subrange,
+    sliding_window,
+    sliding_window_filled,
 )
 
 
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
-
-
-@prof.log_call(trace_logger)
-def index_generator(*sizes):
-    """
-        Takes an argument list of sizes and iterates through them from 0 up to
-        (but not including) each size.
-
-        Args:
-            *sizes(int):            an argument list of ints for the max sizes
-                                    in each index.
-
-        Returns:
-            chain_gen(generator):   a generator over every possible coordinated
-
-
-        Examples:
-            >>> index_generator(0) #doctest: +ELLIPSIS
-            <itertools.product object at 0x...>
-
-            >>> list(index_generator(0))
-            []
-
-            >>> list(index_generator(0, 2))
-            []
-
-            >>> list(index_generator(2, 0))
-            []
-
-            >>> list(index_generator(2, 1))
-            [(0, 0), (1, 0)]
-
-            >>> list(index_generator(1, 2))
-            [(0, 0), (0, 1)]
-
-            >>> list(index_generator(3, 2))
-            [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]
-    """
-
-    # Creates a list of irange generator objects over each respective
-    # dimension of sizes
-    gens = [irange(_) for _ in sizes]
-
-    # Combines the generators to a single generator of indices that go
-    # throughout sizes
-    chain_gen = itertools.product(*gens)
-
-    return(chain_gen)
 
 
 @prof.log_call(trace_logger)
@@ -224,92 +185,6 @@ def list_indices_to_numpy_bool_array(list_indices, shape):
         result[index_array] = True
 
     return(result)
-
-
-@prof.log_call(trace_logger)
-def repeat_generator(a_iter, n=1):
-    """
-        Repeats each value on an iterator given n-times before proceeding to
-        the next value.
-
-        Args:
-            a_iter(iter):          an iterator that will have its values
-                                   repeated contiguously
-
-            n(int):                number of times to repeat each value
-
-        Returns:
-            (generator object):    a generator that contiguously repeats value
-                                   from the given iterator.
-
-        Examples:
-            >>> repeat_generator(irange(5)) #doctest: +ELLIPSIS
-            <generator object repeat_generator at 0x...>
-
-            >>> list(repeat_generator(irange(0)))
-            []
-
-            >>> list(repeat_generator(irange(5), 0))
-            []
-
-            >>> list(repeat_generator(irange(5), 1))
-            [0, 1, 2, 3, 4]
-
-            >>> list(repeat_generator(irange(5), 2))
-            [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
-
-            >>> list(repeat_generator(irange(5), 3))
-            [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
-    """
-
-    assert (n >= 0), "n must be positive, but got n = " + repr(n)
-    assert ((n % 1) == 0), "n must be an integer, but got n = " + repr(n)
-
-    for each_value in a_iter:
-        for i in irange(n):
-            yield(each_value)
-
-
-@prof.log_call(trace_logger)
-def cycle_generator(a_iter, n=1):
-    """
-        Cycles through an iterator n-times.
-
-        Args:
-            a_iter(iter):          an iterator that will be repeated
-            n(int):                number of times to repeat the iterator
-
-        Returns:
-            (generator object):    a generator that repeats the given iterator
-                                   a certain number of times.
-
-        Examples:
-            >>> cycle_generator(irange(5)) #doctest: +ELLIPSIS
-            <generator object cycle_generator at 0x...>
-
-            >>> list(cycle_generator(irange(0)))
-            []
-
-            >>> list(cycle_generator(irange(5), 0))
-            []
-
-            >>> list(cycle_generator(irange(5), 1))
-            [0, 1, 2, 3, 4]
-
-            >>> list(cycle_generator(irange(5), 2))
-            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
-
-            >>> list(cycle_generator(irange(5), 3))
-            [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
-    """
-
-    assert (n >= 0), "n must be positive, but got n = " + repr(n)
-    assert ((n % 1) == 0), "n must be an integer, but got n = " + repr(n)
-
-    a_iter = itertools.chain(*itertools.tee(a_iter, n))
-
-    for each_value in a_iter:
-        yield(each_value)
 
 
 @prof.log_call(trace_logger)
@@ -519,147 +394,7 @@ def xrange_with_skip(start, stop=None, step=None, to_skip=None):
             next_to_skip = next(to_skip, None)
 
 
-def splitting_xrange(a, b=None):
-    """
-        Similar to irange except that it recursively proceeds through the given
-        range in such a way that values that follow each other are preferably
-        not only non-sequential, but fairly different. This does not always
-        work with small ranges, but works nicely with large ranges.
-
-        Args:
-            a(int):              the lower bound of the range
-            b(int):              the upper bound of the range
-
-        Returns:
-            result(generator):   a generator that can be used to iterate
-                                 through the sequence.
-
-        Examples:
-            >>> splitting_xrange(0, 0) #doctest: +ELLIPSIS
-            <generator object splitting_xrange at 0x...>
-
-            >>> list(splitting_xrange(0, 0))
-            []
-
-            >>> list(splitting_xrange(5, 5))
-            []
-
-            >>> list(splitting_xrange(5, 0))
-            []
-
-            >>> list(splitting_xrange(0, 1))
-            [0]
-
-            >>> list(splitting_xrange(0, 2))
-            [0, 1]
-
-            >>> list(splitting_xrange(0, 3))
-            [0, 2, 1]
-
-            >>> list(splitting_xrange(10))
-            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]
-
-            >>> list(splitting_xrange(0, 10))
-            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]
-    """
-
-    def splitting_xrange_helper(a, b):
-        if a != b:
-            half_diff = (b - a) / 2.0
-
-            mid_1 = int(a + math.floor(half_diff))
-            mid_2 = int(a + math.ceil(half_diff))
-
-            if a < mid_1 and b > mid_2:
-                yield(mid_2)
-
-                for _1, _2 in izip(
-                        splitting_xrange_helper(a, mid_1),
-                        splitting_xrange_helper(mid_2, b)
-                ):
-                    yield(_2)
-                    yield(_1)
-
-                if mid_1 != mid_2:
-                    yield(mid_1)
-            elif a < mid_1:
-                for _2 in splitting_xrange_helper(mid_1, b):
-                    yield(_2)
-            elif b > mid_2:
-                for _1 in splitting_xrange_helper(a, mid_2):
-                    yield(_1)
-
-    if b is None:
-        b = a
-        a = 0
-
-    a = int(a)
-    b = int(b)
-
-    if a >= b:
-        return
-
-    yield(a)
-
-    for each in splitting_xrange_helper(a, b):
-        yield(each)
-
-
-@prof.log_call(trace_logger)
-def subrange(start, stop=None, step=None, substep=None):
-    """
-        Generates start and stop values for each subrange.
-
-        Args:
-            start(int):           First value in range (or last if only
-                                  specified value)
-
-            stop(int):            Last value in range
-
-            step(int):            Step between each range
-
-            substep(int):         Step within each range
-
-        Yields:
-            (irange):             A subrange within the larger range.
-
-        Examples:
-            >>> subrange(5) # doctest: +ELLIPSIS
-            <generator object subrange at 0x...>
-
-            >>> list(imap(list, subrange(5)))
-            [[0], [1], [2], [3], [4]]
-
-            >>> list(imap(list, subrange(0, 5)))
-            [[0], [1], [2], [3], [4]]
-
-            >>> list(imap(list, subrange(1, 5)))
-            [[1], [2], [3], [4]]
-
-            >>> list(imap(list, subrange(0, 10, 3)))
-            [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]
-
-            >>> list(imap(list, subrange(0, 7, 3)))
-            [[0, 1, 2], [3, 4, 5], [6]]
-
-            >>> list(imap(list, subrange(0, 7, 3, 2)))
-            [[0, 2], [3, 5], [6]]
-    """
-
-    if stop is None:
-        stop = start
-        start = 0
-
-    if step is None:
-        step = 1
-
-    if substep is None:
-        substep = 1
-
-    range_ends = itertools.chain(irange(start, stop, step), [stop])
-
-    for i, j in lagged_generators_zipped(range_ends):
-        yield(irange(i, j, substep))
+splitting_xrange = lambda a, *args: disperse(irange(a, *args))
 
 
 @prof.log_call(trace_logger)
@@ -736,6 +471,10 @@ def lagged_generators(new_iter, n=2):
             [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
     """
 
+    warnings.warn(
+        "Please use `lagged_generators_zipped` instead.", DeprecationWarning
+    )
+
     assert (n >= 0), \
         "Only a positive semi-definite number of generators can be created."
 
@@ -767,59 +506,11 @@ def lagged_generators(new_iter, n=2):
     return(all_iters)
 
 
-@prof.log_call(trace_logger)
-def lagged_generators_zipped(new_iter, n=2, longest=False, fillvalue=None):
-    """
-        Creates a tuple of generators with each next generator one step ahead
-        of the previous generator.
-
-        Args:
-            new_iter(iter):                 an iterator or something that can
-                                            be turned into an iterator
-
-            n(int):                         number of generators to create as
-                                            lagged
-
-            longest(bool):                  whether to continue zipping along
-                                            the longest generator
-
-            fillvalue:                      value to use to fill generators
-                                            shorter than the longest.
-
-        Returns:
-            generator object:               a generator object that will return
-                                            values from each iterator.
-
-        Examples:
-
-            >>> list(lagged_generators_zipped(irange(5)))
-            [(0, 1), (1, 2), (2, 3), (3, 4)]
-
-            >>> list(lagged_generators_zipped(irange(5), 1))
-            [(0,), (1,), (2,), (3,), (4,)]
-
-            >>> list(lagged_generators_zipped(irange(5), 2))
-            [(0, 1), (1, 2), (2, 3), (3, 4)]
-
-            >>> list(lagged_generators_zipped(irange(5), 3))
-            [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
-
-            >>> list(lagged_generators_zipped(irange(5), longest=True))
-            [(0, 1), (1, 2), (2, 3), (3, 4), (4, None)]
-
-            >>> list(lagged_generators_zipped(irange(5), 3, True))
-            [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, None), (4, None, None)]
-    """
-
-    all_iters = lagged_generators(new_iter, n=n)
-
-    zipped_iters = None
-    if longest:
-        zipped_iters = izip_longest(*all_iters, fillvalue=fillvalue)
-    else:
-        zipped_iters = izip(*all_iters)
-
-    return(zipped_iters)
+lagged_generators_zipped = lambda new_iter, \
+                                  n=2, \
+                                  longest=False, \
+                                  fillvalue=None: \
+    sliding_window_filled(new_iter, n, False, longest, fillvalue)
 
 
 @prof.log_call(trace_logger)
