@@ -45,6 +45,7 @@ from yail.core import (
 from yail.core import (
     accumulate as cumulative_generator,
     cycles as cycle_generator,
+    disperse,
     duplicate as repeat_generator,
     indices as index_generator,
     subrange,
@@ -393,90 +394,7 @@ def xrange_with_skip(start, stop=None, step=None, to_skip=None):
             next_to_skip = next(to_skip, None)
 
 
-def splitting_xrange(a, b=None):
-    """
-        Similar to irange except that it recursively proceeds through the given
-        range in such a way that values that follow each other are preferably
-        not only non-sequential, but fairly different. This does not always
-        work with small ranges, but works nicely with large ranges.
-
-        Args:
-            a(int):              the lower bound of the range
-            b(int):              the upper bound of the range
-
-        Returns:
-            result(generator):   a generator that can be used to iterate
-                                 through the sequence.
-
-        Examples:
-            >>> splitting_xrange(0, 0) #doctest: +ELLIPSIS
-            <generator object splitting_xrange at 0x...>
-
-            >>> list(splitting_xrange(0, 0))
-            []
-
-            >>> list(splitting_xrange(5, 5))
-            []
-
-            >>> list(splitting_xrange(5, 0))
-            []
-
-            >>> list(splitting_xrange(0, 1))
-            [0]
-
-            >>> list(splitting_xrange(0, 2))
-            [0, 1]
-
-            >>> list(splitting_xrange(0, 3))
-            [0, 2, 1]
-
-            >>> list(splitting_xrange(10))
-            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]
-
-            >>> list(splitting_xrange(0, 10))
-            [0, 5, 8, 3, 9, 4, 6, 1, 7, 2]
-    """
-
-    def splitting_xrange_helper(a, b):
-        if a != b:
-            half_diff = (b - a) / 2.0
-
-            mid_1 = int(a + math.floor(half_diff))
-            mid_2 = int(a + math.ceil(half_diff))
-
-            if a < mid_1 and b > mid_2:
-                yield(mid_2)
-
-                for _1, _2 in izip(
-                        splitting_xrange_helper(a, mid_1),
-                        splitting_xrange_helper(mid_2, b)
-                ):
-                    yield(_2)
-                    yield(_1)
-
-                if mid_1 != mid_2:
-                    yield(mid_1)
-            elif a < mid_1:
-                for _2 in splitting_xrange_helper(mid_1, b):
-                    yield(_2)
-            elif b > mid_2:
-                for _1 in splitting_xrange_helper(a, mid_2):
-                    yield(_1)
-
-    if b is None:
-        b = a
-        a = 0
-
-    a = int(a)
-    b = int(b)
-
-    if a >= b:
-        return
-
-    yield(a)
-
-    for each in splitting_xrange_helper(a, b):
-        yield(each)
+splitting_xrange = lambda a, *args: disperse(irange(a, *args))
 
 
 @prof.log_call(trace_logger)
