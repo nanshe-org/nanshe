@@ -66,7 +66,7 @@ File nanshe/util/wrappers.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/xnumpy.py
- Needed: 55; Exist: 55; Missing: 0; Coverage: 100.0%
+ Needed: 54; Exist: 54; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -170,5 +170,5 @@ File nanshe/misc/random_dictionary_learning_data.py
 
 
 Overall statistics for 33 files:
-Docstrings needed: 316; Docstrings exist: 246; Docstrings missing: 70
+Docstrings needed: 315; Docstrings exist: 245; Docstrings missing: 70
 Total docstring coverage: 77.8%;  Grade: very good

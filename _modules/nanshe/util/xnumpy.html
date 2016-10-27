@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a54 documentation</title>
+    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a54+2.g094d505 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a54',
+        VERSION:     '0.1.0a54+2.g094d505',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="nanshe 0.1.0a54 documentation" href="../../../index.html" />
+    <link rel="top" title="nanshe 0.1.0a54+2.g094d505 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -46,7 +46,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a54 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a54+2.g094d505 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -106,6 +106,10 @@
 <span class="kn">import</span> <span class="nn">mahotas</span>
 
 <span class="kn">import</span> <span class="nn">vigra</span>
+
+<span class="kn">import</span> <span class="nn">kenjutsu</span>
+<span class="kn">import</span> <span class="nn">kenjutsu.kenjutsu</span>
+<span class="kn">from</span> <span class="nn">kenjutsu.kenjutsu</span> <span class="k">import</span> <span class="n">split_blocks</span> <span class="k">as</span> <span class="n">blocks_split</span>
 
 <span class="kn">import</span> <span class="nn">npctypes</span>
 <span class="kn">import</span> <span class="nn">npctypes.types</span>
@@ -2588,287 +2592,6 @@
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="blocks_split"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.blocks_split">[docs]</a><span class="k">def</span> <span class="nf">blocks_split</span><span class="p">(</span><span class="n">space_shape</span><span class="p">,</span> <span class="n">block_shape</span><span class="p">,</span> <span class="n">block_halo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return a list of slicings to cut each block out of an array or other.</span>
-
-<span class="sd">        Takes an array with ``space_shape`` and ``block_shape`` for every</span>
-<span class="sd">        dimension and a ``block_halo`` to extend each block on each side. From</span>
-<span class="sd">        this, it can compute slicings to use for cutting each block out from</span>
-<span class="sd">        the original array, HDF5 dataset or other.</span>
-
-<span class="sd">        Note:</span>
-<span class="sd">            Blocks on the boundary that cannot extend the full range will</span>
-<span class="sd">            be truncated to the largest block that will fit. This will raise</span>
-<span class="sd">            a warning, which can be converted to an exception, if needed.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            space_shape(numpy.ndarray):    Shape of array to slice</span>
-<span class="sd">            block_shape(numpy.ndarray):    Size of each block to take</span>
-<span class="sd">            block_halo(numpy.ndarray):     Halo to tack on to each block</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            collections.Sequence of \</span>
-<span class="sd">            tuples of slices:              Provides tuples of slices for \</span>
-<span class="sd">                                           retrieving blocks.</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; blocks_split(</span>
-<span class="sd">            ...     (2,), (1,)</span>
-<span class="sd">            ... )  #doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            ([(slice(0, 1, 1),), (slice(1, 2, 1),)],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 1, 1),), (slice(1, 2, 1),)],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 1, 1),), (slice(0, 1, 1),)])</span>
-
-<span class="sd">            &gt;&gt;&gt; blocks_split((2,), (-1,))</span>
-<span class="sd">            ([(slice(0, 2, 1),)], [(slice(0, 2, 1),)], [(slice(0, 2, 1),)])</span>
-
-<span class="sd">            &gt;&gt;&gt; blocks_split(</span>
-<span class="sd">            ...     (2, 3,), (1, 1,)</span>
-<span class="sd">            ... )  #doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            ([(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(2, 3, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(2, 3, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1))])</span>
-
-<span class="sd">            &gt;&gt;&gt; blocks_split(</span>
-<span class="sd">            ...     (2, 3,), (1, 1,), (0, 0,)</span>
-<span class="sd">            ... )  #doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            ([(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(2, 3, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(2, 3, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(0, 1, 1))])</span>
-
-<span class="sd">            &gt;&gt;&gt; blocks_split(</span>
-<span class="sd">            ...     (2, 3,), (1, 1,), (1, 1,)</span>
-<span class="sd">            ... )  #doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            ([(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(2, 3, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 2, 1), slice(0, 2, 1)),</span>
-<span class="sd">              (slice(0, 2, 1), slice(0, 3, 1)),</span>
-<span class="sd">              (slice(0, 2, 1), slice(1, 3, 1)),</span>
-<span class="sd">              (slice(0, 2, 1), slice(0, 2, 1)),</span>
-<span class="sd">              (slice(0, 2, 1), slice(0, 3, 1)),</span>
-<span class="sd">              (slice(0, 2, 1), slice(1, 3, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="sd">              (slice(1, 2, 1), slice(1, 2, 1))])</span>
-
-
-<span class="sd">            &gt;&gt;&gt; blocks_split(</span>
-<span class="sd">            ...     (10, 12,), (3, 2,), (4, 3,)</span>
-<span class="sd">            ... )  #doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            ([(slice(0, 3, 1), slice(0, 2, 1)),</span>
-<span class="sd">              (slice(0, 3, 1), slice(2, 4, 1)),</span>
-<span class="sd">              (slice(0, 3, 1), slice(4, 6, 1)),</span>
-<span class="sd">              (slice(0, 3, 1), slice(6, 8, 1)),</span>
-<span class="sd">              (slice(0, 3, 1), slice(8, 10, 1)),</span>
-<span class="sd">              (slice(0, 3, 1), slice(10, 12, 1)),</span>
-<span class="sd">              (slice(3, 6, 1), slice(0, 2, 1)),</span>
-<span class="sd">              (slice(3, 6, 1), slice(2, 4, 1)),</span>
-<span class="sd">              (slice(3, 6, 1), slice(4, 6, 1)),</span>
-<span class="sd">              (slice(3, 6, 1), slice(6, 8, 1)),</span>
-<span class="sd">              (slice(3, 6, 1), slice(8, 10, 1)),</span>
-<span class="sd">              (slice(3, 6, 1), slice(10, 12, 1)),</span>
-<span class="sd">              (slice(6, 9, 1), slice(0, 2, 1)),</span>
-<span class="sd">              (slice(6, 9, 1), slice(2, 4, 1)),</span>
-<span class="sd">              (slice(6, 9, 1), slice(4, 6, 1)),</span>
-<span class="sd">              (slice(6, 9, 1), slice(6, 8, 1)),</span>
-<span class="sd">              (slice(6, 9, 1), slice(8, 10, 1)),</span>
-<span class="sd">              (slice(6, 9, 1), slice(10, 12, 1)),</span>
-<span class="sd">              (slice(9, 10, 1), slice(0, 2, 1)),</span>
-<span class="sd">              (slice(9, 10, 1), slice(2, 4, 1)),</span>
-<span class="sd">              (slice(9, 10, 1), slice(4, 6, 1)),</span>
-<span class="sd">              (slice(9, 10, 1), slice(6, 8, 1)),</span>
-<span class="sd">              (slice(9, 10, 1), slice(8, 10, 1)),</span>
-<span class="sd">              (slice(9, 10, 1), slice(10, 12, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">             [(slice(0, 7, 1), slice(0, 5, 1)),</span>
-<span class="sd">              (slice(0, 7, 1), slice(0, 7, 1)),</span>
-<span class="sd">              (slice(0, 7, 1), slice(1, 9, 1)),</span>
-<span class="sd">              (slice(0, 7, 1), slice(3, 11, 1)),</span>
-<span class="sd">              (slice(0, 7, 1), slice(5, 12, 1)),</span>
-<span class="sd">              (slice(0, 7, 1), slice(7, 12, 1)),</span>
-<span class="sd">              (slice(0, 10, 1), slice(0, 5, 1)),</span>
-<span class="sd">              (slice(0, 10, 1), slice(0, 7, 1)),</span>
-<span class="sd">              (slice(0, 10, 1), slice(1, 9, 1)),</span>
-<span class="sd">              (slice(0, 10, 1), slice(3, 11, 1)),</span>
-<span class="sd">              (slice(0, 10, 1), slice(5, 12, 1)),</span>
-<span class="sd">              (slice(0, 10, 1), slice(7, 12, 1)),</span>
-<span class="sd">              (slice(2, 10, 1), slice(0, 5, 1)),</span>
-<span class="sd">              (slice(2, 10, 1), slice(0, 7, 1)),</span>
-<span class="sd">              (slice(2, 10, 1), slice(1, 9, 1)),</span>
-<span class="sd">              (slice(2, 10, 1), slice(3, 11, 1)),</span>
-<span class="sd">              (slice(2, 10, 1), slice(5, 12, 1)),</span>
-<span class="sd">              (slice(2, 10, 1), slice(7, 12, 1)),</span>
-<span class="sd">              (slice(5, 10, 1), slice(0, 5, 1)),</span>
-<span class="sd">              (slice(5, 10, 1), slice(0, 7, 1)),</span>
-<span class="sd">              (slice(5, 10, 1), slice(1, 9, 1)),</span>
-<span class="sd">              (slice(5, 10, 1), slice(3, 11, 1)),</span>
-<span class="sd">              (slice(5, 10, 1), slice(5, 12, 1)),</span>
-<span class="sd">              (slice(5, 10, 1), slice(7, 12, 1))],</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">              [(slice(0, 3, 1), slice(0, 2, 1)),</span>
-<span class="sd">               (slice(0, 3, 1), slice(2, 4, 1)),</span>
-<span class="sd">               (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(3, 6, 1), slice(0, 2, 1)),</span>
-<span class="sd">               (slice(3, 6, 1), slice(2, 4, 1)),</span>
-<span class="sd">               (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(0, 2, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(2, 4, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(0, 2, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(2, 4, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="sd">               (slice(4, 7, 1), slice(3, 5, 1))])</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">space_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">space_shape</span><span class="p">)</span>
-    <span class="n">block_shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">block_shape</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">block_halo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">block_halo</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">block_halo</span><span class="p">)</span>
-
-        <span class="k">assert</span> <span class="p">(</span><span class="n">space_shape</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">block_shape</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">block_halo</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span>\
-            <span class="s2">&quot;There should be no more than 1 dimension for &quot;</span> <span class="o">+</span> \
-            <span class="s2">&quot;`space_shape`, `block_shape`, and `block_halo`.&quot;</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">space_shape</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">block_shape</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">block_halo</span><span class="p">)),</span> \
-            <span class="s2">&quot;The dimensions of `space_shape`, `block_shape`, and &quot;</span> <span class="o">+</span> \
-            <span class="s2">&quot;`block_halo` should be the same.&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="n">space_shape</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">block_shape</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> \
-            <span class="s2">&quot;There should be no more than 1 dimension for &quot;</span> <span class="o">+</span> \
-            <span class="s2">&quot;`space_shape` and `block_shape`.&quot;</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">space_shape</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">block_shape</span><span class="p">)),</span> \
-            <span class="s2">&quot;The dimensions of `space_shape` and `block_shape` &quot;</span> <span class="o">+</span> \
-            <span class="s2">&quot;should be the same.&quot;</span>
-
-        <span class="n">block_halo</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">space_shape</span><span class="p">)</span>
-
-    <span class="n">uneven_block_division</span> <span class="o">=</span> <span class="p">(</span><span class="n">space_shape</span> <span class="o">%</span> <span class="n">block_shape</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">uneven_block_division</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-        <span class="n">uneven_block_division_str</span> <span class="o">=</span> <span class="n">uneven_block_division</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="n">uneven_block_division_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">uneven_block_division_str</span><span class="p">]</span>
-        <span class="n">uneven_block_division_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">uneven_block_division_str</span><span class="p">)</span>
-
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;Blocks will not evenly divide the array.&quot;</span> <span class="o">+</span>
-            <span class="s2">&quot; The following dimensions will be unevenly divided: </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span>
-            <span class="n">uneven_block_division_str</span><span class="p">,</span>
-            <span class="ne">RuntimeWarning</span>
-        <span class="p">)</span>
-
-    <span class="n">ranges_per_dim</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">haloed_ranges_per_dim</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">trimmed_halos_per_dim</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">each_dim</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">space_shape</span><span class="p">)):</span>
-        <span class="c1"># Construct each block using the block size given. Allow to spill over.</span>
-        <span class="k">if</span> <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">space_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span>
-
-        <span class="n">a_range</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">space_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">],</span> <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">])</span>
-        <span class="n">a_range</span> <span class="o">=</span> <span class="n">expand_view</span><span class="p">(</span><span class="n">a_range</span><span class="p">,</span> <span class="n">reps_before</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">a_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">block_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span>
-
-        <span class="c1"># Add the halo to each block on both sides.</span>
-        <span class="n">a_range_haloed</span> <span class="o">=</span> <span class="n">a_range</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">a_range_haloed</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">block_halo</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span>
-        <span class="n">a_range_haloed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">block_halo</span><span class="p">[</span><span class="n">each_dim</span><span class="p">]</span>
-        <span class="n">a_range_haloed</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">space_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">],</span> <span class="n">out</span><span class="o">=</span><span class="n">a_range_haloed</span><span class="p">)</span>
-
-        <span class="c1"># Compute how to trim the halo off of each block.</span>
-        <span class="c1"># Clip each block to the boundaries.</span>
-        <span class="n">a_trimmed_halo</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">a_range</span><span class="p">)</span>
-        <span class="n">a_trimmed_halo</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_range</span> <span class="o">-</span> <span class="n">a_range_haloed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">a_range</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">space_shape</span><span class="p">[</span><span class="n">each_dim</span><span class="p">],</span> <span class="n">out</span><span class="o">=</span><span class="n">a_range</span><span class="p">)</span>
-
-        <span class="c1"># Transpose to allow for iteration over each block&#39;s dimension.</span>
-        <span class="n">a_range</span> <span class="o">=</span> <span class="n">a_range</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">a_range_haloed</span> <span class="o">=</span> <span class="n">a_range_haloed</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">a_trimmed_halo</span> <span class="o">=</span> <span class="n">a_trimmed_halo</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="c1"># Convert all ranges to slices for easier use.</span>
-        <span class="n">a_range</span> <span class="o">=</span> <span class="n">iters</span><span class="o">.</span><span class="n">reformat_slices</span><span class="p">([</span>
-            <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">a_range</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a_range</span><span class="p">))</span>
-        <span class="p">])</span>
-        <span class="n">a_range_haloed</span> <span class="o">=</span> <span class="n">iters</span><span class="o">.</span><span class="n">reformat_slices</span><span class="p">([</span>
-            <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">a_range_haloed</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a_range_haloed</span><span class="p">))</span>
-        <span class="p">])</span>
-        <span class="n">a_trimmed_halo</span> <span class="o">=</span> <span class="n">iters</span><span class="o">.</span><span class="n">reformat_slices</span><span class="p">([</span>
-            <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">a_trimmed_halo</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a_trimmed_halo</span><span class="p">))</span>
-        <span class="p">])</span>
-
-        <span class="c1"># Collect all blocks</span>
-        <span class="n">ranges_per_dim</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_range</span><span class="p">)</span>
-        <span class="n">haloed_ranges_per_dim</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_range_haloed</span><span class="p">)</span>
-        <span class="n">trimmed_halos_per_dim</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_trimmed_halo</span><span class="p">)</span>
-
-    <span class="c1"># Take all combinations of all ranges to get blocks.</span>
-    <span class="n">blocks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">ranges_per_dim</span><span class="p">))</span>
-    <span class="n">haloed_blocks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">haloed_ranges_per_dim</span><span class="p">))</span>
-    <span class="n">trimmed_halos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">trimmed_halos_per_dim</span><span class="p">))</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">blocks</span><span class="p">,</span> <span class="n">haloed_blocks</span><span class="p">,</span> <span class="n">trimmed_halos</span><span class="p">)</span></div>
-
-
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
 <div class="viewcode-block" id="dot_product"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product">[docs]</a><span class="k">def</span> <span class="nf">dot_product</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the two pairs of vectors from each</span>
@@ -5279,7 +5002,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a54 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a54+2.g094d505 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>

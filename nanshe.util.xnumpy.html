@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a54 documentation</title>
+    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a54+2.g094d505 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a54',
+        VERSION:     '0.1.0a54+2.g094d505',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="nanshe 0.1.0a54 documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a54+2.g094d505 documentation" href="index.html" />
     <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.converter module" href="nanshe.converter.html" />
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
@@ -54,7 +54,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a54 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a54+2.g094d505 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -497,210 +497,6 @@ end.</dd>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial_coefficients</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
 <span class="go">array([1, 4, 6, 4, 1])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.xnumpy.blocks_split">
-<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">blocks_split</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#blocks_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.blocks_split" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of slicings to cut each block out of an array or other.</p>
-<p>Takes an array with <code class="docutils literal"><span class="pre">space_shape</span></code> and <code class="docutils literal"><span class="pre">block_shape</span></code> for every
-dimension and a <code class="docutils literal"><span class="pre">block_halo</span></code> to extend each block on each side. From
-this, it can compute slicings to use for cutting each block out from
-the original array, HDF5 dataset or other.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Blocks on the boundary that cannot extend the full range will
-be truncated to the largest block that will fit. This will raise
-a warning, which can be converted to an exception, if needed.</p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>space_shape</strong> (<em>numpy.ndarray</em>) &#8211; Shape of array to slice</li>
-<li><strong>block_shape</strong> (<em>numpy.ndarray</em>) &#8211; Size of each block to take</li>
-<li><strong>block_halo</strong> (<em>numpy.ndarray</em>) &#8211; Halo to tack on to each block</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Provides tuples of slices for                                            retrieving blocks.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">collections.Sequence of             tuples of slices</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">blocks_split</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-<span class="gp">... </span><span class="p">)</span>  
-<span class="go">([(slice(0, 1, 1),), (slice(1, 2, 1),)],</span>
-
-<span class="go"> [(slice(0, 1, 1),), (slice(1, 2, 1),)],</span>
-
-<span class="go"> [(slice(0, 1, 1),), (slice(0, 1, 1),)])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">blocks_split</span><span class="p">((</span><span class="mi">2</span><span class="p">,),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
-<span class="go">([(slice(0, 2, 1),)], [(slice(0, 2, 1),)], [(slice(0, 2, 1),)])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">blocks_split</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,)</span>
-<span class="gp">... </span><span class="p">)</span>  
-<span class="go">([(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(2, 3, 1))],</span>
-
-<span class="go"> [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(2, 3, 1))],</span>
-
-<span class="go"> [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1))])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">blocks_split</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,)</span>
-<span class="gp">... </span><span class="p">)</span>  
-<span class="go">([(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(2, 3, 1))],</span>
-
-<span class="go"> [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(2, 3, 1))],</span>
-
-<span class="go"> [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(0, 1, 1))])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">blocks_split</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,)</span>
-<span class="gp">... </span><span class="p">)</span>  
-<span class="go">([(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(2, 3, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(2, 3, 1))],</span>
-
-<span class="go"> [(slice(0, 2, 1), slice(0, 2, 1)),</span>
-<span class="go">  (slice(0, 2, 1), slice(0, 3, 1)),</span>
-<span class="go">  (slice(0, 2, 1), slice(1, 3, 1)),</span>
-<span class="go">  (slice(0, 2, 1), slice(0, 2, 1)),</span>
-<span class="go">  (slice(0, 2, 1), slice(0, 3, 1)),</span>
-<span class="go">  (slice(0, 2, 1), slice(1, 3, 1))],</span>
-
-<span class="go"> [(slice(0, 1, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(0, 1, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(0, 1, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(1, 2, 1)),</span>
-<span class="go">  (slice(1, 2, 1), slice(1, 2, 1))])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">blocks_split</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,)</span>
-<span class="gp">... </span><span class="p">)</span>  
-<span class="go">([(slice(0, 3, 1), slice(0, 2, 1)),</span>
-<span class="go">  (slice(0, 3, 1), slice(2, 4, 1)),</span>
-<span class="go">  (slice(0, 3, 1), slice(4, 6, 1)),</span>
-<span class="go">  (slice(0, 3, 1), slice(6, 8, 1)),</span>
-<span class="go">  (slice(0, 3, 1), slice(8, 10, 1)),</span>
-<span class="go">  (slice(0, 3, 1), slice(10, 12, 1)),</span>
-<span class="go">  (slice(3, 6, 1), slice(0, 2, 1)),</span>
-<span class="go">  (slice(3, 6, 1), slice(2, 4, 1)),</span>
-<span class="go">  (slice(3, 6, 1), slice(4, 6, 1)),</span>
-<span class="go">  (slice(3, 6, 1), slice(6, 8, 1)),</span>
-<span class="go">  (slice(3, 6, 1), slice(8, 10, 1)),</span>
-<span class="go">  (slice(3, 6, 1), slice(10, 12, 1)),</span>
-<span class="go">  (slice(6, 9, 1), slice(0, 2, 1)),</span>
-<span class="go">  (slice(6, 9, 1), slice(2, 4, 1)),</span>
-<span class="go">  (slice(6, 9, 1), slice(4, 6, 1)),</span>
-<span class="go">  (slice(6, 9, 1), slice(6, 8, 1)),</span>
-<span class="go">  (slice(6, 9, 1), slice(8, 10, 1)),</span>
-<span class="go">  (slice(6, 9, 1), slice(10, 12, 1)),</span>
-<span class="go">  (slice(9, 10, 1), slice(0, 2, 1)),</span>
-<span class="go">  (slice(9, 10, 1), slice(2, 4, 1)),</span>
-<span class="go">  (slice(9, 10, 1), slice(4, 6, 1)),</span>
-<span class="go">  (slice(9, 10, 1), slice(6, 8, 1)),</span>
-<span class="go">  (slice(9, 10, 1), slice(8, 10, 1)),</span>
-<span class="go">  (slice(9, 10, 1), slice(10, 12, 1))],</span>
-
-<span class="go"> [(slice(0, 7, 1), slice(0, 5, 1)),</span>
-<span class="go">  (slice(0, 7, 1), slice(0, 7, 1)),</span>
-<span class="go">  (slice(0, 7, 1), slice(1, 9, 1)),</span>
-<span class="go">  (slice(0, 7, 1), slice(3, 11, 1)),</span>
-<span class="go">  (slice(0, 7, 1), slice(5, 12, 1)),</span>
-<span class="go">  (slice(0, 7, 1), slice(7, 12, 1)),</span>
-<span class="go">  (slice(0, 10, 1), slice(0, 5, 1)),</span>
-<span class="go">  (slice(0, 10, 1), slice(0, 7, 1)),</span>
-<span class="go">  (slice(0, 10, 1), slice(1, 9, 1)),</span>
-<span class="go">  (slice(0, 10, 1), slice(3, 11, 1)),</span>
-<span class="go">  (slice(0, 10, 1), slice(5, 12, 1)),</span>
-<span class="go">  (slice(0, 10, 1), slice(7, 12, 1)),</span>
-<span class="go">  (slice(2, 10, 1), slice(0, 5, 1)),</span>
-<span class="go">  (slice(2, 10, 1), slice(0, 7, 1)),</span>
-<span class="go">  (slice(2, 10, 1), slice(1, 9, 1)),</span>
-<span class="go">  (slice(2, 10, 1), slice(3, 11, 1)),</span>
-<span class="go">  (slice(2, 10, 1), slice(5, 12, 1)),</span>
-<span class="go">  (slice(2, 10, 1), slice(7, 12, 1)),</span>
-<span class="go">  (slice(5, 10, 1), slice(0, 5, 1)),</span>
-<span class="go">  (slice(5, 10, 1), slice(0, 7, 1)),</span>
-<span class="go">  (slice(5, 10, 1), slice(1, 9, 1)),</span>
-<span class="go">  (slice(5, 10, 1), slice(3, 11, 1)),</span>
-<span class="go">  (slice(5, 10, 1), slice(5, 12, 1)),</span>
-<span class="go">  (slice(5, 10, 1), slice(7, 12, 1))],</span>
-
-<span class="go">  [(slice(0, 3, 1), slice(0, 2, 1)),</span>
-<span class="go">   (slice(0, 3, 1), slice(2, 4, 1)),</span>
-<span class="go">   (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(0, 3, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(3, 6, 1), slice(0, 2, 1)),</span>
-<span class="go">   (slice(3, 6, 1), slice(2, 4, 1)),</span>
-<span class="go">   (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(3, 6, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(0, 2, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(2, 4, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(0, 2, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(2, 4, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1)),</span>
-<span class="go">   (slice(4, 7, 1), slice(3, 5, 1))])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -5110,7 +4906,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a54 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a54+2.g094d505 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
