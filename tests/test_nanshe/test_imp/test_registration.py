@@ -17,10 +17,7 @@ import nanshe.io.hdf5.serializers
 import nanshe.imp.registration
 
 
-try:
-    basestring
-except NameError:
-    basestring = str
+from past.builtins import basestring
 
 
 class TestRegisterMeanOffsets(object):
