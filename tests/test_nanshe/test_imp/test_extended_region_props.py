@@ -37,7 +37,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         assert (len(e.props) == len(p))
@@ -46,7 +46,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -55,7 +55,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"])
         ).all()
 
         assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
@@ -80,7 +80,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -93,7 +93,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == numpy.array([2, 1])).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -102,7 +102,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"])
         ).all()
 
         assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
@@ -128,7 +128,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -141,7 +141,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -150,7 +150,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"])
         ).all()
 
         assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
@@ -176,7 +176,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -196,7 +196,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -205,7 +205,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"])
         ).all()
 
         assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
@@ -231,7 +231,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -255,7 +255,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -264,7 +264,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"])
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"])
         ).all()
 
         assert all([(_1 == _2).all() for _1, _2 in nanshe.util.iters.izip(e.get_local_max_index_array(), tuple(p.T))])
@@ -289,7 +289,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         assert (len(e.props) == len(p))
@@ -298,7 +298,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -307,7 +307,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"]
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"]
             )
         ).all()
 
@@ -334,7 +334,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -347,7 +347,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == numpy.array([2, 1])).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -356,7 +356,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"]
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"]
             )
         ).all()
 
@@ -384,7 +384,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -397,7 +397,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -406,7 +406,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"]
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"]
             )
         ).all()
 
@@ -434,7 +434,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -454,7 +454,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -463,7 +463,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"]
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"]
             )
         ).all()
 
@@ -491,7 +491,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.ExtendedRegionProps(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         removal_mask = numpy.zeros(radii.shape, dtype=bool)
@@ -515,7 +515,7 @@ class TestSegment(object):
 
         assert (e.count["count"] == 1).all()
 
-        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)).all()
+        assert (e.label_image == nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]).all()
 
         assert (e.intensity_image == g.max(axis=0)).all()
 
@@ -524,7 +524,7 @@ class TestSegment(object):
         assert (
             e.props == nanshe.imp.segment.extended_region_local_maxima_properties(
                 g.max(axis=0),
-                nanshe.util.xnumpy.enumerate_masks(m).max(axis=0), properties=["label", "centroid"]
+                nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0], properties=["label", "centroid"]
             )
         ).all()
 
