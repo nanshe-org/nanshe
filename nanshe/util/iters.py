@@ -34,12 +34,12 @@ from kenjutsu.kenjutsu import *
 from nanshe.util import prof
 
 # Import Python 2/3 compatibility functions.
-from yail.core import (
+from builtins import (
     range as irange,
     map as imap,
     zip as izip,
-    zip_longest as izip_longest,
 )
+from future.moves.itertools import zip_longest as izip_longest
 
 # Import replacement functions for compatibility.
 from yail.core import (
