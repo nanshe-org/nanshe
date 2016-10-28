@@ -49,6 +49,7 @@ elif sys.argv[1] == "bdist_conda":
         "blas==1.1",
         "openblas",
         "setuptools",
+        "future",
         "psutil",
         "numpy",
         "scipy",
