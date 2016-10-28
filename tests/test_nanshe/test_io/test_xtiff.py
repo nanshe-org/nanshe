@@ -22,10 +22,7 @@ import nanshe.io.xtiff
 import nanshe.converter
 
 
-try:
-    unicode
-except NameError:
-    unicode = str
+from past.builtins import unicode
 
 
 class TestXTiff(object):

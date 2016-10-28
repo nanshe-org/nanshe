@@ -44,10 +44,7 @@ except ImportError:
     from skimage.external import tifffile
 
 
-try:
-    unicode
-except NameError:
-    unicode = str
+from past.builtins import unicode
 
 
 # Get the logger

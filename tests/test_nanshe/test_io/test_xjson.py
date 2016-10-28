@@ -11,10 +11,7 @@ import tempfile
 import nanshe.io.xjson
 
 
-try:
-    unicode
-except NameError:
-    unicode = str
+from past.builtins import unicode
 
 try:
     xrange
