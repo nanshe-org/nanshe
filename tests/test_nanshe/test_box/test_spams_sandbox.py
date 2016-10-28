@@ -13,10 +13,7 @@ import nose.plugins.attrib
 import ctypes
 import multiprocessing
 
-try:
-    from queue import Queue
-except ImportError:
-    from Queue import Queue
+from queue import Queue
 
 import numpy
 import npctypes
