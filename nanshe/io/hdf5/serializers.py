@@ -29,10 +29,7 @@ from nanshe.util import wrappers
 from nanshe.util import prof
 
 
-try:
-    unicode
-except NameError:
-    unicode = str
+from past.builtins import unicode
 
 
 # Get the logger

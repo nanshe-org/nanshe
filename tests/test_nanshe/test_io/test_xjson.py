@@ -11,15 +11,9 @@ import tempfile
 import nanshe.io.xjson
 
 
-try:
-    unicode
-except NameError:
-    unicode = str
+from past.builtins import unicode
 
-try:
-    xrange
-except NameError:
-    xrange = range
+from builtins import range as irange
 
 
 class TestXJson(object):
@@ -31,7 +25,7 @@ class TestXJson(object):
         dict_type = dict
 
         params = collections.OrderedDict()
-        params["b"] = list(xrange(3))
+        params["b"] = list(irange(3))
         params["c"] = "test"
         params["a"] = 5
         params["d"] = collections.OrderedDict(params)
@@ -61,7 +55,7 @@ class TestXJson(object):
         dict_type = dict
 
         params = collections.OrderedDict()
-        params["b"] = list(xrange(3))
+        params["b"] = list(irange(3))
         params["b"].append("__comment__ to drop")
         params["c"] = "test"
         params["a"] = 5
@@ -105,7 +99,7 @@ class TestXJson(object):
         dict_type = collections.OrderedDict
 
         params = collections.OrderedDict()
-        params["b"] = list(xrange(3))
+        params["b"] = list(irange(3))
         params["c"] = "test"
         params["a"] = 5
         params["d"] = collections.OrderedDict(params)
@@ -135,7 +129,7 @@ class TestXJson(object):
         dict_type = collections.OrderedDict
 
         params = collections.OrderedDict()
-        params["b"] = list(xrange(3))
+        params["b"] = list(irange(3))
         params["b"].append("__comment__ to drop")
         params["c"] = "test"
         params["a"] = 5

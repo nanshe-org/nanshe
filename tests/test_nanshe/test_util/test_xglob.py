@@ -5,10 +5,7 @@ __date__ = "$Jul 28, 2014 11:50:37 EDT$"
 import nanshe.util.xglob
 
 
-try:
-    xrange
-except NameError:
-    xrange = range
+from builtins import range as irange
 
 
 class TestXGlob(object):
@@ -21,7 +18,7 @@ class TestXGlob(object):
 
         self.temp_files = []
         temp_files_dict = dict()
-        for i in xrange(TestXGlob.num_files):
+        for i in irange(TestXGlob.num_files):
             each_tempfile = tempfile.NamedTemporaryFile(
                 suffix=".tif", dir=self.temp_dir
             )
@@ -45,7 +42,7 @@ class TestXGlob(object):
     def teardown(self):
         import shutil
 
-        for i in xrange(len(self.temp_files)):
+        for i in irange(len(self.temp_files)):
             self.temp_files[i].close()
 
         self.temp_files = []

@@ -26,10 +26,7 @@ __date__ = "$Apr 30, 2014 16:54:30 EDT$"
 from nanshe.util import prof
 
 
-try:
-    unicode
-except NameError:
-    unicode = str
+from past.builtins import unicode
 
 
 # Get the logger
