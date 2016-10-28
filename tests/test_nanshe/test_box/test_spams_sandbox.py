@@ -31,10 +31,7 @@ except ImportError:
     pass
 
 
-try:
-    xrange
-except NameError:
-    xrange = range
+from builtins import range as irange
 
 
 class TestSpamsSandbox(object):
@@ -110,7 +107,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -166,7 +163,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -221,7 +218,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -279,7 +276,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -331,7 +328,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -382,7 +379,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -432,7 +429,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -485,7 +482,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -552,7 +549,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -618,7 +615,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -668,7 +665,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -719,7 +716,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -787,7 +784,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -857,7 +854,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -909,7 +906,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -960,7 +957,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
@@ -1010,7 +1007,7 @@ class TestSpamsSandbox(object):
         unmatched_g = range(len(self.g))
         matched = dict()
 
-        for i in xrange(len(d)):
+        for i in irange(len(d)):
             new_unmatched_g = []
             for j in unmatched_g:
                 if not (d[i] == self.g[j]).all():
@@ -1063,7 +1060,7 @@ class TestSpamsSandbox(object):
         unmatched_g3 = range(len(self.g3))
         matched = dict()
 
-        for i in xrange(len(d3)):
+        for i in irange(len(d3)):
             new_unmatched_g3 = []
             for j in unmatched_g3:
                 if not (d3[i] == self.g3[j]).all():
