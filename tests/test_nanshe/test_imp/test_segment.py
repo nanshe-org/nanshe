@@ -1608,7 +1608,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.extended_region_local_maxima_properties(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         assert (numpy.bincount(e["label"])[1:]  == 1).all()
@@ -1641,7 +1641,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.extended_region_local_maxima_properties(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         assert (numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all()
@@ -1680,7 +1680,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.extended_region_local_maxima_properties(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         assert (numpy.bincount(e["label"])[1:]  == 1).all()
@@ -1714,7 +1714,7 @@ class TestSegment(object):
 
         e = nanshe.imp.segment.extended_region_local_maxima_properties(
             g.max(axis=0),
-            nanshe.util.xnumpy.enumerate_masks(m).max(axis=0)
+            nanshe.util.xnumpy.enumerate_masks_max(m, axis=0)[0]
         )
 
         assert (numpy.bincount(e["label"])[1:] == numpy.array([2, 1])).all()
@@ -1748,7 +1748,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -1771,7 +1771,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -1803,7 +1803,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -1835,7 +1835,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -1869,7 +1869,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -1893,7 +1893,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -1926,7 +1926,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -1959,7 +1959,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -2021,7 +2021,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
@@ -2143,7 +2143,7 @@ class TestSegment(object):
         images = nanshe.syn.data.generate_gaussian_images(
             space, points, radii/3.0, magnitudes
         ) * masks
-        labels = nanshe.util.xnumpy.enumerate_masks(masks).max(axis=0)
+        labels = nanshe.util.xnumpy.enumerate_masks_max(masks, axis=0)[0]
 
         e = nanshe.imp.segment.ExtendedRegionProps(images.max(axis=0), labels)
 
