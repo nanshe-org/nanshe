@@ -4297,12 +4297,12 @@ def generate_contour_fast(a_image):
             >>> a = numpy.array([[ True,  True, False],
             ...                  [False, False, False],
             ...                  [ True,  True,  True]], dtype=bool)
-            >>> generate_contour(a)
+            >>> generate_contour_fast(a)
             array([[ True,  True, False],
                    [False, False, False],
                    [ True,  True,  True]], dtype=bool)
 
-            >>> generate_contour(numpy.eye(3))
+            >>> generate_contour_fast(numpy.eye(3))
             array([[ 1.,  0.,  0.],
                    [ 0.,  1.,  0.],
                    [ 0.,  0.,  1.]])
@@ -4316,7 +4316,7 @@ def generate_contour_fast(a_image):
             ...     [False,  True, False, False, False, False,  True],
             ...     [False,  True,  True, False, False, False, False]
             ... ], dtype=bool)
-            >>> generate_contour(a)
+            >>> generate_contour_fast(a)
             array([[False, False,  True, False, False, False,  True],
                    [ True, False, False, False,  True, False, False],
                    [ True,  True, False,  True,  True, False,  True],
