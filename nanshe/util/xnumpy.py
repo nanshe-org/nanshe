@@ -45,6 +45,10 @@ import mahotas
 
 import vigra
 
+import imgroi
+import imgroi.core
+from imgroi.core import find_contours as generate_contour_fast
+
 import kenjutsu
 import kenjutsu.kenjutsu
 from kenjutsu.kenjutsu import split_blocks as blocks_split
@@ -2211,24 +2215,18 @@ def enumerate_masks_max(new_masks, axis=0):
                     [0, 0, 0, 4]]], dtype=uint64)
     """
 
-    axis %= new_masks.ndim
-
-    new_enumerated_masks_max = numpy.zeros(
-        new_masks.shape[:axis] + (1,) + new_masks.shape[axis+1:],
-        dtype=numpy.uint64
+    warnings.warn(
+        "`enumerate_masks_max` is deprecated. "
+        "Please use `imgroi`'s `label_mask_stack` instead.",
+        DeprecationWarning
     )
 
-    for i in iters.irange(new_masks.shape[axis]):
-        i = new_enumerated_masks_max.dtype.type(i)
-        one = new_enumerated_masks_max.dtype.type(1)
-        numpy.maximum(
-            new_enumerated_masks_max,
-            (i + one) * add_singleton_axis_pos(
-                            index_axis_at_pos(new_masks, axis, i),
-                            axis
-                        ),
-            out=new_enumerated_masks_max
-        )
+    axis %= new_masks.ndim
+
+    new_masks = new_masks.swapaxes(0, axis)
+    new_enumerated_masks_max = imgroi.core.label_mask_stack(new_masks,
+                                                            dtype=numpy.uint64)
+    new_enumerated_masks_max = new_enumerated_masks_max[None].swapaxes(0, axis)
 
     return(new_enumerated_masks_max)
 
@@ -4282,62 +4280,6 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
     return(vector_pairs_cosine_angle)
 
 
-def generate_contour_fast(a_image):
-    """
-        Takes an image and extracts labeled contours from the mask.
-
-        Args:
-            a_image(numpy.ndarray):            takes an image.
-
-        Returns:
-            (numpy.ndarray):                   an array with the labeled
-                                               contours.
-
-        Examples:
-            >>> a = numpy.array([[ True,  True, False],
-            ...                  [False, False, False],
-            ...                  [ True,  True,  True]], dtype=bool)
-            >>> generate_contour_fast(a)
-            array([[ True,  True, False],
-                   [False, False, False],
-                   [ True,  True,  True]], dtype=bool)
-
-            >>> generate_contour_fast(numpy.eye(3))
-            array([[ 1.,  0.,  0.],
-                   [ 0.,  1.,  0.],
-                   [ 0.,  0.,  1.]])
-
-            >>> a = numpy.array([
-            ...     [False, False,  True, False, False, False,  True],
-            ...     [ True, False, False, False,  True, False, False],
-            ...     [ True,  True, False,  True,  True, False,  True],
-            ...     [ True, False, False,  True,  True, False, False],
-            ...     [ True, False, False, False, False, False, False],
-            ...     [False,  True, False, False, False, False,  True],
-            ...     [False,  True,  True, False, False, False, False]
-            ... ], dtype=bool)
-            >>> generate_contour_fast(a)
-            array([[False, False,  True, False, False, False,  True],
-                   [ True, False, False, False,  True, False, False],
-                   [ True,  True, False,  True,  True, False,  True],
-                   [ True, False, False,  True,  True, False, False],
-                   [ True, False, False, False, False, False, False],
-                   [False,  True, False, False, False, False,  True],
-                   [False,  True,  True, False, False, False, False]], dtype=bool)
-    """
-
-    structure = numpy.ones((3,)*a_image.ndim, dtype=bool)
-
-    a_mask = (a_image != 0)
-    a_mask ^= mahotas.erode(
-            a_mask, structure
-    )
-
-    a_image_contours = a_image * a_mask
-
-    return(a_image_contours)
-
-
 def generate_contour(a_image, separation_distance=1.0, margin=1.0):
     """
         Takes an image and extracts labeled contours from the mask using some
@@ -4388,6 +4330,12 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
                    [False,  True, False, False, False, False,  True],
                    [False,  True,  True, False, False, False, False]], dtype=bool)
     """
+
+    warnings.warn(
+        "`generate_contour` is deprecated. "
+        "Please use `imgroi`'s `find_contours` instead.",
+        DeprecationWarning
+    )
 
     half_thickness = margin / 2
 
