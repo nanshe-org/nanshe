@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a54+14.g363750b documentation</title>
+    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a55 documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a54+14.g363750b',
+        VERSION:     '0.1.0a55',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="nanshe 0.1.0a54+14.g363750b documentation" href="index.html" />
+    <link rel="top" title="nanshe 0.1.0a55 documentation" href="index.html" />
     <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.converter module" href="nanshe.converter.html" />
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
@@ -54,7 +54,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a54+14.g363750b documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a55 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -1830,63 +1830,6 @@ of the contour.</li>
 <span class="gp">... </span>    <span class="p">[</span><span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generate_contour</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="go">array([[False, False,  True, False, False, False,  True],</span>
-<span class="go">       [ True, False, False, False,  True, False, False],</span>
-<span class="go">       [ True,  True, False,  True,  True, False,  True],</span>
-<span class="go">       [ True, False, False,  True,  True, False, False],</span>
-<span class="go">       [ True, False, False, False, False, False, False],</span>
-<span class="go">       [False,  True, False, False, False, False,  True],</span>
-<span class="go">       [False,  True,  True, False, False, False, False]], dtype=bool)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="nanshe.util.xnumpy.generate_contour_fast">
-<code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">generate_contour_fast</code><span class="sig-paren">(</span><em>a_image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#generate_contour_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.generate_contour_fast" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes an image and extracts labeled contours from the mask.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a_image</strong> (<em>numpy.ndarray</em>) &#8211; takes an image.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>an array with the labeled</dt>
-<dd>contours.</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(numpy.ndarray)</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-<span class="gp">... </span>                 <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-<span class="gp">... </span>                 <span class="p">[</span> <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_contour_fast</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="go">array([[ True,  True, False],</span>
-<span class="go">       [False, False, False],</span>
-<span class="go">       [ True,  True,  True]], dtype=bool)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_contour_fast</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-<span class="go">array([[ 1.,  0.,  0.],</span>
-<span class="go">       [ 0.,  1.,  0.],</span>
-<span class="go">       [ 0.,  0.,  1.]])</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_contour_fast</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">array([[False, False,  True, False, False, False,  True],</span>
 <span class="go">       [ True, False, False, False,  True, False, False],</span>
 <span class="go">       [ True,  True, False,  True,  True, False,  True],</span>
@@ -4906,7 +4849,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a54+14.g363750b documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a55 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
