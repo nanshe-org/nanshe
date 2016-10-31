@@ -45,6 +45,10 @@ import mahotas
 
 import vigra
 
+import imgroi
+import imgroi.core
+from imgroi.core import find_contours as generate_contour_fast
+
 import kenjutsu
 import kenjutsu.kenjutsu
 from kenjutsu.kenjutsu import split_blocks as blocks_split
@@ -4280,62 +4284,6 @@ def dot_product_L2_normalized(new_vector_set_1, new_vector_set_2):
                                                                  "cosine")
 
     return(vector_pairs_cosine_angle)
-
-
-def generate_contour_fast(a_image):
-    """
-        Takes an image and extracts labeled contours from the mask.
-
-        Args:
-            a_image(numpy.ndarray):            takes an image.
-
-        Returns:
-            (numpy.ndarray):                   an array with the labeled
-                                               contours.
-
-        Examples:
-            >>> a = numpy.array([[ True,  True, False],
-            ...                  [False, False, False],
-            ...                  [ True,  True,  True]], dtype=bool)
-            >>> generate_contour_fast(a)
-            array([[ True,  True, False],
-                   [False, False, False],
-                   [ True,  True,  True]], dtype=bool)
-
-            >>> generate_contour_fast(numpy.eye(3))
-            array([[ 1.,  0.,  0.],
-                   [ 0.,  1.,  0.],
-                   [ 0.,  0.,  1.]])
-
-            >>> a = numpy.array([
-            ...     [False, False,  True, False, False, False,  True],
-            ...     [ True, False, False, False,  True, False, False],
-            ...     [ True,  True, False,  True,  True, False,  True],
-            ...     [ True, False, False,  True,  True, False, False],
-            ...     [ True, False, False, False, False, False, False],
-            ...     [False,  True, False, False, False, False,  True],
-            ...     [False,  True,  True, False, False, False, False]
-            ... ], dtype=bool)
-            >>> generate_contour_fast(a)
-            array([[False, False,  True, False, False, False,  True],
-                   [ True, False, False, False,  True, False, False],
-                   [ True,  True, False,  True,  True, False,  True],
-                   [ True, False, False,  True,  True, False, False],
-                   [ True, False, False, False, False, False, False],
-                   [False,  True, False, False, False, False,  True],
-                   [False,  True,  True, False, False, False, False]], dtype=bool)
-    """
-
-    structure = numpy.ones((3,)*a_image.ndim, dtype=bool)
-
-    a_mask = (a_image != 0)
-    a_mask ^= mahotas.erode(
-            a_mask, structure
-    )
-
-    a_image_contours = a_image * a_mask
-
-    return(a_image_contours)
 
 
 def generate_contour(a_image, separation_distance=1.0, margin=1.0):
