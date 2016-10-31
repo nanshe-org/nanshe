@@ -58,6 +58,7 @@ elif sys.argv[1] == "bdist_conda":
         "bottleneck",
         "matplotlib",
         "metawrap",
+        "imgroi",
         "kenjutsu",
         "npctypes",
         "xnumpy",
