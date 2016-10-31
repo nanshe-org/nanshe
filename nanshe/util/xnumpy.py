@@ -4330,7 +4330,7 @@ def generate_contour_fast(a_image):
 
     a_mask = (a_image != 0)
     a_mask ^= mahotas.erode(
-            a_image, structure
+            a_mask, structure
     )
 
     a_image_contours = a_image * a_mask
