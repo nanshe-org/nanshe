@@ -2215,24 +2215,18 @@ def enumerate_masks_max(new_masks, axis=0):
                     [0, 0, 0, 4]]], dtype=uint64)
     """
 
-    axis %= new_masks.ndim
-
-    new_enumerated_masks_max = numpy.zeros(
-        new_masks.shape[:axis] + (1,) + new_masks.shape[axis+1:],
-        dtype=numpy.uint64
+    warnings.warn(
+        "`enumerate_masks_max` is deprecated. "
+        "Please use `imgroi`'s `label_mask_stack` instead.",
+        DeprecationWarning
     )
 
-    for i in iters.irange(new_masks.shape[axis]):
-        i = new_enumerated_masks_max.dtype.type(i)
-        one = new_enumerated_masks_max.dtype.type(1)
-        numpy.maximum(
-            new_enumerated_masks_max,
-            (i + one) * add_singleton_axis_pos(
-                            index_axis_at_pos(new_masks, axis, i),
-                            axis
-                        ),
-            out=new_enumerated_masks_max
-        )
+    axis %= new_masks.ndim
+
+    new_masks = new_masks.swapaxes(0, axis)
+    new_enumerated_masks_max = imgroi.core.label_mask_stack(new_masks,
+                                                            dtype=numpy.uint64)
+    new_enumerated_masks_max = new_enumerated_masks_max[None].swapaxes(0, axis)
 
     return(new_enumerated_masks_max)
 
