@@ -4337,6 +4337,12 @@ def generate_contour(a_image, separation_distance=1.0, margin=1.0):
                    [False,  True,  True, False, False, False, False]], dtype=bool)
     """
 
+    warnings.warn(
+        "`generate_contour` is deprecated. "
+        "Please use `imgroi`'s `find_contours` instead.",
+        DeprecationWarning
+    )
+
     half_thickness = margin / 2
 
     lower_threshold = separation_distance - half_thickness
