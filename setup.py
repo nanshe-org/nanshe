@@ -71,9 +71,6 @@ elif sys.argv[1] == "bdist_conda":
     ]
 
     if sys.version_info < (3, 2):
-        build_requires += [
-            "functools32"
-        ]
         install_requires += [
             "functools32"
         ]
