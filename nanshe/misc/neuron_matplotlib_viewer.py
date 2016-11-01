@@ -25,7 +25,7 @@ import warnings
 
 warnings.warn(
     "The module `neuron_matplotlib_viewer` is deprecated."
-    "Please consider using `viewer` instead.",
+    "Please consider using `mplview` instead.",
     DeprecationWarning
 )
 
