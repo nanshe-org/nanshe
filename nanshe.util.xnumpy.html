@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a56 documentation</title>
+    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a56+3.g54c3664.dirty documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a56',
+        VERSION:     '0.1.0a56+3.g54c3664.dirty',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -30,8 +31,6 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="nanshe 0.1.0a56 documentation" href="index.html" />
-    <link rel="up" title="nanshe.util package" href="nanshe.util.html" />
     <link rel="next" title="nanshe.converter module" href="nanshe.converter.html" />
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +53,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a56 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -460,13 +459,13 @@ end.</dd>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) &#8211; which row of Pascal&#8217;s triangle to return.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>cs</strong> &#8211;<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
 <dt>a numpy array containing the row of</dt>
 <dd>Pascal&#8217;s triangle.</dd>
 </dl>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cs(numpy.ndarray)</td>
 </tr>
 </tbody>
 </table>
@@ -521,14 +520,14 @@ mapping
 intersections
 between 2 groups.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>out</strong> &#8211;<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
 <dt>Counts of the</dt>
 <dd>number of matches
 and mismatches.</dd>
 </dl>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">out(numpy.ndarray)</td>
 </tr>
 </tbody>
 </table>
@@ -571,7 +570,7 @@ flipped.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; a 2D bool array mapping
 intersections between 2 groups.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>relevance</strong> &#8211;<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
 <dt>relevance - a combination of</dt>
 <dd><blockquote class="first">
 <div>recall and precision</div></blockquote>
@@ -593,7 +592,7 @@ positives.</dd>
 </dl>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple of floats</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">relevance(tuple of floats)</td>
 </tr>
 </tbody>
 </table>
@@ -1581,10 +1580,10 @@ their mean.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211; the results returned.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the results returned.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -1659,10 +1658,10 @@ their mean.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211; the results returned.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the results returned.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -1921,7 +1920,7 @@ MATLAB&#8217;s function</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles
 of.</li>
-<li><strong>probs</strong> (<em>int or float or numpy.ndarray</em>) &#8211; either some sort of
+<li><strong>probs</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; either some sort of
 integer for the number
 of quantiles or a
 single float specifying
@@ -1930,7 +1929,7 @@ or an array of floats
 specifying the division
 for each quantile in
 the the range (0, 1).</li>
-<li><strong>axis</strong> (<em>int or None</em>) &#8211; the axis to perform the
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>None</em>) &#8211; the axis to perform the
 calculation on (if
 default (None) then
 all, otherwise only on
@@ -2046,7 +2045,7 @@ view.</p>
 axis to.</li>
 <li><strong>axis</strong> (<em>int</em>) &#8211; position for the axis to be in
 the final array.</li>
-<li><strong>pos</strong> (<em>int or slice</em>) &#8211; how to index at the given
+<li><strong>pos</strong> (<em>int</em><em> or </em><em>slice</em>) &#8211; how to index at the given
 axis.</li>
 </ul>
 </td>
@@ -2200,8 +2199,7 @@ to the nearest edge for each dimension.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>a mask that is only True where both masks</dt>
 <dd><p class="first last">are.</p>
 </dd>
@@ -2209,7 +2207,7 @@ to the nearest edge for each dimension.</li>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -2278,8 +2276,7 @@ union.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>ratio of the areas of the masks&#8217;</dt>
 <dd><p class="first last">intersection and union.</p>
 </dd>
@@ -2287,7 +2284,7 @@ union.</p>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -2361,10 +2358,10 @@ union.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211; a mask that is True where either mask is.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a mask that is True where either mask is.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -2436,8 +2433,7 @@ arguments and return a scalar.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>an array (matrix) with the shape (len(a),</dt>
 <dd><p class="first last">len(b)) with each element out[i, j] the
 result of op(a[i], b[j]).</p>
@@ -2446,7 +2442,7 @@ result of op(a[i], b[j]).</p>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -3439,7 +3435,7 @@ of vectors.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles
 of.</li>
-<li><strong>probs</strong> (<em>int or float or numpy.ndarray</em>) &#8211; either some sort of
+<li><strong>probs</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; either some sort of
 integer for the number
 of quantiles or a
 single float specifying
@@ -3448,7 +3444,7 @@ or an array of floats
 specifying the division
 for each quantile in
 the range (0, 1).</li>
-<li><strong>axis</strong> (<em>int or None</em>) &#8211; the axis to perform the
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>None</em>) &#8211; the axis to perform the
 calculation on (if
 default (None) then
 all, otherwise only on
@@ -3589,10 +3585,10 @@ the portion that rolled off masked.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211; result of the roll.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">result of the roll.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -3826,7 +3822,7 @@ due to reshaping, the returned array will be a copy.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
 to the absolute value).</li>
-<li><strong>axis</strong> (<em>int or collection of ints</em>) &#8211; desired axes to squish.</li>
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>collection of ints</em>) &#8211; desired axes to squish.</li>
 <li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions
 is the same plus one by
 inserting singleton dimensions
@@ -4027,9 +4023,9 @@ the nearest edge.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to reorder</li>
-<li><strong>from_axis_order</strong> (<em>str or list of str</em>) &#8211; current labeled axis
+<li><strong>from_axis_order</strong> (<em>str</em><em> or </em><em>list of str</em>) &#8211; current labeled axis
 order.</li>
-<li><strong>to_axis_order</strong> (<em>str or list of str</em>) &#8211; desired labeled axis
+<li><strong>to_axis_order</strong> (<em>str</em><em> or </em><em>list of str</em>) &#8211; desired labeled axis
 order</li>
 <li><strong>to_copy</strong> (<em>bool</em>) &#8211; whether to return a
 view or a copy</li>
@@ -4125,7 +4121,7 @@ which entries match.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>an_array</strong> (<em>numpy.ndarray</em>) &#8211; an array to
 threshold.</li>
-<li><strong>threshold</strong> (<em>int or float or numpy.ndarray</em>) &#8211; something to
+<li><strong>threshold</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; something to
 compare to.</li>
 <li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values
 below the
@@ -4138,8 +4134,7 @@ threshold</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>a mask of entries</dt>
 <dd><p class="first last">reflecting the
 threshold.</p>
@@ -4148,7 +4143,7 @@ threshold.</p>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -4258,7 +4253,7 @@ given the threshold.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>a_metric</strong> (<em>numpy.ndarray</em>) &#8211; an array to
 threshold.</li>
-<li><strong>threshold</strong> (<em>int or float or numpy.ndarray</em>) &#8211; something to
+<li><strong>threshold</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; something to
 compare to.</li>
 <li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values
 below the
@@ -4271,8 +4266,7 @@ threshold</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>out</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>a mapping of</dt>
 <dd><p class="first last">unique matches.</p>
 </dd>
@@ -4280,7 +4274,7 @@ threshold</li>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -4482,10 +4476,10 @@ mapping that are not one-to-one.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> &#8211; the results returned.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the results returned.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">out(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -4564,7 +4558,7 @@ to the absolute value).</li>
 <li><strong>shape</strong> (<em>collection of ints</em>) &#8211; should be the shape of the
 result array (or the array
 before squishing).</li>
-<li><strong>axis</strong> (<em>int or collection of ints</em>) &#8211; desired axes to remove from the
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>collection of ints</em>) &#8211; desired axes to remove from the
 last axis.</li>
 </ul>
 </td>
@@ -4814,7 +4808,7 @@ from the end.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/nanshe.util.xnumpy.txt"
+      <li><a href="_sources/nanshe.util.xnumpy.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -4849,7 +4843,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a56 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
@@ -4859,7 +4853,7 @@ from the end.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

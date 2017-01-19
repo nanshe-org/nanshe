@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.filters.wavelet module &#8212; nanshe 0.1.0a56 documentation</title>
+    <title>nanshe.imp.filters.wavelet module &#8212; nanshe 0.1.0a56+3.g54c3664.dirty documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,10 +17,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a56',
+        VERSION:     '0.1.0a56+3.g54c3664.dirty',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -30,8 +31,6 @@
     <script type="text/javascript" src="_static/cloud.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="nanshe 0.1.0a56 documentation" href="index.html" />
-    <link rel="up" title="nanshe.imp.filters package" href="nanshe.imp.filters.html" />
     <link rel="next" title="nanshe.imp.registration module" href="nanshe.imp.registration.html" />
     <link rel="prev" title="nanshe.imp.filters.noise module" href="nanshe.imp.filters.noise.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +53,7 @@
         <li class="right" >
           <a href="nanshe.imp.filters.noise.html" title="nanshe.imp.filters.noise module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a56 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li>
@@ -96,8 +95,7 @@ transform.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>r</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>a 1D numpy array to use as the wavelet</dt>
 <dd><p class="first last">transform kernel.</p>
 </dd>
@@ -105,7 +103,7 @@ transform.</p>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">r(numpy.ndarray)</p>
 </td>
 </tr>
 </tbody>
@@ -179,8 +177,7 @@ borders.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>k</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>a 1D vigra</dt>
 <dd><p class="first last">kernel to
 aid in
@@ -192,7 +189,7 @@ transform.</p>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">vigra.filters.Kernel1D</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">k(vigra.filters.Kernel1D)</p>
 </td>
 </tr>
 </tbody>
@@ -215,7 +212,7 @@ scale. If scale is an iterable, then</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>im0</strong> (<em>numpy.ndarray</em>) &#8211; the original image.</li>
-<li><strong>scale</strong> (<em>int or tuple of ints</em>) &#8211; the scale of wavelet transform
+<li><strong>scale</strong> (<em>int</em><em> or </em><em>tuple of ints</em>) &#8211; the scale of wavelet transform
 to apply.</li>
 <li><strong>include_intermediates</strong> (<em>bool</em>) &#8211; whether to return
 intermediates or not
@@ -231,8 +228,7 @@ will be raised.)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>W, out</strong> &#8211;</p>
-<dl class="docutils">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>returns the final result of</dt>
 <dd><p class="first last">the wavelet transform and
 possibly other scales. Also,
@@ -242,7 +238,7 @@ may return the intermediates.</p>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple of numpy.ndarrays</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">W, out(tuple of numpy.ndarrays)</p>
 </td>
 </tr>
 </tbody>
@@ -399,7 +395,7 @@ may return the intermediates.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/nanshe.imp.filters.wavelet.txt"
+      <li><a href="_sources/nanshe.imp.filters.wavelet.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -434,7 +430,7 @@ may return the intermediates.</p>
         <li class="right" >
           <a href="nanshe.imp.filters.noise.html" title="nanshe.imp.filters.noise module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a56 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li>
@@ -445,7 +441,7 @@ may return the intermediates.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

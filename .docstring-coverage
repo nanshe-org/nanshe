@@ -1,8 +1,6 @@
 
-File nanshe/learner.py
- - No docstring for generate_neurons_blocks!
- - No docstring for generate_neurons!
- Needed: 6; Exist: 4; Missing: 2; Coverage: 66.7%
+File nanshe/registerer.py
+ Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
 
 File nanshe/_version.py
  Needed: 21; Exist: 21; Missing: 0; Coverage: 100.0%
@@ -10,63 +8,34 @@ File nanshe/_version.py
 File nanshe/converter.py
  Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
 
-File nanshe/registerer.py
- Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
+File nanshe/learner.py
+ - No docstring for generate_neurons_blocks!
+ - No docstring for generate_neurons!
+ Needed: 6; Exist: 4; Missing: 2; Coverage: 66.7%
 
 File nanshe/__init__.py
- Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
-
-File nanshe/imp/segment.py
- - No docstring for region_properties_vigra.VigraProperties!
- - No docstring for VigraProperties.__init__!
- - No docstring for VigraProperties.__len__!
- - No docstring for VigraProperties.__getitem__!
- - No docstring for merge_neuron_sets!
- - No docstring for expand_rois!
- - No docstring for postprocess_data.array_debug_recorder_enumerator!
- Needed: 42; Exist: 35; Missing: 7; Coverage: 83.3%
-
-File nanshe/imp/renorm.py
- Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
-
-File nanshe/imp/registration.py
- Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
-
-File nanshe/imp/__init__.py
- Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
-
-File nanshe/imp/filters/noise.py
- Needed: 4; Exist: 4; Missing: 0; Coverage: 100.0%
-
-File nanshe/imp/filters/wavelet.py
- Needed: 4; Exist: 4; Missing: 0; Coverage: 100.0%
-
-File nanshe/imp/filters/__init__.py
- Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
-
-File nanshe/imp/filters/masks.py
- Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
-
-File nanshe/syn/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/syn/data.py
  Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
 
-File nanshe/util/prof.py
- Needed: 9; Exist: 9; Missing: 0; Coverage: 100.0%
+File nanshe/syn/__init__.py
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/iters.py
  Needed: 12; Exist: 12; Missing: 0; Coverage: 100.0%
 
-File nanshe/util/xglob.py
- Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
+File nanshe/util/prof.py
+ Needed: 9; Exist: 9; Missing: 0; Coverage: 100.0%
+
+File nanshe/util/xnumpy.py
+ Needed: 53; Exist: 53; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/wrappers.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
-File nanshe/util/xnumpy.py
- Needed: 53; Exist: 53; Missing: 0; Coverage: 100.0%
+File nanshe/util/xglob.py
+ Needed: 2; Exist: 2; Missing: 0; Coverage: 100.0%
 
 File nanshe/util/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
@@ -81,18 +50,15 @@ File nanshe/box/__init__.py
 File nanshe/io/xjson.py
  Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
 
-File nanshe/io/xtiff.py
- Needed: 6; Exist: 6; Missing: 0; Coverage: 100.0%
-
 File nanshe/io/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
+
+File nanshe/io/xtiff.py
+ Needed: 6; Exist: 6; Missing: 0; Coverage: 100.0%
 
 File nanshe/io/hdf5/search.py
  - No docstring for get_matching_paths_groups.get_matching_paths_groups_recursive!
  Needed: 6; Exist: 5; Missing: 1; Coverage: 83.3%
-
-File nanshe/io/hdf5/__init__.py
- Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/io/hdf5/record.py
  - No docstring for EmptyArrayRecorder!
@@ -158,14 +124,48 @@ File nanshe/io/hdf5/serializers.py
  - No docstring for HDF5MaskedDataset.__array__!
  Needed: 28; Exist: 8; Missing: 20; Coverage: 28.6%
 
+File nanshe/io/hdf5/__init__.py
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/renorm.py
+ Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/segment.py
+ - No docstring for region_properties_vigra.VigraProperties!
+ - No docstring for VigraProperties.__init__!
+ - No docstring for VigraProperties.__len__!
+ - No docstring for VigraProperties.__getitem__!
+ - No docstring for merge_neuron_sets!
+ - No docstring for expand_rois!
+ - No docstring for postprocess_data.array_debug_recorder_enumerator!
+ Needed: 42; Exist: 35; Missing: 7; Coverage: 83.3%
+
+File nanshe/imp/registration.py
+ Needed: 5; Exist: 5; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/__init__.py
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/filters/noise.py
+ Needed: 4; Exist: 4; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/filters/masks.py
+ Needed: 3; Exist: 3; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/filters/__init__.py
+ Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
+
+File nanshe/imp/filters/wavelet.py
+ Needed: 4; Exist: 4; Missing: 0; Coverage: 100.0%
+
+File nanshe/misc/random_dictionary_learning_data.py
+ Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
+
 File nanshe/misc/neuron_matplotlib_viewer.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 File nanshe/misc/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
-
-File nanshe/misc/random_dictionary_learning_data.py
- Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
 
 
 Overall statistics for 33 files:
