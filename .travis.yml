@@ -8,6 +8,8 @@ env:
    - PYTHON_VERSION="2.7" USE_GPL=true
    - PYTHON_VERSION="3.5" USE_GPL=false
    - PYTHON_VERSION="3.5" USE_GPL=true
+   - PYTHON_VERSION="3.6" USE_GPL=false
+   - PYTHON_VERSION="3.6" USE_GPL=true
 before_install:
    # If `$DEPLOY_DOCS` is unset, make it `false` by default.
    - if [ -z $DEPLOY_DOCS ]; then DEPLOY_DOCS=false; fi
@@ -75,9 +77,12 @@ script:
    - (hash docstring-coverage && docstring-coverage nanshe | tee .docstring-coverage) || true
 after_success:
    # Install packages for submitting coverage results when they are needed.
-   - conda install python-coveralls
+   - conda create -n covenv python=2.7 coverage=3 python-coveralls
+   - source activate covenv
    # Submit results to coveralls.io.
    - coveralls
+   # Back to the test env.
+   - source activate testenv
    # Check to see if this is the right branch to build documentation from.
    - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_REPO_SLUG != "nanshe-org/nanshe" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.

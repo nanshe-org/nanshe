@@ -757,9 +757,9 @@ def unsquish(new_array, shape, axis=None):
         current_axis_order_iter = iters.irange(len(shape))
 
         # Find how the old order relates to the new one
-        axis_order_map = dict(
-            iters.izip(old_axis_order_iter, current_axis_order_iter)
-        )
+        axis_order_map = collections.OrderedDict(sorted(iters.izip(
+            old_axis_order_iter, current_axis_order_iter
+        )))
 
         # Export how the new order will be changed
         # (as the old axis order will be how to transform the axes).
