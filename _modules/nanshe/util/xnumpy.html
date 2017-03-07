@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a56+6.gb854dce documentation</title>
+    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a56+10.gbd4b5df documentation</title>
     
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a56+6.gb854dce',
+        VERSION:     '0.1.0a56+10.gbd4b5df',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a56+6.gb854dce documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a56+10.gbd4b5df documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -818,9 +818,9 @@
         <span class="n">current_axis_order_iter</span> <span class="o">=</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
 
         <span class="c1"># Find how the old order relates to the new one</span>
-        <span class="n">axis_order_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">iters</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">old_axis_order_iter</span><span class="p">,</span> <span class="n">current_axis_order_iter</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="n">axis_order_map</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span>
+            <span class="n">old_axis_order_iter</span><span class="p">,</span> <span class="n">current_axis_order_iter</span>
+        <span class="p">)))</span>
 
         <span class="c1"># Export how the new order will be changed</span>
         <span class="c1"># (as the old axis order will be how to transform the axes).</span>
@@ -4949,7 +4949,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a56+6.gb854dce documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a56+10.gbd4b5df documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
