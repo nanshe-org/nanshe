@@ -942,6 +942,10 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
 
         Examples:
 
+            >>> numpy.set_printoptions(
+            ...     formatter={"float": lambda x: str(float(x))}
+            ... )
+
             >>> region_properties_scikit_image(numpy.zeros((2,2), dtype=int))
             array([], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
@@ -969,6 +973,8 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
             ... )
             array([(1, 3.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> numpy.set_printoptions()
     """
 
     region_properties_type_dict = {
@@ -1269,6 +1275,10 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
 
         Examples:
 
+            >>> numpy.set_printoptions(
+            ...     formatter={"float": lambda x: str(float(x))}
+            ... )
+
             >>> region_properties_vigra(numpy.zeros((2,2), dtype=int))
             array([], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
@@ -1296,6 +1306,8 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
             ... )
             array([(1, 3.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> numpy.set_printoptions()
     """
 
     region_properties_type_dict = {
@@ -1667,6 +1679,10 @@ def region_properties(new_label_image, *args, **kwargs):
 
         Examples:
 
+            >>> numpy.set_printoptions(
+            ...     formatter={"float": lambda x: str(float(x))}
+            ... )
+
             >>> region_properties(
             ...     numpy.zeros((2,2), dtype=int)
             ... ) # doctest: +NORMALIZE_WHITESPACE
@@ -1700,6 +1716,8 @@ def region_properties(new_label_image, *args, **kwargs):
             ... )
             array([(1, 3.0, [1.0, 1.0])], 
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
+
+            >>> numpy.set_printoptions()
     """
 
     return(region_properties_vigra(new_label_image, *args, **kwargs))
@@ -1825,6 +1843,9 @@ def get_one_neuron(shape, dtype):
                                           get_neuron_dtype.
 
         Examples:
+            >>> numpy.set_printoptions(
+            ...     formatter={"float": lambda x: str(float(x))}
+            ... )
             >>> get_one_neuron(
             ...     (3,), numpy.float64
             ... ) #doctest: +NORMALIZE_WHITESPACE
@@ -1868,6 +1889,8 @@ def get_one_neuron(shape, dtype):
                           ('gaussian_mean', '<f8', (2,)),
                           ('gaussian_cov', '<f8', (2, 2)),
                           ('centroid', '<f8', (2,))])
+
+            >>> numpy.set_printoptions()
     """
 
     neurons_dtype = get_neuron_dtype(shape=shape, dtype=dtype)
