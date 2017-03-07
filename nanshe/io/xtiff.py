@@ -126,7 +126,7 @@ def get_multipage_tiff_shape_dtype_transformed(new_tiff_filename,
     # Correct if some pages are for different channels
     if (pages_to_channel != 1):
         new_tiff_file_shape = new_tiff_file_shape[:-2] + \
-                              (new_tiff_file_shape[-2] / pages_to_channel,
+                              (new_tiff_file_shape[-2] // pages_to_channel,
                                pages_to_channel * new_tiff_file_shape[-1],)
 
     # Correct the axis order
@@ -214,7 +214,7 @@ def get_standard_tiff_array(new_tiff_filename,
     if pages_to_channel > 1:
         new_tiff_array = new_tiff_array.reshape(
             new_tiff_array.shape[:-2] +
-            (new_tiff_array.shape[-2] / pages_to_channel,
+            (new_tiff_array.shape[-2] // pages_to_channel,
              pages_to_channel * new_tiff_array.shape[-1],)
         )
 
@@ -319,7 +319,7 @@ def get_standard_tiff_data(new_tiff_filename,
     if pages_to_channel > 1:
         new_tiff_array = new_tiff_array.reshape(
             new_tiff_array.shape[:-2] +
-            (new_tiff_array.shape[-2] / pages_to_channel,
+            (new_tiff_array.shape[-2] // pages_to_channel,
              pages_to_channel * new_tiff_array.shape[-1],)
         )
 
