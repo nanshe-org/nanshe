@@ -8,6 +8,8 @@ env:
    - PYTHON_VERSION="2.7" USE_GPL=true
    - PYTHON_VERSION="3.5" USE_GPL=false
    - PYTHON_VERSION="3.5" USE_GPL=true
+   - PYTHON_VERSION="3.6" USE_GPL=false
+   - PYTHON_VERSION="3.6" USE_GPL=true
 before_install:
    # If `$DEPLOY_DOCS` is unset, make it `false` by default.
    - if [ -z $DEPLOY_DOCS ]; then DEPLOY_DOCS=false; fi
