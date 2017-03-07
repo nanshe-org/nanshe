@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.imp.segment module &#8212; nanshe 0.1.0a56+3.g54c3664.dirty documentation</title>
+    <title>nanshe.imp.segment module &#8212; nanshe 0.1.0a56+6.gb854dce documentation</title>
     
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a56+3.g54c3664.dirty',
+        VERSION:     '0.1.0a56+6.gb854dce',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -53,7 +53,7 @@
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a56+6.gb854dce documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" accesskey="U">nanshe.imp package</a> &#187;</li> 
@@ -767,7 +767,10 @@ get_neuron_dtype.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">(</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([ ([False, False, False],</span>
@@ -811,6 +814,9 @@ get_neuron_dtype.</dd>
 <span class="go">              (&#39;gaussian_mean&#39;, &#39;&lt;f8&#39;, (2,)),</span>
 <span class="go">              (&#39;gaussian_cov&#39;, &#39;&lt;f8&#39;, (2, 2)),</span>
 <span class="go">              (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1171,6 +1177,11 @@ label.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
@@ -1209,6 +1220,9 @@ label.</dd>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1256,6 +1270,11 @@ label.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
@@ -1288,6 +1307,9 @@ label.</dd>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1335,6 +1357,11 @@ label.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
@@ -1367,6 +1394,9 @@ label.</dd>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1636,7 +1666,7 @@ noise used).</li>
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a56+6.gb854dce documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li> 
@@ -1646,7 +1676,7 @@ noise used).</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

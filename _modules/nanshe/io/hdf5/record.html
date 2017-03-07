@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nanshe.io.hdf5.record &#8212; nanshe 0.1.0a56+3.g54c3664.dirty documentation</title>
+    <title>nanshe.io.hdf5.record &#8212; nanshe 0.1.0a56+6.gb854dce documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a56+3.g54c3664.dirty',
+        VERSION:     '0.1.0a56+6.gb854dce',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a56+6.gb854dce documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -115,7 +115,7 @@
 
 
 <span class="c1"># Get the logger</span>
-<span class="n">trace_meta_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceMetaLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">trace_meta_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceMetaLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
@@ -127,13 +127,13 @@
         <span class="k">return</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># For forward compatibility with Python 3</span>
-    <span class="n">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+    <span class="fm">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
 
 <div class="viewcode-block" id="EmptyArrayRecorder.get"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.EmptyArrayRecorder.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">default</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
 
@@ -182,13 +182,13 @@
         <span class="k">return</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># For forward compatibility with Python 3</span>
-    <span class="n">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+    <span class="fm">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
 
 <div class="viewcode-block" id="HDF5ArrayRecorder.get"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.HDF5ArrayRecorder.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">default</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
 
@@ -305,13 +305,13 @@
         <span class="k">return</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># For forward compatibility with Python 3</span>
-    <span class="n">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+    <span class="fm">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
 
 <div class="viewcode-block" id="HDF5EnumeratedArrayRecorder.get"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.HDF5EnumeratedArrayRecorder.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">default</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
 
@@ -560,32 +560,32 @@
                 <span class="c1"># &quot;&quot;&quot;</span>
 
                 <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
                 <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">)</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">:</span>
-                    <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">])</span>
+                    <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">])</span>
 
             <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">_v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">_v</span><span class="p">[</span><span class="n">callable</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="n">_v</span><span class="p">[</span><span class="n">callable</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                         <span class="k">try</span><span class="p">:</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span><span class="p">[</span><span class="n">callable</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span><span class="p">[</span><span class="n">callable</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span>
                         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">EmptyArrayRecorder</span><span class="p">):</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
                             <span class="k">else</span><span class="p">:</span>
                                 <span class="k">raise</span>
 
             <span class="k">def</span> <span class="nf">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">:</span>
-                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
 
         <span class="n">callable</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">static_variables</span><span class="p">(</span>
             <span class="n">recorders</span><span class="o">=</span><span class="n">SubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -598,8 +598,8 @@
             <span class="c1"># However, HDF5EnumeratedArrayRecorder needs a clue as to</span>
             <span class="c1"># when it should switch to a new one as it will keep different</span>
             <span class="c1"># runs separate.</span>
-            <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
-                <span class="n">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">][</span><span class="s2">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+                <span class="n">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">][</span><span class="s2">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">return</span><span class="p">(</span><span class="n">callable</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
 
@@ -700,32 +700,32 @@
                 <span class="c1"># &quot;&quot;&quot;</span>
 
                 <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
                 <span class="k">for</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">)</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">:</span>
-                    <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">])</span>
+                    <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">])</span>
 
             <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">,</span> <span class="n">_v</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">_v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">_v</span><span class="p">[</span><span class="n">a_class</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="n">_v</span><span class="p">[</span><span class="n">a_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                         <span class="k">try</span><span class="p">:</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span><span class="p">[</span><span class="n">a_class</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_v</span><span class="p">[</span><span class="n">a_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span>
                         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span> <span class="n">EmptyArrayRecorder</span><span class="p">):</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyArrayRecorder</span><span class="p">()</span>
                             <span class="k">else</span><span class="p">:</span>
                                 <span class="k">raise</span>
 
             <span class="k">def</span> <span class="nf">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_k</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_k</span> <span class="o">!=</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">:</span>
-                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
 
         <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_static_variables</span><span class="p">(</span>
             <span class="n">recorders</span><span class="o">=</span><span class="n">ClassSubgroupingRecorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -743,8 +743,8 @@
                 <span class="c1"># runs separate.</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span> <span class="o">=</span> <span class="n">ClassSubgroupingRecorders</span><span class="p">()</span>
-                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">a_class</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_class</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="n">a_class</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_class</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">]</span>
 
                 <span class="k">return</span><span class="p">(</span><span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
 
@@ -762,8 +762,8 @@
                 <span class="c1"># However, HDF5EnumeratedArrayRecorder needs a clue as to</span>
                 <span class="c1"># when it should switch to a new one as it will keep different</span>
                 <span class="c1"># runs separate.</span>
-                <span class="n">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
+                <span class="n">callable</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
                     <span class="c1"># setattr(callable.recorders, _k,</span>
                     <span class="c1"># self.recorders.__dict__[_k][callable.__name__)])</span>
                     <span class="nb">setattr</span><span class="p">(</span>
@@ -777,7 +777,7 @@
 
         <span class="c1"># Wraps __init__ only</span>
         <span class="n">a_class</span> <span class="o">=</span> <span class="n">wrappers</span><span class="o">.</span><span class="n">class_decorate_methods</span><span class="p">(</span>
-            <span class="n">__init__</span><span class="o">=</span><span class="n">class_static_subgrouping_array_recorders__init__decorator</span>
+            <span class="fm">__init__</span><span class="o">=</span><span class="n">class_static_subgrouping_array_recorders__init__decorator</span>
         <span class="p">)(</span><span class="n">a_class</span><span class="p">)</span>
 
         <span class="c1"># Wrap everything</span>
@@ -789,10 +789,10 @@
         <span class="c1"># Precedes the constructor to ensure a new working directory is created</span>
         <span class="k">class</span> <span class="nc">MetaSubgroupingRecorders</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
             <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">][</span><span class="s2">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">for</span> <span class="n">_k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">_k</span><span class="p">][</span><span class="s2">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-                <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaSubgroupingRecorders</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span>
+                <span class="k">return</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MetaSubgroupingRecorders</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span>
                     <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
                 <span class="p">))</span>
 
@@ -858,7 +858,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a56+3.g54c3664.dirty documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a56+6.gb854dce documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -867,7 +867,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2015, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
