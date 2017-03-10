@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'nanshe'
-copyright = u'2014-2015, John A. Kirkham'
+copyright = u'2014-2017, John A. Kirkham'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -278,7 +278,7 @@ texinfo_documents = [
 epub_title = u'Nanshe Documentation'
 epub_author = u'John A. Kirkham'
 epub_publisher = u'John A. Kirkham'
-epub_copyright = u'2014-2015, John A. Kirkham'
+epub_copyright = copyright
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'..'
