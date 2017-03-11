@@ -153,6 +153,7 @@ setup(
     install_requires=install_requires,
     tests_require=tests_require,
     test_suite="nose.collector",
+    data_files=[('', ['LICENSE.txt'])],
     zip_safe=True,
     conda_import_tests=False,
     conda_command_tests=False
