@@ -1,5 +1,5 @@
-nanshe.io package
-=================
+nanshe\.io package
+==================
 
 .. automodule:: nanshe.io
     :members:

@@ -1,5 +1,5 @@
-nanshe.imp.segment module
-=========================
+nanshe\.imp\.segment module
+===========================
 
 .. automodule:: nanshe.imp.segment
     :members:

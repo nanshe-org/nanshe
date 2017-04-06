@@ -1,5 +1,5 @@
-nanshe.imp package
-==================
+nanshe\.imp package
+===================
 
 .. automodule:: nanshe.imp
     :members:

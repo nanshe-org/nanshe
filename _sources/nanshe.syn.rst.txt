@@ -1,5 +1,5 @@
-nanshe.syn package
-==================
+nanshe\.syn package
+===================
 
 .. automodule:: nanshe.syn
     :members:

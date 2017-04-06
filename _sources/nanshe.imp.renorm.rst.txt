@@ -1,5 +1,5 @@
-nanshe.imp.renorm module
-========================
+nanshe\.imp\.renorm module
+==========================
 
 .. automodule:: nanshe.imp.renorm
     :members:

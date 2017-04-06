@@ -1,5 +1,5 @@
-nanshe.misc.random_dictionary_learning_data module
-==================================================
+nanshe\.misc\.random\_dictionary\_learning\_data module
+=======================================================
 
 .. automodule:: nanshe.misc.random_dictionary_learning_data
     :members:

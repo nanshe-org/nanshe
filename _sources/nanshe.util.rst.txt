@@ -1,5 +1,5 @@
-nanshe.util package
-===================
+nanshe\.util package
+====================
 
 .. automodule:: nanshe.util
     :members:

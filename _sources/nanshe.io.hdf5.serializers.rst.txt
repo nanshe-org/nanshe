@@ -1,5 +1,5 @@
-nanshe.io.hdf5.serializers module
-=================================
+nanshe\.io\.hdf5\.serializers module
+====================================
 
 .. automodule:: nanshe.io.hdf5.serializers
     :members:

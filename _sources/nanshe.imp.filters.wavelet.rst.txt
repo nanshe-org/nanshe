@@ -1,5 +1,5 @@
-nanshe.imp.filters.wavelet module
-=================================
+nanshe\.imp\.filters\.wavelet module
+====================================
 
 .. automodule:: nanshe.imp.filters.wavelet
     :members:

@@ -1,5 +1,5 @@
-nanshe.io.hdf5.search module
-============================
+nanshe\.io\.hdf5\.search module
+===============================
 
 .. automodule:: nanshe.io.hdf5.search
     :members:

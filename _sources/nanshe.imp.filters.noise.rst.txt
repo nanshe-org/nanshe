@@ -1,5 +1,5 @@
-nanshe.imp.filters.noise module
-===============================
+nanshe\.imp\.filters\.noise module
+==================================
 
 .. automodule:: nanshe.imp.filters.noise
     :members:

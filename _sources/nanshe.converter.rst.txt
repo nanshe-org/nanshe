@@ -1,5 +1,5 @@
-nanshe.converter module
-=======================
+nanshe\.converter module
+========================
 
 .. automodule:: nanshe.converter
     :members:
