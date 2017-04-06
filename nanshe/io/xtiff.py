@@ -37,12 +37,7 @@ import vigra.impex
 from nanshe.util import iters, xglob, prof, xnumpy
 from nanshe.io import hdf5
 
-try:
-    import tifffile
-except ImportError:
-    # scikit-image is bundled with tifffile so use it.
-    from skimage.external import tifffile
-
+import tifffile
 
 from past.builtins import unicode
 
