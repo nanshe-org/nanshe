@@ -272,10 +272,6 @@ def register_mean_offsets(frames2reg,
                 frames2reg_fft[range_ij], template_fft
             )
 
-        # Translate shifts to fit within one frame.
-        for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
-            this_space_shift[range_ij] %= numpy.array(frames2reg_fft.shape[1:])
-
         # Remove global shifts.
         this_space_shift_mean[...] = 0
         for range_ij in iters.subrange(0, len(frames2reg), block_frame_length):
