@@ -1,6 +1,5 @@
 [run]
 branch = True
-erase = True
 package = nanshe
 [report]
 exclude_lines =
