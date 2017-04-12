@@ -60,7 +60,6 @@ install:
    # Install coverage and coveralls to generate and submit test coverage results for coveralls.io.
    # Also, install docstring-coverage to get information about documentation coverage.
    - conda install nose-timer
-   - echo "coverage 3.*" >> $HOME/miniconda/envs/testenv/conda-meta/pinned
    - conda install coverage
    - conda install docstring-coverage || true
    # Clean up downloads as there are quite a few and they waste space/memory.
@@ -76,12 +75,9 @@ script:
    - (hash docstring-coverage && docstring-coverage nanshe | tee .docstring-coverage) || true
 after_success:
    # Install packages for submitting coverage results when they are needed.
-   - conda create -n covenv python=2.7 coverage=3 python-coveralls
-   - source activate covenv
+   - conda install -n testenv python-coveralls
    # Submit results to coveralls.io.
    - coveralls
-   # Back to the test env.
-   - source activate testenv
    # Check to see if this is the right branch to build documentation from.
    - if [ $TRAVIS_PULL_REQUEST != "false" ] || [ $TRAVIS_REPO_SLUG != "nanshe-org/nanshe" ] || [ $TRAVIS_BRANCH != "master" ]; then exit 0 ; fi
    # Save documentation and documentation coverage statistics.
