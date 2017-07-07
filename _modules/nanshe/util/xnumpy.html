@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a58+10.gc8f39a5 documentation</title>
-    
+    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a58+12.g584ff40 documentation</title>
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a58+10.gc8f39a5',
+        VERSION:     '0.1.0a58+12.g584ff40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -34,7 +31,7 @@
     <link rel="search" title="Search" href="../../../search.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -46,7 +43,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -138,8 +135,8 @@
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="renumber_label_image"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.renumber_label_image">[docs]</a><span class="k">def</span> <span class="nf">renumber_label_image</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
+<div class="viewcode-block" id="renumber_label_image"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.renumber_label_image">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">renumber_label_image</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a label image with non-consecutive numbering and renumbers it to</span>
 <span class="sd">        be consecutive. Returns the relabeled image, a mapping from the old</span>
@@ -211,8 +208,8 @@
     <span class="k">return</span><span class="p">((</span><span class="n">new_array_relabeled</span><span class="p">,</span> <span class="n">forward_label_mapping</span><span class="p">,</span> <span class="n">reverse_label_mapping</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="index_axis_at_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.index_axis_at_pos">[docs]</a><span class="k">def</span> <span class="nf">index_axis_at_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<div class="viewcode-block" id="index_axis_at_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.index_axis_at_pos">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index_axis_at_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Indexes an arbitrary axis to the given position, which may be an index,</span>
 <span class="sd">        a slice, or any other NumPy allowed indexing type. This will return a</span>
@@ -293,8 +290,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_subarray</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="add_singleton_axis_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_pos">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_axis_pos</span><span class="p">(</span><span class="n">a_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="add_singleton_axis_pos"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_pos">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add_singleton_axis_pos</span><span class="p">(</span><span class="n">a_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a singleton axis to the given position.</span>
 
@@ -354,8 +351,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_array</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="add_singleton_axis_beginning"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_beginning">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_axis_beginning</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
+<div class="viewcode-block" id="add_singleton_axis_beginning"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_beginning">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add_singleton_axis_beginning</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a singleton axis to the beginning of the array.</span>
 
@@ -380,8 +377,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="add_singleton_axis_end"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_end">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_axis_end</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
+<div class="viewcode-block" id="add_singleton_axis_end"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_axis_end">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add_singleton_axis_end</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a singleton axis to the end of the array.</span>
 
@@ -406,8 +403,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">new_array</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="squish"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.squish">[docs]</a><span class="k">def</span> <span class="nf">squish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="squish"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.squish">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">squish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Moves the given axes to the last dimensions of the array and then</span>
 <span class="sd">        squishes them into one dimension.</span>
@@ -568,8 +565,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="unsquish"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.unsquish">[docs]</a><span class="k">def</span> <span class="nf">unsquish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="unsquish"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.unsquish">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">unsquish</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inverts the squish operation given the shape and the axis/axes to</span>
 <span class="sd">        extract from the last dimension.</span>
@@ -834,8 +831,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="add_singleton_op"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_op">[docs]</a><span class="k">def</span> <span class="nf">add_singleton_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+<div class="viewcode-block" id="add_singleton_op"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.add_singleton_op">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add_singleton_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs an operation on the given array on the specified axis, which</span>
 <span class="sd">        otherwise would have eliminated the axis in question. This function</span>
@@ -878,8 +875,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">add_singleton_axis_pos</span><span class="p">(</span><span class="n">op</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="p">),</span> <span class="n">axis</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="roll"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.roll">[docs]</a><span class="k">def</span> <span class="nf">roll</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">shift</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_mask</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="roll"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.roll">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">roll</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">shift</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_mask</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Like numpy.roll, but generalizes to include a roll for each axis of</span>
 <span class="sd">        new_array.</span>
@@ -1182,8 +1179,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="contains"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.contains">[docs]</a><span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">to_contain</span><span class="p">):</span>
+<div class="viewcode-block" id="contains"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.contains">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">to_contain</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a mask array that is true every time something from to_contain</span>
 <span class="sd">        appears in new_array.</span>
@@ -1233,8 +1230,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">to_contain</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">new_array</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="min_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.min_abs">[docs]</a><span class="k">def</span> <span class="nf">min_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="min_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.min_abs">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">min_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes the min of the given array subject to the absolute value</span>
 <span class="sd">        (magnitude for complex numbers).</span>
@@ -1360,8 +1357,8 @@
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">result_indices</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="nanmin_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.nanmin_abs">[docs]</a><span class="k">def</span> <span class="nf">nanmin_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="nanmin_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.nanmin_abs">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">nanmin_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes the min of the given array subject to the absolute value</span>
 <span class="sd">        (magnitude for complex numbers).</span>
@@ -1498,8 +1495,8 @@
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">result_indices</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="max_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.max_abs">[docs]</a><span class="k">def</span> <span class="nf">max_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="max_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.max_abs">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">max_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes the max of the given array subject to the absolute value</span>
 <span class="sd">        (magnitude for complex numbers).</span>
@@ -1626,8 +1623,8 @@
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">result_indices</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="nanmax_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.nanmax_abs">[docs]</a><span class="k">def</span> <span class="nf">nanmax_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="nanmax_abs"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.nanmax_abs">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">nanmax_abs</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes the max of the given array subject to the absolute value</span>
 <span class="sd">        (magnitude for complex numbers).</span>
@@ -1762,8 +1759,8 @@
         <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">result_indices</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="array_to_matrix"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.array_to_matrix">[docs]</a><span class="k">def</span> <span class="nf">array_to_matrix</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<div class="viewcode-block" id="array_to_matrix"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.array_to_matrix">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">array_to_matrix</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Flattens an array so that the row is the only original shape kept.</span>
 
@@ -1799,8 +1796,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="index_array_to_bool_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.index_array_to_bool_array">[docs]</a><span class="k">def</span> <span class="nf">index_array_to_bool_array</span><span class="p">(</span><span class="n">index_array</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+<div class="viewcode-block" id="index_array_to_bool_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.index_array_to_bool_array">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index_array_to_bool_array</span><span class="p">(</span><span class="n">index_array</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a bool array mask that has each value from the index array as</span>
 <span class="sd">        True. All other values are False. Requires a shape be specified to</span>
@@ -1839,8 +1836,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">bool_array</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="expand_view"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_view">[docs]</a><span class="k">def</span> <span class="nf">expand_view</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
+<div class="viewcode-block" id="expand_view"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.expand_view">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">expand_view</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span> <span class="n">reps_after</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">reps_before</span><span class="o">=</span><span class="nb">tuple</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Behaves like NumPy tile except that it always returns a view and not a</span>
 <span class="sd">        copy. Though, it differs in that additional dimensions are added for</span>
@@ -2293,8 +2290,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_enumerated_masks_max</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="truncate_masked_frames"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.truncate_masked_frames">[docs]</a><span class="k">def</span> <span class="nf">truncate_masked_frames</span><span class="p">(</span><span class="n">shifted_frames</span><span class="p">):</span>
+<div class="viewcode-block" id="truncate_masked_frames"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.truncate_masked_frames">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">truncate_masked_frames</span><span class="p">(</span><span class="n">shifted_frames</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes frames that have been shifted and truncates out the portion,</span>
 <span class="sd">        which is an intact rectangular shape.</span>
@@ -2410,8 +2407,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">truncated_shifted_frames</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="all_permutations_equal"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.all_permutations_equal">[docs]</a><span class="k">def</span> <span class="nf">all_permutations_equal</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">):</span>
+<div class="viewcode-block" id="all_permutations_equal"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.all_permutations_equal">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">all_permutations_equal</span><span class="p">(</span><span class="n">new_array_1</span><span class="p">,</span> <span class="n">new_array_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes two arrays and constructs a new array that contains the result</span>
 <span class="sd">        of equality comparison on every permutation of elements in each array</span>
@@ -2534,8 +2531,8 @@
     <span class="k">pass</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="numpy_structured_array_dtype_generator"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.numpy_structured_array_dtype_generator">[docs]</a><span class="k">def</span> <span class="nf">numpy_structured_array_dtype_generator</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
+<div class="viewcode-block" id="numpy_structured_array_dtype_generator"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.numpy_structured_array_dtype_generator">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">numpy_structured_array_dtype_generator</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a NumPy structured array and returns a generator that goes over</span>
 <span class="sd">        each name in the structured array and yields the name, type, and shape</span>
@@ -2568,8 +2565,8 @@
         <span class="k">yield</span> <span class="p">((</span><span class="n">each_name</span><span class="p">,</span> <span class="n">each_dtype</span><span class="p">,</span> <span class="n">each_shape</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="numpy_structured_array_dtype_list"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.numpy_structured_array_dtype_list">[docs]</a><span class="k">def</span> <span class="nf">numpy_structured_array_dtype_list</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
+<div class="viewcode-block" id="numpy_structured_array_dtype_list"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.numpy_structured_array_dtype_list">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">numpy_structured_array_dtype_list</span><span class="p">(</span><span class="n">new_array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes any NumPy array and returns either a list for a NumPy structured</span>
 <span class="sd">        array via numpy_structured_array_dtype_generator or if it is a normal</span>
@@ -2589,8 +2586,8 @@
     <span class="k">return</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">numpy_structured_array_dtype_generator</span><span class="p">(</span><span class="n">new_array</span><span class="p">)))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="dot_product"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product">[docs]</a><span class="k">def</span> <span class="nf">dot_product</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_product"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dot_product</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the two pairs of vectors from each</span>
 <span class="sd">        set.</span>
@@ -2646,8 +2643,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="pair_dot_product"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">):</span>
+<div class="viewcode-block" id="pair_dot_product"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pair_dot_product</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the vectors in the set.</span>
 
@@ -2687,8 +2684,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">dot_product</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="n">new_vector_set</span><span class="p">))</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="norm"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.norm">[docs]</a><span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="norm"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.norm">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the norm of a vector or a set of vectors.</span>
 
@@ -2779,8 +2776,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="threshold_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.threshold_array">[docs]</a><span class="k">def</span> <span class="nf">threshold_array</span><span class="p">(</span><span class="n">an_array</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="threshold_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.threshold_array">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">threshold_array</span><span class="p">(</span><span class="n">an_array</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a threshold, this function compares the given array to it to see</span>
 <span class="sd">        which entries match.</span>
@@ -2904,8 +2901,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">accepted</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="unique_mapping"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.unique_mapping">[docs]</a><span class="k">def</span> <span class="nf">unique_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="unique_mapping"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.unique_mapping">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">unique_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Take a binary mapping between two sets and excludes portions of the</span>
 <span class="sd">        mapping that are not one-to-one.</span>
@@ -2984,8 +2981,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="threshold_metric"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.threshold_metric">[docs]</a><span class="k">def</span> <span class="nf">threshold_metric</span><span class="p">(</span><span class="n">a_metric</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="threshold_metric"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.threshold_metric">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">threshold_metric</span><span class="p">(</span><span class="n">a_metric</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">include_below</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_closed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a threshold, this function finds which entries uniquely match</span>
 <span class="sd">        given the threshold.</span>
@@ -3102,8 +3099,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">accepted</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="compute_mapping_matches"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.compute_mapping_matches">[docs]</a><span class="k">def</span> <span class="nf">compute_mapping_matches</span><span class="p">(</span><span class="n">mapping</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_mapping_matches"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.compute_mapping_matches">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">compute_mapping_matches</span><span class="p">(</span><span class="n">mapping</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a mapping this function computes number of matches and mismatches</span>
 <span class="sd">        found.</span>
@@ -3158,8 +3155,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="compute_mapping_relevance"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.compute_mapping_relevance">[docs]</a><span class="k">def</span> <span class="nf">compute_mapping_relevance</span><span class="p">(</span><span class="n">mapping</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_mapping_relevance"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.compute_mapping_relevance">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">compute_mapping_relevance</span><span class="p">(</span><span class="n">mapping</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a mapping this function computes the recall and precision.</span>
 
@@ -3221,8 +3218,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">relevance</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="find_relative_offsets"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.find_relative_offsets">[docs]</a><span class="k">def</span> <span class="nf">find_relative_offsets</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="find_relative_offsets"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.find_relative_offsets">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">find_relative_offsets</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a series of points, find the relative points from the mean.</span>
 
@@ -3300,8 +3297,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="find_shortest_wraparound"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.find_shortest_wraparound">[docs]</a><span class="k">def</span> <span class="nf">find_shortest_wraparound</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="find_shortest_wraparound"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.find_shortest_wraparound">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">find_shortest_wraparound</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the smallest values for the points given periodic boundary</span>
 <span class="sd">        conditions.</span>
@@ -3436,8 +3433,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="matrix_reduced_op"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.matrix_reduced_op">[docs]</a><span class="k">def</span> <span class="nf">matrix_reduced_op</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
+<div class="viewcode-block" id="matrix_reduced_op"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.matrix_reduced_op">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">matrix_reduced_op</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sort of like numpy.dot. However, it will use the first axis with both</span>
 <span class="sd">        arrays. This means they may not need to be matrices. However, they must</span>
@@ -3543,8 +3540,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="masks_intersection"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.masks_intersection">[docs]</a><span class="k">def</span> <span class="nf">masks_intersection</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="masks_intersection"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.masks_intersection">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">masks_intersection</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a mask that contains the points share by both masks.</span>
 
@@ -3616,8 +3613,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="masks_union"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.masks_union">[docs]</a><span class="k">def</span> <span class="nf">masks_union</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="masks_union"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.masks_union">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">masks_union</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A mask that contains point contained in either mask.</span>
 
@@ -3686,8 +3683,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="masks_overlap_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.masks_overlap_normalized">[docs]</a><span class="k">def</span> <span class="nf">masks_overlap_normalized</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="masks_overlap_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.masks_overlap_normalized">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">masks_overlap_normalized</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The area of intersection of the masks divided by the area of their</span>
 <span class="sd">        union.</span>
@@ -3765,8 +3762,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span>
+<div class="viewcode-block" id="dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_partially_normalized">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span>
                                      <span class="n">new_vector_set_2</span><span class="p">,</span>
                                      <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -3895,8 +3892,8 @@
     <span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="pair_dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_partially_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="pair_dot_product_partially_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_partially_normalized">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pair_dot_product_partially_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between the two pairs of vectors from each</span>
 <span class="sd">        set and creates a tuple with the dot product divided by one norm or the</span>
@@ -4022,8 +4019,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_normalized">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between a pair of vectors from each set and</span>
 <span class="sd">        divides them by the norm of the two.</span>
@@ -4143,8 +4140,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="pair_dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_normalized">[docs]</a><span class="k">def</span> <span class="nf">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="pair_dot_product_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.pair_dot_product_normalized">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pair_dot_product_normalized</span><span class="p">(</span><span class="n">new_vector_set</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">float_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between a pair of vectors from each set and</span>
 <span class="sd">        divides them by the norm of the two.</span>
@@ -4263,8 +4260,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">vector_pairs_dot_product_normalized</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="dot_product_L2_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_L2_normalized">[docs]</a><span class="k">def</span> <span class="nf">dot_product_L2_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_product_L2_normalized"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.dot_product_L2_normalized">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dot_product_L2_normalized</span><span class="p">(</span><span class="n">new_vector_set_1</span><span class="p">,</span> <span class="n">new_vector_set_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the dot product between a pair of vectors from each set and</span>
 <span class="sd">        divides them by the L_2 norm of the two.</span>
@@ -4643,8 +4640,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">new_quantiles</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="binomial_coefficients"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.binomial_coefficients">[docs]</a><span class="k">def</span> <span class="nf">binomial_coefficients</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="binomial_coefficients"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.binomial_coefficients">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">binomial_coefficients</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a row in Pascal&#39;s triangle (binomial coefficients).</span>
 
@@ -4699,8 +4696,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.line_filter">[docs]</a><span class="k">def</span> <span class="nf">line_filter</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.line_filter">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">line_filter</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a boolean array mask for a line. This mask has size for the</span>
 <span class="sd">        length of the line and number of empty lines beside it in any</span>
@@ -4762,8 +4759,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="symmetric_line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.symmetric_line_filter">[docs]</a><span class="k">def</span> <span class="nf">symmetric_line_filter</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">ndims</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="symmetric_line_filter"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.symmetric_line_filter">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">symmetric_line_filter</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">ndims</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a boolean array mask for a line. This mask has size for the</span>
 <span class="sd">        length of the line and number of empty lines beside it in any</span>
@@ -4824,8 +4821,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="tagging_reorder_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.tagging_reorder_array">[docs]</a><span class="k">def</span> <span class="nf">tagging_reorder_array</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span>
+<div class="viewcode-block" id="tagging_reorder_array"><a class="viewcode-back" href="../../../nanshe.util.xnumpy.html#nanshe.util.xnumpy.tagging_reorder_array">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tagging_reorder_array</span><span class="p">(</span><span class="n">new_array</span><span class="p">,</span>
                           <span class="n">from_axis_order</span><span class="o">=</span><span class="s2">&quot;tzyxc&quot;</span><span class="p">,</span>
                           <span class="n">to_axis_order</span><span class="o">=</span><span class="s2">&quot;tzyxc&quot;</span><span class="p">,</span>
                           <span class="n">to_copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -4967,7 +4964,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -4976,7 +4973,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

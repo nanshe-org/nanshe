@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>nanshe.io.hdf5.record &#8212; nanshe 0.1.0a58+10.gc8f39a5 documentation</title>
-    
+    <title>nanshe.io.hdf5.record &#8212; nanshe 0.1.0a58+12.g584ff40 documentation</title>
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a58+10.gc8f39a5',
+        VERSION:     '0.1.0a58+12.g584ff40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -34,7 +31,7 @@
     <link rel="search" title="Search" href="../../../../search.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -46,7 +43,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -119,8 +116,8 @@
 <span class="n">trace_meta_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceMetaLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="EmptyArrayRecorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.EmptyArrayRecorder">[docs]</a><span class="k">class</span> <span class="nc">EmptyArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="EmptyArrayRecorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.EmptyArrayRecorder">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">EmptyArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__recorders</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
@@ -173,8 +170,8 @@
                 <span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="HDF5ArrayRecorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.HDF5ArrayRecorder">[docs]</a><span class="k">class</span> <span class="nc">HDF5ArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="HDF5ArrayRecorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.HDF5ArrayRecorder">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">HDF5ArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdf5_handle</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span> <span class="o">=</span> <span class="n">hdf5_handle</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="o">=</span> <span class="n">overwrite</span>
@@ -268,8 +265,8 @@
                 <span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="HDF5EnumeratedArrayRecorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.HDF5EnumeratedArrayRecorder">[docs]</a><span class="k">class</span> <span class="nc">HDF5EnumeratedArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="HDF5EnumeratedArrayRecorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.HDF5EnumeratedArrayRecorder">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_class</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">HDF5EnumeratedArrayRecorder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdf5_handle</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hdf5_handle</span> <span class="o">=</span> <span class="n">hdf5_handle</span>
 
@@ -425,8 +422,8 @@
                     <span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="generate_HDF5_array_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.generate_HDF5_array_recorder">[docs]</a><span class="k">def</span> <span class="nf">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span>
+<div class="viewcode-block" id="generate_HDF5_array_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.generate_HDF5_array_recorder">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">generate_HDF5_array_recorder</span><span class="p">(</span><span class="n">hdf5_handle</span><span class="p">,</span>
                                  <span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
                                  <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                  <span class="n">overwrite_group</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -492,8 +489,8 @@
         <span class="k">return</span><span class="p">(</span><span class="n">EmptyArrayRecorder</span><span class="p">())</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.static_subgrouping_array_recorders">[docs]</a><span class="k">def</span> <span class="nf">static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.static_subgrouping_array_recorders">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a decorator that adds a static variable, recorders, that holds</span>
 <span class="sd">        as many recorders as are supplied.</span>
@@ -609,8 +606,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">static_subgrouping_array_recorders_tie</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="static_array_debug_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.static_array_debug_recorder">[docs]</a><span class="k">def</span> <span class="nf">static_array_debug_recorder</span><span class="p">(</span><span class="n">callable</span><span class="p">):</span>
+<div class="viewcode-block" id="static_array_debug_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.static_array_debug_recorder">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">static_array_debug_recorder</span><span class="p">(</span><span class="n">callable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a decorator that adds a static variable recorders that contains</span>
 <span class="sd">        the variable array_debug_recorder to the function it decorates.</span>
@@ -635,8 +632,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">callable</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="class_static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.class_static_subgrouping_array_recorders">[docs]</a><span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="class_static_subgrouping_array_recorders"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.class_static_subgrouping_array_recorders">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">class_static_subgrouping_array_recorders</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a decorator that adds a static variable, recorders, that holds</span>
 <span class="sd">        as many recorders as are supplied.</span>
@@ -804,8 +801,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">class_static_subgrouping_array_recorders_tie</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="class_static_array_debug_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.class_static_array_debug_recorder">[docs]</a><span class="k">def</span> <span class="nf">class_static_array_debug_recorder</span><span class="p">(</span><span class="n">a_class</span><span class="p">):</span>
+<div class="viewcode-block" id="class_static_array_debug_recorder"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.record.html#nanshe.imp.segment.class_static_array_debug_recorder">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_meta_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">class_static_array_debug_recorder</span><span class="p">(</span><span class="n">a_class</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a decorator that adds a static variable recorders that contains</span>
 <span class="sd">        the variable array_debug_recorder to the function it decorates. By</span>
@@ -876,7 +873,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -885,7 +882,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

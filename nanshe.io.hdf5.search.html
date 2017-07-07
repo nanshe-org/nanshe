@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>nanshe.io.hdf5.search module &#8212; nanshe 0.1.0a58+10.gc8f39a5 documentation</title>
-    
+    <title>nanshe.io.hdf5.search module &#8212; nanshe 0.1.0a58+12.g584ff40 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a58+10.gc8f39a5',
+        VERSION:     '0.1.0a58+12.g584ff40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -36,7 +33,7 @@
     <link rel="prev" title="nanshe.io.hdf5.record module" href="nanshe.io.hdf5.record.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -54,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.io.hdf5.record.html" title="nanshe.io.hdf5.record module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.io.html" >nanshe.io package</a> &#187;</li>
@@ -74,7 +71,7 @@
 <p>The module <code class="docutils literal"><span class="pre">search</span></code> provides glob paths to search for content in a HDF5 file.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The module implements a strategy similar to Python&#8217;s <a class="reference external" href="http://docs.python.org/2/library/glob.html"><code class="docutils literal"><span class="pre">glob</span></code></a> module for HDF5
+<p>The module implements a strategy similar to Python’s <a class="reference external" href="http://docs.python.org/2/library/glob.html"><code class="docutils literal"><span class="pre">glob</span></code></a> module for HDF5
 files. In short, it uses regex patterns to match as many possible paths as it
 can.</p>
 </div>
@@ -91,8 +88,8 @@ HDF5 file or not.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+<li><strong>a_filehandle</strong> (<em>h5py.File</em>) – an HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) – an internal path (with patterns for
 each group) for the HDF5 file.</li>
 </ul>
 </td>
@@ -124,8 +121,8 @@ HDF5 file or not.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+<li><strong>a_filehandle</strong> (<em>h5py.File</em>) – an HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) – an internal path (with patterns for
 each group) for the HDF5 file.</li>
 </ul>
 </td>
@@ -156,8 +153,8 @@ Returns a list of matches for the given file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+<li><strong>a_filehandle</strong> (<em>h5py.File</em>) – an HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) – an internal path (with patterns for
 each group) for the HDF5 file.</li>
 </ul>
 </td>
@@ -189,8 +186,8 @@ may contain.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_filehandle</strong> (<em>h5py.File</em>) &#8211; an HDF5 file.</li>
-<li><strong>a_path_pattern</strong> (<em>str</em>) &#8211; an internal path (with patterns for
+<li><strong>a_filehandle</strong> (<em>h5py.File</em>) – an HDF5 file.</li>
+<li><strong>a_path_pattern</strong> (<em>str</em>) – an internal path (with patterns for
 each group) for the HDF5 file.</li>
 </ul>
 </td>
@@ -289,7 +286,7 @@ each group) for the HDF5 file.</li>
         <li class="right" >
           <a href="nanshe.io.hdf5.record.html" title="nanshe.io.hdf5.record module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.io.html" >nanshe.io package</a> &#187;</li>
@@ -300,7 +297,7 @@ each group) for the HDF5 file.</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

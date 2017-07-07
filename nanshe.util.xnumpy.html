@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a58+10.gc8f39a5 documentation</title>
-    
+    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a58+12.g584ff40 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a58+10.gc8f39a5',
+        VERSION:     '0.1.0a58+12.g584ff40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -36,7 +33,7 @@
     <link rel="prev" title="nanshe.util.xglob module" href="nanshe.util.xglob.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -54,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -94,7 +91,7 @@ adding calculations, combining arrays in interesting ways, handling masks, etc.<
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to add the singleton
 axis to.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -127,7 +124,7 @@ end (should be view)</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to add the singleton
 axis to.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -163,9 +160,9 @@ acceptable regime if it is not already.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton axis
+<li><strong>a_array</strong> (<em>numpy.ndarray</em>) – array to add the singleton axis
 to.</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; position for the axis to be in
+<li><strong>axis</strong> (<em>int</em>) – position for the axis to be in
 the final array (defaults to
 zero).</li>
 </ul>
@@ -237,11 +234,11 @@ operation along.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>op</strong> (<em>callable</em>) &#8211; callable that takes a numpy.ndarray
+<li><strong>op</strong> (<em>callable</em>) – callable that takes a numpy.ndarray
 and an int in order.</li>
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to perform operation on and add
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to perform operation on and add
 singleton axis too.</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; the axis to apply the operation along
+<li><strong>axis</strong> (<em>int</em>) – the axis to apply the operation along
 and turn into a singleton.</li>
 </ul>
 </td>
@@ -286,15 +283,15 @@ of equality comparison on every permutation of elements in each array
 (like broadcasting).</p>
 <p>Suppose that new_result contained the result, then one would find that
 the result of the following operation on the specific indices</p>
-<p>new_op( new_array_1[ i_1_1, i_1_2, ... ],
-new_array_2[ i_2_1, i_2_2, ... ] )</p>
+<p>new_op( new_array_1[ i_1_1, i_1_2, … ],
+new_array_2[ i_2_1, i_2_2, … ] )</p>
 <p>would be found in new_result as shown</p>
-<p>new_result[ i_1_1, i_1_2, ..., i_2_1, i_2_2, ... ]</p>
+<p>new_result[ i_1_1, i_1_2, …, i_2_1, i_2_2, … ]</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to add the singleton
 axis to.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -411,7 +408,7 @@ end.</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; The array to flatten, partially.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (<em>numpy.ndarray</em>) – The array to flatten, partially.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
 <dt>The matrix version of the array</dt>
@@ -453,16 +450,16 @@ end.</dd>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.binomial_coefficients">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">binomial_coefficients</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#binomial_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.binomial_coefficients" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a row in Pascal&#8217;s triangle (binomial coefficients).</p>
+<dd><p>Generates a row in Pascal’s triangle (binomial coefficients).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) &#8211; which row of Pascal&#8217;s triangle to return.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) – which row of Pascal’s triangle to return.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
 <dt>a numpy array containing the row of</dt>
-<dd>Pascal&#8217;s triangle.</dd>
+<dd>Pascal’s triangle.</dd>
 </dl>
 </td>
 </tr>
@@ -516,7 +513,7 @@ alarm)</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; a 2D bool array
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) – a 2D bool array
 mapping
 intersections
 between 2 groups.</td>
@@ -568,7 +565,7 @@ flipped.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; a 2D bool array mapping
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mapping</strong> (<em>numpy.ndarray</em>) – a 2D bool array mapping
 intersections between 2 groups.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -634,8 +631,8 @@ appears in new_array.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to check for matches.</li>
-<li><strong>to_contain</strong> (<em>array_like</em>) &#8211; desired matches to find.</li>
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to check for matches.</li>
+<li><strong>to_contain</strong> (<em>array_like</em>) – desired matches to find.</li>
 </ul>
 </td>
 </tr>
@@ -706,8 +703,8 @@ set.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) &#8211; first set of vectors.</li>
-<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) &#8211; second set of vectors.</li>
+<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) – first set of vectors.</li>
+<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) – second set of vectors.</li>
 </ul>
 </td>
 </tr>
@@ -772,8 +769,8 @@ divides them by the L_2 norm of the two.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) &#8211; first set of vectors.</li>
-<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) &#8211; second set of vectors.</li>
+<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) – first set of vectors.</li>
+<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) – second set of vectors.</li>
 </ul>
 </td>
 </tr>
@@ -861,9 +858,9 @@ divides them by the norm of the two.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) &#8211; first set of vectors.</li>
-<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) &#8211; second set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) – first set of vectors.</li>
+<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) – second set of vectors.</li>
+<li><strong>ord</strong> (<em>optional</em>) – basically the same arguments
 as numpy.linalg.norm.</li>
 </ul>
 </td>
@@ -977,9 +974,9 @@ other.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) &#8211; first set of vectors.</li>
-<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) &#8211; second set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+<li><strong>new_vector_set_1</strong> (<em>numpy.ndarray</em>) – first set of vectors.</li>
+<li><strong>new_vector_set_2</strong> (<em>numpy.ndarray</em>) – second set of vectors.</li>
+<li><strong>ord</strong> (<em>optional</em>) – basically the same arguments
 as numpy.linalg.norm</li>
 </ul>
 </td>
@@ -1100,8 +1097,8 @@ zero.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_masks</strong> (<em>numpy.ndarray</em>) &#8211; masks to enumerate</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by
+<li><strong>new_masks</strong> (<em>numpy.ndarray</em>) – masks to enumerate</li>
+<li><strong>axis</strong> (<em>int</em>) – axis to enumerate along (0 by
 default).</li>
 </ul>
 </td>
@@ -1191,8 +1188,8 @@ zero.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_masks</strong> (<em>numpy.ndarray</em>) &#8211; masks to enumerate</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; axis to enumerate along (0 by
+<li><strong>new_masks</strong> (<em>numpy.ndarray</em>) – masks to enumerate</li>
+<li><strong>axis</strong> (<em>int</em>) – axis to enumerate along (0 by
 default).</li>
 </ul>
 </td>
@@ -1252,18 +1249,18 @@ afterwards to get a view of the same range in a larger hyperrectangle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> (<em>int</em>) &#8211; starting point (or stopping
+<li><strong>start</strong> (<em>int</em>) – starting point (or stopping
 point if only one is
 specified).</li>
-<li><strong>stop</strong> (<em>int</em>) &#8211; stopping point (if the
+<li><strong>stop</strong> (<em>int</em>) – stopping point (if the
 starting point is specified)
 (0 by default).</li>
-<li><strong>step</strong> (<em>int</em>) &#8211; size of steps to take between
+<li><strong>step</strong> (<em>int</em>) – size of steps to take between
 value (1 by default).</li>
-<li><strong>reps_after</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+<li><strong>reps_after</strong> (<em>tuple</em>) – repetitions dimension size to
 add before (if int will turn
 into tuple).</li>
-<li><strong>reps_before</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+<li><strong>reps_before</strong> (<em>tuple</em>) – repetitions dimension size to
 add after (if int will turn
 into tuple).</li>
 </ul>
@@ -1341,11 +1338,11 @@ behave identical to tile if the keyword is not specified.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to tile.</li>
-<li><strong>reps_after</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to tile.</li>
+<li><strong>reps_after</strong> (<em>tuple</em>) – repetitions dimension size to
 add before (if int will turn
 into tuple).</li>
-<li><strong>reps_before</strong> (<em>tuple</em>) &#8211; repetitions dimension size to
+<li><strong>reps_before</strong> (<em>tuple</em>) – repetitions dimension size to
 add after (if int will turn
 into tuple).</li>
 </ul>
@@ -1570,13 +1567,13 @@ into tuple).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a set of integer points (NxD) where N
+<li><strong>points</strong> (<em>numpy.ndarray</em>) – a set of integer points (NxD) where N
 is the number of points and D is the
 dimensionality, in which they lay.</li>
-<li><strong>center</strong> (<em>numpy.ndarray</em>) &#8211; an integer point (D) where D is the
+<li><strong>center</strong> (<em>numpy.ndarray</em>) – an integer point (D) where D is the
 dimensionality, in which they lay.
 Defaults to the mean of the points.</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; another set of points relative to
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – another set of points relative to
 their mean.</li>
 </ul>
 </td>
@@ -1650,11 +1647,11 @@ conditions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>points</strong> (<em>numpy.ndarray</em>) &#8211; a set of integer points (NxD) where N
+<li><strong>points</strong> (<em>numpy.ndarray</em>) – a set of integer points (NxD) where N
 is the number of points and D is the
 dimensionality, in which they lay.</li>
-<li><strong>shape</strong> (<em>numpy.ndarray</em>) &#8211; the shape to use for wrapping (D).</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; another set of points relative to
+<li><strong>shape</strong> (<em>numpy.ndarray</em>) – the shape to use for wrapping (D).</li>
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – another set of points relative to
 their mean.</li>
 </ul>
 </td>
@@ -1783,11 +1780,11 @@ minimum distance from the mask edge and some margin.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_image</strong> (<em>numpy.ndarray</em>) &#8211; takes an image.</li>
-<li><strong>separation_distance</strong> (<em>float</em>) &#8211; a separation distance from the
+<li><strong>a_image</strong> (<em>numpy.ndarray</em>) – takes an image.</li>
+<li><strong>separation_distance</strong> (<em>float</em>) – a separation distance from the
 edge of the mask for the center
 of the contour.</li>
-<li><strong>margin</strong> (<em>float</em>) &#8211; the width of contour.</li>
+<li><strong>margin</strong> (<em>float</em>) – the width of contour.</li>
 </ul>
 </td>
 </tr>
@@ -1851,11 +1848,11 @@ some minimum distance from the mask edge and some margin.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_mask</strong> (<em>numpy.ndarray</em>) &#8211; takes a bool mask.</li>
-<li><strong>separation_distance</strong> (<em>float</em>) &#8211; a separation distance from the
+<li><strong>a_mask</strong> (<em>numpy.ndarray</em>) – takes a bool mask.</li>
+<li><strong>separation_distance</strong> (<em>float</em>) – a separation distance from the
 edge of the mask for the center
 of the contour.</li>
-<li><strong>margin</strong> (<em>float</em>) &#8211; the width of contour.</li>
+<li><strong>margin</strong> (<em>float</em>) – the width of contour.</li>
 </ul>
 </td>
 </tr>
@@ -1913,15 +1910,15 @@ of the contour.</li>
 <dt id="nanshe.util.xnumpy.get_quantiles">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">get_quantiles</code><span class="sig-paren">(</span><em>probs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#get_quantiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.get_quantiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines the probabilites for quantiles for given data much like
-MATLAB&#8217;s function</p>
+MATLAB’s function</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – to find the quantiles
 of.</li>
-<li><strong>probs</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; either some sort of
+<li><strong>probs</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) – either some sort of
 integer for the number
 of quantiles or a
 single float specifying
@@ -1930,7 +1927,7 @@ or an array of floats
 specifying the division
 for each quantile in
 the the range (0, 1).</li>
-<li><strong>axis</strong> (<em>int</em><em> or </em><em>None</em>) &#8211; the axis to perform the
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>None</em>) – the axis to perform the
 calculation on (if
 default (None) then
 all, otherwise only on
@@ -1991,9 +1988,9 @@ create the bool array.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>index_array</strong> (<em>numpy.ndarray of ints</em>) &#8211; The index array with the
+<li><strong>index_array</strong> (<em>numpy.ndarray of ints</em>) – The index array with the
 indices to use.</li>
-<li><strong>shape</strong> (<em>tuple of ints</em>) &#8211; The shape to give the bool
+<li><strong>shape</strong> (<em>tuple of ints</em>) – The shape to give the bool
 array.</li>
 </ul>
 </td>
@@ -2042,11 +2039,11 @@ view.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to add the singleton
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to add the singleton
 axis to.</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; position for the axis to be in
+<li><strong>axis</strong> (<em>int</em>) – position for the axis to be in
 the final array.</li>
-<li><strong>pos</strong> (<em>int</em><em> or </em><em>slice</em>) &#8211; how to index at the given
+<li><strong>pos</strong> (<em>int</em><em> or </em><em>slice</em>) – how to index at the given
 axis.</li>
 </ul>
 </td>
@@ -2129,9 +2126,9 @@ line is placed along dimension <code class="docutils literal"><span class="pre">
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>shape</strong> (<em>tuple of ints</em>) &#8211; the distance from the center of the filter
+<li><strong>shape</strong> (<em>tuple of ints</em>) – the distance from the center of the filter
 to the nearest edge for each dimension.</li>
-<li><strong>dim</strong> (<em>int</em>) &#8211; the dimension to put the line along.</li>
+<li><strong>dim</strong> (<em>int</em>) – the dimension to put the line along.</li>
 </ul>
 </td>
 </tr>
@@ -2195,8 +2192,8 @@ to the nearest edge for each dimension.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; first mask.</li>
-<li><strong>b</strong> (<em>numpy.ndarray</em>) &#8211; second mask.</li>
+<li><strong>a</strong> (<em>numpy.ndarray</em>) – first mask.</li>
+<li><strong>b</strong> (<em>numpy.ndarray</em>) – second mask.</li>
 </ul>
 </td>
 </tr>
@@ -2272,13 +2269,13 @@ union.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; first mask.</li>
-<li><strong>b</strong> (<em>numpy.ndarray</em>) &#8211; second mask.</li>
+<li><strong>a</strong> (<em>numpy.ndarray</em>) – first mask.</li>
+<li><strong>b</strong> (<em>numpy.ndarray</em>) – second mask.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>ratio of the areas of the masks&#8217;</dt>
+<dt>ratio of the areas of the masks’</dt>
 <dd><p class="first last">intersection and union.</p>
 </dd>
 </dl>
@@ -2354,8 +2351,8 @@ union.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; first mask.</li>
-<li><strong>b</strong> (<em>numpy.ndarray</em>) &#8211; second mask.</li>
+<li><strong>a</strong> (<em>numpy.ndarray</em>) – first mask.</li>
+<li><strong>b</strong> (<em>numpy.ndarray</em>) – second mask.</li>
 </ul>
 </td>
 </tr>
@@ -2427,9 +2424,9 @@ the first to be the same shape.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (<em>numpy.ndarray</em>) &#8211; first array.</li>
-<li><strong>b</strong> (<em>numpy.ndarray</em>) &#8211; second array.</li>
-<li><strong>op</strong> (<em>callable</em>) &#8211; an operator that will take a[i] and b[j] as
+<li><strong>a</strong> (<em>numpy.ndarray</em>) – first array.</li>
+<li><strong>b</strong> (<em>numpy.ndarray</em>) – second array.</li>
+<li><strong>op</strong> (<em>callable</em>) – an operator that will take a[i] and b[j] as
 arguments and return a scalar.</li>
 </ul>
 </td>
@@ -2535,16 +2532,16 @@ result of op(a[i], b[j]).</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to find the max (subject
 to the absolute value).</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+<li><strong>axis</strong> (<em>int</em>) – desired matches to find.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) – ensure the number of
 dimensions is the same by
 inserting singleton
 dimensions at all the axes
 squished (excepting the last
 one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+<li><strong>return_indices</strong> (<em>bool</em>) – whether to return the indices
 of the maxes in addition to
 the maxes.</li>
 </ul>
@@ -2657,15 +2654,15 @@ value(s), as well.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the min (subject
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to find the min (subject
 to the absolute value).</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+<li><strong>axis</strong> (<em>int</em>) – desired matches to find.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) – ensure the number of
 dimensions is the same by
 inserting singleton dimensions
 at all the axes squished
 (excepting the last one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+<li><strong>return_indices</strong> (<em>bool</em>) – whether to return the indices
 of the mins in addition to the
 mins.</li>
 </ul>
@@ -2778,15 +2775,15 @@ value(s), as well.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to find the max (subject
 to the absolute value).</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+<li><strong>axis</strong> (<em>int</em>) – desired matches to find.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) – ensure the number of
 dimensions is the same by
 inserting singleton dimensions
 at all the axes squished
 (excepting the last one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+<li><strong>return_indices</strong> (<em>bool</em>) – whether to return the indices
 of the maxes in addition to
 the maxes.</li>
 </ul>
@@ -2905,15 +2902,15 @@ value(s), as well.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the min (subject
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to find the min (subject
 to the absolute value).</li>
-<li><strong>axis</strong> (<em>int</em>) &#8211; desired matches to find.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of
+<li><strong>axis</strong> (<em>int</em>) – desired matches to find.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) – ensure the number of
 dimensions is the same by
 inserting singleton dimensions
 at all the axes squished
 (excepting the last one).</li>
-<li><strong>return_indices</strong> (<em>bool</em>) &#8211; whether to return the indices
+<li><strong>return_indices</strong> (<em>bool</em>) – whether to return the indices
 of the mins in addition to the
 mins.</li>
 </ul>
@@ -3034,9 +3031,9 @@ value(s), as well.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; either a single vector or a
+<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) – either a single vector or a
 set of vectors (matrix).</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+<li><strong>ord</strong> (<em>optional</em>) – basically the same arguments
 as numpy.linalg.norm
 (though some are redundant
 here).</li>
@@ -3133,10 +3130,10 @@ each name in the structured array and yields the name, type, and shape
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the info dtype
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) – the array to get the info dtype
 from.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">(NotNumPyStructuredArrayType)</span></code> &#8211; if it is a normal NumPy array.</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">(NotNumPyStructuredArrayType)</span></code> – if it is a normal NumPy array.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An iterator yielding tuples.</td>
 </tr>
@@ -3156,7 +3153,7 @@ NumPy array it returns the type used.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to get the dtype info
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) – the array to get the dtype info
 from.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -3181,7 +3178,7 @@ malleable than a numpy.dtype.</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) – set of vectors.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
 <dt>an array with the distances</dt>
@@ -3238,10 +3235,10 @@ divides them by the norm of the two.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same arguments
+<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) – set of vectors.</li>
+<li><strong>ord</strong> (<em>optional</em>) – basically the same arguments
 as numpy.linalg.norm.</li>
-<li><strong>float_type</strong> (<em>type</em>) &#8211; some form of float</li>
+<li><strong>float_type</strong> (<em>type</em>) – some form of float</li>
 </ul>
 </td>
 </tr>
@@ -3334,10 +3331,10 @@ other.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) &#8211; set of vectors.</li>
-<li><strong>ord</strong> (<em>optional</em>) &#8211; basically the same argument
+<li><strong>new_vector_set</strong> (<em>numpy.ndarray</em>) – set of vectors.</li>
+<li><strong>ord</strong> (<em>optional</em>) – basically the same argument
 as numpy.linalg.norm</li>
-<li><strong>float_type</strong> (<em>type</em>) &#8211; some form of float</li>
+<li><strong>float_type</strong> (<em>type</em>) – some form of float</li>
 </ul>
 </td>
 </tr>
@@ -3428,15 +3425,15 @@ of vectors.</p>
 <dl class="function">
 <dt id="nanshe.util.xnumpy.quantile">
 <code class="descclassname">nanshe.util.xnumpy.</code><code class="descname">quantile</code><span class="sig-paren">(</span><em>data</em>, <em>probs</em>, <em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/util/xnumpy.html#quantile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.util.xnumpy.quantile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines the quantiles for given data much like MATLAB&#8217;s function.</p>
+<dd><p>Determines the quantiles for given data much like MATLAB’s function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>numpy.ndarray</em>) &#8211; to find the quantiles
+<li><strong>data</strong> (<em>numpy.ndarray</em>) – to find the quantiles
 of.</li>
-<li><strong>probs</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; either some sort of
+<li><strong>probs</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) – either some sort of
 integer for the number
 of quantiles or a
 single float specifying
@@ -3445,7 +3442,7 @@ or an array of floats
 specifying the division
 for each quantile in
 the range (0, 1).</li>
-<li><strong>axis</strong> (<em>int</em><em> or </em><em>None</em>) &#8211; the axis to perform the
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>None</em>) – the axis to perform the
 calculation on (if
 default (None) then
 all, otherwise only on
@@ -3521,7 +3518,7 @@ back to the old labels.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the label
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_array</strong> (<em>numpy.ndarray</em>) – the label
 image.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -3576,12 +3573,12 @@ new_array.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to roll axes of.</li>
-<li><strong>shift</strong> (<em>container of ints</em>) &#8211; some sort of container (list, tuple,
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to roll axes of.</li>
+<li><strong>shift</strong> (<em>container of ints</em>) – some sort of container (list, tuple,
 array) of ints specifying how much to
 roll each axis.</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; array to store the results in.</li>
-<li><strong>to_mask</strong> (<em>bool</em>) &#8211; Makes the result a masked array with
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – array to store the results in.</li>
+<li><strong>to_mask</strong> (<em>bool</em>) – Makes the result a masked array with
 the portion that rolled off masked.</li>
 </ul>
 </td>
@@ -3821,10 +3818,10 @@ due to reshaping, the returned array will be a copy.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to find the max (subject
 to the absolute value).</li>
-<li><strong>axis</strong> (<em>int</em><em> or </em><em>collection of ints</em>) &#8211; desired axes to squish.</li>
-<li><strong>keepdims</strong> (<em>bool</em>) &#8211; ensure the number of dimensions
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>collection of ints</em>) – desired axes to squish.</li>
+<li><strong>keepdims</strong> (<em>bool</em>) – ensure the number of dimensions
 is the same plus one by
 inserting singleton dimensions
 at all the axes squished.</li>
@@ -3963,10 +3960,10 @@ line is placed along dimension dim.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>size</strong> (<em>int</em>) &#8211; the distance from the center of the filter to
+<li><strong>size</strong> (<em>int</em>) – the distance from the center of the filter to
 the nearest edge.</li>
-<li><strong>ndims</strong> (<em>int</em>) &#8211; the number of dimensions for the filter.</li>
-<li><strong>dim</strong> (<em>int</em>) &#8211; the dimension to put the line along.</li>
+<li><strong>ndims</strong> (<em>int</em>) – the number of dimensions for the filter.</li>
+<li><strong>dim</strong> (<em>int</em>) – the dimension to put the line along.</li>
 </ul>
 </td>
 </tr>
@@ -4023,12 +4020,12 @@ the nearest edge.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; the array to reorder</li>
-<li><strong>from_axis_order</strong> (<em>str</em><em> or </em><em>list of str</em>) &#8211; current labeled axis
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – the array to reorder</li>
+<li><strong>from_axis_order</strong> (<em>str</em><em> or </em><em>list of str</em>) – current labeled axis
 order.</li>
-<li><strong>to_axis_order</strong> (<em>str</em><em> or </em><em>list of str</em>) &#8211; desired labeled axis
+<li><strong>to_axis_order</strong> (<em>str</em><em> or </em><em>list of str</em>) – desired labeled axis
 order</li>
-<li><strong>to_copy</strong> (<em>bool</em>) &#8211; whether to return a
+<li><strong>to_copy</strong> (<em>bool</em>) – whether to return a
 view or a copy</li>
 </ul>
 </td>
@@ -4120,15 +4117,15 @@ which entries match.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>an_array</strong> (<em>numpy.ndarray</em>) &#8211; an array to
+<li><strong>an_array</strong> (<em>numpy.ndarray</em>) – an array to
 threshold.</li>
-<li><strong>threshold</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; something to
+<li><strong>threshold</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) – something to
 compare to.</li>
-<li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values
+<li><strong>include_below</strong> (<em>bool</em>) – whether values
 below the
 threshold count
 or ones above it.</li>
-<li><strong>is_closed</strong> (<em>bool</em>) &#8211; whether to
+<li><strong>is_closed</strong> (<em>bool</em>) – whether to
 include values
 equal to the
 threshold</li>
@@ -4252,15 +4249,15 @@ given the threshold.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a_metric</strong> (<em>numpy.ndarray</em>) &#8211; an array to
+<li><strong>a_metric</strong> (<em>numpy.ndarray</em>) – an array to
 threshold.</li>
-<li><strong>threshold</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) &#8211; something to
+<li><strong>threshold</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>numpy.ndarray</em>) – something to
 compare to.</li>
-<li><strong>include_below</strong> (<em>bool</em>) &#8211; whether values
+<li><strong>include_below</strong> (<em>bool</em>) – whether values
 below the
 threshold count
 or ones above it.</li>
-<li><strong>is_closed</strong> (<em>bool</em>) &#8211; whether to
+<li><strong>is_closed</strong> (<em>bool</em>) – whether to
 include values
 equal to the
 threshold</li>
@@ -4382,7 +4379,7 @@ which is an intact rectangular shape.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shifted_frames</strong> (<em>numpy.ma.masked_array</em>) &#8211; Image stack to register
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shifted_frames</strong> (<em>numpy.ma.masked_array</em>) – Image stack to register
 (time is the first
 dimension uses C-order
 tyx or tzyx).</td>
@@ -4472,8 +4469,8 @@ mapping that are not one-to-one.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mapping</strong> (<em>numpy.ndarray</em>) &#8211; bool array mapping between to sets.</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; where to store the results.</li>
+<li><strong>mapping</strong> (<em>numpy.ndarray</em>) – bool array mapping between to sets.</li>
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – where to store the results.</li>
 </ul>
 </td>
 </tr>
@@ -4554,12 +4551,12 @@ extract from the last dimension.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_array</strong> (<em>numpy.ndarray</em>) &#8211; array to find the max (subject
+<li><strong>new_array</strong> (<em>numpy.ndarray</em>) – array to find the max (subject
 to the absolute value).</li>
-<li><strong>shape</strong> (<em>collection of ints</em>) &#8211; should be the shape of the
+<li><strong>shape</strong> (<em>collection of ints</em>) – should be the shape of the
 result array (or the array
 before squishing).</li>
-<li><strong>axis</strong> (<em>int</em><em> or </em><em>collection of ints</em>) &#8211; desired axes to remove from the
+<li><strong>axis</strong> (<em>int</em><em> or </em><em>collection of ints</em>) – desired axes to remove from the
 last axis.</li>
 </ul>
 </td>
@@ -4861,7 +4858,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
@@ -4871,7 +4868,7 @@ from the end.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

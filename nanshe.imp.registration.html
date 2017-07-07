@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>nanshe.imp.registration module &#8212; nanshe 0.1.0a58+10.gc8f39a5 documentation</title>
-    
+    <title>nanshe.imp.registration module &#8212; nanshe 0.1.0a58+12.g584ff40 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a58+10.gc8f39a5',
+        VERSION:     '0.1.0a58+12.g584ff40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -36,7 +33,7 @@
     <link rel="prev" title="nanshe.imp.filters.wavelet module" href="nanshe.imp.filters.wavelet.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -54,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.imp.filters.wavelet.html" title="nanshe.imp.filters.wavelet module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" accesskey="U">nanshe.imp package</a> &#187;</li> 
@@ -99,10 +96,10 @@ provided by Uri Dubin.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) &#8211; image stack to register (time
+<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) – image stack to register (time
 is the first dimension uses
 C-order tyx or tzyx).</li>
-<li><strong>template_fft</strong> (<em>numpy.ndarray</em>) &#8211; what to register the image
+<li><strong>template_fft</strong> (<em>numpy.ndarray</em>) – what to register the image
 stack against (single frame
 using C-order yx or zyx).</li>
 </ul>
@@ -187,7 +184,7 @@ frame.</p>
 <dl class="function">
 <dt id="nanshe.imp.registration.generate_unit_phase_shifts">
 <code class="descclassname">nanshe.imp.registration.</code><code class="descname">generate_unit_phase_shifts</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/registration.html#generate_unit_phase_shifts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.registration.generate_unit_phase_shifts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the complex phase shift&#8217;s angle due to a unit spatial shift.</p>
+<dd><p>Computes the complex phase shift’s angle due to a unit spatial shift.</p>
 <p>This is meant to be a helper function for <code class="docutils literal"><span class="pre">register_mean_offsets</span></code>. It
 does this by computing a table of the angle of the phase of a unit
 shift in each dimension (with a factor of ).</p>
@@ -200,8 +197,8 @@ is equivalent to the spatial translation.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>shape</strong> (<em>tuple of ints</em>) &#8211; shape of the data to be shifted.</li>
-<li><strong>float_type</strong> (<em>real type</em>) &#8211; phase type (default numpy.float64)</li>
+<li><strong>shape</strong> (<em>tuple of ints</em>) – shape of the data to be shifted.</li>
+<li><strong>float_type</strong> (<em>real type</em>) – phase type (default numpy.float64)</li>
 </ul>
 </td>
 </tr>
@@ -247,23 +244,23 @@ provided by Uri Dubin.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) &#8211; Image stack to register (time
+<li><strong>frames2reg</strong> (<em>numpy.ndarray</em>) – Image stack to register (time
 is the first dimension uses
 C-order tyx or tzyx).</li>
-<li><strong>max_iters</strong> (<em>int</em>) &#8211; Number of iterations to allow
+<li><strong>max_iters</strong> (<em>int</em>) – Number of iterations to allow
 before forcing termination if
 stable point is not found yet.
 Set to -1 if no limit.
 (Default -1)</li>
-<li><strong>block_frame_length</strong> (<em>int</em>) &#8211; Number of frames to work with
+<li><strong>block_frame_length</strong> (<em>int</em>) – Number of frames to work with
 at a time. By default all.
 (Default -1)</li>
-<li><strong>include_shift</strong> (<em>bool</em>) &#8211; Whether to return the shifts
+<li><strong>include_shift</strong> (<em>bool</em>) – Whether to return the shifts
 used, as well. (Default False)</li>
-<li><strong>to_truncate</strong> (<em>bool</em>) &#8211; Whether to truncate the frames
+<li><strong>to_truncate</strong> (<em>bool</em>) – Whether to truncate the frames
 to remove all masked portions.
 (Default False)</li>
-<li><strong>float_type</strong> (<em>type</em>) &#8211; Type of float to use for
+<li><strong>float_type</strong> (<em>type</em>) – Type of float to use for
 calculation. (Default
 numpy.float64).</li>
 </ul>
@@ -367,10 +364,10 @@ frame.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>frame_fft</strong> (<em>complex array</em>) &#8211; Either a single frame with C-order axes
+<li><strong>frame_fft</strong> (<em>complex array</em>) – Either a single frame with C-order axes
 or multiple frames with time on the 0th
 axis.</li>
-<li><strong>shift</strong> (<em>array of ints</em>) &#8211; Either the shift for each dimension
+<li><strong>shift</strong> (<em>array of ints</em>) – Either the shift for each dimension
 with C-ordered values or multiple
 frames with time on the 0th axis.</li>
 </ul>
@@ -517,7 +514,7 @@ frames with time on the 0th axis.</li>
         <li class="right" >
           <a href="nanshe.imp.filters.wavelet.html" title="nanshe.imp.filters.wavelet module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li> 
@@ -527,7 +524,7 @@ frames with time on the 0th axis.</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

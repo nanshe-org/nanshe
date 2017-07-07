@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>nanshe.io.hdf5.serializers &#8212; nanshe 0.1.0a58+10.gc8f39a5 documentation</title>
-    
+    <title>nanshe.io.hdf5.serializers &#8212; nanshe 0.1.0a58+12.g584ff40 documentation</title>
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a58+10.gc8f39a5',
+        VERSION:     '0.1.0a58+12.g584ff40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -34,7 +31,7 @@
     <link rel="search" title="Search" href="../../../../search.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -46,7 +43,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -98,8 +95,8 @@
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="split_hdf5_path"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.split_hdf5_path">[docs]</a><span class="k">def</span> <span class="nf">split_hdf5_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="split_hdf5_path"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.split_hdf5_path">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">split_hdf5_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Splits an HDF5 path (e.g. `a.h5/b`) into its internal and external</span>
 <span class="sd">        components.</span>
@@ -140,8 +137,8 @@
     <span class="k">return</span><span class="p">(</span><span class="n">ext_path</span><span class="p">,</span> <span class="n">int_path</span><span class="p">)</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="create_numpy_structured_array_in_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">[docs]</a><span class="k">def</span> <span class="nf">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span>
+<div class="viewcode-block" id="create_numpy_structured_array_in_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">create_numpy_structured_array_in_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span>
                                           <span class="n">internalPath</span><span class="p">,</span>
                                           <span class="n">data</span><span class="p">,</span>
                                           <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -209,8 +206,8 @@
         <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
-<span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
-<div class="viewcode-block" id="read_numpy_structured_array_from_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">[docs]</a><span class="k">def</span> <span class="nf">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">):</span>
+<div class="viewcode-block" id="read_numpy_structured_array_from_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">read_numpy_structured_array_from_HDF5</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">internalPath</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serializes a NumPy structure array from an HDF5 file by using the HDF5</span>
 <span class="sd">        compound data type. Also, it will handle normal NumPy arrays and</span>
@@ -602,7 +599,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -611,7 +608,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

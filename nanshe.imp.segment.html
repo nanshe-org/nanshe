@@ -1,23 +1,20 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>nanshe.imp.segment module &#8212; nanshe 0.1.0a58+10.gc8f39a5 documentation</title>
-    
+    <title>nanshe.imp.segment module &#8212; nanshe 0.1.0a58+12.g584ff40 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a58+10.gc8f39a5',
+        VERSION:     '0.1.0a58+12.g584ff40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -36,7 +33,7 @@
     <link rel="prev" title="nanshe.imp.renorm module" href="nanshe.imp.renorm.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body role="document">
+  <body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -54,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" accesskey="U">nanshe.imp package</a> &#187;</li> 
@@ -110,7 +107,7 @@ maintain a label image, whose local maxima one is more interested in
 directly manipulating.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Adding local maxima is not allowed for and wouldn&#8217;t make sense
+<p class="last">Adding local maxima is not allowed for and wouldn’t make sense
 given its dependency on the intensity image.</p>
 </div>
 <dl class="method">
@@ -196,7 +193,7 @@ local maxima per label) will be updated, regardless.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*i</strong> (<em>int</em>) &#8211; A mask of the indices to drop (True for the ones
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*i</strong> (<em>int</em>) – A mask of the indices to drop (True for the ones
 to remove, and False for the ones to keep).</td>
 </tr>
 </tbody>
@@ -218,7 +215,7 @@ local maxima per label) will be updated, regardless.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>remove_prop_indices_mask</strong> (<em>numpy.ndarray</em>) &#8211; A mask of the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>remove_prop_indices_mask</strong> (<em>numpy.ndarray</em>) – A mask of the
 indices to drop
 (True for the ones
 to remove, and
@@ -254,28 +251,28 @@ removal has occurred through the usual mechanisms.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_data</strong> (<em>numpy.ndarray</em>) &#8211; array of
+<li><strong>new_data</strong> (<em>numpy.ndarray</em>) – array of
 data for
 finding
 baseline (
 first axis
 is time).</li>
-<li><strong>half_window_size</strong> (<em>int</em>) &#8211; the rank
+<li><strong>half_window_size</strong> (<em>int</em>) – the rank
 filter
 window size
 is
 2*half_window_size+1.</li>
-<li><strong>which_quantile</strong> (<em>float</em>) &#8211; which
+<li><strong>which_quantile</strong> (<em>float</em>) – which
 quantile to
 return from
 the rank
 filter.</li>
-<li><strong>temporal_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) &#8211; stdev for
+<li><strong>temporal_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) – stdev for
 gaussian
 filter
 to convolve
 over time.</li>
-<li><strong>temporal_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) &#8211; window for
+<li><strong>temporal_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) – window for
 gaussian
 filter to
 convolve
@@ -283,12 +280,12 @@ over time.
 (Measured
 in standard
 deviations)</li>
-<li><strong>spatial_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) &#8211; stdev for
+<li><strong>spatial_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) – stdev for
 gaussian
 filter to
 convolve
 over space.</li>
-<li><strong>spatial_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) &#8211; window for
+<li><strong>spatial_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) – window for
 gaussian
 filter
 to convolve
@@ -296,12 +293,12 @@ over space.
 (Measured
 in standard
 deviations)</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; where the
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – where the
 final
 result
 will be
 stored.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; essentially
+<li><strong>**parameters</strong> (<em>dict</em>) – essentially
 unused (
 catches
 unneeded
@@ -346,12 +343,12 @@ labels, but is one-to-one in local maxima.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) &#8211; The intensity image to find
+<li><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) – The intensity image to find
 local maxima for (ideally,
 all axes are spatial;
 however, it will treat all
 axes the same).</li>
-<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) &#8211; The label image to find
+<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) – The label image to find
 local maxima for (ideally,
 all axes are spatial;
 however, it will treat all
@@ -378,28 +375,28 @@ axes the same).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_data</strong> (<em>numpy.ndarray</em>) &#8211; array of
+<li><strong>new_data</strong> (<em>numpy.ndarray</em>) – array of
 data for
 finding
 baseline (
 first axis
 is time).</li>
-<li><strong>half_window_size</strong> (<em>int</em>) &#8211; the rank
+<li><strong>half_window_size</strong> (<em>int</em>) – the rank
 filter
 window size
 is
 2*half_window_size+1.</li>
-<li><strong>which_quantile</strong> (<em>float</em>) &#8211; which
+<li><strong>which_quantile</strong> (<em>float</em>) – which
 quantile to
 return from
 the rank
 filter.</li>
-<li><strong>temporal_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) &#8211; stdev for
+<li><strong>temporal_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) – stdev for
 gaussian
 filter to
 convolve
 over time.</li>
-<li><strong>temporal_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) &#8211; window for
+<li><strong>temporal_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) – window for
 gaussian
 filter to
 convolve
@@ -407,12 +404,12 @@ over time.
 (Measured
 in standard
 deviations)</li>
-<li><strong>spatial_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) &#8211; stdev for
+<li><strong>spatial_smoothing_gaussian_filter_stdev</strong> (<em>float</em>) – stdev for
 gaussian
 filter to
 convolve
 over space.</li>
-<li><strong>spatial_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) &#8211; window for
+<li><strong>spatial_smoothing_gaussian_filter_window_size</strong> (<em>float</em>) – window for
 gaussian
 filter
 to convolve
@@ -420,21 +417,21 @@ over space.
 (Measured
 in standard
 deviations)</li>
-<li><strong>bias</strong> (<em>float</em>) &#8211; value to be
+<li><strong>bias</strong> (<em>float</em>) – value to be
 added to
 dataset to
 avoid nan.</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; where the
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – where the
 final
 result will
 be stored.</li>
-<li><strong>return_f0</strong> (<em>bool</em>) &#8211; whether to
+<li><strong>return_f0</strong> (<em>bool</em>) – whether to
 return F_0
 also, F_0
 will be
 returned
 first.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; essentially
+<li><strong>**parameters</strong> (<em>dict</em>) – essentially
 unused (
 catches
 unneeded
@@ -469,9 +466,9 @@ dF/F).</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_image</strong> (<em>numpy.ndarray</em>) &#8211; spatial coordinates only (no
+<li><strong>new_image</strong> (<em>numpy.ndarray</em>) – spatial coordinates only (no
 time).</li>
-<li><strong>neuron_masks</strong> (<em>numpy.ndarray</em>) &#8211; first index of denotes which
+<li><strong>neuron_masks</strong> (<em>numpy.ndarray</em>) – first index of denotes which
 mask and all others are spatial
 indices.</li>
 </ul>
@@ -506,13 +503,13 @@ situations.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>neuron_1</strong> (<em>numpy.ndarray</em>) &#8211; numpy structured array (dtype
+<li><strong>neuron_1</strong> (<em>numpy.ndarray</em>) – numpy structured array (dtype
 get_neuron_dtype) containing
 the first neuron.</li>
-<li><strong>neuron_2</strong> (<em>numpy.ndarray</em>) &#8211; numpy structured array (dtype
+<li><strong>neuron_2</strong> (<em>numpy.ndarray</em>) – numpy structured array (dtype
 get_neuron_dtype) containing
 the second neuron.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; dictionary of parameters</li>
+<li><strong>**parameters</strong> (<em>dict</em>) – dictionary of parameters</li>
 </ul>
 </td>
 </tr>
@@ -540,14 +537,14 @@ the second neuron.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_data</strong> (<em>numpy.ndarray</em>) &#8211; array of data for generating a
+<li><strong>new_data</strong> (<em>numpy.ndarray</em>) – array of data for generating a
 dictionary (first axis is
 time).</li>
-<li><strong>initial_dictionary</strong> (<em>numpy.ndarray</em>) &#8211; dictionary to start the
+<li><strong>initial_dictionary</strong> (<em>numpy.ndarray</em>) – dictionary to start the
 algorithm with.</li>
-<li><strong>n_components</strong> (<em>int</em>) &#8211; number of components for the
+<li><strong>n_components</strong> (<em>int</em>) – number of components for the
 dictionary to use.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; passed directly to
+<li><strong>**parameters</strong> (<em>dict</em>) – passed directly to
 spams.trainDL.</li>
 </ul>
 </td>
@@ -571,7 +568,7 @@ as True and background False.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) &#8211; The image to find local
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) – The image to find local
 maxima for (ideally, all
 axes are spatial; however,
 it will treat all axes the
@@ -589,19 +586,19 @@ same).</td>
 <dt id="nanshe.imp.segment.generate_local_maxima_scikit_image">
 <code class="descclassname">nanshe.imp.segment.</code><code class="descname">generate_local_maxima_scikit_image</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#generate_local_maxima_scikit_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.generate_local_maxima_scikit_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a mask the same size as the intensity image with local maxima
-as True and background False. Uses scikit image&#8217;s
+as True and background False. Uses scikit image’s
 skimage.feature.peak_local_max.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) &#8211; The image to find local
+<li><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) – The image to find local
 maxima for (ideally, all
 axes are spatial; however,
 it will treat all axes the
 same).</li>
-<li><strong>local_max_neighborhood_size</strong> (<em>int</em>) &#8211; Size of the neighborhood to
+<li><strong>local_max_neighborhood_size</strong> (<em>int</em>) – Size of the neighborhood to
 check for a local maxima.</li>
 </ul>
 </td>
@@ -620,14 +617,14 @@ check for a local maxima.</li>
 <dt id="nanshe.imp.segment.generate_local_maxima_vigra">
 <code class="descclassname">nanshe.imp.segment.</code><code class="descname">generate_local_maxima_vigra</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#generate_local_maxima_vigra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.generate_local_maxima_vigra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a mask the same size as the intensity image with local maxima
-as True and background False. Uses vigra&#8217;s
+as True and background False. Uses vigra’s
 vigra.analysis.extendedLocalMaxima for 2D and
-vigra&#8217;s vigra.analysis.extendedLocalMaxima3D for 3D.</p>
+vigra’s vigra.analysis.extendedLocalMaxima3D for 3D.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) &#8211; The image to find local
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_intensity_image</strong> (<em>numpy.ndarray</em>) – The image to find local
 maxima for (ideally, all
 axes are spatial; however,
 it will treat all axes the
@@ -650,7 +647,7 @@ has no contents.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_image</strong> (<em>numpy.ndarray</em>) &#8211; an empty numpy structured array with
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_image</strong> (<em>numpy.ndarray</em>) – an empty numpy structured array with
 all types needed for a neuron.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -701,12 +698,12 @@ get_neuron_dtype.</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_image</strong> (<em>numpy.ndarray</em>) &#8211; a single sample image (only spatial
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_image</strong> (<em>numpy.ndarray</em>) – a single sample image (only spatial
 dimension).</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
 <dt>a list that can be converted to a</dt>
-<dd>numpy.dtype using numpy.ndtype&#8217;s
+<dd>numpy.dtype using numpy.ndtype’s
 constructor.</dd>
 </dl>
 </td>
@@ -753,7 +750,7 @@ has one neuron with all zeros.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_image</strong> (<em>numpy.ndarray</em>) &#8211; an empty numpy structured array with
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_image</strong> (<em>numpy.ndarray</em>) – an empty numpy structured array with
 all types needed for a neuron.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
@@ -831,8 +828,8 @@ get_neuron_dtype.</dd>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>props</strong> (<em>numpy.ndarray</em>) &#8211; properties of each labeled region.</li>
-<li><strong>constraints</strong> (<em>dict</em>) &#8211; dictionary containing each property
+<li><strong>props</strong> (<em>numpy.ndarray</em>) – properties of each labeled region.</li>
+<li><strong>constraints</strong> (<em>dict</em>) – dictionary containing each property
 with optional <code class="docutils literal"><span class="pre">min</span></code> and <code class="docutils literal"><span class="pre">max</span></code>
 for each value.</li>
 </ul>
@@ -878,16 +875,16 @@ original argument.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_neuron_set_1</strong> (<em>numpy.ndarray</em>) &#8211; numpy structured array
+<li><strong>new_neuron_set_1</strong> (<em>numpy.ndarray</em>) – numpy structured array
 (dtype get_neuron_dtype)
 containing the first
 neuron set (preferred
 for tie breaking).</li>
-<li><strong>new_neuron_set_2</strong> (<em>numpy.ndarray</em>) &#8211; numpy structured array
+<li><strong>new_neuron_set_2</strong> (<em>numpy.ndarray</em>) – numpy structured array
 (dtype get_neuron_dtype)
 containing the second
 neuron set.</li>
-<li><strong>alignment_min_threshold</strong> (<em>float</em>) &#8211; The minimum required
+<li><strong>alignment_min_threshold</strong> (<em>float</em>) – The minimum required
 cosine of the angle
 between two neurons for
 them to be treated as
@@ -895,7 +892,7 @@ candidates for merging
 (uses the function
 expanded_numpy.dot_product_normalized
 with ord = 2).</li>
-<li><strong>overlap_min_threshold</strong> (<em>numpy.ndarray</em>) &#8211; The minimum required
+<li><strong>overlap_min_threshold</strong> (<em>numpy.ndarray</em>) – The minimum required
 dot product (divided by
 the L1 norm of one of
 the neurons) for them
@@ -903,7 +900,7 @@ to be treated as
 candidates for merging
 (uses the function
 expanded_numpy.dot_product_partially_normalized).</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; dictionary of
+<li><strong>**parameters</strong> (<em>dict</em>) – dictionary of
 parameters</li>
 </ul>
 </td>
@@ -946,16 +943,16 @@ original argument.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_neuron_set_1</strong> (<em>numpy.ndarray</em>) &#8211; numpy structured array
+<li><strong>new_neuron_set_1</strong> (<em>numpy.ndarray</em>) – numpy structured array
 (dtype get_neuron_dtype)
 containing the first
 neuron set (preferred
 for tie breaking).</li>
-<li><strong>new_neuron_set_2</strong> (<em>numpy.ndarray</em>) &#8211; numpy structured array
+<li><strong>new_neuron_set_2</strong> (<em>numpy.ndarray</em>) – numpy structured array
 (dtype get_neuron_dtype)
 containing the second
 neuron set.</li>
-<li><strong>alignment_min_threshold</strong> (<em>float</em>) &#8211; The minimum required
+<li><strong>alignment_min_threshold</strong> (<em>float</em>) – The minimum required
 cosine of the angle
 between two neurons for
 them to be treated as
@@ -963,7 +960,7 @@ candidates for merging
 (uses the function
 expanded_numpy.dot_product_normalized
 with ord = 2).</li>
-<li><strong>overlap_min_threshold</strong> (<em>numpy.ndarray</em>) &#8211; The minimum required
+<li><strong>overlap_min_threshold</strong> (<em>numpy.ndarray</em>) – The minimum required
 dot product (divided by
 the L1 norm of one of
 the neurons) for them
@@ -971,7 +968,7 @@ to be treated as
 candidates for merging
 (uses the function
 expanded_numpy.dot_product_partially_normalized).</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; dictionary of parameters</li>
+<li><strong>**parameters</strong> (<em>dict</em>) – dictionary of parameters</li>
 </ul>
 </td>
 </tr>
@@ -1004,10 +1001,10 @@ were vectors.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_data</strong> (<em>numpy.ndarray</em>) &#8211; array of data for
+<li><strong>new_data</strong> (<em>numpy.ndarray</em>) – array of data for
 normalization (first axis
 is time).</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; contains arguments for
+<li><strong>**parameters</strong> (<em>dict</em>) – contains arguments for
 renormalized_images.</li>
 </ul>
 </td>
@@ -1083,9 +1080,9 @@ renormalized_images.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_dictionary</strong> (<em>numpy.ndarray</em>) &#8211; dictionary of basis images to
+<li><strong>new_dictionary</strong> (<em>numpy.ndarray</em>) – dictionary of basis images to
 analyze for neurons.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; dictionary of parameters</li>
+<li><strong>**parameters</strong> (<em>dict</em>) – dictionary of parameters</li>
 </ul>
 </td>
 </tr>
@@ -1115,12 +1112,12 @@ neuron found.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_data</strong> (<em>numpy.ndarray</em>) &#8211; array of data for generating a
+<li><strong>new_data</strong> (<em>numpy.ndarray</em>) – array of data for generating a
 dictionary (first axis is
 time).</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; where the final result will be
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – where the final result will be
 stored.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; additional parameters for each
+<li><strong>**parameters</strong> (<em>dict</em>) – additional parameters for each
 step of preprocessing.</li>
 </ul>
 </td>
@@ -1144,12 +1141,12 @@ step of preprocessing.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) &#8211; label image used for
+<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) – label image used for
 generating properties.</li>
-<li><strong>args</strong> (<em>list</em>) &#8211; additional position arguments
+<li><strong>args</strong> (<em>list</em>) – additional position arguments
 to pass
 skimage.measure.regionprops.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; additional keyword arguments
+<li><strong>**parameters</strong> (<em>dict</em>) – additional keyword arguments
 to pass
 skimage.measure.regionprops.</li>
 </ul>
@@ -1160,7 +1157,7 @@ skimage.measure.regionprops.</li>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Uses all the same options in skimage.measure.regionprops. If a
-property is not specified, then it won&#8217;t be returned.</p>
+property is not specified, then it won’t be returned.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1204,21 +1201,23 @@ label.</dd>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
@@ -1237,12 +1236,12 @@ label.</dd>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) &#8211; label image used for
+<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) – label image used for
 generating properties.</li>
-<li><strong>args</strong> (<em>list</em>) &#8211; additional position arguments
+<li><strong>args</strong> (<em>list</em>) – additional position arguments
 to pass
 skimage.measure.regionprops.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; additional keyword arguments
+<li><strong>**parameters</strong> (<em>dict</em>) – additional keyword arguments
 to pass
 skimage.measure.regionprops.</li>
 </ul>
@@ -1253,7 +1252,7 @@ skimage.measure.regionprops.</li>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Uses all the same options in skimage.measure.regionprops. If a
-property is not specified, then it won&#8217;t be returned.</p>
+property is not specified, then it won’t be returned.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1276,36 +1275,44 @@ label.</dd>
 <span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 4.0, [0.5, 0.5])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 9.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
@@ -1324,12 +1331,12 @@ label.</dd>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) &#8211; label image used for
+<li><strong>new_label_image</strong> (<em>numpy.ndarray</em>) – label image used for
 generating properties.</li>
-<li><strong>args</strong> (<em>list</em>) &#8211; additional position arguments
+<li><strong>args</strong> (<em>list</em>) – additional position arguments
 to pass
 skimage.measure.regionprops.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; additional keyword arguments
+<li><strong>**parameters</strong> (<em>dict</em>) – additional keyword arguments
 to pass
 skimage.measure.regionprops.</li>
 </ul>
@@ -1340,7 +1347,7 @@ skimage.measure.regionprops.</li>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Uses all the same options in skimage.measure.regionprops. If a
-property is not specified, then it won&#8217;t be returned.</p>
+property is not specified, then it won’t be returned.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1363,36 +1370,44 @@ label.</dd>
 <span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 4.0, [0.5, 0.5])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 9.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
@@ -1412,12 +1427,12 @@ are below the intensity of their local maxima.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>local_maxima</strong> (<a class="reference internal" href="#nanshe.imp.segment.ExtendedRegionProps" title="nanshe.imp.segment.ExtendedRegionProps"><em>ExtendedRegionProps</em></a>) &#8211; The local maxima to refine</li>
-<li><strong>percentage_pixels_below_max</strong> (<em>float</em>) &#8211; The percentage of pixels
+<li><strong>local_maxima</strong> (<a class="reference internal" href="#nanshe.imp.segment.ExtendedRegionProps" title="nanshe.imp.segment.ExtendedRegionProps"><em>ExtendedRegionProps</em></a>) – The local maxima to refine</li>
+<li><strong>percentage_pixels_below_max</strong> (<em>float</em>) – The percentage of pixels
 out of a region that are
 below the local maxima of
 the region</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; essentially unused (catches
+<li><strong>**parameters</strong> (<em>dict</em>) – essentially unused (catches
 unneeded arguments).</li>
 </ul>
 </td>
@@ -1446,11 +1461,11 @@ unneeded arguments).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>local_maxima</strong> (<a class="reference internal" href="#nanshe.imp.segment.ExtendedRegionProps" title="nanshe.imp.segment.ExtendedRegionProps"><em>ExtendedRegionProps</em></a>) &#8211; The local maxima to refine</li>
-<li><strong>min_local_max_distance</strong> (<em>float</em>) &#8211; The minimum allowed
+<li><strong>local_maxima</strong> (<a class="reference internal" href="#nanshe.imp.segment.ExtendedRegionProps" title="nanshe.imp.segment.ExtendedRegionProps"><em>ExtendedRegionProps</em></a>) – The local maxima to refine</li>
+<li><strong>min_local_max_distance</strong> (<em>float</em>) – The minimum allowed
 distance between local
 maxima</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; essentially unused (catches
+<li><strong>**parameters</strong> (<em>dict</em>) – essentially unused (catches
 unneeded arguments).</li>
 </ul>
 </td>
@@ -1481,15 +1496,15 @@ zeros with. If that fails, we copy nearby values over.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_data</strong> (<em>numpy.ndarray</em>) &#8211; data to remove lines from (
+<li><strong>new_data</strong> (<em>numpy.ndarray</em>) – data to remove lines from (
 first axis is time).</li>
-<li><strong>erosion_shape</strong> (<em>numpy.ndarray</em>) &#8211; shape of the erosion element
+<li><strong>erosion_shape</strong> (<em>numpy.ndarray</em>) – shape of the erosion element
 (will be filled with 1).</li>
-<li><strong>dilation_shape</strong> (<em>numpy.ndarray</em>) &#8211; shape of the dilation element
+<li><strong>dilation_shape</strong> (<em>numpy.ndarray</em>) – shape of the dilation element
 (will be filled with 1).</li>
-<li><strong>out</strong> (<em>numpy.ndarray</em>) &#8211; where the final results will be
+<li><strong>out</strong> (<em>numpy.ndarray</em>) – where the final results will be
 stored.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; essentially unused (catches
+<li><strong>**parameters</strong> (<em>dict</em>) – essentially unused (catches
 unneeded arguments).</li>
 </ul>
 </td>
@@ -1518,10 +1533,10 @@ unneeded arguments).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_image</strong> (<em>numpy.ndarray</em>) &#8211; array of data for
+<li><strong>new_image</strong> (<em>numpy.ndarray</em>) – array of data for
 generating a dictionary
 (first axis is time).</li>
-<li><strong>accepted_region_shape_constraints</strong> (<em>dict</em>) &#8211; a dictionary containing
+<li><strong>accepted_region_shape_constraints</strong> (<em>dict</em>) – a dictionary containing
 properties (that could
 be passed to
 region_properties)
@@ -1530,7 +1545,7 @@ dictionary that
 contains the keys min
 and/or max with a value
 for each.</li>
-<li><strong>accepted_neuron_shape_constraints</strong> (<em>dict</em>) &#8211; a dictionary containing
+<li><strong>accepted_neuron_shape_constraints</strong> (<em>dict</em>) – a dictionary containing
 properties (that could
 be passed to
 region_properties)
@@ -1539,7 +1554,7 @@ dictionary that
 contains the keys min
 and/or max with a value
 for each.</li>
-<li><strong>**parameters</strong> (<em>dict</em>) &#8211; additional parameters
+<li><strong>**parameters</strong> (<em>dict</em>) – additional parameters
 for various other
 function calls.</li>
 </ul>
@@ -1569,15 +1584,15 @@ function calls.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_image</strong> (<em>numpy.ndarray</em>) &#8211; image to threshold.</li>
-<li><strong>significance_threshold</strong> (<em>float</em>) &#8211; threshold above which
+<li><strong>new_image</strong> (<em>numpy.ndarray</em>) – image to threshold.</li>
+<li><strong>significance_threshold</strong> (<em>float</em>) – threshold above which
 everything is
 considered significant
 for the purpose of
 noise estimation.</li>
-<li><strong>wavelet_scale</strong> (<em>int</em>) &#8211; the scale of wavelet
+<li><strong>wavelet_scale</strong> (<em>int</em>) – the scale of wavelet
 transform to use.</li>
-<li><strong>noise_threshold</strong> (<em>float</em>) &#8211; a ratio to which the
+<li><strong>noise_threshold</strong> (<em>float</em>) – a ratio to which the
 noise estimate scales
 (e.g. 1.0 means the
 noise computed is the
@@ -1684,7 +1699,7 @@ noise used).</li>
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a58+10.gc8f39a5 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a58+12.g584ff40 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li> 
@@ -1694,7 +1709,7 @@ noise used).</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
