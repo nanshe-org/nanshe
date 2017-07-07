@@ -946,32 +946,40 @@ def region_properties_scikit_image(new_label_image, *args, **kwargs):
             ...     formatter={"float": lambda x: str(float(x))}
             ... )
 
-            >>> region_properties_scikit_image(numpy.zeros((2,2), dtype=int))
-            array([], 
+            >>> region_properties_scikit_image(
+            ...     numpy.zeros((2,2), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties_scikit_image(numpy.ones((2,2), dtype=int))
-            array([(1, 4.0, [0.5, 0.5])], 
+            >>> region_properties_scikit_image(
+            ...     numpy.ones((2,2), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 4.0, [0.5, 0.5])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties_scikit_image(numpy.ones((3,3), dtype=int))
-            array([(1, 9.0, [1.0, 1.0])], 
+            >>> region_properties_scikit_image(
+            ...     numpy.ones((3,3), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 9.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties_scikit_image(numpy.eye(3, dtype=int))
-            array([(1, 3.0, [1.0, 1.0])], 
+            >>> region_properties_scikit_image(
+            ...     numpy.eye(3, dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties_scikit_image(
             ...     numpy.eye(3, dtype=int), ["area", "centroid"]
-            ... )
-            array([(1, 3.0, [1.0, 1.0])], 
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties_scikit_image(
             ...     numpy.eye(3, dtype=int), properties=["area", "centroid"]
-            ... )
-            array([(1, 3.0, [1.0, 1.0])], 
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> numpy.set_printoptions()
@@ -1279,32 +1287,40 @@ def region_properties_vigra(new_label_image, *args, **kwargs):
             ...     formatter={"float": lambda x: str(float(x))}
             ... )
 
-            >>> region_properties_vigra(numpy.zeros((2,2), dtype=int))
-            array([], 
+            >>> region_properties_vigra(
+            ...     numpy.zeros((2,2), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties_vigra(numpy.ones((2,2), dtype=int))
-            array([(1, 4.0, [0.5, 0.5])], 
+            >>> region_properties_vigra(
+            ...     numpy.ones((2,2), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 4.0, [0.5, 0.5])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties_vigra(numpy.ones((3,3), dtype=int))
-            array([(1, 9.0, [1.0, 1.0])], 
+            >>> region_properties_vigra(
+            ...     numpy.ones((3,3), dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 9.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties_vigra(numpy.eye(3, dtype=int))
-            array([(1, 3.0, [1.0, 1.0])], 
+            >>> region_properties_vigra(
+            ...     numpy.eye(3, dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties_vigra(
             ...     numpy.eye(3, dtype=int), ["area", "centroid"]
-            ... )
-            array([(1, 3.0, [1.0, 1.0])], 
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties_vigra(
             ...     numpy.eye(3, dtype=int), properties=["area", "centroid"]
-            ... )
-            array([(1, 3.0, [1.0, 1.0])], 
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> numpy.set_printoptions()
@@ -1686,7 +1702,7 @@ def region_properties(new_label_image, *args, **kwargs):
             >>> region_properties(
             ...     numpy.zeros((2,2), dtype=int)
             ... ) # doctest: +NORMALIZE_WHITESPACE
-            array([], 
+            array([],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties(
@@ -1701,20 +1717,22 @@ def region_properties(new_label_image, *args, **kwargs):
             array([(1, 9.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
-            >>> region_properties(numpy.eye(3, dtype=int))
-            array([(1, 3.0, [1.0, 1.0])], 
+            >>> region_properties(
+            ...     numpy.eye(3, dtype=int)
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties(
             ...     numpy.eye(3, dtype=int), ["area", "centroid"]
-            ... )
-            array([(1, 3.0, [1.0, 1.0])], 
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> region_properties(
             ...     numpy.eye(3, dtype=int), properties=["area", "centroid"]
-            ... )
-            array([(1, 3.0, [1.0, 1.0])], 
+            ... ) # doctest: +NORMALIZE_WHITESPACE
+            array([(1, 3.0, [1.0, 1.0])],
                   dtype=[('label', '<i8'), ('area', '<f8'), ('centroid', '<f8', (2,))])
 
             >>> numpy.set_printoptions()
