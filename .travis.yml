@@ -74,8 +74,11 @@ script:
    # Get info on docstring coverage.
    - (hash docstring-coverage && docstring-coverage nanshe | tee .docstring-coverage) || true
 after_success:
+   # Create deploy environment (workaround coverage Python 3.6 bug).
+   - conda create -n dplenv python=3.5
+   - source activate dplenv
    # Install packages for submitting coverage results when they are needed.
-   - conda install -n testenv python-coveralls
+   - conda install python-coveralls
    # Submit results to coveralls.io.
    - coveralls
    # Check to see if this is the right branch to build documentation from.
