@@ -53,7 +53,6 @@ elif sys.argv[1] == "bdist_conda":
         "psutil",
         "numpy",
         "scipy",
-        "hdf5>=1.8.17,<1.8.18",
         "h5py",
         "bottleneck",
         "matplotlib",
