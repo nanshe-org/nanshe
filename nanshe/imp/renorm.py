@@ -124,12 +124,8 @@ def zeroed_mean_images(input_array, output_array=None):
 
         output_array[:] = input_array
 
-    # start with means having the same contents as the given images
-    means = output_array
-
-    # take the mean while we haven't gotten one mean for each image.
-    while means.ndim > 1:
-        means = means.mean(axis=1)
+    # find the mean for each frame.
+    means = output_array.mean(axis=tuple(iters.irange(1, output_array.ndim)))
 
     # reshape means until it has the right number of dimensions to broadcast.
     means = means.reshape(means.shape + (output_array.ndim - means.ndim)*(1,))
