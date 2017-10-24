@@ -43,7 +43,6 @@ build:
             code: |-
                 conda install -y nose-timer
                 conda install -y coverage
-                conda install -y docstring-coverage
                 conda install -y python-coveralls
                 conda clean -tipsy
 
@@ -56,12 +55,3 @@ build:
             name: Test documentation.
             code: |-
                 python setup.py build_sphinx
-                docstring-coverage nanshe | tee .docstring-coverage
-
-    after-steps:
-        - email-notify:
-            from: alerts@wercker.com
-            to: $TO_EMAIL
-            username: $FROM_EMAIL
-            password: $PASS
-            host: smtp.gmail.com:587
