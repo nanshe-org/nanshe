@@ -1,4 +1,8 @@
 language: generic
+
+os: linux
+dist: precise
+
 addons:
    hosts:
        - travis
