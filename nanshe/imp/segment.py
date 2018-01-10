@@ -169,7 +169,7 @@ def remove_zeroed_lines(new_data,
                 zero_mask_i_labeled_j, dilation_structure
             )
 
-            zero_mask_i_labeled_j_outline = zero_mask_i_labeled_j_dilated - zero_mask_i_labeled_j
+            zero_mask_i_labeled_j_outline = zero_mask_i_labeled_j_dilated ^ zero_mask_i_labeled_j
 
             zero_masks_dilated[i][zero_mask_i_labeled_j_dilated] = True
             zero_masks_outline[i][zero_mask_i_labeled_j_outline] = True
