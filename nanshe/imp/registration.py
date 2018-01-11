@@ -643,7 +643,8 @@ def find_offsets(frames2reg_fft, template_fft):
                     [ 0.,  0.,  0.,  0.],
                     [ 0.,  0.,  0.,  0.]]])
 
-            >>> af = numpy.fft.fftn(a, axes=range(1, a.ndim)); af
+            >>> af = numpy.fft.fftn(a, axes=range(1, a.ndim))
+            >>> af
             array([[[ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]],
@@ -664,7 +665,8 @@ def find_offsets(frames2reg_fft, template_fft):
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]]])
 
-            >>> tf = numpy.fft.fftn(a.mean(axis=0)); tf
+            >>> tf = numpy.fft.fftn(a.mean(axis=0))
+            >>> tf
             array([[ 4.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],
                    [ 2.8+0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],
                    [ 2.8-0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ]])
