@@ -1235,13 +1235,13 @@ def min_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> min_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=0
-            ... )
+            ... )  # doctest: +SKIP
             array([ 0.+0.j,  0.+1.j,  2.+1.j])
 
             >>> min_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=1
-            ... )
+            ... )  # doctest: +SKIP
             array([ 1.+0.j,  0.+0.j])
 
             >>> min_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
@@ -1367,13 +1367,13 @@ def nanmin_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> nanmin_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=0
-            ... )
+            ... )  # doctest: +SKIP
             array([ 0.+0.j,  0.+1.j,  2.+1.j])
 
             >>> nanmin_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=1
-            ... )
+            ... )  # doctest: +SKIP
             array([ 1.+0.j,  0.+0.j])
 
             >>> nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
@@ -1501,13 +1501,13 @@ def max_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> max_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=0
-            ... )
+            ... )  # doctest: +SKIP
             array([ 1.+0.j,  1.+1.j,  1.+3.j])
 
             >>> max_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=1
-            ... )
+            ... )  # doctest: +SKIP
             array([ 2.+1.j,  1.+3.j])
 
             >>> max_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
@@ -1634,13 +1634,13 @@ def nanmax_abs(new_array, axis=None, keepdims=False, return_indices=False):
             >>> nanmax_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=0,
-            ... )
+            ... )  # doctest: +SKIP
             array([ 1.+0.j,  1.+1.j,  1.+3.j])
 
             >>> nanmax_abs(
             ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),
             ...     axis=1,
-            ... )
+            ... )  # doctest: +SKIP
             array([ 2.+1.j,  1.+3.j])
 
             >>> nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))
