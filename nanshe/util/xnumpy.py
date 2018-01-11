@@ -72,6 +72,14 @@ from nanshe.util import iters
 from nanshe.util import prof
 
 
+# Use NumPy printing style from 1.13 for doctests.
+# There is no `legacy` keyword until 1.14 though.
+# So catch any errors that arise and suppress them.
+try:
+    numpy.set_printoptions(legacy="1.13")
+except TypeError:
+    pass
+
 # Get the logger
 trace_logger = prof.getTraceLogger(__name__)
 
