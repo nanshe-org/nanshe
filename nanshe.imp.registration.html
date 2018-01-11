@@ -7,14 +7,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.imp.registration module &#8212; nanshe 0.1.0a59+9.g1f824de documentation</title>
+    <title>nanshe.imp.registration module &#8212; nanshe 0.1.0a59+14.gbab75d0 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.0a59+9.g1f824de',
+        VERSION:     '0.1.0a59+14.gbab75d0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="nanshe.imp.filters.wavelet.html" title="nanshe.imp.filters.wavelet module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a59+9.g1f824de documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a59+14.gbab75d0 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" accesskey="U">nanshe.imp package</a> &#187;</li> 
@@ -143,7 +143,8 @@ frame.</p>
 <span class="go">        [ 0.,  0.,  0.,  0.]]])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">af</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="p">));</span> <span class="n">af</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">af</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">af</span>  
 <span class="go">array([[[ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],</span>
 <span class="go">        [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],</span>
 <span class="go">        [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]],</span>
@@ -165,7 +166,8 @@ frame.</p>
 <span class="go">        [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]]])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tf</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">));</span> <span class="n">tf</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tf</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tf</span>  
 <span class="go">array([[ 4.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],</span>
 <span class="go">       [ 2.8+0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],</span>
 <span class="go">       [ 2.8-0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ]])</span>
@@ -388,7 +390,7 @@ frames with time on the 0th axis.</li>
 <span class="go">       [  4.,   5.,   6.,   7.],</span>
 <span class="go">       [  8.,   9.,  10.,  11.]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">af</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="p">)))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">af</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">af</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  
 <span class="go">array([[ 66. +0.j        ,  -6. +6.j        ,  -6. +0.j        ,  -6. -6.j        ],</span>
 <span class="go">       [-24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ],</span>
 <span class="go">       [-24.-13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ]])</span>
@@ -398,7 +400,7 @@ frames with time on the 0th axis.</li>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">atf</span> <span class="o">=</span> <span class="n">translate_fourier</span><span class="p">(</span><span class="n">af</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">atf</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">atf</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  
 <span class="go">array([[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],</span>
 <span class="go">       [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],</span>
 <span class="go">       [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]])</span>
@@ -414,7 +416,7 @@ frames with time on the 0th axis.</li>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="kc">None</span><span class="p">];</span> <span class="n">af</span> <span class="o">=</span> <span class="n">af</span><span class="p">[</span><span class="kc">None</span><span class="p">];</span> <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">atf</span> <span class="o">=</span> <span class="n">translate_fourier</span><span class="p">(</span><span class="n">af</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">atf</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">atf</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  
 <span class="go">array([[[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],</span>
 <span class="go">        [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],</span>
 <span class="go">        [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]]])</span>
@@ -514,7 +516,7 @@ frames with time on the 0th axis.</li>
         <li class="right" >
           <a href="nanshe.imp.filters.wavelet.html" title="nanshe.imp.filters.wavelet module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a59+9.g1f824de documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a59+14.gbab75d0 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li> 
@@ -524,7 +526,7 @@ frames with time on the 0th axis.</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

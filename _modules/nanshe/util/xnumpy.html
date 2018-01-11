@@ -7,14 +7,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a59+9.g1f824de documentation</title>
+    <title>nanshe.util.xnumpy &#8212; nanshe 0.1.0a59+14.gbab75d0 documentation</title>
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a59+9.g1f824de',
+        VERSION:     '0.1.0a59+14.gbab75d0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a59+9.g1f824de documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a59+14.gbab75d0 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -130,6 +130,14 @@
 <span class="c1"># Need in order to have logging information no matter what.</span>
 <span class="kn">from</span> <span class="nn">nanshe.util</span> <span class="k">import</span> <span class="n">prof</span>
 
+
+<span class="c1"># Use NumPy printing style from 1.13 for doctests.</span>
+<span class="c1"># There is no `legacy` keyword until 1.14 though.</span>
+<span class="c1"># So catch any errors that arise and suppress them.</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">legacy</span><span class="o">=</span><span class="s2">&quot;1.13&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="k">pass</span>
 
 <span class="c1"># Get the logger</span>
 <span class="n">trace_logger</span> <span class="o">=</span> <span class="n">prof</span><span class="o">.</span><span class="n">getTraceLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -1286,13 +1294,13 @@
 <span class="sd">            &gt;&gt;&gt; min_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=0</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 0.+0.j,  0.+1.j,  2.+1.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; min_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=1</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 1.+0.j,  0.+0.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; min_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))</span>
@@ -1418,13 +1426,13 @@
 <span class="sd">            &gt;&gt;&gt; nanmin_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=0</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 0.+0.j,  0.+1.j,  2.+1.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; nanmin_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=1</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 1.+0.j,  0.+0.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; nanmin_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))</span>
@@ -1552,13 +1560,13 @@
 <span class="sd">            &gt;&gt;&gt; max_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=0</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 1.+0.j,  1.+1.j,  1.+3.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; max_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=1</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 2.+1.j,  1.+3.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; max_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))</span>
@@ -1685,13 +1693,13 @@
 <span class="sd">            &gt;&gt;&gt; nanmax_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=0,</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 1.+0.j,  1.+1.j,  1.+3.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; nanmax_abs(</span>
 <span class="sd">            ...     numpy.array([[1+0j, 0+1j, 2+1j], [0+0j, 1+1j, 1+3j]]),</span>
 <span class="sd">            ...     axis=1,</span>
-<span class="sd">            ... )</span>
+<span class="sd">            ... )  # doctest: +SKIP</span>
 <span class="sd">            array([ 2.+1.j,  1.+3.j])</span>
 
 <span class="sd">            &gt;&gt;&gt; nanmax_abs(numpy.arange(24).reshape(2,3,4), axis=(1,2))</span>
@@ -4964,7 +4972,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a59+9.g1f824de documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a59+14.gbab75d0 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -4973,7 +4981,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
