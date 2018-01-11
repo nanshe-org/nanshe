@@ -47,6 +47,14 @@ from nanshe.io import hdf5
 from nanshe.util import prof
 
 
+# Use NumPy printing style from 1.13 for doctests.
+# There is no `legacy` keyword until 1.14 though.
+# So catch any errors that arise and suppress them.
+try:
+    numpy.set_printoptions(legacy="1.13")
+except TypeError:
+    pass
+
 # Get the loggers
 trace_logger = prof.getTraceLogger(__name__)
 logger = prof.logging.getLogger(__name__)
@@ -502,7 +510,7 @@ def translate_fourier(frame_fft, shift):
                    [  4.,   5.,   6.,   7.],
                    [  8.,   9.,  10.,  11.]])
             >>> af = fft.fftn(a, axes=tuple(iters.irange(a.ndim)))
-            >>> numpy.around(af, decimals=10)
+            >>> numpy.around(af, decimals=10)  # doctest: +SKIP
             array([[ 66. +0.j        ,  -6. +6.j        ,  -6. +0.j        ,  -6. -6.j        ],
                    [-24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ],
                    [-24.-13.85640646j,   0. +0.j        ,   0. +0.j        ,   0. +0.j        ]])
@@ -510,7 +518,7 @@ def translate_fourier(frame_fft, shift):
             >>> s = numpy. array([1, -1])
 
             >>> atf = translate_fourier(af, s)
-            >>> numpy.around(atf, decimals=10)
+            >>> numpy.around(atf, decimals=10)  # doctest: +SKIP
             array([[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],
                    [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],
                    [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]])
@@ -524,7 +532,7 @@ def translate_fourier(frame_fft, shift):
 
             >>> a = a[None]; af = af[None]; s = s[None]
             >>> atf = translate_fourier(af, s)
-            >>> numpy.around(atf, decimals=10)
+            >>> numpy.around(atf, decimals=10)  # doctest: +SKIP
             array([[[ 66. +0.j        ,  -6. -6.j        ,   6. -0.j        ,  -6. +6.j        ],
                     [ 24.+13.85640646j,   0. +0.j        ,   0. +0.j        ,  -0. +0.j        ],
                     [ 24.-13.85640646j,   0. -0.j        ,   0. +0.j        ,   0. +0.j        ]]])
@@ -635,7 +643,8 @@ def find_offsets(frames2reg_fft, template_fft):
                     [ 0.,  0.,  0.,  0.],
                     [ 0.,  0.,  0.,  0.]]])
 
-            >>> af = numpy.fft.fftn(a, axes=range(1, a.ndim)); af
+            >>> af = numpy.fft.fftn(a, axes=range(1, a.ndim))
+            >>> af  # doctest: +SKIP
             array([[[ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]],
@@ -656,7 +665,8 @@ def find_offsets(frames2reg_fft, template_fft):
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ],
                     [ 4.+0.j        ,  0.+0.j        ,  0.+0.j        ,  0.+0.j        ]]])
 
-            >>> tf = numpy.fft.fftn(a.mean(axis=0)); tf
+            >>> tf = numpy.fft.fftn(a.mean(axis=0))
+            >>> tf  # doctest: +SKIP
             array([[ 4.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],
                    [ 2.8+0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ],
                    [ 2.8-0.69282032j,  0.0+0.j        ,  0.0+0.j        ,  0.0+0.j        ]])
