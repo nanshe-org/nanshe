@@ -218,6 +218,8 @@ class TestSerializers(object):
         assert (data1[2:8, 2:8].shape == data6.shape)
         assert (data1[2:8, 2:8] == data6).all()
 
+        self.temp_hdf5_file2.close()
+
 
     def test_read_numpy_structured_array_from_HDF5_2(self):
         data1 = numpy.zeros((10, 10), dtype=[("a", float, 2), ("b", int, 3)])
