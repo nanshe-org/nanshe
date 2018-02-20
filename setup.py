@@ -13,6 +13,7 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 from setuptools.dist import Distribution
+from distutils.version import LooseVersion
 
 import versioneer
 
@@ -76,14 +77,21 @@ elif sys.argv[1] == "bdist_conda":
             "functools32"
         ]
 elif sys.argv[1] == "build_sphinx":
+    import sphinx
     import sphinx.apidoc
 
-    sphinx.apidoc.main([
-        sphinx.apidoc.__file__,
+    sphinx_apidoc_args = []
+    if LooseVersion(sphinx.__version__) < LooseVersion("1.7"):
+        sphinx_apidoc_args.append(sphinx.apidoc.__file__)
+
+    sphinx_apidoc_args.extend([
         "-f", "-T", "-e", "-M",
         "-o", "docs",
-        ".", "setup.py", "tests", "versioneer.py"
+        ".",
+        "setup.py", "tests", "versioneer.py"
     ])
+
+    sphinx.apidoc.main(sphinx_apidoc_args)
 
     build_prefix_arg_index = None
     for each_build_arg in ["-b", "--builder"]:
