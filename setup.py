@@ -82,7 +82,8 @@ elif sys.argv[1] == "build_sphinx":
         sphinx.apidoc.__file__,
         "-f", "-T", "-e", "-M",
         "-o", "docs",
-        ".", "setup.py", "tests", "versioneer.py"
+        ".",
+        "setup.py", "tests", "versioneer.py"
     ])
 
     build_prefix_arg_index = None
