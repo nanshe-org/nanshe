@@ -180,7 +180,15 @@ def get_standard_tiff_array(new_tiff_filename,
     assert (pages_to_channel > 0)
 
     with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
-        new_tiff_array = new_tiff_file.asarray(memmap=memmap)
+        if memmap:
+            try:
+                # tifffile >= 0.13.0
+                new_tiff_array = new_tiff_file.asarray(out="memmap")
+            except TypeError:
+                # tifffile < 0.13.0
+                new_tiff_array = new_tiff_file.asarray(memmap=True)
+        else:
+            new_tiff_array = new_tiff_file.asarray()
 
     # Add a singleton channel if none is present.
     if new_tiff_array.ndim == 3:
@@ -260,16 +268,24 @@ def get_standard_tiff_data(new_tiff_filename,
 
     new_tiff_description = []
     with tifffile.TiffFile(new_tiff_filename) as new_tiff_file:
-        new_tiff_array = new_tiff_file.asarray(memmap=memmap)
+        if memmap:
+            try:
+                # tifffile >= 0.13.0
+                new_tiff_array = new_tiff_file.asarray(out="memmap")
+            except TypeError:
+                # tifffile < 0.13.0
+                new_tiff_array = new_tiff_file.asarray(memmap=True)
+        else:
+            new_tiff_array = new_tiff_file.asarray()
 
         for i in iters.irange(
                 0,
-                len(new_tiff_file),
+                len(new_tiff_file.pages),
                 pages_to_channel
         ):
             new_tiff_description.append([])
             for j in iters.irange(pages_to_channel):
-                each_page = new_tiff_file[i + j]
+                each_page = new_tiff_file.pages[i + j]
                 each_metadata = each_page.tags
                 each_desc = u""
 
