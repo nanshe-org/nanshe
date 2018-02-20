@@ -7,14 +7,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.io.xtiff &#8212; nanshe 0.1.0a61+3.g5536a06 documentation</title>
+    <title>nanshe.io.xtiff &#8212; nanshe 0.1.0a61+7.gd3fa681 documentation</title>
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.0a61+3.g5536a06',
+        VERSION:     '0.1.0a61+7.gd3fa681',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a61+3.g5536a06 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -239,7 +239,15 @@
     <span class="k">assert</span> <span class="p">(</span><span class="n">pages_to_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffFile</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_tiff_file</span><span class="p">:</span>
-        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">memmap</span><span class="o">=</span><span class="n">memmap</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">memmap</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># tifffile &gt;= 0.13.0</span>
+                <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">out</span><span class="o">=</span><span class="s2">&quot;memmap&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                <span class="c1"># tifffile &lt; 0.13.0</span>
+                <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">memmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 
     <span class="c1"># Add a singleton channel if none is present.</span>
     <span class="k">if</span> <span class="n">new_tiff_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
@@ -319,16 +327,24 @@
 
     <span class="n">new_tiff_description</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffFile</span><span class="p">(</span><span class="n">new_tiff_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_tiff_file</span><span class="p">:</span>
-        <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">memmap</span><span class="o">=</span><span class="n">memmap</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">memmap</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># tifffile &gt;= 0.13.0</span>
+                <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">out</span><span class="o">=</span><span class="s2">&quot;memmap&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                <span class="c1"># tifffile &lt; 0.13.0</span>
+                <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">memmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tiff_array</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span>
                 <span class="mi">0</span><span class="p">,</span>
-                <span class="nb">len</span><span class="p">(</span><span class="n">new_tiff_file</span><span class="p">),</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">new_tiff_file</span><span class="o">.</span><span class="n">pages</span><span class="p">),</span>
                 <span class="n">pages_to_channel</span>
         <span class="p">):</span>
             <span class="n">new_tiff_description</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">iters</span><span class="o">.</span><span class="n">irange</span><span class="p">(</span><span class="n">pages_to_channel</span><span class="p">):</span>
-                <span class="n">each_page</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+                <span class="n">each_page</span> <span class="o">=</span> <span class="n">new_tiff_file</span><span class="o">.</span><span class="n">pages</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
                 <span class="n">each_metadata</span> <span class="o">=</span> <span class="n">each_page</span><span class="o">.</span><span class="n">tags</span>
                 <span class="n">each_desc</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&quot;</span>
 
@@ -611,7 +627,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a61+3.g5536a06 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
