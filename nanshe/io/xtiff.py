@@ -280,12 +280,12 @@ def get_standard_tiff_data(new_tiff_filename,
 
         for i in iters.irange(
                 0,
-                len(new_tiff_file),
+                len(new_tiff_file.pages),
                 pages_to_channel
         ):
             new_tiff_description.append([])
             for j in iters.irange(pages_to_channel):
-                each_page = new_tiff_file[i + j]
+                each_page = new_tiff_file.pages[i + j]
                 each_metadata = each_page.tags
                 each_desc = u""
 
