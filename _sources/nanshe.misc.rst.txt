@@ -1,5 +1,5 @@
-nanshe\.misc package
-====================
+nanshe.misc package
+===================
 
 .. automodule:: nanshe.misc
     :members:

@@ -6,21 +6,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.imp.segment module &#8212; nanshe 0.1.0a61+7.gd3fa681 documentation</title>
+    <title>nanshe.imp.segment module &#8212; nanshe 0.1.0a62 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1.0a61+7.gd3fa681',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -32,8 +24,7 @@
     <link rel="next" title="nanshe.io package" href="nanshe.io.html" />
     <link rel="prev" title="nanshe.imp.renorm module" href="nanshe.imp.renorm.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
+  </head><body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -51,7 +42,7 @@
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" accesskey="U">nanshe.imp package</a> &#187;</li> 
@@ -67,24 +58,24 @@
             
   <div class="section" id="module-nanshe.imp.segment">
 <span id="nanshe-imp-segment-module"></span><h1>nanshe.imp.segment module<a class="headerlink" href="#module-nanshe.imp.segment" title="Permalink to this headline">¶</a></h1>
-<p>The <code class="docutils literal"><span class="pre">segment</span></code> module has components to make an image processing workflow.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">segment</span></code> module has components to make an image processing workflow.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal"><span class="pre">segment</span></code> (or <strong>segment</strong>ation) module contains algorithms useful in
+<p>The <code class="docutils literal notranslate"><span class="pre">segment</span></code> (or <strong>segment</strong>ation) module contains algorithms useful in
 implementing ADINA ( doi:<a class="reference external" href="http://dx.doi.org/10.1109/ISBI.2013.6556660">10.1109/ISBI.2013.6556660</a> ), but could be reused in
 other workflows. These primary sections can be grouped as follows</p>
 <ol class="arabic simple">
 <li>Preprocessing steps<ol class="loweralpha">
-<li>registration correction (      <a class="reference internal" href="#nanshe.imp.segment.remove_zeroed_lines" title="nanshe.imp.segment.remove_zeroed_lines"><code class="xref py py-func docutils literal"><span class="pre">remove_zeroed_lines()</span></code></a> )</li>
-<li>background estimation and subtraction (      <a class="reference internal" href="#nanshe.imp.segment.estimate_f0" title="nanshe.imp.segment.estimate_f0"><code class="xref py py-func docutils literal"><span class="pre">estimate_f0()</span></code></a>,      <a class="reference internal" href="#nanshe.imp.segment.extract_f0" title="nanshe.imp.segment.extract_f0"><code class="xref py py-func docutils literal"><span class="pre">extract_f0()</span></code></a> )</li>
-<li>wavelet transform ( <a class="reference internal" href="nanshe.imp.filters.wavelet.html#nanshe.imp.filters.wavelet.transform" title="nanshe.imp.filters.wavelet.transform"><code class="xref py py-func docutils literal"><span class="pre">transform()</span></code></a> )</li>
-<li>normalization ( <a class="reference internal" href="#nanshe.imp.segment.normalize_data" title="nanshe.imp.segment.normalize_data"><code class="xref py py-func docutils literal"><span class="pre">normalize_data()</span></code></a> )</li>
+<li>registration correction (      <a class="reference internal" href="#nanshe.imp.segment.remove_zeroed_lines" title="nanshe.imp.segment.remove_zeroed_lines"><code class="xref py py-func docutils literal notranslate"><span class="pre">remove_zeroed_lines()</span></code></a> )</li>
+<li>background estimation and subtraction (      <a class="reference internal" href="#nanshe.imp.segment.estimate_f0" title="nanshe.imp.segment.estimate_f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">estimate_f0()</span></code></a>,      <a class="reference internal" href="#nanshe.imp.segment.extract_f0" title="nanshe.imp.segment.extract_f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">extract_f0()</span></code></a> )</li>
+<li>wavelet transform ( <a class="reference internal" href="nanshe.imp.filters.wavelet.html#nanshe.imp.filters.wavelet.transform" title="nanshe.imp.filters.wavelet.transform"><code class="xref py py-func docutils literal notranslate"><span class="pre">transform()</span></code></a> )</li>
+<li>normalization ( <a class="reference internal" href="#nanshe.imp.segment.normalize_data" title="nanshe.imp.segment.normalize_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">normalize_data()</span></code></a> )</li>
 </ol>
 </li>
-<li>Dictionary learning step (    <a class="reference internal" href="#nanshe.imp.segment.generate_dictionary" title="nanshe.imp.segment.generate_dictionary"><code class="xref py py-func docutils literal"><span class="pre">generate_dictionary()</span></code></a> )</li>
+<li>Dictionary learning step (    <a class="reference internal" href="#nanshe.imp.segment.generate_dictionary" title="nanshe.imp.segment.generate_dictionary"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_dictionary()</span></code></a> )</li>
 <li>Postprocessing<ol class="loweralpha">
-<li>segmentation and refinement (      <a class="reference internal" href="#nanshe.imp.segment.wavelet_denoising" title="nanshe.imp.segment.wavelet_denoising"><code class="xref py py-func docutils literal"><span class="pre">wavelet_denoising()</span></code></a> )</li>
-<li>merging ( <a class="reference internal" href="#nanshe.imp.segment.merge_neuron_sets" title="nanshe.imp.segment.merge_neuron_sets"><code class="xref py py-func docutils literal"><span class="pre">merge_neuron_sets()</span></code></a> )</li>
+<li>segmentation and refinement (      <a class="reference internal" href="#nanshe.imp.segment.wavelet_denoising" title="nanshe.imp.segment.wavelet_denoising"><code class="xref py py-func docutils literal notranslate"><span class="pre">wavelet_denoising()</span></code></a> )</li>
+<li>merging ( <a class="reference internal" href="#nanshe.imp.segment.merge_neuron_sets" title="nanshe.imp.segment.merge_neuron_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">merge_neuron_sets()</span></code></a> )</li>
 </ol>
 </li>
 </ol>
@@ -93,8 +84,8 @@ other workflows. These primary sections can be grouped as follows</p>
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nanshe.imp.segment.ExtendedRegionProps">
-<em class="property">class </em><code class="descclassname">nanshe.imp.segment.</code><code class="descname">ExtendedRegionProps</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">nanshe.imp.segment.</code><code class="descname">ExtendedRegionProps</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Using the results of extended_region_local_maxima_properties with given
 intensity and label images, the ExtendedRegionProps attempts to make it
 easy to get information about local maxima in the image. Further, it
@@ -112,7 +103,7 @@ given its dependency on the intensity image.</p>
 </div>
 <dl class="method">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.get_local_max_index_array">
-<code class="descname">get_local_max_index_array</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.get_local_max_index_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.get_local_max_index_array" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_local_max_index_array</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.get_local_max_index_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.get_local_max_index_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a numpy style index array from the local maxima present.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -132,7 +123,7 @@ given its dependency on the intensity image.</p>
 
 <dl class="method">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.get_local_max_label_image">
-<code class="descname">get_local_max_label_image</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.get_local_max_label_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.get_local_max_label_image" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_local_max_label_image</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.get_local_max_label_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.get_local_max_label_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets an int numpy array that contains the labels of the local
 maxima.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -154,7 +145,7 @@ background.</dd>
 
 <dl class="method">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.get_local_max_mask">
-<code class="descname">get_local_max_mask</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.get_local_max_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.get_local_max_mask" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_local_max_mask</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.get_local_max_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.get_local_max_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a bool numpy array that is True at the locations of the local
 maxima.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -180,7 +171,7 @@ maxima.</p>
 
 <dl class="method">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.remove_prop_indices">
-<code class="descname">remove_prop_indices</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.remove_prop_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.remove_prop_indices" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove_prop_indices</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.remove_prop_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.remove_prop_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the local maxima of the indices listed (like
 remove_prop_mask except with indices).</p>
 <div class="admonition note">
@@ -202,7 +193,7 @@ to remove, and False for the ones to keep).</td>
 
 <dl class="method">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.remove_prop_mask">
-<code class="descname">remove_prop_mask</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.remove_prop_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.remove_prop_mask" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove_prop_mask</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.remove_prop_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.remove_prop_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the local maxima by the mask over their indices (only False
 elements will be kept).</p>
 <div class="admonition note">
@@ -228,7 +219,7 @@ to keep).</td>
 
 <dl class="method">
 <dt id="nanshe.imp.segment.ExtendedRegionProps.renumber_labels">
-<code class="descname">renumber_labels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.renumber_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.renumber_labels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">renumber_labels</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/imp/segment.html#ExtendedRegionProps.renumber_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.imp.segment.ExtendedRegionProps.renumber_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>An internal method to be called after a label is completely removed
 from the local maxima.</p>
 <p>Ensures all labels are in sequential order in the label image,
@@ -662,7 +653,7 @@ get_neuron_dtype.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([], dtype=[(&#39;mask&#39;, &#39;?&#39;, (3,)),</span>
@@ -675,7 +666,7 @@ get_neuron_dtype.</dd>
 <span class="go">                 (&#39;centroid&#39;, &#39;&lt;f8&#39;, (1,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_empty_neuron</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([], dtype=[(&#39;mask&#39;, &#39;?&#39;, (2, 3)),</span>
@@ -713,7 +704,7 @@ constructor.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">3</span><span class="p">,),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">[(&#39;mask&#39;, &lt;... &#39;numpy.bool_&#39;&gt;, (3,)),</span>
@@ -726,7 +717,7 @@ constructor.</dd>
 <span class="go"> (&#39;centroid&#39;, &lt;... &#39;numpy.float64&#39;&gt;, (1,))]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_neuron_dtype</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">[(&#39;mask&#39;, &lt;... &#39;numpy.bool_&#39;&gt;, (2, 3)),</span>
@@ -765,7 +756,7 @@ get_neuron_dtype.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">(</span>
@@ -789,7 +780,7 @@ get_neuron_dtype.</dd>
 <span class="go">              (&#39;centroid&#39;, &#39;&lt;f8&#39;, (1,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_one_neuron</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([ ([[False, False, False],</span>
@@ -814,7 +805,7 @@ get_neuron_dtype.</dd>
 <span class="go">              (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -830,15 +821,15 @@ get_neuron_dtype.</dd>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>props</strong> (<em>numpy.ndarray</em>) – properties of each labeled region.</li>
 <li><strong>constraints</strong> (<em>dict</em>) – dictionary containing each property
-with optional <code class="docutils literal"><span class="pre">min</span></code> and <code class="docutils literal"><span class="pre">max</span></code>
+with optional <code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code>
 for each value.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
 <dt>mask with each region property that</dt>
-<dd><p class="first last">matches marked as <code class="docutils literal"><span class="pre">True</span></code> and the
-rest marked as <code class="docutils literal"><span class="pre">False</span></code>.</p>
+<dd><p class="first last">matches marked as <code class="docutils literal notranslate"><span class="pre">True</span></code> and the
+rest marked as <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 </dd>
 </dl>
 </p>
@@ -1023,7 +1014,7 @@ renormalized_images.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_data</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
@@ -1175,54 +1166,54 @@ label.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
 <span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 4.0, [0.5, 0.5])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 9.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1270,54 +1261,54 @@ label.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
 <span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 4.0, [0.5, 0.5])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 9.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_scikit_image</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1365,54 +1356,54 @@ label.</dd>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
 <span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 4.0, [0.5, 0.5])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 9.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">region_properties_vigra</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="s2">&quot;centroid&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span> 
 <span class="go">array([(1, 3.0, [1.0, 1.0])],</span>
 <span class="go">      dtype=[(&#39;label&#39;, &#39;&lt;i8&#39;), (&#39;area&#39;, &#39;&lt;f8&#39;), (&#39;centroid&#39;, &#39;&lt;f8&#39;, (2,))])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1653,12 +1644,14 @@ noise used).</li>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1699,7 +1692,7 @@ noise used).</li>
         <li class="right" >
           <a href="nanshe.imp.renorm.html" title="nanshe.imp.renorm module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.imp.html" >nanshe.imp package</a> &#187;</li> 
@@ -1709,7 +1702,7 @@ noise used).</li>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

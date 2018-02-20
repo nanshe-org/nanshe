@@ -1,5 +1,5 @@
-nanshe\.util\.xnumpy module
-===========================
+nanshe.util.xnumpy module
+=========================
 
 .. automodule:: nanshe.util.xnumpy
     :members:

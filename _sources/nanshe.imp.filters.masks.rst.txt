@@ -1,5 +1,5 @@
-nanshe\.imp\.filters\.masks module
-==================================
+nanshe.imp.filters.masks module
+===============================
 
 .. automodule:: nanshe.imp.filters.masks
     :members:

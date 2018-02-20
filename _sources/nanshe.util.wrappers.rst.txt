@@ -1,5 +1,5 @@
-nanshe\.util\.wrappers module
-=============================
+nanshe.util.wrappers module
+===========================
 
 .. automodule:: nanshe.util.wrappers
     :members:

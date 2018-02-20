@@ -1,5 +1,5 @@
-nanshe\.util\.prof module
-=========================
+nanshe.util.prof module
+=======================
 
 .. automodule:: nanshe.util.prof
     :members:

@@ -6,21 +6,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.misc.random_dictionary_learning_data module &#8212; nanshe 0.1.0a61+7.gd3fa681 documentation</title>
+    <title>nanshe.misc.random_dictionary_learning_data module &#8212; nanshe 0.1.0a62 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1.0a61+7.gd3fa681',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -32,8 +24,7 @@
     <link rel="next" title="nanshe.syn package" href="nanshe.syn.html" />
     <link rel="prev" title="nanshe.misc.neuron_matplotlib_viewer module" href="nanshe.misc.neuron_matplotlib_viewer.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
+  </head><body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -51,7 +42,7 @@
         <li class="right" >
           <a href="nanshe.misc.neuron_matplotlib_viewer.html" title="nanshe.misc.neuron_matplotlib_viewer module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.misc.html" accesskey="U">nanshe.misc package</a> &#187;</li> 
@@ -67,12 +58,12 @@
             
   <div class="section" id="module-nanshe.misc.random_dictionary_learning_data">
 <span id="nanshe-misc-random-dictionary-learning-data-module"></span><h1>nanshe.misc.random_dictionary_learning_data module<a class="headerlink" href="#module-nanshe.misc.random_dictionary_learning_data" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal"><span class="pre">random_dictionary_learning_data</span></code> supports generating synthetic data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">random_dictionary_learning_data</span></code> supports generating synthetic data.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>The module <code class="docutils literal"><span class="pre">random_dictionary_learning_data</span></code> provides a way of generating
+<p>The module <code class="docutils literal notranslate"><span class="pre">random_dictionary_learning_data</span></code> provides a way of generating
 synthetic data for testing the segmentation algorithm against. Moving forward
-the useful content in here will be refactored and moved into the <code class="docutils literal"><span class="pre">data</span></code>
+the useful content in here will be refactored and moved into the <code class="docutils literal notranslate"><span class="pre">data</span></code>
 module. So, depending on this module is unwise.</p>
 </div>
 <div class="section" id="api">
@@ -80,7 +71,7 @@ module. So, depending on this module is unwise.</p>
 <dl class="class">
 <dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">DictionaryLearningRandomDataGenerator</code><span class="sig-paren">(</span><em>frame_shape</em>, <em>num_objects</em>, <em>num_groups</em>, <em>num_frames</em>, <em>mean_group_size</em>, <em>object_spread</em>, <em>object_max_intensity</em>, <em>object_min_intensity</em>, <em>background_noise_intensity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A Random Generator that build pseudo-data similar in nature to that
 which the ADINA algorithm is run.</p>
 </dd></dl>
@@ -88,7 +79,7 @@ which the ADINA algorithm is run.</p>
 <dl class="class">
 <dt id="nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataSample">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">DictionaryLearningRandomDataSample</code><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#DictionaryLearningRandomDataSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.DictionaryLearningRandomDataSample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Essentially a struct with its values set at runtime by
 DictionaryLearningRandomDataGenerator calls.</p>
 </dd></dl>
@@ -96,7 +87,7 @@ DictionaryLearningRandomDataGenerator calls.</p>
 <dl class="class">
 <dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">MappingDiscreteGeometricDistributionGenerator</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteGeometricDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteGeometricDistributionGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A random generator of groups. Each group has a size that is
 geometrically distributed. However, the individuals chosen for the
 group are all equally likely.</p>
@@ -105,7 +96,7 @@ group are all equally likely.</p>
 <dl class="class">
 <dt id="nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">MappingDiscreteUniformDistributionGenerator</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#MappingDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.MappingDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Given a bunch of arguments. This will create a random element generator
 that returns one or many.</p>
 </dd></dl>
@@ -113,7 +104,7 @@ that returns one or many.</p>
 <dl class="class">
 <dt id="nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator">
 <em class="property">class </em><code class="descclassname">nanshe.misc.random_dictionary_learning_data.</code><code class="descname">NumpyRandomArrayDiscreteUniformDistributionGenerator</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nanshe/misc/random_dictionary_learning_data.html#NumpyRandomArrayDiscreteUniformDistributionGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nanshe.misc.random_dictionary_learning_data.NumpyRandomArrayDiscreteUniformDistributionGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Creates a random numpy array (with type bool) generator that will set
 a certain number of random positions in the array to True (like
 Bernoulli random distribution)</p>
@@ -157,12 +148,14 @@ Bernoulli random distribution)</p>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -203,7 +196,7 @@ Bernoulli random distribution)</p>
         <li class="right" >
           <a href="nanshe.misc.neuron_matplotlib_viewer.html" title="nanshe.misc.neuron_matplotlib_viewer module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.misc.html" >nanshe.misc package</a> &#187;</li> 
@@ -213,7 +206,7 @@ Bernoulli random distribution)</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

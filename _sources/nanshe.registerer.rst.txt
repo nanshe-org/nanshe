@@ -1,5 +1,5 @@
-nanshe\.registerer module
-=========================
+nanshe.registerer module
+========================
 
 .. automodule:: nanshe.registerer
     :members:

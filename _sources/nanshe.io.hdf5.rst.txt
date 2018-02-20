@@ -1,5 +1,5 @@
-nanshe\.io\.hdf5 package
-========================
+nanshe.io.hdf5 package
+======================
 
 .. automodule:: nanshe.io.hdf5
     :members:

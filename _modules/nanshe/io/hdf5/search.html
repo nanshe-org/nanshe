@@ -6,21 +6,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.io.hdf5.search &#8212; nanshe 0.1.0a61+7.gd3fa681 documentation</title>
+    <title>nanshe.io.hdf5.search &#8212; nanshe 0.1.0a62 documentation</title>
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../../',
-        VERSION:     '0.1.0a61+7.gd3fa681',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
+  </head><body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -43,7 +34,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -142,8 +133,8 @@
                     <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">current_pattern_group_matches</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span></div>
+</div>
+    <span class="k">return</span><span class="p">(</span><span class="n">current_pattern_group_matches</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_matching_paths_groups"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.search.html#nanshe.io.hdf5.search.get_matching_paths_groups">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -218,8 +209,8 @@
         <span class="n">new_groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
     <span class="n">groups</span> <span class="o">=</span> <span class="n">new_groups</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span></div>
+</div>
+    <span class="k">return</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_matching_grouped_paths"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.search.html#nanshe.io.hdf5.search.get_matching_grouped_paths">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -250,8 +241,8 @@
         <span class="n">paths_found</span><span class="p">[</span><span class="n">each_path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">paths_found</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">paths_found</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span></div>
+</div>
+    <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_matching_grouped_paths_found"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.search.html#nanshe.io.hdf5.search.get_matching_grouped_paths_found">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -280,8 +271,8 @@
         <span class="n">each_path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">each_path_components</span><span class="p">])</span>
 
         <span class="n">paths_found</span><span class="p">[</span><span class="n">each_path</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">each_path</span> <span class="ow">in</span> <span class="n">a_filehandle</span><span class="p">)</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span></div>
+</div>
+    <span class="k">return</span><span class="p">(</span><span class="n">paths_found</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -291,12 +282,14 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -331,7 +324,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -340,7 +333,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

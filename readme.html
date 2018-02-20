@@ -6,21 +6,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>README &#8212; nanshe 0.1.0a61+7.gd3fa681 documentation</title>
+    <title>README &#8212; nanshe 0.1.0a62 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1.0a61+7.gd3fa681',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -32,8 +24,7 @@
     <link rel="next" title="nanshe package" href="nanshe.html" />
     <link rel="prev" title="Welcome to nanshe’s documentation!" href="index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
+  </head><body>
     <div class="relbar-top">
         
     <div class="related" role="navigation" aria-label="related navigation">
@@ -51,7 +42,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to nanshe’s documentation!"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -84,7 +75,7 @@ for inspecting the results obtained.</p>
 <h3>Converter<a class="headerlink" href="#converter" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="intro">
 <h4>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h4>
-<p>The first item contained inside the package is <code class="docutils literal"><span class="pre">nanshe_converter.py</span></code>.
+<p>The first item contained inside the package is <code class="docutils literal notranslate"><span class="pre">nanshe_converter.py</span></code>.
 This is designed to convert external formats to HDF5 (the native format
 used by Nanshe). Currently, only TIFF stacks are supported.</p>
 </div>
@@ -92,13 +83,13 @@ used by Nanshe). Currently, only TIFF stacks are supported.</p>
 <h4>Sample Usage<a class="headerlink" href="#sample-usage" title="Permalink to this headline">¶</a></h4>
 <p>To run the converter, simply run the command below. The first argument
 specifies the input format. Currently, this is just tiff. The
-configuration parameters are contained in the <code class="docutils literal"><span class="pre">config.json</span></code> file. An
-example configuration file can be found in the <code class="docutils literal"><span class="pre">examples</span></code> folder. The
+configuration parameters are contained in the <code class="docutils literal notranslate"><span class="pre">config.json</span></code> file. An
+example configuration file can be found in the <code class="docutils literal notranslate"><span class="pre">examples</span></code> folder. The
 input images can be specified using a regex as can be seen below. The
 output file is an HDF5 with a dataset containing the result. Here,
-<code class="docutils literal"><span class="pre">output.h5</span></code> is the output file. The data is stored in the specified
-dataset, which is <code class="docutils literal"><span class="pre">/images</span></code> within root.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe_converter</span><span class="o">.</span><span class="n">py</span> <span class="n">tiff</span> <span class="n">config</span><span class="o">.</span><span class="n">json</span> <span class="n">input_dir</span><span class="o">/*.</span><span class="n">tiff</span> <span class="n">output</span><span class="o">.</span><span class="n">h5</span><span class="o">/</span><span class="n">images</span>
+<code class="docutils literal notranslate"><span class="pre">output.h5</span></code> is the output file. The data is stored in the specified
+dataset, which is <code class="docutils literal notranslate"><span class="pre">/images</span></code> within root.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe_converter</span><span class="o">.</span><span class="n">py</span> <span class="n">tiff</span> <span class="n">config</span><span class="o">.</span><span class="n">json</span> <span class="n">input_dir</span><span class="o">/*.</span><span class="n">tiff</span> <span class="n">output</span><span class="o">.</span><span class="n">h5</span><span class="o">/</span><span class="n">images</span>
 </pre></div>
 </div>
 </div>
@@ -107,30 +98,30 @@ dataset, which is <code class="docutils literal"><span class="pre">/images</span
 <h3>Learner<a class="headerlink" href="#learner" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id1">
 <h4>Intro<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
-<p>The next item contained inside the package is <code class="docutils literal"><span class="pre">nanshe_learner.py</span></code>.
+<p>The next item contained inside the package is <code class="docutils literal notranslate"><span class="pre">nanshe_learner.py</span></code>.
 This runs the segmentation algorithm using a specified set of parameters
 on a provided dataset and stores the result.</p>
 </div>
 <div class="section" id="id2">
 <h4>Sample Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>To run the learner, simply run the command below. The configuration
-parameters are contained in the <code class="docutils literal"><span class="pre">config.json</span></code> file. Sample
-configuration files are included in the <code class="docutils literal"><span class="pre">examples</span></code> folder. One example
-is for a single process and is called <code class="docutils literal"><span class="pre">nanshe_learner.json</span></code>. Another
+parameters are contained in the <code class="docutils literal notranslate"><span class="pre">config.json</span></code> file. Sample
+configuration files are included in the <code class="docutils literal notranslate"><span class="pre">examples</span></code> folder. One example
+is for a single process and is called <code class="docutils literal notranslate"><span class="pre">nanshe_learner.json</span></code>. Another
 example uses multiprocessing and is called
-<code class="docutils literal"><span class="pre">nanshe_learner_multiprocessing.json</span></code>. The input data is stored within
-the HDF5 <code class="docutils literal"><span class="pre">input.h5</span></code> in the top level group in the dataset <code class="docutils literal"><span class="pre">images</span></code>.
+<code class="docutils literal notranslate"><span class="pre">nanshe_learner_multiprocessing.json</span></code>. The input data is stored within
+the HDF5 <code class="docutils literal notranslate"><span class="pre">input.h5</span></code> in the top level group in the dataset <code class="docutils literal notranslate"><span class="pre">images</span></code>.
 The output file can be the same file or a different file. Here,
-<code class="docutils literal"><span class="pre">output.h5</span></code> is the output file. The data is stored in the specified
-group, which is root as can be seen by the following <code class="docutils literal"><span class="pre">/</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">output.h5</span></code> is the output file. The data is stored in the specified
+group, which is root as can be seen by the following <code class="docutils literal notranslate"><span class="pre">/</span></code>. The
 extracted neurons will be put in a compound data type (a.k.a. a
-structured array) called <code class="docutils literal"><span class="pre">neurons</span></code>. Various results including the
-masks (under the field <code class="docutils literal"><span class="pre">mask</span></code>) will be stored here. The first index on
+structured array) called <code class="docutils literal notranslate"><span class="pre">neurons</span></code>. Various results including the
+masks (under the field <code class="docutils literal notranslate"><span class="pre">mask</span></code>) will be stored here. The first index on
 neurons will indicate which neuron is selected. All remaining indices
 for different types follow C-order convention (excepting
-<code class="docutils literal"><span class="pre">gaussian_cov</span></code>, which is the covariance matrix and slightly differs
+<code class="docutils literal notranslate"><span class="pre">gaussian_cov</span></code>, which is the covariance matrix and slightly differs
 for obvious reasons).</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe_learner</span><span class="o">.</span><span class="n">py</span> <span class="n">config</span><span class="o">.</span><span class="n">json</span> <span class="nb">input</span><span class="o">.</span><span class="n">h5</span><span class="o">/</span><span class="n">images</span> <span class="n">output</span><span class="o">.</span><span class="n">h5</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe_learner</span><span class="o">.</span><span class="n">py</span> <span class="n">config</span><span class="o">.</span><span class="n">json</span> <span class="nb">input</span><span class="o">.</span><span class="n">h5</span><span class="o">/</span><span class="n">images</span> <span class="n">output</span><span class="o">.</span><span class="n">h5</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -139,19 +130,19 @@ for obvious reasons).</p>
 <h3>Viewer<a class="headerlink" href="#viewer" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id3">
 <h4>Intro<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
-<p>The first item contained inside the package is <code class="docutils literal"><span class="pre">nanshe_viewer.py</span></code>.
+<p>The first item contained inside the package is <code class="docutils literal notranslate"><span class="pre">nanshe_viewer.py</span></code>.
 This runs the segmentation algorithm using a specified set of parameters
 on a provided dataset and stores the result.</p>
 </div>
 <div class="section" id="id4">
 <h4>Sample Usage<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>To run the viewer, simply run the command below. The configuration
-parameters are contained in the <code class="docutils literal"><span class="pre">config.json</span></code> file. These specify how
+parameters are contained in the <code class="docutils literal notranslate"><span class="pre">config.json</span></code> file. These specify how
 the layers are ordered, grouped, and named. Also, they specify where to
 fetch the data for the layers. Lastly, they specify where this data is
 located in an HDF5 file. The input data is stored within the HDF5
-<code class="docutils literal"><span class="pre">input.h5</span></code>.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe_viewer</span><span class="o">.</span><span class="n">py</span> <span class="n">config</span><span class="o">.</span><span class="n">json</span> <span class="nb">input</span><span class="o">.</span><span class="n">h5</span>
+<code class="docutils literal notranslate"><span class="pre">input.h5</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe_viewer</span><span class="o">.</span><span class="n">py</span> <span class="n">config</span><span class="o">.</span><span class="n">json</span> <span class="nb">input</span><span class="o">.</span><span class="n">h5</span>
 </pre></div>
 </div>
 </div>
@@ -163,19 +154,19 @@ using BuildEM ( <a class="reference external" href="https://github.com/janelia-f
 are designed to be largely independent of your own system. These contain
 all the dependencies needed to run everything used by Nanshe except for
 the ones explicitly required and excluded from BuildEM.</p>
-<p>To run any of the above utilities, there is a <code class="docutils literal"><span class="pre">run_*.sh</span></code> command that
+<p>To run any of the above utilities, there is a <code class="docutils literal notranslate"><span class="pre">run_*.sh</span></code> command that
 will do this. For example, here is how you would call the
 nanshe_learner.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe</span><span class="o">-</span><span class="n">package</span><span class="o">/</span><span class="n">run_nanshe_learner</span><span class="o">.</span><span class="n">sh</span> <span class="s2">&quot;config.json&quot;</span> <span class="s2">&quot;input.h5/images&quot;</span> <span class="s2">&quot;output.h5/&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe</span><span class="o">-</span><span class="n">package</span><span class="o">/</span><span class="n">run_nanshe_learner</span><span class="o">.</span><span class="n">sh</span> <span class="s2">&quot;config.json&quot;</span> <span class="s2">&quot;input.h5/images&quot;</span> <span class="s2">&quot;output.h5/&quot;</span>
 </pre></div>
 </div>
 <p>It is also possible to submit jobs to cluster using the Open Grid
-Engine, which have DRMAA installed. This is done using <code class="docutils literal"><span class="pre">qrun_*.sh</span></code>
+Engine, which have DRMAA installed. This is done using <code class="docutils literal notranslate"><span class="pre">qrun_*.sh</span></code>
 commands as seen below. In the case of nanshe_learner, a special
 configure file is required, which can be found in the example directory.
 If DRMAA is not available, it is possible to run multiprocessing as
 mentioned above.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe</span><span class="o">-</span><span class="n">package</span><span class="o">/</span><span class="n">qrun_nanshe_learner</span><span class="o">.</span><span class="n">sh</span> <span class="s2">&quot;config.json&quot;</span> <span class="s2">&quot;input.h5/images&quot;</span> <span class="s2">&quot;output.h5/&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">nanshe</span><span class="o">-</span><span class="n">package</span><span class="o">/</span><span class="n">qrun_nanshe_learner</span><span class="o">.</span><span class="n">sh</span> <span class="s2">&quot;config.json&quot;</span> <span class="s2">&quot;input.h5/images&quot;</span> <span class="s2">&quot;output.h5/&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -186,11 +177,11 @@ Often it is not necessary to know them. However, they do occasionally
 come up. For instances, Nanshe uses the C-order indexing convention and
 does not use multiple channels. This means that the spatial ordering
 will be transposed of what is usually expected and time will come first.
-For a given 2D array, <code class="docutils literal"><span class="pre">a_2D</span></code>, indexing would be <code class="docutils literal"><span class="pre">a_2D[t,y,x]</span></code> where
-<code class="docutils literal"><span class="pre">t</span></code> is time and <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code> are the usual spatial coordinates.
-Similarly, for a 3D array, <code class="docutils literal"><span class="pre">a_3D</span></code>, the indexing would be
-<code class="docutils literal"><span class="pre">a_3D[t,z,y,x]</span></code>. Also, the JSON configuration files permit commenting.
-This is done by using <code class="docutils literal"><span class="pre">__comment__</span></code> as a prefix within a string. For
+For a given 2D array, <code class="docutils literal notranslate"><span class="pre">a_2D</span></code>, indexing would be <code class="docutils literal notranslate"><span class="pre">a_2D[t,y,x]</span></code> where
+<code class="docutils literal notranslate"><span class="pre">t</span></code> is time and <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> are the usual spatial coordinates.
+Similarly, for a 3D array, <code class="docutils literal notranslate"><span class="pre">a_3D</span></code>, the indexing would be
+<code class="docutils literal notranslate"><span class="pre">a_3D[t,z,y,x]</span></code>. Also, the JSON configuration files permit commenting.
+This is done by using <code class="docutils literal notranslate"><span class="pre">__comment__</span></code> as a prefix within a string. For
 objects (a.k.a. dictionaries), if the key or value has a comment both
 will be removed on parsing. For arrays (a.k.a. lists), if a value is a
 comment, it will be dropped from the list. Additionally, some steps are
@@ -258,12 +249,14 @@ If only one is specified, then only an upper or lower bound exists.</p>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -304,7 +297,7 @@ If only one is specified, then only an upper or lower bound exists.</p>
         <li class="right" >
           <a href="index.html" title="Welcome to nanshe’s documentation!"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a61+7.gd3fa681 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
  
       </ul>
     </div>
@@ -312,7 +305,7 @@ If only one is specified, then only an upper or lower bound exists.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -1,5 +1,5 @@
-nanshe\.box\.spams\_sandbox module
-==================================
+nanshe.box.spams\_sandbox module
+================================
 
 .. automodule:: nanshe.box.spams_sandbox
     :members:

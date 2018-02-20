@@ -1,5 +1,5 @@
-nanshe\.learner module
-======================
+nanshe.learner module
+=====================
 
 .. automodule:: nanshe.learner
     :members:

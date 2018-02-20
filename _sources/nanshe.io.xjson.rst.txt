@@ -1,5 +1,5 @@
-nanshe\.io\.xjson module
-========================
+nanshe.io.xjson module
+======================
 
 .. automodule:: nanshe.io.xjson
     :members:

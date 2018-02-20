@@ -1,5 +1,5 @@
-nanshe\.util\.xglob module
-==========================
+nanshe.util.xglob module
+========================
 
 .. automodule:: nanshe.util.xglob
     :members:
