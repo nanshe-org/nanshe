@@ -47,6 +47,7 @@ install:
    - python setup.py bdist_conda
    # Setup environment for nanshe and install it with all dependencies.
    - conda create --use-local -n testenv python=$PYTHON_VERSION nanshe==$VERSION
+   - touch $HOME/miniconda/envs/testenv/conda-meta/pinned
    - conda update --use-local -n testenv --all
    - conda install --use-local -n testenv nanshe==$VERSION
    - source activate testenv
@@ -59,6 +60,7 @@ install:
    - export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
    - conda install drmaa
    # Install sphinx and friends to build documentation.
+   - echo "sphinx 1.6.*" >> $HOME/miniconda/envs/testenv/conda-meta/pinned
    - conda install sphinx
    - conda install cloud_sptheme
    # Install coverage and coveralls to generate and submit test coverage results for coveralls.io.

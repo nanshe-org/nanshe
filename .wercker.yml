@@ -24,6 +24,7 @@ build:
                 conda create -y --use-local -n testenv nanshe==$(python setup.py --version)
                 source activate testenv
                 conda clean -tipsy
+                touch /opt/conda/envs/testenv/conda-meta/pinned
 
         - script:
             name: Install dependencies for cluster support.
@@ -34,6 +35,7 @@ build:
         - script:
             name: Install dependencies for building docs.
             code: |-
+                echo "sphinx 1.6.*" >> /opt/conda/envs/testenv/conda-meta/pinned
                 conda install -y sphinx
                 conda install -y cloud_sptheme
                 conda clean -tipsy
