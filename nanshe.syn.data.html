@@ -6,16 +6,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.syn.data module &#8212; nanshe 0.1.0a62 documentation</title>
+    <title>nanshe.syn.data module &#8212; nanshe 0.1.0a63 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
@@ -42,7 +43,7 @@
         <li class="right" >
           <a href="nanshe.syn.html" title="nanshe.syn package"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.syn.html" accesskey="U">nanshe.syn package</a> &#187;</li> 
@@ -109,7 +110,7 @@ radius for each mask.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">#doctest: +NORMALIZE_WHITESPACE</span>
 <span class="go">array([[[ 6.96247819e-08, 2.80886418e-05, 2.07548550e-04, 2.80886418e-05, 6.96247819e-08],</span>
 <span class="go">        [ 2.80886418e-05, 1.13317669e-02, 8.37310610e-02, 1.13317669e-02, 2.80886418e-05],</span>
 <span class="go">        [ 2.07548550e-04, 8.37310610e-02, 6.18693507e-01, 8.37310610e-02, 2.07548550e-04],</span>
@@ -123,7 +124,7 @@ radius for each mask.</p>
 <span class="go">1.0</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">#doctest: +NORMALIZE_WHITESPACE</span>
 <span class="go">array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],</span>
 <span class="go">        [ 0.00000000e+00, 1.12384321e-07, 3.35012940e-04, 1.12384321e-07, 0.00000000e+00],</span>
 <span class="go">        [ 0.00000000e+00, 3.35012940e-04, 9.98659499e-01, 3.35012940e-04, 0.00000000e+00],</span>
@@ -139,7 +140,7 @@ radius for each mask.</p>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generate_gaussian_images</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">5</span>
-<span class="gp">... </span><span class="p">)</span> 
+<span class="gp">... </span><span class="p">)</span> <span class="c1">#doctest: +NORMALIZE_WHITESPACE</span>
 <span class="go">array([[[ 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00],</span>
 <span class="go">        [ 0.00000000e+00, 5.61921606e-07, 1.67506470e-03, 5.61921606e-07, 0.00000000e+00],</span>
 <span class="go">        [ 0.00000000e+00, 1.67506470e-03, 4.99329749e+00, 1.67506470e-03, 0.00000000e+00],</span>
@@ -157,11 +158,11 @@ radius for each mask.</p>
 <span class="go">array([[[[  3.76754623e-09,   1.12308970e-05,   3.76754623e-09],</span>
 <span class="go">         [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
 <span class="go">         [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
 <span class="go">         [  3.34788322e-02,   9.97989922e+01,   3.34788322e-02],</span>
 <span class="go">         [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[  3.76754623e-09,   1.12308970e-05,   3.76754623e-09],</span>
 <span class="go">         [  1.12308970e-05,   3.34788322e-02,   1.12308970e-05],</span>
 <span class="go">         [  3.76754623e-09,   1.12308970e-05,   3.76754623e-09]]]])</span>
@@ -238,11 +239,11 @@ mask.</p>
 <span class="go">array([[[[False, False, False],</span>
 <span class="go">         [False,  True, False],</span>
 <span class="go">         [False, False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True, False],</span>
 <span class="go">         [ True,  True,  True],</span>
 <span class="go">         [False,  True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False, False, False],</span>
 <span class="go">         [False,  True, False],</span>
 <span class="go">         [False, False, False]]]], dtype=bool)</span>
@@ -339,11 +340,11 @@ mask.</p>
 <span class="go">array([[[[False, False, False],</span>
 <span class="go">         [False,  True, False],</span>
 <span class="go">         [False, False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True, False],</span>
 <span class="go">         [ True,  True,  True],</span>
 <span class="go">         [False,  True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False, False, False],</span>
 <span class="go">         [False,  True, False],</span>
 <span class="go">         [False, False, False]]]], dtype=bool)</span>
@@ -529,7 +530,7 @@ coordinate.</p>
         <li class="right" >
           <a href="nanshe.syn.html" title="nanshe.syn package"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.syn.html" >nanshe.syn package</a> &#187;</li> 
@@ -539,7 +540,7 @@ coordinate.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

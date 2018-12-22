@@ -6,16 +6,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.box.spams_sandbox &#8212; nanshe 0.1.0a62 documentation</title>
+    <title>nanshe.box.spams_sandbox &#8212; nanshe 0.1.0a63 documentation</title>
     <link rel="stylesheet" href="../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../../../_static/cloud.js"></script>
@@ -34,7 +35,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -73,8 +74,8 @@
 <span class="kn">import</span> <span class="nn">npctypes.shared</span>
 
 
-<div class="viewcode-block" id="SPAMSException"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.SPAMSException">[docs]</a><span class="k">class</span> <span class="nc">SPAMSException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span></div>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="SPAMSException"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.SPAMSException">[docs]</a><span class="k">class</span> <span class="nc">SPAMSException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="run_multiprocessing_queue_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_queue_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_queue_spams_trainDL</span><span class="p">(</span><span class="n">out_queue</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -110,8 +111,8 @@
     <span class="c1"># Also, it takes a long time to load this module.</span>
     <span class="kn">import</span> <span class="nn">spams</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
-    <span class="n">out_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">out_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="call_multiprocessing_queue_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_queue_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_queue_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -162,8 +163,8 @@
     <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exitcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="n">SPAMSException</span><span class="p">(</span>
         <span class="s2">&quot;SPAMS has terminated with exitcode </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
     <span class="p">)</span>
-</div>
-    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="run_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.run_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">run_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">result_array_type</span><span class="p">,</span>
@@ -252,8 +253,8 @@
                         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
 
                     <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span></div>
-                <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="call_multiprocessing_array_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_multiprocessing_array_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_multiprocessing_array_spams_trainDL</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -356,8 +357,8 @@
     <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">with</span> <span class="n">npctypes</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">result_array</span><span class="p">)</span> <span class="k">as</span> <span class="n">result</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</div>
-    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="call_spams_trainDL"><a class="viewcode-back" href="../../../nanshe.box.spams_sandbox.html#nanshe.box.spams_sandbox.call_spams_trainDL">[docs]</a><span class="k">def</span> <span class="nf">call_spams_trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -384,8 +385,8 @@
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">spams</span><span class="o">.</span><span class="n">trainDL</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</div>
-    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -437,7 +438,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="../../../index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -446,7 +447,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

@@ -6,16 +6,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a62 documentation</title>
+    <title>nanshe.util.xnumpy module &#8212; nanshe 0.1.0a63 documentation</title>
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/cloud.base.js"></script>
     <script type="text/javascript" src="_static/cloud.js"></script>
@@ -42,7 +43,7 @@
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" accesskey="U">nanshe.util package</a> &#187;</li> 
@@ -308,14 +309,14 @@ end.</dd>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_equal</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">array([[[[ True, False],</span>
 <span class="go">         [False,  True]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[ True, False],</span>
 <span class="go">         [False,  True]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[ True, False],</span>
 <span class="go">         [False,  True]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[ True, False],</span>
 <span class="go">         [False,  True]]]], dtype=bool)</span>
 </pre></div>
@@ -325,14 +326,14 @@ end.</dd>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[[False,  True],</span>
 <span class="go">         [ True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True],</span>
 <span class="go">         [ True, False]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[False,  True],</span>
 <span class="go">         [ True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True],</span>
 <span class="go">         [ True, False]]]], dtype=bool)</span>
 </pre></div>
@@ -340,14 +341,14 @@ end.</dd>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_permutations_equal</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">array([[[[False,  True],</span>
 <span class="go">         [ True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True],</span>
 <span class="go">         [ True, False]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[False,  True],</span>
 <span class="go">         [ True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True],</span>
 <span class="go">         [ True, False]]]], dtype=bool)</span>
 </pre></div>
@@ -356,16 +357,16 @@ end.</dd>
 <span class="go">array([[[[False,  True,  True],</span>
 <span class="go">         [ True, False,  True],</span>
 <span class="go">         [ True,  True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True,  True],</span>
 <span class="go">         [ True, False,  True],</span>
 <span class="go">         [ True,  True, False]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[False,  True,  True],</span>
 <span class="go">         [ True, False,  True],</span>
 <span class="go">         [ True,  True, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True,  True],</span>
 <span class="go">         [ True, False,  True],</span>
 <span class="go">         [ True,  True, False]]]], dtype=bool)</span>
@@ -377,14 +378,14 @@ end.</dd>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[[False, False],</span>
 <span class="go">         [False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False, False],</span>
 <span class="go">         [False, False]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[ True, False],</span>
 <span class="go">         [False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[False,  True],</span>
 <span class="go">         [False, False]]]], dtype=bool)</span>
 </pre></div>
@@ -1063,7 +1064,7 @@ of vectors.</p>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
 <span class="gp">... </span>    <span class="mi">2</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1">#doctest: +NORMALIZE_WHITESPACE</span>
 <span class="go">(array([[  8.94427191,  12.96919427,  16.99411663,  21.01903899],</span>
 <span class="go">        [ 10.46518036,  15.55634919,  20.64751801,  25.73868684]]),</span>
 <span class="go"> array([[ 1.90692518,  1.85274204,  1.82405837,  1.80635674],</span>
@@ -1107,11 +1108,11 @@ default).</li>
 <span class="go">array([[[1, 1, 1],</span>
 <span class="go">        [1, 1, 1],</span>
 <span class="go">        [1, 1, 1]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[2, 2, 2],</span>
 <span class="go">        [2, 2, 2],</span>
 <span class="go">        [2, 2, 2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[3, 3, 3],</span>
 <span class="go">        [3, 3, 3],</span>
 <span class="go">        [3, 3, 3]]], dtype=uint64)</span>
@@ -1142,17 +1143,17 @@ default).</li>
 <span class="go">        [0, 0, 0, 0],</span>
 <span class="go">        [0, 0, 0, 0],</span>
 <span class="go">        [0, 0, 0, 0]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[0, 0, 0, 0],</span>
 <span class="go">        [0, 2, 0, 0],</span>
 <span class="go">        [0, 0, 0, 0],</span>
 <span class="go">        [0, 0, 0, 0]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[0, 0, 0, 0],</span>
 <span class="go">        [0, 0, 0, 0],</span>
 <span class="go">        [0, 0, 3, 0],</span>
 <span class="go">        [0, 0, 0, 0]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[0, 0, 0, 0],</span>
 <span class="go">        [0, 0, 0, 0],</span>
 <span class="go">        [0, 0, 0, 0],</span>
@@ -1301,12 +1302,12 @@ into tuple).</li>
 <span class="go">        [1, 1],</span>
 <span class="go">        [2, 2],</span>
 <span class="go">        [3, 3]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[0, 0],</span>
 <span class="go">        [1, 1],</span>
 <span class="go">        [2, 2],</span>
 <span class="go">        [3, 3]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[0, 0],</span>
 <span class="go">        [1, 1],</span>
 <span class="go">        [2, 2],</span>
@@ -1371,7 +1372,7 @@ into tuple).</li>
 <span class="go">array([[[0],</span>
 <span class="go">        [1],</span>
 <span class="go">        [2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[3],</span>
 <span class="go">        [4],</span>
 <span class="go">        [5]]])</span>
@@ -1381,7 +1382,7 @@ into tuple).</li>
 <span class="go">array([[[0],</span>
 <span class="go">        [1],</span>
 <span class="go">        [2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[3],</span>
 <span class="go">        [4],</span>
 <span class="go">        [5]]])</span>
@@ -1391,7 +1392,7 @@ into tuple).</li>
 <span class="go">array([[[0],</span>
 <span class="go">        [1],</span>
 <span class="go">        [2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[3],</span>
 <span class="go">        [4],</span>
 <span class="go">        [5]]])</span>
@@ -1401,7 +1402,7 @@ into tuple).</li>
 <span class="go">array([[[0],</span>
 <span class="go">        [1],</span>
 <span class="go">        [2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[3],</span>
 <span class="go">        [4],</span>
 <span class="go">        [5]]])</span>
@@ -1420,10 +1421,10 @@ into tuple).</li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_view</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span> <span class="n">reps_before</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 <span class="go">array([[[0, 1, 2],</span>
 <span class="go">        [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[0, 1, 2],</span>
 <span class="go">        [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[0, 1, 2],</span>
 <span class="go">        [3, 4, 5]]])</span>
 </pre></div>
@@ -1432,7 +1433,7 @@ into tuple).</li>
 <span class="go">array([[[0, 0, 0, 0],</span>
 <span class="go">        [1, 1, 1, 1],</span>
 <span class="go">        [2, 2, 2, 2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[3, 3, 3, 3],</span>
 <span class="go">        [4, 4, 4, 4],</span>
 <span class="go">        [5, 5, 5, 5]]])</span>
@@ -1446,25 +1447,25 @@ into tuple).</li>
 <span class="go">array([[[[0, 0, 0, 0],</span>
 <span class="go">         [1, 1, 1, 1],</span>
 <span class="go">         [2, 2, 2, 2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[3, 3, 3, 3],</span>
 <span class="go">         [4, 4, 4, 4],</span>
 <span class="go">         [5, 5, 5, 5]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[0, 0, 0, 0],</span>
 <span class="go">         [1, 1, 1, 1],</span>
 <span class="go">         [2, 2, 2, 2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[3, 3, 3, 3],</span>
 <span class="go">         [4, 4, 4, 4],</span>
 <span class="go">         [5, 5, 5, 5]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[0, 0, 0, 0],</span>
 <span class="go">         [1, 1, 1, 1],</span>
 <span class="go">         [2, 2, 2, 2]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[3, 3, 3, 3],</span>
 <span class="go">         [4, 4, 4, 4],</span>
 <span class="go">         [5, 5, 5, 5]]]])</span>
@@ -1475,28 +1476,28 @@ into tuple).</li>
 <span class="go">         [0, 0, 0],</span>
 <span class="go">         [0, 0, 0],</span>
 <span class="go">         [0, 0, 0]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[1, 1, 1],</span>
 <span class="go">         [1, 1, 1],</span>
 <span class="go">         [1, 1, 1],</span>
 <span class="go">         [1, 1, 1]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[2, 2, 2],</span>
 <span class="go">         [2, 2, 2],</span>
 <span class="go">         [2, 2, 2],</span>
 <span class="go">         [2, 2, 2]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[3, 3, 3],</span>
 <span class="go">         [3, 3, 3],</span>
 <span class="go">         [3, 3, 3],</span>
 <span class="go">         [3, 3, 3]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[4, 4, 4],</span>
 <span class="go">         [4, 4, 4],</span>
 <span class="go">         [4, 4, 4],</span>
 <span class="go">         [4, 4, 4]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[5, 5, 5],</span>
 <span class="go">         [5, 5, 5],</span>
 <span class="go">         [5, 5, 5],</span>
@@ -1509,40 +1510,40 @@ into tuple).</li>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">array([[[[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]],</span>
-
-<span class="go">        [[0, 1, 2],</span>
-<span class="go">         [3, 4, 5]]],</span>
-
-
-<span class="go">       [[[0, 1, 2],</span>
-<span class="go">         [3, 4, 5]],</span>
-
-<span class="go">        [[0, 1, 2],</span>
-<span class="go">         [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]]],</span>
-
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">        [[0, 1, 2],</span>
+<span class="go">         [3, 4, 5]]],</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">       [[[0, 1, 2],</span>
+<span class="go">         [3, 4, 5]],</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="go">        [[0, 1, 2],</span>
+<span class="go">         [3, 4, 5]],</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[0, 1, 2],</span>
 <span class="go">         [3, 4, 5]]]])</span>
 </pre></div>
@@ -2162,11 +2163,11 @@ to the nearest edge for each dimension.</li>
 <span class="go">array([[[False, False, False],</span>
 <span class="go">        [False, False, False],</span>
 <span class="go">        [False, False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[False, False, False],</span>
 <span class="go">        [ True,  True,  True],</span>
 <span class="go">        [False, False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[False, False, False],</span>
 <span class="go">        [False, False, False],</span>
 <span class="go">        [False, False, False]]], dtype=bool)</span>
@@ -2588,14 +2589,14 @@ value(s), as well.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">max_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 1.+0.j,  1.+1.j,  1.+3.j])</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">max_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 2.+1.j,  1.+3.j])</span>
 </pre></div>
 </div>
@@ -2709,14 +2710,14 @@ value(s), as well.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">min_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 0.+0.j,  0.+1.j,  2.+1.j])</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">min_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 1.+0.j,  0.+0.j])</span>
 </pre></div>
 </div>
@@ -2836,14 +2837,14 @@ value(s), as well.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nanmax_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 1.+0.j,  1.+1.j,  1.+3.j])</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nanmax_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 2.+1.j,  1.+3.j])</span>
 </pre></div>
 </div>
@@ -2963,14 +2964,14 @@ value(s), as well.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nanmin_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 0.+0.j,  0.+1.j,  2.+1.j])</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nanmin_abs</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span><span class="p">]]),</span>
 <span class="gp">... </span>    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
-<span class="gp">... </span><span class="p">)</span>  
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
 <span class="go">array([ 1.+0.j,  0.+0.j])</span>
 </pre></div>
 </div>
@@ -3461,12 +3462,14 @@ same length as probs).</p>
 <span class="go">masked_array(data = [ 1.5  2.5],</span>
 <span class="go">             mask = False,</span>
 <span class="go">       fill_value = nan)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">quantile</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">masked_array(data = [ 1.25  2.    2.75],</span>
 <span class="go">             mask = False,</span>
 <span class="go">       fill_value = nan)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">quantile</span><span class="p">(</span>
@@ -3476,12 +3479,14 @@ same length as probs).</p>
 <span class="go">masked_array(data = [ 1.25  2.    2.75],</span>
 <span class="go">             mask = False,</span>
 <span class="go">       fill_value = nan)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">quantile</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">]),</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="go">masked_array(data = [ 2.],</span>
 <span class="go">             mask = False,</span>
 <span class="go">       fill_value = nan)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.1176</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0679</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3031</span><span class="p">,</span>  <span class="mf">0.8261</span><span class="p">],</span>
@@ -3494,6 +3499,7 @@ same length as probs).</p>
 <span class="go">             mask =</span>
 <span class="go"> False,</span>
 <span class="go">       fill_value = nan)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -3673,6 +3679,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[ True  True  True  True  True]</span>
 <span class="go"> [False False False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">roll</span><span class="p">(</span>
@@ -3687,6 +3694,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False False False  True]</span>
 <span class="go"> [False False False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -3698,7 +3706,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False False False  True]</span>
 <span class="go"> [False False False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
 <span class="go">masked_array(data =</span>
 <span class="go"> [[1 2 3 4 --]</span>
@@ -3707,6 +3715,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False False False  True]</span>
 <span class="go"> [False False False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -3718,7 +3727,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False  True]</span>
 <span class="go"> [False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
 <span class="go">masked_array(data =</span>
 <span class="go"> [[2 3 --]</span>
@@ -3727,8 +3736,8 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False  True]</span>
 <span class="go"> [False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="c1"># this should work, but it doesn&#39;t. </span>
+<span class="go">&lt;BLANKLINE&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="c1"># this should work, but it doesn&#39;t. # doctest: +SKIP</span>
 <span class="go">masked_array(data =</span>
 <span class="go"> [[0 2 3 -- 4]</span>
 <span class="go"> [5 7 8 -- 9]],</span>
@@ -3736,6 +3745,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False False  True False]</span>
 <span class="go"> [False False False  True False]],</span>
 <span class="go">       fill_value = 999999)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -3747,7 +3757,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False  True]</span>
 <span class="go"> [False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
 <span class="go">masked_array(data =</span>
 <span class="go"> [[2 3 --]</span>
@@ -3756,7 +3766,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False  True]</span>
 <span class="go"> [False False  True]],</span>
 <span class="go">       fill_value = 999999)</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">getmaskarray</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span> <span class="n">a</span>
 <span class="go">masked_array(data =</span>
 <span class="go"> [[0 2 3 -- 4]</span>
@@ -3765,6 +3775,7 @@ the portion that rolled off masked.</li>
 <span class="go"> [[False False False  True False]</span>
 <span class="go"> [False False False  True False]],</span>
 <span class="go">       fill_value = 999999)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
@@ -3838,7 +3849,7 @@ given axes.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -3858,12 +3869,12 @@ given axes.</p>
 <span class="go">        [ 1, 13],</span>
 <span class="go">        [ 2, 14],</span>
 <span class="go">        [ 3, 15]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[ 4, 16],</span>
 <span class="go">        [ 5, 17],</span>
 <span class="go">        [ 6, 18],</span>
 <span class="go">        [ 7, 19]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[ 8, 20],</span>
 <span class="go">        [ 9, 21],</span>
 <span class="go">        [10, 22],</span>
@@ -3876,7 +3887,7 @@ given axes.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -3888,7 +3899,7 @@ given axes.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -3924,9 +3935,9 @@ given axes.</p>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">squish</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span> <span class="n">b</span>
 <span class="go">array([[[[ 0,  1,  2,  3, 12, 13, 14, 15]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[ 4,  5,  6,  7, 16, 17, 18, 19]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">        [[ 8,  9, 10, 11, 20, 21, 22, 23]]]])</span>
 </pre></div>
 </div>
@@ -3989,11 +4000,11 @@ the nearest edge.</li>
 <span class="go">array([[[False, False, False],</span>
 <span class="go">        [False, False, False],</span>
 <span class="go">        [False, False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[False, False, False],</span>
 <span class="go">        [ True,  True,  True],</span>
 <span class="go">        [False, False, False]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[False, False, False],</span>
 <span class="go">        [False, False, False],</span>
 <span class="go">        [False, False, False]]], dtype=bool)</span>
@@ -4401,13 +4412,13 @@ that has no mask.</dd>
 <span class="go">  [8 9 10 --]</span>
 <span class="go">  [12 13 14 --]</span>
 <span class="go">  [16 17 18 --]]</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go"> [[-- -- -- --]</span>
 <span class="go">  [-- -- -- --]</span>
 <span class="go">  [28 29 30 31]</span>
 <span class="go">  [32 33 34 35]</span>
 <span class="go">  [36 37 38 39]]</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go"> [[-- 41 42 43]</span>
 <span class="go">  [-- 45 46 47]</span>
 <span class="go">  [-- 49 50 51]</span>
@@ -4419,30 +4430,31 @@ that has no mask.</dd>
 <span class="go">  [False False False  True]</span>
 <span class="go">  [False False False  True]</span>
 <span class="go">  [False False False  True]]</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go"> [[ True  True  True  True]</span>
 <span class="go">  [ True  True  True  True]</span>
 <span class="go">  [False False False False]</span>
 <span class="go">  [False False False False]</span>
 <span class="go">  [False False False False]]</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go"> [[ True False False False]</span>
 <span class="go">  [ True False False False]</span>
 <span class="go">  [ True False False False]</span>
 <span class="go">  [ True False False False]</span>
 <span class="go">  [ True False False False]]],</span>
 <span class="go">       fill_value = 999999)</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">truncate_masked_frames</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">array([[[ 9, 10],</span>
 <span class="go">        [13, 14],</span>
 <span class="go">        [17, 18]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[29, 30],</span>
 <span class="go">        [33, 34],</span>
 <span class="go">        [37, 38]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[49, 50],</span>
 <span class="go">        [53, 54],</span>
 <span class="go">        [57, 58]]])</span>
@@ -4571,7 +4583,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4588,7 +4600,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4601,12 +4613,12 @@ from the end.</p>
 <span class="go">        [ 1, 13],</span>
 <span class="go">        [ 2, 14],</span>
 <span class="go">        [ 3, 15]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[ 4, 16],</span>
 <span class="go">        [ 5, 17],</span>
 <span class="go">        [ 6, 18],</span>
 <span class="go">        [ 7, 19]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[ 8, 20],</span>
 <span class="go">        [ 9, 21],</span>
 <span class="go">        [10, 22],</span>
@@ -4617,7 +4629,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4629,7 +4641,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4641,7 +4653,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4665,7 +4677,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4689,7 +4701,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4712,7 +4724,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4735,7 +4747,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4757,7 +4769,7 @@ from the end.</p>
 <span class="go">array([[[ 0,  1,  2,  3],</span>
 <span class="go">        [ 4,  5,  6,  7],</span>
 <span class="go">        [ 8,  9, 10, 11]],</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">       [[12, 13, 14, 15],</span>
 <span class="go">        [16, 17, 18, 19],</span>
 <span class="go">        [20, 21, 22, 23]]])</span>
@@ -4851,7 +4863,7 @@ from the end.</p>
         <li class="right" >
           <a href="nanshe.util.xglob.html" title="nanshe.util.xglob module"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="nanshe.html" >nanshe package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nanshe.util.html" >nanshe.util package</a> &#187;</li> 
@@ -4861,7 +4873,7 @@ from the end.</p>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

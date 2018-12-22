@@ -6,16 +6,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>nanshe.io.hdf5.serializers &#8212; nanshe 0.1.0a62 documentation</title>
+    <title>nanshe.io.hdf5.serializers &#8212; nanshe 0.1.0a63 documentation</title>
     <link rel="stylesheet" href="../../../../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
-    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../../../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../../../../_static/cloud.base.js"></script>
     <script type="text/javascript" src="../../../../_static/cloud.js"></script>
@@ -34,7 +35,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -124,8 +125,8 @@
             <span class="s2">&quot; provided with an unknown file extension.&quot;</span>
         <span class="p">)</span>
 
-</div>
-    <span class="k">return</span><span class="p">(</span><span class="n">ext_path</span><span class="p">,</span> <span class="n">int_path</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">ext_path</span><span class="p">,</span> <span class="n">int_path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="create_numpy_structured_array_in_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.create_numpy_structured_array_in_HDF5">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -193,8 +194,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span>
 
-    <span class="k">if</span> <span class="n">close_file_handle</span><span class="p">:</span></div>
-        <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">close_file_handle</span><span class="p">:</span>
+        <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="read_numpy_structured_array_from_HDF5"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.read_numpy_structured_array_from_HDF5">[docs]</a><span class="nd">@prof</span><span class="o">.</span><span class="n">log_call</span><span class="p">(</span><span class="n">trace_logger</span><span class="p">)</span>
@@ -277,8 +278,8 @@
 
     <span class="k">if</span> <span class="n">close_file_handle</span><span class="p">:</span>
         <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</div>
-    <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="hdf5_wrapper"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.hdf5_wrapper">[docs]</a><span class="k">def</span> <span class="nf">hdf5_wrapper</span><span class="p">(</span><span class="n">hdf5_args</span><span class="o">=</span><span class="p">[],</span> <span class="n">hdf5_kwargs</span><span class="o">=</span><span class="p">[],</span> <span class="n">hdf5_result</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
@@ -370,8 +371,8 @@
             <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">hdf5_wrapped</span><span class="p">)</span>
-</div>
-    <span class="k">return</span><span class="p">(</span><span class="n">hdf5_decorator</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">hdf5_decorator</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="HDF5MaskedDataset"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset">[docs]</a><span class="k">class</span> <span class="nc">HDF5MaskedDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -514,8 +515,8 @@
         <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HDF5MaskedDataset.resize"><a class="viewcode-back" href="../../../../nanshe.io.hdf5.serializers.html#nanshe.io.hdf5.serializers.HDF5MaskedDataset.resize">[docs]</a>    <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">args</span><span class="p">]</span>
@@ -539,8 +540,8 @@
 
         <span class="n">result</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
         <span class="n">result</span><span class="o">.</span><span class="n">fill_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">[</span><span class="s2">&quot;fill_value&quot;</span><span class="p">][</span><span class="o">...</span><span class="p">]</span>
-</div>
-        <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -592,7 +593,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> &nbsp; &nbsp;</li>
-    <li><a href="../../../../index.html">nanshe 0.1.0a62 documentation</a> &#187;</li>
+    <li><a href="../../../../index.html">nanshe 0.1.0a63 documentation</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
@@ -601,7 +602,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014-2017, John A. Kirkham.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
