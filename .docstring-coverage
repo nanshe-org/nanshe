@@ -16,9 +16,6 @@ File nanshe/converter.py
 File nanshe/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
-File nanshe/misc/neuron_matplotlib_viewer.py
- Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
-
 File nanshe/misc/random_dictionary_learning_data.py
  Needed: 15; Exist: 15; Missing: 0; Coverage: 100.0%
 
@@ -168,6 +165,6 @@ File nanshe/util/__init__.py
  Needed: 1; Exist: 1; Missing: 0; Coverage: 100.0%
 
 
-Overall statistics for 33 files:
-Docstrings needed: 297; Docstrings exist: 228; Docstrings missing: 69
-Total docstring coverage: 76.8%;  Grade: very good
+Overall statistics for 32 files:
+Docstrings needed: 296; Docstrings exist: 227; Docstrings missing: 69
+Total docstring coverage: 76.7%;  Grade: very good

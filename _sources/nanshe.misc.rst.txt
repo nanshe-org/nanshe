@@ -11,6 +11,5 @@ Submodules
 
 .. toctree::
 
-   nanshe.misc.neuron_matplotlib_viewer
    nanshe.misc.random_dictionary_learning_data
 
