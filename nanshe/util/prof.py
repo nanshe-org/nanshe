@@ -341,6 +341,6 @@ def memory_profiler(logger, interval=1, level=logging.INFO):
 
     while memory_profiler.to_run:
         logger.log(
-            level, "Memory info = " + repr(current_process.memory_info_ex())
+            level, "Memory info = " + repr(current_process.memory_info())
         )
         time.sleep(interval)
