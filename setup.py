@@ -49,7 +49,6 @@ elif sys.argv[1] == "bdist_conda":
     install_requires = [
         "blas==1.1",
         "openblas",
-        "setuptools",
         "future",
         "psutil",
         "numpy",
