@@ -15,9 +15,8 @@ not deleted), its API may be broken from what it was here.
 __author__ = "John Kirkham <kirkhamj@janelia.hhmi.org>"
 __date__ = "$Apr 01, 2015 00:13:16 EDT$"
 
-__all__ = [  # "neuron_matplotlib_viewer",
+__all__ = [
     "random_dictionary_learning_data"
 ]
 
-# from nanshe.misc import neuron_matplotlib_viewer
 from nanshe.misc import random_dictionary_learning_data
