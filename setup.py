@@ -55,7 +55,6 @@ elif sys.argv[1] == "bdist_conda":
         "scipy",
         "h5py",
         "bottleneck",
-        "matplotlib",
         "imgroi",
         "kenjutsu",
         "metawrap",
