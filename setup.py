@@ -51,7 +51,7 @@ elif sys.argv[1] == "bdist_conda":
         "openblas",
         "future",
         "psutil",
-        "numpy",
+        "numpy >=1.11",
         "scipy",
         "h5py",
         "bottleneck",
