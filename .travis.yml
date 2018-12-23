@@ -66,7 +66,7 @@ install:
    # Also, install docstring-coverage to get information about documentation coverage.
    - conda install nose-timer
    - conda install coverage
-   - conda install docstring-coverage || true
+   - if [[ $DEPLOY_DOCS == true ]]; then conda install docstring-coverage; fi
    # Clean up downloads as there are quite a few and they waste space/memory.
    - sudo apt-get clean
    - conda clean -tipsy
