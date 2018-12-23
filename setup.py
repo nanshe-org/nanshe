@@ -58,7 +58,6 @@ elif sys.argv[1] == "bdist_conda":
         "imgroi",
         "kenjutsu",
         "metawrap",
-        "mplview",
         "npctypes",
         "xnumpy",
         "scikit-image",
